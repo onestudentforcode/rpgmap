@@ -1,0 +1,9 @@
+# Godot
+.godot/
+*.import
+
+# 本地截图等临时产物
+.shots/
+
+# Python
+__pycache__/
