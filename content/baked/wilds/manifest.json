@@ -1,65 +1,17 @@
 {
   "maps": {
-    "corridor": {
-      "name": "西西弗百货・一层后廊",
+    "plains": {
+      "name": "寨外・风声荒地",
       "objects": [
-        "elevator",
-        "npc",
-        "sign"
-      ],
-      "tiles": [
-        "carpet",
-        "corr",
-        "wall",
-        "door"
-      ]
-    },
-    "lobby": {
-      "name": "西西弗百货・一层大厅",
-      "objects": [
-        "counter",
-        "npc",
+        "battle_mark",
+        "chest",
         "plant",
         "save_stone",
-        "shelf",
         "sign"
       ],
       "tiles": [
         "floor_a",
-        "floor_b",
         "carpet",
-        "wall",
-        "door"
-      ]
-    },
-    "market": {
-      "name": "西西弗百货・地下坊市",
-      "objects": [
-        "battle_mark",
-        "chest",
-        "counter",
-        "plant",
-        "save_stone",
-        "shelf",
-        "sign"
-      ],
-      "tiles": [
-        "corr",
-        "wall",
-        "door"
-      ]
-    },
-    "storeroom": {
-      "name": "西西弗百货・储物间",
-      "objects": [
-        "chest",
-        "plant",
-        "save_stone",
-        "shelf",
-        "sign"
-      ],
-      "tiles": [
-        "corr",
         "wall",
         "door"
       ]
@@ -189,7 +141,7 @@
           ]
         }
       },
-      "path": "res://assets/themes/placeholder/objects.png",
+      "path": "res://assets/themes/wilds/objects.png",
       "prompt_region": [
         160,
         0,
@@ -207,15 +159,23 @@
         48
       ],
       "layout": "4方向x4帧，行序 下/左/右/上，列序 待机/迈步/过渡/迈步2",
-      "path": "res://assets/themes/placeholder/player.png",
+      "path": "res://assets/themes/wilds/player.png",
       "size": [
         128,
         192
       ]
     },
     "tileset": {
-      "art": {},
-      "path": "res://assets/themes/placeholder/tileset.png",
+      "art": {
+        "carpet": "dirt",
+        "corr": "gravel",
+        "door": "door",
+        "floor_a": "grass",
+        "floor_b": "grass",
+        "void": "void",
+        "wall": "hedge"
+      },
+      "path": "res://assets/themes/wilds/tileset.png",
       "size": [
         224,
         32
@@ -280,5 +240,5 @@
       ]
     }
   },
-  "theme": "placeholder"
+  "theme": "wilds"
 }

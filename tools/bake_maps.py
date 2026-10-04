@@ -205,19 +205,22 @@ def cell_is_solid(src: dict, theme: dict, x: int, y: int) -> bool:
     return bool(theme["tiles"][le["tile"]].get("solid", False))
 
 
-def validate_portals_cross(all_src: dict, theme: dict, tid: str) -> None:
-    """跨图校验（按主题）：目标存在、落点合法且不在对方触发格上、双向配对存在。"""
+def validate_portals_global(all_src: dict, themes: dict, map_owners: dict) -> None:
+    """全局门户校验：目标存在（可跨主题集，如城镇 hub ↔ 野外）、
+    落点在目标图的所有归属主题下均可行走且不压触发格、双向配对存在。"""
     for mid, src in all_src.items():
         for p in src.get("portals", []):
             target_id = p["to"]
             tsrc = all_src.get(target_id)
-            check(tsrc is not None, f"[{tid}] {mid}: 传送目标图不存在: {target_id}")
+            check(tsrc is not None, f"{mid}: 传送目标图不存在: {target_id}")
+            check(target_id != mid, f"{mid}: 门户 {p['cell']} 指向自身")
             tw, th = map_dims(tsrc)
             sx, sy = p["spawn"]
             check(0 <= sx < tw and 0 <= sy < th,
                   f"{mid}: 门户 {p['cell']} 的落点 {p['spawn']} 在 {target_id} 越界")
-            check(not cell_is_solid(tsrc, theme, sx, sy),
-                  f"{mid}: 落点 {p['spawn']} 在 {target_id} 是实心格")
+            for owner_tid in map_owners[target_id]:
+                check(not cell_is_solid(tsrc, themes[owner_tid], sx, sy),
+                      f"{mid}: 落点 {p['spawn']} 在 {target_id}（主题 {owner_tid}）是实心格")
             t_portals = {tuple(q["cell"]) for q in tsrc.get("portals", [])}
             check((sx, sy) not in t_portals,
                   f"{mid}: 落点 {p['spawn']} 压在 {target_id} 的触发格上（会来回横跳）")
@@ -335,16 +338,32 @@ def main() -> int:
             check(src.get("id") == p.stem, f"{p.name}: id '{src.get('id')}' 与文件名不符")
             all_src[p.stem] = src
 
-        # 主题 × 地图 全组合：布局与皮肤解耦（R3）。
-        # 主题契约 = 覆盖所有地图用到的语义图块/物件，任一缺失即烘焙失败。
+        # 主题 → 地图集分配（index.json["themes"]）：城镇主题只管城镇图、
+        # 野外主题只管野外图；主题契约 = 覆盖其地图集用到的全部语义图块/物件。
+        raw_sets = index_src.get("themes")
+        check(isinstance(raw_sets, dict) and raw_sets,
+              'index.json: themes 应为 {主题id: [地图id...]}')
         maps_by_theme: dict = {}
-        for tid in sorted(themes):
+        for tid in sorted(raw_sets):
+            check(tid in themes, f"index.json: 主题 '{tid}' 不存在")
+            mids = raw_sets[tid]
+            check(isinstance(mids, list) and mids, f"index.json: {tid} 的地图集为空")
+            for mid in mids:
+                check(mid in all_src, f"index.json: {tid} 引用不存在的地图 '{mid}'")
             theme = themes[tid]
-            for mid in sorted(all_src):
-                validate_map(all_src[mid], theme, f"{mid}.json")
-            validate_portals_cross(all_src, theme, tid)
-            maps_by_theme[tid] = {mid: expand_map(all_src[mid], theme)
-                                  for mid in sorted(all_src)}
+            subset = {mid: all_src[mid] for mid in sorted(mids)}
+            for mid in sorted(mids):
+                validate_map(subset[mid], theme, f"{mid}.json")
+            maps_by_theme[tid] = {mid: expand_map(subset[mid], theme)
+                                  for mid in sorted(mids)}
+        covered = set()
+        for mids in maps_by_theme.values():
+            covered |= set(mids)
+        check(covered == set(all_src),
+              f"index.json: 未被任何主题分配的地图: {sorted(set(all_src) - covered)}")
+        map_owners = {mid: sorted({tid for tid, m in maps_by_theme.items() if mid in m})
+                      for mid in all_src}
+        validate_portals_global(all_src, themes, map_owners)
 
         for tid, maps in maps_by_theme.items():
             theme = themes[tid]
@@ -367,6 +386,7 @@ def main() -> int:
                 "note": "美术采购单：按下列规格出图，覆盖 assets/ 同名文件后无需重烘",
                 "textures": {
                     "tileset": {**theme["textures"]["tileset"],
+                                "art": theme.get("art", {}),
                                 "tiles": [{"name": n, "atlas": t["atlas"],
                                            "solid": bool(t.get("solid", False))}
                                           for n, t in theme["tiles"].items()]},
@@ -387,9 +407,13 @@ def main() -> int:
 
         write_json(BAKED / "index.json", {
             "default_theme": index_src.get("default_theme", next(iter(sorted(themes)))),
-            "themes": sorted(themes),
-            "default_map": index_src.get("default_map", sorted(all_src)[0]),
-            "maps": sorted(all_src),
+            "themes": {tid: {"maps": sorted(maps),
+                             # 尊重源 index 的全局 default_map（在其集合内时），
+                             # 否则取字典序首图
+                             "default_map": index_src.get("default_map")
+                             if index_src.get("default_map") in maps else sorted(maps)[0]}
+                       for tid, maps in maps_by_theme.items()},
+            "map_theme": {mid: owners[0] for mid, owners in sorted(map_owners.items())},
         })
 
         n_maps = len(all_src)

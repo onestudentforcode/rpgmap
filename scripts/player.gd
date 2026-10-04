@@ -27,6 +27,19 @@ func setup(cfg: Dictionary) -> void:
 	_prompt_region = Rect2(cfg["prompt_region"][0], cfg["prompt_region"][1],
 			cfg["prompt_region"][2], cfg["prompt_region"][3])
 	_prompt_texture = load(cfg["prompt_texture"])
+	if _sprite != null:
+		retheme()
+
+
+## 主题变更后重建精灵帧与提示气泡（跨主题传送时调用）
+func retheme() -> void:
+	_sprite.sprite_frames = _build_frames()
+	_sprite.offset = Vector2(0, -_frame_size.y / 2.0)
+	_sprite.play("idle_" + facing)
+	var at := AtlasTexture.new()
+	at.atlas = _prompt_texture
+	at.region = _prompt_region
+	_prompt.texture = at
 
 
 func _ready() -> void:

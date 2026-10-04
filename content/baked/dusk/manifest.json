@@ -214,6 +214,7 @@
       ]
     },
     "tileset": {
+      "art": {},
       "path": "res://assets/themes/dusk/tileset.png",
       "size": [
         224,

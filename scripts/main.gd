@@ -27,6 +27,7 @@ var game_state := GameState.new()
 
 var _theme_id := ""
 var _baked: Dictionary = {}   # 当前地图烘焙数据
+var _index: Dictionary = {}   # 烘焙索引（主题地图集 + 地图归属）
 
 var _ground: TileMapLayer
 var _walls: TileMapLayer
@@ -40,6 +41,7 @@ var _portal_until_ms := 0
 func _ready() -> void:
 	var args := OS.get_cmdline_user_args()
 	var index := MapHost.load_index()
+	_index = index
 	_theme_id = index["default_theme"]
 	for a in args:
 		if a.begins_with("--theme="):
@@ -51,7 +53,7 @@ func _ready() -> void:
 	var theme := MapHost.load_theme(_theme_id)
 	_build_stage()
 	_build_player_and_ui(theme)
-	var first := MapHost.load_map(_theme_id, index["default_map"])
+	var first := MapHost.load_map(_theme_id, index["themes"][_theme_id]["default_map"])
 	_load_map(first, MapHost.to_v2i(first["spawn"]), first["spawn_face"])
 	_fade.modulate.a = 1.0
 	var tw := create_tween()
@@ -61,7 +63,10 @@ func _ready() -> void:
 		_run_selftest.call_deferred()
 	for a in args:
 		if a.begins_with("--shots="):
-			_run_shots(a.get_slice("=", 1))
+			if _theme_id == "wilds":
+				_run_shots_wilds(a.get_slice("=", 1))
+			else:
+				_run_shots(a.get_slice("=", 1))
 
 
 func _build_stage() -> void:
@@ -96,7 +101,7 @@ func _build_stage() -> void:
 	add_child(fade_layer)
 
 	var battle_layer := CanvasLayer.new()
-	battle_layer.layer = 50
+	battle_layer.layer = 95  # 高于淡入遮罩（90）：遮罩压暗世界，不压战斗提示
 	_battle_label = Label.new()
 	_battle_label.set_anchors_preset(Control.PRESET_FULL_RECT)
 	_battle_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
@@ -179,7 +184,13 @@ func _do_transition(tr: Dictionary) -> void:
 	var tw := create_tween()
 	tw.tween_property(_fade, "modulate:a", 1.0, FADE_TIME)
 	await tw.finished
-	var next := MapHost.load_map(_theme_id, tr["to"])
+	# 跨主题门户（如城镇 hub ↔ 野外）：解析目标图归属主题并换装
+	var to := str(tr["to"])
+	if not (to in _index["themes"][_theme_id]["maps"]):
+		_theme_id = _index["map_theme"][to]
+		player.setup(MapHost.load_theme(_theme_id)["player"])
+		player.retheme()
+	var next := MapHost.load_map(_theme_id, to)
 	_load_map(next, MapHost.to_v2i(tr["spawn"]), tr["face"])
 	await get_tree().create_timer(0.05).timeout
 	var tw2 := create_tween()
@@ -328,8 +339,10 @@ func _run_selftest() -> void:
 	_check(fails, _cell_has_collision(_walls, Vector2i(0, 0)), "墙体有碰撞")
 	_check(fails, not _cell_has_collision(_ground, Vector2i(2, 8)), "地面可行走")
 
-	# R3 验证：每个主题下的同一布局，格数与节点数必须完全一致
+	# R3 验证：共享同一布局的各主题，格数与节点数必须完全一致
 	for tid in index["themes"]:
+		if not ("lobby" in index["themes"][tid]["maps"]):
+			continue  # 野外主题不含大厅（按主题分配地图集）
 		var lb := MapHost.load_map(tid, "lobby")
 		_check(fails, _count_used(lb["ground"]) == _count_used(lobby["ground"])
 				and _count_used(lb["walls"]) == _count_used(lobby["walls"])
@@ -392,6 +405,36 @@ func _run_selftest() -> void:
 	await get_tree().create_timer(0.4).timeout
 	_check(fails, state == State.PLAYING and battles.size() == 1,
 			"冷却期内重复走进不再触发")
+
+	# ---- 野外：一次性精英遭遇 + 消费后不再触发 ----
+	var wilds_entry: Dictionary = index["themes"]["wilds"]
+	_check(fails, "plains" in wilds_entry["maps"], "wilds 主题分配 plains 地图集")
+	var plains := MapHost.load_map("wilds", "plains")
+	var saved_theme := _theme_id
+	_theme_id = "wilds"
+	_load_map(plains, Vector2i(36, 4), "down")
+	_theme_id = saved_theme
+	_check(fails, _walls.get_used_cells().size() == _count_used(plains["walls"]),
+			"野外墙格数=烘焙数据")
+	var wild_marks := 0
+	for it in plains["interactions"]:
+		if str(it.get("type")) == "battle":
+			wild_marks += it["cells"].size()
+	_check(fails, wild_marks == 4, "野外明雷 x4（3 普通 + 1 精英）")
+	var elite_cell := Vector2i(35, 22)
+	player.teleport(MapHost.cell_center(elite_cell, 32), "down")
+	await get_tree().create_timer(0.4).timeout
+	_check(fails, state == State.BATTLE, "走进精英格进入战斗桩")
+	_check(fails, battles.size() == 2 and battles[1][1] == "wild_elite",
+			"精英遭遇携带 enemy_id")
+	await get_tree().create_timer(BATTLE_HOLD + 2 * FADE_TIME + 0.3).timeout
+	_check(fails, state == State.PLAYING, "精英战结束恢复移动")
+	_check(fails, game_state.is_consumed("plains", elite_cell), "一次性遭遇已消费")
+	player.teleport(MapHost.cell_center(Vector2i(35, 21), 32), "down")
+	await get_tree().create_timer(0.3).timeout
+	player.teleport(MapHost.cell_center(elite_cell, 32), "down")
+	await get_tree().create_timer(0.4).timeout
+	_check(fails, state == State.PLAYING and battles.size() == 2, "已消费遭遇不再触发")
 
 	# ---- 门户往返 ----
 	_load_map(lobby, Vector2i(2, 8), "down")
@@ -512,6 +555,31 @@ func _run_shots(dir: String) -> void:
 	activate_zone(_find_zone("C"))
 	await get_tree().create_timer(0.3).timeout
 	await _shot(dir.path_join("7_menu.png"))
+	print("SHOTS DONE")
+	get_tree().quit(0)
+
+
+## ---- 野外主题截图：--theme=wilds --shots=DIR ----
+
+func _run_shots_wilds(dir: String) -> void:
+	DirAccess.make_dir_recursive_absolute(dir)
+	await get_tree().create_timer(0.8).timeout
+	await _shot(dir.path_join("1_plains.png"))
+
+	player.teleport(MapHost.cell_center(Vector2i(6, 7), 32), "down")  # 明雷旁
+	await get_tree().create_timer(0.4).timeout
+	await _shot(dir.path_join("2_mark.png"))
+
+	player.teleport(MapHost.cell_center(Vector2i(6, 6), 32), "down")  # 走进明雷
+	await get_tree().create_timer(FADE_TIME + 0.4).timeout
+	await _shot(dir.path_join("3_battle_stub.png"))
+	await get_tree().create_timer(BATTLE_HOLD + FADE_TIME + 0.3).timeout
+
+	player.teleport(MapHost.cell_center(Vector2i(36, 4), 32), "up")  # 宝箱旁
+	await get_tree().create_timer(0.4).timeout
+	activate_zone(_find_zone("X"))
+	await get_tree().create_timer(0.8).timeout
+	await _shot(dir.path_join("4_chest.png"))
 	print("SHOTS DONE")
 	get_tree().quit(0)
 

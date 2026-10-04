@@ -1,14 +1,36 @@
 {
-  "default_map": "lobby",
   "default_theme": "placeholder",
-  "maps": [
-    "corridor",
-    "lobby",
-    "market",
-    "storeroom"
-  ],
-  "themes": [
-    "dusk",
-    "placeholder"
-  ]
+  "map_theme": {
+    "corridor": "dusk",
+    "lobby": "dusk",
+    "market": "dusk",
+    "plains": "wilds",
+    "storeroom": "dusk"
+  },
+  "themes": {
+    "dusk": {
+      "default_map": "lobby",
+      "maps": [
+        "corridor",
+        "lobby",
+        "market",
+        "storeroom"
+      ]
+    },
+    "placeholder": {
+      "default_map": "lobby",
+      "maps": [
+        "corridor",
+        "lobby",
+        "market",
+        "storeroom"
+      ]
+    },
+    "wilds": {
+      "default_map": "plains",
+      "maps": [
+        "plains"
+      ]
+    }
+  }
 }

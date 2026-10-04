@@ -1,0 +1,50 @@
+{
+  "schema": 1,
+  "id": "wilds",
+  "tile_size": 32,
+  "textures": {
+    "tileset": {"path": "res://assets/themes/wilds/tileset.png", "size": [224, 32]},
+    "objects": {"path": "res://assets/themes/wilds/objects.png", "size": [352, 96]},
+    "player": {"path": "res://assets/themes/wilds/player.png", "size": [128, 192], "frame": [32, 48]}
+  },
+  "palette_overrides": {
+    "floor_a": "#79a05c", "floor_a_line": "#6a9151", "floor_a_hi": "#8cb069", "floor_a_dot": "#6d9454",
+    "floor_b": "#719856", "floor_b_line": "#628a4b", "floor_b_dot": "#67904e",
+    "carpet": "#9a7a4e", "carpet_dark": "#846741", "carpet_pat": "#b08c5c",
+    "corr": "#8f9077", "corr_line": "#75765f", "corr_dot": "#828369",
+    "wall": "#3f6b3c", "wall_cap": "#2e5230", "wall_line": "#396238", "wall_hi": "#55804b", "wall_ao": "#294728",
+    "brass": "#8a7a52", "brass_dark": "#6a5c3e",
+    "wood": "#6b5540", "wood_top": "#96795a", "wood_panel": "#4a3a2e",
+    "pot": "#7a5a44", "leaf": "#39603c", "leaf_hi": "#4e7b4e",
+    "coat": "#3a4a42", "coat_hi": "#47594f", "scarf": "#c88a3e",
+    "paper": "#d8d4bc", "ink": "#3e4232"
+  },
+  "art": {
+    "floor_a": "grass", "floor_b": "grass", "carpet": "dirt",
+    "corr": "gravel", "wall": "hedge", "door": "door", "void": "void"
+  },
+  "tiles": {
+    "floor_a": {"atlas": [0, 0]},
+    "floor_b": {"atlas": [1, 0]},
+    "carpet": {"atlas": [2, 0]},
+    "corr": {"atlas": [3, 0]},
+    "wall": {"atlas": [4, 0], "solid": true},
+    "door": {"atlas": [5, 0]},
+    "void": {"atlas": [6, 0], "solid": true}
+  },
+  "objects": {
+    "counter": {"region": [0, 0, 32, 32], "box": [30, 14]},
+    "shelf": {"region": [32, 0, 32, 32], "box": [30, 14]},
+    "plant": {"region": [64, 0, 32, 32], "box": [22, 12]},
+    "sign": {"region": [96, 0, 32, 32], "box": [20, 12]},
+    "npc": {"frames": [[176, 0, 32, 48], [208, 0, 32, 48]], "box": [20, 12]},
+    "elevator": {"region": [128, 0, 32, 64], "zone_offset": [0, 20]},
+    "chest": {"region": [240, 0, 32, 32], "open_region": [272, 0, 32, 32], "box": [24, 12]},
+    "save_stone": {"region": [304, 0, 32, 32], "box": [22, 12]},
+    "battle_mark": {"region": [336, 0, 16, 16]}
+  },
+  "player": {
+    "prompt_region": [160, 0, 16, 16],
+    "prompt_texture": "res://assets/themes/wilds/objects.png"
+  }
+}

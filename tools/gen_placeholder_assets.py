@@ -63,15 +63,75 @@ BASE_PAL = {
 PAL = dict(BASE_PAL)
 
 
-def load_theme_palettes() -> dict:
-    """从 content/themes/*.json 读 {主题id: 色板覆盖}。"""
-    themes = {}
+def load_theme_palettes() -> list:
+    """从 content/themes/*.json 读 [{id, palette覆盖, art风格覆盖}]。"""
+    themes = []
     for p in sorted(THEMES_DIR.glob("*.json")):
         data = json.loads(p.read_text(encoding="utf-8"))
-        themes[data["id"]] = data.get("palette_overrides", {})
+        themes.append((data["id"], data.get("palette_overrides", {}),
+                       data.get("art", {})))
     if not themes:
         raise SystemExit(f"未找到主题文件: {THEMES_DIR}")
     return themes
+
+
+# ---------------------------------------------------------------- 图块绘制
+# 语义图块 → 缺省绘制风格；主题 JSON 可用 "art" 段覆盖（如草地/泥路/树篱）
+ART_DEFAULT = {
+    "floor_a": "tile", "floor_b": "tile_var", "carpet": "carpet",
+    "corr": "tile", "wall": "wall", "door": "door", "void": "void",
+}
+
+
+def draw_tile(style: str) -> Image.Image:
+    if style == "tile":
+        return tile_floor_a()
+    if style == "tile_var":
+        return tile_floor_b()
+    if style == "carpet":
+        return tile_carpet()
+    if style == "grass":
+        img, d = canvas(TILE, TILE)
+        d.rectangle((0, 0, 31, 31), fill=C("floor_a"))
+        dither(d, 0, 0, 32, 32, C("floor_a_dot"), step=5, seed=11)
+        for bx, by in ((4, 6), (12, 14), (22, 5), (27, 18), (8, 24), (17, 27)):
+            d.rectangle((bx, by, bx, by + 2), fill=C("floor_a_hi"))
+        return img
+    if style == "dirt":
+        img, d = canvas(TILE, TILE)
+        d.rectangle((0, 0, 31, 31), fill=C("carpet"))
+        dither(d, 0, 0, 32, 32, C("carpet_dark"), step=6, seed=12)
+        for bx, by in ((6, 9), (21, 4), (26, 22), (11, 19)):
+            d.rectangle((bx, by, bx + 1, by + 1), fill=C("carpet_pat"))
+        return img
+    if style == "gravel":
+        img, d = canvas(TILE, TILE)
+        d.rectangle((0, 0, 31, 31), fill=C("corr"))
+        dither(d, 0, 0, 32, 32, C("corr_dot"), step=4, seed=13)
+        dither(d, 0, 0, 32, 32, C("corr_line"), step=9, seed=14)
+        return img
+    if style == "hedge":
+        img, d = canvas(TILE, TILE)
+        d.rectangle((0, 0, 31, 31), fill=C("wall"))
+        d.rectangle((0, 0, 31, 4), fill=C("wall_cap"))
+        dither(d, 0, 2, 32, 30, C("wall_hi"), step=4, seed=15)
+        dither(d, 0, 24, 32, 8, C("wall_ao"), step=3, seed=16)
+        return img
+    if style == "wall":
+        return tile_wall()
+    if style == "door":
+        return tile_door()
+    if style == "void":
+        return tile_void()
+    raise SystemExit(f"未知图块绘制风格: {style}")
+
+
+def gen_tileset(art: dict) -> Image.Image:
+    sheet = Image.new("RGBA", (TILE * 7, TILE), (0, 0, 0, 0))
+    for i, name in enumerate(["floor_a", "floor_b", "carpet", "corr",
+                              "wall", "door", "void"]):
+        sheet.paste(draw_tile(art.get(name, ART_DEFAULT[name])), (i * TILE, 0))
+    return sheet
 
 
 def C(name: str) -> tuple:
@@ -181,15 +241,6 @@ def tile_void() -> Image.Image:
     d.rectangle((0, 0, 31, 31), fill=C("void"))
     dither(d, 0, 0, 32, 32, C("void_dot"), step=6, seed=5)
     return img
-
-
-def gen_tileset() -> Image.Image:
-    tiles = [tile_floor_a(), tile_floor_b(), tile_carpet(), tile_corridor(),
-             tile_wall(), tile_door(), tile_void()]
-    sheet = Image.new("RGBA", (TILE * len(tiles), TILE), (0, 0, 0, 0))
-    for i, t in enumerate(tiles):
-        sheet.paste(t, (i * TILE, 0))
-    return sheet
 
 
 # ---------------------------------------------------------------- 行走图
@@ -452,17 +503,16 @@ def qc(name: str, img: Image.Image, expect: tuple) -> bool:
 
 
 def main():
-    themes = load_theme_palettes()
     ok = True
-    for tid in sorted(themes):
+    for tid, pal_over, art in load_theme_palettes():
         PAL.clear()
         PAL.update(BASE_PAL)
-        PAL.update(themes[tid])
+        PAL.update(pal_over)
         out = ASSETS / "themes" / tid
         out.mkdir(parents=True, exist_ok=True)
         print(f"== 主题 {tid} ==")
         for name, img, expect in [
-            ("tileset.png", gen_tileset(), (TILE * 7, TILE)),
+            ("tileset.png", gen_tileset(art), (TILE * 7, TILE)),
             ("player.png", gen_player_sheet(), (PW * 4, PH * 4)),
             ("objects.png", gen_objects(), (352, 96)),
         ]:

@@ -1,4 +1,9 @@
 {
   "default_theme": "placeholder",
-  "default_map": "lobby"
+  "default_map": "lobby",
+  "themes": {
+    "placeholder": ["lobby", "corridor", "storeroom", "market"],
+    "dusk": ["lobby", "corridor", "storeroom", "market"],
+    "wilds": ["plains"]
+  }
 }
