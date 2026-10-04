@@ -4,6 +4,10 @@
 > [daoyan-reuse-plan-answers.md](daoyan-reuse-plan-answers.md)（基于对 daoyan 仓库的实读）。
 > 决议已并入本文档 §6，与原提案冲突处以 §6 为准。仍待用户拍板：正式命名（A3）、
 > Phase 88 立项时机、对回执推荐值的最终确认。
+>
+> **定位降级（2026-10-04）：接入 daoyan 不是现阶段任务。** 本文档转为**背景资料**，
+> 为实验阶段规划（[demo-phases.md](demo-phases.md)）提供内核需求来源；
+> 实验的推进以 demo-phases.md 为准。
 
 > 状态：待确认。本文档不依赖 daoyan 代码（按约定暂未读取），
 > E 组接口问题在允许读项目后第一时间摸清。
