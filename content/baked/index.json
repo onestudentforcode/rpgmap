@@ -1,0 +1,12 @@
+{
+  "default_map": "lobby",
+  "default_theme": "placeholder",
+  "maps": [
+    "corridor",
+    "lobby",
+    "storeroom"
+  ],
+  "themes": [
+    "placeholder"
+  ]
+}

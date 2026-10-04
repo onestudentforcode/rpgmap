@@ -1,5 +1,9 @@
 # 资产规格（ComfyUI 对接用）
 
+> **P1 起，权威规格以 bake 产物 `content/baked/<theme>/manifest.json`（美术采购单）为准**，
+> 本文描述的是 placeholder 主题当前规格与出图后处理要求，两者一致。
+> 正式图到位后按本规格覆盖 `assets/` 下同名文件，Godot 自动重导入，无需重烘、无需改代码。
+
 MVP 当前用 `tools/gen_placeholder_assets.py` 生成的程序化占位图。
 ComfyUI 正式图到位后，**按本规格覆盖 `assets/` 下同名文件即可**，
 Godot 自动重导入，无需改任何代码或场景。

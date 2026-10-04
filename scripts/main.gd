@@ -1,5 +1,6 @@
 extends Node2D
-## 主控：搭建舞台（地面/墙/物件/玩家/UI），状态机（移动/对话/切图），
+## 主控：搭建舞台（地面/墙/物件/玩家/UI），状态机（移动/对话/切图）。
+## 只读 content/baked/ 烘焙产物（tools/bake_maps.py 生成）。
 ## 自带两种运行模式：--selftest 无头逻辑自测；--shots=DIR 窗口截图。
 
 const FADE_TIME := 0.3
@@ -12,6 +13,9 @@ var current_map := ""
 var player: Player
 var dialogue: DialogueUI
 
+var _theme_id := ""
+var _baked: Dictionary = {}   # 当前地图烘焙数据
+
 var _ground: TileMapLayer
 var _walls: TileMapLayer
 var _objects: Node2D
@@ -21,10 +25,13 @@ var _portal_until_ms := 0
 
 
 func _ready() -> void:
+	var index := MapHost.load_index()
+	_theme_id = index["default_theme"]
+	var theme := MapHost.load_theme(_theme_id)
 	_build_stage()
-	_build_player_and_ui()
-	var start: Dictionary = MapData.MAPS["lobby"]
-	_load_map("lobby", start["spawn"], start["spawn_face"])
+	_build_player_and_ui(theme)
+	var first := MapHost.load_map(_theme_id, index["default_map"])
+	_load_map(first, MapHost.to_v2i(first["spawn"]), first["spawn_face"])
 	_fade.modulate.a = 1.0
 	var tw := create_tween()
 	tw.tween_property(_fade, "modulate:a", 0.0, 0.6)
@@ -38,12 +45,9 @@ func _ready() -> void:
 
 
 func _build_stage() -> void:
-	var tileset := MapBuilder.build_tileset()
-
 	_ground = TileMapLayer.new()
 	_ground.name = "Ground"
 	_ground.z_index = -1  # 地面不参与 Y-sort，永远垫底
-	_ground.tile_set = tileset
 	add_child(_ground)
 
 	_ysort = Node2D.new()
@@ -54,7 +58,6 @@ func _build_stage() -> void:
 	_walls = TileMapLayer.new()
 	_walls.name = "Walls"
 	_walls.y_sort_enabled = true  # 与父容器联动，墙块按行参与伪深度排序
-	_walls.tile_set = tileset
 	_ysort.add_child(_walls)
 
 	_objects = Node2D.new()
@@ -73,10 +76,11 @@ func _build_stage() -> void:
 	add_child(fade_layer)
 
 
-func _build_player_and_ui() -> void:
+func _build_player_and_ui(theme: Dictionary) -> void:
 	player = Player.new()
 	player.name = "Player"
 	player.main = self
+	player.setup(theme["player"])
 	_ysort.add_child(player)
 
 	dialogue = DialogueUI.new()
@@ -87,15 +91,21 @@ func _build_player_and_ui() -> void:
 
 ## ---- 地图加载：场景树中始终只有当前地图 ----
 
-func _load_map(map_id: String, spawn_cell: Vector2i, face: String) -> void:
+func _load_map(baked: Dictionary, spawn_cell: Vector2i, face: String) -> void:
 	_ground.clear()
 	_walls.clear()
 	for c in _objects.get_children():
 		c.free()
-	var info := MapBuilder.build(map_id, _ground, _walls, _objects)
-	current_map = map_id
-	player.set_camera_limits(Rect2(Vector2.ZERO, info["size_px"]))
-	player.teleport(MapBuilder.cell_center(spawn_cell), face)
+	var ts := int(baked["tile_size"])
+	var tileset := MapHost.build_tileset(baked)
+	_ground.tile_set = tileset
+	_walls.tile_set = tileset
+	MapHost.build(baked, _ground, _walls, _objects)
+	_baked = baked
+	current_map = baked["id"]
+	var size_px := Vector2(baked["size"][0], baked["size"][1]) * ts
+	player.set_camera_limits(Rect2(Vector2.ZERO, size_px))
+	player.teleport(MapHost.cell_center(spawn_cell, ts), face)
 	# 切图后短暂冷却，且出生格不在触发区上，防进门来回横跳
 	_portal_until_ms = Time.get_ticks_msec() + 400
 	for p in get_tree().get_nodes_in_group("portal"):
@@ -108,7 +118,10 @@ func _on_portal_entered(body: Node2D, area: Area2D) -> void:
 	if Time.get_ticks_msec() < _portal_until_ms:
 		return
 	var cell: Vector2i = area.get_meta("portal_cell")
-	var tr: Dictionary = MapData.TRANSITIONS[current_map][cell]
+	var tr := MapHost.find_portal(_baked, cell)
+	if tr.is_empty():
+		push_error("触发格无门户数据: " + str(cell))
+		return
 	_do_transition(tr)
 
 
@@ -118,7 +131,8 @@ func _do_transition(tr: Dictionary) -> void:
 	var tw := create_tween()
 	tw.tween_property(_fade, "modulate:a", 1.0, FADE_TIME)
 	await tw.finished
-	_load_map(tr["to"], tr["spawn"], tr["face"])
+	var next := MapHost.load_map(_theme_id, tr["to"])
+	_load_map(next, MapHost.to_v2i(tr["spawn"]), tr["face"])
 	await get_tree().create_timer(0.05).timeout
 	var tw2 := create_tween()
 	tw2.tween_property(_fade, "modulate:a", 0.0, FADE_TIME)
@@ -152,30 +166,47 @@ func _process(_delta: float) -> void:
 
 func _run_selftest() -> void:
 	var fails: Array[String] = []
-	_check(fails, _ground.get_used_cells().size() > 0, "大厅地面已铺设")
-	_check(fails, _walls.get_used_cells().size() > 0, "大厅墙体已铺设")
-	_check(fails, _objects.get_children().size() >= 20, "大厅物件已生成 (%d)" % _objects.get_children().size())
+	var lobby := MapHost.load_map(_theme_id, "lobby")
+	_load_map(lobby, MapHost.to_v2i(lobby["spawn"]), lobby["spawn_face"])
+	_check(fails, _ground.get_used_cells().size() == _count_used(lobby["ground"]),
+			"大厅地面格数=烘焙数据")
+	_check(fails, _walls.get_used_cells().size() == _count_used(lobby["walls"]),
+			"大厅墙格数=烘焙数据")
+	_check(fails, _node_count(lobby) == _objects.get_children().size(),
+			"大厅物件/交互/门户节点数=烘焙数据")
 	_check(fails, _cell_has_collision(_walls, Vector2i(0, 0)), "墙体有碰撞")
 	_check(fails, not _cell_has_collision(_ground, Vector2i(2, 8)), "地面可行走")
-	_check(fails, get_tree().get_nodes_in_group("portal").size() == 2, "大厅传送点 x2")
-	_check(fails, get_tree().get_nodes_in_group("interactable").size() >= 15, "大厅交互点足够")
+	_check(fails, get_tree().get_nodes_in_group("interactable").size() == _zone_count(lobby),
+			"大厅交互区数量=烘焙数据")
 
-	_load_map("corridor", Vector2i(1, 5), "right")
-	var spawn_pos := MapBuilder.cell_center(Vector2i(1, 5))
+	var corridor := MapHost.load_map(_theme_id, "corridor")
+	_load_map(corridor, Vector2i(1, 5), "right")
+	var spawn_pos := MapHost.cell_center(Vector2i(1, 5), int(corridor["tile_size"]))
 	_check(fails, player.global_position.distance_to(spawn_pos) < 1.0, "落点=门内一格")
-	_check(fails, _walls.get_used_cells().size() == _expected_wall_cells("corridor"),
+	_check(fails, _walls.get_used_cells().size() == _count_used(corridor["walls"]),
 			"单地图加载：墙格数=后廊")
-	_check(fails, _ground.get_used_cells().size() == _expected_ground_cells("corridor"),
+	_check(fails, _ground.get_used_cells().size() == _count_used(corridor["ground"]),
 			"单地图加载：地格数=后廊")
-	_check(fails, get_tree().get_nodes_in_group("portal").size() == 2, "后廊传送点 x2")
-	_check(fails, get_tree().get_nodes_in_group("interactable").size() >= 3, "后廊交互点足够")
 
-	_load_map("lobby", Vector2i(2, 8), "down")
-	_check(fails, player.global_position.distance_to(MapBuilder.cell_center(Vector2i(2, 8))) < 1.0,
-			"返回大厅落点正确")
-	_check(fails, _walls.get_used_cells().size() == _expected_wall_cells("lobby"), "返回大厅墙格数正确")
+	# R2 验证：储物间仅由 JSON 文件新增，运行时零代码感知
+	var storeroom := MapHost.load_map(_theme_id, "storeroom")
+	var tr := MapHost.find_portal(corridor, Vector2i(19, 5))
+	_check(fails, not tr.is_empty(), "后廊→储物间门户存在")
+	_load_map(storeroom, MapHost.to_v2i(tr["spawn"]), tr["face"])
+	_check(fails, player.global_position.distance_to(MapHost.cell_center(
+			MapHost.to_v2i(tr["spawn"]), int(storeroom["tile_size"]))) < 1.0,
+			"储物间落点正确")
+	_check(fails, _walls.get_used_cells().size() == _count_used(storeroom["walls"]),
+			"储物间墙格数=烘焙数据")
+	_check(fails, get_tree().get_nodes_in_group("portal").size() == storeroom["portals"].size(),
+			"储物间回程门户 x1")
 
-	dialogue.open("测试", PackedStringArray(["第一页", "第二页"]))
+	_load_map(lobby, Vector2i(2, 8), "down")
+	_check(fails, player.global_position.distance_to(MapHost.cell_center(
+			Vector2i(2, 8), int(lobby["tile_size"]))) < 1.0, "返回大厅落点正确")
+
+	var clerk := MapHost.find_interaction(lobby, "N")
+	dialogue.open(clerk["name"], PackedStringArray(clerk["pages"]))
 	_check(fails, dialogue.visible and dialogue.is_typing(), "对话打开且打字中")
 	await get_tree().create_timer(0.2).timeout  # 越过防误触冷却；首页可能已自然打完
 	for i in 6:  # 循环推进直到关闭（每次 advance 只做"补全/翻页"其一，对打字时序鲁棒）
@@ -207,22 +238,23 @@ func _cell_has_collision(layer: TileMapLayer, cell: Vector2i) -> bool:
 	return td != null and td.get_collision_polygons_count(0) > 0
 
 
-func _expected_wall_cells(map_id: String) -> int:
+static func _count_used(arr: Array) -> int:
 	var n := 0
-	for row: String in MapData.MAPS[map_id]["layout"]:
-		for ch in row:
-			if ch in ["#", "E", " "]:
-				n += 1
+	for v in arr:
+		if int(v) >= 0:
+			n += 1
 	return n
 
 
-func _expected_ground_cells(map_id: String) -> int:
+static func _zone_count(baked: Dictionary) -> int:
 	var n := 0
-	for row: String in MapData.MAPS[map_id]["layout"]:
-		for ch in row:
-			if not (ch in ["#", "E"]):
-				n += 1
+	for it in baked["interactions"]:
+		n += it["cells"].size()
 	return n
+
+
+static func _node_count(baked: Dictionary) -> int:
+	return baked["objects"].size() + _zone_count(baked) + baked["portals"].size()
 
 
 ## ---- 窗口截图模式：--shots=DIR（需窗口环境，用于视觉验收）----
@@ -232,11 +264,11 @@ func _run_shots(dir: String) -> void:
 	await get_tree().create_timer(0.8).timeout
 	await _shot(dir.path_join("1_lobby.png"))
 
-	player.teleport(MapBuilder.cell_center(Vector2i(4, 9)), "up")  # 站到告示牌旁
+	player.teleport(MapHost.cell_center(Vector2i(4, 9), 32), "up")  # 站到告示牌旁
 	await get_tree().create_timer(0.4).timeout
 	await _shot(dir.path_join("2_prompt.png"))
 
-	var clerk: Dictionary = MapData.MAPS["lobby"]["dialogues"]["N"]
+	var clerk := MapHost.find_interaction(_baked, "N")
 	dialogue.open(clerk["name"], PackedStringArray(clerk["pages"]))
 	await get_tree().create_timer(1.0).timeout
 	await _shot(dir.path_join("3_dialogue.png"))
@@ -246,12 +278,16 @@ func _run_shots(dir: String) -> void:
 			break
 		dialogue.advance()
 
-	_do_transition(MapData.TRANSITIONS["lobby"][Vector2i(23, 7)])
+	_do_transition(MapHost.find_portal(_baked, Vector2i(23, 7)))
 	await get_tree().create_timer(1.0).timeout
-	player.teleport(MapBuilder.cell_center(Vector2i(10, 7)), "down")  # 摆到空地便于核对
+	player.teleport(MapHost.cell_center(Vector2i(10, 7), 32), "down")  # 摆到空地便于核对
 	await get_tree().create_timer(0.4).timeout
 	print("player at ", player.global_position, " map=", current_map)
 	await _shot(dir.path_join("4_corridor.png"))
+
+	_do_transition(MapHost.find_portal(_baked, Vector2i(19, 5)))
+	await get_tree().create_timer(1.0).timeout
+	await _shot(dir.path_join("5_storeroom.png"))  # 出生朝向=right，回归覆盖右向帧渲染
 	print("SHOTS DONE")
 	get_tree().quit(0)
 

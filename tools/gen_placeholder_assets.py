@@ -250,9 +250,11 @@ def gen_player_sheet() -> Image.Image:
     sheet = Image.new("RGBA", (PW * 4, PH * 4), (0, 0, 0, 0))
     for r, dname in enumerate(dirs):
         for c, s in enumerate(strides):
-            f = player_frame(dname, s)
             if dname == "right":
-                f = f.transpose(Image.FLIP_LEFT_RIGHT)
+                # 右向 = 左向帧镜像（player_frame 无 right 分支，直接生成会是空画布）
+                f = player_frame("left", s).transpose(Image.FLIP_LEFT_RIGHT)
+            else:
+                f = player_frame(dname, s)
             sheet.paste(f, (c * PW, r * PH))
     return outline(sheet, C("outline"))
 
@@ -363,19 +365,26 @@ def gen_objects() -> Image.Image:
 
 
 # ---------------------------------------------------------------- QC + 输出
-def qc(name: str, img: Image.Image, expect: tuple):
+def qc(name: str, img: Image.Image, expect: tuple) -> bool:
     problems = []
     if img.mode != "RGBA":
         problems.append(f"mode={img.mode}")
     if img.size != expect:
         problems.append(f"size={img.size} expect={expect}")
     alpha = img.getchannel("A")
-    lo, hi = alpha.getextrema()
-    semi = sum(1 for a in alpha.getdata() if 0 < a < 255)
+    hist = alpha.histogram()
+    semi = sum(hist[1:255])
     if semi:
         problems.append(f"{semi} 半透明像素（糊边）")
+    # 行走图专项：四个方向行都必须有实质内容（防空帧漏检）
+    if name == "player.png":
+        for r, dname in enumerate(["down", "left", "right", "up"]):
+            row = alpha.crop((0, r * PH, PW * 4, (r + 1) * PH))
+            opaque = sum(1 for v in row.tobytes() if v == 255)
+            if opaque < 500:
+                problems.append(f"行 {dname} 仅 {opaque} 不透明像素（疑似空帧）")
     print(f"[{'OK ' if not problems else 'BAD'}] {name} {img.size} "
-          f"alpha∈[{lo},{hi}] " + ("; ".join(problems) if problems else ""))
+          + ("; ".join(problems) if problems else "alpha 二值 ✓"))
     return not problems
 
 

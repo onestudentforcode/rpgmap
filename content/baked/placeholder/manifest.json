@@ -1,0 +1,225 @@
+{
+  "maps": {
+    "corridor": {
+      "name": "西西弗百货・一层后廊",
+      "objects": [
+        "elevator",
+        "npc",
+        "sign"
+      ],
+      "tiles": [
+        "carpet",
+        "corr",
+        "wall",
+        "door"
+      ]
+    },
+    "lobby": {
+      "name": "西西弗百货・一层大厅",
+      "objects": [
+        "counter",
+        "npc",
+        "plant",
+        "shelf",
+        "sign"
+      ],
+      "tiles": [
+        "floor_a",
+        "floor_b",
+        "carpet",
+        "wall",
+        "door"
+      ]
+    },
+    "storeroom": {
+      "name": "西西弗百货・储物间",
+      "objects": [
+        "plant",
+        "shelf",
+        "sign"
+      ],
+      "tiles": [
+        "corr",
+        "wall",
+        "door"
+      ]
+    }
+  },
+  "note": "美术采购单：按下列规格出图，覆盖 assets/ 同名文件后无需重烘",
+  "schema": 1,
+  "textures": {
+    "objects": {
+      "objects": {
+        "counter": {
+          "box": [
+            30,
+            14
+          ],
+          "region": [
+            0,
+            0,
+            32,
+            32
+          ]
+        },
+        "elevator": {
+          "region": [
+            128,
+            0,
+            32,
+            64
+          ],
+          "zone_offset": [
+            0,
+            20
+          ]
+        },
+        "npc": {
+          "box": [
+            20,
+            12
+          ],
+          "frames": [
+            [
+              176,
+              0,
+              32,
+              48
+            ],
+            [
+              208,
+              0,
+              32,
+              48
+            ]
+          ]
+        },
+        "plant": {
+          "box": [
+            22,
+            12
+          ],
+          "region": [
+            64,
+            0,
+            32,
+            32
+          ]
+        },
+        "shelf": {
+          "box": [
+            30,
+            14
+          ],
+          "region": [
+            32,
+            0,
+            32,
+            32
+          ]
+        },
+        "sign": {
+          "box": [
+            20,
+            12
+          ],
+          "region": [
+            96,
+            0,
+            32,
+            32
+          ]
+        }
+      },
+      "path": "res://assets/objects.png",
+      "prompt_region": [
+        160,
+        0,
+        16,
+        16
+      ],
+      "size": [
+        256,
+        96
+      ]
+    },
+    "player": {
+      "frame": [
+        32,
+        48
+      ],
+      "layout": "4方向x4帧，行序 下/左/右/上，列序 待机/迈步/过渡/迈步2",
+      "path": "res://assets/player.png",
+      "size": [
+        128,
+        192
+      ]
+    },
+    "tileset": {
+      "path": "res://assets/tileset.png",
+      "size": [
+        224,
+        32
+      ],
+      "tiles": [
+        {
+          "atlas": [
+            0,
+            0
+          ],
+          "name": "floor_a",
+          "solid": false
+        },
+        {
+          "atlas": [
+            1,
+            0
+          ],
+          "name": "floor_b",
+          "solid": false
+        },
+        {
+          "atlas": [
+            2,
+            0
+          ],
+          "name": "carpet",
+          "solid": false
+        },
+        {
+          "atlas": [
+            3,
+            0
+          ],
+          "name": "corr",
+          "solid": false
+        },
+        {
+          "atlas": [
+            4,
+            0
+          ],
+          "name": "wall",
+          "solid": true
+        },
+        {
+          "atlas": [
+            5,
+            0
+          ],
+          "name": "door",
+          "solid": false
+        },
+        {
+          "atlas": [
+            6,
+            0
+          ],
+          "name": "void",
+          "solid": true
+        }
+      ]
+    }
+  },
+  "theme": "placeholder"
+}
