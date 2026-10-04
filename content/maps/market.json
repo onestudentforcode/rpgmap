@@ -1,0 +1,80 @@
+{
+  "schema": 1,
+  "id": "market",
+  "name": "西西弗百货・地下坊市",
+  "spawn": [8, 3],
+  "spawn_face": "down",
+  "layout": [
+    "###########DD#######",
+    "#..P....C....P.....#",
+    "#..................#",
+    "#..................#",
+    "#.......i..........#",
+    "#..................#",
+    "#.....T............#",
+    "#..................#",
+    "#..........X.......#",
+    "#..................#",
+    "#....S......S......#",
+    "#..................#",
+    "#.V................#",
+    "####################"
+  ],
+  "legend": {
+    ".": {"tile": "corr"},
+    "#": {"tile": "wall", "wall": true},
+    "D": {"tile": "door"},
+    "C": {"tile": "corr", "object": "counter"},
+    "S": {"tile": "corr", "object": "shelf"},
+    "P": {"tile": "corr", "object": "plant"},
+    "i": {"tile": "corr", "object": "sign"},
+    "T": {"tile": "corr", "object": "battle_mark"},
+    "X": {"tile": "corr", "object": "chest"},
+    "V": {"tile": "corr", "object": "save_stone"}
+  },
+  "portals": [
+    {"cell": [11, 0], "to": "lobby", "spawn": [11, 14], "face": "up"},
+    {"cell": [12, 0], "to": "lobby", "spawn": [12, 14], "face": "up"}
+  ],
+  "interactions": {
+    "C": {
+      "type": "menu",
+      "name": "坊市工坊台",
+      "items": [
+        {"id": "shop", "label": "杂货铺", "desc": "补给与材料。"},
+        {"id": "bounty", "label": "差事榜", "desc": "今日委托三件，酬劳面议。"},
+        {"id": "drill", "label": "演武预约", "desc": "与练桩切磋，不计胜负。"}
+      ]
+    },
+    "i": {
+      "name": "坊市告示",
+      "pages": [
+        "『地下坊市营业时间：随时。』",
+        "『本坊市不与地面百货为同一经营者——请勿向地面索要发票。』"
+      ]
+    },
+    "T": {
+      "type": "battle",
+      "name": "游荡的货影",
+      "enemy": "market_shade",
+      "once": false,
+      "cooldown_s": 15
+    },
+    "X": {
+      "type": "chest",
+      "name": "坊市旧箱",
+      "pages": [
+        "翻出一枚铜质天平坠饰。",
+        "『公平交易』——背面刻着这四个字，边缘磨得发亮。"
+      ]
+    },
+    "V": {
+      "type": "save",
+      "name": "存档石",
+      "pages": [
+        "这块存档石比楼上那块温热，像是刚被谁用过。",
+        "（演示：消费状态为进程内记忆，重启后重置——正式实现应接存档。）"
+      ]
+    }
+  }
+}

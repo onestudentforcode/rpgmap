@@ -3,7 +3,7 @@ class_name MapHost
 ## 烘焙产物由 tools/bake_maps.py 生成；改地图请改 content/ 源数据后重新 bake。
 
 const WORLD_LAYER := 1    # 静态碰撞体所在层
-const PLAYER_LAYER := 2   # 玩家体所在层（传送区据此检测玩家）
+const PLAYER_LAYER := 2   # 玩家体所在层（传送区/明雷区据此检测玩家）
 
 
 static func load_index() -> Dictionary:
@@ -99,8 +99,13 @@ static func build(baked: Dictionary, ground: TileMapLayer, walls: TileMapLayer,
 	for o in baked["objects"]:
 		_spawn_object(o, ts, objects_tex, objects)
 	for it in baked["interactions"]:
-		for c in it["cells"]:
-			_spawn_zone(it, to_v2i(c), ts, objects)
+		match str(it.get("type", "dialogue")):
+			"battle":
+				for c in it["cells"]:
+					_spawn_battle_zone(it, to_v2i(c), ts, objects_tex, objects)
+			_:
+				for c in it["cells"]:
+					_spawn_zone(it, to_v2i(c), ts, objects)
 	for p in baked["portals"]:
 		_spawn_portal(to_v2i(p["cell"]), ts, objects)
 
@@ -113,8 +118,8 @@ static func _atlas(tex: Texture2D, region: Array) -> AtlasTexture:
 
 
 ## 物件：StaticBody2D 原点在脚底（tile 底边中点），参与 Y-sort。
-## 无 box 的物件（如电梯）不生成碰撞，由所在墙格提供阻挡；
-## frames 存在时播两帧待机动画，否则画单帧 Sprite2D。
+## 无 box 的物件不生成碰撞，由所在墙格提供阻挡；
+## frames 存在时播待机动画，否则画单帧 Sprite2D。
 static func _spawn_object(o: Dictionary, ts: int, tex: Texture2D, objects: Node2D) -> void:
 	var cell := to_v2i(o["cell"])
 	var base := Vector2((cell.x + 0.5) * ts, (cell.y + 1) * ts)
@@ -146,24 +151,80 @@ static func _spawn_object(o: Dictionary, ts: int, tex: Texture2D, objects: Node2
 		body.add_child(anim)
 	else:
 		var spr := Sprite2D.new()
+		spr.name = "Sprite"
 		spr.texture = _atlas(tex, o["region"])
 		spr.offset = Vector2(0, -int(o["region"][3]) / 2.0)
 		body.add_child(spr)
 	objects.add_child(body)
 
 
+## 靠近触发的交互区（dialogue/menu/chest/save）
 static func _spawn_zone(it: Dictionary, cell: Vector2i, ts: int, objects: Node2D) -> void:
 	var zone := Interactable.new()
 	zone.name = "Inter_%s_%d_%d" % [it["char"], cell.x, cell.y]
 	var off: Array = it.get("zone_offset", [0, 0])
 	zone.position = Vector2((cell.x + 0.5) * ts, (cell.y + 1) * ts) \
 			+ Vector2(off[0], off[1])
+	zone.type = str(it.get("type", "dialogue"))
+	zone.params = it
 	zone.display_name = it["name"]
 	var pages := PackedStringArray()
-	for p in it["pages"]:
+	for p in it.get("pages", []):
 		pages.append(str(p))
 	zone.pages = pages
+	zone.set_meta("zone_cell", cell)
 	objects.add_child(zone)
+
+
+## 明雷战斗触发区：走进触发 + 地面脉动标记（视觉预告，防"莫名开战"）
+static func _spawn_battle_zone(it: Dictionary, cell: Vector2i, ts: int,
+		tex: Texture2D, objects: Node2D) -> void:
+	var area := Area2D.new()
+	area.name = "Battle_%s_%d_%d" % [it["char"], cell.x, cell.y]
+	area.position = cell_center(cell, ts)
+	area.collision_layer = 16
+	area.collision_mask = PLAYER_LAYER
+	area.monitorable = false
+	var cs := CollisionShape2D.new()
+	var shape := RectangleShape2D.new()
+	shape.size = Vector2(ts, ts)
+	cs.shape = shape
+	area.add_child(cs)
+	area.set_meta("zone_cell", cell)
+	area.set_meta("battle", it)
+	area.add_to_group("battle_trigger")
+	objects.add_child(area)
+
+	var mark: Variant = it.get("mark_region")
+	if mark != null:
+		var decal := Sprite2D.new()
+		decal.name = "Mark_%s_%d_%d" % [it["char"], cell.x, cell.y]
+		decal.texture = _atlas(tex, mark)
+		decal.position = cell_center(cell, ts)
+		decal.z_index = -1  # 垫在实体之下（z 优先于 y-sort）
+		objects.add_child(decal)
+		var tw := decal.create_tween().set_loops()
+		tw.tween_property(decal, "modulate:a", 0.35, 0.7)
+		tw.tween_property(decal, "modulate:a", 1.0, 0.7)
+
+
+## 地图加载后按消费状态套用视觉（宝箱开盖）。consumed: {"x,y": true}
+static func apply_consumed(objects: Node2D, baked: Dictionary, consumed: Dictionary) -> void:
+	if consumed.is_empty():
+		return
+	for o in baked["objects"]:
+		if o["kind"] != "chest" or o.get("open_region") == null:
+			continue
+		var c := to_v2i(o["cell"])
+		if not consumed.has("%d,%d" % [c.x, c.y]):
+			continue
+		var body := objects.get_node_or_null("Obj_chest_%d_%d" % [c.x, c.y])
+		if body == null:
+			continue
+		var spr: Sprite2D = body.get_node_or_null("Sprite")
+		if spr != null:
+			spr.texture.region = Rect2(o["open_region"][0], o["open_region"][1],
+					o["open_region"][2], o["open_region"][3])
 
 
 static func _spawn_portal(cell: Vector2i, ts: int, objects: Node2D) -> void:

@@ -4,7 +4,7 @@
   "tile_size": 32,
   "textures": {
     "tileset": {"path": "res://assets/themes/dusk/tileset.png", "size": [224, 32]},
-    "objects": {"path": "res://assets/themes/dusk/objects.png", "size": [256, 96]},
+    "objects": {"path": "res://assets/themes/dusk/objects.png", "size": [352, 96]},
     "player": {"path": "res://assets/themes/dusk/player.png", "size": [128, 192], "frame": [32, 48]}
   },
   "palette_overrides": {
@@ -35,7 +35,10 @@
     "plant": {"region": [64, 0, 32, 32], "box": [22, 12]},
     "sign": {"region": [96, 0, 32, 32], "box": [20, 12]},
     "npc": {"frames": [[176, 0, 32, 48], [208, 0, 32, 48]], "box": [20, 12]},
-    "elevator": {"region": [128, 0, 32, 64], "zone_offset": [0, 20]}
+    "elevator": {"region": [128, 0, 32, 64], "zone_offset": [0, 20]},
+    "chest": {"region": [240, 0, 32, 32], "open_region": [272, 0, 32, 32], "box": [24, 12]},
+    "save_stone": {"region": [304, 0, 32, 32], "box": [22, 12]},
+    "battle_mark": {"region": [336, 0, 16, 16]}
   },
   "player": {
     "prompt_region": [160, 0, 16, 16],

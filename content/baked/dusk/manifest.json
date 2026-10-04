@@ -20,6 +20,7 @@
         "counter",
         "npc",
         "plant",
+        "save_stone",
         "shelf",
         "sign"
       ],
@@ -31,10 +32,29 @@
         "door"
       ]
     },
+    "market": {
+      "name": "西西弗百货・地下坊市",
+      "objects": [
+        "battle_mark",
+        "chest",
+        "counter",
+        "plant",
+        "save_stone",
+        "shelf",
+        "sign"
+      ],
+      "tiles": [
+        "corr",
+        "wall",
+        "door"
+      ]
+    },
     "storeroom": {
       "name": "西西弗百货・储物间",
       "objects": [
+        "chest",
         "plant",
+        "save_stone",
         "shelf",
         "sign"
       ],
@@ -50,6 +70,32 @@
   "textures": {
     "objects": {
       "objects": {
+        "battle_mark": {
+          "region": [
+            336,
+            0,
+            16,
+            16
+          ]
+        },
+        "chest": {
+          "box": [
+            24,
+            12
+          ],
+          "open_region": [
+            272,
+            0,
+            32,
+            32
+          ],
+          "region": [
+            240,
+            0,
+            32,
+            32
+          ]
+        },
         "counter": {
           "box": [
             30,
@@ -106,6 +152,18 @@
             32
           ]
         },
+        "save_stone": {
+          "box": [
+            22,
+            12
+          ],
+          "region": [
+            304,
+            0,
+            32,
+            32
+          ]
+        },
         "shelf": {
           "box": [
             30,
@@ -139,7 +197,7 @@
         16
       ],
       "size": [
-        256,
+        352,
         96
       ]
     },

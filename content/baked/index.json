@@ -4,6 +4,7 @@
   "maps": [
     "corridor",
     "lobby",
+    "market",
     "storeroom"
   ],
   "themes": [

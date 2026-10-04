@@ -16,7 +16,17 @@
 | `layout` | ASCII 字符画，行等宽；一字符 = 一格 |
 | `legend` | 字符 → 语义图块；可选 `wall:true`（画到墙层）、`object`（物件 id） |
 | `portals` | 传送门列表：`{cell, to, spawn, face}`；双向各写一条 |
-| `interactions` | 字符 → `{name, pages[]}` 纯氛围对话（有选项/改状态的交互 P3 才引入，且将来走引擎） |
+| `interactions` | **类型化**交互点：字符 → `{type, name, ...}`，type 缺省为 `dialogue`（见下表） |
+
+交互类型：
+
+| type | 必填 | 行为 |
+|------|------|------|
+| `dialogue` | `pages[]` | 靠近按 E → 纯氛围多页文本，不改状态 |
+| `menu` | `items[]`（每项 `{id,label,desc?}`） | 靠近按 E → 弹功能菜单；选择发 `menu_command(map, item_id)` 接缝事件（正式实现桥接宿主命令分发） |
+| `chest` | `pages[]` | 靠近按 E → 首次给奖励文案并消费（贴图换开盖，跨图持久）；再次交互提示已空 |
+| `battle` | `enemy`；可选 `once`(默认false)、`cooldown_s`(默认20) | **走进触发**（明雷地面标记脉动），发 `battle_requested(map, enemy)` 接缝事件后进战斗桩；once=true 消费型，否则冷却 |
+| `save` | `pages[]` 可选 | 靠近按 E → 存档提示（演示为进程内状态，正式实现接存档） |
 
 约定：物件字符所在格自动铺 `tile` 指定的地面；`wall:true` 字符只画墙层不铺地。
 
@@ -51,8 +61,8 @@ baked/
 
 - `tiles`：本图用到的语义图块表（主题声明顺序）`{name, atlas, solid}`
 - `ground` / `walls`：逐格图块索引平铺数组（行优先，`-1` = 空），长度 = 宽×高
-- `objects`：`{kind, cell, region|frames, box?, zone_offset}` —— 区域已从主题解析为具体像素
-- `interactions`：`{char, cells[], name, pages, zone_offset}` —— 同字符多格共享一份文案
+- `objects`：`{kind, cell, region|frames, open_region?, box?, zone_offset}` —— 区域已从主题解析为具体像素
+- `interactions`：`{char, cells[], name, type, zone_offset, pages?|items?|enemy/once/cooldown_s?, mark_region?}` —— 同字符多格共享一份定义
 - `portals`：`{cell, to, spawn, face}`
 
 ## 4. bake 校验清单

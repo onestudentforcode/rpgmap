@@ -26,6 +26,7 @@ THEMES_DIR = CONTENT / "themes"
 BAKED = CONTENT / "baked"
 
 FACES = {"up", "down", "left", "right"}
+ITYPES = {"dialogue", "menu", "chest", "battle", "save"}
 
 
 class BakeError(Exception):
@@ -99,6 +100,8 @@ def validate_theme(theme: dict) -> None:
             is_size2(o["box"], f"主题 {tid}: objects.{name}.box")
         if o.get("zone_offset") is not None:
             is_size2(o["zone_offset"], f"主题 {tid}: objects.{name}.zone_offset")
+        if o.get("open_region") is not None:
+            is_region4(o["open_region"], f"主题 {tid}: objects.{name}.open_region")
     is_region4(theme.get("player", {}).get("prompt_region"),
                f"主题 {tid}: player.prompt_region")
     check(isinstance(theme["player"].get("prompt_texture"), str)
@@ -143,17 +146,37 @@ def validate_map(src: dict, theme: dict, mname: str) -> None:
     check(not cell_is_solid(src, theme, sx, sy), f"{mname}: spawn {spawn} 落在实心图块上")
     face = src.get("spawn_face")
     check(face in FACES, f"{mname}: spawn_face '{face}' 非法")
-    # 交互（本图内可校验部分）
+    # 交互（类型化：dialogue/menu/chest/battle/save）
     interactions = src.get("interactions", {})
     for ch, info in interactions.items():
         check(ch in legend and legend[ch].get("object"),
               f"{mname}: 交互 '{ch}' 的 legend 项缺 object 锚点")
         check(isinstance(info.get("name"), str) and info["name"],
               f"{mname}: 交互 '{ch}' 缺 name")
-        pages = info.get("pages")
-        check(isinstance(pages, list) and pages and
-              all(isinstance(p, str) and p for p in pages),
-              f"{mname}: 交互 '{ch}' 的 pages 非法")
+        itype = info.get("type", "dialogue")
+        check(itype in ITYPES, f"{mname}: 交互 '{ch}' 未知类型 '{itype}'")
+        if itype in ("dialogue", "chest", "save"):
+            pages = info.get("pages", [])
+            check(isinstance(pages, list) and
+                  all(isinstance(p, str) and p for p in pages),
+                  f"{mname}: 交互 '{ch}' 的 pages 非法")
+            check(pages or itype == "save",
+                  f"{mname}: 交互 '{ch}' 缺 pages")
+        elif itype == "menu":
+            items = info.get("items")
+            check(isinstance(items, list) and items, f"{mname}: 交互 '{ch}' 缺 items")
+            for it in items:
+                check(isinstance(it, dict) and isinstance(it.get("id"), str)
+                      and it["id"] and isinstance(it.get("label"), str) and it["label"],
+                      f"{mname}: 交互 '{ch}' 的 items 项缺 id/label")
+        elif itype == "battle":
+            check(isinstance(info.get("enemy"), str) and info["enemy"],
+                  f"{mname}: 交互 '{ch}' 缺 enemy")
+            if info.get("once") is not None:
+                check(isinstance(info["once"], bool), f"{mname}: 交互 '{ch}' once 应为布尔")
+            if info.get("cooldown_s") is not None:
+                check(isinstance(info["cooldown_s"], int) and info["cooldown_s"] > 0,
+                      f"{mname}: 交互 '{ch}' cooldown_s 应为正整数")
         check(any(ch in row for row in layout),
               f"{mname}: 交互 '{ch}' 在布局中未出现")
     # 门户（本图内可校验部分）
@@ -237,6 +260,8 @@ def expand_map(src: dict, theme: dict) -> dict:
                     entry["frames"] = od["frames"]
                 else:
                     entry["region"] = od["region"]
+                    if od.get("open_region") is not None:
+                        entry["open_region"] = od["open_region"]
                 if od.get("box") is not None:
                     entry["box"] = od["box"]
                 objects.append(entry)
@@ -246,13 +271,29 @@ def expand_map(src: dict, theme: dict) -> dict:
     del used_objects  # 预留：主题内未用物件的告警口径，P2 换肤时再启用
 
     interactions = []
+    has_battle = False
     for ch in sorted(src.get("interactions", {})):
         info = src["interactions"][ch]
         zone_offset = theme["objects"][legend[ch]["object"]].get("zone_offset", [0, 0])
         cells = [[x, y] for y, row in enumerate(layout)
                  for x, c in enumerate(row) if c == ch]
-        interactions.append({"char": ch, "cells": cells, "name": info["name"],
-                             "pages": info["pages"], "zone_offset": zone_offset})
+        entry = {"char": ch, "cells": cells, "name": info["name"],
+                 "type": info.get("type", "dialogue"), "zone_offset": zone_offset}
+        itype = entry["type"]
+        if itype in ("dialogue", "chest", "save") and info.get("pages"):
+            entry["pages"] = info["pages"]
+        elif itype == "menu":
+            entry["items"] = info["items"]
+        elif itype == "battle":
+            has_battle = True
+            entry["enemy"] = info["enemy"]
+            entry["once"] = bool(info.get("once", False))
+            entry["cooldown_s"] = int(info.get("cooldown_s", 20))
+        interactions.append(entry)
+    if has_battle and theme["objects"].get("battle_mark", {}).get("region"):
+        battle_mark_region = theme["objects"]["battle_mark"]["region"]
+    else:
+        battle_mark_region = None
 
     return {
         "schema": 1,
@@ -268,6 +309,7 @@ def expand_map(src: dict, theme: dict) -> dict:
         "walls": walls,
         "objects": objects,
         "interactions": interactions,
+        "battle_mark_region": battle_mark_region,
         "portals": [{"cell": p["cell"], "to": p["to"], "spawn": p["spawn"],
                      "face": p["face"]} for p in src.get("portals", [])],
         "spawn": src["spawn"],

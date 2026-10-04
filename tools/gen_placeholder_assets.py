@@ -8,7 +8,8 @@
 产出（全部 RGBA PNG，alpha 仅 0/255，最近邻）：
   assets/themes/<id>/tileset.png   224x32  7 枚 32x32 图块（单行，列号即图块序号）
   assets/themes/<id>/player.png    128x192 4 方向 x 4 帧 32x48 行走图（行序 下/左/右/上）
-  assets/themes/<id>/objects.png   256x96  物件图集（柜台/货架/盆栽/告示牌/电梯/NPC x2/E 提示）
+  assets/themes/<id>/objects.png   352x96  物件图集（柜台/货架/盆栽/告示牌/电梯/NPC x2/
+                                           宝箱开闭/存档石/明雷标记/E 提示）
 
 用法：python tools/gen_placeholder_assets.py
 """
@@ -52,6 +53,8 @@ BASE_PAL = {
     "npc_pants": "#3a3428",
     # 电梯灯
     "lamp_red": "#b03a34",
+    # P3 交互物件：存档石符文 / 明雷标记
+    "rune": "#7fd0c8", "mark_bg": "#1f2a33", "mark_fg": "#e8963c",
     # 提示气泡
     "bubble_bg": "#2b2b30", "bubble_fg": "#f0ead8",
 }
@@ -359,6 +362,42 @@ def obj_npc(frame: int) -> Image.Image:
     return outline(img, C("outline"))
 
 
+def obj_chest(closed: bool) -> Image.Image:
+    img, d = canvas(TILE, TILE)
+    d.rectangle((4, 14, 27, 27), fill=C("wood_panel"))
+    for x in (8, 16, 24):
+        d.rectangle((x, 18, x, 26), fill=C("wood"))
+    d.rectangle((4, 26, 27, 27), fill=C("brass_dark"))
+    if closed:
+        d.rectangle((3, 8, 28, 14), fill=C("wood_top"))
+        d.rectangle((3, 13, 28, 14), fill=C("brass_dark"))
+        d.rectangle((14, 8, 17, 16), fill=C("brass"))
+    else:
+        d.rectangle((3, 3, 28, 9), fill=C("wood_top"))   # 上翻的盖
+        d.rectangle((5, 14, 26, 19), fill=C("void"))     # 内腔
+        d.rectangle((7, 16, 12, 18), fill=C("door_glow"))  # 内物微光
+    return img
+
+
+def obj_save_stone() -> Image.Image:
+    img, d = canvas(TILE, TILE)
+    d.polygon([(8, 28), (11, 6), (21, 6), (24, 28)], fill=C("metal_dark"))
+    d.polygon([(10, 26), (12, 8), (20, 8), (22, 26)], fill=C("metal"))
+    d.rectangle((14, 12, 17, 20), fill=C("rune"))
+    d.rectangle((15, 14, 16, 18), fill=C("bubble_bg"))
+    d.rectangle((6, 27, 25, 28), fill=C("corr_line"))
+    return img
+
+
+def obj_battle_mark() -> Image.Image:
+    img, d = canvas(16, 16)
+    d.polygon([(8, 1), (15, 8), (8, 15), (1, 8)], fill=C("mark_bg"))
+    d.polygon([(8, 2), (14, 8), (8, 14), (2, 8)], outline=C("mark_fg"))
+    d.rectangle((7, 4, 8, 9), fill=C("mark_fg"))
+    d.rectangle((7, 11, 8, 12), fill=C("mark_fg"))
+    return img
+
+
 def obj_prompt() -> Image.Image:
     img, d = canvas(16, 16)
     d.rectangle((1, 1, 14, 14), fill=C("bubble_bg"))
@@ -372,7 +411,7 @@ def obj_prompt() -> Image.Image:
 
 
 def gen_objects() -> Image.Image:
-    sheet = Image.new("RGBA", (256, 96), (0, 0, 0, 0))
+    sheet = Image.new("RGBA", (352, 96), (0, 0, 0, 0))
     sheet.paste(obj_counter().convert("RGBA"), (0, 0))
     sheet.paste(outline(obj_shelf(), C("outline")).convert("RGBA"), (32, 0))
     sheet.paste(outline(obj_plant(), C("outline")).convert("RGBA"), (64, 0))
@@ -381,6 +420,10 @@ def gen_objects() -> Image.Image:
     sheet.paste(obj_prompt(), (160, 0))
     sheet.paste(obj_npc(0), (176, 0))
     sheet.paste(obj_npc(1), (208, 0))
+    sheet.paste(outline(obj_chest(True), C("outline")).convert("RGBA"), (240, 0))
+    sheet.paste(outline(obj_chest(False), C("outline")).convert("RGBA"), (272, 0))
+    sheet.paste(outline(obj_save_stone(), C("outline")).convert("RGBA"), (304, 0))
+    sheet.paste(obj_battle_mark(), (336, 0))
     return sheet
 
 
@@ -421,7 +464,7 @@ def main():
         for name, img, expect in [
             ("tileset.png", gen_tileset(), (TILE * 7, TILE)),
             ("player.png", gen_player_sheet(), (PW * 4, PH * 4)),
-            ("objects.png", gen_objects(), (256, 96)),
+            ("objects.png", gen_objects(), (352, 96)),
         ]:
             ok &= qc(name, img, expect)
             img.save(out / name)

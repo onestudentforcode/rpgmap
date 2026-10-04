@@ -122,7 +122,7 @@ func _update_interaction() -> void:
 	var still := velocity.length() < 5.0
 	_prompt.visible = nearest != null and still
 	if nearest != null and still and Input.is_action_just_pressed("interact") and main:
-		main.open_dialogue_for(nearest)
+		main.activate_zone(nearest)
 
 
 func nearest_interactable() -> Interactable:
