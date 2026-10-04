@@ -1,5 +1,10 @@
 # 地图系统复用 daoyan — 工作流提案与问题清单
 
+> **状态更新（2026-10-04）：A–E 组问题已全部解答**，见
+> [daoyan-reuse-plan-answers.md](daoyan-reuse-plan-answers.md)（基于对 daoyan 仓库的实读）。
+> 决议已并入本文档 §6，与原提案冲突处以 §6 为准。仍待用户拍板：正式命名（A3）、
+> Phase 88 立项时机、对回执推荐值的最终确认。
+
 > 状态：待确认。本文档不依赖 daoyan 代码（按约定暂未读取），
 > E 组接口问题在允许读项目后第一时间摸清。
 
@@ -127,8 +132,59 @@ A 地图源数据 ──► B 烘焙 bake ──► C 运行时只加载 ◄─�
 - 主题 tileset（C3 定了列明细）、物件图集（建筑/宝箱/存档点/触发标记…）、
   主角与 NPC 四向行走图
 
-## 5. 下一步顺序
+## 5. 下一步顺序（已被 §6 修订版取代）
 
 1. 你回答 A、B 组（C/D 组可边做边定）
 2. 允许读 daoyan → 摸清 E 组五个接口 → 出移植设计文档
 3. 立工作流骨架：bake 脚本 + MapHost + 第一张切片图端到端跑通，再谈量产
+
+## 6. 决议并入（2026-10-04，源自回执，冲突处以本节为准）
+
+### 6.0 范围澄清（回执 §0，最重要）
+
+daoyan 实际有**三套**地图形态，本工作流只替代其中一套：
+
+| 形态 | 现状 | 处置 |
+|------|------|------|
+| SceneStage 大图+热点（AI 底图 1536×1024 + 可行走域 + 热点圆） | 六场景 manifest | **替换**（本工作流） |
+| 狩猎图 64×64（seed 确定性生成 + 登阶兽王玩法 + 对拍测试） | 战斗域 | **不动**（AGENTS.md 保护条款） |
+| 演出底图（Phase 87 修炼/突破等全屏插画） | 过场演出 | **不涉及** |
+
+另外：daoyan 场景热点是 15+ 个 `SceneCommand` 面板（商店/差事榜/修炼/突破/整备…）的
+**功能入口**，分发中枢 `app.gd _on_scene_command`。tile 城镇交互点体系必须原样继承
+这一层（→ C4 的 `menu` 型，功能入口主形态）。
+
+### 6.1 决议一览
+
+| 问题 | 决议 |
+|------|------|
+| A1 宿主 | 移植进 `daoyan/godot`：规则/数据层 `scripts/engine/maps/`（RefCounted 纯函数+JSON 同构），表现层 `scripts/app/` MapHost（SceneStage 兄弟节点，**无 autoload**），bake 工具进 `scripts/`（与 `build_avatar_sheet.py` 同族），源数据进 `content/` 走 content_loader+release 校验 |
+| A2 旧方案 | **新旧并存逐步迁**：先新增一张切片场景（新 scene_id，不动旧六场景），验收后逐场景迁移；狩猎图与演出底图不迁；**立项 Phase 88，待 Phase 87 S5 收口启动** |
+| A3 命名 | 机制零成本（scene_id/label 全在 manifest）；「西西弗」只存在于 rpgmap 不会带入；正式名待用户定（现设定「道演」，s_001 为青岩寨主题） |
+| B1 编辑面 | ASCII 保留，但唯一事实源 = **content/ 下 JSON**（布局为内嵌字符串数组，图例映射=主题包同 JSON 化），非 GDScript 常量 |
+| B2 烘焙产物 | **校验后规范化 JSON + manifest 进 git（非 .tscn）**；MapHost 运行时 `set_cell` 批量构建（毫秒级）。理由：贴合 content JSON 流与 faction-assets 热替换贴图路径（非 res://）。四阶段结构不变 |
+| B3 城镇结构 | 大图+门传送先行；门 = `scene.enter.<id>` 的触发格版；单镇 3–5 张功能图，与现有六场景语义对齐 |
+| C1 切片 | **s_001 寨内 hub 的 tile 版**（新 scene_id 并存）；同图放一个 `battle_trigger` 占位验证战斗往返 |
+| C2 规格 | tile 32×32 维持；daoyan 1280×720 基线不动；MapHost 世界容器 **2× 整数缩放**（逻辑视野 640×360 ≈ 20×11 格）；UI 走 UIThemeTokens；贴图**逐资产**设 nearest（勿全局改） |
+| C3 地形 | 首图 7 种直边无 autotile：石板广场/夯土路/草地/夯土墙(碰)/木墙(碰)/水沟(碰)/门洞(传送)；后续 autotile 可复用 `build_hunt_tiles.py` 位掩码管线经验 |
+| C4 交互点 | 首批六种：`portal` / `menu`(SceneCommand 桥接，功能入口主形态) / `dialogue`(纯氛围) / `battle_trigger`(明雷) / `chest`(消费即 erase) / `save`(留位不做) |
+| C5 美术工序 | 切图+QC 工具落 daoyan `scripts/`；AI 做工具与切图，人只看截图验收（rpgmap `--shots` 模式搬过去） |
+| C6 持久化 | **直接接引擎存档**（快照加 `consumed_interaction_ids` 或复用 `game.flags`），写即存，不做内存级 |
+| D1 触发 | 明雷可见标记 + 走进触发；默认可重复带冷却，内容可声明一次性 |
+| D2 战斗接口 | 进：`HostCombat.begin_combat(enemy_id + map_encounter_id 归属标记)`（新增 SessionStore 写方法 + 端点 + Host 静态函数，照抄 `begin_wild_combat` 形）；回：`CombatScreen.exited` → 恢复分支加 MapHost visible；地图状态仿 `hunt_maps` 进 `academy` |
+| D3 野外 | 与城镇共用 tile 规格+bake 流水线，独立野外主题包；40×30～64×40 滚动图；与 64×64 狩猎图**并存不合并** |
+| E1–E5 接口 | 已全部摸清（回执 §1）：零 autoload、App+15 面板纯代码构建、`command_issued` 唯一契约、对话走 pending/choices 桥接、战斗六入口汇聚 `begin_combat`、SQLite 快照写即存、无自定义输入 action（rpgmap 的 [input] 段需移植）、主题 token 单一来源 `ui_theme_tokens.gd` |
+
+### 6.2 对原提案的两处修订
+
+1. **阶段 B 产物**：烘焙 .tscn → 校验后规范化 JSON + manifest（理由见 B2）。
+2. **阶段 A 主题包分层**：地图源数据只放**纯氛围文本**（读告示牌类）；
+   凡有选项/改状态的交互一律走引擎（SceneCommand/事件卡 → pending/choices），
+   不得内嵌玩法对话，否则绕过叙事与存档体系。
+
+### 6.3 修订后的下一步
+
+1. 用户对回执推荐值拍板（可直接「按推荐」）；
+2. 待 Phase 87 S5 收口 → 立项 **Phase 88**，本节并入计划；
+3. 工作流骨架：bake（校验+规范化 JSON+manifest）+ MapHost + s_001 hub 切片图端到端；
+4. 移植设计文档可直接开写（E 组已摸清；实施前对回执关键断言做代码级抽查）。
