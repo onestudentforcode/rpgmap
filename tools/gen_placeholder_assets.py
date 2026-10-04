@@ -1,23 +1,29 @@
 # -*- coding: utf-8 -*-
 """占位美术资产生成器（像素风，ComfyUI 正式图到位前的开发用占位）。
 
+按主题生成（P2 换肤演练）：读取 content/themes/*.json 的 palette_overrides，
+对基准色板做覆盖，输出 assets/themes/<id>/{tileset,objects,player}.png。
+图集布局对所有主题一致（语义图块位置不变），主题间只有色板差异。
+
 产出（全部 RGBA PNG，alpha 仅 0/255，最近邻）：
-  assets/tileset.png   224x32  7 枚 32x32 图块（单行，列号即图块序号）
-  assets/player.png    128x192 4 方向 x 4 帧 32x48 行走图（行序 下/左/右/上）
-  assets/objects.png   256x96  物件图集（柜台/货架/盆栽/告示牌/电梯/NPC x2/E 提示）
+  assets/themes/<id>/tileset.png   224x32  7 枚 32x32 图块（单行，列号即图块序号）
+  assets/themes/<id>/player.png    128x192 4 方向 x 4 帧 32x48 行走图（行序 下/左/右/上）
+  assets/themes/<id>/objects.png   256x96  物件图集（柜台/货架/盆栽/告示牌/电梯/NPC x2/E 提示）
 
 用法：python tools/gen_placeholder_assets.py
 """
+import json
 from pathlib import Path
 
 from PIL import Image, ImageDraw
 
 ROOT = Path(__file__).resolve().parent.parent
 ASSETS = ROOT / "assets"
+THEMES_DIR = ROOT / "content" / "themes"
 TILE = 32
 
-# ---------------------------------------------------------------- 调色板
-PAL = {
+# 基准色板；主题 JSON 的 palette_overrides 对其按键覆盖
+BASE_PAL = {
     # 地面
     "floor_a": "#d8cdb4", "floor_a_line": "#c2b598", "floor_a_hi": "#e2d8c2",
     "floor_a_dot": "#cfc3a8",
@@ -49,6 +55,20 @@ PAL = {
     # 提示气泡
     "bubble_bg": "#2b2b30", "bubble_fg": "#f0ead8",
 }
+
+# 工作色板：生成时按主题覆盖（C() 只读它）
+PAL = dict(BASE_PAL)
+
+
+def load_theme_palettes() -> dict:
+    """从 content/themes/*.json 读 {主题id: 色板覆盖}。"""
+    themes = {}
+    for p in sorted(THEMES_DIR.glob("*.json")):
+        data = json.loads(p.read_text(encoding="utf-8"))
+        themes[data["id"]] = data.get("palette_overrides", {})
+    if not themes:
+        raise SystemExit(f"未找到主题文件: {THEMES_DIR}")
+    return themes
 
 
 def C(name: str) -> tuple:
@@ -389,17 +409,24 @@ def qc(name: str, img: Image.Image, expect: tuple) -> bool:
 
 
 def main():
-    ASSETS.mkdir(exist_ok=True)
-    out = [
-        ("tileset.png", gen_tileset(), (TILE * 7, TILE)),
-        ("player.png", gen_player_sheet(), (PW * 4, PH * 4)),
-        ("objects.png", gen_objects(), (256, 96)),
-    ]
+    themes = load_theme_palettes()
     ok = True
-    for name, img, expect in out:
-        ok &= qc(name, img, expect)
-        img.save(ASSETS / name)
-    print("完成" if ok else "有 QC 问题，请检查", "→", ASSETS)
+    for tid in sorted(themes):
+        PAL.clear()
+        PAL.update(BASE_PAL)
+        PAL.update(themes[tid])
+        out = ASSETS / "themes" / tid
+        out.mkdir(parents=True, exist_ok=True)
+        print(f"== 主题 {tid} ==")
+        for name, img, expect in [
+            ("tileset.png", gen_tileset(), (TILE * 7, TILE)),
+            ("player.png", gen_player_sheet(), (PW * 4, PH * 4)),
+            ("objects.png", gen_objects(), (256, 96)),
+        ]:
+            ok &= qc(name, img, expect)
+            img.save(out / name)
+        print(f"主题 {tid} → {out}")
+    print("完成" if ok else "有 QC 问题，请检查")
 
 
 if __name__ == "__main__":

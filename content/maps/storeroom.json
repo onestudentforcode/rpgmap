@@ -2,7 +2,6 @@
   "schema": 1,
   "id": "storeroom",
   "name": "西西弗百货・储物间",
-  "theme": "placeholder",
   "spawn": [5, 5],
   "spawn_face": "down",
   "layout": [

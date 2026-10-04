@@ -131,7 +131,7 @@
           ]
         }
       },
-      "path": "res://assets/themes/placeholder/objects.png",
+      "path": "res://assets/themes/dusk/objects.png",
       "prompt_region": [
         160,
         0,
@@ -149,14 +149,14 @@
         48
       ],
       "layout": "4方向x4帧，行序 下/左/右/上，列序 待机/迈步/过渡/迈步2",
-      "path": "res://assets/themes/placeholder/player.png",
+      "path": "res://assets/themes/dusk/player.png",
       "size": [
         128,
         192
       ]
     },
     "tileset": {
-      "path": "res://assets/themes/placeholder/tileset.png",
+      "path": "res://assets/themes/dusk/tileset.png",
       "size": [
         224,
         32
@@ -221,5 +221,5 @@
       ]
     }
   },
-  "theme": "placeholder"
+  "theme": "dusk"
 }

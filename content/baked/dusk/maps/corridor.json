@@ -370,7 +370,7 @@
       ]
     }
   ],
-  "objects_texture": "res://assets/themes/placeholder/objects.png",
+  "objects_texture": "res://assets/themes/dusk/objects.png",
   "portals": [
     {
       "cell": [
@@ -419,7 +419,7 @@
     5
   ],
   "spawn_face": "down",
-  "theme": "placeholder",
+  "theme": "dusk",
   "tile_size": 32,
   "tiles": [
     {
@@ -455,7 +455,7 @@
       "solid": false
     }
   ],
-  "tileset_texture": "res://assets/themes/placeholder/tileset.png",
+  "tileset_texture": "res://assets/themes/dusk/tileset.png",
   "walls": [
     2,
     2,

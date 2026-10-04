@@ -2,7 +2,6 @@
   "schema": 1,
   "id": "corridor",
   "name": "西西弗百货・一层后廊",
-  "theme": "placeholder",
   "spawn": [2, 5],
   "spawn_face": "down",
   "layout": [

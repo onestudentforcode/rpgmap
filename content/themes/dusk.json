@@ -1,0 +1,44 @@
+{
+  "schema": 1,
+  "id": "dusk",
+  "tile_size": 32,
+  "textures": {
+    "tileset": {"path": "res://assets/themes/dusk/tileset.png", "size": [224, 32]},
+    "objects": {"path": "res://assets/themes/dusk/objects.png", "size": [256, 96]},
+    "player": {"path": "res://assets/themes/dusk/player.png", "size": [128, 192], "frame": [32, 48]}
+  },
+  "palette_overrides": {
+    "floor_a": "#b7b5c8", "floor_a_line": "#9c9ab2", "floor_a_hi": "#c8c6d8", "floor_a_dot": "#a8a6bd",
+    "floor_b": "#b0aec2", "floor_b_line": "#9492aa", "floor_b_dot": "#a2a0b6",
+    "carpet": "#41508c", "carpet_dark": "#2f3a6b", "carpet_pat": "#5a68ab",
+    "corr": "#87919f", "corr_line": "#6c7583", "corr_dot": "#7a8391",
+    "wall": "#4c3554", "wall_cap": "#382840", "wall_line": "#42304b", "wall_hi": "#6d5175", "wall_ao": "#2c2033",
+    "brass": "#c08a52", "brass_dark": "#93653c",
+    "wood": "#6b5560", "wood_top": "#96798a", "wood_panel": "#4a3a4a",
+    "metal": "#8b95a2", "metal_dark": "#6d7683",
+    "pot": "#7a5a74", "leaf": "#39606b", "leaf_hi": "#4e7b85",
+    "coat": "#263a30", "coat_hi": "#33493d", "scarf": "#d8a850",
+    "paper": "#dcd8c8", "ink": "#3e3848"
+  },
+  "tiles": {
+    "floor_a": {"atlas": [0, 0]},
+    "floor_b": {"atlas": [1, 0]},
+    "carpet": {"atlas": [2, 0]},
+    "corr": {"atlas": [3, 0]},
+    "wall": {"atlas": [4, 0], "solid": true},
+    "door": {"atlas": [5, 0]},
+    "void": {"atlas": [6, 0], "solid": true}
+  },
+  "objects": {
+    "counter": {"region": [0, 0, 32, 32], "box": [30, 14]},
+    "shelf": {"region": [32, 0, 32, 32], "box": [30, 14]},
+    "plant": {"region": [64, 0, 32, 32], "box": [22, 12]},
+    "sign": {"region": [96, 0, 32, 32], "box": [20, 12]},
+    "npc": {"frames": [[176, 0, 32, 48], [208, 0, 32, 48]], "box": [20, 12]},
+    "elevator": {"region": [128, 0, 32, 64], "zone_offset": [0, 20]}
+  },
+  "player": {
+    "prompt_region": [160, 0, 16, 16],
+    "prompt_texture": "res://assets/themes/dusk/objects.png"
+  }
+}

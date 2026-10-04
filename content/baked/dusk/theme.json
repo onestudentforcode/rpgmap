@@ -1,0 +1,18 @@
+{
+  "player": {
+    "frame": [
+      32,
+      48
+    ],
+    "prompt_region": [
+      160,
+      0,
+      16,
+      16
+    ],
+    "prompt_texture": "res://assets/themes/dusk/objects.png",
+    "texture": "res://assets/themes/dusk/player.png"
+  },
+  "theme": "dusk",
+  "tile_size": 32
+}

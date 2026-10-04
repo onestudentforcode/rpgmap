@@ -3,10 +3,11 @@
   "id": "placeholder",
   "tile_size": 32,
   "textures": {
-    "tileset": {"path": "res://assets/tileset.png", "size": [224, 32]},
-    "objects": {"path": "res://assets/objects.png", "size": [256, 96]},
-    "player": {"path": "res://assets/player.png", "size": [128, 192], "frame": [32, 48]}
+    "tileset": {"path": "res://assets/themes/placeholder/tileset.png", "size": [224, 32]},
+    "objects": {"path": "res://assets/themes/placeholder/objects.png", "size": [256, 96]},
+    "player": {"path": "res://assets/themes/placeholder/player.png", "size": [128, 192], "frame": [32, 48]}
   },
+  "palette_overrides": {},
   "tiles": {
     "floor_a": {"atlas": [0, 0]},
     "floor_b": {"atlas": [1, 0]},
@@ -26,6 +27,6 @@
   },
   "player": {
     "prompt_region": [160, 0, 16, 16],
-    "prompt_texture": "res://assets/objects.png"
+    "prompt_texture": "res://assets/themes/placeholder/objects.png"
   }
 }

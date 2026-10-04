@@ -25,8 +25,16 @@ var _portal_until_ms := 0
 
 
 func _ready() -> void:
+	var args := OS.get_cmdline_user_args()
 	var index := MapHost.load_index()
 	_theme_id = index["default_theme"]
+	for a in args:
+		if a.begins_with("--theme="):
+			_theme_id = a.get_slice("=", 1)
+	if not (_theme_id in index["themes"]):
+		push_error("未知主题: " + _theme_id)
+		get_tree().quit(1)
+		return
 	var theme := MapHost.load_theme(_theme_id)
 	_build_stage()
 	_build_player_and_ui(theme)
@@ -36,7 +44,6 @@ func _ready() -> void:
 	var tw := create_tween()
 	tw.tween_property(_fade, "modulate:a", 0.0, 0.6)
 
-	var args := OS.get_cmdline_user_args()
 	if "--selftest" in args:
 		_run_selftest.call_deferred()
 	for a in args:
@@ -166,6 +173,7 @@ func _process(_delta: float) -> void:
 
 func _run_selftest() -> void:
 	var fails: Array[String] = []
+	var index := MapHost.load_index()
 	var lobby := MapHost.load_map(_theme_id, "lobby")
 	_load_map(lobby, MapHost.to_v2i(lobby["spawn"]), lobby["spawn_face"])
 	_check(fails, _ground.get_used_cells().size() == _count_used(lobby["ground"]),
@@ -178,6 +186,14 @@ func _run_selftest() -> void:
 	_check(fails, not _cell_has_collision(_ground, Vector2i(2, 8)), "地面可行走")
 	_check(fails, get_tree().get_nodes_in_group("interactable").size() == _zone_count(lobby),
 			"大厅交互区数量=烘焙数据")
+
+	# R3 验证：每个主题下的同一布局，格数与节点数必须完全一致
+	for tid in index["themes"]:
+		var lb := MapHost.load_map(tid, "lobby")
+		_check(fails, _count_used(lb["ground"]) == _count_used(lobby["ground"])
+				and _count_used(lb["walls"]) == _count_used(lobby["walls"])
+				and _node_count(lb) == _node_count(lobby),
+				"主题 %s 大厅布局与基准一致" % tid)
 
 	var corridor := MapHost.load_map(_theme_id, "corridor")
 	_load_map(corridor, Vector2i(1, 5), "right")

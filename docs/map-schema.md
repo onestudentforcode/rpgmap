@@ -25,12 +25,17 @@
 | 字段 | 说明 |
 |------|------|
 | `tile_size` | 图块边长（当前 32） |
-| `textures` | tileset / objects / player 三张贴图的路径与尺寸（manifest 的依据） |
+| `textures` | tileset / objects / player 三张贴图的路径与尺寸（**路径按主题分目录**：`assets/themes/<id>/`） |
+| `palette_overrides` | 相对基准色板（生成器 `BASE_PAL`）的颜色覆盖；生成器据此逐主题出图 |
 | `tiles` | 语义名 → `{atlas:[列,行], solid?}`；solid 图块烘焙出全格碰撞 |
 | `objects` | 物件名 → `{region}` 或 `{frames:[...]}`（两帧待机），可选 `box`（脚底碰撞盒）、`zone_offset`（交互区偏移，如电梯） |
 | `player` | `prompt_region`（E 提示在 objects 图集上的区域）、`prompt_texture` |
 
-换肤（P2）= 新增主题 JSON + 换贴图，地图源数据不动。
+**主题契约**：主题必须覆盖**所有**地图用到的语义图块/物件（bake 逐主题校验，缺失即失败）。
+图集布局对所有主题一致，主题间只有色板与贴图差异 → 换肤零代码。
+
+**烘焙为全组合**：bake 对每个主题 × 每张地图产出 `baked/<theme>/maps/<id>.json`——
+同一布局在不同主题下都可运行；启动用 `--theme=<id>` 选主题（缺省取 index 的 default_theme）。
 
 ## 3. 烘焙产物 `content/baked/`
 
@@ -63,7 +68,8 @@ baked/
 
 ```bash
 python tools/bake_maps.py                # 烘焙（校验失败即退出，不写产物）
-python tools/gen_placeholder_assets.py   # 重新生成占位美术（含逐行 QC）
-godot --headless --path . -- --selftest  # 17 项逻辑自测
-godot --path . -- --shots=DIR            # 窗口截图验收（5 张）
+python tools/gen_placeholder_assets.py   # 按主题生成占位美术（读 themes/*.json 色板，含逐行 QC）
+godot --headless --path . -- --selftest              # 逻辑自测（含双主题布局一致性）
+godot --path . -- --shots=DIR                        # 截图验收（默认主题）
+godot --path . -- --theme=dusk --shots=DIR           # 截图验收（指定主题）
 ```

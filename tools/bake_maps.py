@@ -182,16 +182,13 @@ def cell_is_solid(src: dict, theme: dict, x: int, y: int) -> bool:
     return bool(theme["tiles"][le["tile"]].get("solid", False))
 
 
-def validate_portals_cross(all_src: dict, themes: dict) -> None:
-    """跨图校验：目标存在、落点合法且不在对方触发格上、双向配对存在。"""
+def validate_portals_cross(all_src: dict, theme: dict, tid: str) -> None:
+    """跨图校验（按主题）：目标存在、落点合法且不在对方触发格上、双向配对存在。"""
     for mid, src in all_src.items():
-        theme = themes[src["theme"]]
         for p in src.get("portals", []):
             target_id = p["to"]
             tsrc = all_src.get(target_id)
-            check(tsrc is not None, f"{mid}: 传送目标图不存在: {target_id}")
-            check(tsrc["theme"] == src["theme"],
-                  f"{mid}: 跨主题传送 {target_id} 不支持（主题 {src['theme']}）")
+            check(tsrc is not None, f"[{tid}] {mid}: 传送目标图不存在: {target_id}")
             tw, th = map_dims(tsrc)
             sx, sy = p["spawn"]
             check(0 <= sx < tw and 0 <= sy < th,
@@ -261,7 +258,7 @@ def expand_map(src: dict, theme: dict) -> dict:
         "schema": 1,
         "id": src["id"],
         "name": src.get("name", src["id"]),
-        "theme": src["theme"],
+        "theme": theme["id"],
         "tile_size": ts,
         "size": [w, h],
         "tileset_texture": theme["textures"]["tileset"]["path"],
@@ -294,18 +291,18 @@ def main() -> int:
         for p in map_files:
             src = load_json(p)
             check(src.get("id") == p.stem, f"{p.name}: id '{src.get('id')}' 与文件名不符")
-            check(src.get("theme") in themes,
-                  f"{p.name}: 主题 '{src.get('theme')}' 不存在")
             all_src[p.stem] = src
-        for mid, src in all_src.items():
-            validate_map(src, themes[src["theme"]], mid + ".json")
-        validate_portals_cross(all_src, themes)
 
-        # 按主题分组展开
+        # 主题 × 地图 全组合：布局与皮肤解耦（R3）。
+        # 主题契约 = 覆盖所有地图用到的语义图块/物件，任一缺失即烘焙失败。
         maps_by_theme: dict = {}
-        for mid in sorted(all_src):
-            src = all_src[mid]
-            maps_by_theme.setdefault(src["theme"], {})[mid] = expand_map(src, themes[src["theme"]])
+        for tid in sorted(themes):
+            theme = themes[tid]
+            for mid in sorted(all_src):
+                validate_map(all_src[mid], theme, f"{mid}.json")
+            validate_portals_cross(all_src, theme, tid)
+            maps_by_theme[tid] = {mid: expand_map(all_src[mid], theme)
+                                  for mid in sorted(all_src)}
 
         for tid, maps in maps_by_theme.items():
             theme = themes[tid]

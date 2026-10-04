@@ -10,8 +10,8 @@
       16,
       16
     ],
-    "prompt_texture": "res://assets/objects.png",
-    "texture": "res://assets/player.png"
+    "prompt_texture": "res://assets/themes/placeholder/objects.png",
+    "texture": "res://assets/themes/placeholder/player.png"
   },
   "theme": "placeholder",
   "tile_size": 32

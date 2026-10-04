@@ -2,7 +2,6 @@
   "schema": 1,
   "id": "lobby",
   "name": "西西弗百货・一层大厅",
-  "theme": "placeholder",
   "spawn": [2, 8],
   "spawn_face": "down",
   "layout": [
