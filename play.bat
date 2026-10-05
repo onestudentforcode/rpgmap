@@ -16,8 +16,11 @@ rem  说明：参数原样透传给游戏（含主题 id 识别，见 scripts/ma
 rem        含空格的路径请加引号，或直接调用 godot 可执行文件。
 rem ============================================================
 
-set "GODOT=C:\Users\88445\Desktop\code\daoyan\.tools\godot-4.7.2\engine\Godot_v4.7.2-stable_win64.exe"
-set "GODOT_CONSOLE=C:\Users\88445\Desktop\code\daoyan\.tools\godot-4.7.2\engine\Godot_v4.7.2-stable_win64_console.exe"
+rem 新机器可用环境变量覆盖引擎路径（或在下方直接改默认值）：
+if not "%GODOT_EXE%"=="" set "GODOT=%GODOT_EXE%"
+if not "%GODOT_EXE_CONSOLE%"=="" set "GODOT_CONSOLE=%GODOT_EXE_CONSOLE%"
+if "%GODOT%"=="" set "GODOT=C:\Users\88445\Desktop\code\daoyan\.tools\godot-4.7.2\engine\Godot_v4.7.2-stable_win64.exe"
+if "%GODOT_CONSOLE%"=="" set "GODOT_CONSOLE=C:\Users\88445\Desktop\code\daoyan\.tools\godot-4.7.2\engine\Godot_v4.7.2-stable_win64_console.exe"
 rem 追加 "." 规范化路径：%~dp0 结尾反斜杠会转义闭合引号
 set "PROJECT=%~dp0."
 
@@ -26,7 +29,7 @@ if /i "%~1"=="help" goto :usage
 
 if not exist "%GODOT%" (
     echo [错误] 未找到 Godot: %GODOT%
-    echo 请修改本脚本顶部的 GODOT 路径后重试。
+    echo 请设置环境变量 GODOT_EXE / GODOT_EXE_CONSOLE，或修改本脚本默认路径。
     pause
     exit /b 1
 )
