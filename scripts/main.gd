@@ -44,7 +44,10 @@ func _ready() -> void:
 	_index = index
 	_theme_id = index["default_theme"]
 	for a in args:
-		if a.begins_with("--theme="):
+		# 主题既可用 --theme=ID 也可直接写主题 id（便于启动脚本透传）
+		if a in index["themes"]:
+			_theme_id = a
+		elif a.begins_with("--theme="):
 			_theme_id = a.get_slice("=", 1)
 	if not (_theme_id in index["themes"]):
 		push_error("未知主题: " + _theme_id)
