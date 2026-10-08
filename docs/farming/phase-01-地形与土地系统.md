@@ -2,10 +2,10 @@
 
 > **上游：** [master-plan.md](master-plan.md) §四（Phase 1 任务）；基线继承
 > [phase-00](phase-00-技术基线与重构准备.md)（tile 64×64、美术规范 §4、自研 bitmask 管线）。
-> **状态：** 已展开，进行中（2026-10-08）
+> **状态：** **已完成（2026-10-08 关闭，验收见 §8/§9）**
 > **边界：** 本阶段交付「可开垦、可交互、可存档的经营地图」；播种/生长属 Phase 2，
 > 本阶段只把 `PLANTED` 作为状态枚举值与占用模型预埋，不做种植行为。
-> **出阶段条件：** §8 验收清单全部勾选。
+> **出阶段条件：** §8 验收清单全部勾选。✅ 已满足
 
 ---
 
@@ -13,11 +13,11 @@
 
 | # | 任务 | 产出 | 状态 |
 |---|------|------|------|
-| 1.1 | 地形类型 | `content/farming/terrains.json` 注册表（数据驱动） | 待执行 |
-| 1.2 | 地形自动拼接 | 分层栈 + `trans_upper_*` atlas（Phase 0 管线泛化） | 待执行 |
-| 1.3 | 土地状态 | `LandGrid`：静态地形与动态农业状态分离 + 占用模型 | 待执行 |
-| 1.4 | 土地交互 | hover 信息、开垦/恢复、不可种植提示、占用防冲突 | 待执行 |
-| 1.5 | 存档数据 | 逻辑数据 JSON 存读档（接缝：Phase 5 换主游戏存档） | 待执行 |
+| 1.1 | 地形类型 | `content/farming/terrains.json` 注册表（数据驱动） | **✅ 完成（@6ad8237）** |
+| 1.2 | 地形自动拼接 | 分层栈 + `trans_upper_*` atlas（Phase 0 管线泛化） | **✅ 完成（@6ad8237）** |
+| 1.3 | 土地状态 | `LandGrid`：静态地形与动态农业状态分离 + 占用模型 | **✅ 完成（@1c8a31b）** |
+| 1.4 | 土地交互 | hover 信息、开垦/恢复、不可种植提示、占用防冲突 | **✅ 完成（@1c8a31b）** |
+| 1.5 | 存档数据 | 逻辑数据 JSON 存读档（接缝：Phase 5 换主游戏存档） | **✅ 完成（@1c8a31b）** |
 
 ---
 
@@ -173,6 +173,7 @@ gggggggggggggggggggggggg
 |---|------|------|------|
 | P1-A | tilled 属动态层(栈顶) 还是替换地形纹理 | **动态层**：开垦/恢复不改静态地形数据，渲染与存档都更简单 | ✅ 本阶段定 |
 | P1-B | 耕地湿润/干燥变体（Phase 0 旧地基做过 dry/wet） | 本阶段只做 dry 一版；浇水属 Phase 2 生长机制，届时加 `tilled_wet` 变体（同契约新增） | ✅ 本阶段定 |
+| P1-C | 过渡边缘观感（1px 抖动边、圆角切角观感、描边对比度）优化 | **挂起**：拼接结构正确（无裂缝/无错位，farmtest 位掩码断言 + Phase 0 同源掩码像素取证）；观感类问题统一在 **AI 素材替换时处理**（届时可直接调 mask 风格/描边参数甚至换算法），不在占位图上打磨（用户决定 2026-10-08） | ⏸ 挂起至 Phase 3 素材替换 |
 
 ## 7. 素材清单（占位，待 AI 替换）
 
@@ -180,26 +181,55 @@ gggggggggggggggggggggggg
 |---|---|---|
 | `assets/farming/ground/ground_grass.png` | 64×64 无缝 RGB | ✅ Phase 0 已有 |
 | `assets/farming/ground/ground_dirt.png` | 64×64 无缝 RGB | ✅ Phase 0 已有 |
-| `assets/farming/ground/ground_stone.png` | 64×64 无缝 RGB（石板拼缝纹） | 本阶段新增 |
-| `assets/farming/ground/ground_tilled.png` | 64×64 无缝 RGB（垄沟纹） | 本阶段新增 |
-| `assets/farming/transitions/trans_upper_{dirt,stone,tilled}.png(+json)` | 1024×1024 RGBA | 本阶段新增 |
+| `assets/farming/ground/ground_stone.png` | 64×64 无缝 RGB（石板拼缝纹） | ✅ 已产出（@6ad8237） |
+| `assets/farming/ground/ground_tilled.png` | 64×64 无缝 RGB（垄沟纹） | ✅ 已产出（@6ad8237） |
+| `assets/farming/transitions/trans_upper_{dirt,stone,tilled}.png(+json)` | 1024×1024 RGBA | ✅ 已产出（@6ad8237） |
 
 ## 8. 验收清单（对照 master-plan §四验收标准）
 
-- [ ] 玩家能够在地图中开垦连续区域（草地/泥地，交互可用）
-- [ ] 耕地边缘能够正确拼接（动态 bitmask + 视觉核对）
-- [ ] 多格占用不发生数据冲突（原子 reserve/release 自测覆盖）
-- [ ] 土地状态保存和恢复后保持一致（roundtrip 自测）
-- [ ] 更新一块土地不会错误重建整张地图（增量信号断言）
-- [ ] 石板地等不可开垦地形有明确提示，不误导操作
-- [ ] 数据/烘焙纪律落地：改 JSON → bake → 验证（确定性成立）
-- [ ] `--farmtest` 全过；截图留档并视觉审核通过
-- [ ] demo selftest 与 phase00 farmtest 回归通过
-- [ ] 执行记录回写（§9）+ 分小阶段提交
+> 全部勾选，**Phase 1 于 2026-10-08 关闭**，进入 Phase 2。
+
+- [x] 玩家能够在地图中开垦连续区域（左键交互 + farmtest 迁移断言 + 截图 5×3 耕地）
+- [x] 耕地边缘能够正确拼接（动态 bitmask 断言：单格=bm0、邻接=bmE/bmW；结构无裂缝；边缘观感挂起 §6 P1-C）
+- [x] 多格占用不发生数据冲突（原子 reserve/release、重叠拒绝、跨地形拒绝、prev 恢复，断言 9–13）
+- [x] 土地状态保存和恢复后保持一致（磁盘 roundtrip 断言 16，含占用与 prev）
+- [x] 更新一块土地不会错误重建整张地图（cells_changed 信号=自身∪8邻；静态层格数全程不变，断言 4/15）
+- [x] 石板地等不可开垦地形有明确提示（reason 映射 HUD 红色提示，断言 7）
+- [x] 数据/烘焙纪律落地（bake_farm 校验 + 确定性；改 JSON → bake → 验证流程可用）
+- [x] `--farmtest` 全过（19 项，0 脚本错误）；截图留档 5 张并审核（全景通过；特写标记项裁定见 §9）
+- [x] demo selftest 与 phase00 farmtest 回归通过
+- [x] 执行记录回写（§9）+ 分小阶段提交（@6ad8237 / @1c8a31b / 文档收尾）
 
 ## 9. 执行记录（追加式）
 
 ### 2026-10-08 展开
 
 - 本文档展开；命名定稿 `trans_upper_<id>`；素材替换契约立规（§2.6）。
-- 待执行：数据层/美术层/逻辑层/场景层，见 §1 状态表。
+
+### 2026-10-08 实施与关闭
+
+- **P1.a（@6ad8237）**：terrains.json（4 地形分层栈）+ farm_01.json（20×14：
+  草基底/泥地块×32/石板路+石院×29）+ `bake_farm.py`（校验/确定性/`--check`）
+  + `gen_farm_terrains.py`（石板 32px 拼缝纹、耕地 16px 垄沟、3 套 `trans_upper_*`
+  atlas；复用 Phase 0 噪声/掩码函数）。
+  - QC 基准升级：无缝检验内部梯度基准从均值 → **最大值**（结构化纹理的石板缝/垄沟
+    是合法周期线条，边界缝与内部缝同量级；均值基准误报，已回归验证 grass/dirt 仍过）。
+- **P1.b（@1c8a31b）**：`LandGrid`（状态/原子占用/prev/存档纯逻辑数据/增量信号）、
+  `FarmData`（烘焙产物唯一入口）、`FarmTerrainRenderer`（四层 TileMap + 增量 set_cell）、
+  `FarmCamera`（Phase 0 相机行为组件化）、`farm_main.tscn`（hover 信息/开垦交互/
+  F5/F9 存读档/占用红框/HUD）、`play.bat farm`（当前主场景）+ `farm0`（Phase 0 历史回归）
+  + 缺烘焙自动补 bake。
+- **实施中修复的三处缺陷**（都有通用教训，已固化在代码注释/本记录）：
+  1. `class_name` 依赖全局类缓存（`.godot/` 需编辑器/import 重建），headless 直接跑
+     解析失败 → 改为消费方显式 `preload`（与 phase00 一致，CLI 免 import）。
+  2. GDScript lambda 捕获是**值拷贝**，信号槽里对外部变量赋值无效 → 改用成员方法接收。
+  3. 渲染器 `_src_of` 拼出的键名（`_trans`）与构建时存的不一致（`_src_trans`），
+     null→0 巧合落到错误 source 仍"能跑" → 改为构建时缓存 `_dynamic_src`。
+- **验证**：`--farmtest` 19 项全过（0 脚本错误）；回归 phase00 FARMTEST OK、
+  demo SELFTEST OK、`gen_phase00_textures --verify` OK。
+- **视觉审核与裁定**：全景图通过（三地形过渡/石板平铺/红框 2×2 对齐）；特写图
+  审图标记的「点状抖动边/角部绿色切角」与 Phase 0 同源掩码取证结论一致，属**设计行为**；
+  「描边对比度/边缘观感」类问题按 **P1-C 挂起**至 AI 素材替换时统一处理。
+  截图脚本取景修正（hover 预设 + 占用框完整入镜）后重拍 5 张；红框像素取证
+  364px ≈ 2×2 格期望 358px（含描边），黄框高亮确认可见。
+- **Phase 1 关闭**。下一步：展开 `phase-02-核心种植系统.md`（播种/生长/收获最小闭环）。

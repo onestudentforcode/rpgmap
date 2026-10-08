@@ -42,9 +42,12 @@
     **禁止作为新模块依赖**；新模块规范见 phase-00 §4
   - 保留复用：bake 纪律、自测/截图基建、QC 铁律、地图内核（作为「游戏侧」对接面）
   - **Phase 0 已完成（2026-10-08 关闭）**：D1=tile 64×64 冻结、美术规范冻结
-    （phase-00 §4）、拼接验证场景 `play.bat farm` 落地（farmtest 14 项 + 4 截图
-    视觉审核通过）；详情与已知坑见 [phase-00](docs/farming/phase-00-技术基线与重构准备.md) §7/§8
-  - 当前：**待展开 Phase 1（地形与土地系统）** → `docs/farming/phase-01-地形与土地系统.md`
+    （phase-00 §4）、拼接验证场景落地；详情与已知坑见
+    [phase-00](docs/farming/phase-00-技术基线与重构准备.md) §7/§8
+  - **Phase 1 已完成（2026-10-08 关闭）**：地形分层栈（草/泥/石板 + 动态耕地）+
+    LandGrid 状态/原子占用模型 + 增量渲染 + 纯逻辑存档 + `play.bat farm` 主场景；
+    farmtest 19 项全过。过渡边缘观感问题挂起（P1-C，待 AI 素材替换时统一处理）
+  - 当前：**待展开 Phase 2（核心种植系统）** → `docs/farming/phase-02-核心种植系统.md`
 - demo 实验的 P5/P6 **暂缓**（P5 跨机器出图协作模式由种植模块 Phase 3 继承）
 - 开放问题（命名/持久化深度/战斗桩深度）见 demo-phases.md §6，均给了默认值，不阻塞
 
@@ -89,26 +92,36 @@ play.bat --shots=DIR            # 窗口截图验收（7 张/城镇主题，4 �
 
 python tools/bake_maps.py               # 烘焙（改 content/ 后必跑；校验失败即退出）
 python tools/gen_placeholder_assets.py  # 重新生成占位美术（读 themes/*.json 色板）
+
+# —— 种植模块（farming）——
+python tools/farming/bake_farm.py          # 种植数据烘焙（改 content/farming/ 后必跑）
+python tools/farming/gen_farm_terrains.py  # 重生成地形占位纹理（--verify 只校验）
+play.bat farm                              # 主农场场景（开垦/存档；缺烘焙与纹理自动补）
+play.bat farm --farmtest                   # 种植逻辑自测（19 项）
+play.bat farm0                             # Phase 0 拼接验证场景（历史回归）
 ```
 
 **纪律：改 `content/` 源数据后先 bake 再跑自测/游戏**（自测读的是烘焙产物）。
 改 `assets/` 贴图后，编辑器打开会自动重导入；纯命令行场景跑一次
 `godot --headless --path . --import`。
 
-## 7. 下一步：种植模块 Phase 1（地形与土地系统）
+## 7. 下一步：种植模块 Phase 2（核心种植系统）
 
-**Phase 0 已于 2026-10-08 关闭**（验收记录与已知坑见
-[phase-00 §7/§8](docs/farming/phase-00-技术基线与重构准备.md)）。下一步按总规划
-[master-plan §四](docs/farming/master-plan.md) 展开
-`docs/farming/phase-01-地形与土地系统.md`（地形类型/自动拼接/土地状态/交互/存档）。
-Phase 0 已冻结的基线（后续阶段直接遵守）：
+**Phase 0/1 均已于 2026-10-08 关闭**（验收记录见
+[phase-00](docs/farming/phase-00-技术基线与重构准备.md) /
+[phase-01](docs/farming/phase-01-地形与土地系统.md)）。下一步按总规划
+[master-plan §五](docs/farming/master-plan.md) 展开
+`docs/farming/phase-02-核心种植系统.md`（作物数据模型/生命周期/播种收获闭环/两种测试作物）。
 
-- tile **64×64**、六层结构落位（Ground/Transition/Farmland/YSort/Overlay）、
-  美术规范 phase-00 §4（视角/光照左上/底部中心锚/alpha 二值/NEAREST/命名）
-- 过渡 = 自研 8 邻域 bitmask → mask atlas 管线（生成器
-  `tools/farming/gen_phase00_textures.py`，Phase 1 评估内角 overlap）
-- 入口 `play.bat farm [--farmtest|--farm-shots=DIR]`；提交纪律见 §9
-  （阶段文档统一 `phase-<两位号>-<阶段名>.md` 命名）
+已冻结基线（后续阶段直接遵守）：
+
+- tile **64×64**；分层地形栈 + 自研 bitmask 过渡（`trans_upper_*`，命名定稿）；
+  美术规范 phase-00 §4 + **素材替换契约** phase-01 §2.6（占位图将被 AI 正式图
+  同名替换；逻辑零像素依赖；过渡观感问题挂起 P1-C 至替换时统一处理）
+- `LandGrid` 状态机（WILD/TILLED/PLANTED 预埋/OCCUPIED prev/UNAVAILABLE）+
+  原子多格占用 + `cells_changed` 增量信号——Phase 2 的播种直接落在 TILLED 状态与
+  占用 API 之上
+- 数据纪律：`content/farming/` 源 JSON → `bake_farm.py` → `baked/`（运行时唯一读取）
 
 原 demo P5（美术回填演练）暂缓；其跨机器出图协作模式
 （manifest → ComfyUI 出图 → 本机 QC → 零代码替换）由种植模块 Phase 3 资产管线继承，
