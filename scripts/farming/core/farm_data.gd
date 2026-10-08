@@ -15,6 +15,25 @@ static func load_index() -> Dictionary:
 	return _load(BAKED_DIR + "/index.json")
 
 
+static func load_config() -> Dictionary:
+	return _load(BAKED_DIR + "/config.json")
+
+
+static func load_crops() -> Dictionary:
+	return _load(BAKED_DIR + "/crops.json")
+
+
+static func load_items() -> Dictionary:
+	return _load(BAKED_DIR + "/items.json")
+
+
+static func items_by_id(items: Dictionary) -> Dictionary:
+	var out := {}
+	for it in items.get("items", []):
+		out[it["item_id"]] = it
+	return out
+
+
 static func load_map(map_id: String) -> Dictionary:
 	return _load(BAKED_DIR + "/maps/%s.json" % map_id)
 
