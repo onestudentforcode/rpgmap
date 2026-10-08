@@ -1,0 +1,47 @@
+{
+  "schema": 1,
+  "crops": [
+    {
+      "crop_id": "dew_grass",
+      "name": "凝露草",
+      "category": "herb",
+      "footprint": [1, 1],
+      "planting_medium": "soil",
+      "growth_stages": [
+        {"id": "seed", "days": 1, "sprite": "stage_0"},
+        {"id": "sprout", "days": 1, "sprite": "stage_1"},
+        {"id": "growing", "days": 2, "sprite": "stage_2"},
+        {"id": "mature", "days": 0, "sprite": "stage_3"}
+      ],
+      "harvest_type": "remove",
+      "harvest_items": [
+        {"item_id": "dew_leaf", "min": 1, "max": 2},
+        {"item_id": "dew_grass_seed", "min": 0, "max": 1}
+      ],
+      "max_harvests": 1,
+      "regrowth_duration": 0,
+      "feed_tags": ["wood", "yin"]
+    },
+    {
+      "crop_id": "scarlet_berry",
+      "name": "赤纹果",
+      "category": "shrub",
+      "footprint": [1, 1],
+      "planting_medium": "soil",
+      "growth_stages": [
+        {"id": "seed", "days": 1, "sprite": "stage_0"},
+        {"id": "sprout", "days": 1, "sprite": "stage_1"},
+        {"id": "growing", "days": 2, "sprite": "stage_2"},
+        {"id": "mature", "days": 0, "sprite": "stage_3"}
+      ],
+      "harvest_type": "regrow",
+      "harvest_items": [
+        {"item_id": "scarlet_berry_fruit", "min": 2, "max": 4},
+        {"item_id": "scarlet_berry_seed", "min": 0, "max": 1}
+      ],
+      "max_harvests": 3,
+      "regrowth_duration": 2,
+      "feed_tags": ["fire"]
+    }
+  ]
+}

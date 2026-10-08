@@ -1,0 +1,38 @@
+{
+  "schema": 1,
+  "items": [
+    {
+      "item_id": "dew_leaf",
+      "name": "凝露叶",
+      "base_price": 8,
+      "feed_tags": [
+        "wood",
+        "yin"
+      ],
+      "source": "farming"
+    },
+    {
+      "item_id": "dew_grass_seed",
+      "name": "凝露草种子",
+      "base_price": 5,
+      "feed_tags": [],
+      "source": "farming"
+    },
+    {
+      "item_id": "scarlet_berry_fruit",
+      "name": "赤纹果",
+      "base_price": 12,
+      "feed_tags": [
+        "fire"
+      ],
+      "source": "farming"
+    },
+    {
+      "item_id": "scarlet_berry_seed",
+      "name": "赤纹果种子",
+      "base_price": 10,
+      "feed_tags": [],
+      "source": "farming"
+    }
+  ]
+}

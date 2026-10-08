@@ -87,6 +87,89 @@ def validate_terrains(data, msgs):
     return {t["id"]: t for t in terrains}
 
 
+def validate_config(data, items_ids, msgs):
+    if data.get("schema") != 1:
+        _fail(msgs, "config.schema 必须为 1")
+        return
+    t = data.get("time", {})
+    for key in ("terms_per_year", "days_per_term", "ap_per_day"):
+        v = t.get(key)
+        if not isinstance(v, int) or v <= 0:
+            _fail(msgs, "config.time.%s 必须为正整数: %r" % (key, v))
+    names = data.get("term_names", [])
+    if len(names) != t.get("terms_per_year"):
+        _fail(msgs, "config.term_names 数量 %d ≠ terms_per_year %s" % (len(names), t.get("terms_per_year")))
+    costs = data.get("ap_costs", {})
+    for key in ("till", "untill", "plant", "harvest", "clear"):
+        v = costs.get(key)
+        if not isinstance(v, int) or v < 0:
+            _fail(msgs, "config.ap_costs.%s 必须为非负整数: %r" % (key, v))
+    for iid in data.get("start_inventory", {}):
+        if iid not in items_ids:
+            _fail(msgs, "config.start_inventory 引用未注册物品 %r" % iid)
+
+
+def validate_items(data, msgs):
+    if data.get("schema") != 1:
+        _fail(msgs, "items.schema 必须为 1")
+        return set()
+    ids = set()
+    for it in data.get("items", []):
+        iid = it.get("item_id")
+        if not iid or iid in ids:
+            _fail(msgs, "物品 id 缺失或重复: %r" % iid)
+        ids.add(iid)
+        if not isinstance(it.get("base_price"), (int, float)) or it["base_price"] < 0:
+            _fail(msgs, "物品 %s base_price 非法" % iid)
+    return ids
+
+
+def validate_crops(data, items_ids, msgs):
+    if data.get("schema") != 1:
+        _fail(msgs, "crops.schema 必须为 1")
+        return
+    ids = set()
+    for c in data.get("crops", []):
+        cid = c.get("crop_id")
+        if not cid or cid in ids:
+            _fail(msgs, "作物 id 缺失或重复: %r" % cid)
+        ids.add(cid)
+        fp = c.get("footprint")
+        if not (isinstance(fp, list) and len(fp) == 2 and all(isinstance(v, int) and v > 0 for v in fp)):
+            _fail(msgs, "作物 %s footprint 非法: %r" % (cid, fp))
+        stages = c.get("growth_stages")
+        if not isinstance(stages, list) or len(stages) < 2:
+            _fail(msgs, "作物 %s growth_stages 至少 2 段" % cid)
+            continue
+        for s in stages:
+            if not isinstance(s.get("days"), int) or s["days"] < 0:
+                _fail(msgs, "作物 %s 阶段 %s days 非法" % (cid, s.get("id")))
+        if stages[-1].get("days") != 0:
+            _fail(msgs, "作物 %s 末段（成熟期）days 必须为 0" % cid)
+        htype = c.get("harvest_type")
+        if htype not in ("remove", "regrow"):
+            _fail(msgs, "作物 %s harvest_type 非法: %r" % (cid, htype))
+        items = c.get("harvest_items")
+        if not isinstance(items, list) or not items:
+            _fail(msgs, "作物 %s harvest_items 不能为空" % cid)
+        for e in items:
+            if e.get("item_id") not in items_ids:
+                _fail(msgs, "作物 %s 产出引用未注册物品 %r" % (cid, e.get("item_id")))
+            if not (isinstance(e.get("min"), int) and isinstance(e.get("max"), int)
+                    and 0 <= e["min"] <= e["max"]):
+                _fail(msgs, "作物 %s 产出数量区间非法: %r" % (cid, e))
+        mh = c.get("max_harvests")
+        if not isinstance(mh, int) or mh < 1:
+            _fail(msgs, "作物 %s max_harvests 必须为 ≥1 整数" % cid)
+        rd = c.get("regrowth_duration")
+        if htype == "remove" and (mh != 1 or rd != 0):
+            _fail(msgs, "作物 %s remove 型须 max_harvests=1 且 regrowth_duration=0" % cid)
+        if htype == "regrow" and (not isinstance(rd, int) or rd < 1):
+            _fail(msgs, "作物 %s regrow 型须 regrowth_duration ≥1" % cid)
+        if not c.get("planting_medium"):
+            _fail(msgs, "作物 %s 缺 planting_medium" % cid)
+
+
 def validate_map(data, reg, msgs):
     for key in ("id", "name", "size", "legend", "rows"):
         if key not in data:
@@ -135,6 +218,13 @@ def main():
     check_only = "--check" in sys.argv
     msgs = []
 
+    items_src = _load_json(os.path.join(SRC, "items.json"))
+    items_ids = validate_items(items_src, msgs)
+    config_src = _load_json(os.path.join(SRC, "config.json"))
+    validate_config(config_src, items_ids, msgs)
+    crops_src = _load_json(os.path.join(SRC, "crops.json"))
+    validate_crops(crops_src, items_ids, msgs)
+
     terrains_src = _load_json(os.path.join(SRC, "terrains.json"))
     reg = validate_terrains(terrains_src, msgs)
 
@@ -157,6 +247,9 @@ def main():
             os.path.join(BAKED, "terrains.json"): _dump_bytes(normalize_terrains(terrains_src)),
             os.path.join(BAKED, "index.json"): _dump_bytes(
                 {"schema": 1, "maps": [m["id"] for m in maps]}),
+            os.path.join(BAKED, "config.json"): _dump_bytes(config_src),
+            os.path.join(BAKED, "items.json"): _dump_bytes(items_src),
+            os.path.join(BAKED, "crops.json"): _dump_bytes(crops_src),
         }
         for m in maps:
             files[os.path.join(BAKED, "maps", "%s.json" % m["id"])] = \
@@ -169,7 +262,8 @@ def main():
         sys.exit(1)
 
     if check_only:
-        print("[bake] 校验通过（%d 地形，%d 地图），--check 未写产物" % (len(reg), len(maps)))
+        print("[bake] 校验通过（%d 地形，%d 地图，%d 作物，%d 物品），--check 未写产物" % (
+            len(reg), len(maps), len(crops_src.get("crops", [])), len(items_ids)))
         return
 
     for path, blob in out_files.items():
@@ -177,7 +271,8 @@ def main():
         with open(path, "wb") as f:
             f.write(blob)
         print("[bake] %s" % os.path.relpath(path, ROOT))
-    print("[bake] OK（%d 地形，%d 地图）" % (len(reg), len(maps)))
+    print("[bake] OK（%d 地形，%d 地图，%d 作物，%d 物品）" % (
+        len(reg), len(maps), len(crops_src.get("crops", [])), len(items_ids)))
 
 
 if __name__ == "__main__":
