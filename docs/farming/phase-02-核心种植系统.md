@@ -2,11 +2,11 @@
 
 > **上游：** [master-plan.md](master-plan.md) §五（v1.1 修订后）+ [phase-01](phase-01-地形与土地系统.md)
 > 已冻结基线（LandGrid 状态机/占用 API/增量渲染/数据烘焙纪律/素材替换契约）。
-> **状态：** 已展开，进行中（2026-10-08）
+> **状态：** **已完成（2026-10-08 关闭，验收见 §10/§11）**
 > **边界：** 最小可玩种植闭环——时间 + 播种 + 生长 + 采收（含有限次再生与枯竭清理）
 > + 多素材产出 + 库存 + 存档。养殖/加工/市场/蛊虫联动属 Phase 5；四类作物扩展属 Phase 4
 > （本阶段两种测试作物即 herb + shrub，天然预演）。
-> **出阶段条件：** §10 验收清单全部勾选。
+> **出阶段条件：** §10 验收清单全部勾选。✅ 已满足
 
 ---
 
@@ -14,14 +14,14 @@
 
 | # | 任务 | 产出 | 状态 |
 |---|------|------|------|
-| 2.1 | 作物数据模型 | `content/farming/crops.json`（v1.1 字段：harvest_items / max_harvests） | 待执行 |
-| 2.2 | 作物生命周期 | SEED→SPROUT→GROWING→MATURE→（REGROWING↔MATURE）→EXHAUSTED→清理 | 待执行 |
-| 2.3 | 游戏时间 | `FarmClock`：24 时节 × 15 天 × 24 行动点，按天离散推进 | 待执行 |
-| 2.4 | 播种 | 工具槽选种 → 校验（TILLED/脚印/种子数）→ 原子播种（扣种子+占格同成败） | 待执行 |
-| 2.5 | 收获/清理 | 多素材掷量收获；remove 移除；regrow 有限次；EXHAUSTED 清理回 TILLED | 待执行 |
-| 2.6 | 测试作物 | 凝露草（herb·remove·4 天）+ 赤纹果（shrub·regrow×3·再生长 2 天） | 待执行 |
-| — | 库存 | `FarmInventory`（id→数量，Phase 5 换主游戏道具适配层） | 待执行 |
-| — | 存档 | schema v2：clock + grid + crops + inventory | 待执行 |
+| 2.1 | 作物数据模型 | `content/farming/crops.json`（v1.1 字段：harvest_items / max_harvests） | **✅ 完成（@6ff9a69）** |
+| 2.2 | 作物生命周期 | SEED→SPROUT→GROWING→MATURE→（REGROWING↔MATURE）→EXHAUSTED→清理 | **✅ 完成（@03ebe22）** |
+| 2.3 | 游戏时间 | `FarmClock`：24 时节 × 15 天 × 24 行动点，按天离散推进 | **✅ 完成（@03ebe22）** |
+| 2.4 | 播种 | 工具槽选种 → 校验（TILLED/脚印/种子数）→ 原子播种（扣种子+占格同成败） | **✅ 完成（@03ebe22）** |
+| 2.5 | 收获/清理 | 多素材掷量收获；remove 移除；regrow 有限次；EXHAUSTED 清理回 TILLED | **✅ 完成（@03ebe22）** |
+| 2.6 | 测试作物 | 凝露草（herb·remove·4 天）+ 赤纹果（shrub·regrow×3·再生长 2 天） | **✅ 完成（@6ff9a69）** |
+| — | 库存 | `FarmInventory`（id→数量，Phase 5 换主游戏道具适配层） | **✅ 完成（@03ebe22）** |
+| — | 存档 | schema v2：clock + grid + crops + inventory | **✅ 完成（@03ebe22）** |
 
 ---
 
@@ -164,19 +164,43 @@ Overlay：MATURE 格画金色小标、EXHAUSTED 画灰褐叉号（UI 绘制，�
 
 ## 10. 验收清单（对照 master-plan §五验收标准）
 
-- [ ] 播种→生长→成熟→收获完整流程可玩（交互 + 断言）
-- [ ] 两种收获机制（remove/regrow）正常运作；regrow 达上限枯竭、清理恢复
-- [ ] 多素材产出：单次收获 ≥1 种素材、数量在区间内、确定性可重放
-- [ ] 时间体系：24 时节×15 天×24AP；跨天/跨时节/跨年正确；AP 自动次日
-- [ ] 生长数据可存档及恢复（含读档后跨天）
-- [ ] 作物逻辑不依赖具体图片（素材替换契约：贴图缺失回退兜底）
-- [ ] 收获物进入库存；种子扣除与占格原子
-- [ ] `--farmtest` 全过；截图留档审核；phase00/demo 回归通过
-- [ ] 执行记录回写 + 分小阶段提交
+> 全部勾选，**Phase 2 于 2026-10-08 关闭**，进入 Phase 3。
+
+- [x] 播种→生长→成熟→收获完整流程可玩（交互 + farmtest 26-29）
+- [x] 两种收获机制（remove/regrow）正常运作；regrow 达上限枯竭、清理恢复（farmtest 29-31）
+- [x] 多素材产出：单次收获 ≥1 种素材、数量在区间内、确定性可重放（farmtest 29 掷量复算）
+- [x] 时间体系：24 时节×15 天×24AP；跨天/跨时节/跨年正确；AP 自动次日（farmtest 20-23）
+- [x] 生长数据可存档及恢复（含读档后跨天，farmtest 33）
+- [x] 作物逻辑不依赖具体图片（CropRenderer 缺图回退链 + 素材契约断言 35）
+- [x] 收获物进入库存；种子扣除与占格原子（farmtest 25-26/32）
+- [x] `--farmtest` 全过（40 项：P1 19 + P2 21）；截图留档 4 张审核通过（阶段区分/贴地/枯竭态/叉号）；
+      phase00 farmtest 与 demo selftest 回归通过
+- [x] 执行记录回写（§11）+ 分小阶段提交（@6ff9a69 / @03ebe22 / 收尾）
 
 ## 11. 执行记录（追加式）
 
 ### 2026-10-08 展开
 
 - 本文档展开；上游 master-plan 升 v1.1（时间体系/有限采收/多产出）。
-- 待执行：§1 状态表。
+
+### 2026-10-08 实施与关闭
+
+- **P2.a（@6ff9a69）**：config（24 节气名/AP 表/开局种子）+ crops（凝露草 remove×1、
+  赤纹果 regrow×3 再生长 2 天，各 4 段生长/双产出）+ items（含 base_price 占位）
+  + bake 扩展校验（阶段天数/引用/枚举/一致性）+ `gen_farm_crops.py` 占位阶段图
+  （10 张，QC 全过）。
+- **P2.b（@03ebe22）**：`FarmClock`（total_days+ap 派生制、AP 归零自动次日）、
+  `CropManager`（GROWING/MATURE/REGROWING/EXHAUSTED；播种=reserve(PLANTED) 原子占格；
+  有限次再生；多素材掷量 RNG 以 (uid,count) 播种可复算）、`FarmInventory`、
+  `CropRenderer`（状态→贴图契约 + 回退链 + 独立阴影）、`LandGrid.reserve` 增
+  target_state（PLANTED 须 TILLED）、farm_main v2（工具槽 1-9/H、收获优先分发、
+  R 休息、AP 检查、HUD 时节/背包、成熟金点/枯竭叉号 Overlay、存档 schema v2）。
+- **验证**：`--farmtest` **40 项全过**（P1 19 + P2 21，0 脚本错误）；截图 4 张视觉
+  审核通过（阶段大小区分/贴地/枯竭灰褐态+叉号清晰）；phase00 farmtest、demo
+  selftest 回归通过。
+- **过程中修复**：①farm_inventory.apply_save void 用于布尔链 → 返回 bool；
+  ②crop_manager 的 grid 成员补类型标注（无标注则方法调用推断失败）；
+  ③重写 farm_main 时丢失 `--farm-shots` 参数分发循环（窗口空跑超时）——插桩定位后补回。
+  教训入档：**大文件重写后必须回归全部运行模式（selftest/shots/交互）**。
+- **Phase 2 关闭**。下一步：展开 `phase-03-AI作物资产管线.md`（美术规范细化→
+  生成工作流→QC 工具→正式素材替换占位图，含 P1-C 挂起项的统一处理）。
