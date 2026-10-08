@@ -41,7 +41,10 @@
     `archive/old-farming/`**（Phase 0 任务 0.1 完成：引用复核零依赖、selftest 复核通过），
     **禁止作为新模块依赖**；新模块规范见 phase-00 §4
   - 保留复用：bake 纪律、自测/截图基建、QC 铁律、地图内核（作为「游戏侧」对接面）
-  - 当前只推进 **Phase 0**（技术基线与重构准备），一次只展开一个 Phase
+  - **Phase 0 已完成（2026-10-08 关闭）**：D1=tile 64×64 冻结、美术规范冻结
+    （phase-00 §4）、拼接验证场景 `play.bat farm` 落地（farmtest 14 项 + 4 截图
+    视觉审核通过）；详情与已知坑见 [phase-00](docs/farming/phase-00-技术基线与重构准备.md) §7/§8
+  - 当前：**待展开 Phase 1（地形与土地系统）** → `docs/farming/phase-01-地形与土地系统.md`
 - demo 实验的 P5/P6 **暂缓**（P5 跨机器出图协作模式由种植模块 Phase 3 继承）
 - 开放问题（命名/持久化深度/战斗桩深度）见 demo-phases.md §6，均给了默认值，不阻塞
 
@@ -92,22 +95,20 @@ python tools/gen_placeholder_assets.py  # 重新生成占位美术（读 themes/
 改 `assets/` 贴图后，编辑器打开会自动重导入；纯命令行场景跑一次
 `godot --headless --path . --import`。
 
-## 7. 下一步：种植模块 Phase 0（技术基线与重构准备）
+## 7. 下一步：种植模块 Phase 1（地形与土地系统）
 
-**现行主线已切换到灵植经营模块**，总规划与阶段任务见
-[docs/farming/master-plan.md](docs/farming/master-plan.md)（§三 Phase 0 任务、
-§十四 当前执行任务、附录 A 仓库适配）。要点：
+**Phase 0 已于 2026-10-08 关闭**（验收记录与已知坑见
+[phase-00 §7/§8](docs/farming/phase-00-技术基线与重构准备.md)）。下一步按总规划
+[master-plan §四](docs/farming/master-plan.md) 展开
+`docs/farming/phase-01-地形与土地系统.md`（地形类型/自动拼接/土地状态/交互/存档）。
+Phase 0 已冻结的基线（后续阶段直接遵守）：
 
-1. ✅ 任务 0.1 旧方案隔离已完成（2026-10-08）：旧地基归档至 `archive/old-farming/`，
-   游戏侧引用复核零依赖，`play.bat --selftest` 基线全过
-2. 下一步＝phase-00 §5 最小拼接验证：`play.bat farm` 场景、草地/泥土无缝纹理 +
-   过渡 mask、相机平移缩放、网格点击换算、占位 Sprite 锚点/遮挡（美术规范草案见
-   phase-00 §4，须与验证一并冻结）
-3. 收尾冻结：D1 tile 尺寸（64 vs 32）落定 + 美术规范去「草案」，
-   验收清单见 phase-00 §7
-4. 阶段收尾纪律不变：自测全过 + 截图人工核对 + git 提交 + 验收记录
-   （`docs/farming/phase-00-技术基线与重构准备.md`，阶段文档统一
-   `phase-<两位号>-<阶段名>.md` 命名）
+- tile **64×64**、六层结构落位（Ground/Transition/Farmland/YSort/Overlay）、
+  美术规范 phase-00 §4（视角/光照左上/底部中心锚/alpha 二值/NEAREST/命名）
+- 过渡 = 自研 8 邻域 bitmask → mask atlas 管线（生成器
+  `tools/farming/gen_phase00_textures.py`，Phase 1 评估内角 overlap）
+- 入口 `play.bat farm [--farmtest|--farm-shots=DIR]`；提交纪律见 §9
+  （阶段文档统一 `phase-<两位号>-<阶段名>.md` 命名）
 
 原 demo P5（美术回填演练）暂缓；其跨机器出图协作模式
 （manifest → ComfyUI 出图 → 本机 QC → 零代码替换）由种植模块 Phase 3 资产管线继承，
