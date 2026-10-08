@@ -1,0 +1,23 @@
+{
+  "schema": 1,
+  "id": "farm_01",
+  "name": "灵田·壹号",
+  "size": [20, 14],
+  "legend": {"g": "grass", "d": "dirt", "s": "stone"},
+  "rows": [
+    "gggggggggggggggggggg",
+    "gggggddddddggggggggg",
+    "ggggddddddddggggddgg",
+    "ggggddddddddggggddgg",
+    "gggggddddddggggggggg",
+    "gggggggggggggggggggg",
+    "ssssssssssssssssssss",
+    "gggggggggggggggggggg",
+    "gggggggggggggggsssgg",
+    "gggggggggggggggsssgg",
+    "gggggggggggggggsssgg",
+    "gggggggggggggggggggg",
+    "gggggggggggggggggggg",
+    "gggggggggggggggggggg"
+  ]
+}

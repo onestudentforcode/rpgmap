@@ -305,7 +305,12 @@ def _draw(img):
 
 
 def _check_seamless(img, name, fails):
-    """无缝统计检验：接缝梯度不得远超内部相邻梯度均值。"""
+    """无缝统计检验：接缝梯度不得远超内部相邻梯度的最大值。
+
+    基准取内部梯度最大值而非均值/p90——结构化纹理（石板拼缝、垄沟这类
+    周期线条）的缝只占极少数列，但其边界缝与内部缝梯度同量级（天然 wrap）；
+    噪声纹理内部最大值依然很低，真正的断裂边界（远超内部任何梯度）仍会被检出。
+    """
     w, h = img.size
     px = img.load()
 
@@ -317,14 +322,20 @@ def _check_seamless(img, name, fails):
         s = sum(abs(px[x, y1][c] - px[x, y2][c]) for x in range(w) for c in range(3))
         return s / (w * 3)
 
-    inner_c = sum(col_grad(x, x + 1) for x in range(w - 1)) / (w - 1)
+    def col_grads():
+        return [col_grad(x, x + 1) for x in range(w - 1)]
+
+    def row_grads():
+        return [row_grad(y, y + 1) for y in range(h - 1)]
+
+    inner_c = max(col_grads())
     bound_c = col_grad(w - 1, 0)
-    inner_r = sum(row_grad(y, y + 1) for y in range(h - 1)) / (h - 1)
+    inner_r = max(row_grads())
     bound_r = row_grad(h - 1, 0)
     for b, i, tag in ((bound_c, inner_c, "列"), (bound_r, inner_r, "行")):
-        limit = max(1.6 * max(i, 0.35), 2.0)
+        limit = max(1.3 * max(i, 0.35), 2.0)
         if b > limit:
-            fails.append("%s 无缝检验失败：%s方向边界梯度 %.1f 超限 %.1f（内部均值 %.1f）"
+            fails.append("%s 无缝检验失败：%s方向边界梯度 %.1f 超限 %.1f（内部最大 %.1f）"
                          % (name, tag, b, limit, i))
 
 
