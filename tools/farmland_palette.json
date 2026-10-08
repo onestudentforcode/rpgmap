@@ -1,0 +1,9 @@
+{
+  "comment": "耕地像素素材色板（暗→亮 5 级坡道）。dry=翻耕干土，wet=浇水后。色相对齐 wilds 主题的暖棕族（carpet #9a7a4e / wood #6b5540）。换色板改这里重跑 tools/gen_farmland_sprite.py 即可。",
+  "levels": 5,
+  "ramps": {
+    "dry": ["#4a3a2c", "#63503a", "#7d6647", "#97815b", "#b09a6d"],
+    "wet": ["#241c10", "#3a2f1d", "#524126", "#6c5836", "#89764a"]
+  },
+  "preview_bg": "#79a05c"
+}
