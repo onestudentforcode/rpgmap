@@ -159,4 +159,9 @@ daoyan 代码接入与移植、autoload/场景路由改造、真实战斗系统�
 
 ## 7. 当前状态
 
-P0–P4 完成。下一步：**P5 美术回填演练**（manifest 移交包 → ComfyUI 出图 → 本机 QC → 零代码替换）。
+P0–P4 完成。
+
+**2026-10-08 更新：优先级已转入灵植经营模块（种植系统从零重构）**，
+总规划见 [farming/master-plan.md](farming/master-plan.md)。
+本实验的 P5/P6 暂缓：P5 的跨机器出图协作模式（manifest → ComfyUI → QC → 零代码替换）
+由种植模块 Phase 3 资产管线继承；P6 是否结题后续再定。
