@@ -12,7 +12,7 @@
 .\play.bat --shots=res://.shots/farm-current
 ```
 
-`test.bat`依次运行31项资产QC、18项资产/配置工具测试、67项农场游戏流程检查；
+`test.bat`依次运行31项资产QC、20项资产/配置工具测试、67项农场游戏流程检查；
 任一步失败立即返回非零退出码，成功输出`FARMING TEST SUITE OK`。
 游戏流程覆盖土地开垦、播种扣种与占格、生长、凝露草一次采收、赤纹果有限再生/枯竭/清理、
 库存与时间推进、存档恢复；Phase 4新增介质/B键、混合介质拒绝、多格树木/真菌隔离fixture与旧存档恢复检查。
@@ -21,6 +21,15 @@ Phase 4.b另有真实果树/月华菇操作、产物入库、存读档、锚点�
 不加载旧商场/野外演示或Phase 0验证场景。
 逻辑测试使用headless和独立测试存档；截图是单独的视觉验证流程。
 现有色板精确值越界告警保留，QC错误才阻断。
+
+Phase 4正式图完成后，可单独运行GPU前后遮挡检查（需要渲染窗口，不能加`--headless`）：
+
+```powershell
+& $env:GODOT_EXE_CONSOLE --path . --script scripts/farming/tests/phase04_depth.gd
+```
+
+应输出`DEPTH CHECK behind=true front=true`；截图写入`.shots/farm-phase04c-final/`。
+该检查使用真实CropRenderer和重叠标记，不加载历史场景，也不写玩家存档。
 
 兼容`play.bat farm --farmtest`、`play.bat farm --farm-shots=DIR`。
 农场直接运行也接受`--selftest`和`--shots`别名；截图参数支持等号形式及shell拆分后的两项形式。

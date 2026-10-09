@@ -1,6 +1,6 @@
 # handoff — 跨机器开发交接
 
-> 最后更新：2026-10-09（Phase 3 已关闭，Phase 4.a/4.b 完成）。
+> 最后更新：2026-10-09（种植模块Phase 0–4已关闭）。
 > 交接对象：新机器上的开发者或 AI 会话。
 > **开工前必读：§2 新机器清单 → §6 命令自检；现行主线是种植模块，先读 [docs/farming/master-plan.md](docs/farming/master-plan.md)；改 demo 地图前必读 [docs/map-schema.md](docs/map-schema.md)。**
 
@@ -10,7 +10,7 @@
    星露谷式多城镇（单镇多张功能地图 + 特殊交互点）和野外战斗触发图（地图只抛事件不承载战斗）。
 2. **daoyan 接入不是现阶段任务**：`docs/daoyan-reuse-plan.md` + `-answers.md` 是背景资料
    （将来移植的目标形态与接口摸底），实验期间**只读不改** daoyan 仓库。
-3. **正式美术使用 ComfyUI 管线**：本机已直连出图，跨机器移交保留为备选；
+3. **现行正式美术使用内置image_gen**：用户确认本机没有ComfyUI；历史脚本与跨机器移交保留为备选；
    原图与候选保留在工作目录，正式图通过 QC 和场景审核后同名接入。
 
 ## 2. 新机器快速上手（checklist）
@@ -53,8 +53,9 @@
     farmtest 40 项全过（详见 [phase-02](docs/farming/phase-02-核心种植系统.md)）
   - **Phase 3 已关闭**：四类地面与现有两种植物正式图片已接入，资产管线与过渡验收完成；
     详见 [phase-03](docs/farming/phase-03-AI作物资产管线.md)。
-  - **Phase 4 执行中，4.a/4.b 已完成**：介质、大画布、兼容存档，以及青玉果树/月华菇运行内容和结构占位；
-    下一步 4.c 正式母版与阶段衍生，详见 [phase-04](docs/farming/phase-04-四类作物扩展.md)。
+  - **Phase 4 已关闭**：四类作物运行、介质/多格/存档和正式图齐备；用户审核果树B＋菌菇A后完成衍生。
+    清单31项均交付或程序生成，31项QC/20项工具/67项流程及前后遮挡像素验证通过；
+    详见[phase-04](docs/farming/phase-04-四类作物扩展.md)。下一阶段Phase 5尚未展开。
 - demo 实验的 P5/P6 **暂缓**（P5 跨机器出图协作模式由种植模块 Phase 3 继承）
 - 开放问题（命名/持久化深度/战斗桩深度）见 demo-phases.md §6，均给了默认值，不阻塞
 
@@ -121,12 +122,11 @@ play.bat farm0                             # Phase 0 拼接验证场景（历史
 改 `assets/` 贴图后，编辑器打开会自动重导入；纯命令行场景跑一次
 `godot --headless --path . --import`。
 
-## 7. 下一步：种植模块 Phase 4.c（果树与真菌正式美术）
+## 7. 下一步：种植模块 Phase 5（喂养与经济联动，尚未展开）
 
-Phase 0–3 已关闭，Phase 4.a/4.b 完成。按
-[phase-04](docs/farming/phase-04-四类作物扩展.md) 继续 4.c：先审核青玉果树与月华菇成熟母版，
-再参考母版衍生阶段。后续美术适量加入东方玄幻意象，详见art-style-sheet.md；
-尚未交付的图片不得标记 delivered。当前31项资产中新增10张为结构占位，现有正式图保留。
+Phase 0–4已关闭；下一步按master-plan §八展开Phase 5任务文档，再按任务级分批实现和提交。
+现有四类作物正式图全部保留，后续美术继续适量加入东方玄幻意象；母版先人工审核后衍生。
+完整生成记录见docs/farming/art-generation-phase04.json，原图/候选/失败报告保留在.art-work/。
 
 已冻结基线（后续阶段直接遵守）：
 
@@ -160,7 +160,7 @@ Phase 0–3 已关闭，Phase 4.a/4.b 完成。按
 
 1. 先读本文档 + docs/farming/master-plan.md（现行主线），然后跑 `test.bat` 确认种植模块基线；详见`docs/farming/testing.md`
 2. 一切地图/主题修改走「源 JSON → bake → 验证」流程，禁止手改 `content/baked/`
-3. 保持当前阶段边界：不接 daoyan、不进入 Phase 5 市场/喂养；ComfyUI 以种植模块现行资产管线为准
+3. 不接daoyan；Phase 5须先展开任务文档，按现行master-plan实施。出图以image_gen及统一后处理/QC为准
 4. 提交纪律：**每个小阶段（任务级）完成即 git 提交**，不等整个 Phase 收尾；
    Phase 级收尾另加：自测全过 + 截图人工核对 + 验收记录勾选
 5. 种植模块一切以 master-plan.md 为准：一次只展开当前 Phase；旧经营地基
