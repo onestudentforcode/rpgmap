@@ -41,6 +41,8 @@ Phase 5界面预览（不写玩家存档，必须带`--fresh`）：
 ```
 
 截图输出`.shots/farm-phase05/market-hungry.png`与`market-fed.png`；游戏中M打开/关闭集市，Esc关闭。
+界面优化后另有`inventory.png`、`market-trade.png`、`market-bulk.png`和`hud.png`。
+预览验证弹窗暂停/恢复相机、逻辑视口边界、数量×5快捷键和工具按钮选择；成功输出`UI PREVIEW OK`。
 仅跑经济核心可用`--headless --path . --script scripts/farming/tests/run_phase05.gd`。
 
 兼容`play.bat farm --farmtest`、`play.bat farm --farm-shots=DIR`。
