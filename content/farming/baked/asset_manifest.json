@@ -403,8 +403,8 @@
     {
       "path": "assets/farming/crops/jade_fruit_tree/stage_0.png",
       "type": "crop_stage",
-      "status": "placeholder",
-      "note": "",
+      "status": "delivered",
+      "note": "2026-10-09 image_gen??????????B??????????+??NEAREST/alpha240??/???/?????QC/????/???67?farmtest?????.art-work/phase04c-20261009/?SHA256 2983ddd1b76071261ea83ce78e236a836f85304cf2187f1e9f2b07ee4fe9f696",
       "size": [
         128,
         192
@@ -425,8 +425,8 @@
     {
       "path": "assets/farming/crops/jade_fruit_tree/stage_1.png",
       "type": "crop_stage",
-      "status": "placeholder",
-      "note": "",
+      "status": "delivered",
+      "note": "2026-10-09 image_gen??????????B??????????+??NEAREST/alpha240??/???/?????QC/????/???67?farmtest?????.art-work/phase04c-20261009/?SHA256 c342022aa65a5d4476ede880581d70e0ba8113671329f06e5afc8ed64e9a3b30",
       "size": [
         128,
         192
@@ -447,8 +447,8 @@
     {
       "path": "assets/farming/crops/jade_fruit_tree/stage_2.png",
       "type": "crop_stage",
-      "status": "placeholder",
-      "note": "",
+      "status": "delivered",
+      "note": "2026-10-09 image_gen??????????B??????????+??NEAREST/alpha240??/???/?????QC/????/???67?farmtest?????.art-work/phase04c-20261009/?SHA256 d3bc1bdb824506cd79aa5bb2ca50be58d246853197cfd02ab26d3d16730823ea",
       "size": [
         128,
         192
@@ -469,8 +469,8 @@
     {
       "path": "assets/farming/crops/jade_fruit_tree/stage_3.png",
       "type": "crop_stage",
-      "status": "placeholder",
-      "note": "",
+      "status": "delivered",
+      "note": "2026-10-09 image_gen??????????B??????????+??NEAREST/alpha240??/???/?????QC/????/???67?farmtest?????.art-work/phase04c-20261009/?SHA256 e7955f9d2edf70b82f54f68b523ef3de6bb8c63264c3e70cf03f999a0ceace64",
       "size": [
         128,
         192
@@ -492,8 +492,8 @@
     {
       "path": "assets/farming/crops/jade_fruit_tree/stage_harvested.png",
       "type": "crop_stage",
-      "status": "placeholder",
-      "note": "",
+      "status": "delivered",
+      "note": "2026-10-09 image_gen??????????B??????????+??NEAREST/alpha240??/???/?????QC/????/???67?farmtest?????.art-work/phase04c-20261009/?SHA256 5c6227b5e71b3ae19a114c62006a5d38cbf2033317936df043f7e205b8a975fc",
       "size": [
         128,
         192
@@ -515,8 +515,8 @@
     {
       "path": "assets/farming/crops/jade_fruit_tree/stage_exhausted.png",
       "type": "crop_stage",
-      "status": "placeholder",
-      "note": "",
+      "status": "delivered",
+      "note": "2026-10-09 image_gen??????????B??????????+??NEAREST/alpha240??/???/?????QC/????/???67?farmtest?????.art-work/phase04c-20261009/?SHA256 9a5fd67c5289504a3c4c9abb0cdd57423476256b82783d9f8ea40778d1abb3c4",
       "size": [
         128,
         192
