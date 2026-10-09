@@ -8,11 +8,11 @@
   "note": "2026-10-09 v2.1 重入库：同管线（分位拉伸 0.05/0.85+中值，seed 202610104）；终版 46 色 σ=10.3 阶占比 63/22/2；QC/平铺/场景目检通过"
  },
  "assets/farming/ground/ground_stone.png": {
-  "status": "requested",
-  "note": "2026-10-09 首批移交包已构建；草泥审核后出图"
+  "status": "delivered",
+  "note": "2026-10-09 v2.1 入库：模板v2出图（seed 202610106）+ quantize_ground（0.05/0.95/中值）；石板分块与拼缝结构可辨；QC/平铺/场景目检通过"
  },
  "assets/farming/ground/ground_tilled.png": {
-  "status": "requested",
-  "note": "2026-10-09 首批移交包已构建；草泥审核后出图"
+  "status": "delivered",
+  "note": "2026-10-09 v2.1 入库：模板v2出图（seed 202610107）+ quantize_ground（0.30/0.95）；水平垄沟 32px 周期成立；QC/平铺/场景目检通过"
  }
 }
