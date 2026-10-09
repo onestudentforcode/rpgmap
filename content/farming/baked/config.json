@@ -58,5 +58,17 @@
     "scarlet_berry_seed": 5,
     "jade_fruit_tree_seed": 3,
     "moon_cap_seed": 6
+  },
+  "economy": {
+    "initial_primeval_stones": 60,
+    "ap_weight": 1,
+    "day_weight": 1,
+    "use_behaviors": [
+      "battle"
+    ],
+    "medium_materials": {
+      "fungal_bed": "fungal_bed_material",
+      "rotten_log": "rotten_log"
+    }
   }
 }

@@ -6,10 +6,30 @@
     "ap_per_day": 24
   },
   "term_names": [
-    "立春", "雨水", "惊蛰", "春分", "清明", "谷雨",
-    "立夏", "小满", "芒种", "夏至", "小暑", "大暑",
-    "立秋", "处暑", "白露", "秋分", "寒露", "霜降",
-    "立冬", "小雪", "大雪", "冬至", "小寒", "大寒"
+    "立春",
+    "雨水",
+    "惊蛰",
+    "春分",
+    "清明",
+    "谷雨",
+    "立夏",
+    "小满",
+    "芒种",
+    "夏至",
+    "小暑",
+    "大暑",
+    "立秋",
+    "处暑",
+    "白露",
+    "秋分",
+    "寒露",
+    "霜降",
+    "立冬",
+    "小雪",
+    "大雪",
+    "冬至",
+    "小寒",
+    "大寒"
   ],
   "ap_costs": {
     "till": 1,
@@ -20,14 +40,35 @@
     "prepare_medium": 1
   },
   "planting_media": [
-    {"id": "soil", "name": "土壤"},
-    {"id": "fungal_bed", "name": "菌床"},
-    {"id": "rotten_log", "name": "朽木"}
+    {
+      "id": "soil",
+      "name": "土壤"
+    },
+    {
+      "id": "fungal_bed",
+      "name": "菌床"
+    },
+    {
+      "id": "rotten_log",
+      "name": "朽木"
+    }
   ],
   "start_inventory": {
     "dew_grass_seed": 10,
     "scarlet_berry_seed": 5,
     "jade_fruit_tree_seed": 3,
     "moon_cap_seed": 6
+  },
+  "economy": {
+    "initial_primeval_stones": 60,
+    "ap_weight": 1,
+    "day_weight": 1,
+    "use_behaviors": [
+      "battle"
+    ],
+    "medium_materials": {
+      "fungal_bed": "fungal_bed_material",
+      "rotten_log": "rotten_log"
+    }
   }
 }

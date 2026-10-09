@@ -20,7 +20,7 @@ func count(item_id: String) -> int:
 
 
 func has(item_id: String, n: int = 1) -> bool:
-	return count(item_id) >= n
+	return n > 0 and count(item_id) >= n
 
 
 func add(item_id: String, n: int) -> void:

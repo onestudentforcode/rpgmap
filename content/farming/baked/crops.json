@@ -50,7 +50,8 @@
       "feed_tags": [
         "wood",
         "yin"
-      ]
+      ],
+      "path_id": "wood"
     },
     {
       "crop_id": "scarlet_berry",
@@ -100,7 +101,8 @@
       "regrowth_duration": 2,
       "feed_tags": [
         "fire"
-      ]
+      ],
+      "path_id": "wood"
     },
     {
       "crop_id": "jade_fruit_tree",
@@ -155,7 +157,8 @@
       "feed_tags": [
         "wood",
         "earth"
-      ]
+      ],
+      "path_id": "wood"
     },
     {
       "crop_id": "moon_cap",
@@ -210,7 +213,8 @@
       "feed_tags": [
         "yin",
         "water"
-      ]
+      ],
+      "path_id": "wood"
     }
   ]
 }
