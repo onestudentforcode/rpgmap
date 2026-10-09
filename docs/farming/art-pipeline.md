@@ -1,7 +1,8 @@
 # 批量出图操作说明
 
-当前完成第一阶段工具建设。正式图由另一台 ComfyUI 生成，本机不部署 ComfyUI。
-工作目录 `.art-work/` 已忽略；原图、候选、报告、移交包不混入正式资产。
+当前完成第一阶段工具建设。**2026-10-09 起本机直连 ComfyUI 出图**（Qwen-Image 2.1
+int8 栈；出图脚本 `gen_ground_batch/gen_crop_masters/gen_crop_stages`），跨机器移交
+模式保留为备选。工作目录 `.art-work/` 已忽略；原图、候选、报告、移交包不混入正式资产。
 
 ## 1. 构建移交包
 
@@ -24,6 +25,9 @@ Compress-Archive -LiteralPath .art-work/handoff/ground -DestinationPath .art-wor
 ## 2. 原图后处理
 
 每个候选集合单独放 `.art-work/raw/candidate_a/assets/farming/...`，保持 manifest 原路径。
+**地面纹理在 postprocess 前先过 `quantize_ground.py`**（亮度分位拉伸→中值→锚点
+吸附；离散色阶不可依赖提示词，参数逐地物固化在工具 DEFAULTS，可 `--params` 覆盖）——
+2026-10-09 实测：无此步的地面成品为纯色块（σ≈1~2、四阶割 90%+ 同阶）。
 部分回传用只包含该批资产的 manifest，或补齐全部候选后再运行。
 
 ```powershell
@@ -77,6 +81,9 @@ python tools/farming/qc_assets.py --target all --report .art-work/reports/baseli
 成熟占比按包围盒高度/64，锚点按 bbox 底部中心；这两项与色板越界为告警，不替代目检。
 阴影贴片为独立程序资产，允许棋盘分离像素，不应用作物孤岛规则。
 
-2026-10-09 占位基线：21 项检查中，凝露草 stage_3 存在分离簇（正式 QC 拒绝）；
-成熟占比和底部锚点存在告警。第一阶段不修饰占位图来冒充正式图；新正式资产必须遵守完整契约。
-原有 farmtest 40 项、phase00 14 项、demo selftest 通过。
+2026-10-09 正式基线：AI 采购口径 14/14 全部 delivered（地面 4 + 作物 10），
+qc all 21 项 0 失败（palette 锚点外色/成熟占比为告警项）；farmtest 40 项、
+phase00 14 项、demo selftest 零回归；平铺/排图/场景截图三重目检通过。
+历史占位基线（凝露草分离簇等差异）已随正式替换消除；占位图保留仅作回滚用途。
+地面管线 = 模板 v2 出图 → quantize_ground → postprocess；作物管线 = 洋红底
+出图（近洋红吸附）→ postprocess 精确键；衍生以审核母版参考锚定。
