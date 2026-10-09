@@ -112,6 +112,21 @@ class PipelineTests(unittest.TestCase):
         self.sprite().save(path)
         self.assertTrue(any("unexpected crop stage" in r["errors"] for r in inspect(self.directory, "crops")))
 
+    def test_non_multiple_padding_and_border_key_preserves_enclosed_highlights(self):
+        source = Image.new("RGB", (1254,1254), (254,253,254))
+        draw = ImageDraw.Draw(source)
+        draw.rectangle((420,380,820,1050),fill=(78,123,78))
+        draw.rectangle((550,550,650,650),fill=(255,255,255))
+        before = source.tobytes()
+        with self.assertRaises(ValueError):
+            process(source,"crop_stage",background="#ffffff")
+        result = process(source,"crop_stage",background="#ffffff",background_tolerance=12,pad_to_multiple=True)
+        self.assertEqual(source.tobytes(),before)
+        self.assertEqual(result.size,(64,64))
+        self.assertEqual(result.getchannel("A").getbbox()[3],62)
+        self.assertIn((255,255,255,255),set(pixels(result)))
+        self.assertNotIn((254,253,254,255),set(pixels(result)))
+
     def test_delivered_guard_and_missing_status_precedence(self):
         path = self.directory / "content/farming/art_status.json"
         path.parent.mkdir(parents=True)

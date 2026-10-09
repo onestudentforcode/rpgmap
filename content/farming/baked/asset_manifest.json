@@ -180,7 +180,7 @@
       "path": "assets/farming/crops/dew_grass/stage_0.png",
       "type": "crop_stage",
       "status": "delivered",
-      "note": "2026-10-09 v2.1 入库：审核母版参考锚定衍生（seed 见 gen_meta_cs.json）；qc all 21 项 0 失败；farm0/farm farmtest、demo selftest 过；全阶段排图目检通过",
+      "note": "2026-10-09 用户工作区图片替换：1254白底原图补边1280→整数20倍NEAREST降64；白底容差12/alpha二值/去孤岛/底部中心；QC/阶段排图/场景截图及farm、farm0、demo回归通过；源图SHA256 3f3b1f09373169eecca41a3dd8c0abc6fbd8e62e08242cfe33e7d3836124a96a",
       "size": [
         64,
         64
@@ -202,7 +202,7 @@
       "path": "assets/farming/crops/dew_grass/stage_1.png",
       "type": "crop_stage",
       "status": "delivered",
-      "note": "2026-10-09 v2.1 入库：审核母版参考锚定衍生（seed 见 gen_meta_cs.json）；qc all 21 项 0 失败；farm0/farm farmtest、demo selftest 过；全阶段排图目检通过",
+      "note": "2026-10-09 用户工作区图片替换：1254白底原图补边1280→整数20倍NEAREST降64；白底容差12/alpha二值/去孤岛/底部中心；QC/阶段排图/场景截图及farm、farm0、demo回归通过；源图SHA256 2eed6d84860698b07fc5900af357ea7921b2abbf00849567730458b9774658ea",
       "size": [
         64,
         64
@@ -224,7 +224,7 @@
       "path": "assets/farming/crops/dew_grass/stage_2.png",
       "type": "crop_stage",
       "status": "delivered",
-      "note": "2026-10-09 v2.1 入库：审核母版参考锚定衍生（seed 见 gen_meta_cs.json）；qc all 21 项 0 失败；farm0/farm farmtest、demo selftest 过；全阶段排图目检通过",
+      "note": "2026-10-09 用户工作区图片替换：1254白底原图补边1280→整数20倍NEAREST降64；白底容差12/alpha二值/去孤岛/底部中心；QC/阶段排图/场景截图及farm、farm0、demo回归通过；源图SHA256 254fc747986c0934b29e8cbba86726ffef68e217dc8075473099e0631c896472",
       "size": [
         64,
         64
@@ -246,7 +246,7 @@
       "path": "assets/farming/crops/dew_grass/stage_3.png",
       "type": "crop_stage",
       "status": "delivered",
-      "note": "2026-10-09 v2.1 入库：母版候选A（seed 111/113）经人工审核批准；qc/排图/场景目检通过",
+      "note": "2026-10-09 用户工作区图片替换：1254白底原图补边1280→整数20倍NEAREST降64；白底容差12/alpha二值/去孤岛/底部中心；QC/阶段排图/场景截图及farm、farm0、demo回归通过；源图SHA256 fa7a54837304de0cc2762f016d1f98fdcd2d92a3d6a64e03133a7b8b7a64341c",
       "size": [
         64,
         64
@@ -269,7 +269,7 @@
       "path": "assets/farming/crops/scarlet_berry/stage_0.png",
       "type": "crop_stage",
       "status": "delivered",
-      "note": "2026-10-09 v2.1 入库：审核母版参考锚定衍生（seed 见 gen_meta_cs.json）；qc all 21 项 0 失败；farm0/farm farmtest、demo selftest 过；全阶段排图目检通过",
+      "note": "2026-10-09 用户工作区图片替换：1254白底原图补边1280→整数20倍NEAREST降64；白底容差12/alpha二值/去孤岛/底部中心；QC/阶段排图/场景截图及farm、farm0、demo回归通过；源图SHA256 4032687b8093f652d3f0f44dbbf9860f56155c7521efe429346595e8e7cc22f1",
       "size": [
         64,
         64
@@ -291,7 +291,7 @@
       "path": "assets/farming/crops/scarlet_berry/stage_1.png",
       "type": "crop_stage",
       "status": "delivered",
-      "note": "2026-10-09 v2.1 入库：审核母版参考锚定衍生（seed 见 gen_meta_cs.json）；qc all 21 项 0 失败；farm0/farm farmtest、demo selftest 过；全阶段排图目检通过",
+      "note": "2026-10-09 用户工作区图片替换：1254白底原图补边1280→整数20倍NEAREST降64；白底容差12/alpha二值/去孤岛/底部中心；QC/阶段排图/场景截图及farm、farm0、demo回归通过；源图SHA256 52f4960b9f3c3ffc941485f9480f65e07f1c59b42a84b63a20c28a1e160df4b3",
       "size": [
         64,
         64
@@ -313,7 +313,7 @@
       "path": "assets/farming/crops/scarlet_berry/stage_2.png",
       "type": "crop_stage",
       "status": "delivered",
-      "note": "2026-10-09 v2.1 入库：审核母版参考锚定衍生（seed 见 gen_meta_cs.json）；qc all 21 项 0 失败；farm0/farm farmtest、demo selftest 过；全阶段排图目检通过",
+      "note": "2026-10-09 用户工作区图片替换：1254白底原图补边1280→整数20倍NEAREST降64；白底容差12/alpha二值/去孤岛/底部中心；QC/阶段排图/场景截图及farm、farm0、demo回归通过；源图SHA256 87d64db677475d5b84fe8915293016b3cea48e27f395d570a2558319a9fac477",
       "size": [
         64,
         64
@@ -335,7 +335,7 @@
       "path": "assets/farming/crops/scarlet_berry/stage_3.png",
       "type": "crop_stage",
       "status": "delivered",
-      "note": "2026-10-09 v2.1 入库：母版候选A（seed 111/113）经人工审核批准；qc/排图/场景目检通过",
+      "note": "2026-10-09 用户工作区图片替换：1254白底原图补边1280→整数20倍NEAREST降64；白底容差12/alpha二值/去孤岛/底部中心；QC/阶段排图/场景截图及farm、farm0、demo回归通过；源图SHA256 fb0a59b4b62c57b5f4b66ac3f6d3d096cee9bef71cada2e1a5ea0c006c09784a",
       "size": [
         64,
         64
@@ -358,7 +358,7 @@
       "path": "assets/farming/crops/scarlet_berry/stage_harvested.png",
       "type": "crop_stage",
       "status": "delivered",
-      "note": "2026-10-09 v2.1 入库：审核母版参考锚定衍生（seed 见 gen_meta_cs.json）；qc all 21 项 0 失败；farm0/farm farmtest、demo selftest 过；全阶段排图目检通过",
+      "note": "2026-10-09 用户工作区图片替换：1254白底原图补边1280→整数20倍NEAREST降64；白底容差12/alpha二值/去孤岛/底部中心；QC/阶段排图/场景截图及farm、farm0、demo回归通过；源图SHA256 ae90b019d03d9c350aa34eb4b47b19dd8fd83d1cd7a09db3b028450be0d29d8a",
       "size": [
         64,
         64
@@ -381,7 +381,7 @@
       "path": "assets/farming/crops/scarlet_berry/stage_exhausted.png",
       "type": "crop_stage",
       "status": "delivered",
-      "note": "2026-10-09 v2.1 入库：审核母版参考锚定衍生（seed 见 gen_meta_cs.json）；qc all 21 项 0 失败；farm0/farm farmtest、demo selftest 过；全阶段排图目检通过",
+      "note": "2026-10-09 用户工作区图片替换：1254白底原图补边1280→整数20倍NEAREST降64；白底容差12/alpha二值/去孤岛/底部中心；QC/阶段排图/场景截图及farm、farm0、demo回归通过；源图SHA256 458c99c9d8e98e5e85bfc93273dd251cfab8fdf2962999c9b13f18f5abf7a5de",
       "size": [
         64,
         64

@@ -278,3 +278,20 @@ status 语义：`placeholder`（当前占位）/ `requested`（已列入采购�
   仍按 §7.3 流程调参记录。
 - **登记**：art_status 14/14 delivered（含作物 10 项补录修正）；manifest 重建
   （AI 口径未交付 0 项）。提交：46eee5d、d8fa246、b0123f9、a04ce36、be2d8af。
+
+### 2026-10-09 用户工作区植物图片替换
+
+- 新输入：凝露草 `s0..s3.png` 映射 `stage_0..3.png`；赤纹果六张同名阶段图，
+  共十张1254×1254 RGB近白底原图。此次替换不沿用旧图seed/母版生成记录。
+- 原图备份与替换前文件：`.art-work/crop-import-20261009/{raw,before,source-originals}/`；
+  `source_records.json`留存源路径/SHA256，资产状态note亦记录源哈希。
+- 后处理新增显式`--pad-to-multiple`：1254补边到1280，以20倍NEAREST降64；
+  `--background-tolerance 12 --background '#ffffff'`只去除边界连通白底，保留封闭高光；
+  二值alpha、8连通去孤岛、2px安全边与底部中心对齐。默认严格整倍输入规则保持。
+- 成熟高度占比：凝露草62.5%、赤纹果60.9%；生长阶段高度递增，采后无果/枯竭态可区分。
+  十张作物均有色板精确值越界告警；阶段排图审核后保留用户原色，不强制量化到冻结锚点。
+- 验证：QC all 21项0错误；工具12项测试通过；farmtest、farm0、demo selftest通过。
+  `.shots/farm-crops-20261009/`四张场景截图审核通过。首次启动脚本的截图参数被shell拆成两项，
+  改为直接调用console版、完整`--farm-shots=res://...`参数与gl_compatibility后成功，旧实例已关闭。
+  项目默认渲染方式不变；CropRenderer直接从PNG创建纹理，项目Nearest设置生效，无mipmap依赖。
+- 十张图维持delivered并重建manifest；种植数据、逻辑与渲染代码不变。

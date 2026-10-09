@@ -87,3 +87,16 @@ phase00 14 项、demo selftest 零回归；平铺/排图/场景截图三重目�
 历史占位基线（凝露草分离簇等差异）已随正式替换消除；占位图保留仅作回滚用途。
 地面管线 = 模板 v2 出图 → quantize_ground → postprocess；作物管线 = 洋红底
 出图（近洋红吸附）→ postprocess 精确键；衍生以审核母版参考锚定。
+
+## 用户工作区非整倍白底图接入（2026-10-09）
+
+128或64整倍数透明PNG仍为标准回传规格；兼容已有1254px白底图时，显式选择：
+
+```powershell
+python tools/farming/postprocess_assets.py --manifest .art-work/crop-import-20261009/manifest.json --input .art-work/crop-import-20261009/raw --output .art-work/crop-import-20261009/processed --background '#ffffff' --background-tolerance 12 --pad-to-multiple
+```
+
+`--pad-to-multiple`只补边，不拉伸主体：1254补到1280再以20倍NEAREST降64。
+`--background-tolerance`默认0，色键去除仅遍历边界连通背景，保留主体内部封闭高光。
+原图备份、处理报告与来源哈希留在该run目录；凝露草s0..s3另归档source-originals。
+此轮阶段排图在`.art-work/review/crops_processed.png`，场景截图在`.shots/farm-crops-20261009/`。

@@ -6,14 +6,22 @@ Use --background '#ff00ff' for crop images generated on a solid key background.
 """
 import argparse
 import json
+from collections import deque
 from pathlib import Path
 from PIL import Image
 from asset_common import ROOT, components, rgb, pixels
 from qc_assets import check_image
 
 
-def process(image, kind, threshold=128, background=None):
+def process(image, kind, threshold=128, background=None, background_tolerance=0, pad_to_multiple=False):
     w, h = image.size
+    if pad_to_multiple and kind == "crop_stage" and w == h and w >= 64 and w % 64:
+        if background is None:
+            raise ValueError("padding opaque source requires an explicit background key")
+        size = ((w + 63) // 64) * 64
+        padded = Image.new("RGBA", (size, size), (*rgb(background), 255))
+        padded.paste(image.convert("RGBA"), ((size-w)//2, (size-h)//2))
+        image, w, h = padded, size, size
     if w != h or w < 64 or w % 64:
         raise ValueError("source must be square, >=64, and an integer multiple of 64")
     if kind == "ground":
@@ -38,12 +46,24 @@ def process(image, kind, threshold=128, background=None):
                 px[x, 63-offset] = tuple(round(b[c] * (1-weight) + mean[c] * weight) for c in range(3))
         return image
     image = image.convert("RGBA")
+    image = image.resize((64, 64), Image.Resampling.NEAREST)
     if background is not None:
         key = rgb(background)
-        image.putdata([(*p[:3], 0 if p[:3] == key else p[3]) for p in pixels(image)])
+        px = image.load()
+        # Flood only border-connected key pixels, preserving enclosed leaf/dew highlights.
+        candidates = {(x, y) for y in range(64) for x in range(64)
+                      if max(abs(px[x,y][c]-key[c]) for c in range(3)) <= background_tolerance}
+        queue = deque(p for p in candidates if p[0] in (0,63) or p[1] in (0,63))
+        visited = set(queue)
+        while queue:
+            x, y = queue.popleft()
+            px[x,y] = (0,0,0,0)
+            for point in ((x-1,y),(x+1,y),(x,y-1),(x,y+1)):
+                if point in candidates and point not in visited:
+                    visited.add(point)
+                    queue.append(point)
     elif image.getchannel("A").getextrema() == (255, 255):
         raise ValueError("opaque crop source: supply exact --background key or transparent PNG")
-    image = image.resize((64, 64), Image.Resampling.NEAREST)
     image.putalpha(image.getchannel("A").point(lambda a: 255 if a >= threshold else 0))
     groups = components(image.getchannel("A"))
     if not groups:
@@ -71,6 +91,8 @@ def main():
     parser.add_argument("--output", type=Path, required=True)
     parser.add_argument("--alpha-threshold", type=int, default=128)
     parser.add_argument("--background")
+    parser.add_argument("--background-tolerance", type=int, default=0, help="RGB key tolerance, only border-connected pixels")
+    parser.add_argument("--pad-to-multiple", action="store_true", help="pad crop canvas to next multiple of 64 before integer NEAREST reduction")
     args = parser.parse_args()
     raw, out = args.input.resolve(), args.output.resolve()
     assets = (ROOT / "assets").resolve()
@@ -78,6 +100,8 @@ def main():
         parser.error("raw/output must be separate, non-nested directories; output cannot be assets/")
     if not 1 <= args.alpha_threshold <= 255:
         parser.error("alpha threshold must be 1..255")
+    if not 0 <= args.background_tolerance <= 255:
+        parser.error("background tolerance must be 0..255")
     if out.exists() and any(out.iterdir()):
         parser.error("output must be empty; use a new run directory")
     entries = json.loads(args.manifest.read_text(encoding="utf-8"))["assets"]
@@ -92,7 +116,8 @@ def main():
         result = {"path": rel.as_posix(), "errors": [], "warnings": []}
         try:
             with Image.open(source) as image:
-                output = process(image, entry["type"], args.alpha_threshold, args.background)
+                output = process(image, entry["type"], args.alpha_threshold, args.background,
+                                 args.background_tolerance, args.pad_to_multiple)
             destination.parent.mkdir(parents=True, exist_ok=True)
             output.save(destination)
             result["errors"], result["warnings"] = check_image(destination, entry)
