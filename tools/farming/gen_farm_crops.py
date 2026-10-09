@@ -15,6 +15,7 @@
   python tools/farming/gen_farm_crops.py --verify   只校验现有文件
 """
 
+import argparse
 import json
 import os
 import random
@@ -110,7 +111,61 @@ def _shrub_stage(kind):
     return img
 
 
+def _tree_stage(kind):
+    """2×2青玉果树结构占位：扭干、层叠树冠、玉果；非正式美术。"""
+    from PIL import Image, ImageDraw
+    img = Image.new("RGBA", (128, 192))
+    d = ImageDraw.Draw(img)
+    bark = [rgb(c) + (255,) for c in _colors["bark"]]
+    jade = [rgb(c) + (255,) for c in _colors["jade"]]
+    leaves = [LEAF_DARK + (255,), LEAF + (255,), LEAF_HI + (255,)]
+    if kind == 0:
+        d.ellipse((55, 174, 72, 189), fill=jade[0])
+        d.line((59, 178, 67, 183), fill=jade[2], width=2)
+        return img
+    height = 50 if kind == 1 else 86 if kind == 2 else 128
+    top = 190 - height
+    exhausted = kind == "exhausted"
+    colors = [WITHER_DARK + (255,), WITHER + (255,), bark[2]] if exhausted else leaves
+    d.line([(64, 184), (59, 166), (66, top + 24)], fill=bark[0], width=10)
+    d.line([(63, 187), (62, 165), (67, top + 30)], fill=bark[1], width=3)
+    d.polygon([(50, 189), (59, 179), (67, 178), (77, 189)], fill=bark[0])
+    radius = 18 if kind == 1 else 33 if kind == 2 else 49
+    d.ellipse((64-radius, top+12, 63+radius, top+height//2+10), fill=colors[0])
+    d.ellipse((64-radius+8, top, 63+radius-5, top+height//2), fill=colors[1])
+    d.ellipse((64-radius+12, top+7, 62, top+height//3), fill=colors[2])
+    if kind == 3:
+        for x,y in [(36,top+38),(69,top+23),(87,top+47),(58,top+58)]:
+            d.ellipse((x,y,x+9,y+11), fill=jade[1])
+            d.line((x+3,y+2,x+3,y+6), fill=jade[3], width=2)
+    return img
+
+
+def _fungus_stage(kind):
+    """月华菇结构占位：银紫菌盖及实色月牙纹，无漂浮发光。"""
+    img = _canvas()
+    d = p0._draw(img)
+    moon = [rgb(c) + (255,) for c in _colors["moon"]]
+    d.ellipse((21, 56, 42, 61), fill=moon[0])
+    if kind == 0:
+        d.line([(25,59),(30,56),(35,59),(39,57)], fill=moon[2], width=2)
+        return img
+    top = {1:46, 2:34, 3:22}.get(kind,22)
+    d.rectangle((29, top+8, 35, 58), fill=moon[2])
+    radius = {1:9, 2:15, 3:22}.get(kind,22)
+    d.pieslice((32-radius, top, 31+radius, top+24),180,360,fill=moon[0])
+    d.pieslice((34-radius, top, 29+radius, top+19),180,360,fill=moon[1])
+    if kind == 3:
+        d.arc((22,25,32,35),60,290,fill=moon[3],width=2)
+        d.line((14,34,20,35),fill=moon[2],width=2)
+    return img
+
+
 def _draw_crop(cid, kind):
+    if cid == "jade_fruit_tree":
+        return _tree_stage(kind)
+    if cid == "moon_cap":
+        return _fungus_stage(kind)
     if cid == "dew_grass" and isinstance(kind, int):
         return _herb_stage(kind)
     if cid == "scarlet_berry":
@@ -129,13 +184,22 @@ def outputs_for(crop):
 
 
 def main():
-    only_verify = "--verify" in sys.argv
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--verify", action="store_true")
+    parser.add_argument("--crop", action="append", help="Only this crop_id; repeat for multiple crops")
+    args = parser.parse_args()
+    only_verify = args.verify
     baked = os.path.join(ROOT, "content", "farming", "baked", "crops.json")
     if not os.path.isfile(baked):
         print("[错误] 缺少 %s（先运行 python tools/farming/bake_farm.py）" % baked)
         sys.exit(2)
     with open(baked, "r", encoding="utf-8") as f:
         crops = json.load(f).get("crops", [])
+    if args.crop:
+        unknown = set(args.crop) - {c["crop_id"] for c in crops}
+        if unknown:
+            parser.error("unknown crop_id: " + ", ".join(sorted(unknown)))
+        crops = [c for c in crops if c["crop_id"] in args.crop]
 
     fails = []
     if not only_verify:

@@ -15,6 +15,7 @@ GROUND_DESC = {
     "tilled": "dark warm brown cultivated soil, horizontal furrows repeated every 32px on this 128px canvas",
 }
 STAGE_DESC = {"seed": "small planted seed, no soil mound", "sprout": "small seedling",
+              "mycelium": "compact connected mycelium knot, no mushroom cap yet",
               "growing": "young plant smaller than mature reference", "mature": "fully mature plant",
               "harvested": "same mature plant with all fruit removed, healthy leaves",
               "exhausted": "same plant exhausted, gray brown drooping leaves, no fruit"}
@@ -66,8 +67,13 @@ def build(batch, output):
         else:
             crop = Path(rel).parent.name
             identity = {"dew_grass": "slender green medicinal grass with dew drops attached to leaves",
-                        "scarlet_berry": "rounded green shrub with scarlet berries"}.get(crop, "cultivation fantasy plant " + crop)
-            colors = palette["crops"]["leaf"] + palette["crops"]["dew" if crop == "dew_grass" else "berry"]
+                        "scarlet_berry": "rounded green shrub with scarlet berries",
+                        "jade_fruit_tree": "small spirit orchard tree, gently twisted old trunk, layered cloud-shaped crown, jade-green fruits with subtle carved-jade-like natural veins, all ornament attached to plant",
+                        "moon_cap": "compact medicinal spirit mushroom, silver-violet cap with a subtle natural crescent-shaped marking, pale jade gills, all ornament attached to mushroom"}.get(crop, "cultivation fantasy plant " + crop)
+            accent = {"dew_grass": "dew", "jade_fruit_tree": "jade", "moon_cap": "moon"}.get(crop, "berry")
+            colors = palette["crops"]["leaf"] + palette["crops"][accent]
+            if crop == "jade_fruit_tree":
+                colors += palette["crops"]["bark"]
             if entry["stage"] == "exhausted":
                 colors = palette["crops"]["wither"]
             canvas = entry["size"]
@@ -76,7 +82,8 @@ def build(batch, output):
                 prompt += ", subject height 55-75 percent of canvas"
             else:
                 prompt += ", preserve approved mature reference leaf shape, hue, view and lighting"
-            reference = None if entry["stage"] == "mature" else f"approved/assets/farming/crops/{crop}/stage_3.png"
+            master = next(e["path"] for e in all_entries if e["type"] == "crop_stage" and Path(e["path"]).parent.name == crop and e["stage"] == "mature")
+            reference = None if entry["stage"] == "mature" else "approved/" + master
             prompt += ", palette anchors " + ", ".join(colors)
         prompts.append({"path": rel, "candidates": 2 if batch in ("ground", "crop_masters") else 1,
                         "reference_required": reference, "prompt": prompt,
@@ -89,7 +96,8 @@ def build(batch, output):
 作物先母版，人工审核通过后才允许衍生；reference_required 指向审核后的正式母版，不能使用占位图代替。
 不锁定未经验证的模型或工作流；由出图机选择可用工作流，回传必须附 workflow JSON、模型版本、seed、采样器、steps、CFG、提示词及参考图记录。
 
-各候选放独立 raw/candidate_a/ 或 raw/candidate_b/ 根目录，内部按 manifest 中 assets/farming/... 原路径放置；128×128 PNG。
+各候选放独立 raw/candidate_a/ 或 raw/candidate_b/ 根目录，内部按 manifest 中 assets/farming/... 原路径放置。
+PNG尺寸按prompts.json：通常为manifest目标画布的2倍；果树256×384，64px作物128×128。
 作物优先透明背景；若采用纯色背景，记录准确 hex 色键，本机用 --background 指定。地面完全不透明。
 缺少出图机能力或参考母版时停止对应任务并说明原因，禁止把占位图标成正式图。
 

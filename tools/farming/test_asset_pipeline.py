@@ -105,7 +105,8 @@ class PipelineTests(unittest.TestCase):
 
     def test_missing_and_extra_stage(self):
         results = inspect(self.directory, "crops")
-        self.assertEqual(len(results), 10)
+        expected = [e for e in build_manifest()["assets"] if e["type"] == "crop_stage"]
+        self.assertEqual({r["path"] for r in results}, {e["path"] for e in expected})
         self.assertTrue(all("missing required asset" in r["errors"] for r in results))
         path = self.directory / "assets/farming/crops/dew_grass/stage_99.png"
         path.parent.mkdir(parents=True)

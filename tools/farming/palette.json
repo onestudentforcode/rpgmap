@@ -12,7 +12,10 @@
     "dew": ["#96d2eb"],
     "berry": ["#c44a3e", "#e07a5e"],
     "wither": ["#695c46", "#827358"],
-    "seed": ["#6c5335", "#846741"]
+    "seed": ["#6c5335", "#846741"],
+    "bark": ["#695c46", "#846741", "#b08c5c"],
+    "jade": ["#3e6e64", "#5fa08f", "#8fd0b8", "#d8f0e4"],
+    "moon": ["#575978", "#8586a5", "#b8bfd8", "#d8f0e4"]
   },
   "transition": {"outer_radius": 13, "diagonal_radius": 6, "dither_rows": 2, "dither_periods": [2, 4], "rim_width": 2, "rim_dark_factor": 0.85, "rim_deep_factor": 0.72}
 }

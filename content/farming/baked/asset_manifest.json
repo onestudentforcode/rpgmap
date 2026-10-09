@@ -401,6 +401,230 @@
       ]
     },
     {
+      "path": "assets/farming/crops/jade_fruit_tree/stage_0.png",
+      "type": "crop_stage",
+      "status": "placeholder",
+      "note": "",
+      "size": [
+        128,
+        192
+      ],
+      "stage": "seed",
+      "constraints": [
+        "128×192 RGBA 透明底",
+        "alpha 二值（0/255）",
+        "2px 全透明安全边",
+        "底部中心锚点（贴地）",
+        "斜俯视 2.5D、光从左上",
+        "无孤岛像素簇"
+      ],
+      "refs": [
+        "crop:jade_fruit_tree（青玉果树/tree，regrow）"
+      ]
+    },
+    {
+      "path": "assets/farming/crops/jade_fruit_tree/stage_1.png",
+      "type": "crop_stage",
+      "status": "placeholder",
+      "note": "",
+      "size": [
+        128,
+        192
+      ],
+      "stage": "sprout",
+      "constraints": [
+        "128×192 RGBA 透明底",
+        "alpha 二值（0/255）",
+        "2px 全透明安全边",
+        "底部中心锚点（贴地）",
+        "斜俯视 2.5D、光从左上",
+        "无孤岛像素簇"
+      ],
+      "refs": [
+        "crop:jade_fruit_tree（青玉果树/tree，regrow）"
+      ]
+    },
+    {
+      "path": "assets/farming/crops/jade_fruit_tree/stage_2.png",
+      "type": "crop_stage",
+      "status": "placeholder",
+      "note": "",
+      "size": [
+        128,
+        192
+      ],
+      "stage": "growing",
+      "constraints": [
+        "128×192 RGBA 透明底",
+        "alpha 二值（0/255）",
+        "2px 全透明安全边",
+        "底部中心锚点（贴地）",
+        "斜俯视 2.5D、光从左上",
+        "无孤岛像素簇"
+      ],
+      "refs": [
+        "crop:jade_fruit_tree（青玉果树/tree，regrow）"
+      ]
+    },
+    {
+      "path": "assets/farming/crops/jade_fruit_tree/stage_3.png",
+      "type": "crop_stage",
+      "status": "placeholder",
+      "note": "",
+      "size": [
+        128,
+        192
+      ],
+      "stage": "mature",
+      "constraints": [
+        "128×192 RGBA 透明底",
+        "alpha 二值（0/255）",
+        "2px 全透明安全边",
+        "底部中心锚点（贴地）",
+        "斜俯视 2.5D、光从左上",
+        "无孤岛像素簇",
+        "成熟期主体占画布 55–75%"
+      ],
+      "refs": [
+        "crop:jade_fruit_tree（青玉果树/tree，regrow）"
+      ]
+    },
+    {
+      "path": "assets/farming/crops/jade_fruit_tree/stage_harvested.png",
+      "type": "crop_stage",
+      "status": "placeholder",
+      "note": "",
+      "size": [
+        128,
+        192
+      ],
+      "stage": "harvested",
+      "constraints": [
+        "128×192 RGBA 透明底",
+        "alpha 二值（0/255）",
+        "2px 全透明安全边",
+        "底部中心锚点（贴地）",
+        "斜俯视 2.5D、光从左上",
+        "无孤岛像素簇",
+        "同母版衍生：采收后再生长形态（无果）"
+      ],
+      "refs": [
+        "crop:jade_fruit_tree（regrow ×3，再生长 3 天）"
+      ]
+    },
+    {
+      "path": "assets/farming/crops/jade_fruit_tree/stage_exhausted.png",
+      "type": "crop_stage",
+      "status": "placeholder",
+      "note": "",
+      "size": [
+        128,
+        192
+      ],
+      "stage": "exhausted",
+      "constraints": [
+        "128×192 RGBA 透明底",
+        "alpha 二值（0/255）",
+        "2px 全透明安全边",
+        "底部中心锚点（贴地）",
+        "斜俯视 2.5D、光从左上",
+        "无孤岛像素簇",
+        "同母版衍生：枯竭形态（灰褐下垂，待清理）"
+      ],
+      "refs": [
+        "crop:jade_fruit_tree（regrow ×3，再生长 3 天）"
+      ]
+    },
+    {
+      "path": "assets/farming/crops/moon_cap/stage_0.png",
+      "type": "crop_stage",
+      "status": "placeholder",
+      "note": "",
+      "size": [
+        64,
+        64
+      ],
+      "stage": "mycelium",
+      "constraints": [
+        "64×64 RGBA 透明底",
+        "alpha 二值（0/255）",
+        "2px 全透明安全边",
+        "底部中心锚点（贴地）",
+        "斜俯视 2.5D、光从左上",
+        "无孤岛像素簇"
+      ],
+      "refs": [
+        "crop:moon_cap（月华菇/fungus，remove）"
+      ]
+    },
+    {
+      "path": "assets/farming/crops/moon_cap/stage_1.png",
+      "type": "crop_stage",
+      "status": "placeholder",
+      "note": "",
+      "size": [
+        64,
+        64
+      ],
+      "stage": "sprout",
+      "constraints": [
+        "64×64 RGBA 透明底",
+        "alpha 二值（0/255）",
+        "2px 全透明安全边",
+        "底部中心锚点（贴地）",
+        "斜俯视 2.5D、光从左上",
+        "无孤岛像素簇"
+      ],
+      "refs": [
+        "crop:moon_cap（月华菇/fungus，remove）"
+      ]
+    },
+    {
+      "path": "assets/farming/crops/moon_cap/stage_2.png",
+      "type": "crop_stage",
+      "status": "placeholder",
+      "note": "",
+      "size": [
+        64,
+        64
+      ],
+      "stage": "growing",
+      "constraints": [
+        "64×64 RGBA 透明底",
+        "alpha 二值（0/255）",
+        "2px 全透明安全边",
+        "底部中心锚点（贴地）",
+        "斜俯视 2.5D、光从左上",
+        "无孤岛像素簇"
+      ],
+      "refs": [
+        "crop:moon_cap（月华菇/fungus，remove）"
+      ]
+    },
+    {
+      "path": "assets/farming/crops/moon_cap/stage_3.png",
+      "type": "crop_stage",
+      "status": "placeholder",
+      "note": "",
+      "size": [
+        64,
+        64
+      ],
+      "stage": "mature",
+      "constraints": [
+        "64×64 RGBA 透明底",
+        "alpha 二值（0/255）",
+        "2px 全透明安全边",
+        "底部中心锚点（贴地）",
+        "斜俯视 2.5D、光从左上",
+        "无孤岛像素簇",
+        "成熟期主体占画布 55–75%"
+      ],
+      "refs": [
+        "crop:moon_cap（月华菇/fungus，remove）"
+      ]
+    },
+    {
       "path": "assets/farming/crops/_placeholder/shadow_ellipse.png",
       "type": "utility",
       "status": "generated",
