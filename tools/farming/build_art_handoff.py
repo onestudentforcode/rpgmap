@@ -31,6 +31,8 @@ def build(batch, output):
             return e.get("stage") == "mature"
         return e["path"].split("/")[-2] == batch and e.get("stage") != "mature"
     entries = [e for e in all_entries if selected(e)]
+    if not entries:
+        raise ValueError("unknown/empty batch: use ground, crop_masters or a registered crop_id")
     if output.exists() and any(output.iterdir()):
         raise ValueError("output must be empty; use a new package directory")
     output.mkdir(parents=True, exist_ok=True)
@@ -63,11 +65,13 @@ def build(batch, output):
             reference = None
         else:
             crop = Path(rel).parent.name
-            identity = "slender green medicinal grass with dew drops attached to leaves" if crop == "dew_grass" else "rounded green shrub with scarlet berries"
+            identity = {"dew_grass": "slender green medicinal grass with dew drops attached to leaves",
+                        "scarlet_berry": "rounded green shrub with scarlet berries"}.get(crop, "cultivation fantasy plant " + crop)
             colors = palette["crops"]["leaf"] + palette["crops"]["dew" if crop == "dew_grass" else "berry"]
             if entry["stage"] == "exhausted":
                 colors = palette["crops"]["wither"]
-            prompt = "128x128 pixel art, muted oriental cultivation fantasy plant, single isolated sprite, non-isometric oblique overhead 2.5D rear-side 45 degree view, upper-left light at 10-11 o'clock, transparent background, centered ground contact with 4px bottom padding, " + identity + ", " + STAGE_DESC[entry["stage"]]
+            canvas = entry["size"]
+            prompt = "%dx%d pixel art, muted oriental cultivation fantasy plant, single isolated sprite, non-isometric oblique overhead 2.5D rear-side 45 degree view, upper-left light at 10-11 o'clock, transparent background, centered ground contact with 4px bottom padding, " % (canvas[0]*2, canvas[1]*2) + identity + ", " + STAGE_DESC.get(entry["stage"], entry["stage"])
             if entry["stage"] == "mature":
                 prompt += ", subject height 55-75 percent of canvas"
             else:
@@ -113,7 +117,7 @@ play.bat farm --farm-shots=.shots/farm-phase03
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--batch", choices=["ground", "crop_masters", "dew_grass", "scarlet_berry"], required=True)
+    parser.add_argument("--batch", required=True, help="ground, crop_masters or registered crop_id (non-mature stages)")
     parser.add_argument("--output", type=Path, required=True)
     args = parser.parse_args()
     try:

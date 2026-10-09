@@ -13,8 +13,16 @@ from asset_common import ROOT, components, rgb, pixels
 from qc_assets import check_image
 
 
-def process(image, kind, threshold=128, background=None, background_tolerance=0, pad_to_multiple=False):
+def process(image, kind, threshold=128, background=None, background_tolerance=0, pad_to_multiple=False,
+            target_size=(64, 64)):
     w, h = image.size
+    tw, th = target_size
+    if any(not isinstance(v, int) or v < 64 or v % 64 for v in (tw, th)):
+        raise ValueError("target canvas must use positive multiples of 64")
+    if kind == "ground" and (tw, th) != (64, 64):
+        raise ValueError("ground target must remain 64x64")
+    if pad_to_multiple and (tw, th) != (64, 64):
+        raise ValueError("padding is supported only for the 64x64 crop contract")
     if pad_to_multiple and kind == "crop_stage" and w == h and w >= 64 and w % 64:
         if background is None:
             raise ValueError("padding opaque source requires an explicit background key")
@@ -22,8 +30,8 @@ def process(image, kind, threshold=128, background=None, background_tolerance=0,
         padded = Image.new("RGBA", (size, size), (*rgb(background), 255))
         padded.paste(image.convert("RGBA"), ((size-w)//2, (size-h)//2))
         image, w, h = padded, size, size
-    if w != h or w < 64 or w % 64:
-        raise ValueError("source must be square, >=64, and an integer multiple of 64")
+    if w < tw or h < th or w % tw or h % th or w // tw != h // th:
+        raise ValueError("source must match target aspect and be an integer multiple of target canvas")
     if kind == "ground":
         if "transparency" in image.info or ("A" in image.getbands() and image.getchannel("A").getextrema() != (255, 255)):
             raise ValueError("ground source must be fully opaque")
@@ -46,14 +54,14 @@ def process(image, kind, threshold=128, background=None, background_tolerance=0,
                 px[x, 63-offset] = tuple(round(b[c] * (1-weight) + mean[c] * weight) for c in range(3))
         return image
     image = image.convert("RGBA")
-    image = image.resize((64, 64), Image.Resampling.NEAREST)
+    image = image.resize((tw, th), Image.Resampling.NEAREST)
     if background is not None:
         key = rgb(background)
         px = image.load()
         # Flood only border-connected key pixels, preserving enclosed leaf/dew highlights.
-        candidates = {(x, y) for y in range(64) for x in range(64)
+        candidates = {(x, y) for y in range(th) for x in range(tw)
                       if max(abs(px[x,y][c]-key[c]) for c in range(3)) <= background_tolerance}
-        queue = deque(p for p in candidates if p[0] in (0,63) or p[1] in (0,63))
+        queue = deque(p for p in candidates if p[0] in (0,tw-1) or p[1] in (0,th-1))
         visited = set(queue)
         while queue:
             x, y = queue.popleft()
@@ -74,11 +82,11 @@ def process(image, kind, threshold=128, background=None, background_tolerance=0,
             px[x, y] = (0, 0, 0, 0)
     bbox = image.getchannel("A").getbbox()
     x0, y0, x1, y1 = bbox
-    if x1-x0 > 60 or y1-y0 > 60:
-        raise ValueError("subject exceeds 60px safety area; regenerate with more padding")
+    if x1-x0 > tw-4 or y1-y0 > th-4:
+        raise ValueError("subject exceeds canvas safety area; regenerate with more padding")
     subject = image.crop(bbox)
-    output = Image.new("RGBA", (64, 64))
-    output.paste(subject, ((64-subject.width)//2, 62-subject.height))
+    output = Image.new("RGBA", (tw, th))
+    output.paste(subject, ((tw-subject.width)//2, th-2-subject.height))
     # Clear invisible RGB so white matte pixels cannot survive in transparent space.
     output.putdata([p if p[3] else (0, 0, 0, 0) for p in pixels(output)])
     return output
@@ -117,7 +125,7 @@ def main():
         try:
             with Image.open(source) as image:
                 output = process(image, entry["type"], args.alpha_threshold, args.background,
-                                 args.background_tolerance, args.pad_to_multiple)
+                                 args.background_tolerance, args.pad_to_multiple, tuple(entry["size"]))
             destination.parent.mkdir(parents=True, exist_ok=True)
             output.save(destination)
             result["errors"], result["warnings"] = check_image(destination, entry)

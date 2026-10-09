@@ -34,10 +34,12 @@ Compress-Archive -LiteralPath .art-work/handoff/ground -DestinationPath .art-wor
 python tools/farming/postprocess_assets.py --manifest .art-work/handoff/ground/manifest.json --input .art-work/raw/candidate_a --output .art-work/processed/run_a
 ```
 
-源图须为 64 整倍数方图（本轮 128）；工具不做任意比例缩放。作物优先透明底，
+地面和现有作物源图须为 64 整倍数方图（本轮 128）；Phase 4 大画布作物按
+manifest 的 sprite_size 使用等比例整倍数矩形源图，例如 256×384 → 128×192，
+具体契约见 [phase-04](phase-04-四类作物扩展.md)。工具不做任意比例缩放。作物优先透明底，
 纯色底用 `--background '#ff00ff'` 指定准确色键，仅移除完全匹配的颜色，复杂脏边退回重出。
 默认 alpha 阈值 128，8 连通去孤岛，只保留最大主体；报告与原图均保留，需核对是否误删叶片。
-超过 60px 安全区的主体报错，不静默裁掉主体、不二次缩小。
+超过目标画布四边各 2px 安全区的主体报错（64px画布可用60px），不静默裁掉主体、不二次缩小。
 
 地面 NEAREST 缩至 64 后执行 4px 对称边缘混合，产出 3×3 平铺预览。
 无缝统计通过不能保证重复纹理观感；镜像/混合可能产生结构变化，必须目检。

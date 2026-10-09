@@ -1,6 +1,6 @@
 # handoff — 跨机器开发交接
 
-> 最后更新：2026-10-08 @ dev（灵植经营模块立项，总规划落地）。
+> 最后更新：2026-10-09（Phase 3 已关闭，Phase 4.a 基础完成）。
 > 交接对象：新机器上的开发者或 AI 会话。
 > **开工前必读：§2 新机器清单 → §6 命令自检；现行主线是种植模块，先读 [docs/farming/master-plan.md](docs/farming/master-plan.md)；改 demo 地图前必读 [docs/map-schema.md](docs/map-schema.md)。**
 
@@ -10,8 +10,8 @@
    星露谷式多城镇（单镇多张功能地图 + 特殊交互点）和野外战斗触发图（地图只抛事件不承载战斗）。
 2. **daoyan 接入不是现阶段任务**：`docs/daoyan-reuse-plan.md` + `-answers.md` 是背景资料
    （将来移植的目标形态与接口摸底），实验期间**只读不改** daoyan 仓库。
-3. **正式美术由 ComfyUI 生成（另一台机器）**：本机负责规格制定、资产清单（manifest）、
-   占位图生成与 QC 验收；美术到位后零代码替换。
+3. **正式美术使用 ComfyUI 管线**：本机已直连出图，跨机器移交保留为备选；
+   原图与候选保留在工作目录，正式图通过 QC 和场景审核后同名接入。
 
 ## 2. 新机器快速上手（checklist）
 
@@ -51,9 +51,10 @@
     AP 归零自动次日）+ 作物生命周期（GROWING/MATURE/REGROWING/EXHAUSTED，
     有限次再生+枯竭清理）+ 多素材产出（确定性掷量）+ 库存 + 存档 v2；
     farmtest 40 项全过（详见 [phase-02](docs/farming/phase-02-核心种植系统.md)）
-  - 当前：**Phase 3 第一阶段工具完成，待正式图回传** → [phase-03-AI作物资产管线.md](docs/farming/phase-03-AI作物资产管线.md)
-    （资产契约/采购单 manifest 协议/QC 工具/AI 生成工作流/正式素材替换 + P1-C 处理；
-    执行前提：ComfyUI 出图机可用）
+  - **Phase 3 已关闭**：四类地面与现有两种植物正式图片已接入，资产管线与过渡验收完成；
+    详见 [phase-03](docs/farming/phase-03-AI作物资产管线.md)。
+  - **Phase 4 执行中，4.a 已完成**：土壤/菌床/朽木介质、矩形大画布契约、兼容存档和独立测试；
+    下一步 4.b 接入果树与真菌运行内容，详见 [phase-04](docs/farming/phase-04-四类作物扩展.md)。
 - demo 实验的 P5/P6 **暂缓**（P5 跨机器出图协作模式由种植模块 Phase 3 继承）
 - 开放问题（命名/持久化深度/战斗桩深度）见 demo-phases.md §6，均给了默认值，不阻塞
 
@@ -62,6 +63,7 @@
 | 文档 | 内容 | 何时读 |
 |------|------|--------|
 | [docs/farming/master-plan.md](docs/farming/master-plan.md) | **灵植经营模块总 Phase 规划（现行主线）** | **开工先读** |
+| [docs/farming/phase-04-四类作物扩展.md](docs/farming/phase-04-四类作物扩展.md) | 当前阶段任务、介质与大画布契约、执行记录 | 推进当前主线时 |
 | [docs/demo-phases.md](docs/demo-phases.md) | demo 实验阶段规划与验收记录（P0–P4） | 内核/工作流背景 |
 | [docs/map-schema.md](docs/map-schema.md) | 地图/主题数据格式 + bake 流程 | **改 demo 地图/改主题前** |
 | [docs/assets-spec.md](docs/assets-spec.md) | 美术资产规格（ComfyUI 对接） | demo 美术回填时；种植模块美术规范以 Phase 0/3 新产出为准 |
@@ -110,7 +112,7 @@ python tools/farming/gen_farm_terrains.py --transitions-only # 正式地面回�
 python tools/farming/qc_assets.py --target all # 正式资产统一检查（占位差异见 art-pipeline.md）
 python tools/farming/build_art_handoff.py --batch ground --output .art-work/handoff/ground # 空输出目录
 play.bat farm                              # 主农场场景（开垦/种植/采收/存档）
-play.bat farm --farmtest                   # 种植逻辑自测（40 项）
+play.bat farm --farmtest                   # 种植逻辑自测（当前 54 项）
 play.bat farm0                             # Phase 0 拼接验证场景（历史回归）
 ```
 
@@ -118,21 +120,17 @@ play.bat farm0                             # Phase 0 拼接验证场景（历史
 改 `assets/` 贴图后，编辑器打开会自动重导入；纯命令行场景跑一次
 `godot --headless --path . --import`。
 
-## 7. 下一步：种植模块 Phase 3（AI 作物资产管线）
+## 7. 下一步：种植模块 Phase 4.b（果树与真菌内容接入）
 
-**Phase 0/1/2 均已于 2026-10-08 关闭**（验收记录见
-[phase-00](docs/farming/phase-00-技术基线与重构准备.md) /
-[phase-01](docs/farming/phase-01-地形与土地系统.md) /
-[phase-02](docs/farming/phase-02-核心种植系统.md)）。下一步按总规划
-[master-plan §六](docs/farming/master-plan.md) 展开
-`docs/farming/phase-03-AI作物资产管线.md`（资产契约 / manifest 采购单协议 /
-`qc_assets.py` / AI 生成工作流与 style-sheet / 正式素材替换——**含 P1-C 过渡观感
-挂起项**；跨机器 ComfyUI 出图协作模式在本阶段落地，继承 demo P5 设想）。
+Phase 0–3 已关闭，Phase 4.a 基础完成。按
+[phase-04](docs/farming/phase-04-四类作物扩展.md) 继续 4.b：配置首棵 2×2 果树与菌床真菌，
+接入种子、产物、库存和结构占位，验证共享生命周期、多格交互与存档。
+随后 4.c 按成熟母版审核→阶段衍生→正式图片验收的顺序推进；尚未交付的图片不得标记 delivered。
 
 已冻结基线（后续阶段直接遵守）：
 
 - tile **64×64**；分层地形栈 + 自研 bitmask 过渡（`trans_upper_*`）；美术规范
-  phase-00 §4 + 素材替换契约 phase-01 §2.6（**占位图将被 AI 正式图同名替换**；
+  phase-00 §4 + 素材替换契约 phase-01 §2.6（现有两种植物已使用正式图；
   逻辑零像素依赖；替换后必跑 QC → farmtest → 截图核对）
 - `LandGrid`（WILD/TILLED/PLANTED/OCCUPIED-prev/UNAVAILABLE + 原子多格占用 +
   增量信号）与 `CropManager`（GROWING/MATURE/REGROWING/EXHAUSTED、
@@ -140,9 +138,9 @@ play.bat farm0                             # Phase 0 拼接验证场景（历史
   `FarmClock`（24 时节×15 天×24AP，day_changed 离散推进）
 - 数据纪律：`content/farming/` 源 JSON → `bake_farm.py` → `baked/`（运行时唯一读取）
 
-原 demo P5（美术回填演练）暂缓；其跨机器出图协作模式
-（manifest → ComfyUI 出图 → 本机 QC → 零代码替换）由种植模块 Phase 3 资产管线继承，
-届时在 `docs/farming/` 下另立资产规范文档。
+现有正式图片不得被占位生成覆盖。使用 B 在空耕地轮换介质，每次消耗 1AP；
+当前介质外观为临时色块。大画布按 sprite_size 登记，逻辑占地仍由 footprint 决定。
+默认测试仅覆盖当前种植模块，旧 demo 与 farm0 保留显式独立入口。
 
 ## 8. 机器相关差异与已知坑
 
@@ -161,7 +159,7 @@ play.bat farm0                             # Phase 0 拼接验证场景（历史
 
 1. 先读本文档 + docs/farming/master-plan.md（现行主线），然后跑 `test.bat` 确认种植模块基线；详见`docs/farming/testing.md`
 2. 一切地图/主题修改走「源 JSON → bake → 验证」流程，禁止手改 `content/baked/`
-3. 保持实验边界：不接 daoyan、不做存档完整方案、不部署本地 ComfyUI（见 demo-phases §5）
+3. 保持当前阶段边界：不接 daoyan、不进入 Phase 5 市场/喂养；ComfyUI 以种植模块现行资产管线为准
 4. 提交纪律：**每个小阶段（任务级）完成即 git 提交**，不等整个 Phase 收尾；
    Phase 级收尾另加：自测全过 + 截图人工核对 + 验收记录勾选
 5. 种植模块一切以 master-plan.md 为准：一次只展开当前 Phase；旧经营地基

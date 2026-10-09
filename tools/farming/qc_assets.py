@@ -36,20 +36,21 @@ def check_image(path, entry):
         if set(pixels(alpha)) - {0, 255}:
             errors.append("alpha must be binary 0/255")
         if kind == "crop_stage":
+            width, height = image.size
             bbox = alpha.getbbox()
             if not bbox:
                 errors.append("empty sprite")
             else:
                 x0, y0, x1, y1 = bbox
-                if min(x0, y0) < 2 or x1 > 62 or y1 > 62:
+                if min(x0, y0) < 2 or x1 > width-2 or y1 > height-2:
                     errors.append(f"2px safety border violated: {bbox}")
                 if len(components(alpha)) != 1:
                     errors.append("disconnected foreground components")
-                if abs((x0 + x1) / 2 - 32) > 1 or y1 != 62:
-                    warnings.append(f"anchor: bbox center={(x0+x1)/2}, bottom={y1}; expected 32,62")
+                if abs((x0 + x1) / 2 - width/2) > 1 or y1 != height-2:
+                    warnings.append(f"anchor: bbox center={(x0+x1)/2}, bottom={y1}; expected {width/2},{height-2}")
                 if entry.get("stage") == "mature":
                     # Occupancy means bbox height / canvas, not opaque pixel area.
-                    ratio = (y1 - y0) / 64
+                    ratio = (y1 - y0) / height
                     if not 0.55 <= ratio <= 0.75:
                         warnings.append(f"mature height occupancy {ratio:.1%}, expected 55-75%")
             colors = [c for ramp in load_palette()["crops"].values() for c in ramp]

@@ -6,7 +6,7 @@ echo [test 1/3] Current farming asset QC
 python tools/farming/qc_assets.py --target all
 if errorlevel 1 goto :failed
 echo [test 2/3] Current farming asset pipeline
-python -m unittest discover -s tools/farming -p test_asset_pipeline.py -v
+python -m unittest discover -s tools/farming -p test_*.py -v
 if errorlevel 1 goto :failed
 echo [test 3/3] Current farming game flow
 call play.bat farm --farmtest

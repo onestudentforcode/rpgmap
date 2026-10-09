@@ -16,8 +16,14 @@
     "untill": 1,
     "plant": 1,
     "harvest": 1,
-    "clear": 1
+    "clear": 1,
+    "prepare_medium": 1
   },
+  "planting_media": [
+    {"id": "soil", "name": "土壤"},
+    {"id": "fungal_bed", "name": "菌床"},
+    {"id": "rotten_log", "name": "朽木"}
+  ],
   "start_inventory": {
     "dew_grass_seed": 10,
     "scarlet_berry_seed": 5

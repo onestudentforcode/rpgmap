@@ -15,6 +15,7 @@ const CropManager := preload("res://scripts/farming/core/crops/crop_manager.gd")
 const FarmInventory := preload("res://scripts/farming/core/inventory/farm_inventory.gd")
 const FarmTerrainRenderer := preload("res://scripts/farming/rendering/terrain_renderer.gd")
 const CropRenderer := preload("res://scripts/farming/rendering/crop_renderer.gd")
+const Phase04Tests := preload("res://scripts/farming/tests/phase04_foundation.gd")
 const FarmCamera := preload("res://scripts/farming/rendering/farm_camera.gd")
 
 const MAP_ID := "farm_01"
@@ -85,7 +86,7 @@ func _ready() -> void:
 		tillable[t["id"]] = t["tillable"]
 
 	grid = LandGrid.new()
-	grid.setup(w, h, map["grid"], tillable)
+	grid.setup(w, h, map["grid"], tillable, _medium_ids())
 	renderer = FarmTerrainRenderer.new()
 	if not renderer.build(self, grid, terrains):
 		get_tree().quit(1)
@@ -156,7 +157,7 @@ func _setup_overlay(w: int, h: int) -> void:
 
 	_hud = _make_label()
 	_hud.position = Vector2(8, 6)
-	_hud.text = "灵田·壹号（Phase 2）· 左键 行动 · 1-9/H 选工具 · R 休息 · F5 存档 · F9 读档 · WASD 平移 · 滚轮 缩放"
+	_hud.text = "灵田·壹号 · 左键 行动 · 1-9/H 选工具 · B 换介质 · R 休息 · F5 存档 · F9 读档 · WASD 平移 · 滚轮 缩放"
 	layer.add_child(_hud)
 
 	_hud_info = _make_label()
@@ -207,6 +208,8 @@ func _unhandled_input(event: InputEvent) -> void:
 		elif event.keycode == KEY_R:
 			clock.end_day()
 			_flash("休息一晚 —— %s" % clock.describe(), true)
+		elif event.keycode == KEY_B:
+			_cycle_medium(_hover)
 		elif event.keycode == KEY_H:
 			_tool = (_tool + 1) % (_tool_crop_ids.size() + 1)
 			_update_hud()
@@ -296,6 +299,33 @@ func _do_till(cell: Vector2i) -> void:
 		_flash(_reason_text(chk["reason"]), false)
 
 
+func _medium_ids() -> Array:
+	return _config.get("planting_media", [{"id": "soil", "name": "土壤"}]).map(func(m): return m["id"])
+
+
+func _medium_name(id: String) -> String:
+	for medium in _config.get("planting_media", [{"id": "soil", "name": "土壤"}]):
+		if medium["id"] == id:
+			return String(medium["name"])
+	return id
+
+
+func _cycle_medium(cell: Vector2i) -> void:
+	var ids := _medium_ids()
+	var next: String = ids[(ids.find(grid.medium_at(cell)) + 1) % ids.size()]
+	var chk := grid.can_prepare_medium(cell, next)
+	if not chk["ok"]:
+		_flash(_reason_text(chk["reason"]), false)
+		return
+	var cost := clock.cost_of("prepare_medium")
+	if not clock.can_spend(cost):
+		_flash("行动点不足", false)
+		return
+	grid.prepare_medium(cell, next)
+	clock.spend(cost)
+	_flash("种植介质：%s" % _medium_name(next), true)
+
+
 func _reason_of_cell(cell: Vector2i) -> String:
 	var inst := crop_mgr.instance_at(cell)
 	if not inst.is_empty():
@@ -336,6 +366,13 @@ func _draw_highlight() -> void:
 func _draw_marks() -> void:
 	if grid == null:
 		return
+	for y in range(grid.height):
+		for x in range(grid.width):
+			var cell := Vector2i(x, y)
+			var medium := grid.medium_at(cell)
+			if medium not in ["", "soil"]:
+				var color := Color(0.5, 0.4, 0.65, 0.3) if medium == "fungal_bed" else Color(0.3, 0.2, 0.1, 0.35)
+				_overlay_marks.draw_rect(Rect2(Vector2(cell) * TILE, Vector2.ONE * TILE), color, true)
 	for c in grid.occupied_cells():  # 设施占用（红）
 		_overlay_marks.draw_rect(Rect2(Vector2(c) * TILE, Vector2.ONE * TILE),
 				Color(0.85, 0.15, 0.15, 0.35), true)
@@ -366,8 +403,11 @@ func _update_hud() -> void:
 		var tname: String = _terrains_by_id().get(tid, {}).get("name", tid)
 		var inst := crop_mgr.instance_at(_hover) if crop_mgr != null else {}
 		var extra := ""
+		var medium := grid.medium_at(_hover)
+		if not medium.is_empty():
+			extra = " · 介质：" + _medium_name(medium)
 		if not inst.is_empty():
-			extra = " · " + _crop_name(inst["crop_id"]) + " " + _crop_state_text(inst)
+			extra += " · " + _crop_name(inst["crop_id"]) + " " + _crop_state_text(inst)
 		text = "(%d,%d) %s · %s%s" % [_hover.x, _hover.y, tname,
 				LandGrid.STATE_NAMES[grid.state_at(_hover)], extra]
 	if clock != null:
@@ -427,6 +467,8 @@ func _crop_name(cid: String) -> String:
 
 
 func _reason_text(reason: String) -> String:
+	if reason.begins_with("medium_mismatch:"):
+		return "需要种植介质：" + _medium_name(reason.get_slice(":", 1))
 	if reason.begins_with("terrain_not_tillable:"):
 		var tid := reason.get_slice(":", 1)
 		return "不可种植/开垦：%s（%s）" % [_terrains_by_id().get(tid, {}).get("name", tid), tid]
@@ -441,6 +483,8 @@ func _reason_text(reason: String) -> String:
 	if reason.begins_with("cell_busy:"):
 		return "该格已被占用/种植中（%s）" % reason.get_slice(":", 1)
 	return {
+		"unknown_medium": "未知种植介质",
+		"medium_requires_empty_tilled": "先开垦空地，再切换种植介质",
 		"out_of_bounds": "目标越界",
 		"no_crop": "这里没有植株",
 		"unknown_crop": "未知作物",
@@ -902,6 +946,36 @@ func _run_farmtest() -> void:
 		_ok("作物素材契约：两种作物阶段图齐全（含 regrow 双态）")
 	else:
 		fails.append("作物素材缺失")
+	fails.append_array(Phase04Tests.run())
+	# Exercise the real B-key/plant handlers, including AP and seed atomicity.
+	grid.reset()
+	crop_mgr.reset_all()
+	clock.setup(_config)
+	inventory.setup(_config.get("start_inventory", {}))
+	var medium_cell := Vector2i(1,1)
+	grid.till(medium_cell)
+	var before_ap := clock.ap
+	_cycle_medium(medium_cell)
+	if grid.medium_at(medium_cell)=="fungal_bed" and clock.ap==before_ap-clock.cost_of("prepare_medium"):
+		_ok("P4: B键准备介质消耗配置AP")
+	else:
+		fails.append("P4: 准备介质/AP异常")
+	_tool = _tool_crop_ids.find("dew_grass") + 1
+	var before_seed := inventory.count("dew_grass_seed")
+	before_ap = clock.ap
+	_act_on(medium_cell)
+	if inventory.count("dew_grass_seed")==before_seed and clock.ap==before_ap and crop_mgr.crops.is_empty():
+		_ok("P4: 错误介质播种不扣种子/AP，无实例")
+	else:
+		fails.append("P4: 错误介质播种出现副作用")
+	grid.prepare_medium(medium_cell,"soil")
+	_act_on(medium_cell)
+	before_ap = clock.ap
+	_cycle_medium(medium_cell)
+	if not crop_mgr.instance_at(medium_cell).is_empty() and grid.medium_at(medium_cell)=="soil" and clock.ap==before_ap:
+		_ok("P4: 种植后B键换介质被拒且不扣AP")
+	else:
+		fails.append("P4: 占用格换介质出现副作用")
 
 	grid.reset()
 	renderer.refresh_dynamic_all()
@@ -974,6 +1048,8 @@ func _run_shots(dir: String) -> void:
 			clock.end_day()
 			clock.end_day()
 	grid.reserve(Vector2i(12, 11), 2, 2, "demo_shot")
+	grid.prepare_medium(Vector2i(3,11),"fungal_bed")
+	grid.prepare_medium(Vector2i(7,11),"rotten_log")
 	renderer.refresh_dynamic_all()
 	_overlay_marks.queue_redraw()
 	_update_hover(Vector2(3.5 * TILE, 11.5 * TILE))

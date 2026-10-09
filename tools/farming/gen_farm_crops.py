@@ -121,7 +121,7 @@ def _draw_crop(cid, kind):
 
 
 def outputs_for(crop):
-    outs = [("stage_%d" % i, i) for i in range(len(crop["growth_stages"]))]
+    outs = [(stage["sprite"], i) for i, stage in enumerate(crop["growth_stages"])]
     if crop["harvest_type"] == "regrow":
         outs.append(("stage_harvested", "harvested"))
         outs.append(("stage_exhausted", "exhausted"))
@@ -152,6 +152,13 @@ def main():
             os.makedirs(out_dir, exist_ok=True)
             for name, kind in outputs_for(crop):
                 img = _draw_crop(cid, kind)
+                size = tuple(crop.get("sprite_size", [64, 64]))
+                if size != img.size:
+                    from PIL import Image
+                    canvas = Image.new("RGBA", size)
+                    subject = img.crop(img.getchannel("A").getbbox())
+                    canvas.paste(subject, ((size[0]-subject.width)//2, size[1]-2-subject.height))
+                    img = canvas
                 img.save(os.path.join(out_dir, "%s.png" % name))
                 print("[gen] assets/farming/crops/%s/%s.png" % (cid, name))
         if rng.random() < 0:  # 确定性占位（防未来引入随机绘制时漏检）
@@ -166,7 +173,7 @@ def main():
                 continue
             from PIL import Image
             img = Image.open(path).convert("RGBA")
-            if img.size != (SIZE, SIZE):
+            if img.size != tuple(crop.get("sprite_size", [SIZE, SIZE])):
                 fails.append("%s/%s 尺寸错误: %s" % (cid, name, img.size))
             else:
                 p0._check_sprite(img, "crops/%s/%s" % (cid, name), 2, fails)

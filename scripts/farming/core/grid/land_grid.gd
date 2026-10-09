@@ -3,10 +3,11 @@ extends RefCounted
 ## 纯逻辑，零渲染/资源依赖——素材替换零影响（phase-01 §2.6 契约）。
 ## 消费方以 preload 引用（不依赖全局类缓存，headless/CLI 可直接运行）。
 ##
-## 状态迁移（本阶段）：
+## 状态迁移：
 ##   WILD → TILLED（开垦）｜TILLED → WILD（恢复）
 ##   可用格 → OCCUPIED（原子多格占用，记 prev）｜OCCUPIED → prev（释放）
-## PLANTED 为 Phase 2 预埋，本阶段不产生（占用判定预留拒绝）。
+##   TILLED → PLANTED（作物占用，记 prev）｜PLANTED → prev（采收/清理释放）
+## Phase 4：准备介质随耕地保存，多格播种由 CropManager 逐格校验。
 ##
 ## 变更通知：cells_changed(cells) 携带「变更格 ∪ 8 邻」（去重），
 ## 渲染层据此增量更新，禁止整图重建。
@@ -37,13 +38,20 @@ var _state: Array = []          # [y][x] -> State
 var _tillable: Dictionary = {}  # terrain_id -> bool（注册表快照）
 var _prev: Dictionary = {}      # Vector2i -> State（占用前状态）
 var _holders: Dictionary = {}   # holder -> {origin,fw,fh,cells}
+var _media: Dictionary = {}     # prepared cell -> non-default planting medium
+var _medium_ids: Array = ["soil"]
 
 
-func setup(w: int, h: int, terrain_grid: Array, tillable_map: Dictionary) -> void:
+func setup(w: int, h: int, terrain_grid: Array, tillable_map: Dictionary,
+		medium_ids: Array = ["soil"]) -> void:
 	width = w
 	height = h
 	terrain = terrain_grid
 	_tillable = tillable_map
+	_medium_ids = medium_ids.duplicate()
+	_media.clear()
+	_prev.clear()
+	_holders.clear()
 	_state = []
 	for y in range(h):
 		var row := []
@@ -70,6 +78,37 @@ func default_state_at(cell: Vector2i) -> int:
 
 func is_terrain_tillable(cell: Vector2i) -> bool:
 	return _tillable.get(terrain_at(cell), false)
+
+
+func medium_at(cell: Vector2i) -> String:
+	if not in_bounds(cell.x, cell.y):
+		return ""
+	var st := state_at(cell)
+	if st in [State.TILLED, State.PLANTED] or (st == State.OCCUPIED and _prev.get(cell) == State.TILLED):
+		return String(_media.get(cell, "soil"))
+	return ""
+
+
+func can_prepare_medium(cell: Vector2i, medium: String) -> Dictionary:
+	if not in_bounds(cell.x, cell.y):
+		return {"ok": false, "reason": "out_of_bounds"}
+	if medium not in _medium_ids:
+		return {"ok": false, "reason": "unknown_medium"}
+	if state_at(cell) != State.TILLED:
+		return {"ok": false, "reason": "medium_requires_empty_tilled"}
+	return {"ok": true, "reason": ""}
+
+
+func prepare_medium(cell: Vector2i, medium: String) -> Dictionary:
+	var chk := can_prepare_medium(cell, medium)
+	if not chk["ok"]:
+		return chk
+	if medium == "soil":
+		_media.erase(cell)
+	else:
+		_media[cell] = medium
+	_emit_around([cell])
+	return chk
 
 
 ## 8 邻位掩码：pred.call(x, y) 为真的方向置位（渲染层按层传入判定）。
@@ -114,6 +153,7 @@ func untill(cell: Vector2i) -> Dictionary:
 	if state_at(cell) != State.TILLED:
 		return {"ok": false, "reason": "not_tilled:" + STATE_NAMES[state_at(cell)]}
 	_state[cell.y][cell.x] = State.WILD
+	_media.erase(cell)
 	_emit_around([cell])
 	return {"ok": true, "reason": ""}
 
@@ -196,14 +236,17 @@ func to_save() -> Dictionary:
 			if st == default_state_at(cell):
 				continue
 			var e := {"x": x, "y": y, "s": name_of.call(st)}
-			if st == State.OCCUPIED:
-				e["p"] = name_of.call(_prev.get(cell, State.WILD))
+			if st in [State.OCCUPIED, State.PLANTED]:
+				e["p"] = name_of.call(_prev.get(cell, State.TILLED if st == State.PLANTED else State.WILD))
 			cells.append(e)
 	var holders := {}
 	for h in _holders:
 		var r: Dictionary = _holders[h]
 		holders[h] = {"o": [r["origin"].x, r["origin"].y], "f": [r["fw"], r["fh"]]}
-	return {"schema": 1, "cells": cells, "holders": holders}
+	var media := []
+	for cell in _media:
+		media.append({"x": cell.x, "y": cell.y, "medium": _media[cell]})
+	return {"schema": 1, "cells": cells, "holders": holders, "media": media}
 
 
 func apply_save(data: Dictionary) -> bool:
@@ -219,8 +262,16 @@ func apply_save(data: Dictionary) -> bool:
 			return false
 		var st: int = by_name[e["s"]]
 		_state[cell.y][cell.x] = st
-		if st == State.OCCUPIED:
-			_prev[cell] = by_name.get(e.get("p", "WILD"), State.WILD)
+		if st in [State.OCCUPIED, State.PLANTED]:
+			var fallback := "TILLED" if st == State.PLANTED else "WILD"
+			_prev[cell] = by_name.get(e.get("p", fallback), State.WILD)
+	for e in data.get("media", []):
+		var cell := Vector2i(int(e["x"]), int(e["y"]))
+		var medium := String(e["medium"])
+		if not can_restore_medium(cell, medium):
+			return false
+		if medium != "soil":
+			_media[cell] = medium
 	for h in data.get("holders", {}):
 		var meta: Dictionary = data["holders"][h]
 		var origin := Vector2i(int(meta["o"][0]), int(meta["o"][1]))
@@ -234,6 +285,10 @@ func apply_save(data: Dictionary) -> bool:
 	return true
 
 
+func can_restore_medium(cell: Vector2i, medium: String) -> bool:
+	return medium in _medium_ids and not medium_at(cell).is_empty()
+
+
 ## 复位到「按地图默认」（首次进入 / 读档前）。
 func reset() -> void:
 	for y in range(height):
@@ -241,6 +296,7 @@ func reset() -> void:
 			_state[y][x] = default_state_at(Vector2i(x, y))
 	_prev.clear()
 	_holders.clear()
+	_media.clear()
 
 
 # ------------------------------------------------------------ 变更通知

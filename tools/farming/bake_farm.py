@@ -23,6 +23,7 @@ import io
 import json
 import os
 import sys
+import re
 
 ROOT = os.path.normpath(os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", ".."))
 SRC = os.path.join(ROOT, "content", "farming")
@@ -107,6 +108,24 @@ def validate_config(data, items_ids, msgs):
     for iid in data.get("start_inventory", {}):
         if iid not in items_ids:
             _fail(msgs, "config.start_inventory 引用未注册物品 %r" % iid)
+    media = data.get("planting_media", [{"id": "soil", "name": "土壤"}])
+    if not isinstance(media, list):
+        _fail(msgs, "config.planting_media 必须为数组")
+        media = []
+    medium_ids = set()
+    for medium in media:
+        if not isinstance(medium, dict):
+            _fail(msgs, "config.planting_media 每项必须为对象")
+            continue
+        mid = medium.get("id", "")
+        if not isinstance(mid, str) or not re.fullmatch(r"[a-z][a-z0-9_]*", mid) or mid in medium_ids or not medium.get("name"):
+            _fail(msgs, "config.planting_media id/name 非法或重复: %r" % medium)
+        if isinstance(mid, str):
+            medium_ids.add(mid)
+    if "soil" not in medium_ids:
+        _fail(msgs, "config.planting_media 必须保留 soil（旧存档默认介质）")
+    if "prepare_medium" in costs and (not isinstance(costs["prepare_medium"], int) or costs["prepare_medium"] < 0):
+        _fail(msgs, "config.ap_costs.prepare_medium 必须非负整数")
 
 
 def validate_items(data, msgs):
@@ -124,16 +143,23 @@ def validate_items(data, msgs):
     return ids
 
 
-def validate_crops(data, items_ids, msgs):
+def validate_crops(data, items_ids, msgs, medium_ids=None):
     if data.get("schema") != 1:
         _fail(msgs, "crops.schema 必须为 1")
         return
     ids = set()
+    medium_ids = medium_ids if medium_ids is not None else {"soil"}
     for c in data.get("crops", []):
         cid = c.get("crop_id")
         if not cid or cid in ids:
             _fail(msgs, "作物 id 缺失或重复: %r" % cid)
         ids.add(cid)
+        if c.get("category") not in ("herb", "shrub", "tree", "fungus"):
+            _fail(msgs, "作物 %s category 须为 herb/shrub/tree/fungus" % cid)
+        size = c.get("sprite_size", [64, 64])
+        if not (isinstance(size, list) and len(size) == 2 and
+                all(isinstance(v, int) and v >= 64 and v % 64 == 0 for v in size)):
+            _fail(msgs, "作物 %s sprite_size 须为两个64整倍数" % cid)
         fp = c.get("footprint")
         if not (isinstance(fp, list) and len(fp) == 2 and all(isinstance(v, int) and v > 0 for v in fp)):
             _fail(msgs, "作物 %s footprint 非法: %r" % (cid, fp))
@@ -144,6 +170,9 @@ def validate_crops(data, items_ids, msgs):
         for s in stages:
             if not isinstance(s.get("days"), int) or s["days"] < 0:
                 _fail(msgs, "作物 %s 阶段 %s days 非法" % (cid, s.get("id")))
+        sprites = [s.get("sprite", "") for s in stages]
+        if any(not isinstance(s, str) or not re.fullmatch(r"stage_[0-9]+", s) for s in sprites) or len(set(sprites)) != len(sprites):
+            _fail(msgs, "作物 %s 阶段sprite须唯一且形如stage_<n>" % cid)
         if stages[-1].get("days") != 0:
             _fail(msgs, "作物 %s 末段（成熟期）days 必须为 0" % cid)
         htype = c.get("harvest_type")
@@ -166,8 +195,8 @@ def validate_crops(data, items_ids, msgs):
             _fail(msgs, "作物 %s remove 型须 max_harvests=1 且 regrowth_duration=0" % cid)
         if htype == "regrow" and (not isinstance(rd, int) or rd < 1):
             _fail(msgs, "作物 %s regrow 型须 regrowth_duration ≥1" % cid)
-        if not c.get("planting_medium"):
-            _fail(msgs, "作物 %s 缺 planting_medium" % cid)
+        if c.get("planting_medium") not in medium_ids:
+            _fail(msgs, "作物 %s 引用未注册 planting_medium: %r" % (cid, c.get("planting_medium")))
 
 
 def validate_map(data, reg, msgs):
@@ -223,7 +252,10 @@ def main():
     config_src = _load_json(os.path.join(SRC, "config.json"))
     validate_config(config_src, items_ids, msgs)
     crops_src = _load_json(os.path.join(SRC, "crops.json"))
-    validate_crops(crops_src, items_ids, msgs)
+    validate_crops(crops_src, items_ids, msgs,
+                   {m.get("id") for m in config_src.get("planting_media", [{"id": "soil"}])
+                    if isinstance(m, dict) and isinstance(m.get("id"), str)}
+                   if isinstance(config_src.get("planting_media", []), list) else set())
 
     terrains_src = _load_json(os.path.join(SRC, "terrains.json"))
     reg = validate_terrains(terrains_src, msgs)

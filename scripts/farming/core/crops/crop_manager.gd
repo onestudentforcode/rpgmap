@@ -98,6 +98,8 @@ func can_plant(cell: Vector2i, crop_id: String) -> Dictionary:
 				return {"ok": false, "reason": "not_tilled"}
 			if st != LandGrid.State.TILLED:
 				return {"ok": false, "reason": "cell_busy:" + LandGrid.STATE_NAMES[st]}
+			if grid.medium_at(c) != String(def["planting_medium"]):
+				return {"ok": false, "reason": "medium_mismatch:" + String(def["planting_medium"])}
 	return {"ok": true, "reason": ""}
 
 
