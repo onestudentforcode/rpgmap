@@ -13,11 +13,13 @@ const LandGrid := preload("res://scripts/farming/core/grid/land_grid.gd")
 const FarmClock := preload("res://scripts/farming/core/clock/farm_clock.gd")
 const CropManager := preload("res://scripts/farming/core/crops/crop_manager.gd")
 const FarmInventory := preload("res://scripts/farming/core/inventory/farm_inventory.gd")
+const FarmSnapshot := preload("res://scripts/farming/core/storage/farm_snapshot.gd")
 const FarmEconomy := preload("res://scripts/farming/core/economy/farm_economy.gd")
 const FarmEconomyPanel := preload("res://scripts/farming/rendering/farm_economy_panel.gd")
 const FarmUI := preload("res://scripts/farming/rendering/farm_ui_style.gd")
 const Phase05Tests := preload("res://scripts/farming/tests/phase05_economy.gd")
 const Phase05ContentTests := preload("res://scripts/farming/tests/phase05_content.gd")
+const Phase06SlotTests := preload("res://scripts/farming/tests/phase06_slots.gd")
 const FarmTerrainRenderer := preload("res://scripts/farming/rendering/terrain_renderer.gd")
 const CropRenderer := preload("res://scripts/farming/rendering/crop_renderer.gd")
 const Phase04Tests := preload("res://scripts/farming/tests/phase04_foundation.gd")
@@ -58,6 +60,7 @@ var _notice_ok := true
 var _hover := Vector2i(-1, -1)
 var _tool := 0  # 0=锄头；n=种子槽 _tool_crop_ids[n-1]
 var _save_path := SAVE_PATH
+var _snapshot_extra: Dictionary = {}
 
 # 自测信号收集（lambda 捕获是值拷贝，经成员方法落盘）
 var _farmtest_got: Array[Vector2i] = []
@@ -636,21 +639,26 @@ func _reason_text(reason: String) -> String:
 	}.get(reason, "无法操作：%s" % reason.replace("_", " "))
 
 
-# ------------------------------------------------------------ 存档（schema v2；接缝：Phase 5 换主游戏存档适配层）
+# ------------------------------------------------------------ 完整快照（P6.a；三槽菜单接入见P6.b）
 
-func _save() -> void:
-	var f := FileAccess.open(_save_path, FileAccess.WRITE)
-	if f == null:
-		_flash("存档失败：无法写入", false)
-		return
-	var data := {
+func capture_snapshot() -> Dictionary:
+	var snapshot := _snapshot_extra.duplicate(true)
+	snapshot.merge({
 		"schema": 3,
 		"clock": clock.to_save(),
 		"grid": grid.to_save(),
 		"crops": crop_mgr.to_save(),
 		"inventory": inventory.to_save(),
 		"economy": economy.to_save(),
-	}
+	}, true)
+	return snapshot
+
+func _save() -> void:
+	var f := FileAccess.open(_save_path, FileAccess.WRITE)
+	if f == null:
+		_flash("存档失败：无法写入", false)
+		return
+	var data := capture_snapshot()
 	f.store_string(JSON.stringify(data, "\t"))
 	f.close()
 	_flash("已存档", true)
@@ -662,20 +670,20 @@ func _load(silent: bool) -> bool:
 			_flash("没有存档", false)
 		return false
 	var parsed = JSON.parse_string(FileAccess.get_file_as_string(_save_path))
-	if parsed == null or not (parsed is Dictionary) or int(parsed.get("schema", 0)) not in [2, 3]:
+	return apply_snapshot(parsed, silent)
+
+
+func apply_snapshot(value, silent: bool = true) -> bool:
+	# Detached validation completes before touching any live model.
+	var checked := FarmSnapshot.normalize(value)
+	if not checked["ok"]:
 		if not silent:
-			_flash("存档版本不兼容或损坏", false)
+			_flash(checked["reason"], false)
 		return false
-	for key in ["grid", "crops", "inventory", "clock"]:
-		if not parsed.get(key) is Dictionary:
-			return false
+	var parsed: Dictionary = checked["snapshot"]
 	var loaded_economy := FarmEconomy.new()
 	loaded_economy.setup(_config, _items_by_id, _crops_by_id, inventory)
-	if int(parsed["schema"]) == 3:
-		if not parsed.get("economy") is Dictionary or not loaded_economy.apply_save(parsed["economy"]):
-			if not silent:
-				_flash("经济存档内容异常", false)
-			return false
+	loaded_economy.apply_save(parsed["economy"])
 	var ok := grid.apply_save(parsed["grid"]) \
 			and crop_mgr.apply_save(parsed["crops"]) \
 			and inventory.apply_save(parsed["inventory"])
@@ -685,6 +693,9 @@ func _load(silent: bool) -> bool:
 		return false
 	clock.apply_save(parsed["clock"])
 	economy = loaded_economy
+	_snapshot_extra = parsed.duplicate(true)
+	for key in ["schema", "clock", "grid", "crops", "inventory", "economy"]:
+		_snapshot_extra.erase(key)
 	if economy_panel != null and economy_panel.visible:
 		economy_panel.refresh()
 	renderer.refresh_dynamic_all()
@@ -1135,6 +1146,8 @@ func _run_farmtest() -> void:
 	fails.append_array(Phase04ContentTests.run(self))
 	fails.append_array(Phase05Tests.run())
 	fails.append_array(Phase05ContentTests.run(self))
+	fails.append_array(Phase06SlotTests.run())
+	fails.append_array(Phase06SlotTests.run_scene(self))
 
 	grid.reset()
 	renderer.refresh_dynamic_all()
