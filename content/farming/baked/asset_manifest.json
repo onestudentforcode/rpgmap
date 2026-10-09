@@ -7,7 +7,7 @@
       "path": "assets/farming/ground/ground_grass.png",
       "type": "ground",
       "status": "requested",
-      "note": "2026-10-09 首批采购移交（含 style-sheet）",
+      "note": "2026-10-09 首批移交包已构建（palette/style-sheet/prompts/references；待出图机回传）",
       "size": [
         64,
         64
@@ -27,7 +27,7 @@
       "path": "assets/farming/ground/ground_dirt.png",
       "type": "ground",
       "status": "requested",
-      "note": "2026-10-09 首批采购移交",
+      "note": "2026-10-09 首批移交包已构建；待出图机回传",
       "size": [
         64,
         64
@@ -47,7 +47,7 @@
       "path": "assets/farming/transitions/trans_upper_dirt.png",
       "type": "atlas",
       "status": "generated",
-      "note": "改 ground 后运行 gen_farm_terrains.py 重生成",
+      "note": "改 ground 后运行 gen_farm_terrains.py --transitions-only 重生成（保留 ground）",
       "size": [
         1024,
         1024
@@ -64,7 +64,7 @@
       "path": "assets/farming/transitions/trans_upper_dirt.json",
       "type": "atlas_meta",
       "status": "generated",
-      "note": "改 ground 后运行 gen_farm_terrains.py 重生成",
+      "note": "改 ground 后运行 gen_farm_terrains.py --transitions-only 重生成（保留 ground）",
       "size": null,
       "constraints": [
         "程序生成：上层纹理 × 统一掩码（不外发采购）",
@@ -78,7 +78,7 @@
       "path": "assets/farming/ground/ground_stone.png",
       "type": "ground",
       "status": "requested",
-      "note": "2026-10-09 首批采购移交",
+      "note": "2026-10-09 首批移交包已构建；草泥审核后出图",
       "size": [
         64,
         64
@@ -98,7 +98,7 @@
       "path": "assets/farming/transitions/trans_upper_stone.png",
       "type": "atlas",
       "status": "generated",
-      "note": "改 ground 后运行 gen_farm_terrains.py 重生成",
+      "note": "改 ground 后运行 gen_farm_terrains.py --transitions-only 重生成（保留 ground）",
       "size": [
         1024,
         1024
@@ -115,7 +115,7 @@
       "path": "assets/farming/transitions/trans_upper_stone.json",
       "type": "atlas_meta",
       "status": "generated",
-      "note": "改 ground 后运行 gen_farm_terrains.py 重生成",
+      "note": "改 ground 后运行 gen_farm_terrains.py --transitions-only 重生成（保留 ground）",
       "size": null,
       "constraints": [
         "程序生成：上层纹理 × 统一掩码（不外发采购）",
@@ -129,7 +129,7 @@
       "path": "assets/farming/ground/ground_tilled.png",
       "type": "ground",
       "status": "requested",
-      "note": "2026-10-09 首批采购移交",
+      "note": "2026-10-09 首批移交包已构建；草泥审核后出图",
       "size": [
         64,
         64
@@ -149,7 +149,7 @@
       "path": "assets/farming/transitions/trans_upper_tilled.png",
       "type": "atlas",
       "status": "generated",
-      "note": "改 ground 后运行 gen_farm_terrains.py 重生成",
+      "note": "改 ground 后运行 gen_farm_terrains.py --transitions-only 重生成（保留 ground）",
       "size": [
         1024,
         1024
@@ -166,7 +166,7 @@
       "path": "assets/farming/transitions/trans_upper_tilled.json",
       "type": "atlas_meta",
       "status": "generated",
-      "note": "改 ground 后运行 gen_farm_terrains.py 重生成",
+      "note": "改 ground 后运行 gen_farm_terrains.py --transitions-only 重生成（保留 ground）",
       "size": null,
       "constraints": [
         "程序生成：上层纹理 × 统一掩码（不外发采购）",

@@ -4,7 +4,7 @@
 > 基线继承 [phase-00 §4 美术规范](phase-00-技术基线与重构准备.md)（已冻结）、
 > [phase-01 §2.6 素材替换契约](phase-01-地形与土地系统.md)、
 > [phase-02](phase-02-核心种植系统.md)（crops 数据模型与渲染契约）。
-> **状态：** 已展开，待执行（2026-10-08）
+> **状态：** 第一阶段工具已落地（2026-10-09）；正式图待跨机器回传
 > **边界：** 建立可重复的 AI 素材生产/验收/替换管线，并用它产出**正式**作物与地形素材，
 > 替换全部程序占位图。新作物类别扩展属 Phase 4；蛊虫/市场属 Phase 5。
 > **执行前提：** ComfyUI 出图机可用（跨机器协作，继承 demo P5 模式）；本机不出正式图。
@@ -18,8 +18,8 @@
 |---|------|------|------|
 | 3.1 | 统一作物 Sprite 规范细化 | 本文 §2 资产契约（phase-00 §4 的逐类细化） | ✅ 随本文档 |
 | 3.2 | 阶段素材契约 | `stage_<n>` / `stage_harvested` / `stage_exhausted` 齐全性规则 | ✅ 随本文档 |
-| 3.3 | AI 生成工作流 | §4 人机协作规程 + `docs/farming/art-style-sheet.md`（一页式风格约束+提示词模板） | 待执行 |
-| 3.4 | 资源检查脚本 | `tools/farming/qc_assets.py`（统一 QC，覆盖 master-plan 3.4 七项） | 待执行 |
+| 3.3 | AI 生成工作流 | §4 人机协作规程 + `docs/farming/art-style-sheet.md`（一页式风格约束+提示词模板） | 工具/首批移交包完成，待正式出图验证 |
+| 3.4 | 资源检查脚本 | `tools/farming/qc_assets.py`（统一 QC，覆盖 master-plan 3.4 七项） | ✅ 工具完成；占位基线差异见 §12 |
 | 3.5 | 统一渲染验收 | 替换后零代码运行（渲染契约已在 Phase 2 落地，本阶段做替换演练） | 待执行 |
 | 3.6 | 采购单（manifest）工具 | `tools/farming/gen_asset_manifest.py` → 资产清单/移交包 | **✅ 完成（2026-10-09，首批 21 项清单已产出，4 地面纹理标记 requested）** |
 | 3.7 | 地形资产替换 + P1-C 处理 | AI 无缝地面纹理替换 ground_*；过渡 atlas 重生成；观感参数重调 | 待执行 |
@@ -68,7 +68,7 @@ phase-00 §4 十项冻结规范的**逐类细化**——这是给 ComfyUI 操作
 
 - **不出图、不手做**：由 `gen_farm_terrains.py` 以「上层地面纹理 × 程序掩码」重生成
   （基础纹理与边缘 Mask 分开维护——master-plan 任务 1.2 原则）。
-- AI 替换 ground 后**必跑** `python tools/farming/gen_farm_terrains.py` 重出全部
+- AI 替换 ground 后**必跑** `python tools/farming/gen_farm_terrains.py --transitions-only` 重出全部
   `trans_upper_*`（描边色自动取新纹理色板派生值）。
 - 掩码观感参数（抖动/圆角 R/描边宽）在真实纹理上重调 = **P1-C 处理落点**（§7）。
 
@@ -168,7 +168,7 @@ status 语义：`placeholder`（当前占位）/ `requested`（已列入采购�
 
 1. AI 无缝纹理替换 `ground_grass / ground_dirt / ground_stone / ground_tilled`
    （走 §4.3 全流程）。
-2. `gen_farm_terrains.py` 重生成三套 `trans_upper_*`（掩码不变、纹理与描边色换新）。
+2. `gen_farm_terrains.py --transitions-only` 重生成三套 `trans_upper_*`（保留 ground，纹理与描边色换新）。
 3. **P1-C 落点**：在真实纹理上重调掩码观感参数（生成器常量：抖动行数/占比、圆角
    R、描边宽与取色）——目标「正常缩放下过渡自然，无裂缝不突兀」；参数变更走生成器
    配置化（提为 `gen_farm_terrains.py` 的 CLI/常量参数，不再散落代码）。
@@ -192,12 +192,12 @@ status 语义：`placeholder`（当前占位）/ `requested`（已列入采购�
 - `tools/farming/gen_farm_terrains.py` / `gen_farm_crops.py`：保留为占位图生成器与
   atlas 重生成器；占位逻辑在全部资产 `delivered` 后仅作回滚用途。
 
-## 10. 自测断言（farmtest 增量，目标 +6 ≥ 46）
+## 10. 验证场景（工具集成测试 + farmtest 40 项零回归）
 
 1. manifest 与 baked 对账：每作物阶段文件存在性 == manifest 声明（无缺漏/无多余）
 2. qc_assets 全过后：`--farmtest` 原有 40 项不回归（替换零代码的直接证据）
 3. 主体占比/锚点检查纳入 qc_assets（farmtest 不重复断言，只跑工具）
-4. 占位图回滚演练：`git stash`/回退一张图 → 缺图回退链生效（场景不崩，仅隐藏+告警）
+4. 正式图回传后分别验证：回退图片恢复占位内容；临时移走单张作物图触发缺图回退链（场景不崩，仅隐藏+告警），测试后恢复。
 5. trans atlas 重生成确定性：同 ground 输入两次生成 md5 一致
 6. P1-C 调参后过渡掩码统计检验仍过（无缝/无裂缝）
 
@@ -230,3 +230,24 @@ status 语义：`placeholder`（当前占位）/ `requested`（已列入采购�
 - 首批清单 **21 项**：AI 采购口径 14（4 地面纹理已标 requested 待移交出图机 +
   10 作物阶段 Sprite 占位在库）+ 程序生成 7（3 套过渡 atlas+位序 JSON、阴影贴片）。
 - 待执行：style-sheet、qc_assets、postprocess 工具，及正式图回传后的替换流程。
+
+### 2026-10-09 第一阶段：批量工具与首批移交包
+
+- 独立 `tools/farming/palette.json` 落地，初值取 wilds 地面族与既有作物色；
+  占位生成器与移交提示词同源读取，风格表见 `art-style-sheet.md`。
+- `postprocess_assets.py`：隔离原图/输出，整倍 NEAREST，Sprite 二值 alpha、8连通去孤岛、
+  2px 安全边/底部中心对齐；地面四边混合无缝化与 3×3 平铺预览；逐图 QC 报告。
+- `qc_assets.py`：原始格式/模式、尺寸、命名、安全边/孤岛、阶段缺漏/多余、无缝统计、
+  atlas bm255/位序检查；色板/成熟占比/锚点为告警。成熟占比明确为 bbox 高度/64。
+- 修复生成器覆盖风险：新增 `--transitions-only`，从当前地面纹理派生描边，保留 ground；
+  掩码参数集中在 palette，支持 CLI 试调与隔离输出。默认 256 种掩码与原实现一致。
+  三类占位生成器拒绝覆盖 delivered；manifest 中实际缺图优先于人工状态。
+- `build_art_handoff.py` 支持地面/成熟母版/两种作物衍生批次；首批包已生成：
+  `.art-work/handoff/ground-comfyui.zip`（4 地面项、风格/色板/提示词/占位参考/回传说明/校验和）。
+  `requested` 仅代表待出图采购，尚未回传或 delivered；“含 style-sheet”旧备注已纠正。
+- 操作说明见 [art-pipeline.md](art-pipeline.md)。本轮完成工具与移交准备，未替换正式图、
+  未调定 P1-C、未开启作物衍生；正式回传仍须机器→逻辑→视觉三道门。
+- 验证：工具 11 项测试通过（失败样例、批量回传、动态作物清单、三个生成器覆盖防护、
+  ground 哈希保持、两次 atlas 字节确定性）；farmtest 40 项、phase00 14 项、demo selftest 通过。
+- 占位基线报告 `.art-work/reports/baseline.json`：21 项中凝露草 mature 有分离簇被拒；
+  两种成熟占比与底部锚点告警。保留占位原图，正式图按完整契约验收。

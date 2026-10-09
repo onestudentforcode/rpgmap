@@ -19,15 +19,19 @@
 用法：
   python tools/farming/gen_farm_terrains.py            生成 + QC
   python tools/farming/gen_farm_terrains.py --verify   只校验现有文件
+  python tools/farming/gen_farm_terrains.py --transitions-only  正式纹理仅重建过渡（不覆盖 ground）
 """
 
 import json
 import os
 import random
 import sys
+import argparse
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import gen_phase00_textures as p0  # noqa: E402  (复用 Phase 0 管线)
+from asset_common import load_palette, rgb, protect_delivered
+from transition_assets import make_atlas, validate_config
 
 ROOT = p0.ROOT
 SIZE = p0.SIZE
@@ -40,24 +44,9 @@ UPPERS = ["dirt", "stone", "tilled"]  # 过渡 atlas 所属上层地形
 
 def _stone_ramp():
     """石板：wilds corr 族（灰绿碎石）+ 派生亮色。"""
-    pal = {}
-    try:
-        with open(os.path.join(ROOT, "content/themes/wilds.json"), "r", encoding="utf-8") as f:
-            pal = json.load(f).get("palette_overrides", {})
-
-    except Exception:
-        pass
-
-    def rgb(key, default):
-        v = pal.get(key, default).lstrip("#")
-        return tuple(int(v[i:i + 2], 16) for i in (0, 2, 4))
-
-    base = rgb("corr", "#8f9077")
-    line = rgb("corr_line", "#75765f")
-    dot = rgb("corr_dot", "#828369")
-    hi = tuple(min(255, int(c * 1.12)) for c in base)
-    return {"base": base, "line": line, "dot": dot, "hi": hi,
-            "dark": line, "deep": tuple(int(c * 0.78) for c in line)}
+    colors = [rgb(c) for c in load_palette()["ground"]["stone"]]
+    return {"base": colors[2], "line": colors[0], "dot": colors[1], "hi": colors[3],
+            "dark": colors[0], "deep": tuple(int(c * .78) for c in colors[0])}
 
 
 def _make_stone(ramp, rng):
@@ -165,9 +154,60 @@ def verify(fails):
 
 
 def main():
-    only_verify = "--verify" in sys.argv
+    parser = argparse.ArgumentParser(description=__doc__)
+    mode = parser.add_mutually_exclusive_group()
+    mode.add_argument("--verify", action="store_true")
+    mode.add_argument("--transitions-only", action="store_true", help="read existing ground; never write ground")
+    parser.add_argument("--output-root", default=ROOT, help="output root (temporary root for regeneration checks)")
+    for key in ("outer_radius", "diagonal_radius", "dither_rows", "rim_width"):
+        parser.add_argument("--" + key.replace("_", "-"), type=int)
+    for key in ("rim_dark_factor", "rim_deep_factor"):
+        parser.add_argument("--" + key.replace("_", "-"), type=float)
+    args = parser.parse_args()
+    only_verify = args.verify
+    config = load_palette()["transition"].copy()
+    for key in config:
+        if hasattr(args, key) and getattr(args, key) is not None:
+            config[key] = getattr(args, key)
+    try:
+        validate_config(config)
+    except ValueError as exc:
+        parser.error(str(exc))
+    output_root = os.path.abspath(args.output_root)
+    if not args.transitions_only and output_root != ROOT:
+        parser.error("--output-root requires --transitions-only")
     fails = []
-    if not only_verify:
+    if args.transitions_only:
+        from PIL import Image
+        inputs = {}
+        # Preflight all inputs before writing any output.
+        for up in UPPERS:
+            path = os.path.join(ROOT, "assets/farming/ground/ground_%s.png" % up)
+            try:
+                with Image.open(path) as img:
+                    if img.mode != "RGB" or img.size != (SIZE, SIZE):
+                        parser.error("%s must be 64x64 RGB" % path)
+                    inputs[up] = img.copy()
+            except OSError as exc:
+                parser.error(str(exc))
+        for up, texture in inputs.items():
+            png = os.path.join(output_root, "assets/farming/transitions/trans_upper_%s.png" % up)
+            os.makedirs(os.path.dirname(png), exist_ok=True)
+            make_atlas(texture, config).save(png)
+            meta = {"schema": 1, "tile": SIZE, "grid": [16, 16], "upper": up,
+                    "over": "any_lower", "bits": p0.BITS,
+                    "bit_meaning": "置位 = 该方向邻格同属本上层地形",
+                    "atlas_of": "col = bitmask & 15, row = bitmask >> 4",
+                    "source_tool": "tools/farming/gen_farm_terrains.py", "mask_config": config}
+            with open(png.replace(".png", ".json"), "w", encoding="utf-8") as f:
+                json.dump(meta, f, ensure_ascii=False, indent=2)
+            _check_atlas(png, fails)
+            print("[gen] %s (ground preserved)" % png)
+    elif not only_verify:
+        try:
+            protect_delivered([OUT_STONE, OUT_TILLED])
+        except ValueError as exc:
+            parser.error(str(exc))
         built = build_all()
         # dirt 过渡 atlas 需要泥土纹理：优先读现有 Phase 0 产物（视觉一致），缺失则现生成
         dirt_path = os.path.join(ROOT, "assets/farming/ground/ground_dirt.png")
@@ -201,7 +241,8 @@ def main():
                 json.dump(meta, f, ensure_ascii=False, indent=2)
             print("[gen] assets/farming/transitions/trans_upper_%s.png(+json)" % up)
 
-    verify(fails)
+    if not args.transitions_only:
+        verify(fails)
     if fails:
         for m in fails:
             print("[qc ] FAIL %s" % m)

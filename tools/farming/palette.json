@@ -1,0 +1,18 @@
+{
+  "schema": 1,
+  "source": "wilds palette_overrides + existing farming crop colors (2026-10-09)",
+  "ground": {
+    "grass": ["#6a9151", "#6d9454", "#79a05c", "#8cb069"],
+    "dirt": ["#665032", "#846741", "#9a7a4e", "#b08c5c"],
+    "stone": ["#75765f", "#828369", "#8f9077", "#a0a185"],
+    "tilled": ["#665032", "#846741", "#9a7a4e", "#b08c5c"]
+  },
+  "crops": {
+    "leaf": ["#39603c", "#4e7b4e", "#639463"],
+    "dew": ["#96d2eb"],
+    "berry": ["#c44a3e", "#e07a5e"],
+    "wither": ["#695c46", "#827358"],
+    "seed": ["#6c5335", "#846741"]
+  },
+  "transition": {"outer_radius": 13, "diagonal_radius": 6, "dither_rows": 2, "dither_periods": [2, 4], "rim_width": 2, "rim_dark_factor": 0.85, "rim_deep_factor": 0.72}
+}

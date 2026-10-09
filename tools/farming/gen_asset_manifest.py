@@ -59,9 +59,11 @@ def _rel(path):
 
 
 def _status_for(rel_path, overrides):
+    if not os.path.isfile(os.path.join(ROOT, rel_path)):
+        return "missing", overrides.get(rel_path, {}).get("note", "")
     if rel_path in overrides:
         return overrides[rel_path].get("status", "placeholder"), overrides[rel_path].get("note", "")
-    return ("placeholder" if os.path.isfile(os.path.join(ROOT, rel_path)) else "missing"), ""
+    return "placeholder", ""
 
 
 def build_manifest():
@@ -90,7 +92,7 @@ def build_manifest():
                 exists = os.path.isfile(os.path.join(ROOT, rel_t))
                 entries.append({
                     "path": rel_t, "type": kind, "status": "generated" if exists else "missing",
-                    "note": "改 ground 后运行 gen_farm_terrains.py 重生成",
+                    "note": "改 ground 后运行 gen_farm_terrains.py --transitions-only 重生成（保留 ground）",
                     "size": [1024, 1024] if kind == "atlas" else None,
                     "constraints": ["程序生成：上层纹理 × 统一掩码（不外发采购）",
                                     "alpha 二值；bm=255 tile 全不透明"],

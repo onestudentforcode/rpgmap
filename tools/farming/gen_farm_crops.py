@@ -22,20 +22,19 @@ import sys
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import gen_phase00_textures as p0  # noqa: E402
+from asset_common import load_palette, rgb, protect_delivered
 
 ROOT = p0.ROOT
 SIZE = p0.SIZE
 SEED = 20261008
 
-LEAF_DARK = (0x39, 0x60, 0x3c)
-LEAF = (0x4e, 0x7b, 0x4e)
-LEAF_HI = (0x63, 0x94, 0x63)
-SOIL = (0x6c, 0x53, 0x35)
-BERRY = (0xc4, 0x4a, 0x3e)
-BERRY_HI = (0xe0, 0x7a, 0x5e)
-DEW = (0x96, 0xd2, 0xeb)
-WITHER = (0x82, 0x73, 0x58)
-WITHER_DARK = (0x69, 0x5c, 0x46)
+# Single palette source shared by production prompts and placeholder generators.
+_colors = load_palette()["crops"]
+LEAF_DARK, LEAF, LEAF_HI = map(rgb, _colors["leaf"])
+SOIL = rgb(_colors["seed"][0])
+BERRY, BERRY_HI = map(rgb, _colors["berry"])
+DEW = rgb(_colors["dew"][0])
+WITHER_DARK, WITHER = map(rgb, _colors["wither"])
 
 
 def _canvas():
@@ -140,6 +139,12 @@ def main():
 
     fails = []
     if not only_verify:
+        try:
+            protect_delivered(["assets/farming/crops/%s/%s.png" % (c["crop_id"], name)
+                              for c in crops for name, _ in outputs_for(c)])
+        except ValueError as exc:
+            print("[error]", exc)
+            sys.exit(1)
         rng = random.Random(SEED)  # 保留参数位：当前图形为确定性手绘，不耗随机数
         for crop in crops:
             cid = crop["crop_id"]

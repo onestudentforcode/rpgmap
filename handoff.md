@@ -51,7 +51,7 @@
     AP 归零自动次日）+ 作物生命周期（GROWING/MATURE/REGROWING/EXHAUSTED，
     有限次再生+枯竭清理）+ 多素材产出（确定性掷量）+ 库存 + 存档 v2；
     farmtest 40 项全过（详见 [phase-02](docs/farming/phase-02-核心种植系统.md)）
-  - 当前：**Phase 3 已展开待执行** → [phase-03-AI作物资产管线.md](docs/farming/phase-03-AI作物资产管线.md)
+  - 当前：**Phase 3 第一阶段工具完成，待正式图回传** → [phase-03-AI作物资产管线.md](docs/farming/phase-03-AI作物资产管线.md)
     （资产契约/采购单 manifest 协议/QC 工具/AI 生成工作流/正式素材替换 + P1-C 处理；
     执行前提：ComfyUI 出图机可用）
 - demo 实验的 P5/P6 **暂缓**（P5 跨机器出图协作模式由种植模块 Phase 3 继承）
@@ -104,6 +104,9 @@ python tools/farming/bake_farm.py          # 种植数据烘焙（改 content/fa
 python tools/farming/gen_farm_terrains.py  # 重生成地形占位纹理（--verify 只校验）
 python tools/farming/gen_farm_crops.py     # 重生成作物占位阶段图（--verify 只校验）
 python tools/farming/gen_asset_manifest.py # 资产采购单（改数据/交付资产后重跑；--missing 查缺）
+python tools/farming/gen_farm_terrains.py --transitions-only # 正式地面回传后仅重建 atlas（不覆盖 ground）
+python tools/farming/qc_assets.py --target all # 正式资产统一检查（占位差异见 art-pipeline.md）
+python tools/farming/build_art_handoff.py --batch ground --output .art-work/handoff/ground # 空输出目录
 play.bat farm                              # 主农场场景（开垦/种植/采收/存档）
 play.bat farm --farmtest                   # 种植逻辑自测（40 项）
 play.bat farm0                             # Phase 0 拼接验证场景（历史回归）

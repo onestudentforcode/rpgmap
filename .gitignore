@@ -4,6 +4,7 @@
 
 # 本地截图等临时产物
 .shots/
+.art-work/
 
 # Python
 __pycache__/
