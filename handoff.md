@@ -55,7 +55,10 @@
     详见 [phase-03](docs/farming/phase-03-AI作物资产管线.md)。
   - **Phase 4 已关闭**：四类作物运行、介质/多格/存档和正式图齐备；用户审核果树B＋菌菇A后完成衍生。
     清单31项均交付或程序生成，31项QC/20项工具/67项流程及前后遮挡像素验证通过；
-    详见[phase-04](docs/farming/phase-04-四类作物扩展.md)。下一阶段Phase 5尚未展开。
+    详见[phase-04](docs/farming/phase-04-四类作物扩展.md)。
+  - **Phase 5已关闭（本仓库闭环）**：60元石、木属性食材、饱食度6（每日/指定成功行为各减1）、
+    集市/喂养面板、介质材料消耗、schema3兼容存档；31项QC/23项工具/97项流程检查通过。
+    详见[phase-05](docs/farming/phase-05-喂养与经济闭环.md)；上游实际接线尚未实施。
 - demo 实验的 P5/P6 **暂缓**（P5 跨机器出图协作模式由种植模块 Phase 3 继承）
 - 开放问题（命名/持久化深度/战斗桩深度）见 demo-phases.md §6，均给了默认值，不阻塞
 
@@ -113,7 +116,7 @@ python tools/farming/gen_farm_terrains.py --transitions-only # 正式地面回�
 python tools/farming/qc_assets.py --target all # 正式资产统一检查（占位差异见 art-pipeline.md）
 python tools/farming/build_art_handoff.py --batch ground --output .art-work/handoff/ground # 空输出目录
 play.bat farm                              # 主农场场景（开垦/种植/采收/存档）
-play.bat farm --farmtest                   # 种植逻辑自测（当前 67 项）
+play.bat farm --farmtest                   # 种植与经济逻辑自测（当前 97 项）
 play.bat --fresh                           # 新开局试玩四类作物（含新种子，保存前保留旧存档）
 play.bat farm0                             # Phase 0 拼接验证场景（历史回归）
 ```
@@ -122,9 +125,11 @@ play.bat farm0                             # Phase 0 拼接验证场景（历史
 改 `assets/` 贴图后，编辑器打开会自动重导入；纯命令行场景跑一次
 `godot --headless --path . --import`。
 
-## 7. 下一步：种植模块 Phase 5（喂养与经济联动，尚未展开）
+## 7. 当前闭环与后续阶段
 
-Phase 0–4已关闭；下一步按master-plan §八展开Phase 5任务文档，再按任务级分批实现和提交。
+Phase 0–5已关闭；Phase5以本仓库种植经济闭环为完成条件，对上游保留适配接口。
+下一步由用户确定Phase6体验优化范围或上游实际接线，不自动扩展。
+游戏中M打开库存/集市/喂养，R进入次日；指定行为调用`record_gu_use(behavior, succeeded)`，默认允许battle。
 现有四类作物正式图全部保留，后续美术继续适量加入东方玄幻意象；母版先人工审核后衍生。
 完整生成记录见docs/farming/art-generation-phase04.json，原图/候选/失败报告保留在.art-work/。
 
@@ -139,7 +144,7 @@ Phase 0–4已关闭；下一步按master-plan §八展开Phase 5任务文档，
   `FarmClock`（24 时节×15 天×24AP，day_changed 离散推进）
 - 数据纪律：`content/farming/` 源 JSON → `bake_farm.py` → `baked/`（运行时唯一读取）
 
-现有正式图片不得被占位生成覆盖。使用 B 在空耕地轮换介质，每次消耗 1AP；
+现有正式图片不得被占位生成覆盖。使用 B 在空耕地轮换介质，每次消耗 1AP；准备菌床/朽木另扣对应商品1份；
 当前介质外观为临时色块。大画布按 sprite_size 登记，逻辑占地仍由 footprint 决定。
 默认测试仅覆盖当前种植模块，旧 demo 与 farm0 保留显式独立入口。
 
@@ -160,7 +165,7 @@ Phase 0–4已关闭；下一步按master-plan §八展开Phase 5任务文档，
 
 1. 先读本文档 + docs/farming/master-plan.md（现行主线），然后跑 `test.bat` 确认种植模块基线；详见`docs/farming/testing.md`
 2. 一切地图/主题修改走「源 JSON → bake → 验证」流程，禁止手改 `content/baked/`
-3. 不接daoyan；Phase 5须先展开任务文档，按现行master-plan实施。出图以image_gen及统一后处理/QC为准
+3. 不改daoyan；Phase5本仓库闭环已完成，上游实际接线另行授权。出图以image_gen及统一后处理/QC为准
 4. 提交纪律：**每个小阶段（任务级）完成即 git 提交**，不等整个 Phase 收尾；
    Phase 级收尾另加：自测全过 + 截图人工核对 + 验收记录勾选
 5. 种植模块一切以 master-plan.md 为准：一次只展开当前 Phase；旧经营地基
