@@ -179,8 +179,8 @@
     {
       "path": "assets/farming/crops/dew_grass/stage_0.png",
       "type": "crop_stage",
-      "status": "placeholder",
-      "note": "",
+      "status": "delivered",
+      "note": "2026-10-09 v2.1 入库：审核母版参考锚定衍生（seed 见 gen_meta_cs.json）；qc all 21 项 0 失败；farm0/farm farmtest、demo selftest 过；全阶段排图目检通过",
       "size": [
         64,
         64
@@ -201,8 +201,8 @@
     {
       "path": "assets/farming/crops/dew_grass/stage_1.png",
       "type": "crop_stage",
-      "status": "placeholder",
-      "note": "",
+      "status": "delivered",
+      "note": "2026-10-09 v2.1 入库：审核母版参考锚定衍生（seed 见 gen_meta_cs.json）；qc all 21 项 0 失败；farm0/farm farmtest、demo selftest 过；全阶段排图目检通过",
       "size": [
         64,
         64
@@ -223,8 +223,8 @@
     {
       "path": "assets/farming/crops/dew_grass/stage_2.png",
       "type": "crop_stage",
-      "status": "placeholder",
-      "note": "",
+      "status": "delivered",
+      "note": "2026-10-09 v2.1 入库：审核母版参考锚定衍生（seed 见 gen_meta_cs.json）；qc all 21 项 0 失败；farm0/farm farmtest、demo selftest 过；全阶段排图目检通过",
       "size": [
         64,
         64
@@ -245,8 +245,8 @@
     {
       "path": "assets/farming/crops/dew_grass/stage_3.png",
       "type": "crop_stage",
-      "status": "placeholder",
-      "note": "",
+      "status": "delivered",
+      "note": "2026-10-09 v2.1 入库：母版候选A（seed 111/113）经人工审核批准；qc/排图/场景目检通过",
       "size": [
         64,
         64
@@ -268,8 +268,8 @@
     {
       "path": "assets/farming/crops/scarlet_berry/stage_0.png",
       "type": "crop_stage",
-      "status": "placeholder",
-      "note": "",
+      "status": "delivered",
+      "note": "2026-10-09 v2.1 入库：审核母版参考锚定衍生（seed 见 gen_meta_cs.json）；qc all 21 项 0 失败；farm0/farm farmtest、demo selftest 过；全阶段排图目检通过",
       "size": [
         64,
         64
@@ -290,8 +290,8 @@
     {
       "path": "assets/farming/crops/scarlet_berry/stage_1.png",
       "type": "crop_stage",
-      "status": "placeholder",
-      "note": "",
+      "status": "delivered",
+      "note": "2026-10-09 v2.1 入库：审核母版参考锚定衍生（seed 见 gen_meta_cs.json）；qc all 21 项 0 失败；farm0/farm farmtest、demo selftest 过；全阶段排图目检通过",
       "size": [
         64,
         64
@@ -312,8 +312,8 @@
     {
       "path": "assets/farming/crops/scarlet_berry/stage_2.png",
       "type": "crop_stage",
-      "status": "placeholder",
-      "note": "",
+      "status": "delivered",
+      "note": "2026-10-09 v2.1 入库：审核母版参考锚定衍生（seed 见 gen_meta_cs.json）；qc all 21 项 0 失败；farm0/farm farmtest、demo selftest 过；全阶段排图目检通过",
       "size": [
         64,
         64
@@ -334,8 +334,8 @@
     {
       "path": "assets/farming/crops/scarlet_berry/stage_3.png",
       "type": "crop_stage",
-      "status": "placeholder",
-      "note": "",
+      "status": "delivered",
+      "note": "2026-10-09 v2.1 入库：母版候选A（seed 111/113）经人工审核批准；qc/排图/场景目检通过",
       "size": [
         64,
         64
@@ -357,8 +357,8 @@
     {
       "path": "assets/farming/crops/scarlet_berry/stage_harvested.png",
       "type": "crop_stage",
-      "status": "placeholder",
-      "note": "",
+      "status": "delivered",
+      "note": "2026-10-09 v2.1 入库：审核母版参考锚定衍生（seed 见 gen_meta_cs.json）；qc all 21 项 0 失败；farm0/farm farmtest、demo selftest 过；全阶段排图目检通过",
       "size": [
         64,
         64
@@ -380,8 +380,8 @@
     {
       "path": "assets/farming/crops/scarlet_berry/stage_exhausted.png",
       "type": "crop_stage",
-      "status": "placeholder",
-      "note": "",
+      "status": "delivered",
+      "note": "2026-10-09 v2.1 入库：审核母版参考锚定衍生（seed 见 gen_meta_cs.json）；qc all 21 项 0 失败；farm0/farm farmtest、demo selftest 过；全阶段排图目检通过",
       "size": [
         64,
         64
