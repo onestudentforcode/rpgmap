@@ -1,6 +1,6 @@
 # handoff — 跨机器开发交接
 
-> 最后更新：2026-10-09（Phase 3 已关闭，Phase 4.a 基础完成）。
+> 最后更新：2026-10-09（Phase 3 已关闭，Phase 4.a/4.b 完成）。
 > 交接对象：新机器上的开发者或 AI 会话。
 > **开工前必读：§2 新机器清单 → §6 命令自检；现行主线是种植模块，先读 [docs/farming/master-plan.md](docs/farming/master-plan.md)；改 demo 地图前必读 [docs/map-schema.md](docs/map-schema.md)。**
 
@@ -53,8 +53,8 @@
     farmtest 40 项全过（详见 [phase-02](docs/farming/phase-02-核心种植系统.md)）
   - **Phase 3 已关闭**：四类地面与现有两种植物正式图片已接入，资产管线与过渡验收完成；
     详见 [phase-03](docs/farming/phase-03-AI作物资产管线.md)。
-  - **Phase 4 执行中，4.a 已完成**：土壤/菌床/朽木介质、矩形大画布契约、兼容存档和独立测试；
-    下一步 4.b 接入果树与真菌运行内容，详见 [phase-04](docs/farming/phase-04-四类作物扩展.md)。
+  - **Phase 4 执行中，4.a/4.b 已完成**：介质、大画布、兼容存档，以及青玉果树/月华菇运行内容和结构占位；
+    下一步 4.c 正式母版与阶段衍生，详见 [phase-04](docs/farming/phase-04-四类作物扩展.md)。
 - demo 实验的 P5/P6 **暂缓**（P5 跨机器出图协作模式由种植模块 Phase 3 继承）
 - 开放问题（命名/持久化深度/战斗桩深度）见 demo-phases.md §6，均给了默认值，不阻塞
 
@@ -112,7 +112,8 @@ python tools/farming/gen_farm_terrains.py --transitions-only # 正式地面回�
 python tools/farming/qc_assets.py --target all # 正式资产统一检查（占位差异见 art-pipeline.md）
 python tools/farming/build_art_handoff.py --batch ground --output .art-work/handoff/ground # 空输出目录
 play.bat farm                              # 主农场场景（开垦/种植/采收/存档）
-play.bat farm --farmtest                   # 种植逻辑自测（当前 54 项）
+play.bat farm --farmtest                   # 种植逻辑自测（当前 67 项）
+play.bat --fresh                           # 新开局试玩四类作物（含新种子，保存前保留旧存档）
 play.bat farm0                             # Phase 0 拼接验证场景（历史回归）
 ```
 
@@ -120,12 +121,12 @@ play.bat farm0                             # Phase 0 拼接验证场景（历史
 改 `assets/` 贴图后，编辑器打开会自动重导入；纯命令行场景跑一次
 `godot --headless --path . --import`。
 
-## 7. 下一步：种植模块 Phase 4.b（果树与真菌内容接入）
+## 7. 下一步：种植模块 Phase 4.c（果树与真菌正式美术）
 
-Phase 0–3 已关闭，Phase 4.a 基础完成。按
-[phase-04](docs/farming/phase-04-四类作物扩展.md) 继续 4.b：配置首棵 2×2 果树与菌床真菌，
-接入种子、产物、库存和结构占位，验证共享生命周期、多格交互与存档。
-随后 4.c 按成熟母版审核→阶段衍生→正式图片验收的顺序推进；尚未交付的图片不得标记 delivered。
+Phase 0–3 已关闭，Phase 4.a/4.b 完成。按
+[phase-04](docs/farming/phase-04-四类作物扩展.md) 继续 4.c：先审核青玉果树与月华菇成熟母版，
+再参考母版衍生阶段。后续美术适量加入东方玄幻意象，详见art-style-sheet.md；
+尚未交付的图片不得标记 delivered。当前31项资产中新增10张为结构占位，现有正式图保留。
 
 已冻结基线（后续阶段直接遵守）：
 
