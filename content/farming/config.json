@@ -26,6 +26,8 @@
   ],
   "start_inventory": {
     "dew_grass_seed": 10,
-    "scarlet_berry_seed": 5
+    "scarlet_berry_seed": 5,
+    "jade_fruit_tree_seed": 3,
+    "moon_cap_seed": 6
   }
 }
