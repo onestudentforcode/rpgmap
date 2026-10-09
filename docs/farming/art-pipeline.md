@@ -58,8 +58,9 @@ play.bat farm --farm-shots=.shots/farm-phase03-ground
 ```
 
 地面批次先用 ground/transitions QC；作物还在占位阶段时，all 会报告既有占位图差异。
-作物全部替换后必须 `qc_assets.py --target all` 全过，回归 `play.bat farm0 --farmtest`
-和 `play.bat --selftest`，截图人工审核通过，再将该批 art_status 登记 delivered、重建 manifest、提交。
+作物全部替换后运行`test.bat`（QC all、资产工具与当前农场流程），截图人工审核通过，
+再将该批art_status登记delivered、重建manifest、提交。历史farm0与demo测试不再属于默认入库门，
+只有改动它们或共享内核时才通过显式入口单独回归，见[testing.md](testing.md)。
 截图和逻辑测试分开运行。出现视觉争议时以截图可信坐标的像素取证裁定。
 
 过渡参数默认来自 palette.json 的 transition；CLI 可覆盖 `--outer-radius`、`--diagonal-radius`、

@@ -21,9 +21,9 @@
 4. 告诉启动脚本引擎路径（二选一）：
    - 设环境变量 `GODOT_EXE` / `GODOT_EXE_CONSOLE` 指向 Godot 可执行文件（推荐）
    - 或直接改 `play.bat` 顶部的默认路径
-5. 首次运行 `play.bat --selftest`：Godot 会自动重建 `*.import`（被 gitignore，属正常）；
-   **预期输出 SELFTEST OK（35 项）**——这就是基线健全的证明
-6. 跑起来看一眼：`play.bat`（暖色百货）、`play.bat dusk`（暮色换肤）、`play.bat wilds`（野外）
+5. 首次运行 `test.bat`：仅执行当前种植模块的资产QC、工具测试和农场流程测试；
+   **预期输出 FARMING TEST SUITE OK**；`play.bat --selftest`可只跑农场逻辑。
+6. 运行 `play.bat`或Godot F5默认主场景进入当前农场；旧演示通过`play.bat demo`显式进入。
 
 ## 3. 当前状态
 
@@ -91,10 +91,12 @@ scripts/main.gd（状态机：移动/对话/菜单/战斗桩/切图）
 ## 6. 常用命令
 
 ```
-play.bat                        # 启动（默认主题）
-play.bat <theme>                # 主题：placeholder | dusk | wilds
-play.bat --selftest             # 35 项逻辑自测（headless 逻辑 + 窗口自绘）
-play.bat --shots=DIR            # 窗口截图验收（7 张/城镇主题，4 张/野外主题）
+play.bat                        # 当前农场（默认主场景）
+test.bat                        # 当前农场：资产QC + 工具测试 + 游戏流程（不运行旧内容）
+play.bat --selftest             # 仅农场逻辑测试（headless）
+play.bat --shots=DIR            # 当前农场截图
+play.bat demo wilds             # 旧商场/野外演示，显式入口
+play.bat demo --selftest         # 旧演示测试，按需单独运行
 
 python tools/bake_maps.py               # 烘焙（改 content/ 后必跑；校验失败即退出）
 python tools/gen_placeholder_assets.py  # 重新生成占位美术（读 themes/*.json 色板）
@@ -157,7 +159,7 @@ play.bat farm0                             # Phase 0 拼接验证场景（历史
 
 ## 9. 新 AI 会话交接边界
 
-1. 先读本文档 + docs/farming/master-plan.md（现行主线），然后跑 `play.bat --selftest` 确认基线
+1. 先读本文档 + docs/farming/master-plan.md（现行主线），然后跑 `test.bat` 确认种植模块基线；详见`docs/farming/testing.md`
 2. 一切地图/主题修改走「源 JSON → bake → 验证」流程，禁止手改 `content/baked/`
 3. 保持实验边界：不接 daoyan、不做存档完整方案、不部署本地 ComfyUI（见 demo-phases §5）
 4. 提交纪律：**每个小阶段（任务级）完成即 git 提交**，不等整个 Phase 收尾；

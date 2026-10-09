@@ -3,7 +3,8 @@ extends Node2D
 ## 时间体系：24 时节 × 15 天 × 24 行动点（master-plan v1.1 任务 2.3）。
 ## 地形数据只读烘焙产物；渲染增量更新；存档纯逻辑数据（素材替换零影响）。
 ##
-## 运行：play.bat farm [--farmtest] [--farm-shots=DIR] [--fresh]
+## 默认入口：play.bat [--selftest] [--shots=DIR] [--fresh]；test.bat 运行当前模块测试。
+## 兼容：play.bat farm [--farmtest] [--farm-shots=DIR]。
 ##   左键 行动 · 1-9/H 选工具（0 锄头，其余种子槽） · R 休息进入次日
 ##   F5 存档 · F9 读档 · WASD/方向键 平移 · 滚轮 缩放
 
@@ -113,15 +114,23 @@ func _ready() -> void:
 	_setup_overlay(w, h)
 
 	var args := OS.get_cmdline_user_args()
-	if "--farmtest" in args:
+	var testing := "--farmtest" in args or "--selftest" in args
+	if testing:
 		_save_path = SAVE_PATH_TEST
 		_run_farmtest.call_deferred()
 	else:
 		if "--fresh" not in args:
 			_load(true)
-	for a in args:
-		if a.begins_with("--farm-shots="):
-			_run_shots(a.get_slice("=", 1))
+	# Tests and screenshot demos have separate lifecycles; testing takes priority.
+	if not testing:
+		for i in range(args.size()):
+			var a: String = args[i]
+			if a.begins_with("--farm-shots=") or a.begins_with("--shots="):
+				_run_shots(a.get_slice("=", 1))
+				break
+			if a in ["--farm-shots", "--shots"] and i + 1 < args.size():
+				_run_shots(args[i + 1])
+				break
 	_update_hover(get_global_mouse_position())
 	_update_hud()
 
