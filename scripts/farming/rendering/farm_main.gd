@@ -16,6 +16,7 @@ const FarmInventory := preload("res://scripts/farming/core/inventory/farm_invent
 const FarmTerrainRenderer := preload("res://scripts/farming/rendering/terrain_renderer.gd")
 const CropRenderer := preload("res://scripts/farming/rendering/crop_renderer.gd")
 const Phase04Tests := preload("res://scripts/farming/tests/phase04_foundation.gd")
+const Phase04ContentTests := preload("res://scripts/farming/tests/phase04_content.gd")
 const FarmCamera := preload("res://scripts/farming/rendering/farm_camera.gd")
 
 const MAP_ID := "farm_01"
@@ -38,6 +39,7 @@ var _ysort: Node2D
 var _cam: Camera2D
 var _cam_ctrl: FarmCamera
 var _overlay_marks: Node2D
+var _medium_marks: Node2D
 var _hl: Node2D
 var _hud: Label
 var _hud_info: Label
@@ -154,19 +156,28 @@ func _setup_overlay(w: int, h: int) -> void:
 	var layer := CanvasLayer.new()
 	layer.layer = 10
 	add_child(layer)
+	var hud_box := VBoxContainer.new()
+	hud_box.position = Vector2(8,6)
+	hud_box.size.x = get_viewport_rect().size.x-16
+	hud_box.add_theme_constant_override("separation",2)
+	layer.add_child(hud_box)
+	get_viewport().size_changed.connect(func(): hud_box.size.x = get_viewport_rect().size.x-16)
 
 	_hud = _make_label()
-	_hud.position = Vector2(8, 6)
-	_hud.text = "灵田·壹号 · 左键 行动 · 1-9/H 选工具 · B 换介质 · R 休息 · F5 存档 · F9 读档 · WASD 平移 · 滚轮 缩放"
-	layer.add_child(_hud)
+	_hud.text = "灵田 · 左键行动 · 1-%d/H 工具 · B介质 · R休息 · F5/F9存读 · WASD/滚轮" % _tool_crop_ids.size()
+	hud_box.add_child(_hud)
 
 	_hud_info = _make_label()
-	_hud_info.position = Vector2(8, 28)
-	layer.add_child(_hud_info)
+	hud_box.add_child(_hud_info)
 
 	_hud_tool = _make_label()
-	_hud_tool.position = Vector2(8, 50)
-	layer.add_child(_hud_tool)
+	hud_box.add_child(_hud_tool)
+
+	_medium_marks = Node2D.new()
+	_medium_marks.name = "PlantingMedia"
+	_medium_marks.z_index = -1  # Above ground, below Y-sort sprites.
+	_medium_marks.draw.connect(_draw_media)
+	add_child(_medium_marks)
 
 	_overlay_marks = Node2D.new()
 	_overlay_marks.name = "FieldMarks"
@@ -190,6 +201,8 @@ func _make_label() -> Label:
 	l.add_theme_color_override("font_color", Color(0.95, 0.92, 0.8))
 	l.add_theme_color_override("font_shadow_color", Color(0, 0, 0, 0.85))
 	l.add_theme_constant_override("shadow_offset_y", 1)
+	l.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	l.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	return l
 
 
@@ -363,7 +376,7 @@ func _draw_highlight() -> void:
 				Color(1.0, 0.9, 0.35, 0.95), false, 2.0)
 
 
-func _draw_marks() -> void:
+func _draw_media() -> void:
 	if grid == null:
 		return
 	for y in range(grid.height):
@@ -372,8 +385,16 @@ func _draw_marks() -> void:
 			var medium := grid.medium_at(cell)
 			if medium not in ["", "soil"]:
 				var color := Color(0.5, 0.4, 0.65, 0.3) if medium == "fungal_bed" else Color(0.3, 0.2, 0.1, 0.35)
-				_overlay_marks.draw_rect(Rect2(Vector2(cell) * TILE, Vector2.ONE * TILE), color, true)
+				_medium_marks.draw_rect(Rect2(Vector2(cell) * TILE, Vector2.ONE * TILE), color, true)
+
+
+func _draw_marks() -> void:
+	if grid == null:
+		return
+	_medium_marks.queue_redraw()
 	for c in grid.occupied_cells():  # 设施占用（红）
+		if grid.state_at(c) != LandGrid.State.OCCUPIED:
+			continue
 		_overlay_marks.draw_rect(Rect2(Vector2(c) * TILE, Vector2.ONE * TILE),
 				Color(0.85, 0.15, 0.15, 0.35), true)
 		_overlay_marks.draw_rect(Rect2(Vector2(c) * TILE, Vector2.ONE * TILE),
@@ -933,7 +954,7 @@ func _run_farmtest() -> void:
 
 	# 35. 作物素材契约（阶段齐全；素材替换同名覆盖）
 	var assets_ok := true
-	for cid in ["dew_grass", "scarlet_berry"]:
+	for cid in _tool_crop_ids:
 		var def_c: Dictionary = crop_mgr.def_of(cid)
 		for s in def_c["growth_stages"]:
 			if not FileAccess.file_exists("res://assets/farming/crops/%s/%s.png" % [cid, s["sprite"]]):
@@ -943,7 +964,7 @@ func _run_farmtest() -> void:
 				if not FileAccess.file_exists("res://assets/farming/crops/%s/%s.png" % [cid, extra]):
 					assets_ok = false
 	if assets_ok:
-		_ok("作物素材契约：两种作物阶段图齐全（含 regrow 双态）")
+		_ok("作物素材契约：所有已登记作物阶段图齐全（含 regrow 双态）")
 	else:
 		fails.append("作物素材缺失")
 	fails.append_array(Phase04Tests.run())
@@ -976,6 +997,7 @@ func _run_farmtest() -> void:
 		_ok("P4: 种植后B键换介质被拒且不扣AP")
 	else:
 		fails.append("P4: 占用格换介质出现副作用")
+	fails.append_array(Phase04ContentTests.run(self))
 
 	grid.reset()
 	renderer.refresh_dynamic_all()
@@ -1068,4 +1090,62 @@ func _run_shots(dir: String) -> void:
 		var path := dir.path_join(shot[0])
 		img.save_png(path)
 		print("[shot] %s" % path)
+	await _run_phase04_shots(dir)
 	get_tree().quit(0)
+
+
+func _run_phase04_shots(dir: String) -> void:
+	# Four real definitions; keep generated placeholders distinct from delivered art.
+	crop_mgr.reset_all()
+	grid.reset()
+	clock.setup(_config)
+	inventory.setup(_config["start_inventory"])
+	for y in range(10,13):
+		for x in range(4,12):
+			grid.till(Vector2i(x,y))
+	crop_mgr.plant(Vector2i(7,10),"jade_fruit_tree")
+	for day in range(6):
+		clock.end_day()
+	crop_mgr.plant(Vector2i(4,11),"dew_grass")
+	crop_mgr.plant(Vector2i(5,11),"scarlet_berry")
+	grid.prepare_medium(Vector2i(10,11),"fungal_bed")
+	crop_mgr.plant(Vector2i(10,11),"moon_cap")
+	for day in range(4):
+		clock.end_day()
+	_tool=_tool_crop_ids.find("jade_fruit_tree")+1
+	_update_hover(Vector2(8.5*TILE,11.5*TILE))
+	_update_hud()
+	await _capture_phase04(dir,"farm04_1_four_categories.png",Vector2(7.5*TILE,11*TILE),1.2)
+	_act_on(Vector2i(8,11))
+	_act_on(Vector2i(10,11))
+	await _capture_phase04(dir,"farm04_2_harvested_and_bed.png",Vector2(7.5*TILE,11*TILE),1.2)
+	crop_mgr.reset_all()
+	grid.reset()
+	clock.setup(_config)
+	for y in range(11,13):
+		for x in range(2,14):
+			grid.till(Vector2i(x,y))
+	crop_mgr.plant(Vector2i(11,11),"jade_fruit_tree")
+	for day in range(5):
+		clock.end_day()
+	crop_mgr.plant(Vector2i(8,11),"jade_fruit_tree")
+	for day in range(3):
+		clock.end_day()
+	crop_mgr.plant(Vector2i(5,11),"jade_fruit_tree")
+	for day in range(2):
+		clock.end_day()
+	crop_mgr.plant(Vector2i(2,11),"jade_fruit_tree")
+	_update_hover(Vector2(11.5*TILE,11.5*TILE))
+	await _capture_phase04(dir,"farm04_3_tree_stages.png",Vector2(7.5*TILE,11.5*TILE),0.7)
+
+
+func _capture_phase04(dir: String, filename: String, center: Vector2, zoom: float) -> void:
+	renderer.refresh_dynamic_all()
+	_overlay_marks.queue_redraw()
+	_cam.position=center
+	_cam.zoom=Vector2(zoom,zoom)
+	await get_tree().process_frame
+	await RenderingServer.frame_post_draw
+	var path := dir.path_join(filename)
+	get_viewport().get_texture().get_image().save_png(path)
+	print("[shot] %s" % path)

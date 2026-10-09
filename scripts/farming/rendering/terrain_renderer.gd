@@ -82,7 +82,7 @@ func update_cells(cells: Array[Vector2i]) -> void:
 	for c in cells:
 		if not _grid.in_bounds(c.x, c.y):
 			continue
-		if _grid.state_at(c) == LandGrid.State.TILLED:
+		if not _grid.medium_at(c).is_empty():
 			layer.set_cell(c, _dynamic_src, _dynamic_atlas(c))
 		else:
 			layer.erase_cell(c)
@@ -131,7 +131,11 @@ func _rebuild_static() -> void:
 
 ## 全量刷新动态层（读档/复位后调用；常规变更走 update_cells 增量）。
 func refresh_dynamic_all() -> void:
-	update_cells(_grid.cells_with_state(LandGrid.State.TILLED))
+	var cells: Array[Vector2i] = []
+	for y in range(_grid.height):
+		for x in range(_grid.width):
+			cells.append(Vector2i(x,y))
+	update_cells(cells)
 
 
 func _static_atlas(tid: String, cell: Vector2i) -> Vector2i:
@@ -146,7 +150,7 @@ func _dynamic_atlas(cell: Vector2i) -> Vector2i:
 func _tilled_pred() -> Callable:
 	# 经 LandGrid 公开接口 state_at 判定，保持渲染层零内部状态依赖
 	var grid := _grid
-	return func(x: int, y: int) -> bool: return grid.state_at(Vector2i(x, y)) == LandGrid.State.TILLED
+	return func(x: int, y: int) -> bool: return not grid.medium_at(Vector2i(x, y)).is_empty()
 
 
 func _load_tex(rel: String) -> Texture2D:
