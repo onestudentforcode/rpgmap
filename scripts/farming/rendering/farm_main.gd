@@ -13,6 +13,9 @@ const LandGrid := preload("res://scripts/farming/core/grid/land_grid.gd")
 const FarmClock := preload("res://scripts/farming/core/clock/farm_clock.gd")
 const CropManager := preload("res://scripts/farming/core/crops/crop_manager.gd")
 const FarmInventory := preload("res://scripts/farming/core/inventory/farm_inventory.gd")
+const FarmEconomy := preload("res://scripts/farming/core/economy/farm_economy.gd")
+const FarmEconomyPanel := preload("res://scripts/farming/rendering/farm_economy_panel.gd")
+const Phase05Tests := preload("res://scripts/farming/tests/phase05_economy.gd")
 const FarmTerrainRenderer := preload("res://scripts/farming/rendering/terrain_renderer.gd")
 const CropRenderer := preload("res://scripts/farming/rendering/crop_renderer.gd")
 const Phase04Tests := preload("res://scripts/farming/tests/phase04_foundation.gd")
@@ -29,6 +32,8 @@ var renderer: FarmTerrainRenderer
 var clock: FarmClock
 var crop_mgr: CropManager
 var inventory: FarmInventory
+var economy: FarmEconomy
+var economy_panel: FarmEconomyPanel
 var crop_r: CropRenderer
 
 var _config: Dictionary = {}
@@ -107,6 +112,8 @@ func _ready() -> void:
 	crop_mgr.setup(grid, crops_data)
 	inventory = FarmInventory.new()
 	inventory.setup(_config.get("start_inventory", {}))
+	economy = FarmEconomy.new()
+	economy.setup(_config, _items_by_id, _crops_by_id, inventory)
 	crop_r = CropRenderer.new()
 	crop_r.build(_ysort, crop_mgr)
 	clock.day_changed.connect(_on_day_changed)
@@ -172,6 +179,17 @@ func _setup_overlay(w: int, h: int) -> void:
 
 	_hud_tool = _make_label()
 	hud_box.add_child(_hud_tool)
+	var market := Button.new()
+	market.text = "库存 / 集市 / 喂养（M）"
+	market.size_flags_horizontal = Control.SIZE_SHRINK_BEGIN
+	market.pressed.connect(_toggle_economy)
+	hud_box.add_child(market)
+	economy_panel = FarmEconomyPanel.new()
+	layer.add_child(economy_panel)
+	economy_panel.build(self)
+	economy_panel.changed.connect(func(message: String, ok: bool):
+		_update_hud()
+		_flash(message, ok))
 
 	_medium_marks = Node2D.new()
 	_medium_marks.name = "PlantingMedia"
@@ -209,6 +227,13 @@ func _make_label() -> Label:
 # ------------------------------------------------------------ 输入与交互
 
 func _unhandled_input(event: InputEvent) -> void:
+	if event is InputEventKey and event.pressed and not event.echo and event.keycode == KEY_M:
+		_toggle_economy()
+		return
+	if economy_panel != null and economy_panel.visible:
+		if event is InputEventKey and event.pressed and event.keycode == KEY_ESCAPE:
+			economy_panel.hide()
+		return
 	if event is InputEventMouseMotion:
 		_update_hover(get_global_mouse_position())
 	elif event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
@@ -334,6 +359,10 @@ func _cycle_medium(cell: Vector2i) -> void:
 	if not clock.can_spend(cost):
 		_flash("行动点不足", false)
 		return
+	var material := economy.medium_material(next)
+	if not material.is_empty() and not inventory.remove(material, 1):
+		_flash("材料不足：%s（可在集市购买）" % _item_name(material), false)
+		return
 	grid.prepare_medium(cell, next)
 	clock.spend(cost)
 	_flash("种植介质：%s" % _medium_name(next), true)
@@ -363,9 +392,27 @@ func _on_cells_changed(_cells: Array[Vector2i]) -> void:
 
 func _on_day_changed(_total: int) -> void:
 	crop_mgr.on_day_changed()
+	economy.on_day_changed()
 	if _overlay_marks != null:
 		_overlay_marks.queue_redraw()
 	_update_hud()
+	if economy_panel != null and economy_panel.visible:
+		economy_panel.refresh()
+
+
+func _toggle_economy() -> void:
+	economy_panel.visible = not economy_panel.visible
+	if economy_panel.visible:
+		economy_panel.refresh()
+
+
+## External gameplay hook; the caller supplies the completed behavior and result.
+func record_gu_use(behavior: String, succeeded: bool) -> Dictionary:
+	var result := economy.record_use(behavior, succeeded)
+	_update_hud()
+	if economy_panel != null and economy_panel.visible:
+		economy_panel.refresh()
+	return result
 
 
 # ------------------------------------------------------------ 绘制
@@ -447,7 +494,8 @@ func _update_hud() -> void:
 			if n >= 8:
 				inv_parts.append("…")
 				break
-		_hud_tool.text = "%s  |  背包：%s" % [tool_text, "、".join(inv_parts) if not inv_parts.is_empty() else "空"]
+		_hud_tool.text = "%s  |  元石%d · 木蛊%d/6  |  背包：%s" % [tool_text, economy.primeval_stones,
+			economy.gu["satiety"], "、".join(inv_parts) if not inv_parts.is_empty() else "空"]
 
 
 func _terrains_by_id() -> Dictionary:
@@ -524,11 +572,12 @@ func _save() -> void:
 		_flash("存档失败：无法写入", false)
 		return
 	var data := {
-		"schema": 2,
+		"schema": 3,
 		"clock": clock.to_save(),
 		"grid": grid.to_save(),
 		"crops": crop_mgr.to_save(),
 		"inventory": inventory.to_save(),
+		"economy": economy.to_save(),
 	}
 	f.store_string(JSON.stringify(data, "\t"))
 	f.close()
@@ -541,10 +590,20 @@ func _load(silent: bool) -> bool:
 			_flash("没有存档", false)
 		return false
 	var parsed = JSON.parse_string(FileAccess.get_file_as_string(_save_path))
-	if parsed == null or not (parsed is Dictionary) or int(parsed.get("schema", 0)) != 2:
+	if parsed == null or not (parsed is Dictionary) or int(parsed.get("schema", 0)) not in [2, 3]:
 		if not silent:
 			_flash("存档版本不兼容或损坏", false)
 		return false
+	for key in ["grid", "crops", "inventory", "clock"]:
+		if not parsed.get(key) is Dictionary:
+			return false
+	var loaded_economy := FarmEconomy.new()
+	loaded_economy.setup(_config, _items_by_id, _crops_by_id, inventory)
+	if int(parsed["schema"]) == 3:
+		if not parsed.get("economy") is Dictionary or not loaded_economy.apply_save(parsed["economy"]):
+			if not silent:
+				_flash("经济存档内容异常", false)
+			return false
 	var ok := grid.apply_save(parsed["grid"]) \
 			and crop_mgr.apply_save(parsed["crops"]) \
 			and inventory.apply_save(parsed["inventory"])
@@ -553,6 +612,9 @@ func _load(silent: bool) -> bool:
 			_flash("存档内容异常", false)
 		return false
 	clock.apply_save(parsed["clock"])
+	economy = loaded_economy
+	if economy_panel != null and economy_panel.visible:
+		economy_panel.refresh()
 	renderer.refresh_dynamic_all()
 	if _overlay_marks != null:
 		_overlay_marks.queue_redraw()
@@ -974,6 +1036,7 @@ func _run_farmtest() -> void:
 	clock.setup(_config)
 	inventory.setup(_config.get("start_inventory", {}))
 	var medium_cell := Vector2i(1,1)
+	inventory.add("fungal_bed_material", 1)  # P5: prepare now requires a purchased material.
 	grid.till(medium_cell)
 	var before_ap := clock.ap
 	_cycle_medium(medium_cell)
@@ -998,6 +1061,7 @@ func _run_farmtest() -> void:
 	else:
 		fails.append("P4: 占用格换介质出现副作用")
 	fails.append_array(Phase04ContentTests.run(self))
+	fails.append_array(Phase05Tests.run())
 
 	grid.reset()
 	renderer.refresh_dynamic_all()

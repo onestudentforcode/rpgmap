@@ -11,6 +11,7 @@ static func run(farm) -> Array[String]:
 	farm.grid.reset()
 	farm.clock.setup(farm._config)
 	farm.inventory.setup(farm._config["start_inventory"])
+	farm.inventory.add("fungal_bed_material", 1)  # P5 production cost fixture.
 	var categories := []
 	for cid in farm._tool_crop_ids:
 		categories.append(farm.crop_mgr.def_of(cid)["category"])
