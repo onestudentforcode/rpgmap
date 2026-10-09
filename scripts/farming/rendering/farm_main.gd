@@ -6,7 +6,7 @@ extends Node2D
 ## 默认入口：play.bat [--selftest] [--shots=DIR] [--fresh]；test.bat 运行当前模块测试。
 ## 兼容：play.bat farm [--farmtest] [--farm-shots=DIR]。
 ##   左键 行动 · 1-9/H 选工具（0 锄头，其余种子槽） · R 休息进入次日
-##   F5 存档 · F9 读档 · WASD/方向键 平移 · 滚轮 缩放
+##   每日结束自动存入所属槽 · Esc菜单 · WASD/方向键平移 · 滚轮缩放
 
 const FarmData := preload("res://scripts/farming/core/farm_data.gd")
 const LandGrid := preload("res://scripts/farming/core/grid/land_grid.gd")
@@ -20,6 +20,7 @@ const FarmUI := preload("res://scripts/farming/rendering/farm_ui_style.gd")
 const Phase05Tests := preload("res://scripts/farming/tests/phase05_economy.gd")
 const Phase05ContentTests := preload("res://scripts/farming/tests/phase05_content.gd")
 const Phase06SlotTests := preload("res://scripts/farming/tests/phase06_slots.gd")
+const Phase06DemoTests := preload("res://scripts/farming/tests/phase06_demo.gd")
 const FarmTerrainRenderer := preload("res://scripts/farming/rendering/terrain_renderer.gd")
 const CropRenderer := preload("res://scripts/farming/rendering/crop_renderer.gd")
 const Phase04Tests := preload("res://scripts/farming/tests/phase04_foundation.gd")
@@ -39,6 +40,8 @@ var inventory: FarmInventory
 var economy: FarmEconomy
 var economy_panel: FarmEconomyPanel
 var crop_r: CropRenderer
+var demo_controller
+var demo_snapshot: Dictionary = {}
 
 var _config: Dictionary = {}
 var _items_by_id: Dictionary = {}
@@ -133,15 +136,20 @@ func _ready() -> void:
 	_setup_overlay(w, h)
 
 	var args := OS.get_cmdline_user_args()
-	var testing := "--farmtest" in args or "--selftest" in args
+	var testing := demo_controller == null and ("--farmtest" in args or "--selftest" in args)
 	if testing:
 		_save_path = SAVE_PATH_TEST
 		_run_farmtest.call_deferred()
+	elif demo_controller != null:
+		if not apply_snapshot(demo_snapshot):
+			push_error("Demo快照加载失败")
+			return
 	else:
-		if "--fresh" not in args:
-			_load(true)
+		var preview: bool = "--fresh" in args or Array(args).any(func(arg): return arg.begins_with("--shots") or arg.begins_with("--farm-shots"))
+		if not preview:
+			get_tree().change_scene_to_file.call_deferred("res://scenes/farming/farm_demo.tscn")
 	# Tests and screenshot demos have separate lifecycles; testing takes priority.
-	if not testing:
+	if not testing and demo_controller == null:
 		for i in range(args.size()):
 			var a: String = args[i]
 			if a.begins_with("--farm-shots=") or a.begins_with("--shots="):
@@ -186,15 +194,14 @@ func _setup_overlay(w: int, h: int) -> void:
 	var status := HBoxContainer.new()
 	hud_box.add_child(status)
 	status.add_child(_hud)
-	for save_action in [true, false]:
-		var button := Button.new()
-		button.text = "存档 F5" if save_action else "读档 F9"
-		button.pressed.connect(func():
-			if save_action:
-				_save()
-			else:
-				_load(false))
-		status.add_child(button)
+	var menu := Button.new()
+	menu.text = "槽%d · 菜单 Esc" % demo_controller.store.active_slot() if demo_controller != null else "菜单 Esc"
+	menu.pressed.connect(func():
+		if demo_controller != null:
+			demo_controller.show_pause()
+		else:
+			_flash("预览模式：无存档槽",true))
+	status.add_child(menu)
 
 	_hud_info = _make_label()
 	_hud_info.add_theme_font_size_override("font_size", 11)
@@ -252,8 +259,7 @@ func _setup_overlay(w: int, h: int) -> void:
 	economy_panel.build(self)
 	economy_panel.visibility_changed.connect(func():
 		shade.visible = economy_panel.visible
-		_cam_ctrl.set_process(not economy_panel.visible)
-		_cam_ctrl.set_process_unhandled_input(not economy_panel.visible))
+		refresh_camera_lock())
 	economy_panel.changed.connect(func(message: String, ok: bool):
 		_update_hud()
 		_flash(message, ok))
@@ -299,6 +305,8 @@ func _make_label() -> Label:
 # ------------------------------------------------------------ 输入与交互
 
 func _unhandled_input(event: InputEvent) -> void:
+	if demo_controller != null and demo_controller.is_modal():
+		return
 	if event is InputEventKey and event.pressed and not event.echo and event.keycode == KEY_M:
 		_toggle_economy()
 		return
@@ -311,10 +319,9 @@ func _unhandled_input(event: InputEvent) -> void:
 	elif event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
 		_act_on(_hover)
 	elif event is InputEventKey and event.pressed and not event.echo:
-		if event.keycode == KEY_F5:
-			_save()
-		elif event.keycode == KEY_F9:
-			_load(false)
+		if event.keycode == KEY_ESCAPE and demo_controller != null:
+			demo_controller.show_pause()
+			get_viewport().set_input_as_handled()
 		elif event.keycode == KEY_R:
 			clock.end_day()
 			_flash("休息一晚 —— %s" % clock.describe(), true)
@@ -334,7 +341,7 @@ func _act_on(cell: Vector2i) -> void:
 	# 1) 收获优先：任意工具点成熟植株
 	var hchk := crop_mgr.can_harvest(cell)
 	if hchk["ok"]:
-		if not clock.spend(clock.cost_of("harvest")):
+		if not clock.can_spend(clock.cost_of("harvest")):
 			_flash("行动点不足", false)
 			return
 		var r: Dictionary = crop_mgr.harvest(cell)
@@ -347,15 +354,17 @@ func _act_on(cell: Vector2i) -> void:
 			suffix = "（植株已枯竭，用锄头清理）"
 		elif not r["removed"]:
 			suffix = "（植株保留，再次结果中）"
+		clock.spend(clock.cost_of("harvest"))
 		_flash("收获 " + "、".join(parts) + suffix, true)
 		return
 	# 2) 锄头：清理 > 开垦 > 恢复
 	if _tool == 0:
 		if crop_mgr.can_clear(cell)["ok"]:
-			if not clock.spend(clock.cost_of("clear")):
+			if not clock.can_spend(clock.cost_of("clear")):
 				_flash("行动点不足", false)
 				return
 			crop_mgr.clear(cell)
+			clock.spend(clock.cost_of("clear"))
 			_flash("已清理枯竭植株，地格恢复开垦态", true)
 			return
 		var st := grid.state_at(cell)
@@ -470,6 +479,16 @@ func _on_day_changed(_total: int) -> void:
 	_update_hud()
 	if economy_panel != null and economy_panel.visible:
 		economy_panel.refresh()
+	if demo_controller != null:
+		demo_controller.save_world(capture_snapshot())
+
+
+func refresh_camera_lock() -> void:
+	if _cam_ctrl == null:
+		return
+	var locked: bool = (economy_panel != null and economy_panel.visible) or (demo_controller != null and demo_controller.is_modal())
+	_cam_ctrl.set_process(not locked)
+	_cam_ctrl.set_process_unhandled_input(not locked)
 
 
 func _toggle_economy() -> void:
@@ -564,7 +583,7 @@ func _update_hud() -> void:
 			var cid: String = _tool_crop_ids[_tool - 1]
 			tool_text = "工具：播种 %s（种子×%d）" % [_crop_name(cid), inventory.count(cid + "_seed")]
 		_hud_tool.text = tool_text
-		_hud_tool.tooltip_text = "左键行动 · H轮换工具 · WASD/方向键平移 · 滚轮缩放 · F5存档/F9读档"
+		_hud_tool.tooltip_text = "左键行动 · H轮换工具 · WASD/方向键平移 · 滚轮缩放 · 每日自动保存 · Esc菜单"
 		for index in range(_tool_buttons.size()):
 			_tool_buttons[index].set_pressed_no_signal(index == _tool)
 
@@ -1148,6 +1167,7 @@ func _run_farmtest() -> void:
 	fails.append_array(Phase05ContentTests.run(self))
 	fails.append_array(Phase06SlotTests.run())
 	fails.append_array(Phase06SlotTests.run_scene(self))
+	fails.append_array(await Phase06DemoTests.run(get_tree()))
 
 	grid.reset()
 	renderer.refresh_dynamic_all()
