@@ -116,7 +116,7 @@ python tools/farming/gen_farm_terrains.py --transitions-only # 正式地面回�
 python tools/farming/qc_assets.py --target all # 正式资产统一检查（占位差异见 art-pipeline.md）
 python tools/farming/build_art_handoff.py --batch ground --output .art-work/handoff/ground # 空输出目录
 play.bat farm                              # 主农场场景（开垦/种植/采收/存档）
-play.bat farm --farmtest                   # 种植与经济逻辑自测（当前 97 项）
+play.bat farm --farmtest                   # 种植/经济/存档逻辑自测（当前 127 项）
 play.bat --fresh                           # 新开局试玩四类作物（含新种子，保存前保留旧存档）
 play.bat farm0                             # Phase 0 拼接验证场景（历史回归）
 ```
@@ -129,7 +129,8 @@ play.bat farm0                             # Phase 0 拼接验证场景（历史
 
 Phase 0–5已关闭；Phase5以本仓库种植经济闭环为完成条件，对上游保留适配接口。
 Phase6范围已由用户确认，草案见[phase-06](docs/farming/phase-06-Demo体验与三槽存档.md)：
-开始菜单/引导、三槽每日自动存档（撤除玩家手动存读）、首个45天经营回顾、购买高级3×3工具（成功AP总成本折半向上取整）与设置；尚未修改运行代码。
+开始菜单/引导、三槽每日自动存档（撤除玩家手动存读）、首个45天经营回顾、购买高级3×3工具（成功AP总成本折半向上取整）与设置。
+P6.a三槽服务与完整快照校验已完成（30项新检查，总127项）；开始菜单与每日自动存档尚待P6.b接入，当前玩家入口仍为旧农场。
 不新增作物/人物/美术/音乐，不实现蛊虫主动能力或实际上游接线。
 游戏中M打开库存/集市/喂养，R进入次日；指定行为调用`record_gu_use(behavior, succeeded)`，默认允许battle。
 现有四类作物正式图全部保留，后续美术继续适量加入东方玄幻意象；母版先人工审核后衍生。
