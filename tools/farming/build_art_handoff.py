@@ -21,15 +21,19 @@ STAGE_DESC = {"seed": "small planted seed, no soil mound", "sprout": "small seed
               "exhausted": "same plant exhausted, gray brown drooping leaves, no fruit"}
 
 
-def build(batch, output):
+def build(batch, output, crops=None):
     all_entries = build_manifest()["assets"]
+    if crops:
+        registered = {Path(e["path"]).parent.name for e in all_entries if e["type"] == "crop_stage"}
+        if batch != "crop_masters" or set(crops)-registered:
+            raise ValueError("--crop must name registered crops in crop_masters batch")
     def selected(e):
         if batch == "ground":
             return e["type"] == "ground"
         if e["type"] != "crop_stage":
             return False
         if batch == "crop_masters":
-            return e.get("stage") == "mature"
+            return e.get("stage") == "mature" and (not crops or Path(e["path"]).parent.name in crops)
         return e["path"].split("/")[-2] == batch and e.get("stage") != "mature"
     entries = [e for e in all_entries if selected(e)]
     if not entries:
@@ -127,9 +131,10 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--batch", required=True, help="ground, crop_masters or registered crop_id (non-mature stages)")
     parser.add_argument("--output", type=Path, required=True)
+    parser.add_argument("--crop",action="append",help="filter crop_masters by crop_id; repeat for multiple crops")
     args = parser.parse_args()
     try:
-        build(args.batch, args.output.resolve())
+        build(args.batch, args.output.resolve(),args.crop)
     except (OSError, ValueError) as exc:
         parser.exit(1, str(exc)+"\n")
 

@@ -94,6 +94,33 @@ class Phase04Tests(unittest.TestCase):
             self.assertTrue(all('256x384' in p['prompt'] and 'twisted old trunk' in p['prompt'] for p in prompts))
             self.assertTrue(all(p['reference_required'].endswith('jade_fruit_tree/stage_3.png') for p in prompts))
 
+    def test_explicit_padding_preserves_original_and_integer_scale(self):
+        source=Image.new('RGBA',(1254,1254))
+        ImageDraw.Draw(source).rectangle((400,230,850,1120),fill=(78,123,78,254))
+        before=source.tobytes()
+        output=process(source,'crop_stage',target_size=(64,64),pad_factor=20)
+        self.assertEqual(source.tobytes(),before)
+        self.assertEqual(output.size,(64,64))
+        self.assertEqual(output.getchannel('A').getbbox()[3],62)
+        tree=Image.new('RGBA',(1024,1536))
+        ImageDraw.Draw(tree).rectangle((80,200,950,1480),fill=(78,123,78,255))
+        self.assertEqual(process(tree,'crop_stage',target_size=(128,192),pad_factor=10).size,(128,192))
+        for bad in (0,True,7):
+            with self.assertRaises(ValueError):
+                process(tree,'crop_stage',target_size=(128,192),pad_factor=bad)
+        with self.assertRaises(ValueError):
+            process(Image.new('RGB',(64,64)),'crop_stage',pad_factor=2)
+
+    def test_master_batch_filter_excludes_delivered_old_crops(self):
+        with tempfile.TemporaryDirectory() as temp:
+            directory=Path(temp)/'new_masters'
+            build('crop_masters',directory,['jade_fruit_tree','moon_cap'])
+            entries=json.loads((directory/'manifest.json').read_text(encoding='utf-8'))['assets']
+            self.assertEqual({Path(e['path']).parent.name for e in entries},{'jade_fruit_tree','moon_cap'})
+            self.assertEqual(len(entries),2)
+            with self.assertRaises(ValueError):
+                build('crop_masters',Path(temp)/'bad',['unknown'])
+
 
 if __name__=='__main__':
     unittest.main()

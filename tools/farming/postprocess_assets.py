@@ -14,13 +14,26 @@ from qc_assets import check_image
 
 
 def process(image, kind, threshold=128, background=None, background_tolerance=0, pad_to_multiple=False,
-            target_size=(64, 64)):
+            target_size=(64, 64), pad_factor=None):
     w, h = image.size
     tw, th = target_size
     if any(not isinstance(v, int) or v < 64 or v % 64 for v in (tw, th)):
         raise ValueError("target canvas must use positive multiples of 64")
     if kind == "ground" and (tw, th) != (64, 64):
         raise ValueError("ground target must remain 64x64")
+    if pad_factor is not None:
+        if kind != "crop_stage" or not isinstance(pad_factor,int) or isinstance(pad_factor,bool) or pad_factor < 1:
+            raise ValueError("pad factor is a positive integer for crop sprites only")
+        if pad_to_multiple:
+            raise ValueError("choose pad factor or pad-to-multiple, not both")
+        pw,ph = tw*pad_factor,th*pad_factor
+        if pw < w or ph < h:
+            raise ValueError("padding canvas cannot crop the original")
+        if background is None and ("A" not in image.getbands() or image.getchannel("A").getextrema()==(255,255)):
+            raise ValueError("opaque source padding requires explicit background key")
+        padded = Image.new("RGBA",(pw,ph),(*rgb(background),255) if background else (0,0,0,0))
+        padded.paste(image.convert("RGBA"),((pw-w)//2,(ph-h)//2))
+        image,w,h = padded,pw,ph
     if pad_to_multiple and (tw, th) != (64, 64):
         raise ValueError("padding is supported only for the 64x64 crop contract")
     if pad_to_multiple and kind == "crop_stage" and w == h and w >= 64 and w % 64:
@@ -101,6 +114,7 @@ def main():
     parser.add_argument("--background")
     parser.add_argument("--background-tolerance", type=int, default=0, help="RGB key tolerance, only border-connected pixels")
     parser.add_argument("--pad-to-multiple", action="store_true", help="pad crop canvas to next multiple of 64 before integer NEAREST reduction")
+    parser.add_argument("--pad-factor",type=int,help="explicitly pad crop to target_size * factor, then integer NEAREST reduce")
     args = parser.parse_args()
     raw, out = args.input.resolve(), args.output.resolve()
     assets = (ROOT / "assets").resolve()
@@ -125,7 +139,7 @@ def main():
         try:
             with Image.open(source) as image:
                 output = process(image, entry["type"], args.alpha_threshold, args.background,
-                                 args.background_tolerance, args.pad_to_multiple, tuple(entry["size"]))
+                                 args.background_tolerance, args.pad_to_multiple, tuple(entry["size"]),args.pad_factor)
             destination.parent.mkdir(parents=True, exist_ok=True)
             output.save(destination)
             result["errors"], result["warnings"] = check_image(destination, entry)
