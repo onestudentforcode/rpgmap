@@ -15,6 +15,7 @@ const CropManager := preload("res://scripts/farming/core/crops/crop_manager.gd")
 const FarmInventory := preload("res://scripts/farming/core/inventory/farm_inventory.gd")
 const FarmEconomy := preload("res://scripts/farming/core/economy/farm_economy.gd")
 const FarmEconomyPanel := preload("res://scripts/farming/rendering/farm_economy_panel.gd")
+const FarmUI := preload("res://scripts/farming/rendering/farm_ui_style.gd")
 const Phase05Tests := preload("res://scripts/farming/tests/phase05_economy.gd")
 const Phase05ContentTests := preload("res://scripts/farming/tests/phase05_content.gd")
 const FarmTerrainRenderer := preload("res://scripts/farming/rendering/terrain_renderer.gd")
@@ -50,6 +51,10 @@ var _hl: Node2D
 var _hud: Label
 var _hud_info: Label
 var _hud_tool: Label
+var _tool_buttons: Array[Button] = []
+var _notice_timer: Timer
+var _notice_text := ""
+var _notice_ok := true
 var _hover := Vector2i(-1, -1)
 var _tool := 0  # 0=锄头；n=种子槽 _tool_crop_ids[n-1]
 var _save_path := SAVE_PATH
@@ -164,33 +169,96 @@ func _setup_overlay(w: int, h: int) -> void:
 	var layer := CanvasLayer.new()
 	layer.layer = 10
 	add_child(layer)
+	var hud_panel := PanelContainer.new()
+	hud_panel.position = Vector2(8, 6)
+	hud_panel.custom_minimum_size.x = 624
+	hud_panel.theme = FarmUI.theme()
+	layer.add_child(hud_panel)
 	var hud_box := VBoxContainer.new()
-	hud_box.position = Vector2(8,6)
-	hud_box.size.x = get_viewport_rect().size.x-16
+	hud_panel.add_child(hud_box)
 	hud_box.add_theme_constant_override("separation",2)
-	layer.add_child(hud_box)
-	get_viewport().size_changed.connect(func(): hud_box.size.x = get_viewport_rect().size.x-16)
 
 	_hud = _make_label()
-	_hud.text = "灵田 · 左键行动 · 1-%d/H 工具 · B介质 · R休息 · F5/F9存读 · WASD/滚轮" % _tool_crop_ids.size()
-	hud_box.add_child(_hud)
+	_hud.add_theme_font_size_override("font_size", 12)
+	var status := HBoxContainer.new()
+	hud_box.add_child(status)
+	status.add_child(_hud)
+	for save_action in [true, false]:
+		var button := Button.new()
+		button.text = "存档 F5" if save_action else "读档 F9"
+		button.pressed.connect(func():
+			if save_action:
+				_save()
+			else:
+				_load(false))
+		status.add_child(button)
 
 	_hud_info = _make_label()
+	_hud_info.add_theme_font_size_override("font_size", 11)
 	hud_box.add_child(_hud_info)
-
+	var dock := PanelContainer.new()
+	dock.position = Vector2(8, 282)
+	dock.custom_minimum_size = Vector2(624, 72)
+	dock.theme = FarmUI.theme()
+	layer.add_child(dock)
+	var dock_box := VBoxContainer.new()
+	dock.add_child(dock_box)
+	var tools := HBoxContainer.new()
+	dock_box.add_child(tools)
+	for index in range(_tool_crop_ids.size() + 1):
+		var button := Button.new()
+		button.text = "锄头" if index == 0 else "%s %d" % [_crop_name(_tool_crop_ids[index-1]), index]
+		button.tooltip_text = "H轮换工具；点击地图开垦、恢复或清理" if index == 0 else "选择种子，再点击匹配介质的空耕地播种"
+		button.toggle_mode = true
+		button.pressed.connect(func():
+			_tool = index
+			_update_hud())
+		tools.add_child(button)
+		_tool_buttons.append(button)
+	var medium_button := Button.new()
+	medium_button.text = "介质 B"
+	medium_button.tooltip_text = "将鼠标移到空耕地，按B轮换介质；菌床与朽木需要材料。"
+	medium_button.pressed.connect(func(): _cycle_medium(_hover))
+	tools.add_child(medium_button)
+	var rest := Button.new()
+	rest.text = "休息 R"
+	rest.pressed.connect(func():
+		clock.end_day()
+		_flash("休息一晚 —— %s" % clock.describe(), true))
+	tools.add_child(rest)
+	var actions := HBoxContainer.new()
+	dock_box.add_child(actions)
 	_hud_tool = _make_label()
-	hud_box.add_child(_hud_tool)
+	_hud_tool.add_theme_font_size_override("font_size", 11)
+	actions.add_child(_hud_tool)
 	var market := Button.new()
-	market.text = "库存 / 集市 / 喂养（M）"
+	market.text = "行囊 / 集市 M"
 	market.size_flags_horizontal = Control.SIZE_SHRINK_BEGIN
 	market.pressed.connect(_toggle_economy)
-	hud_box.add_child(market)
+	actions.add_child(market)
+	var shade := ColorRect.new()
+	shade.size = Vector2(640, 360)
+	shade.color = Color(0.04, 0.08, 0.05, 0.62)
+	shade.hide()
+	layer.add_child(shade)
+	shade.gui_input.connect(func(event):
+		if event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
+			economy_panel.hide())
 	economy_panel = FarmEconomyPanel.new()
 	layer.add_child(economy_panel)
 	economy_panel.build(self)
+	economy_panel.visibility_changed.connect(func():
+		shade.visible = economy_panel.visible
+		_cam_ctrl.set_process(not economy_panel.visible)
+		_cam_ctrl.set_process_unhandled_input(not economy_panel.visible))
 	economy_panel.changed.connect(func(message: String, ok: bool):
 		_update_hud()
 		_flash(message, ok))
+	_notice_timer = Timer.new()
+	_notice_timer.one_shot = true
+	_notice_timer.wait_time = 4.0
+	_notice_timer.timeout.connect(_update_hud)
+	add_child(_notice_timer)
 
 	_medium_marks = Node2D.new()
 	_medium_marks.name = "PlantingMedia"
@@ -477,26 +545,25 @@ func _update_hud() -> void:
 			extra = " · 介质：" + _medium_name(medium)
 		if not inst.is_empty():
 			extra += " · " + _crop_name(inst["crop_id"]) + " " + _crop_state_text(inst)
+		var state_names := {LandGrid.State.WILD:"荒地", LandGrid.State.TILLED:"已开垦",
+			LandGrid.State.PLANTED:"种植中", LandGrid.State.OCCUPIED:"已占用", LandGrid.State.UNAVAILABLE:"不可种植"}
 		text = "(%d,%d) %s · %s%s" % [_hover.x, _hover.y, tname,
-				LandGrid.STATE_NAMES[grid.state_at(_hover)], extra]
+				state_names[grid.state_at(_hover)], extra]
 	if clock != null:
-		text += "  |  " + clock.describe()
-	_hud_info.text = text
+		_hud.text = "%s  |  元石 %d  |  木蛊 %d/6" % [clock.describe(), economy.primeval_stones, economy.gu["satiety"]]
+	var notice_active := _notice_timer != null and not _notice_timer.is_stopped()
+	_hud_info.text = _notice_text if notice_active else text
+	if notice_active:
+		_hud_info.modulate = FarmUI.JADE if _notice_ok else FarmUI.ERROR
 	if _hud_tool != null:
 		var tool_text := "工具：锄头（开垦/恢复/清理）"
 		if _tool > 0:
 			var cid: String = _tool_crop_ids[_tool - 1]
 			tool_text = "工具：播种 %s（种子×%d）" % [_crop_name(cid), inventory.count(cid + "_seed")]
-		var inv_parts := []
-		var n := 0
-		for e in inventory.entries():
-			inv_parts.append("%s×%d" % [_item_name(e["item_id"]), int(e["count"])])
-			n += 1
-			if n >= 8:
-				inv_parts.append("…")
-				break
-		_hud_tool.text = "%s  |  元石%d · 木蛊%d/6  |  背包：%s" % [tool_text, economy.primeval_stones,
-			economy.gu["satiety"], "、".join(inv_parts) if not inv_parts.is_empty() else "空"]
+		_hud_tool.text = tool_text
+		_hud_tool.tooltip_text = "左键行动 · H轮换工具 · WASD/方向键平移 · 滚轮缩放 · F5存档/F9读档"
+		for index in range(_tool_buttons.size()):
+			_tool_buttons[index].set_pressed_no_signal(index == _tool)
 
 
 func _terrains_by_id() -> Dictionary:
@@ -524,7 +591,11 @@ func _crop_state_text(inst: Dictionary) -> String:
 
 
 func _flash(msg: String, ok: bool) -> void:
-	_hud_info.modulate = Color(0.95, 0.4, 0.35) if not ok else Color(0.6, 0.95, 0.6)
+	_notice_text = msg
+	_notice_ok = ok
+	if _notice_timer != null:
+		_notice_timer.start()
+	_hud_info.modulate = FarmUI.JADE if ok else FarmUI.ERROR
 	_hud_info.text = msg
 
 
