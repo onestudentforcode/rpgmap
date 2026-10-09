@@ -21,7 +21,7 @@
 | 3.3 | AI 生成工作流 | §4 人机协作规程 + `docs/farming/art-style-sheet.md`（一页式风格约束+提示词模板） | 待执行 |
 | 3.4 | 资源检查脚本 | `tools/farming/qc_assets.py`（统一 QC，覆盖 master-plan 3.4 七项） | 待执行 |
 | 3.5 | 统一渲染验收 | 替换后零代码运行（渲染契约已在 Phase 2 落地，本阶段做替换演练） | 待执行 |
-| 3.6 | 采购单（manifest）工具 | `tools/farming/gen_asset_manifest.py` → 资产清单/移交包 | 待执行 |
+| 3.6 | 采购单（manifest）工具 | `tools/farming/gen_asset_manifest.py` → 资产清单/移交包 | **✅ 完成（2026-10-09，首批 21 项清单已产出，4 地面纹理标记 requested）** |
 | 3.7 | 地形资产替换 + P1-C 处理 | AI 无缝地面纹理替换 ground_*；过渡 atlas 重生成；观感参数重调 | 待执行 |
 
 ---
@@ -220,4 +220,13 @@ status 语义：`placeholder`（当前占位）/ `requested`（已列入采购�
 
 - 本文档展开；资产契约/采购单协议/QC 清单/工作流规程定稿（§2–§7）；
   决策点 P3-B/C/D 预定，P3-A 留待真实纹理上架。
-- 待执行：§1 状态表（工具 3 件 + style-sheet + 正式素材替换 + P1-C）。
+
+### 2026-10-09 任务 3.6 完成
+
+- `tools/farming/gen_asset_manifest.py` 落地：数据驱动（baked/terrains+crops）对账
+  `assets/farming/`，产出 `content/farming/baked/asset_manifest.json` + 控制台摘要；
+  状态机 missing/placeholder/requested/delivered/generated，人工登记走
+  `content/farming/art_status.json`；`--missing` 供 CI/流程检查缺失。
+- 首批清单 **21 项**：AI 采购口径 14（4 地面纹理已标 requested 待移交出图机 +
+  10 作物阶段 Sprite 占位在库）+ 程序生成 7（3 套过渡 atlas+位序 JSON、阴影贴片）。
+- 待执行：style-sheet、qc_assets、postprocess 工具，及正式图回传后的替换流程。

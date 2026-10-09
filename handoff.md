@@ -103,6 +103,7 @@ python tools/gen_placeholder_assets.py  # 重新生成占位美术（读 themes/
 python tools/farming/bake_farm.py          # 种植数据烘焙（改 content/farming/ 后必跑）
 python tools/farming/gen_farm_terrains.py  # 重生成地形占位纹理（--verify 只校验）
 python tools/farming/gen_farm_crops.py     # 重生成作物占位阶段图（--verify 只校验）
+python tools/farming/gen_asset_manifest.py # 资产采购单（改数据/交付资产后重跑；--missing 查缺）
 play.bat farm                              # 主农场场景（开垦/种植/采收/存档）
 play.bat farm --farmtest                   # 种植逻辑自测（40 项）
 play.bat farm0                             # Phase 0 拼接验证场景（历史回归）
