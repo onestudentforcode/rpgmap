@@ -49,7 +49,17 @@ def build(batch, output):
         if entry["type"] == "ground":
             terrain = Path(rel).stem.removeprefix("ground_")
             colors = palette["ground"][terrain]
-            prompt = "128x128 pixel art tile, seamless in all four directions, flat top-down surface, 2-4 tonal steps, low contrast, low-medium frequency detail, " + GROUND_DESC[terrain]
+            # v2 模板（2026-10-09）：首版 "low contrast, 2-4 tonal steps" 被模型理解为
+            # 平滑弱对比晕染（成品 σ≈1.8、亮度 4 阶割 90% 同阶=纯色块）。改为强制
+            # 离散平涂色阶 + 覆盖占比 + 锚点色为唯一用色；去掉 low contrast。
+            prompt = ("128x128 pixel art tile, seamless in all four directions, "
+                      "flat top-down surface, exactly 3 flat tonal steps with hard "
+                      "pixel edges between steps: base tone about 70 percent coverage, "
+                      "darker cluster tone about 25 percent, light accent tone about "
+                      "5 percent, no smooth gradients between steps, low-medium "
+                      "frequency detail with visible distinct clusters, "
+                      + GROUND_DESC[terrain])
+            prompt += ", use only these flat colors: " + ", ".join(colors)
             reference = None
         else:
             crop = Path(rel).parent.name
@@ -63,7 +73,7 @@ def build(batch, output):
             else:
                 prompt += ", preserve approved mature reference leaf shape, hue, view and lighting"
             reference = None if entry["stage"] == "mature" else f"approved/assets/farming/crops/{crop}/stage_3.png"
-        prompt += ", palette anchors " + ", ".join(colors)
+            prompt += ", palette anchors " + ", ".join(colors)
         prompts.append({"path": rel, "candidates": 2 if batch in ("ground", "crop_masters") else 1,
                         "reference_required": reference, "prompt": prompt,
                         "negative": "isometric, scene, text, watermark, bloom, glow, anti-aliasing, photorealistic, smooth gradients, sprite sheet" + (", ground, soil mound, contact shadow, translucent edges" if entry["type"] == "crop_stage" else ", perspective, directional shadow, transparent background")})

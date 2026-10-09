@@ -19,11 +19,11 @@ from PIL import Image
 
 ROOT = Path(__file__).resolve().parent.parent.parent
 WORK = ROOT / ".art-work"
-PROMPTS = WORK / "handoff" / "ground" / "prompts.json"
+PROMPTS = WORK / "handoff" / "ground2" / "prompts.json"
 API = "http://127.0.0.1:8188"
 BATCH = ["ground_grass", "ground_dirt"]          # 首批：草地/泥土（审核后再石板/耕地）
-SEEDS = {("ground_grass", "a"): 202610091, ("ground_grass", "b"): 202610092,
-         ("ground_dirt", "a"): 202610093, ("ground_dirt", "b"): 202610094}
+SEEDS = {("ground_grass", "a"): 202610101, ("ground_grass", "b"): 202610102,
+         ("ground_dirt", "a"): 202610103, ("ground_dirt", "b"): 202610104}
 STEPS, CFG, SAMPLER, SCHED = 25, 1.0, "euler", "simple"
 GEN_SIZE = 1024                                   # 出图尺寸（降采样前）
 RAW_SIZE = 128                                    # 契约源图尺寸（64 整倍数，本轮 128）
@@ -92,7 +92,7 @@ def main() -> None:
             "steps": STEPS, "cfg": CFG, "sampler": f"{SAMPLER}/{SCHED}",
             "gen_size": GEN_SIZE, "downscale": "BOX area average -> 128",
             "candidates": {}}
-    cache = WORK / "raw" / "_gen1024"
+    cache = WORK / "raw" / "_gen1024_v2"
     cache.mkdir(parents=True, exist_ok=True)
     for it in items:
         stem = Path(it["path"]).stem
@@ -103,13 +103,13 @@ def main() -> None:
                 print(f"[gen] {stem} 候选{cand} seed={seed}", flush=True)
                 gen(it["prompt"], it["negative"], seed, big)
             img = Image.open(big).convert("RGB").resize((RAW_SIZE, RAW_SIZE), Image.BOX)
-            out = WORK / "raw" / f"candidate_{cand}" / it["path"]
+            out = WORK / "raw" / f"candidate_{cand}2" / it["path"]
             out.parent.mkdir(parents=True, exist_ok=True)
             img.save(out)
             meta["candidates"][f"{stem}_{cand}"] = {"seed": seed,
                     "raw": str(out.relative_to(ROOT))}
             print(f"[ok] {out.relative_to(ROOT)}", flush=True)
-    (WORK / "raw" / "gen_meta.json").write_text(
+    (WORK / "raw" / "gen_meta_v2.json").write_text(
         json.dumps(meta, ensure_ascii=False, indent=1), encoding="utf-8")
     print("gen_meta.json written")
 

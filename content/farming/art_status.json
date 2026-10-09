@@ -1,11 +1,11 @@
 {
  "assets/farming/ground/ground_grass.png": {
   "status": "delivered",
-  "note": "2026-10-09 delivered：本机 ComfyUI Qwen-Image2.1 出图（seed 202610091），BOX→128→后处理 64+边缘混合；QC/平铺/场景截图审核通过（候选A；B 候选弃）"
+  "note": "2026-10-09 v2.1 重入库：v2 提示词（离散三阶平涂+锚点唯一用色）出图后经 quantize_ground 确定性重着色（分位拉伸 0.15/0.95 + 锚点吸附，seed 202610102）；终版 60 色 σ=7.7 阶占比 60/15/5；QC/平铺/场景目检通过"
  },
  "assets/farming/ground/ground_dirt.png": {
   "status": "delivered",
-  "note": "2026-10-09 delivered：本机 ComfyUI Qwen-Image2.1 出图（seed 202610093），同管线；QC/平铺/场景截图审核通过（候选A；B 候选弃）"
+  "note": "2026-10-09 v2.1 重入库：同管线（分位拉伸 0.05/0.85+中值，seed 202610104）；终版 46 色 σ=10.3 阶占比 63/22/2；QC/平铺/场景目检通过"
  },
  "assets/farming/ground/ground_stone.png": {
   "status": "requested",
