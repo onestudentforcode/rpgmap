@@ -51,8 +51,9 @@
     AP 归零自动次日）+ 作物生命周期（GROWING/MATURE/REGROWING/EXHAUSTED，
     有限次再生+枯竭清理）+ 多素材产出（确定性掷量）+ 库存 + 存档 v2；
     farmtest 40 项全过（详见 [phase-02](docs/farming/phase-02-核心种植系统.md)）
-  - 当前：**待展开 Phase 3（AI 作物资产管线）** → `docs/farming/phase-03-AI作物资产管线.md`
-    （含 P1-C 过渡观感挂起项的统一处理；跨机器出图协作模式在此阶段落地）
+  - 当前：**Phase 3 已展开待执行** → [phase-03-AI作物资产管线.md](docs/farming/phase-03-AI作物资产管线.md)
+    （资产契约/采购单 manifest 协议/QC 工具/AI 生成工作流/正式素材替换 + P1-C 处理；
+    执行前提：ComfyUI 出图机可用）
 - demo 实验的 P5/P6 **暂缓**（P5 跨机器出图协作模式由种植模块 Phase 3 继承）
 - 开放问题（命名/持久化深度/战斗桩深度）见 demo-phases.md §6，均给了默认值，不阻塞
 
@@ -118,9 +119,9 @@ play.bat farm0                             # Phase 0 拼接验证场景（历史
 [phase-01](docs/farming/phase-01-地形与土地系统.md) /
 [phase-02](docs/farming/phase-02-核心种植系统.md)）。下一步按总规划
 [master-plan §六](docs/farming/master-plan.md) 展开
-`docs/farming/phase-03-AI作物资产管线.md`（Sprite 规范细化 / AI 生成工作流 /
-资源检查脚本 / 正式素材替换占位图——**含 P1-C 过渡观感挂起项**；跨机器
-ComfyUI 出图协作模式在本阶段落地，继承 demo P5 设想）。
+`docs/farming/phase-03-AI作物资产管线.md`（资产契约 / manifest 采购单协议 /
+`qc_assets.py` / AI 生成工作流与 style-sheet / 正式素材替换——**含 P1-C 过渡观感
+挂起项**；跨机器 ComfyUI 出图协作模式在本阶段落地，继承 demo P5 设想）。
 
 已冻结基线（后续阶段直接遵守）：
 
