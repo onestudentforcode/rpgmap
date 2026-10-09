@@ -243,6 +243,51 @@ def normalize_map(data, reg):
     return {"schema": 1, "id": data["id"], "name": data["name"], "size": data["size"], "grid": grid}
 
 
+def validate_economy(config, items, crops, msgs):
+    """Validate the new contract independently of Phase 0-4 content fixtures."""
+    economy = config.get('economy')
+    if economy is None:
+        return
+    if not isinstance(economy, dict):
+        _fail(msgs, 'economy 必须为对象')
+        return
+    for key in ('initial_primeval_stones', 'ap_weight', 'day_weight'):
+        if type(economy.get(key)) is not int or economy[key] < 0:
+            _fail(msgs, 'economy.%s 必须为非负整数' % key)
+    behaviors = economy.get('use_behaviors')
+    if not isinstance(behaviors, list) or not behaviors or any(not isinstance(v, str) or not v for v in behaviors):
+        _fail(msgs, 'economy.use_behaviors 必须为非空行为名称数组')
+    paths = {'wood', 'fire', 'earth', 'gold', 'water'}
+    by_id = {i['item_id']: i for i in items['items']}
+    for item in items['items']:
+        if item.get('kind') not in {'food', 'seed', 'production'}:
+            _fail(msgs, '物品kind非法: %s' % item['item_id'])
+        elements = item.get('path_ids')
+        if not isinstance(elements, list) or not elements or any(v not in paths for v in elements):
+            _fail(msgs, '物品path_ids非法: %s' % item['item_id'])
+        for key in ('buy_price', 'sell_price'):
+            if type(item.get(key)) is not int or not 0 <= item[key] <= 1000000:
+                _fail(msgs, '物品%s非法: %s' % (key, item['item_id']))
+    media = {m['id'] for m in config['planting_media']}
+    materials = economy.get('medium_materials', {})
+    if not isinstance(materials, dict):
+        _fail(msgs, 'economy.medium_materials 必须为对象')
+        materials = {}
+    for medium, iid in materials.items():
+        if medium not in media or medium == 'soil' or by_id.get(iid, {}).get('kind') != 'production':
+            _fail(msgs, '介质消耗物映射非法: %s' % medium)
+    for crop in crops['crops']:
+        if crop.get('path_id') not in paths:
+            _fail(msgs, '作物path_id非法: %s' % crop['crop_id'])
+        seed = by_id.get(crop['crop_id'] + '_seed', {})
+        if seed.get('kind') != 'seed' or seed.get('buy_price', 0) <= 0:
+            _fail(msgs, '作物必须有可购买种子: %s' % crop['crop_id'])
+        for product in crop['harvest_items']:
+            item = by_id.get(product['item_id'], {})
+            if item.get('kind') == 'food' and crop.get('path_id') not in item.get('path_ids', []):
+                _fail(msgs, '作物与食材五行不一致: %s' % crop['crop_id'])
+
+
 def main():
     check_only = "--check" in sys.argv
     msgs = []
@@ -252,6 +297,7 @@ def main():
     config_src = _load_json(os.path.join(SRC, "config.json"))
     validate_config(config_src, items_ids, msgs)
     crops_src = _load_json(os.path.join(SRC, "crops.json"))
+    validate_economy(config_src, items_src, crops_src, msgs)
     validate_crops(crops_src, items_ids, msgs,
                    {m.get("id") for m in config_src.get("planting_media", [{"id": "soil"}])
                     if isinstance(m, dict) and isinstance(m.get("id"), str)}

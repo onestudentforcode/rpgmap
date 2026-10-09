@@ -16,6 +16,7 @@ const FarmInventory := preload("res://scripts/farming/core/inventory/farm_invent
 const FarmEconomy := preload("res://scripts/farming/core/economy/farm_economy.gd")
 const FarmEconomyPanel := preload("res://scripts/farming/rendering/farm_economy_panel.gd")
 const Phase05Tests := preload("res://scripts/farming/tests/phase05_economy.gd")
+const Phase05ContentTests := preload("res://scripts/farming/tests/phase05_content.gd")
 const FarmTerrainRenderer := preload("res://scripts/farming/rendering/terrain_renderer.gd")
 const CropRenderer := preload("res://scripts/farming/rendering/crop_renderer.gd")
 const Phase04Tests := preload("res://scripts/farming/tests/phase04_foundation.gd")
@@ -1062,6 +1063,7 @@ func _run_farmtest() -> void:
 		fails.append("P4: 占用格换介质出现副作用")
 	fails.append_array(Phase04ContentTests.run(self))
 	fails.append_array(Phase05Tests.run())
+	fails.append_array(Phase05ContentTests.run(self))
 
 	grid.reset()
 	renderer.refresh_dynamic_all()
