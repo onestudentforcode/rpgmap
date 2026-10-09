@@ -1,0 +1,52 @@
+{
+  "schema": 1,
+  "terrains": [
+    {
+      "id": "grass",
+      "name": "草地",
+      "layer": 0,
+      "tillable": true,
+      "dynamic": false,
+      "medium": null,
+      "textures": {
+        "ground": "assets/farming/ground/ground_grass.png"
+      }
+    },
+    {
+      "id": "dirt",
+      "name": "泥土地",
+      "layer": 1,
+      "tillable": true,
+      "dynamic": false,
+      "medium": null,
+      "textures": {
+        "ground": "assets/farming/ground/ground_dirt.png",
+        "trans": "assets/farming/transitions/trans_upper_dirt.png"
+      }
+    },
+    {
+      "id": "stone",
+      "name": "石板地",
+      "layer": 2,
+      "tillable": false,
+      "dynamic": false,
+      "medium": null,
+      "textures": {
+        "ground": "assets/farming/ground/ground_stone.png",
+        "trans": "assets/farming/transitions/trans_upper_stone.png"
+      }
+    },
+    {
+      "id": "tilled",
+      "name": "耕地",
+      "layer": 3,
+      "tillable": false,
+      "dynamic": true,
+      "medium": "soil",
+      "textures": {
+        "ground": "assets/farming/ground/ground_tilled.png",
+        "trans": "assets/farming/transitions/trans_upper_tilled.png"
+      }
+    }
+  ]
+}

@@ -1,0 +1,421 @@
+{
+  "schema": 1,
+  "generator": "tools/farming/gen_asset_manifest.py",
+  "source_of_truth": "content/farming/baked/{terrains,crops}.json",
+  "assets": [
+    {
+      "path": "assets/farming/ground/ground_grass.png",
+      "type": "ground",
+      "status": "requested",
+      "note": "2026-10-09 首批采购移交（含 style-sheet）",
+      "size": [
+        64,
+        64
+      ],
+      "constraints": [
+        "64×64 RGB 无 alpha",
+        "四向无缝（边界梯度≤内部最大×1.3）",
+        "周期结构线整除 64",
+        "中低频细节 2–4 色阶",
+        "色相族：草绿族（wilds floor_a 系）"
+      ],
+      "refs": [
+        "terrain:grass（草地）"
+      ]
+    },
+    {
+      "path": "assets/farming/ground/ground_dirt.png",
+      "type": "ground",
+      "status": "requested",
+      "note": "2026-10-09 首批采购移交",
+      "size": [
+        64,
+        64
+      ],
+      "constraints": [
+        "64×64 RGB 无 alpha",
+        "四向无缝（边界梯度≤内部最大×1.3）",
+        "周期结构线整除 64",
+        "中低频细节 2–4 色阶",
+        "色相族：暖棕族（wilds carpet 系）"
+      ],
+      "refs": [
+        "terrain:dirt（泥土地）"
+      ]
+    },
+    {
+      "path": "assets/farming/transitions/trans_upper_dirt.png",
+      "type": "atlas",
+      "status": "generated",
+      "note": "改 ground 后运行 gen_farm_terrains.py 重生成",
+      "size": [
+        1024,
+        1024
+      ],
+      "constraints": [
+        "程序生成：上层纹理 × 统一掩码（不外发采购）",
+        "alpha 二值；bm=255 tile 全不透明"
+      ],
+      "refs": [
+        "terrain:dirt"
+      ]
+    },
+    {
+      "path": "assets/farming/transitions/trans_upper_dirt.json",
+      "type": "atlas_meta",
+      "status": "generated",
+      "note": "改 ground 后运行 gen_farm_terrains.py 重生成",
+      "size": null,
+      "constraints": [
+        "程序生成：上层纹理 × 统一掩码（不外发采购）",
+        "alpha 二值；bm=255 tile 全不透明"
+      ],
+      "refs": [
+        "terrain:dirt"
+      ]
+    },
+    {
+      "path": "assets/farming/ground/ground_stone.png",
+      "type": "ground",
+      "status": "requested",
+      "note": "2026-10-09 首批采购移交",
+      "size": [
+        64,
+        64
+      ],
+      "constraints": [
+        "64×64 RGB 无 alpha",
+        "四向无缝（边界梯度≤内部最大×1.3）",
+        "周期结构线整除 64",
+        "中低频细节 2–4 色阶",
+        "色相族：灰绿碎石族（wilds corr 系）"
+      ],
+      "refs": [
+        "terrain:stone（石板地）"
+      ]
+    },
+    {
+      "path": "assets/farming/transitions/trans_upper_stone.png",
+      "type": "atlas",
+      "status": "generated",
+      "note": "改 ground 后运行 gen_farm_terrains.py 重生成",
+      "size": [
+        1024,
+        1024
+      ],
+      "constraints": [
+        "程序生成：上层纹理 × 统一掩码（不外发采购）",
+        "alpha 二值；bm=255 tile 全不透明"
+      ],
+      "refs": [
+        "terrain:stone"
+      ]
+    },
+    {
+      "path": "assets/farming/transitions/trans_upper_stone.json",
+      "type": "atlas_meta",
+      "status": "generated",
+      "note": "改 ground 后运行 gen_farm_terrains.py 重生成",
+      "size": null,
+      "constraints": [
+        "程序生成：上层纹理 × 统一掩码（不外发采购）",
+        "alpha 二值；bm=255 tile 全不透明"
+      ],
+      "refs": [
+        "terrain:stone"
+      ]
+    },
+    {
+      "path": "assets/farming/ground/ground_tilled.png",
+      "type": "ground",
+      "status": "requested",
+      "note": "2026-10-09 首批采购移交",
+      "size": [
+        64,
+        64
+      ],
+      "constraints": [
+        "64×64 RGB 无 alpha",
+        "四向无缝（边界梯度≤内部最大×1.3）",
+        "周期结构线整除 64",
+        "中低频细节 2–4 色阶",
+        "色相族：暖棕暗族（carpet 暗系 + 垄沟）"
+      ],
+      "refs": [
+        "terrain:tilled（耕地）"
+      ]
+    },
+    {
+      "path": "assets/farming/transitions/trans_upper_tilled.png",
+      "type": "atlas",
+      "status": "generated",
+      "note": "改 ground 后运行 gen_farm_terrains.py 重生成",
+      "size": [
+        1024,
+        1024
+      ],
+      "constraints": [
+        "程序生成：上层纹理 × 统一掩码（不外发采购）",
+        "alpha 二值；bm=255 tile 全不透明"
+      ],
+      "refs": [
+        "terrain:tilled"
+      ]
+    },
+    {
+      "path": "assets/farming/transitions/trans_upper_tilled.json",
+      "type": "atlas_meta",
+      "status": "generated",
+      "note": "改 ground 后运行 gen_farm_terrains.py 重生成",
+      "size": null,
+      "constraints": [
+        "程序生成：上层纹理 × 统一掩码（不外发采购）",
+        "alpha 二值；bm=255 tile 全不透明"
+      ],
+      "refs": [
+        "terrain:tilled"
+      ]
+    },
+    {
+      "path": "assets/farming/crops/dew_grass/stage_0.png",
+      "type": "crop_stage",
+      "status": "placeholder",
+      "note": "",
+      "size": [
+        64,
+        64
+      ],
+      "stage": "seed",
+      "constraints": [
+        "64×64 RGBA 透明底",
+        "alpha 二值（0/255）",
+        "2px 全透明安全边",
+        "底部中心锚点（贴地）",
+        "斜俯视 2.5D、光从左上",
+        "无孤岛像素簇"
+      ],
+      "refs": [
+        "crop:dew_grass（凝露草/herb，remove）"
+      ]
+    },
+    {
+      "path": "assets/farming/crops/dew_grass/stage_1.png",
+      "type": "crop_stage",
+      "status": "placeholder",
+      "note": "",
+      "size": [
+        64,
+        64
+      ],
+      "stage": "sprout",
+      "constraints": [
+        "64×64 RGBA 透明底",
+        "alpha 二值（0/255）",
+        "2px 全透明安全边",
+        "底部中心锚点（贴地）",
+        "斜俯视 2.5D、光从左上",
+        "无孤岛像素簇"
+      ],
+      "refs": [
+        "crop:dew_grass（凝露草/herb，remove）"
+      ]
+    },
+    {
+      "path": "assets/farming/crops/dew_grass/stage_2.png",
+      "type": "crop_stage",
+      "status": "placeholder",
+      "note": "",
+      "size": [
+        64,
+        64
+      ],
+      "stage": "growing",
+      "constraints": [
+        "64×64 RGBA 透明底",
+        "alpha 二值（0/255）",
+        "2px 全透明安全边",
+        "底部中心锚点（贴地）",
+        "斜俯视 2.5D、光从左上",
+        "无孤岛像素簇"
+      ],
+      "refs": [
+        "crop:dew_grass（凝露草/herb，remove）"
+      ]
+    },
+    {
+      "path": "assets/farming/crops/dew_grass/stage_3.png",
+      "type": "crop_stage",
+      "status": "placeholder",
+      "note": "",
+      "size": [
+        64,
+        64
+      ],
+      "stage": "mature",
+      "constraints": [
+        "64×64 RGBA 透明底",
+        "alpha 二值（0/255）",
+        "2px 全透明安全边",
+        "底部中心锚点（贴地）",
+        "斜俯视 2.5D、光从左上",
+        "无孤岛像素簇",
+        "成熟期主体占画布 55–75%"
+      ],
+      "refs": [
+        "crop:dew_grass（凝露草/herb，remove）"
+      ]
+    },
+    {
+      "path": "assets/farming/crops/scarlet_berry/stage_0.png",
+      "type": "crop_stage",
+      "status": "placeholder",
+      "note": "",
+      "size": [
+        64,
+        64
+      ],
+      "stage": "seed",
+      "constraints": [
+        "64×64 RGBA 透明底",
+        "alpha 二值（0/255）",
+        "2px 全透明安全边",
+        "底部中心锚点（贴地）",
+        "斜俯视 2.5D、光从左上",
+        "无孤岛像素簇"
+      ],
+      "refs": [
+        "crop:scarlet_berry（赤纹果/shrub，regrow）"
+      ]
+    },
+    {
+      "path": "assets/farming/crops/scarlet_berry/stage_1.png",
+      "type": "crop_stage",
+      "status": "placeholder",
+      "note": "",
+      "size": [
+        64,
+        64
+      ],
+      "stage": "sprout",
+      "constraints": [
+        "64×64 RGBA 透明底",
+        "alpha 二值（0/255）",
+        "2px 全透明安全边",
+        "底部中心锚点（贴地）",
+        "斜俯视 2.5D、光从左上",
+        "无孤岛像素簇"
+      ],
+      "refs": [
+        "crop:scarlet_berry（赤纹果/shrub，regrow）"
+      ]
+    },
+    {
+      "path": "assets/farming/crops/scarlet_berry/stage_2.png",
+      "type": "crop_stage",
+      "status": "placeholder",
+      "note": "",
+      "size": [
+        64,
+        64
+      ],
+      "stage": "growing",
+      "constraints": [
+        "64×64 RGBA 透明底",
+        "alpha 二值（0/255）",
+        "2px 全透明安全边",
+        "底部中心锚点（贴地）",
+        "斜俯视 2.5D、光从左上",
+        "无孤岛像素簇"
+      ],
+      "refs": [
+        "crop:scarlet_berry（赤纹果/shrub，regrow）"
+      ]
+    },
+    {
+      "path": "assets/farming/crops/scarlet_berry/stage_3.png",
+      "type": "crop_stage",
+      "status": "placeholder",
+      "note": "",
+      "size": [
+        64,
+        64
+      ],
+      "stage": "mature",
+      "constraints": [
+        "64×64 RGBA 透明底",
+        "alpha 二值（0/255）",
+        "2px 全透明安全边",
+        "底部中心锚点（贴地）",
+        "斜俯视 2.5D、光从左上",
+        "无孤岛像素簇",
+        "成熟期主体占画布 55–75%"
+      ],
+      "refs": [
+        "crop:scarlet_berry（赤纹果/shrub，regrow）"
+      ]
+    },
+    {
+      "path": "assets/farming/crops/scarlet_berry/stage_harvested.png",
+      "type": "crop_stage",
+      "status": "placeholder",
+      "note": "",
+      "size": [
+        64,
+        64
+      ],
+      "stage": "harvested",
+      "constraints": [
+        "64×64 RGBA 透明底",
+        "alpha 二值（0/255）",
+        "2px 全透明安全边",
+        "底部中心锚点（贴地）",
+        "斜俯视 2.5D、光从左上",
+        "无孤岛像素簇",
+        "同母版衍生：采收后再生长形态（无果）"
+      ],
+      "refs": [
+        "crop:scarlet_berry（regrow ×3，再生长 2 天）"
+      ]
+    },
+    {
+      "path": "assets/farming/crops/scarlet_berry/stage_exhausted.png",
+      "type": "crop_stage",
+      "status": "placeholder",
+      "note": "",
+      "size": [
+        64,
+        64
+      ],
+      "stage": "exhausted",
+      "constraints": [
+        "64×64 RGBA 透明底",
+        "alpha 二值（0/255）",
+        "2px 全透明安全边",
+        "底部中心锚点（贴地）",
+        "斜俯视 2.5D、光从左上",
+        "无孤岛像素簇",
+        "同母版衍生：枯竭形态（灰褐下垂，待清理）"
+      ],
+      "refs": [
+        "crop:scarlet_berry（regrow ×3，再生长 2 天）"
+      ]
+    },
+    {
+      "path": "assets/farming/crops/_placeholder/shadow_ellipse.png",
+      "type": "utility",
+      "status": "generated",
+      "note": "接触阴影独立贴片",
+      "size": [
+        48,
+        16
+      ],
+      "constraints": [
+        "RGBA 二值黑、50% 棋盘抖动",
+        "不烘焙进作物 Sprite（规范 §4.2）"
+      ],
+      "refs": [
+        "crop_renderer / phase00_check"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scripts/farming/rendering/phase00_check.gd" id="1_ph00"]
+
+[node name="Phase00Check" type="Node2D"]
+script = ExtResource("1_ph00")

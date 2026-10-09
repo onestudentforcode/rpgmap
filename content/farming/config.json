@@ -1,0 +1,25 @@
+{
+  "schema": 1,
+  "time": {
+    "terms_per_year": 24,
+    "days_per_term": 15,
+    "ap_per_day": 24
+  },
+  "term_names": [
+    "立春", "雨水", "惊蛰", "春分", "清明", "谷雨",
+    "立夏", "小满", "芒种", "夏至", "小暑", "大暑",
+    "立秋", "处暑", "白露", "秋分", "寒露", "霜降",
+    "立冬", "小雪", "大雪", "冬至", "小寒", "大寒"
+  ],
+  "ap_costs": {
+    "till": 1,
+    "untill": 1,
+    "plant": 1,
+    "harvest": 1,
+    "clear": 1
+  },
+  "start_inventory": {
+    "dew_grass_seed": 10,
+    "scarlet_berry_seed": 5
+  }
+}

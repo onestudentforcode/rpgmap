@@ -1,0 +1,23 @@
+{
+  "schema": 1,
+  "tile": 64,
+  "grid": [
+    16,
+    16
+  ],
+  "upper": "stone",
+  "over": "any_lower",
+  "bits": {
+    "N": 1,
+    "E": 2,
+    "S": 4,
+    "W": 8,
+    "NE": 16,
+    "SE": 32,
+    "SW": 64,
+    "NW": 128
+  },
+  "bit_meaning": "置位 = 该方向邻格同属本上层地形",
+  "atlas_of": "col = bitmask & 15, row = bitmask >> 4",
+  "source_tool": "tools/farming/gen_farm_terrains.py"
+}
