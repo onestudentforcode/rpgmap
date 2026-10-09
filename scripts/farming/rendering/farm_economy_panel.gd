@@ -9,18 +9,24 @@ var _quantity: SpinBox
 
 func build(farm) -> void:
 	_farm = farm
-	custom_minimum_size = Vector2(660, 430)
-	position = Vector2(28, 128)
+	# The game renders at 640x360 before the window is scaled to 1280x720.
+	custom_minimum_size = Vector2(624, 304)
+	position = Vector2(8, 48)
+	var panel_style := StyleBoxFlat.new()
+	panel_style.bg_color = Color(0.10, 0.13, 0.10, 0.98)
+	add_theme_stylebox_override("panel", panel_style)
+	theme = Theme.new()
+	theme.default_font_size = 14
 	var margin := MarginContainer.new()
 	for side in ["left", "right", "top", "bottom"]:
-		margin.add_theme_constant_override("margin_" + side, 12)
+		margin.add_theme_constant_override("margin_" + side, 8)
 	add_child(margin)
 	var box := VBoxContainer.new()
 	margin.add_child(box)
 	var header := HBoxContainer.new()
 	box.add_child(header)
 	_summary = farm._make_label()
-	_summary.custom_minimum_size.x = 530
+	_summary.custom_minimum_size.x = 490
 	header.add_child(_summary)
 	var close := Button.new()
 	close.text = "关闭"
@@ -30,6 +36,7 @@ func build(farm) -> void:
 	box.add_child(controls)
 	var label: Label = farm._make_label()
 	label.text = "交易数量"
+	label.custom_minimum_size.x = 64
 	label.size_flags_horizontal = Control.SIZE_SHRINK_BEGIN
 	controls.add_child(label)
 	_quantity = SpinBox.new()
@@ -42,7 +49,7 @@ func build(farm) -> void:
 	hint.text = "喂养按一餐数量扣除，仅饱食度为0时可喂。"
 	box.add_child(hint)
 	var scroll := ScrollContainer.new()
-	scroll.custom_minimum_size.y = 310
+	scroll.custom_minimum_size.y = 208
 	box.add_child(scroll)
 	_rows = VBoxContainer.new()
 	_rows.size_flags_horizontal = Control.SIZE_EXPAND_FILL
@@ -62,7 +69,7 @@ func refresh() -> void:
 		var row := HBoxContainer.new()
 		_rows.add_child(row)
 		var label: Label = _farm._make_label()
-		label.custom_minimum_size.x = 260
+		label.custom_minimum_size.x = 230
 		label.text = "%s ×%d" % [item["name"], _farm.inventory.count(iid)]
 		row.add_child(label)
 		if int(item.get("buy_price", 0)) > 0:
