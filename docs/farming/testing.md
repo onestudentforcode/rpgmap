@@ -100,3 +100,11 @@ GPU界面入口为`--path . --script scripts/farming/tests/phase06_tools_preview
 P6.e新增28项真实流程检查：鼠标选择工具/选种、成功开地/播种、休息生长、采收、出售和饥饿喂养；失败不推进、重看不改资源、跳过隐藏提示、日存档恢复、放弃当天回退、槽间教学隔离、非法步骤拒绝；全局设置独立存储、重启读取、非法值/写入失败/损坏处理、菜单应用与FPS切换、输入恢复。
 独立入口为`--headless --path . --script scripts/farming/tests/run_phase06_experience.gd`，输出`PHASE06 EXPERIENCE TEST OK`。
 GPU入口为`--path . --script scripts/farming/tests/phase06_experience_preview.gd`，输出`EXPERIENCE PREVIEW OK`。八张截图位于`.shots/farm-phase06e/`，实测960/1280/1920窗口、全屏往返与帧率/FPS。该入口只改变测试进程自身显示，并创建/清理测试设置和槽目录，不操作玩家配置。
+
+## 45天经营与独立发布验收
+
+P6.f另有12项固定策略经营检查：正式初始资源、45个日存档与15/30天恢复、四类作物闭环、独立账本与六项回顾统计、期末余额、三工具投资和冻结报告持久化。入口为`--headless --path . --script scripts/farming/tests/phase06_playtest.gd`，成功输出`45 DAY PLAYTEST OK`；默认报告在`.art-work/phase06-playtest.json`。GPU截图不加headless并追加`--playtest-shots=res://.shots/farm-phase06f`。
+
+`tools/farming/build_demo.ps1 -GodotExe <控制台引擎路径>`导出并等待实际release程序通过8项检查才打包，必须安装同版本Windows release模板。可单独运行导出程序的`-- --demo-smoke`，配`--headless --log-file <绝对日志路径>`；成功标记为`DEMO RELEASE SMOKE OK`，失败退出码为1。不要把GUI程序启动成功或PowerShell未等待的退出码当作检查结果。
+
+发布检查覆盖旧场景/开发测试排除、JSON与60元石新槽、27张正式纹理解码、种植收获出售、钱包/工具自动存档及显示设置；使用唯一隔离目录并清理。GPU不加headless，追加`--smoke-shots=<绝对目录>`，审核真实发布程序的菜单、教学农场和设置。详细结果与限制见[45天试玩记录](phase06-playtest.md)。日常`test.bat`仍保持31/25/234项；这两项较长验收按发布需要显式运行。
