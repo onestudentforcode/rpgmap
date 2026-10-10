@@ -1376,6 +1376,7 @@ func _preview(directory: String) -> void:
 	world.workforce.assign_source("spring_source",1)
 	_locate(Vector2i(17,8))
 	await _shot(directory,"source-assignment")
+	world.plant(Vector2i(2,2),"golden_wheat")
 	_locate(Vector2i(2,2))
 	await _shot(directory,"crop-detail")
 	_select_tool("till")

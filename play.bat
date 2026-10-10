@@ -1,24 +1,29 @@
 @echo off
 chcp 65001 >nul
 setlocal EnableExtensions
-rem Default entry and --selftest belong to the current farming module.
-rem Legacy content requires explicit demo or farm0 selection.
+rem Default entry belongs to V1 / Phase 6.5. V0 and historical content are explicit.
 if "%~1"=="/?" goto :usage
 if /i "%~1"=="help" goto :usage
 set "PROJECT=%~dp0."
-set "MODE=farm"
-set "SCENE=scenes/farming/farm_demo.tscn"
+set "MODE=v1"
+set "SCENE=scenes/farming/farm_v1.tscn"
 if /i "%~1"=="demo" goto :select_demo
 if /i "%~1"=="farm0" goto :select_farm0
 if /i "%~1"=="farm" goto :select_farm
 if /i "%~1"=="v1" goto :select_v1
+if /i "%~1"=="v0" goto :select_v0
 if "%~1"=="" goto :args
 set "FIRST=%~1"
 if "%FIRST:~0,2%"=="--" goto :args
 echo [error] Unknown entry: %~1. Use play.bat demo %~1 for a legacy theme.
 exit /b 2
 :select_farm
+set "MODE=farm"
 set "SCENE=scenes/farming/farm_main.tscn"
+goto :consume_mode
+:select_v0
+set "MODE=farm"
+set "SCENE=scenes/farming/farm_demo.tscn"
 goto :consume_mode
 :select_v1
 set "MODE=v1"
@@ -41,6 +46,8 @@ set "HEADLESS="
 if "%~1"=="" goto :launch
 set "ARG=%~1"
 if /i "%ARG%"=="--selftest" if not "%MODE%"=="demo" set "ARG=--farmtest"
+if /i "%ARG%"=="--farmtest" if "%MODE%"=="v1" set "ARG=--v1-smoke"
+if /i "%ARG:~0,8%"=="--shots=" if "%MODE%"=="v1" set "ARG=--v1-shots=%ARG:~8%"
 if /i "%ARG%"=="--farmtest" if "%MODE%"=="farm" set "SCENE=scenes/farming/farm_main.tscn"
 if /i "%ARG:~0,8%"=="--shots=" if "%MODE%"=="farm" set "SCENE=scenes/farming/farm_main.tscn"
 if /i "%ARG:~0,13%"=="--farm-shots=" if "%MODE%"=="farm" set "SCENE=scenes/farming/farm_main.tscn"
@@ -51,6 +58,9 @@ if /i "%ARG%"=="--selftest" set "CONSOLE=1"
 if /i "%ARG%"=="--selftest" set "HEADLESS=--headless"
 if /i "%ARG%"=="--farmtest" set "CONSOLE=1"
 if /i "%ARG%"=="--farmtest" set "HEADLESS=--headless"
+if /i "%ARG%"=="--v1-smoke" set "CONSOLE=1"
+if /i "%ARG%"=="--v1-smoke" set "HEADLESS=--headless"
+if /i "%ARG:~0,11%"=="--v1-shots=" set "CONSOLE=1"
 if /i "%ARG:~0,8%"=="--shots=" set "CONSOLE=1"
 if /i "%ARG:~0,13%"=="--farm-shots=" set "CONSOLE=1"
 if /i "%ARG%"=="--shots" set "CONSOLE=1"
@@ -82,9 +92,10 @@ if not exist "%PROJECT%\assets\farming\ground\ground_grass.png" (
 "%EXE%" %HEADLESS% --path "%PROJECT%" %SCENE% -- %FARGS%
 exit /b %errorlevel%
 :usage
-echo play.bat                         Farming Demo menu with three slots
-echo play.bat --selftest               Current farm logic test, headless
-echo play.bat --shots=DIR              Current farm screenshots
+echo play.bat                         V1 bright UI with three independent slots
+echo play.bat --selftest               V1 runtime smoke, isolated slots, headless
+echo play.bat --shots=DIR              V1 UI screenshots, isolated slots
+echo play.bat v0                      Historical V0 menu and independent saves
 echo play.bat farm --farmtest          Same current farm logic test
 echo play.bat v1                      V1 farm with work designations and employees
 echo play.bat farm --fresh             Unsaved developer preview only
@@ -93,4 +104,5 @@ echo play.bat demo wilds              Legacy demo, explicit opt-in
 echo play.bat demo --selftest          Legacy demo tests only
 echo play.bat farm0 --farmtest         Historical Phase 0 tests only
 echo test.bat                         Farming QC + tool tests + game flow
+echo test-v1.bat                      Complete V1 model and UI regression
 exit /b 0

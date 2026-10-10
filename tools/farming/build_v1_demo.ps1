@@ -2,7 +2,7 @@ param([string]$GodotExe = $env:GODOT_EXE_CONSOLE)
 $ErrorActionPreference = 'Stop'
 $projectRoot = [IO.Path]::GetFullPath((Join-Path $PSScriptRoot '../..'))
 if (-not $GodotExe -or -not (Test-Path -LiteralPath $GodotExe -PathType Leaf)) { throw 'Supply -GodotExe or GODOT_EXE_CONSOLE.' }
-# Copy a small isolated project. The working project's V0 default/export preset is never edited.
+# Copy a small isolated V1 project; historical scenes and tests stay outside the package.
 $stageRoot = Join-Path $projectRoot ('.art-work/v1-release-' + [Guid]::NewGuid().ToString('N'))
 $outputDir = Join-Path $projectRoot 'dist/lingtian-v1-demo'
 $logDir = Join-Path $projectRoot '.art-work'
@@ -12,9 +12,9 @@ function Copy-ReleaseFile([string]$relative) {
     New-Item -ItemType Directory -Force -Path (Split-Path -Parent $target) | Out-Null
     Copy-Item -LiteralPath (Join-Path $projectRoot $relative) -Destination $target
 }
-foreach ($directory in @('scripts/farming/v1','scripts/farming/core','assets/farming/ground','assets/farming/transitions')) {
+foreach ($directory in @('scripts/farming/v1','scripts/farming/core','assets/farming/ground','assets/farming/transitions','assets/farming/ui')) {
     $prefix = Join-Path $projectRoot $directory
-    Get-ChildItem -LiteralPath $prefix -Recurse -File | Where-Object { $_.Extension -in @('.gd','.uid','.png') } | ForEach-Object {
+    Get-ChildItem -LiteralPath $prefix -Recurse -File | Where-Object { $_.Extension -in @('.gd','.uid','.png','.svg','.json') } | ForEach-Object {
         Copy-ReleaseFile ($_.FullName.Substring($projectRoot.Length+1))
     }
 }
@@ -41,7 +41,7 @@ $smokeText = Get-Content -LiteralPath $smokeLog -Raw -Encoding UTF8
 if ($probe.ExitCode -ne 0 -or $smokeText -notmatch 'V1 RELEASE SMOKE OK' -or $smokeText -match 'SCRIPT ERROR:|ERROR:') { throw "V1 release smoke failed: $smokeLog" }
 Copy-Item -LiteralPath (Join-Path $projectRoot 'docs/farming/demo-v1-操作说明.md') -Destination (Join-Path $outputDir 'README.md') -Force
 $files = @('LingTianDemoV1.exe','README.md')
-$manifest = [ordered]@{ product='LingTian Demo V1'; art='placeholder'; release_smoke='passed'; files=@($files | ForEach-Object {
+$manifest = [ordered]@{ product='LingTian Demo V1'; phase='6.5'; art='world-placeholder; ui-vector'; release_smoke='passed'; files=@($files | ForEach-Object {
     $path = Join-Path $outputDir $_
     [ordered]@{ name=$_; bytes=(Get-Item -LiteralPath $path).Length; sha256=(Get-FileHash -LiteralPath $path -Algorithm SHA256).Hash.ToLowerInvariant() }
 }) }
