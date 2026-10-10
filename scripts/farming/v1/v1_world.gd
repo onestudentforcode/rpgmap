@@ -6,6 +6,7 @@ const Data := preload("res://scripts/farming/v1/v1_data.gd")
 const Snapshot := preload("res://scripts/farming/v1/v1_snapshot.gd")
 const Orders := preload("res://scripts/farming/v1/v1_orders.gd")
 const Scalars := preload("res://scripts/farming/v1/v1_world_state.gd")
+const Workforce := preload("res://scripts/farming/v1/v1_workforce.gd")
 const Grid := preload("res://scripts/farming/core/grid/land_grid.gd")
 const Clock := preload("res://scripts/farming/core/clock/farm_clock.gd")
 const Inventory := preload("res://scripts/farming/core/inventory/farm_inventory.gd")
@@ -36,6 +37,8 @@ var _source_day := 0
 var _source_cells: Dictionary = {}
 var _store
 var daily_save_error := ""
+var workforce: Workforce
+var _labour_action := false
 
 func _init(slot_store = null) -> void:
 	_store = slot_store
@@ -63,6 +66,7 @@ func _init(slot_store = null) -> void:
 	for ident in source_defs:
 		var position: Array = source_defs[ident]["position"]
 		_source_cells[Vector2i(int(position[0]), int(position[1]))] = ident
+	workforce = Workforce.new(self)
 	apply_snapshot(Snapshot.fresh())
 
 func _error(reason: String) -> Dictionary:
@@ -73,11 +77,13 @@ func _can_act(ap: int = 1) -> Dictionary:
 		return _error("日存档失败，请重试保存或放弃当天：" + daily_save_error)
 	if _store != null and _store.active_slot() == 0:
 		return _error("尚未选择V1存档槽")
-	if not clock.can_spend(ap):
+	if not _labour_action and not clock.can_spend(ap):
 		return _error("行动点不足")
 	return {"ok": true}
 
 func _finish(ap: int, result: Dictionary) -> Dictionary:
+	if _labour_action:
+		return result
 	var before_day := clock.total_days
 	clock.spend(ap)
 	result["day_advanced"] = before_day != clock.total_days
@@ -205,6 +211,18 @@ func harvest(cell: Vector2i, mode: String = "harvest") -> Dictionary:
 
 func irrigate(cell: Vector2i) -> Dictionary:
 	return _improve(cell, 0, "clean_water", "irrigate_units", "irrigate_gain")
+
+func clear_crop(cell: Vector2i) -> Dictionary:
+	var checked := _can_act()
+	if not checked["ok"]:
+		return checked
+	var crop := instance_at(cell)
+	if crop.is_empty():
+		return _error("没有可清理的作物")
+	var uid := int(crop["uid"])
+	grid.release("v1_crop:%d" % uid)
+	crops.erase(uid)
+	return _finish(1, {"ok": true, "removed_uid": uid})
 
 func fertilize(cell: Vector2i) -> Dictionary:
 	return _improve(cell, 1, "humus", "fertilize_units", "fertilize_gain")
@@ -412,6 +430,7 @@ func _trade(item_id: String, quantity, buying: bool) -> Dictionary:
 	return _finish(0, {"ok": true, "item_id": item_id, "quantity": count, "total": total})
 
 func _on_day_changed(day: int) -> void:
+	workforce.settle(day-1)
 	for uid in crops:
 		var row: Dictionary = crops[uid]
 		var definition: Dictionary = crop_defs[row["crop_id"]]
@@ -466,6 +485,7 @@ func to_snapshot() -> Dictionary:
 	return {"product": "farm_demo_v1", "schema": Snapshot.SCHEMA, "clock": clock.to_save(),
 		"economy": {"primeval_stones": primeval_stones, "sales_revenue": _sales_revenue, "order_revenue": _order_revenue},
 		"inventory": inventory.to_save(), "orders": _orders.duplicate(true),
+		"workforce": workforce.state.duplicate(true),
 		"world": {"map_id": config["map_id"], "tilled": tilled, "environment": environment.duplicate(true),
 			"crops": rows, "next_uid": _next_uid, "sources": {"day": _source_day, "used": _source_used.duplicate()},
 			"facilities": buildings, "next_facility_uid": _next_facility_uid, "next_batch_uid": _next_batch_uid}}
@@ -504,6 +524,7 @@ func apply_snapshot(value) -> Dictionary:
 	_sales_revenue = int(snapshot["economy"]["sales_revenue"])
 	_order_revenue = int(snapshot["economy"]["order_revenue"])
 	_orders = snapshot["orders"].duplicate(true)
+	workforce.state = snapshot["workforce"].duplicate(true)
 	environment = world["environment"].duplicate(true)
 	_next_uid = int(world["next_uid"])
 	_source_day = int(world["sources"]["day"])

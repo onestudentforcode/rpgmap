@@ -86,8 +86,10 @@ def _compile(source):
         cells = {(x, y) for x in range(rect[0], rect[0]+rect[2]) for y in range(rect[1], rect[1]+rect[3])}
         require(not cells & lit_cells, 'overlapping light regions')
         lit_cells |= cells
-    for value in config['workers'].values():
-        require(integer(value, 1), 'invalid worker parameter')
+    workers = config['workers']
+    require(set(workers) == {'fee_per_success', 'daily_work_limit', 'max_workers', 'default_budget', 'water_threshold', 'fertility_threshold'}, 'incomplete worker config')
+    require(integer(workers['fee_per_success'], 1) and integer(workers['daily_work_limit'], 1, 100) and integer(workers['max_workers'], 1, 2) and integer(workers['default_budget']), 'invalid worker capacity/fee')
+    require(integer(workers['water_threshold'], 1, 100) and integer(workers['fertility_threshold'], 1, 100), 'invalid worker care threshold')
     for ident, item in resources.items():
         require(item['element'] in ELEMENTS and item['form'] in ['solid', 'liquid', 'gas', 'energy'] and item['stage'] in ['primary', 'intermediate', 'refined'], f'{ident}: classification')
         require(isinstance(item['name'], str) and bool(item['name']) and isinstance(item['tags'], list) and item['tags'] and len(set(item['tags'])) == len(item['tags']) and all(isinstance(t, str) and t for t in item['tags']), f'{ident}: labels')

@@ -30,7 +30,11 @@
     },
     "workers": {
       "fee_per_success": 1,
-      "daily_work_limit": 12
+      "daily_work_limit": 12,
+      "max_workers": 2,
+      "default_budget": 12,
+      "water_threshold": 30,
+      "fertility_threshold": 30
     },
     "standard_action_ap": 1,
     "light": {

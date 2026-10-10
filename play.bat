@@ -11,6 +11,7 @@ set "SCENE=scenes/farming/farm_demo.tscn"
 if /i "%~1"=="demo" goto :select_demo
 if /i "%~1"=="farm0" goto :select_farm0
 if /i "%~1"=="farm" goto :select_farm
+if /i "%~1"=="v1" goto :select_v1
 if "%~1"=="" goto :args
 set "FIRST=%~1"
 if "%FIRST:~0,2%"=="--" goto :args
@@ -18,6 +19,10 @@ echo [error] Unknown entry: %~1. Use play.bat demo %~1 for a legacy theme.
 exit /b 2
 :select_farm
 set "SCENE=scenes/farming/farm_main.tscn"
+goto :consume_mode
+:select_v1
+set "MODE=v1"
+set "SCENE=scenes/farming/farm_v1.tscn"
 goto :consume_mode
 :select_demo
 set "MODE=demo"
@@ -81,6 +86,7 @@ echo play.bat                         Farming Demo menu with three slots
 echo play.bat --selftest               Current farm logic test, headless
 echo play.bat --shots=DIR              Current farm screenshots
 echo play.bat farm --farmtest          Same current farm logic test
+echo play.bat v1                      V1 farm with work designations and employees
 echo play.bat farm --fresh             Unsaved developer preview only
 echo play.bat farm --farm-shots=DIR    Same current farm screenshots
 echo play.bat demo wilds              Legacy demo, explicit opt-in
