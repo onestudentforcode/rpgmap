@@ -44,8 +44,9 @@ func _run() -> void:
 	root.get_texture().get_image().save_png(dir + "/inventory.png")
 	farm.economy_panel.hide()
 	assert(farm._cam_ctrl.is_processing(), "Closing modal must restore camera")
-	farm._tool_buttons[2].pressed.emit()
-	assert(farm._tool == 2, "Clickable crop tool must select correct seed slot")
+	farm._tool_buttons[1].pressed.emit()
+	farm._crop_choice.item_selected.emit(1)
+	assert(farm._tool == 2, "Clickable sower and crop selector must select correct seed")
 	await process_frame
 	await process_frame
 	root.get_texture().get_image().save_png(dir + "/hud.png")

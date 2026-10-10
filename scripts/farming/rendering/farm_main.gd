@@ -22,6 +22,7 @@ const Phase05ContentTests := preload("res://scripts/farming/tests/phase05_conten
 const Phase06SlotTests := preload("res://scripts/farming/tests/phase06_slots.gd")
 const Phase06DemoTests := preload("res://scripts/farming/tests/phase06_demo.gd")
 const Phase06RecordsTests := preload("res://scripts/farming/tests/phase06_records.gd")
+const Phase06ToolsTests := preload("res://scripts/farming/tests/phase06_tools.gd")
 const FarmTerrainRenderer := preload("res://scripts/farming/rendering/terrain_renderer.gd")
 const CropRenderer := preload("res://scripts/farming/rendering/crop_renderer.gd")
 const Phase04Tests := preload("res://scripts/farming/tests/phase04_foundation.gd")
@@ -1248,6 +1249,9 @@ func _run_farmtest() -> void:
 	fails.append_array(Phase06SlotTests.run_scene(self))
 	fails.append_array(await Phase06DemoTests.run(get_tree()))
 	fails.append_array(await Phase06RecordsTests.run(get_tree()))
+	var tool_tests = Phase06ToolsTests.new()
+	fails.append_array(await tool_tests.run(get_tree()))
+	if not tool_tests.completed: fails.append("P6.d工具检查未完整执行")
 
 	grid.reset()
 	renderer.refresh_dynamic_all()
