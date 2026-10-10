@@ -1,7 +1,7 @@
 # handoff — 跨机器开发交接
 
 > 最后更新：2026-10-10（种植模块Phase 0–6已关闭，Windows灵田Demo已交付）。
-> **现行迭代：** 上述交付命名为Demo V0；Demo V1.a～d独立配置/成本/三槽、种植/加工、五行订单/rank/市场底层和经济存档已完成，入口为[demo-v1-plan.md](docs/farming/demo-v1-plan.md)及[demo-v1-resources.md](docs/farming/demo-v1-resources.md)，下一批V1.e付费工作与场景交互。V1完整场景尚未接入，默认游戏仍为V0。
+> **现行迭代：** 上述交付命名为Demo V0；Demo V1.a～d及V1.e首批普通雇工、框选标记、地格选种与可操作场景已完成，入口`play.bat v1`，规则见[demo-v1-plan.md](docs/farming/demo-v1-plan.md)、[demo-v1-employment.md](docs/farming/demo-v1-employment.md)与[demo-v1-resources.md](docs/farming/demo-v1-resources.md)。继续V1.e体验/视觉完善和V1.f首次45天回顾/发布包，默认游戏仍为V0。
 > 交接对象：新机器上的开发者或 AI 会话。
 > **开工前必读：§2 新机器清单 → §6 命令自检；现行主线是种植模块，先读 [docs/farming/master-plan.md](docs/farming/master-plan.md)；改 demo 地图前必读 [docs/map-schema.md](docs/map-schema.md)。**
 
@@ -22,9 +22,9 @@
 4. 告诉启动脚本引擎路径（二选一）：
    - 设环境变量 `GODOT_EXE` / `GODOT_EXE_CONSOLE` 指向 Godot 可执行文件（推荐）
    - 或直接改 `play.bat` 顶部的默认路径
-5. 首次运行 `test.bat`：执行当前种植模块的资产QC、工具测试、农场流程和独立V1测试；`test-v1.bat`可单跑V1编译产物、三槽/报价、种植/环境/资源点、设施/配方/回流以及订单/rank/买卖/经济日结检查；
+5. 首次运行 `test.bat`：执行当前种植模块的资产QC、工具测试、农场流程和独立V1测试；`test-v1.bat`可单跑V1编译产物、三槽/报价、种植/环境/资源点、加工/回流、订单/rank/经济及普通雇工/框选派工界面检查；
    **预期输出 FARMING TEST SUITE OK**；`play.bat --selftest`可只跑农场逻辑。
-6. 运行 `play.bat`或Godot F5默认主场景进入Demo开始菜单；旧演示通过`play.bat demo`显式进入。
+6. 运行`play.bat v1`进入新V1农务派工场景，首次选择独立V1槽并新建。`play.bat`或Godot F5仍进入V0开始菜单；旧演示通过`play.bat demo`显式进入。
 
 ## 3. 当前状态
 
@@ -68,7 +68,9 @@
 | 文档 | 内容 | 何时读 |
 |------|------|--------|
 | [docs/farming/master-plan.md](docs/farming/master-plan.md) | **灵植经营模块总 Phase 规划（现行主线）** | **开工先读** |
-| [docs/farming/phase-04-四类作物扩展.md](docs/farming/phase-04-四类作物扩展.md) | 当前阶段任务、介质与大画布契约、执行记录 | 推进当前主线时 |
+| [docs/farming/demo-v1-plan.md](docs/farming/demo-v1-plan.md) | 当前V1范围、实施批次与执行记录 | 推进当前主线时 |
+| [docs/farming/demo-v1-employment.md](docs/farming/demo-v1-employment.md) | 普通雇工、任务标记、调度与存档规则 | 调整派工时 |
+| [docs/farming/phase-04-四类作物扩展.md](docs/farming/phase-04-四类作物扩展.md) | V0介质与大画布契约、执行记录 | 查阅既有作物/资产时 |
 | [docs/demo-phases.md](docs/demo-phases.md) | demo 实验阶段规划与验收记录（P0–P4） | 内核/工作流背景 |
 | [docs/map-schema.md](docs/map-schema.md) | 地图/主题数据格式 + bake 流程 | **改 demo 地图/改主题前** |
 | [docs/assets-spec.md](docs/assets-spec.md) | 美术资产规格（ComfyUI 对接） | demo 美术回填时；种植模块美术规范以 Phase 0/3 新产出为准 |
@@ -99,6 +101,7 @@ scripts/main.gd（状态机：移动/对话/菜单/战斗桩/切图）
 
 ```
 play.bat                        # 当前农场（默认主场景）
+play.bat v1                     # V1三槽、农务派工、加工、市场与订单
 test.bat                        # 当前农场：资产QC + 工具测试 + 游戏流程（不运行旧内容）
 play.bat --selftest             # 仅农场逻辑测试（headless）
 play.bat --shots=DIR            # 当前农场截图
