@@ -1,6 +1,7 @@
 # handoff — 跨机器开发交接
 
 > 最后更新：2026-10-10（种植模块Phase 0–6已关闭，Windows灵田Demo已交付）。
+> **现行迭代：** 上述交付命名为Demo V0；Demo V1范围已确认，设计入口为[demo-v1-plan.md](docs/farming/demo-v1-plan.md)及[demo-v1-resources.md](docs/farming/demo-v1-resources.md)，下一批V1.a资源/配方/供货配置与独立存档。当前尚未进入V1代码实施。
 > 交接对象：新机器上的开发者或 AI 会话。
 > **开工前必读：§2 新机器清单 → §6 命令自检；现行主线是种植模块，先读 [docs/farming/master-plan.md](docs/farming/master-plan.md)；改 demo 地图前必读 [docs/map-schema.md](docs/map-schema.md)。**
 
