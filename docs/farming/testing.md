@@ -13,7 +13,7 @@
 .\play.bat --shots=res://.shots/farm-current
 ```
 
-`test.bat`依次运行31项资产QC、25项资产/配置工具测试、206项农场游戏流程检查；
+`test.bat`依次运行31项资产QC、25项资产/配置工具测试、234项农场游戏流程检查；
 任一步失败立即返回非零退出码，成功输出`FARMING TEST SUITE OK`。
 游戏流程覆盖土地开垦、播种扣种与占格、生长、凝露草一次采收、赤纹果有限再生/枯竭/清理、
 库存与时间推进、存档恢复；Phase 4新增介质/B键、混合介质拒绝、多格树木/真菌隔离fixture与旧存档恢复检查。
@@ -94,3 +94,9 @@ Demo菜单预览：
 P6.d新增28项真实操作检查：购买与重复/余额校验、等级切换、三个栏位、中心范围和边缘、1/2/3/9次AP取整、普通单目标、高级不恢复耕地、双击第二事件、种子不足、AP不足不跨日续做、末AP完整自动档、混合介质、多格树播种/采收/清理去重、种子选择恢复与槽隔离。价格配置新增2项Python检查。
 独立逻辑入口为`--headless --path . --script scripts/farming/tests/run_phase06_tools.gd`，输出`PHASE06 TOOLS TEST OK`。
 GPU界面入口为`--path . --script scripts/farming/tests/phase06_tools_preview.gd`，输出`TOOLS PREVIEW OK`；五张截图位于`.shots/farm-phase06d/`。两个入口仅操作各自测试槽目录并清理，不能用来继续玩家存档。
+
+## 教学与显示设置验收
+
+P6.e新增28项真实流程检查：鼠标选择工具/选种、成功开地/播种、休息生长、采收、出售和饥饿喂养；失败不推进、重看不改资源、跳过隐藏提示、日存档恢复、放弃当天回退、槽间教学隔离、非法步骤拒绝；全局设置独立存储、重启读取、非法值/写入失败/损坏处理、菜单应用与FPS切换、输入恢复。
+独立入口为`--headless --path . --script scripts/farming/tests/run_phase06_experience.gd`，输出`PHASE06 EXPERIENCE TEST OK`。
+GPU入口为`--path . --script scripts/farming/tests/phase06_experience_preview.gd`，输出`EXPERIENCE PREVIEW OK`。八张截图位于`.shots/farm-phase06e/`，实测960/1280/1920窗口、全屏往返与帧率/FPS。该入口只改变测试进程自身显示，并创建/清理测试设置和槽目录，不操作玩家配置。

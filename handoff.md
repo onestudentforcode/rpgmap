@@ -116,7 +116,7 @@ python tools/farming/gen_farm_terrains.py --transitions-only # 正式地面回�
 python tools/farming/qc_assets.py --target all # 正式资产统一检查（占位差异见 art-pipeline.md）
 python tools/farming/build_art_handoff.py --batch ground --output .art-work/handoff/ground # 空输出目录
 play.bat farm                              # 主农场场景（开垦/种植/采收/存档）
-play.bat farm --farmtest                   # 种植/经济/Demo存档流程自测（当前 206 项）
+play.bat farm --farmtest                   # 种植/经济/Demo存档流程自测（当前 234 项）
 play.bat --fresh                           # 无存档开发预览；玩家新游戏从默认菜单选槽
 play.bat farm0                             # Phase 0 拼接验证场景（历史回归）
 ```
@@ -131,7 +131,8 @@ Phase 0–5已关闭；Phase5以本仓库种植经济闭环为完成条件，对
 Phase6范围已由用户确认，草案见[phase-06](docs/farming/phase-06-Demo体验与三槽存档.md)：
 开始菜单/引导、三槽每日自动存档（撤除玩家手动存读）、首个45天经营回顾、购买高级3×3工具（成功AP总成本折半向上取整）与设置。
 P6.a/P6.b已完成：默认进入Demo开始菜单、三槽选择/删除/覆盖/导入、每日自动保存及统一退出流程。F5/F9和手动存读按钮撤除。
-P6.c已完成：成功行为统计、首次45天冻结回顾与菜单重看，随所属槽保存。P6.d已完成：M工具页购买高级锄头/播种器/采收器，工具栏普/高切换、中心3×3范围、整批成功AP折半取整及工具槽隔离。当前206项流程、25项工具检查通过；下一批P6.e。设置按钮暂禁用，完整设置与引导在P6.e实现。
+P6.c已完成：成功行为统计、首次45天冻结回顾与菜单重看，随所属槽保存。P6.d已完成：M工具页购买高级锄头/播种器/采收器，工具栏普/高切换、中心3×3范围、整批成功AP折半取整及工具槽隔离。P6.e已完成：七步成功操作教学、跳过/重看/日存档恢复，主菜单与游戏菜单显示设置开放。当前234项流程、25项工具检查通过；下一批P6.f试玩平衡与Windows打包。
+全局显示设置单独保存于user://farm_demo_settings.cfg：全屏/窗口分辨率、垂直同步或帧率上限与FPS显示；教学状态随游戏槽保存。
 不新增作物/人物/美术/音乐，不实现蛊虫主动能力或实际上游接线。
 游戏中M打开库存/集市/喂养，R进入次日；指定行为调用`record_gu_use(behavior, succeeded)`，默认允许battle。
 现有四类作物正式图全部保留，后续美术继续适量加入东方玄幻意象；母版先人工审核后衍生。
