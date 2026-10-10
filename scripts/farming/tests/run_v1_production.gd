@@ -201,6 +201,8 @@ func _validation() -> void:
 	var basis := Snapshot.fresh()
 	basis["schema"] = 1
 	basis.erase("world")
+	basis.erase("orders")
+	basis["economy"] = {"primeval_stones": basis["economy"]["primeval_stones"]}
 	basis["clock"]["total_days"] = 7
 	var upgraded := Snapshot.normalize(basis)
 	check(upgraded["ok"] and upgraded["snapshot"]["schema"] == Snapshot.SCHEMA and upgraded["snapshot"]["world"]["sources"]["day"] == 7, "only V1.a foundation upgrades to blank world")

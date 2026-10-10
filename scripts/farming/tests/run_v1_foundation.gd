@@ -19,7 +19,7 @@ func check(condition: bool, label: String) -> void:
 
 func _initialize() -> void:
 	var fresh := Snapshot.fresh()
-	check(fresh["economy"] == {"primeval_stones": 60}, "initial currency, no test Gu")
+	check(fresh["economy"] == {"primeval_stones": 60, "sales_revenue": 0, "order_revenue": 0}, "initial currency and zero revenue, no test Gu")
 	check(fresh["inventory"].size() == 4 and fresh["inventory"].get("golden_wheat_seed") == 8, "four V1 seeds")
 	check(Snapshot.normalize(fresh)["ok"], "fresh snapshot valid")
 	check(not Snapshot.normalize(OldSnapshot.fresh())["ok"], "reject V0 snapshot")

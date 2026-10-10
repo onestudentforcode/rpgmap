@@ -184,6 +184,8 @@ func _snapshot_guards() -> void:
 	prior_world.collect("spring_source")
 	var old := prior_world.to_snapshot()
 	old["schema"] = 2
+	old.erase("orders")
+	old["economy"] = {"primeval_stones": old["economy"]["primeval_stones"]}
 	for field in ["facilities", "next_facility_uid", "next_batch_uid"]:
 		old["world"].erase(field)
 	var upgraded := Snapshot.normalize(old)

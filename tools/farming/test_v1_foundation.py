@@ -137,6 +137,23 @@ class V1FoundationTests(unittest.TestCase):
             mutation(self.source)
             self.invalid()
 
+    def test_order_policy_and_rank_thresholds_are_checked(self):
+        for mutation in [lambda o: o.update(path_policy='random'),
+                         lambda o: o.update(rank_policy='highest_only'),
+                         lambda o: o.update(daily_limit=True),
+                         lambda o: o.update(base_demand=0),
+                         lambda o: o.update(premium_percent=True),
+                         lambda o: o.update(premium_percent=10.0),
+                         lambda o: o.update(paths=['wood'] * 5),
+                         lambda o: o.update(paths=dict.fromkeys(['wood', 'gold', 'water', 'fire', 'earth'])),
+                         lambda o: o['rank_unlock_revenue'].update({'1': 1}),
+                         lambda o: o['rank_unlock_revenue'].update({'3': 120}),
+                         lambda o: o['rank_unlock_revenue'].update({'5': True}),
+                         lambda o: o.update(unknown=1)]:
+            self.setUp()
+            mutation(self.source['orders'])
+            self.invalid()
+
 
 if __name__ == '__main__':
     unittest.main()
