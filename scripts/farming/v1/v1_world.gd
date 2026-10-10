@@ -7,6 +7,7 @@ const Snapshot := preload("res://scripts/farming/v1/v1_snapshot.gd")
 const Orders := preload("res://scripts/farming/v1/v1_orders.gd")
 const Scalars := preload("res://scripts/farming/v1/v1_world_state.gd")
 const Workforce := preload("res://scripts/farming/v1/v1_workforce.gd")
+const Journal := preload("res://scripts/farming/v1/v1_journal.gd")
 const Grid := preload("res://scripts/farming/core/grid/land_grid.gd")
 const Clock := preload("res://scripts/farming/core/clock/farm_clock.gd")
 const Inventory := preload("res://scripts/farming/core/inventory/farm_inventory.gd")
@@ -39,6 +40,20 @@ var _store
 var daily_save_error := ""
 var workforce: Workforce
 var _labour_action := false
+var journal: Dictionary
+
+func guide_dismiss(dismissed: bool) -> Dictionary:
+	var checked := _can_act(0)
+	if not checked["ok"]: return checked
+	journal["guide"]["dismissed"] = dismissed
+	changed.emit()
+	return {"ok":true}
+
+func _count(key: String, ident: String, quantity: int = 1) -> void:
+	Journal.add_count(journal,key,ident,quantity)
+
+func _cash(key: String, amount: int) -> void:
+	Journal.add_cash(journal,key,amount)
 
 func _init(slot_store = null) -> void:
 	_store = slot_store
@@ -157,6 +172,7 @@ func till(cell: Vector2i) -> Dictionary:
 	if _source_cells.has(cell):
 		return _error("资源点不能开垦")
 	checked = grid.till(cell)
+	if checked["ok"]: _count("fieldwork","till")
 	return _finish(1, checked) if checked["ok"] else checked
 
 func plant(cell: Vector2i, crop_id: String) -> Dictionary:
@@ -170,7 +186,7 @@ func plant(cell: Vector2i, crop_id: String) -> Dictionary:
 	inputs[definition["seed"]] = int(inputs.get(definition["seed"], 0)) + 1
 	for ident in inputs:
 		if not inventory.has(ident, int(inputs[ident])):
-			return _error("缺少种植投入：" + ident)
+			return _error("缺少种植投入：" + _items[ident]["name"])
 	var footprint: Array = definition["footprint"]
 	checked = grid.reserve(cell, int(footprint[0]), int(footprint[1]), "v1_crop:%d" % _next_uid, Grid.State.PLANTED)
 	if not checked["ok"]:
@@ -184,6 +200,8 @@ func plant(cell: Vector2i, crop_id: String) -> Dictionary:
 	if definition["mode"] == "culture_each_cycle":
 		var index := cell.y * grid.width + cell.x
 		environment[index][0] = mini(100, int(environment[index][0]) + int(inputs.get("clean_water", 0)) * int(config["environment"]["irrigate_gain"]))
+	_count("plantings",crop_id)
+	Journal.observe(journal,"plant")
 	return _finish(1, {"ok": true, "uid": uid})
 
 func harvest(cell: Vector2i, mode: String = "harvest") -> Dictionary:
@@ -207,6 +225,8 @@ func harvest(cell: Vector2i, mode: String = "harvest") -> Dictionary:
 	else:
 		grid.release("v1_crop:%d" % uid)
 		crops.erase(uid)
+	_count("harvests",instance["crop_id"])
+	for ident in outputs: _count("produce",ident,int(outputs[ident]))
 	return _finish(1, {"ok": true, "items": outputs.duplicate(), "removed": not crops.has(uid)})
 
 func irrigate(cell: Vector2i) -> Dictionary:
@@ -222,6 +242,7 @@ func clear_crop(cell: Vector2i) -> Dictionary:
 	var uid := int(crop["uid"])
 	grid.release("v1_crop:%d" % uid)
 	crops.erase(uid)
+	_count("cleared",crop["crop_id"])
 	return _finish(1, {"ok": true, "removed_uid": uid})
 
 func fertilize(cell: Vector2i) -> Dictionary:
@@ -239,6 +260,7 @@ func _improve(cell: Vector2i, field: int, item: String, units: String, gain: Str
 		return _error("环境已满或缺少投入")
 	inventory.remove(item, amount)
 	environment[index][field] = mini(100, int(environment[index][field]) + int(config["environment"][gain]))
+	_count("fieldwork","irrigate" if field == 0 else "fertilize")
 	return _finish(1, {"ok": true})
 
 func collect(ident: String) -> Dictionary:
@@ -253,6 +275,7 @@ func collect(ident: String) -> Dictionary:
 		return _error("今日资源点配额不足")
 	_source_used[ident] = int(_source_used[ident]) + quantity
 	inventory.add(definition["item"], quantity)
+	_count("collected",definition["item"],quantity)
 	return _finish(int(definition["ap"]), {"ok": true, "item_id": definition["item"], "quantity": quantity})
 
 func facility_at(cell: Vector2i) -> Dictionary:
@@ -275,7 +298,7 @@ func build_facility(cell: Vector2i, facility_id: String) -> Dictionary:
 		return _error("建设元石不足")
 	for ident in definition["materials"]:
 		if not inventory.has(ident, int(definition["materials"][ident])):
-			return _error("建设材料不足：" + ident)
+			return _error("建设材料不足：" + _items[ident]["name"])
 	var footprint: Array = definition["footprint"]
 	var tilled_before := []
 	for dy in range(int(footprint[1])):
@@ -296,6 +319,8 @@ func build_facility(cell: Vector2i, facility_id: String) -> Dictionary:
 	primeval_stones -= int(definition["cash"])
 	_next_facility_uid += 1
 	facilities[uid] = {"uid": uid, "facility_id": facility_id, "origin": [cell.x,cell.y], "batch": {}}
+	_count("buildings",facility_id)
+	_cash("construction_spend",int(definition["cash"]))
 	return _finish(ap, {"ok": true, "facility_uid": uid})
 
 func demolish_facility(uid: int) -> Dictionary:
@@ -325,7 +350,7 @@ func start_batch(facility_uid: int, recipe_id: String) -> Dictionary:
 		return _error("设施不适用或已有未收取批次")
 	for ident in recipe["inputs"]:
 		if not inventory.has(ident, int(recipe["inputs"][ident])):
-			return _error("加工投入不足：" + ident)
+			return _error("加工投入不足：" + _items[ident]["name"])
 	for ident in recipe["inputs"]:
 		inventory.remove(ident, int(recipe["inputs"][ident]))
 	var batch_id := _next_batch_uid
@@ -339,6 +364,8 @@ func start_batch(facility_uid: int, recipe_id: String) -> Dictionary:
 	facility["batch"] = {"batch_id": batch_id, "recipe_id": recipe_id, "inputs": inputs,
 		"outputs": outputs, "start_day": clock.total_days,
 		"finish_day": clock.total_days + int(recipe["days"]), "status": "processing"}
+	_count("batches_started",recipe_id)
+	Journal.observe(journal,"processing")
 	return _finish(int(recipe["start_ap"]), {"ok": true, "batch_id": batch_id})
 
 func claim_batch(facility_uid: int, expected_batch_id: int) -> Dictionary:
@@ -355,6 +382,7 @@ func claim_batch(facility_uid: int, expected_batch_id: int) -> Dictionary:
 	for ident in outputs:
 		inventory.add(ident, int(outputs[ident]))
 	facilities[facility_uid]["batch"] = {}
+	for ident in outputs: _count("processed",ident,int(outputs[ident]))
 	return _finish(int(recipe["claim_ap"]), {"ok": true, "batch_id": expected_batch_id, "items": outputs})
 
 func gross_revenue() -> int:
@@ -397,6 +425,11 @@ func deliver_order(order_id: int, item_id: String) -> Dictionary:
 				entry["receipt"][key] = quote[key]
 	primeval_stones += int(quote["payout"])
 	_order_revenue += int(quote["payout"])
+	for entry in _orders["entries"]:
+		if entry["id"] == order_id: _count("deliveries",entry["path"])
+	_count("delivered_items",item_id,int(quote["quantity"]))
+	_cash("order_revenue",int(quote["payout"]))
+	Journal.observe(journal,"order")
 	return _finish(0, {"ok": true, "order_id": order_id, "quote": quote})
 
 func buy(item_id: String, quantity) -> Dictionary:
@@ -421,12 +454,14 @@ func _trade(item_id: String, quantity, buying: bool) -> Dictionary:
 			return _error("元石不足或库存越界")
 		primeval_stones -= total
 		inventory.add(item_id, count)
+		_cash("purchase_spend",total)
 	else:
 		if not inventory.has(item_id, count) or not Scalars.whole(primeval_stones + total) or not Scalars.whole(gross_revenue() + total):
 			return _error("库存不足或收入越界")
 		inventory.remove(item_id, count)
 		primeval_stones += total
 		_sales_revenue += total
+		_cash("sales_revenue",total)
 	return _finish(0, {"ok": true, "item_id": item_id, "quantity": count, "total": total})
 
 func _on_day_changed(day: int) -> void:
@@ -453,6 +488,7 @@ func _on_day_changed(day: int) -> void:
 			row["progress"] = mini(target, int(row["progress"]) + growth)
 			if row["progress"] == target:
 				row["state"] = "mature"
+				_count("matured",row["crop_id"])
 		for cell in cells:
 			var index: int = cell.y * grid.width + cell.x
 			environment[index][0] = maxi(0, int(environment[index][0]) - int(definition["water_use"]))
@@ -464,7 +500,9 @@ func _on_day_changed(day: int) -> void:
 		var batch: Dictionary = row["batch"]
 		if not batch.is_empty() and batch["status"] == "processing" and day >= int(batch["finish_day"]):
 			batch["status"] = "ready"
+			_count("batches_completed",batch["recipe_id"])
 	_orders = Orders.advance(_orders, day, gross_revenue())
+	Journal.settle(journal,day,primeval_stones,inventory.to_save(),workforce.state["report"]["workers"])
 	if _store != null:
 		var saved: Dictionary = _store.commit(to_snapshot())
 		daily_save_error = "" if saved["ok"] else String(saved["reason"])
@@ -486,6 +524,7 @@ func to_snapshot() -> Dictionary:
 		"economy": {"primeval_stones": primeval_stones, "sales_revenue": _sales_revenue, "order_revenue": _order_revenue},
 		"inventory": inventory.to_save(), "orders": _orders.duplicate(true),
 		"workforce": workforce.state.duplicate(true),
+		"journal": journal.duplicate(true),
 		"world": {"map_id": config["map_id"], "tilled": tilled, "environment": environment.duplicate(true),
 			"crops": rows, "next_uid": _next_uid, "sources": {"day": _source_day, "used": _source_used.duplicate()},
 			"facilities": buildings, "next_facility_uid": _next_facility_uid, "next_batch_uid": _next_batch_uid}}
@@ -525,6 +564,7 @@ func apply_snapshot(value) -> Dictionary:
 	_order_revenue = int(snapshot["economy"]["order_revenue"])
 	_orders = snapshot["orders"].duplicate(true)
 	workforce.state = snapshot["workforce"].duplicate(true)
+	journal = snapshot["journal"].duplicate(true)
 	environment = world["environment"].duplicate(true)
 	_next_uid = int(world["next_uid"])
 	_source_day = int(world["sources"]["day"])

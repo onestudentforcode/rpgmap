@@ -127,6 +127,7 @@ func set_seed(cell: Vector2i, crop_id: String) -> Dictionary:
 		if plan["cell"] == [cell.x,cell.y]:
 			state["seed_plans"].erase(plan)
 	state["seed_plans"].append({"cell": [cell.x,cell.y], "crop_id": crop_id})
+	world.Journal.observe(world.journal,"seed")
 	return _changed({"ok": true})
 
 static func footprint(rect: Rect2i) -> Array:
@@ -178,6 +179,7 @@ func mark(rect: Rect2i, kind: String, priority: int = 5) -> Dictionary:
 				"cell": [point.x,point.y], "priority": priority})
 			state["next_mark_id"] = int(state["next_mark_id"])+1
 			added += 1
+	if added > 0: world.Journal.observe(world.journal,"designation")
 	return _changed({"ok": true, "added": added, "skipped": skipped})
 
 func cancel(rect: Rect2i) -> Dictionary:
@@ -247,6 +249,31 @@ func _execute(job: Dictionary) -> Dictionary:
 		return _error("植物已变化或工作不适用")
 	return world.harvest(cell, "fell" if kind == "fell" else "harvest")
 
+func task_status(cell: Vector2i, kind: String) -> String:
+	# Inspection never invokes the action or alters AP, stock, guide or marks.
+	var target := _target(cell,kind)
+	if not target["ok"]: return "当前目标不适用，等待地格状态变化"
+	if kind == "plant":
+		var plan := seed_plan(cell)
+		if plan.is_empty(): return "尚未给地格分配种子"
+		var definition: Dictionary = world.crop_defs[plan["crop_id"]]
+		for point in footprint(Rect2i(cell.x,cell.y,int(definition["footprint"][0]),int(definition["footprint"][1]))):
+			if not world.grid.in_bounds(point.x,point.y) or world.grid.state_at(point) != Grid.State.TILLED: return "等待完整占地开垦并空闲"
+		var inputs: Dictionary = definition["inputs"].duplicate()
+		inputs[definition["seed"]] = int(inputs.get(definition["seed"],0))+1
+		var missing := PackedStringArray()
+		for ident in inputs:
+			if world.inventory.count(ident) < int(inputs[ident]): missing.append("%s×%d" % [world._items[ident]["name"],int(inputs[ident])-world.inventory.count(ident)])
+		if not missing.is_empty(): return "缺少："+"、".join(missing)
+	elif kind in ["irrigate","fertilize"]:
+		var field := "water" if kind == "irrigate" else "fertility"
+		if int(world.environment_at(cell)[field]) >= int(settings[field+"_threshold"]): return "尚未低于养护阈值%d" % settings[field+"_threshold"]
+		var item := "clean_water" if kind == "irrigate" else "humus"
+		var units := int(world.config["environment"]["irrigate_units" if kind == "irrigate" else "fertilize_units"])
+		if not world.inventory.has(item,units): return "缺少："+world._items[item]["name"]
+	elif kind in ["harvest","fell"] and world.instance_at(cell)["state"] != "mature": return "等待植物成熟"
+	return "条件就绪；需负责雇工启用该工作，日结执行"
+
 func settle(completed_day: int) -> void:
 	var reports := []
 	for worker in state["workers"]:
@@ -272,6 +299,8 @@ func settle(completed_day: int) -> void:
 					continue
 				world.primeval_stones -= fee
 				state["spent"] = int(state["spent"])+fee
+				world._cash("labour_spend",fee)
+				world._count("work_actions",job["kind"])
 				report["success"] = int(report["success"])+1
 				report["fee"] = int(report["fee"])+fee
 				report["counts"][job["kind"]] = int(report["counts"].get(job["kind"],0))+1
