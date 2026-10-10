@@ -18,6 +18,10 @@ if errorlevel 1 goto :failed
 if errorlevel 1 goto :failed
 "%V1_GODOT%" --headless --path . --script res://scripts/farming/tests/run_v1_workforce_ui.gd
 if errorlevel 1 goto :failed
+"%V1_GODOT%" --headless --path . --script res://scripts/farming/tests/run_v1_journal.gd
+if errorlevel 1 goto :failed
+"%V1_GODOT%" --headless --path . res://scenes/farming/farm_v1.tscn -- --v1-smoke
+if errorlevel 1 goto :failed
 popd
 exit /b 0
 :failed

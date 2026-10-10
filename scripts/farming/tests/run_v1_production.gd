@@ -200,6 +200,7 @@ func _validation() -> void:
 		check(not restored.apply_snapshot(bad)["ok"] and restored.to_snapshot() == snapshot, "invalid world rejected before mutation")
 	var basis := Snapshot.fresh()
 	basis["schema"] = 1
+	basis.erase("journal")
 	basis.erase("world")
 	basis.erase("orders")
 	basis.erase("workforce")

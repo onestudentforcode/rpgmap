@@ -32,6 +32,7 @@ func fixture(day: int, revenue: int) -> World:
 	snapshot["clock"]["total_days"] = day
 	snapshot["world"]["sources"]["day"] = day
 	snapshot["workforce"] = Workforce.fresh(day)
+	snapshot["journal"] = World.Journal.fresh(day,60)
 	snapshot["economy"]["sales_revenue"] = revenue
 	snapshot["orders"] = Orders.generate(day, revenue)
 	var world := World.new()
@@ -172,6 +173,7 @@ func _validation() -> void:
 	for schema in [1,2,3]:
 		var old := before.duplicate(true)
 		old["schema"] = schema
+		old.erase("journal")
 		old.erase("orders")
 		old.erase("workforce")
 		old["economy"] = {"primeval_stones": 55}

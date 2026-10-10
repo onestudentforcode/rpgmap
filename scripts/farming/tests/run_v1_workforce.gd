@@ -248,6 +248,7 @@ func _validation() -> void:
 	check(Snapshot.normalize(JSON.parse_string(JSON.stringify(completed)))["snapshot"] == completed,"labour JSON roundtrip exact integers")
 	var old := completed.duplicate(true)
 	old["schema"] = 4
+	old.erase("journal")
 	old.erase("workforce")
 	var migrated := Snapshot.normalize(old)
 	check(migrated["ok"] and migrated["snapshot"]["orders"] == old["orders"] and migrated["snapshot"]["economy"] == old["economy"] and migrated["snapshot"]["world"] == old["world"] and migrated["snapshot"]["workforce"]["workers"].is_empty(),"schema4 preserves production order history and earnings")

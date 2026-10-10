@@ -184,6 +184,7 @@ func _snapshot_guards() -> void:
 	prior_world.collect("spring_source")
 	var old := prior_world.to_snapshot()
 	old["schema"] = 2
+	old.erase("journal")
 	old.erase("orders")
 	old.erase("workforce")
 	old["economy"] = {"primeval_stones": old["economy"]["primeval_stones"]}
