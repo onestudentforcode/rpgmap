@@ -13,6 +13,7 @@ extends RefCounted
 ## 渲染层据此增量更新，禁止整图重建。
 
 signal cells_changed(cells: Array[Vector2i])
+signal cultivated(cell: Vector2i)
 
 enum State { WILD, TILLED, PLANTED, OCCUPIED, UNAVAILABLE }
 
@@ -144,6 +145,7 @@ func till(cell: Vector2i) -> Dictionary:
 		return chk
 	_state[cell.y][cell.x] = State.TILLED
 	_emit_around([cell])
+	cultivated.emit(cell)
 	return chk
 
 

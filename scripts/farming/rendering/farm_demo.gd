@@ -4,6 +4,11 @@ const Slots := preload("res://scripts/farming/core/storage/farm_slot_store.gd")
 const Snapshot := preload("res://scripts/farming/core/storage/farm_snapshot.gd")
 const UI := preload("res://scripts/farming/rendering/farm_ui_style.gd")
 const FarmScene := preload("res://scenes/farming/farm_main.tscn")
+const Settings := preload("res://scripts/farming/core/storage/farm_settings.gd")
+var settings = Settings.new()
+var _settings_draft: Dictionary = {}
+var _fps: Label
+var _fps_elapsed := 0.0
 @export var route_cli := false
 var store = Slots.new()
 var legacy_path := "user://farm_phase02_save.json"
@@ -26,6 +31,9 @@ func _ready() -> void:
 		get_tree().change_scene_to_file.call_deferred("res://scenes/farming/farm_main.tscn")
 		return
 	DisplayServer.window_set_title("灵田 Demo")
+	if route_cli:
+		settings.load_settings()
+		settings.apply_display()
 	get_tree().auto_accept_quit = false
 	var layer := CanvasLayer.new()
 	layer.layer = 30
@@ -35,6 +43,15 @@ func _ready() -> void:
 	_surface.theme = UI.theme()
 	layer.add_child(_surface)
 	_show_main()
+	var fps_layer := CanvasLayer.new()
+	fps_layer.layer = 31
+	add_child(fps_layer)
+	_fps = UI.label("")
+	_fps.position = Vector2(552,264)
+	_fps.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	fps_layer.add_child(_fps)
+	_fps.visible = settings.data["show_fps"]
+	if not settings.warning.is_empty(): _message.text = settings.warning
 
 func _page(title: String, screen: String) -> void:
 	_screen = screen
@@ -81,9 +98,7 @@ func _show_main() -> void:
 	_message.text = "自由经营四类灵植，出售收获或留作食材。每日结束自动保存。"
 	_button(_box, "新游戏", _show_slots.bind("new"))
 	_button(_box, "继续游戏", _show_slots.bind("continue"))
-	var settings := _button(_box, "设置", _show_help)
-	settings.disabled = true
-	settings.tooltip_text = "显示和音量设置暂未开放"
+	_button(_box, "设置", show_settings)
 	_button(_box, "操作说明", _show_help)
 	if FileAccess.file_exists(legacy_path):
 		_button(_box, "导入旧农场存档", _show_slots.bind("import"))
@@ -243,14 +258,74 @@ func show_pause() -> void:
 	_message.text = "当前槽%d · 当天进度将在每日结束时保存。" % store.active_slot()
 	_button(_box,"继续经营", _set_modal.bind(false))
 	_button(_box,"经营记录 / 首轮回顾", show_records)
+	_button(_box,"设置", show_settings)
 	_button(_box,"操作说明", _show_help)
 	_button(_box,"返回主菜单", request_exit.bind("menu"))
 	_button(_box,"退出游戏", request_exit.bind("quit"))
 
 func _show_help() -> void:
 	_page("操作说明", "help")
-	_message.text = "左键：开垦、播种、采收或清理\n1～4：选种子 · H：轮换锄头/播种/采收 · B：准备介质\nR：结束当天 · M：库存、集市和喂养\nWASD / 方向键：平移 · 滚轮：缩放 · Esc：菜单\n\n每天结束自动存入当前槽，不提供手动存读档。\nM中工具页购买高级档；工具栏普/高切换。高级范围3×3，成功AP合计折半取整。\n本版本暂未开放显示与音量设置。"
+	_message.text = "左键：开垦、播种、采收或清理\n1～4：选种子 · H：轮换锄头/播种/采收 · B：准备介质\n休息按钮 / R：结束当天 · 行囊按钮 / M：库存、集市和喂养\nWASD / 方向键：平移 · 滚轮：缩放 · Esc：菜单\n每天结束自动保存；AP用完也会过日，饱食度每天减1。\nM工具页购买高级档，工具栏普/高切换。高级范围3×3，成功AP合计折半取整。"
+	if farm != null:
+		_button(_box,"重看新手教学", restart_tutorial)
+		_button(_box,"跳过新手教学", skip_tutorial)
 	_button(_box,"返回", show_pause if farm != null else _show_main)
+
+func restart_tutorial() -> void:
+	farm.tutorial.restart()
+	_set_modal(false)
+
+func skip_tutorial() -> void:
+	farm.tutorial.skip()
+	_set_modal(false)
+
+func show_settings() -> void:
+	if farm != null: farm.economy_panel.hide()
+	_page("灵田 · 设置", "settings")
+	_message.text = "全局显示设置独立于存档槽；应用后自动保存。"
+	_settings_draft = settings.data.duplicate(true)
+	var fullscreen := CheckButton.new()
+	fullscreen.text = "全屏"
+	fullscreen.button_pressed = _settings_draft["fullscreen"]
+	fullscreen.toggled.connect(func(enabled): _settings_draft["fullscreen"] = enabled)
+	_box.add_child(fullscreen)
+	var resolution := OptionButton.new()
+	for size in Settings.RESOLUTIONS: resolution.add_item("窗口分辨率 %d × %d" % [size.x,size.y])
+	resolution.select(int(_settings_draft["resolution"]))
+	resolution.item_selected.connect(func(index): _settings_draft["resolution"] = index)
+	_box.add_child(resolution)
+	var frame_mode := OptionButton.new()
+	for name in ["垂直同步", "帧率上限 60", "帧率上限 120", "不限帧率"]: frame_mode.add_item(name)
+	frame_mode.select(Settings.FRAME_MODES.find(_settings_draft["frame_mode"]))
+	frame_mode.item_selected.connect(func(index): _settings_draft["frame_mode"] = Settings.FRAME_MODES[index])
+	_box.add_child(frame_mode)
+	var fps := CheckButton.new()
+	fps.text = "显示 FPS"
+	fps.button_pressed = _settings_draft["show_fps"]
+	fps.toggled.connect(func(enabled): _settings_draft["show_fps"] = enabled)
+	_box.add_child(fps)
+	_box.add_child(UI.label("音量：尚未启用（本版本无音乐和音效）",true))
+	var actions := HBoxContainer.new()
+	_box.add_child(actions)
+	_button(actions,"应用并保存", apply_settings)
+	_button(actions,"操作说明", _show_help)
+	_button(actions,"返回", show_pause if farm != null else _show_main)
+
+func apply_settings() -> void:
+	var result: Dictionary = settings.save_settings(_settings_draft)
+	if not result["ok"]:
+		_message.text = result["reason"] + "；原设置保留。"
+		return
+	settings.apply_display()
+	_fps.visible = settings.data["show_fps"]
+	_message.text = "设置已应用并保存。全屏时窗口分辨率在切回窗口后生效。"
+
+func _process(delta: float) -> void:
+	if _fps == null: return
+	_fps_elapsed += delta
+	if _fps_elapsed >= 0.5:
+		_fps.text = "FPS %d" % Engine.get_frames_per_second()
+		_fps_elapsed = 0.0
 
 func request_exit(destination: String) -> void:
 	_exit_destination = destination
@@ -305,7 +380,7 @@ func _unhandled_input(event: InputEvent) -> void:
 		"pause": _set_modal(false)
 		"records": _set_modal(false)
 		"exit": choose_exit("cancel")
-		"help":
+		"help", "settings":
 			if farm != null: show_pause()
 			else: _show_main()
 		"slots", "confirm": _show_main()

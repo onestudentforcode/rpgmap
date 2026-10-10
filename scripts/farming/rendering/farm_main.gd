@@ -50,6 +50,10 @@ var _level_buttons: Dictionary = {}
 var _selected_crop := 0
 const Records := preload("res://scripts/farming/core/economy/farm_records.gd")
 var records = Records.new()
+const Tutorial := preload("res://scripts/farming/core/economy/farm_tutorial.gd")
+var tutorial = Tutorial.new()
+var _tutorial_panel: PanelContainer
+var _tutorial_hint: Label
 var demo_controller
 var demo_snapshot: Dictionary = {}
 
@@ -145,6 +149,7 @@ func _ready() -> void:
 
 	_setup_camera(w, h)
 	_setup_overlay(w, h)
+	tutorial.changed.connect(_refresh_tutorial)
 
 	var args := OS.get_cmdline_user_args()
 	var testing := demo_controller == null and ("--farmtest" in args or "--selftest" in args)
@@ -171,6 +176,7 @@ func _ready() -> void:
 				break
 	_update_hover(get_global_mouse_position())
 	_update_hud()
+	_refresh_tutorial()
 
 
 # ------------------------------------------------------------ 搭建
@@ -263,6 +269,22 @@ func _setup_overlay(w: int, h: int) -> void:
 	market.size_flags_horizontal = Control.SIZE_SHRINK_BEGIN
 	market.pressed.connect(_toggle_economy)
 	actions.add_child(market)
+	_tutorial_panel = PanelContainer.new()
+	_tutorial_panel.position = Vector2(8,58)
+	_tutorial_panel.custom_minimum_size = Vector2(624,52)
+	_tutorial_panel.theme = FarmUI.theme()
+	layer.add_child(_tutorial_panel)
+	var tutorial_row := HBoxContainer.new()
+	_tutorial_panel.add_child(tutorial_row)
+	_tutorial_hint = FarmUI.label("")
+	_tutorial_hint.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	_tutorial_hint.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	_tutorial_hint.add_theme_font_size_override("font_size",11)
+	tutorial_row.add_child(_tutorial_hint)
+	var skip := Button.new()
+	skip.text = "跳过教学"
+	skip.pressed.connect(tutorial.skip)
+	tutorial_row.add_child(skip)
 	var shade := ColorRect.new()
 	shade.size = Vector2(640, 360)
 	shade.color = Color(0.04, 0.08, 0.05, 0.62)
@@ -500,6 +522,7 @@ func _on_cells_changed(_cells: Array[Vector2i]) -> void:
 
 func _on_day_changed(_total: int) -> void:
 	if demo_controller != null:
+		tutorial.observe("grow")
 		records.finish_day(_total, economy.primeval_stones)
 	crop_mgr.on_day_changed()
 	economy.on_day_changed()
@@ -560,10 +583,12 @@ func _tool_kind() -> String:
 	return "hoe" if _tool == 0 else ("harvester" if _tool == -1 else "sower")
 
 func _select_kind(kind: String) -> void:
+	if demo_controller != null: tutorial.observe("select")
 	_tool = 0 if kind == "hoe" else (-1 if kind == "harvester" else _selected_crop+1)
 	_update_hud()
 
 func _select_crop(index: int) -> void:
+	if demo_controller != null: tutorial.observe("select")
 	_selected_crop = index
 	_tool = index+1
 	_update_hud()
@@ -732,6 +757,7 @@ func capture_snapshot() -> Dictionary:
 	snapshot["tools"] = tools.data.duplicate(true)
 	if demo_controller != null:
 		snapshot["records"] = records.data.duplicate(true)
+		snapshot["tutorial"] = tutorial.data.duplicate(true)
 	snapshot.merge({
 		"schema": 3,
 		"clock": clock.to_save(),
@@ -787,6 +813,14 @@ func apply_snapshot(value, silent: bool = true) -> bool:
 	economy = loaded_economy
 	if demo_controller != null:
 		records.data = parsed.get("records", Records.fresh(int(parsed["clock"]["total_days"]))).duplicate(true)
+		tutorial.data = parsed.get("tutorial",Tutorial.fresh()).duplicate(true)
+		if not crop_mgr.planted.is_connected(tutorial.planted):
+			crop_mgr.planted.connect(tutorial.planted)
+			crop_mgr.harvested.connect(tutorial.harvested)
+			grid.cultivated.connect(tutorial.cultivated)
+		economy.traded.connect(tutorial.traded)
+		economy.fed.connect(tutorial.fed)
+		_refresh_tutorial()
 		if not crop_mgr.planted.is_connected(records.planted):
 			crop_mgr.planted.connect(records.planted)
 			crop_mgr.harvested.connect(records.harvested)
@@ -1403,3 +1437,10 @@ func _capture_phase04(dir: String, filename: String, center: Vector2, zoom: floa
 	var path := dir.path_join(filename)
 	get_viewport().get_texture().get_image().save_png(path)
 	print("[shot] %s" % path)
+
+
+func _refresh_tutorial() -> void:
+	if _tutorial_panel == null: return
+	_tutorial_panel.visible = demo_controller != null and tutorial.active()
+	if tutorial.active():
+		_tutorial_hint.text = "新手 %d/7 · %s" % [int(tutorial.data["step"])+1,Tutorial.HINTS[int(tutorial.data["step"])]]

@@ -2,6 +2,7 @@ extends RefCounted
 ## Validates detached snapshots before any live world or slot is changed.
 const Data := preload("res://scripts/farming/core/farm_data.gd")
 const Economy := preload("res://scripts/farming/core/economy/farm_economy.gd")
+const Tutorial := preload("res://scripts/farming/core/economy/farm_tutorial.gd")
 const Tools := preload("res://scripts/farming/core/economy/farm_tools.gd")
 const Records := preload("res://scripts/farming/core/economy/farm_records.gd")
 const Inventory := preload("res://scripts/farming/core/inventory/farm_inventory.gd")
@@ -70,6 +71,9 @@ static func normalize(value) -> Dictionary:
 			return fail("钱包或蛊虫数据非法")
 	out["schema"] = 3
 	out["economy"] = economy.to_save()
+	if out.has("tutorial") and not Tutorial.valid(out["tutorial"]):
+		return fail("新手教学状态非法")
+	if out.has("tutorial"): out["tutorial"]["step"] = int(out["tutorial"]["step"])
 	if out.has("tools") and not Tools.valid(out["tools"], crops):
 		return fail("工具拥有或选择状态非法")
 	if out.has("tools"):
