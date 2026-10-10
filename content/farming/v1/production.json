@@ -1,0 +1,879 @@
+{
+  "schema": 1,
+  "product": "farm_demo_v1",
+  "config": {
+    "initial_primeval_stones": 60,
+    "ap_per_day": 24,
+    "days_per_term": 15,
+    "map_id": "farm_01",
+    "ap_weight": 1,
+    "day_weight": 1,
+    "start_inventory": {
+      "golden_wheat_seed": 8,
+      "fast_fir_seed": 2,
+      "resin_tree_seed": 1,
+      "wood_decay_spawn": 4
+    },
+    "environment": {
+      "initial_water": 60,
+      "initial_fertility": 60,
+      "irrigate_units": 1,
+      "irrigate_gain": 30,
+      "fertilize_units": 1,
+      "fertilize_gain": 30
+    },
+    "workers": {
+      "fee_per_success": 1,
+      "daily_work_limit": 12
+    },
+    "standard_action_ap": 1
+  },
+  "resources": [
+    {
+      "id": "golden_wheat_seed",
+      "name": "金穗麦种子",
+      "element": "wood",
+      "form": "solid",
+      "stage": "primary",
+      "tags": [
+        "seed",
+        "cultivation"
+      ],
+      "supply_allowed": false,
+      "buy_price": 3,
+      "sell_price": 0,
+      "cost_source": "purchase"
+    },
+    {
+      "id": "fast_fir_seed",
+      "name": "速生杉苗",
+      "element": "wood",
+      "form": "solid",
+      "stage": "primary",
+      "tags": [
+        "seed",
+        "cultivation"
+      ],
+      "supply_allowed": false,
+      "buy_price": 8,
+      "sell_price": 0,
+      "cost_source": "purchase"
+    },
+    {
+      "id": "resin_tree_seed",
+      "name": "松脂树苗",
+      "element": "wood",
+      "form": "solid",
+      "stage": "primary",
+      "tags": [
+        "seed",
+        "cultivation"
+      ],
+      "supply_allowed": false,
+      "buy_price": 10,
+      "sell_price": 0,
+      "cost_source": "purchase"
+    },
+    {
+      "id": "wood_decay_spawn",
+      "name": "木腐菇菌种",
+      "element": "wood",
+      "form": "solid",
+      "stage": "primary",
+      "tags": [
+        "seed",
+        "cultivation"
+      ],
+      "supply_allowed": false,
+      "buy_price": 3,
+      "sell_price": 0,
+      "cost_source": "purchase"
+    },
+    {
+      "id": "grain",
+      "name": "谷粒",
+      "element": "wood",
+      "form": "solid",
+      "stage": "primary",
+      "tags": [
+        "food"
+      ],
+      "supply_allowed": true,
+      "buy_price": 6,
+      "sell_price": 4,
+      "cost_source": "wheat"
+    },
+    {
+      "id": "straw",
+      "name": "秸秆",
+      "element": "wood",
+      "form": "solid",
+      "stage": "primary",
+      "tags": [
+        "organic",
+        "processing"
+      ],
+      "supply_allowed": false,
+      "buy_price": 3,
+      "sell_price": 1,
+      "cost_source": "wheat"
+    },
+    {
+      "id": "raw_wood",
+      "name": "原木",
+      "element": "wood",
+      "form": "solid",
+      "stage": "primary",
+      "tags": [
+        "building",
+        "processing"
+      ],
+      "supply_allowed": false,
+      "buy_price": 6,
+      "sell_price": 4,
+      "cost_source": "fir"
+    },
+    {
+      "id": "twig",
+      "name": "枝条",
+      "element": "wood",
+      "form": "solid",
+      "stage": "primary",
+      "tags": [
+        "organic",
+        "processing"
+      ],
+      "supply_allowed": false,
+      "buy_price": 3,
+      "sell_price": 2,
+      "cost_source": "fir"
+    },
+    {
+      "id": "resin",
+      "name": "松脂",
+      "element": "fire",
+      "form": "solid",
+      "stage": "primary",
+      "tags": [
+        "food",
+        "fuel"
+      ],
+      "supply_allowed": true,
+      "buy_price": 0,
+      "sell_price": 6,
+      "cost_source": "resin"
+    },
+    {
+      "id": "mushroom",
+      "name": "木腐菇",
+      "element": "wood",
+      "form": "solid",
+      "stage": "primary",
+      "tags": [
+        "food"
+      ],
+      "supply_allowed": true,
+      "buy_price": 0,
+      "sell_price": 6,
+      "cost_source": "mushroom"
+    },
+    {
+      "id": "humus",
+      "name": "腐殖土",
+      "element": "earth",
+      "form": "solid",
+      "stage": "intermediate",
+      "tags": [
+        "food",
+        "fertilizer"
+      ],
+      "supply_allowed": true,
+      "buy_price": 0,
+      "sell_price": 4,
+      "cost_source": "compost"
+    },
+    {
+      "id": "raw_stone",
+      "name": "普通岩石",
+      "element": "earth",
+      "form": "solid",
+      "stage": "primary",
+      "tags": [
+        "building"
+      ],
+      "supply_allowed": false,
+      "buy_price": 3,
+      "sell_price": 1,
+      "cost_source": "stone"
+    },
+    {
+      "id": "iron_ore",
+      "name": "含铁矿石",
+      "element": "earth",
+      "form": "solid",
+      "stage": "primary",
+      "tags": [
+        "processing"
+      ],
+      "supply_allowed": false,
+      "buy_price": 4,
+      "sell_price": 2,
+      "cost_source": "ore"
+    },
+    {
+      "id": "clean_water",
+      "name": "清水",
+      "element": "water",
+      "form": "liquid",
+      "stage": "primary",
+      "tags": [
+        "food",
+        "medium"
+      ],
+      "supply_allowed": true,
+      "buy_price": 2,
+      "sell_price": 1,
+      "cost_source": "water"
+    },
+    {
+      "id": "wood_chip",
+      "name": "木屑",
+      "element": "wood",
+      "form": "solid",
+      "stage": "intermediate",
+      "tags": [
+        "organic",
+        "cultivation"
+      ],
+      "supply_allowed": false,
+      "buy_price": 4,
+      "sell_price": 2,
+      "cost_source": "shred"
+    },
+    {
+      "id": "wood_plank",
+      "name": "木板",
+      "element": "wood",
+      "form": "solid",
+      "stage": "intermediate",
+      "tags": [
+        "building"
+      ],
+      "supply_allowed": false,
+      "buy_price": 0,
+      "sell_price": 8,
+      "cost_source": "saw"
+    },
+    {
+      "id": "charcoal",
+      "name": "木炭",
+      "element": "fire",
+      "form": "solid",
+      "stage": "intermediate",
+      "tags": [
+        "food",
+        "fuel"
+      ],
+      "supply_allowed": true,
+      "buy_price": 0,
+      "sell_price": 5,
+      "cost_source": "char"
+    },
+    {
+      "id": "iron_ingot",
+      "name": "铁锭",
+      "element": "gold",
+      "form": "solid",
+      "stage": "intermediate",
+      "tags": [
+        "food",
+        "building"
+      ],
+      "supply_allowed": true,
+      "buy_price": 0,
+      "sell_price": 12,
+      "cost_source": "smelt"
+    }
+  ],
+  "cost_models": [
+    {
+      "id": "water",
+      "inputs": {},
+      "ap": 1,
+      "days": 0,
+      "outputs": {
+        "clean_water": {
+          "quantity": 5,
+          "share": 1
+        }
+      },
+      "basis": {
+        "kind": "source",
+        "id": "spring_source"
+      },
+      "cash": 0
+    },
+    {
+      "id": "stone",
+      "inputs": {},
+      "ap": 1,
+      "days": 0,
+      "outputs": {
+        "raw_stone": {
+          "quantity": 3,
+          "share": 1
+        }
+      },
+      "basis": {
+        "kind": "source",
+        "id": "stone_source"
+      },
+      "cash": 0
+    },
+    {
+      "id": "ore",
+      "inputs": {},
+      "ap": 1,
+      "days": 0,
+      "outputs": {
+        "iron_ore": {
+          "quantity": 2,
+          "share": 1
+        }
+      },
+      "basis": {
+        "kind": "source",
+        "id": "ore_source"
+      },
+      "cash": 0
+    },
+    {
+      "id": "wheat",
+      "inputs": {
+        "golden_wheat_seed": 1,
+        "clean_water": 2
+      },
+      "ap": 5,
+      "days": 4,
+      "outputs": {
+        "grain": {
+          "quantity": 3,
+          "share": 0.75
+        },
+        "straw": {
+          "quantity": 2,
+          "share": 0.25
+        }
+      },
+      "basis": {
+        "kind": "crop",
+        "id": "golden_wheat"
+      },
+      "cash": 0,
+      "operations": {
+        "till": 1,
+        "plant": 1,
+        "harvest": 1,
+        "irrigate": 2
+      }
+    },
+    {
+      "id": "fir",
+      "inputs": {
+        "fast_fir_seed": 1,
+        "clean_water": 4
+      },
+      "ap": 10,
+      "days": 8,
+      "outputs": {
+        "raw_wood": {
+          "quantity": 4,
+          "share": 0.75
+        },
+        "twig": {
+          "quantity": 4,
+          "share": 0.25
+        }
+      },
+      "basis": {
+        "kind": "crop",
+        "id": "fast_fir"
+      },
+      "cash": 0,
+      "operations": {
+        "till": 4,
+        "plant": 1,
+        "harvest": 1,
+        "irrigate": 4
+      }
+    },
+    {
+      "id": "resin",
+      "inputs": {
+        "resin_tree_seed": 1,
+        "clean_water": 4
+      },
+      "ap": 10,
+      "days": 8,
+      "outputs": {
+        "resin": {
+          "quantity": 4,
+          "share": 1
+        }
+      },
+      "basis": {
+        "kind": "crop",
+        "id": "resin_tree"
+      },
+      "cash": 0,
+      "operations": {
+        "till": 4,
+        "plant": 1,
+        "harvest": 1,
+        "irrigate": 4
+      }
+    },
+    {
+      "id": "shred",
+      "inputs": {
+        "raw_wood": 1
+      },
+      "ap": 2,
+      "days": 1,
+      "outputs": {
+        "wood_chip": {
+          "quantity": 4,
+          "share": 1
+        }
+      },
+      "basis": {
+        "kind": "recipe",
+        "id": "shred_wood"
+      },
+      "cash": 0
+    },
+    {
+      "id": "saw",
+      "inputs": {
+        "raw_wood": 2
+      },
+      "ap": 2,
+      "days": 1,
+      "outputs": {
+        "wood_plank": {
+          "quantity": 2,
+          "share": 0.75
+        },
+        "wood_chip": {
+          "quantity": 1,
+          "share": 0.25
+        }
+      },
+      "basis": {
+        "kind": "recipe",
+        "id": "saw_planks"
+      },
+      "cash": 0
+    },
+    {
+      "id": "compost",
+      "inputs": {
+        "straw": 2
+      },
+      "ap": 2,
+      "days": 2,
+      "outputs": {
+        "humus": {
+          "quantity": 2,
+          "share": 1
+        }
+      },
+      "basis": {
+        "kind": "recipe",
+        "id": "compost_straw"
+      },
+      "cash": 0
+    },
+    {
+      "id": "mushroom",
+      "inputs": {
+        "wood_decay_spawn": 1,
+        "wood_chip": 3,
+        "clean_water": 2
+      },
+      "ap": 3,
+      "days": 4,
+      "outputs": {
+        "mushroom": {
+          "quantity": 3,
+          "share": 0.75
+        },
+        "humus": {
+          "quantity": 1,
+          "share": 0.25
+        }
+      },
+      "basis": {
+        "kind": "crop",
+        "id": "wood_decay_mushroom"
+      },
+      "cash": 0,
+      "operations": {
+        "till": 1,
+        "plant": 1,
+        "harvest": 1,
+        "irrigate": 0
+      }
+    },
+    {
+      "id": "char",
+      "inputs": {
+        "twig": 4
+      },
+      "ap": 2,
+      "days": 2,
+      "outputs": {
+        "charcoal": {
+          "quantity": 3,
+          "share": 1
+        }
+      },
+      "basis": {
+        "kind": "recipe",
+        "id": "char_twigs"
+      },
+      "cash": 0
+    },
+    {
+      "id": "smelt",
+      "inputs": {
+        "iron_ore": 3,
+        "charcoal": 1
+      },
+      "ap": 2,
+      "days": 2,
+      "outputs": {
+        "iron_ingot": {
+          "quantity": 1,
+          "share": 1
+        }
+      },
+      "basis": {
+        "kind": "recipe",
+        "id": "smelt_charcoal"
+      },
+      "cash": 0
+    }
+  ],
+  "crops": [
+    {
+      "id": "golden_wheat",
+      "seed": "golden_wheat_seed",
+      "footprint": [
+        1,
+        1
+      ],
+      "days": 4,
+      "mode": "harvest_replant",
+      "inputs": {},
+      "outputs": {
+        "grain": 3,
+        "straw": 2
+      },
+      "water_use": 4,
+      "fertility_use": 2,
+      "light": 80
+    },
+    {
+      "id": "fast_fir",
+      "seed": "fast_fir_seed",
+      "footprint": [
+        2,
+        2
+      ],
+      "days": 8,
+      "mode": "fell_replant",
+      "inputs": {},
+      "outputs": {
+        "raw_wood": 4,
+        "twig": 4
+      },
+      "water_use": 3,
+      "fertility_use": 1,
+      "light": 80
+    },
+    {
+      "id": "resin_tree",
+      "seed": "resin_tree_seed",
+      "footprint": [
+        2,
+        2
+      ],
+      "days": 8,
+      "mode": "tap_or_fell",
+      "cycle_days": 3,
+      "inputs": {},
+      "outputs": {
+        "resin": 4
+      },
+      "fell_outputs": {
+        "raw_wood": 4,
+        "twig": 3
+      },
+      "water_use": 3,
+      "fertility_use": 1,
+      "light": 80
+    },
+    {
+      "id": "wood_decay_mushroom",
+      "seed": "wood_decay_spawn",
+      "footprint": [
+        1,
+        1
+      ],
+      "days": 4,
+      "mode": "culture_each_cycle",
+      "inputs": {
+        "wood_chip": 3,
+        "clean_water": 2
+      },
+      "outputs": {
+        "mushroom": 3,
+        "humus": 1
+      },
+      "water_use": 2,
+      "fertility_use": 0,
+      "light": 30
+    }
+  ],
+  "sources": [
+    {
+      "id": "stone_source",
+      "position": [
+        15,
+        8
+      ],
+      "item": "raw_stone",
+      "quantity": 3,
+      "daily_limit": 18,
+      "ap": 1
+    },
+    {
+      "id": "ore_source",
+      "position": [
+        16,
+        8
+      ],
+      "item": "iron_ore",
+      "quantity": 2,
+      "daily_limit": 12,
+      "ap": 1
+    },
+    {
+      "id": "spring_source",
+      "position": [
+        17,
+        8
+      ],
+      "item": "clean_water",
+      "quantity": 5,
+      "daily_limit": 30,
+      "ap": 1
+    }
+  ],
+  "facilities": [
+    {
+      "id": "woodshop",
+      "name": "木工台",
+      "footprint": [
+        2,
+        2
+      ],
+      "cash": 8,
+      "materials": {
+        "raw_wood": 2,
+        "raw_stone": 2
+      }
+    },
+    {
+      "id": "char_kiln",
+      "name": "炭化炉",
+      "footprint": [
+        2,
+        2
+      ],
+      "cash": 12,
+      "materials": {
+        "raw_wood": 2,
+        "raw_stone": 3
+      }
+    },
+    {
+      "id": "compost_bin",
+      "name": "堆肥箱",
+      "footprint": [
+        1,
+        1
+      ],
+      "cash": 6,
+      "materials": {
+        "raw_wood": 1,
+        "raw_stone": 1
+      }
+    },
+    {
+      "id": "smelter",
+      "name": "小型冶炼炉",
+      "footprint": [
+        2,
+        2
+      ],
+      "cash": 20,
+      "materials": {
+        "wood_plank": 2,
+        "raw_stone": 6
+      }
+    }
+  ],
+  "recipes": [
+    {
+      "id": "saw_planks",
+      "facility": "woodshop",
+      "inputs": {
+        "raw_wood": 2
+      },
+      "outputs": {
+        "wood_plank": 2,
+        "wood_chip": 1
+      },
+      "days": 1,
+      "start_ap": 1,
+      "claim_ap": 1
+    },
+    {
+      "id": "shred_wood",
+      "facility": "woodshop",
+      "inputs": {
+        "raw_wood": 1
+      },
+      "outputs": {
+        "wood_chip": 4
+      },
+      "days": 1,
+      "start_ap": 1,
+      "claim_ap": 1
+    },
+    {
+      "id": "shred_twigs",
+      "facility": "woodshop",
+      "inputs": {
+        "twig": 2
+      },
+      "outputs": {
+        "wood_chip": 3
+      },
+      "days": 1,
+      "start_ap": 1,
+      "claim_ap": 1
+    },
+    {
+      "id": "char_twigs",
+      "facility": "char_kiln",
+      "inputs": {
+        "twig": 4
+      },
+      "outputs": {
+        "charcoal": 3
+      },
+      "days": 2,
+      "start_ap": 1,
+      "claim_ap": 1
+    },
+    {
+      "id": "compost_straw",
+      "facility": "compost_bin",
+      "inputs": {
+        "straw": 2
+      },
+      "outputs": {
+        "humus": 2
+      },
+      "days": 2,
+      "start_ap": 1,
+      "claim_ap": 1
+    },
+    {
+      "id": "compost_twigs",
+      "facility": "compost_bin",
+      "inputs": {
+        "twig": 3
+      },
+      "outputs": {
+        "humus": 2
+      },
+      "days": 2,
+      "start_ap": 1,
+      "claim_ap": 1
+    },
+    {
+      "id": "compost_chips",
+      "facility": "compost_bin",
+      "inputs": {
+        "wood_chip": 3
+      },
+      "outputs": {
+        "humus": 2
+      },
+      "days": 2,
+      "start_ap": 1,
+      "claim_ap": 1
+    },
+    {
+      "id": "smelt_charcoal",
+      "facility": "smelter",
+      "inputs": {
+        "iron_ore": 3,
+        "charcoal": 1
+      },
+      "outputs": {
+        "iron_ingot": 1
+      },
+      "days": 2,
+      "start_ap": 1,
+      "claim_ap": 1
+    },
+    {
+      "id": "smelt_resin",
+      "facility": "smelter",
+      "inputs": {
+        "iron_ore": 3,
+        "resin": 1
+      },
+      "outputs": {
+        "iron_ingot": 1
+      },
+      "days": 2,
+      "start_ap": 1,
+      "claim_ap": 1
+    }
+  ],
+  "orders": {
+    "base_demand": 12,
+    "daily_limit": 3,
+    "premium_percent": 10,
+    "rank_unlock_revenue": {
+      "1": 0,
+      "2": 120,
+      "3": 300,
+      "4": 650,
+      "5": 1200
+    },
+    "paths": [
+      "wood",
+      "gold",
+      "water",
+      "fire",
+      "earth"
+    ]
+  }
+}

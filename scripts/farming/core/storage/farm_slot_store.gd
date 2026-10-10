@@ -4,9 +4,11 @@ const Snapshot := preload("res://scripts/farming/core/storage/farm_snapshot.gd")
 const MAX_FILE_BYTES := 4194304
 var _directory: String
 var _active_slot := 0
+var _snapshot_validator = Snapshot
 
-func _init(directory: String = "user://farm_demo_slots") -> void:
+func _init(directory: String = "user://farm_demo_slots", snapshot_validator = Snapshot) -> void:
 	_directory = directory.trim_suffix("/")
+	_snapshot_validator = snapshot_validator
 
 func active_slot() -> int:
 	return _active_slot
@@ -77,10 +79,12 @@ func commit(snapshot: Dictionary) -> Dictionary:
 	return _write(_active_slot, snapshot)
 
 func import_legacy(slot: int, legacy_path: String, overwrite_confirmed: bool = false) -> Dictionary:
+	if _snapshot_validator != Snapshot:
+		return _error("独立版本不支持导入V0存档")
 	var raw := _read_json(legacy_path)
 	if not raw["ok"]:
 		return raw
-	var checked := Snapshot.normalize(raw["data"])
+	var checked: Dictionary = _snapshot_validator.normalize(raw["data"])
 	if not checked["ok"]:
 		return checked
 	var snapshot: Dictionary = checked["snapshot"]
@@ -124,14 +128,14 @@ func _read_file(path: String, slot: int) -> Dictionary:
 		return _error("槽位或存档封装非法")
 	if data["snapshot_json"].sha256_text() != data["checksum"]:
 		return _error("存档校验失败")
-	var checked := Snapshot.normalize(JSON.parse_string(data["snapshot_json"]))
+	var checked: Dictionary = _snapshot_validator.normalize(JSON.parse_string(data["snapshot_json"]))
 	if checked["ok"]:
 		checked["slot_id"] = slot
 		checked["saved_at"] = int(data["saved_at"])
 	return checked
 
 func _write(slot: int, snapshot: Dictionary) -> Dictionary:
-	var checked := Snapshot.normalize(snapshot)
+	var checked: Dictionary = _snapshot_validator.normalize(snapshot)
 	if not checked["ok"]:
 		return checked
 	if snapshot.has("slot_id") and snapshot["slot_id"] != slot:
