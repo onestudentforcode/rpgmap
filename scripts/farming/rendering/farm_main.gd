@@ -41,6 +41,12 @@ var inventory: FarmInventory
 var economy: FarmEconomy
 var economy_panel: FarmEconomyPanel
 var crop_r: CropRenderer
+const Tools := preload("res://scripts/farming/core/economy/farm_tools.gd")
+const Batch := preload("res://scripts/farming/core/crops/farm_batch.gd")
+var tools = Tools.new()
+var _crop_choice: OptionButton
+var _level_buttons: Dictionary = {}
+var _selected_crop := 0
 const Records := preload("res://scripts/farming/core/economy/farm_records.gd")
 var records = Records.new()
 var demo_controller
@@ -90,6 +96,7 @@ func _ready() -> void:
 	var terrains := FarmData.load_terrains()
 	var map := FarmData.load_map(MAP_ID)
 	_config = FarmData.load_config()
+	tools.prices = _config["advanced_tools"]
 	var crops_data := FarmData.load_crops()
 	var items_data := FarmData.load_items()
 	if terrains.is_empty() or map.is_empty() or _config.is_empty() \
@@ -218,16 +225,22 @@ func _setup_overlay(w: int, h: int) -> void:
 	dock.add_child(dock_box)
 	var tools := HBoxContainer.new()
 	dock_box.add_child(tools)
-	for index in range(_tool_crop_ids.size() + 1):
+	for kind in Tools.KINDS:
 		var button := Button.new()
-		button.text = "锄头" if index == 0 else "%s %d" % [_crop_name(_tool_crop_ids[index-1]), index]
-		button.tooltip_text = "H轮换工具；点击地图开垦、恢复或清理" if index == 0 else "选择种子，再点击匹配介质的空耕地播种"
+		button.text = Tools.NAMES[kind]
 		button.toggle_mode = true
-		button.pressed.connect(func():
-			_tool = index
-			_update_hud())
+		button.pressed.connect(_select_kind.bind(kind))
 		tools.add_child(button)
 		_tool_buttons.append(button)
+		var level := Button.new()
+		level.pressed.connect(func():
+			if self.tools.switch_level(kind): _update_hud())
+		tools.add_child(level)
+		_level_buttons[kind] = level
+	_crop_choice = OptionButton.new()
+	for cid in _tool_crop_ids: _crop_choice.add_item(_crop_name(cid))
+	_crop_choice.item_selected.connect(_select_crop)
+	tools.add_child(_crop_choice)
 	var medium_button := Button.new()
 	medium_button.text = "介质 B"
 	medium_button.tooltip_text = "将鼠标移到空耕地，按B轮换介质；菌床与朽木需要材料。"
@@ -320,7 +333,8 @@ func _unhandled_input(event: InputEvent) -> void:
 	if event is InputEventMouseMotion:
 		_update_hover(get_global_mouse_position())
 	elif event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
-		_act_on(_hover)
+		if not event.double_click:
+			_act_on(_hover)
 	elif event is InputEventKey and event.pressed and not event.echo:
 		if event.keycode == KEY_ESCAPE and demo_controller != null:
 			demo_controller.show_pause()
@@ -331,16 +345,22 @@ func _unhandled_input(event: InputEvent) -> void:
 		elif event.keycode == KEY_B:
 			_cycle_medium(_hover)
 		elif event.keycode == KEY_H:
-			_tool = (_tool + 1) % (_tool_crop_ids.size() + 1)
+			_select_kind({"hoe":"sower","sower":"harvester","harvester":"hoe"}[_tool_kind()])
 			_update_hud()
 		else:
 			for i in range(_tool_crop_ids.size()):
 				if event.keycode == KEY_1 + i:
-					_tool = i + 1
-					_update_hud()
+					_select_crop(i)
 
 
 func _act_on(cell: Vector2i) -> void:
+	if not grid.in_bounds(cell.x,cell.y): return
+	if tools.advanced(_tool_kind()):
+		if _tool > 0: _selected_crop = _tool-1
+		var batch: Dictionary = Batch.run(cell,_tool_kind(),_tool_crop_ids[_selected_crop],grid,crop_mgr,inventory,clock)
+		_flash("范围操作：完成%d，跳过%d · %dAP %s" % [batch["successes"],batch["skipped"],batch["ap"],batch["stopped"]],batch["ok"])
+		_update_hud()
+		return
 	# 1) 收获优先：任意工具点成熟植株
 	var hchk := crop_mgr.can_harvest(cell)
 	if hchk["ok"]:
@@ -359,6 +379,9 @@ func _act_on(cell: Vector2i) -> void:
 			suffix = "（植株保留，再次结果中）"
 		clock.spend(clock.cost_of("harvest"))
 		_flash("收获 " + "、".join(parts) + suffix, true)
+		return
+	if _tool == -1:
+		_flash("请选择成熟植株采收",false)
 		return
 	# 2) 锄头：清理 > 开垦 > 恢复
 	if _tool == 0:
@@ -514,9 +537,35 @@ func record_gu_use(behavior: String, succeeded: bool) -> Dictionary:
 # ------------------------------------------------------------ 绘制
 
 func _draw_highlight() -> void:
-	if grid != null and grid.in_bounds(_hover.x, _hover.y):
-		_hl.draw_rect(Rect2(Vector2(_hover) * TILE, Vector2.ONE * TILE),
-				Color(1.0, 0.9, 0.35, 0.95), false, 2.0)
+	if grid == null or not grid.in_bounds(_hover.x,_hover.y): return
+	var targets: Array = Batch.cells(_hover,grid) if tools.advanced(_tool_kind()) else [_hover]
+	for cell in targets:
+		var operation := Batch.action(cell,_tool_kind(),_tool_crop_ids[_selected_crop],grid,crop_mgr)
+		if not tools.advanced(_tool_kind()):
+			if crop_mgr.can_harvest(cell)["ok"]: operation = "harvest"
+			elif _tool == 0 and grid.state_at(cell) == LandGrid.State.TILLED: operation = "untill"
+		var available := not operation.is_empty()
+		if available:
+			var cost := clock.cost_of(operation)
+			available = clock.can_spend(ceili(cost / 2.0) if tools.advanced(_tool_kind()) else cost)
+			if operation == "plant": available = available and inventory.has(_tool_crop_ids[_selected_crop]+"_seed",1)
+		var color := FarmUI.JADE if available else FarmUI.ERROR
+		if tools.advanced(_tool_kind()):
+			_hl.draw_rect(Rect2(Vector2(cell)*TILE,Vector2.ONE*TILE),Color(color,0.15),true)
+		_hl.draw_rect(Rect2(Vector2(cell)*TILE,Vector2.ONE*TILE),color,false,2.0)
+	_hl.draw_rect(Rect2(Vector2(_hover)*TILE,Vector2.ONE*TILE),FarmUI.PAPER,false,3.0)
+
+func _tool_kind() -> String:
+	return "hoe" if _tool == 0 else ("harvester" if _tool == -1 else "sower")
+
+func _select_kind(kind: String) -> void:
+	_tool = 0 if kind == "hoe" else (-1 if kind == "harvester" else _selected_crop+1)
+	_update_hud()
+
+func _select_crop(index: int) -> void:
+	_selected_crop = index
+	_tool = index+1
+	_update_hud()
 
 
 func _draw_media() -> void:
@@ -589,8 +638,17 @@ func _update_hud() -> void:
 			tool_text = "工具：播种 %s（种子×%d）" % [_crop_name(cid), inventory.count(cid + "_seed")]
 		_hud_tool.text = tool_text
 		_hud_tool.tooltip_text = "左键行动 · H轮换工具 · WASD/方向键平移 · 滚轮缩放 · 每日自动保存 · Esc菜单"
+		_hud_tool.text = ("高级 · 3×3 · AP折半取整" if tools.advanced(_tool_kind()) else "普通 · 单目标") + " · " + ( _crop_name(_tool_crop_ids[_tool-1]) if _tool > 0 else Tools.NAMES[_tool_kind()] )
 		for index in range(_tool_buttons.size()):
-			_tool_buttons[index].set_pressed_no_signal(index == _tool)
+			var kind: String = Tools.KINDS[index]
+			_tool_buttons[index].set_pressed_no_signal(kind == _tool_kind())
+			_level_buttons[kind].text = "高" if tools.advanced(kind) else "普"
+			_level_buttons[kind].disabled = not tools.data["owned"].has(kind)
+			_level_buttons[kind].tooltip_text = "切换普通/高级" if tools.data["owned"].has(kind) else "请先从集市购买高级工具"
+		if _tool > 0: _selected_crop = _tool-1
+		_crop_choice.select(_selected_crop)
+		if _hl != null: _hl.queue_redraw()
+
 
 
 func _terrains_by_id() -> Dictionary:
@@ -667,6 +725,10 @@ func _reason_text(reason: String) -> String:
 
 func capture_snapshot() -> Dictionary:
 	var snapshot := _snapshot_extra.duplicate(true)
+	tools.data["kind"] = _tool_kind()
+	if _tool > 0: _selected_crop = _tool-1
+	tools.data["crop"] = _tool_crop_ids[_selected_crop]
+	snapshot["tools"] = tools.data.duplicate(true)
 	if demo_controller != null:
 		snapshot["records"] = records.data.duplicate(true)
 	snapshot.merge({
@@ -718,6 +780,9 @@ func apply_snapshot(value, silent: bool = true) -> bool:
 			_flash("存档内容异常", false)
 		return false
 	clock.apply_save(parsed["clock"])
+	tools.data = parsed.get("tools",Tools.fresh()).duplicate(true)
+	_selected_crop = _tool_crop_ids.find(tools.data["crop"])
+	_tool = 0 if tools.data["kind"] == "hoe" else (-1 if tools.data["kind"] == "harvester" else _selected_crop+1)
 	economy = loaded_economy
 	if demo_controller != null:
 		records.data = parsed.get("records", Records.fresh(int(parsed["clock"]["total_days"]))).duplicate(true)

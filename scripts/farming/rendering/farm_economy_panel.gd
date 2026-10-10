@@ -38,7 +38,7 @@ func build(farm) -> void:
 	_summary = UI.label("")
 	box.add_child(_summary)
 	_tabs = TabBar.new()
-	for title_text in ["库存", "集市", "喂养"]:
+	for title_text in ["库存", "集市", "喂养", "工具"]:
 		_tabs.add_tab(title_text)
 	box.add_child(_tabs)
 	_controls = HBoxContainer.new()
@@ -89,19 +89,33 @@ func refresh() -> void:
 	_controls.visible = view == 1
 	_hint.text = ["种子用于播种，生产材料用于准备介质，食材可出售或喂养。",
 		"按钮显示本次数量与总价。出售食材可换取新种子。",
-		"饱食度为0时喂一餐恢复至6；每天与指定成功行为各减1。"][view]
+		"饱食度为0时喂一餐恢复至6；每天与指定成功行为各减1。",
+		"永久解锁高级工具；同类一个栏位，购买后在工具栏切换普/高。"][view]
 	_summary.text = "元石 %d枚    |    木蛊饱食度 %d/6    |    喂养 %d次" % [
 		_farm.economy.primeval_stones, _farm.economy.gu["satiety"], _farm.economy.gu["feeding_count"]]
 	var scroll_position := _scroll.scroll_vertical
 	for child in _rows.get_children():
 		_rows.remove_child(child)
 		child.queue_free()
-	for kind in (["seed", "production", "food"] if view != 2 else ["food"]):
+	for kind in ([] if view == 3 else (["seed", "production", "food"] if view != 2 else ["food"])):
 		_rows.add_child(UI.label({"seed":"种子", "production":"生产材料", "food":"木属性食材"}[kind], true))
 		for iid in _farm._items_by_id:
 			var item: Dictionary = _farm._items_by_id[iid]
 			if item.get("kind", "") == kind:
 				_add_item(iid, item, view)
+	if view == 3:
+		_rows.add_child(UI.label("高级工具 · 永久拥有 · 同类一个栏位",true))
+		for kind in _farm.tools.KINDS:
+			var row := HBoxContainer.new()
+			_rows.add_child(row)
+			var owned: bool = _farm.tools.data["owned"].has(kind)
+			var price: int = _farm.tools.prices[kind]
+			var text := UI.label("高级%s · 3×3，成功AP总成本折半" % _farm.tools.NAMES[kind])
+			text.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+			row.add_child(text)
+			var buy := _button(row,"已拥有" if owned else "购买 · %d元石" % price,_buy_tool.bind(kind))
+			buy.disabled = owned or _farm.economy.primeval_stones < price
+			buy.tooltip_text = "永久解锁，不可回售；工具栏切换等级" if owned else "购买不消耗AP；等级需在工具栏切换"
 	_scroll.set_deferred("scroll_vertical", scroll_position)
 
 
@@ -170,3 +184,9 @@ func _feed(iid: String) -> void:
 	_feedback.text = "消耗%s×%d，饱食度恢复至6" % [_farm._item_name(iid), int(result.get("quantity", 0))] if result["ok"] else String(result["reason"])
 	_feedback.add_theme_color_override("font_color", UI.JADE if result["ok"] else UI.ERROR)
 	changed.emit(_feedback.text, result["ok"])
+
+func _buy_tool(kind: String) -> void:
+	var result: Dictionary = _farm.tools.buy(kind,_farm.economy)
+	refresh()
+	_feedback.text = "高级%s已购入，点击工具栏的普/高按钮切换" % _farm.tools.NAMES[kind] if result["ok"] else result["reason"]
+	changed.emit(_feedback.text,result["ok"])

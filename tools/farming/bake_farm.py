@@ -92,6 +92,13 @@ def validate_config(data, items_ids, msgs):
     if data.get("schema") != 1:
         _fail(msgs, "config.schema 必须为 1")
         return
+    tools = data.get("advanced_tools", {})
+    if not isinstance(tools, dict) or set(tools) != {"hoe", "sower", "harvester"}:
+        _fail(msgs, "config.advanced_tools requires exactly three tool prices")
+    else:
+        for kind, price in tools.items():
+            if type(price) is not int or not 0 < price <= 1000000:
+                _fail(msgs, "advanced tool price must be a positive integer: %s" % kind)
     t = data.get("time", {})
     for key in ("terms_per_year", "days_per_term", "ap_per_day"):
         v = t.get(key)

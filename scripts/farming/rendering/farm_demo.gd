@@ -249,7 +249,7 @@ func show_pause() -> void:
 
 func _show_help() -> void:
 	_page("操作说明", "help")
-	_message.text = "左键：开垦、播种、采收或清理\n1～4 / H：选种子或轮换工具 · B：准备介质\nR：结束当天 · M：库存、集市和喂养\nWASD / 方向键：平移 · 滚轮：缩放 · Esc：菜单\n\n每天结束自动存入当前槽，不提供手动存读档。\n本版本暂未开放显示与音量设置。"
+	_message.text = "左键：开垦、播种、采收或清理\n1～4：选种子 · H：轮换锄头/播种/采收 · B：准备介质\nR：结束当天 · M：库存、集市和喂养\nWASD / 方向键：平移 · 滚轮：缩放 · Esc：菜单\n\n每天结束自动存入当前槽，不提供手动存读档。\nM中工具页购买高级档；工具栏普/高切换。高级范围3×3，成功AP合计折半取整。\n本版本暂未开放显示与音量设置。"
 	_button(_box,"返回", show_pause if farm != null else _show_main)
 
 func request_exit(destination: String) -> void:

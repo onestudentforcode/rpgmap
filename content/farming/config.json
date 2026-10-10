@@ -70,5 +70,10 @@
       "fungal_bed": "fungal_bed_material",
       "rotten_log": "rotten_log"
     }
+  },
+  "advanced_tools": {
+    "hoe": 30,
+    "sower": 40,
+    "harvester": 40
   }
 }
