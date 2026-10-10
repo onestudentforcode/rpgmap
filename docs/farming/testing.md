@@ -13,7 +13,7 @@
 .\play.bat --shots=res://.shots/farm-current
 ```
 
-`test.bat`依次运行31项资产QC、23项资产/配置工具测试、178项农场游戏流程检查；
+`test.bat`依次运行31项资产QC、25项资产/配置工具测试、206项农场游戏流程检查；
 任一步失败立即返回非零退出码，成功输出`FARMING TEST SUITE OK`。
 游戏流程覆盖土地开垦、播种扣种与占格、生长、凝露草一次采收、赤纹果有限再生/枯竭/清理、
 库存与时间推进、存档恢复；Phase 4新增介质/B键、混合介质拒绝、多格树木/真菌隔离fixture与旧存档恢复检查。
@@ -88,3 +88,9 @@ Demo菜单预览：
 运行`--path . --script scripts/farming/tests/phase06_records_preview.gd`（GPU模式，不加headless）。
 输出`RECORDS PREVIEW OK`，截图位于`.shots/farm-phase06c/`：进行中的经营记录、已冻结回顾和滚动明细。
 三张界面均在640×360逻辑视口内，继续经营按钮始终可见；预览只写专用测试目录，结束后清理。
+
+## 高级工具与范围操作验收
+
+P6.d新增28项真实操作检查：购买与重复/余额校验、等级切换、三个栏位、中心范围和边缘、1/2/3/9次AP取整、普通单目标、高级不恢复耕地、双击第二事件、种子不足、AP不足不跨日续做、末AP完整自动档、混合介质、多格树播种/采收/清理去重、种子选择恢复与槽隔离。价格配置新增2项Python检查。
+独立逻辑入口为`--headless --path . --script scripts/farming/tests/run_phase06_tools.gd`，输出`PHASE06 TOOLS TEST OK`。
+GPU界面入口为`--path . --script scripts/farming/tests/phase06_tools_preview.gd`，输出`TOOLS PREVIEW OK`；五张截图位于`.shots/farm-phase06d/`。两个入口仅操作各自测试槽目录并清理，不能用来继续玩家存档。
