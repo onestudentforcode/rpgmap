@@ -178,8 +178,9 @@ def _compile(source):
     require(reachable == set(resources) and built == set(facilities), 'unreachable resource/facility construction dependency')
     for iid in resources: require(known_sources[iid] and consumers[iid], f'{iid}: orphan source/consumer')
     orders = out['orders']
-    require(integer(orders['base_demand'], 1) and integer(orders['daily_limit'], 1, 20) and orders['premium_percent'] == 10, 'invalid orders')
-    require(set(orders['paths']) == ELEMENTS and len(orders['paths']) == 5, 'five order paths required')
+    require(set(orders) == {'base_demand', 'daily_limit', 'premium_percent', 'rank_unlock_revenue', 'paths', 'path_policy', 'rank_policy'} and orders['path_policy'] == 'rotation' and orders['rank_policy'] == 'mixed_rotation', 'invalid order template policy')
+    require(integer(orders['base_demand'], 1) and integer(orders['daily_limit'], 1, 20) and integer(orders['premium_percent'], 10, 10), 'invalid orders')
+    require(isinstance(orders['paths'], list) and all(isinstance(p, str) for p in orders['paths']) and set(orders['paths']) == ELEMENTS and len(orders['paths']) == 5, 'five order paths required')
     unlocks = orders['rank_unlock_revenue']
     require(set(unlocks) == {'1','2','3','4','5'} and all(integer(v) for v in unlocks.values()) and unlocks['1'] == 0 and all(unlocks[str(r)] < unlocks[str(r+1)] for r in range(1,5)), 'rank thresholds')
     for element in ELEMENTS:

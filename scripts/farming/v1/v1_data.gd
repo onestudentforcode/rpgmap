@@ -41,15 +41,21 @@ static func light_at(cell: Vector2i) -> int:
 
 static func supply_quote(path: String, rank: int, item_id: String) -> Dictionary:
 	var data := load_data()
-	if data.is_empty() or rank < 1 or rank > 5 or path not in data["orders"]["paths"]:
+	if data.is_empty():
+		return {"ok": false, "reason": "V1配置缺失"}
+	return demand_quote(path, rank, int(data["orders"]["base_demand"]) * rank, item_id)
+
+## Independent consumer request adapter. Demand is explicit; no Gu state is required.
+static func demand_quote(path: String, rank: int, demand: int, item_id: String) -> Dictionary:
+	var data := load_data()
+	if data.is_empty() or rank < 1 or rank > 5 or demand < 1 or demand > 5000000 or path not in data["orders"]["paths"]:
 		return {"ok": false, "reason": "流派或转数非法"}
 	var item: Dictionary = resources(data).get(item_id, {})
 	if item.is_empty() or not item["supply_allowed"] or item["element"] != path or item["supply_value"] <= 0:
 		return {"ok": false, "reason": "材料不具备对应食材资格"}
-	var demand := int(data["orders"]["base_demand"]) * rank
-	var quantity := ceili(float(demand) / float(item["supply_value"]))
+	var quantity: int = (demand + int(item["supply_value"]) - 1) / int(item["supply_value"])
 	var base := quantity * int(item["sell_price"])
-	var premium := floori(float(base) * float(data["orders"]["premium_percent"]) / 100.0)
+	var premium: int = base * int(data["orders"]["premium_percent"]) / 100
 	return {"ok": true, "item_id": item_id, "path": path, "rank": rank,
 		"demand": demand, "quantity": quantity, "provided": quantity * int(item["supply_value"]),
 		"base": base, "premium": premium, "payout": base + premium}

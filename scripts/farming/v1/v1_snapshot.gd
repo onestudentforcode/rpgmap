@@ -1,15 +1,16 @@
 extends RefCounted
-## Schema 3 adds facilities/batches. Earlier V1 schemas gain empty new fields; never imports V0.
+## Schema 4 adds revenue and daily orders. Earlier V1 schemas gain new empty state; never imports V0.
 const Data := preload("res://scripts/farming/v1/v1_data.gd")
 const Scalars := preload("res://scripts/farming/v1/v1_world_state.gd")
-const SCHEMA := 3
+const Orders := preload("res://scripts/farming/v1/v1_orders.gd")
+const SCHEMA := 4
 
 static func fresh() -> Dictionary:
 	var config: Dictionary = Data.load_data()["config"]
 	return {"product": "farm_demo_v1", "schema": SCHEMA,
 		"clock": {"total_days": 0, "ap": int(config["ap_per_day"])},
-		"economy": {"primeval_stones": int(config["initial_primeval_stones"])},
-		"inventory": config["start_inventory"].duplicate(true), "world": Scalars.fresh()}
+		"economy": {"primeval_stones": int(config["initial_primeval_stones"]), "sales_revenue": 0, "order_revenue": 0},
+		"inventory": config["start_inventory"].duplicate(true), "world": Scalars.fresh(), "orders": Orders.generate(0, 0)}
 
 static func fail(reason: String) -> Dictionary:
 	return {"ok": false, "reason": reason}
@@ -18,7 +19,7 @@ static func normalize(value) -> Dictionary:
 	if not value is Dictionary or value.get("product") != "farm_demo_v1" or not Scalars.whole(value.get("schema"), 1, SCHEMA):
 		return fail("不支持的V1快照版本")
 	for key in value:
-		if key not in ["product", "schema", "clock", "economy", "inventory", "slot_id", "world"]:
+		if key not in ["product", "schema", "clock", "economy", "inventory", "slot_id", "world", "orders"]:
 			return fail("不支持的V1快照字段")
 	if value.has("slot_id") and not Scalars.whole(value["slot_id"], 1, 3):
 		return fail("槽位非法")
@@ -30,8 +31,21 @@ static func normalize(value) -> Dictionary:
 	var economy: Dictionary = value["economy"]
 	if clock.size() != 2 or not Scalars.whole(clock.get("total_days")) or not Scalars.whole(clock.get("ap"), 1, int(config["ap_per_day"])):
 		return fail("日期或行动点非法")
-	if economy.size() != 1 or not Scalars.whole(economy.get("primeval_stones")):
+	var old_schema := int(value["schema"]) < SCHEMA
+	if old_schema and (not Scalars.exact(economy, ["primeval_stones"]) or value.has("orders")):
+		return fail("旧V1版本不能包含订单或收入字段")
+	if old_schema:
+		economy = economy.duplicate(true)
+		economy["sales_revenue"] = 0
+		economy["order_revenue"] = 0
+	if not Scalars.exact(economy, ["primeval_stones", "sales_revenue", "order_revenue"]) or not Scalars.whole(economy.get("primeval_stones")) or not Scalars.whole(economy.get("sales_revenue")) or not Scalars.whole(economy.get("order_revenue")):
 		return fail("元石非法")
+	var revenue := int(economy["sales_revenue"]) + int(economy["order_revenue"])
+	if not Scalars.whole(revenue):
+		return fail("累计收入越界")
+	var orders_checked := Orders.normalize(Orders.generate(int(clock["total_days"]), 0) if old_schema else value.get("orders"), int(clock["total_days"]), revenue, int(economy["order_revenue"]))
+	if not orders_checked["ok"]:
+		return orders_checked
 	var items := Data.resources(Data.load_data())
 	var inventory := {}
 	for iid in value["inventory"]:
@@ -54,4 +68,5 @@ static func normalize(value) -> Dictionary:
 		return checked
 	return {"ok": true, "snapshot": {"product": "farm_demo_v1", "schema": SCHEMA,
 		"clock": {"total_days": int(clock["total_days"]), "ap": int(clock["ap"])},
-		"economy": {"primeval_stones": int(economy["primeval_stones"])}, "inventory": inventory, "world": checked["world"]}}
+		"economy": {"primeval_stones": int(economy["primeval_stones"]), "sales_revenue": int(economy["sales_revenue"]), "order_revenue": int(economy["order_revenue"])},
+		"inventory": inventory, "world": checked["world"], "orders": orders_checked["orders"]}}

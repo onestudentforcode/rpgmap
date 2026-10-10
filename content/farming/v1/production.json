@@ -883,6 +883,8 @@
     }
   ],
   "orders": {
+    "path_policy": "rotation",
+    "rank_policy": "mixed_rotation",
     "base_demand": 12,
     "daily_limit": 3,
     "premium_percent": 10,

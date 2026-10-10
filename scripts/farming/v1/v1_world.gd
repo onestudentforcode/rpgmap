@@ -4,6 +4,8 @@ signal changed()
 signal daily_settled(total_days: int, saved: bool)
 const Data := preload("res://scripts/farming/v1/v1_data.gd")
 const Snapshot := preload("res://scripts/farming/v1/v1_snapshot.gd")
+const Orders := preload("res://scripts/farming/v1/v1_orders.gd")
+const Scalars := preload("res://scripts/farming/v1/v1_world_state.gd")
 const Grid := preload("res://scripts/farming/core/grid/land_grid.gd")
 const Clock := preload("res://scripts/farming/core/clock/farm_clock.gd")
 const Inventory := preload("res://scripts/farming/core/inventory/farm_inventory.gd")
@@ -12,6 +14,10 @@ var grid: Grid
 var clock: Clock
 var inventory: Inventory
 var primeval_stones := 60
+var _sales_revenue := 0
+var _order_revenue := 0
+var _orders: Dictionary = {}
+var _items: Dictionary = {}
 var config: Dictionary
 var crop_defs: Dictionary
 var source_defs: Dictionary
@@ -34,6 +40,7 @@ var daily_save_error := ""
 func _init(slot_store = null) -> void:
 	_store = slot_store
 	config = Data.load_data()["config"]
+	_items = Data.resources(Data.load_data())
 	crop_defs = Data.definitions("crops")
 	source_defs = Data.definitions("sources")
 	facility_defs = Data.definitions("facilities")
@@ -332,6 +339,78 @@ func claim_batch(facility_uid: int, expected_batch_id: int) -> Dictionary:
 	facilities[facility_uid]["batch"] = {}
 	return _finish(int(recipe["claim_ap"]), {"ok": true, "batch_id": expected_batch_id, "items": outputs})
 
+func gross_revenue() -> int:
+	return _sales_revenue + _order_revenue
+
+func unlocked_rank() -> int:
+	return Data.unlocked_rank(gross_revenue())
+
+func daily_orders() -> Array:
+	return _orders["entries"].duplicate(true)
+
+func order_settlements() -> Array:
+	return _orders["settlements"].duplicate(true)
+
+func order_quote(order_id: int, item_id: String) -> Dictionary:
+	for entry in _orders["entries"]:
+		if entry["id"] == order_id:
+			if entry["status"] != "open":
+				return _error("订单已结算")
+			return Data.demand_quote(entry["path"], int(entry["rank"]), int(entry["demand"]), item_id)
+	return _error("订单不存在或已过期")
+
+func deliver_order(order_id: int, item_id: String) -> Dictionary:
+	var checked := _can_act(0)
+	if not checked["ok"]:
+		return checked
+	var quote := order_quote(order_id, item_id)
+	if not quote["ok"]:
+		return quote
+	if not inventory.has(item_id, int(quote["quantity"])):
+		return _error("订单材料不足")
+	if not Scalars.whole(primeval_stones + int(quote["payout"])) or not Scalars.whole(gross_revenue() + int(quote["payout"])):
+		return _error("元石或收入越界")
+	# Inventory, receipt and revenue change together before observers or daily saves.
+	inventory.remove(item_id, int(quote["quantity"]))
+	for entry in _orders["entries"]:
+		if entry["id"] == order_id:
+			entry["status"] = "completed"
+			for key in ["item_id", "quantity", "provided", "base", "premium", "payout"]:
+				entry["receipt"][key] = quote[key]
+	primeval_stones += int(quote["payout"])
+	_order_revenue += int(quote["payout"])
+	return _finish(0, {"ok": true, "order_id": order_id, "quote": quote})
+
+func buy(item_id: String, quantity) -> Dictionary:
+	return _trade(item_id, quantity, true)
+
+func sell(item_id: String, quantity) -> Dictionary:
+	return _trade(item_id, quantity, false)
+
+func _trade(item_id: String, quantity, buying: bool) -> Dictionary:
+	var checked := _can_act(0)
+	if not checked["ok"]:
+		return checked
+	if not _items.has(item_id) or not Scalars.whole(quantity, 1, 1000000):
+		return _error("交易物品或数量非法")
+	var price := int(_items[item_id]["buy_price" if buying else "sell_price"])
+	if price <= 0:
+		return _error("该物品不支持此交易")
+	var count := int(quantity)
+	var total := price * count
+	if buying:
+		if primeval_stones < total or not Scalars.whole(inventory.count(item_id) + count):
+			return _error("元石不足或库存越界")
+		primeval_stones -= total
+		inventory.add(item_id, count)
+	else:
+		if not inventory.has(item_id, count) or not Scalars.whole(primeval_stones + total) or not Scalars.whole(gross_revenue() + total):
+			return _error("库存不足或收入越界")
+		inventory.remove(item_id, count)
+		primeval_stones += total
+		_sales_revenue += total
+	return _finish(0, {"ok": true, "item_id": item_id, "quantity": count, "total": total})
+
 func _on_day_changed(day: int) -> void:
 	for uid in crops:
 		var row: Dictionary = crops[uid]
@@ -366,6 +445,7 @@ func _on_day_changed(day: int) -> void:
 		var batch: Dictionary = row["batch"]
 		if not batch.is_empty() and batch["status"] == "processing" and day >= int(batch["finish_day"]):
 			batch["status"] = "ready"
+	_orders = Orders.advance(_orders, day, gross_revenue())
 	if _store != null:
 		var saved: Dictionary = _store.commit(to_snapshot())
 		daily_save_error = "" if saved["ok"] else String(saved["reason"])
@@ -384,7 +464,8 @@ func to_snapshot() -> Dictionary:
 	for row in facilities.values():
 		buildings.append(row.duplicate(true))
 	return {"product": "farm_demo_v1", "schema": Snapshot.SCHEMA, "clock": clock.to_save(),
-		"economy": {"primeval_stones": primeval_stones}, "inventory": inventory.to_save(),
+		"economy": {"primeval_stones": primeval_stones, "sales_revenue": _sales_revenue, "order_revenue": _order_revenue},
+		"inventory": inventory.to_save(), "orders": _orders.duplicate(true),
 		"world": {"map_id": config["map_id"], "tilled": tilled, "environment": environment.duplicate(true),
 			"crops": rows, "next_uid": _next_uid, "sources": {"day": _source_day, "used": _source_used.duplicate()},
 			"facilities": buildings, "next_facility_uid": _next_facility_uid, "next_batch_uid": _next_batch_uid}}
@@ -420,6 +501,9 @@ func apply_snapshot(value) -> Dictionary:
 	clock.apply_save(snapshot["clock"])
 	inventory.apply_save(snapshot["inventory"])
 	primeval_stones = int(snapshot["economy"]["primeval_stones"])
+	_sales_revenue = int(snapshot["economy"]["sales_revenue"])
+	_order_revenue = int(snapshot["economy"]["order_revenue"])
+	_orders = snapshot["orders"].duplicate(true)
 	environment = world["environment"].duplicate(true)
 	_next_uid = int(world["next_uid"])
 	_source_day = int(world["sources"]["day"])

@@ -621,6 +621,7 @@
   "orders": {
     "base_demand": 12,
     "daily_limit": 3,
+    "path_policy": "rotation",
     "paths": [
       "wood",
       "gold",
@@ -629,6 +630,7 @@
       "earth"
     ],
     "premium_percent": 10,
+    "rank_policy": "mixed_rotation",
     "rank_unlock_revenue": {
       "1": 0,
       "2": 120,
