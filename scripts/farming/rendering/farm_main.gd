@@ -17,17 +17,8 @@ const FarmSnapshot := preload("res://scripts/farming/core/storage/farm_snapshot.
 const FarmEconomy := preload("res://scripts/farming/core/economy/farm_economy.gd")
 const FarmEconomyPanel := preload("res://scripts/farming/rendering/farm_economy_panel.gd")
 const FarmUI := preload("res://scripts/farming/rendering/farm_ui_style.gd")
-const Phase05Tests := preload("res://scripts/farming/tests/phase05_economy.gd")
-const Phase05ContentTests := preload("res://scripts/farming/tests/phase05_content.gd")
-const Phase06SlotTests := preload("res://scripts/farming/tests/phase06_slots.gd")
-const Phase06DemoTests := preload("res://scripts/farming/tests/phase06_demo.gd")
-const Phase06RecordsTests := preload("res://scripts/farming/tests/phase06_records.gd")
-const Phase06ToolsTests := preload("res://scripts/farming/tests/phase06_tools.gd")
-const Phase06ExperienceTests := preload("res://scripts/farming/tests/phase06_experience.gd")
 const FarmTerrainRenderer := preload("res://scripts/farming/rendering/terrain_renderer.gd")
 const CropRenderer := preload("res://scripts/farming/rendering/crop_renderer.gd")
-const Phase04Tests := preload("res://scripts/farming/tests/phase04_foundation.gd")
-const Phase04ContentTests := preload("res://scripts/farming/tests/phase04_content.gd")
 const FarmCamera := preload("res://scripts/farming/rendering/farm_camera.gd")
 
 const MAP_ID := "farm_01"
@@ -187,9 +178,16 @@ func _setup_camera(w: int, h: int) -> void:
 	_cam.position = Vector2(w, h) * (TILE * 0.5)
 	add_child(_cam)
 	_cam.make_current()
+	if demo_controller != null:
+		_cam.zoom = Vector2(0.5,0.5)
+		add_child(load("res://scripts/farming/rendering/farm_zones.gd").new())
 	_cam_ctrl = FarmCamera.new()
 	_cam_ctrl.name = "FarmCamera"
 	_cam_ctrl.setup(_cam, Vector2i(w, h), TILE)
+	if demo_controller != null:
+		_cam_ctrl.view_top = 80.0
+		_cam_ctrl.view_bottom = 78.0
+		_cam.position.y = get_viewport().get_visible_rect().size.y * 0.5 / _cam.zoom.y - _cam_ctrl.view_top / _cam.zoom.y
 	_cam_ctrl.zoom_set.connect(func(_z: float) -> void: _update_hud())
 	add_child(_cam_ctrl)
 
@@ -848,6 +846,19 @@ func _ok(msg: String) -> void:
 
 
 func _run_farmtest() -> void:
+	if not ResourceLoader.exists("res://scripts/farming/tests/phase05_economy.gd"):
+		push_error("发布包不包含开发测试，请在工作区运行test.bat")
+		get_tree().quit(1)
+		return
+	var Phase05Tests = load("res://scripts/farming/tests/phase05_economy.gd")
+	var Phase05ContentTests = load("res://scripts/farming/tests/phase05_content.gd")
+	var Phase06SlotTests = load("res://scripts/farming/tests/phase06_slots.gd")
+	var Phase06DemoTests = load("res://scripts/farming/tests/phase06_demo.gd")
+	var Phase06RecordsTests = load("res://scripts/farming/tests/phase06_records.gd")
+	var Phase06ToolsTests = load("res://scripts/farming/tests/phase06_tools.gd")
+	var Phase06ExperienceTests = load("res://scripts/farming/tests/phase06_experience.gd")
+	var Phase04Tests = load("res://scripts/farming/tests/phase04_foundation.gd")
+	var Phase04ContentTests = load("res://scripts/farming/tests/phase04_content.gd")
 	var fails: Array[String] = []
 	var chk: Dictionary = {}
 

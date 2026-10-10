@@ -154,7 +154,13 @@ func _tilled_pred() -> Callable:
 
 
 func _load_tex(rel: String) -> Texture2D:
-	var img := Image.load_from_file("res://" + rel)
+	var path := "res://" + rel
+	if OS.has_feature("farm_demo_release"):
+		return load(path) as Texture2D
+	var img := Image.new()
+	if img.load_png_from_buffer(FileAccess.get_file_as_bytes(path)) != OK:
+		push_error("[farm] 无法解码纹理 " + path)
+		return null
 	if img == null or img.is_empty():
 		push_error("[farm] 无法加载纹理 res://" + rel)
 		return null

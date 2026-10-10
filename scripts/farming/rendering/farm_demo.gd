@@ -31,6 +31,12 @@ func _ready() -> void:
 		get_tree().change_scene_to_file.call_deferred("res://scenes/farming/farm_main.tscn")
 		return
 	DisplayServer.window_set_title("灵田 Demo")
+	var smoke := "--demo-smoke" in args
+	if smoke:
+		var directory := "user://farm_release_smoke_%d" % Time.get_ticks_usec()
+		store = Slots.new(directory+"/slots")
+		settings = Settings.new(directory+"/settings.cfg")
+		legacy_path = directory+"/absent.json"
 	if route_cli:
 		settings.load_settings()
 		settings.apply_display()
@@ -52,6 +58,14 @@ func _ready() -> void:
 	fps_layer.add_child(_fps)
 	_fps.visible = settings.data["show_fps"]
 	if not settings.warning.is_empty(): _message.text = settings.warning
+	if smoke:
+		var probe = load("res://scripts/farming/validation/farm_release_smoke.gd").new()
+		probe.shell = self
+		probe.directory = settings.path.get_base_dir()
+		for arg in args:
+			if arg.begins_with("--smoke-shots="): probe.shots = arg.trim_prefix("--smoke-shots=")
+		add_child(probe)
+		probe.run.call_deferred()
 
 func _page(title: String, screen: String) -> void:
 	_screen = screen
