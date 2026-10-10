@@ -61,13 +61,29 @@ def _compile(source):
     facilities = registry(out['facilities'], 'facilities')
     recipes = registry(out['recipes'], 'recipes')
     config = out['config']
+    require(isinstance(config['map_id'], str) and config['map_id'].isascii() and config['map_id'].replace('_', '').isalnum(), 'invalid map id')
+    map_path = ROOT / 'content/farming/baked/maps' / (config['map_id'] + '.json')
+    require(map_path.exists(), 'missing V1 base map')
+    map_data = json.loads(map_path.read_text(encoding='utf-8'))
+    width, height = map_data['size']
     require(integer(config['initial_primeval_stones']) and integer(config['ap_per_day'], 1) and config['days_per_term'] == 15, 'invalid economy/time')
     for key in ['ap_weight', 'day_weight']:
         require(positive(config[key]), 'invalid cost weight')
     require(integer(config['standard_action_ap'], 1), 'invalid standard action AP')
     quantities(config['start_inventory'], resources, 'start_inventory')
+    environment_keys = {'initial_water', 'initial_fertility', 'irrigate_units', 'irrigate_gain', 'fertilize_units', 'fertilize_gain', 'optimal_water', 'optimal_fertility', 'low_water_efficiency', 'low_fertility_efficiency', 'light_tolerance', 'low_light_efficiency'}
+    require(set(config['environment']) == environment_keys, 'incomplete environment config')
     for value in config['environment'].values():
         require(integer(value, 1, 100), 'invalid environment parameter')
+    light = config['light']
+    require(integer(light['default'], 0, 100) and isinstance(light['regions'], list), 'invalid fixed light')
+    lit_cells = set()
+    for region in light['regions']:
+        rect = region['rect']
+        require(isinstance(rect, list) and len(rect) == 4 and all(integer(v) for v in rect) and rect[2] > 0 and rect[3] > 0 and rect[0] + rect[2] <= width and rect[1] + rect[3] <= height and integer(region['level'], 0, 100), 'invalid light region')
+        cells = {(x, y) for x in range(rect[0], rect[0]+rect[2]) for y in range(rect[1], rect[1]+rect[3])}
+        require(not cells & lit_cells, 'overlapping light regions')
+        lit_cells |= cells
     for value in config['workers'].values():
         require(integer(value, 1), 'invalid worker parameter')
     for ident, item in resources.items():
@@ -109,7 +125,7 @@ def _compile(source):
     positions = set()
     for ident, entry in sources.items():
         position = entry['position']
-        require(isinstance(position, list) and len(position) == 2 and all(integer(v, 0, bound) for v, bound in zip(position, [19, 13])) and tuple(position) not in positions, f'{ident}: source position')
+        require(isinstance(position, list) and len(position) == 2 and all(integer(v, 0, bound) for v, bound in zip(position, [width-1, height-1])) and tuple(position) not in positions, f'{ident}: source position')
         positions.add(tuple(position))
         require(entry['item'] in resources and integer(entry['quantity'], 1) and integer(entry['daily_limit'], entry['quantity']) and entry['daily_limit'] % entry['quantity'] == 0 and integer(entry['ap'], 1, config['ap_per_day']), f'{ident}: daily capacity')
         known_sources[entry['item']].append(ident)

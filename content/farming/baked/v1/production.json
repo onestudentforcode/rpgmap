@@ -10,9 +10,29 @@
       "initial_fertility": 60,
       "initial_water": 60,
       "irrigate_gain": 30,
-      "irrigate_units": 1
+      "irrigate_units": 1,
+      "light_tolerance": 20,
+      "low_fertility_efficiency": 75,
+      "low_light_efficiency": 50,
+      "low_water_efficiency": 50,
+      "optimal_fertility": 30,
+      "optimal_water": 30
     },
     "initial_primeval_stones": 60,
+    "light": {
+      "default": 80,
+      "regions": [
+        {
+          "level": 30,
+          "rect": [
+            0,
+            9,
+            8,
+            5
+          ]
+        }
+      ]
+    },
     "map_id": "farm_01",
     "standard_action_ap": 1,
     "start_inventory": {

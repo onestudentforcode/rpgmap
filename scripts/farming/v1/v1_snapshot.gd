@@ -1,23 +1,23 @@
 extends RefCounted
-## Foundation snapshot only. World, production and order state join in later batches.
+## Schema 2 adds the V1.b world; schema 1 V1 foundation upgrades to an empty world.
 const Data := preload("res://scripts/farming/v1/v1_data.gd")
-const Scalars := preload("res://scripts/farming/core/storage/farm_snapshot.gd")
+const Scalars := preload("res://scripts/farming/v1/v1_world_state.gd")
 
 static func fresh() -> Dictionary:
 	var config: Dictionary = Data.load_data()["config"]
-	return {"product": "farm_demo_v1", "schema": 1,
+	return {"product": "farm_demo_v1", "schema": 2,
 		"clock": {"total_days": 0, "ap": int(config["ap_per_day"])},
 		"economy": {"primeval_stones": int(config["initial_primeval_stones"])},
-		"inventory": config["start_inventory"].duplicate(true)}
+		"inventory": config["start_inventory"].duplicate(true), "world": Scalars.fresh()}
 
 static func fail(reason: String) -> Dictionary:
 	return {"ok": false, "reason": reason}
 
 static func normalize(value) -> Dictionary:
-	if not value is Dictionary or value.get("product") != "farm_demo_v1" or not Scalars.whole(value.get("schema"), 1, 1):
+	if not value is Dictionary or value.get("product") != "farm_demo_v1" or not Scalars.whole(value.get("schema"), 1, 2):
 		return fail("不支持的V1快照版本")
 	for key in value:
-		if key not in ["product", "schema", "clock", "economy", "inventory", "slot_id"]:
+		if key not in ["product", "schema", "clock", "economy", "inventory", "slot_id", "world"]:
 			return fail("不支持的V1快照字段")
 	if value.has("slot_id") and not Scalars.whole(value["slot_id"], 1, 3):
 		return fail("槽位非法")
@@ -38,6 +38,12 @@ static func normalize(value) -> Dictionary:
 			return fail("库存物品或数量非法")
 		if value["inventory"][iid] > 0:
 			inventory[iid] = int(value["inventory"][iid])
-	return {"ok": true, "snapshot": {"product": "farm_demo_v1", "schema": 1,
+	if int(value["schema"]) == 1 and value.has("world"):
+		return fail("V1基础版本不能包含世界字段")
+	var world = value.get("world") if int(value["schema"]) == 2 else Scalars.fresh(int(clock["total_days"]))
+	var checked := Scalars.normalize(world, int(clock["total_days"]))
+	if not checked["ok"]:
+		return checked
+	return {"ok": true, "snapshot": {"product": "farm_demo_v1", "schema": 2,
 		"clock": {"total_days": int(clock["total_days"]), "ap": int(clock["ap"])},
-		"economy": {"primeval_stones": int(economy["primeval_stones"])}, "inventory": inventory}}
+		"economy": {"primeval_stones": int(economy["primeval_stones"])}, "inventory": inventory, "world": checked["world"]}}

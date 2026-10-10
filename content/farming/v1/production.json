@@ -20,13 +20,33 @@
       "irrigate_units": 1,
       "irrigate_gain": 30,
       "fertilize_units": 1,
-      "fertilize_gain": 30
+      "fertilize_gain": 30,
+      "optimal_water": 30,
+      "optimal_fertility": 30,
+      "low_water_efficiency": 50,
+      "low_fertility_efficiency": 75,
+      "light_tolerance": 20,
+      "low_light_efficiency": 50
     },
     "workers": {
       "fee_per_success": 1,
       "daily_work_limit": 12
     },
-    "standard_action_ap": 1
+    "standard_action_ap": 1,
+    "light": {
+      "default": 80,
+      "regions": [
+        {
+          "rect": [
+            0,
+            9,
+            8,
+            5
+          ],
+          "level": 30
+        }
+      ]
+    }
   },
   "resources": [
     {
