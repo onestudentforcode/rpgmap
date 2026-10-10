@@ -35,3 +35,5 @@
 本轮97项farmtest通过。GPU预览确认面板边界、数量×5快捷键、可点击种子槽和弹窗相机暂停/恢复；截图包含 `inventory.png`、`market-trade.png`、`market-bulk.png`、`market-hungry.png`、`market-fed.png`、`hud.png`。正文在三档背景上的对比度为12.70/10.06/6.95；辅助文字调亮，确保悬停背景上也达到4.5以上。
 
 P6.b当前基线153项流程检查通过，新增八个菜单/槽位/退出/保存失败界面截图见`.shots/farm-phase06b/`。
+
+P6.c新增经营记录页：从Esc菜单打开；首轮结束成功保存后自动展示，可滚动查看产量和喂养消耗，继续经营按钮固定在底部。三张验收截图位于`.shots/farm-phase06c/`；当前流程基线178项。
