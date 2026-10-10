@@ -1,7 +1,7 @@
 # handoff — 跨机器开发交接
 
 > 最后更新：2026-10-10（种植模块Phase 0–6已关闭，Windows灵田Demo已交付）。
-> **现行迭代：** 上述交付命名为Demo V0；Demo V1.a～b独立配置/成本/三槽、四植物、水肥/固定光照与资源点生产模型已完成，入口为[demo-v1-plan.md](docs/farming/demo-v1-plan.md)及[demo-v1-resources.md](docs/farming/demo-v1-resources.md)，下一批V1.c设施加工。V1完整场景尚未接入，默认游戏仍为V0。
+> **现行迭代：** 上述交付命名为Demo V0；Demo V1.a～c独立配置/成本/三槽、种植环境/资源点、设施加工/生产回流已完成，入口为[demo-v1-plan.md](docs/farming/demo-v1-plan.md)及[demo-v1-resources.md](docs/farming/demo-v1-resources.md)，下一批V1.d五行订单。V1完整场景尚未接入，默认游戏仍为V0。
 > 交接对象：新机器上的开发者或 AI 会话。
 > **开工前必读：§2 新机器清单 → §6 命令自检；现行主线是种植模块，先读 [docs/farming/master-plan.md](docs/farming/master-plan.md)；改 demo 地图前必读 [docs/map-schema.md](docs/map-schema.md)。**
 
@@ -22,7 +22,7 @@
 4. 告诉启动脚本引擎路径（二选一）：
    - 设环境变量 `GODOT_EXE` / `GODOT_EXE_CONSOLE` 指向 Godot 可执行文件（推荐）
    - 或直接改 `play.bat` 顶部的默认路径
-5. 首次运行 `test.bat`：执行当前种植模块的资产QC、工具测试、农场流程和独立V1测试；`test-v1.bat`可单跑V1编译产物、三槽/报价与四植物/环境/资源点/日结检查；
+5. 首次运行 `test.bat`：执行当前种植模块的资产QC、工具测试、农场流程和独立V1测试；`test-v1.bat`可单跑V1编译产物、三槽/报价、种植/环境/资源点以及设施/配方/生产回流/日结检查；
    **预期输出 FARMING TEST SUITE OK**；`play.bat --selftest`可只跑农场逻辑。
 6. 运行 `play.bat`或Godot F5默认主场景进入Demo开始菜单；旧演示通过`play.bat demo`显式进入。
 
