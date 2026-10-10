@@ -1,0 +1,2054 @@
+{
+	"daily": [
+		{
+			"ap_after_save": 24,
+			"balance": 18,
+			"crops": 8,
+			"day": 1,
+			"inventory": {
+				"dew_grass_seed": 7,
+				"jade_fruit_tree_seed": 2,
+				"moon_cap_seed": 4,
+				"scarlet_berry_seed": 3
+			},
+			"satiety": 5,
+			"totals": {
+				"feeding": {},
+				"harvests": {},
+				"planted": {
+					"dew_grass": 3,
+					"jade_fruit_tree": 1,
+					"moon_cap": 2,
+					"scarlet_berry": 2
+				},
+				"revenue": 0,
+				"spending": {
+					"production": 12,
+					"seed": 0,
+					"tool": 30
+				},
+				"yield": {}
+			}
+		},
+		{
+			"ap_after_save": 24,
+			"balance": 18,
+			"crops": 8,
+			"day": 2,
+			"inventory": {
+				"dew_grass_seed": 7,
+				"jade_fruit_tree_seed": 2,
+				"moon_cap_seed": 4,
+				"scarlet_berry_seed": 3
+			},
+			"satiety": 4,
+			"totals": {
+				"feeding": {},
+				"harvests": {},
+				"planted": {
+					"dew_grass": 3,
+					"jade_fruit_tree": 1,
+					"moon_cap": 2,
+					"scarlet_berry": 2
+				},
+				"revenue": 0,
+				"spending": {
+					"production": 12,
+					"seed": 0,
+					"tool": 30
+				},
+				"yield": {}
+			}
+		},
+		{
+			"ap_after_save": 24,
+			"balance": 18,
+			"crops": 8,
+			"day": 3,
+			"inventory": {
+				"dew_grass_seed": 7,
+				"jade_fruit_tree_seed": 2,
+				"moon_cap_seed": 4,
+				"scarlet_berry_seed": 3
+			},
+			"satiety": 3,
+			"totals": {
+				"feeding": {},
+				"harvests": {},
+				"planted": {
+					"dew_grass": 3,
+					"jade_fruit_tree": 1,
+					"moon_cap": 2,
+					"scarlet_berry": 2
+				},
+				"revenue": 0,
+				"spending": {
+					"production": 12,
+					"seed": 0,
+					"tool": 30
+				},
+				"yield": {}
+			}
+		},
+		{
+			"ap_after_save": 24,
+			"balance": 18,
+			"crops": 8,
+			"day": 4,
+			"inventory": {
+				"dew_grass_seed": 7,
+				"jade_fruit_tree_seed": 2,
+				"moon_cap_seed": 4,
+				"scarlet_berry_seed": 3
+			},
+			"satiety": 2,
+			"totals": {
+				"feeding": {},
+				"harvests": {},
+				"planted": {
+					"dew_grass": 3,
+					"jade_fruit_tree": 1,
+					"moon_cap": 2,
+					"scarlet_berry": 2
+				},
+				"revenue": 0,
+				"spending": {
+					"production": 12,
+					"seed": 0,
+					"tool": 30
+				},
+				"yield": {}
+			}
+		},
+		{
+			"ap_after_save": 24,
+			"balance": 130,
+			"crops": 8,
+			"day": 5,
+			"inventory": {
+				"dew_grass_seed": 5,
+				"dew_leaf": 1,
+				"jade_fruit_tree_seed": 2,
+				"moon_cap_seed": 2,
+				"scarlet_berry_seed": 4
+			},
+			"satiety": 1,
+			"totals": {
+				"feeding": {},
+				"harvests": {
+					"dew_grass": 3,
+					"moon_cap": 2,
+					"scarlet_berry": 2
+				},
+				"planted": {
+					"dew_grass": 6,
+					"jade_fruit_tree": 1,
+					"moon_cap": 4,
+					"scarlet_berry": 2
+				},
+				"revenue": 192,
+				"spending": {
+					"production": 12,
+					"seed": 0,
+					"tool": 110
+				},
+				"yield": {
+					"dew_grass_seed": 1,
+					"dew_leaf": 4,
+					"moon_cap_flesh": 6,
+					"scarlet_berry_fruit": 7,
+					"scarlet_berry_seed": 1
+				}
+			}
+		},
+		{
+			"ap_after_save": 24,
+			"balance": 130,
+			"crops": 8,
+			"day": 6,
+			"inventory": {
+				"dew_grass_seed": 5,
+				"dew_leaf": 1,
+				"jade_fruit_tree_seed": 2,
+				"moon_cap_seed": 2,
+				"scarlet_berry_seed": 4
+			},
+			"satiety": 0,
+			"totals": {
+				"feeding": {},
+				"harvests": {
+					"dew_grass": 3,
+					"moon_cap": 2,
+					"scarlet_berry": 2
+				},
+				"planted": {
+					"dew_grass": 6,
+					"jade_fruit_tree": 1,
+					"moon_cap": 4,
+					"scarlet_berry": 2
+				},
+				"revenue": 192,
+				"spending": {
+					"production": 12,
+					"seed": 0,
+					"tool": 110
+				},
+				"yield": {
+					"dew_grass_seed": 1,
+					"dew_leaf": 4,
+					"moon_cap_flesh": 6,
+					"scarlet_berry_fruit": 7,
+					"scarlet_berry_seed": 1
+				}
+			}
+		},
+		{
+			"ap_after_save": 24,
+			"balance": 178,
+			"crops": 8,
+			"day": 7,
+			"inventory": {
+				"dew_grass_seed": 5,
+				"jade_fruit_tree_seed": 2,
+				"moon_cap_seed": 2,
+				"scarlet_berry_seed": 6
+			},
+			"satiety": 5,
+			"totals": {
+				"feeding": {
+					"dew_leaf": 1
+				},
+				"harvests": {
+					"dew_grass": 3,
+					"moon_cap": 2,
+					"scarlet_berry": 4
+				},
+				"planted": {
+					"dew_grass": 6,
+					"jade_fruit_tree": 1,
+					"moon_cap": 4,
+					"scarlet_berry": 2
+				},
+				"revenue": 240,
+				"spending": {
+					"production": 12,
+					"seed": 0,
+					"tool": 110
+				},
+				"yield": {
+					"dew_grass_seed": 1,
+					"dew_leaf": 4,
+					"moon_cap_flesh": 6,
+					"scarlet_berry_fruit": 11,
+					"scarlet_berry_seed": 3
+				}
+			}
+		},
+		{
+			"ap_after_save": 24,
+			"balance": 178,
+			"crops": 8,
+			"day": 8,
+			"inventory": {
+				"dew_grass_seed": 5,
+				"jade_fruit_tree_seed": 2,
+				"moon_cap_seed": 2,
+				"scarlet_berry_seed": 6
+			},
+			"satiety": 4,
+			"totals": {
+				"feeding": {
+					"dew_leaf": 1
+				},
+				"harvests": {
+					"dew_grass": 3,
+					"moon_cap": 2,
+					"scarlet_berry": 4
+				},
+				"planted": {
+					"dew_grass": 6,
+					"jade_fruit_tree": 1,
+					"moon_cap": 4,
+					"scarlet_berry": 2
+				},
+				"revenue": 240,
+				"spending": {
+					"production": 12,
+					"seed": 0,
+					"tool": 110
+				},
+				"yield": {
+					"dew_grass_seed": 1,
+					"dew_leaf": 4,
+					"moon_cap_flesh": 6,
+					"scarlet_berry_fruit": 11,
+					"scarlet_berry_seed": 3
+				}
+			}
+		},
+		{
+			"ap_after_save": 24,
+			"balance": 334,
+			"crops": 8,
+			"day": 9,
+			"inventory": {
+				"dew_grass_seed": 4,
+				"dew_leaf": 1,
+				"jade_fruit_tree_seed": 2,
+				"moon_cap_seed": 1,
+				"scarlet_berry_seed": 6
+			},
+			"satiety": 3,
+			"totals": {
+				"feeding": {
+					"dew_leaf": 1
+				},
+				"harvests": {
+					"dew_grass": 6,
+					"moon_cap": 4,
+					"scarlet_berry": 6
+				},
+				"planted": {
+					"dew_grass": 9,
+					"jade_fruit_tree": 1,
+					"moon_cap": 6,
+					"scarlet_berry": 4
+				},
+				"revenue": 396,
+				"spending": {
+					"production": 12,
+					"seed": 0,
+					"tool": 110
+				},
+				"yield": {
+					"dew_grass_seed": 3,
+					"dew_leaf": 9,
+					"moon_cap_flesh": 8,
+					"moon_cap_seed": 1,
+					"scarlet_berry_fruit": 19,
+					"scarlet_berry_seed": 5
+				}
+			}
+		},
+		{
+			"ap_after_save": 24,
+			"balance": 334,
+			"crops": 8,
+			"day": 10,
+			"inventory": {
+				"dew_grass_seed": 4,
+				"dew_leaf": 1,
+				"jade_fruit_tree_seed": 2,
+				"moon_cap_seed": 1,
+				"scarlet_berry_seed": 6
+			},
+			"satiety": 2,
+			"totals": {
+				"feeding": {
+					"dew_leaf": 1
+				},
+				"harvests": {
+					"dew_grass": 6,
+					"moon_cap": 4,
+					"scarlet_berry": 6
+				},
+				"planted": {
+					"dew_grass": 9,
+					"jade_fruit_tree": 1,
+					"moon_cap": 6,
+					"scarlet_berry": 4
+				},
+				"revenue": 396,
+				"spending": {
+					"production": 12,
+					"seed": 0,
+					"tool": 110
+				},
+				"yield": {
+					"dew_grass_seed": 3,
+					"dew_leaf": 9,
+					"moon_cap_flesh": 8,
+					"moon_cap_seed": 1,
+					"scarlet_berry_fruit": 19,
+					"scarlet_berry_seed": 5
+				}
+			}
+		},
+		{
+			"ap_after_save": 24,
+			"balance": 406,
+			"crops": 8,
+			"day": 11,
+			"inventory": {
+				"dew_grass_seed": 4,
+				"dew_leaf": 1,
+				"jade_fruit_tree_seed": 2,
+				"moon_cap_seed": 1,
+				"scarlet_berry_seed": 6
+			},
+			"satiety": 1,
+			"totals": {
+				"feeding": {
+					"dew_leaf": 1
+				},
+				"harvests": {
+					"dew_grass": 6,
+					"jade_fruit_tree": 1,
+					"moon_cap": 4,
+					"scarlet_berry": 6
+				},
+				"planted": {
+					"dew_grass": 9,
+					"jade_fruit_tree": 1,
+					"moon_cap": 6,
+					"scarlet_berry": 4
+				},
+				"revenue": 468,
+				"spending": {
+					"production": 12,
+					"seed": 0,
+					"tool": 110
+				},
+				"yield": {
+					"dew_grass_seed": 3,
+					"dew_leaf": 9,
+					"jade_fruit": 3,
+					"moon_cap_flesh": 8,
+					"moon_cap_seed": 1,
+					"scarlet_berry_fruit": 19,
+					"scarlet_berry_seed": 5
+				}
+			}
+		},
+		{
+			"ap_after_save": 24,
+			"balance": 406,
+			"crops": 8,
+			"day": 12,
+			"inventory": {
+				"dew_grass_seed": 4,
+				"dew_leaf": 1,
+				"jade_fruit_tree_seed": 2,
+				"moon_cap_seed": 1,
+				"scarlet_berry_seed": 6
+			},
+			"satiety": 0,
+			"totals": {
+				"feeding": {
+					"dew_leaf": 1
+				},
+				"harvests": {
+					"dew_grass": 6,
+					"jade_fruit_tree": 1,
+					"moon_cap": 4,
+					"scarlet_berry": 6
+				},
+				"planted": {
+					"dew_grass": 9,
+					"jade_fruit_tree": 1,
+					"moon_cap": 6,
+					"scarlet_berry": 4
+				},
+				"revenue": 468,
+				"spending": {
+					"production": 12,
+					"seed": 0,
+					"tool": 110
+				},
+				"yield": {
+					"dew_grass_seed": 3,
+					"dew_leaf": 9,
+					"jade_fruit": 3,
+					"moon_cap_flesh": 8,
+					"moon_cap_seed": 1,
+					"scarlet_berry_fruit": 19,
+					"scarlet_berry_seed": 5
+				}
+			}
+		},
+		{
+			"ap_after_save": 24,
+			"balance": 522,
+			"crops": 8,
+			"day": 13,
+			"inventory": {
+				"dew_grass_seed": 3,
+				"dew_leaf": 1,
+				"jade_fruit_tree_seed": 2,
+				"scarlet_berry_seed": 7
+			},
+			"satiety": 5,
+			"totals": {
+				"feeding": {
+					"dew_leaf": 2
+				},
+				"harvests": {
+					"dew_grass": 9,
+					"jade_fruit_tree": 1,
+					"moon_cap": 6,
+					"scarlet_berry": 8
+				},
+				"planted": {
+					"dew_grass": 12,
+					"jade_fruit_tree": 1,
+					"moon_cap": 8,
+					"scarlet_berry": 4
+				},
+				"revenue": 584,
+				"spending": {
+					"production": 12,
+					"seed": 0,
+					"tool": 110
+				},
+				"yield": {
+					"dew_grass_seed": 5,
+					"dew_leaf": 12,
+					"jade_fruit": 3,
+					"moon_cap_flesh": 10,
+					"moon_cap_seed": 2,
+					"scarlet_berry_fruit": 25,
+					"scarlet_berry_seed": 6
+				}
+			}
+		},
+		{
+			"ap_after_save": 24,
+			"balance": 642,
+			"crops": 8,
+			"day": 14,
+			"inventory": {
+				"dew_grass_seed": 3,
+				"dew_leaf": 1,
+				"jade_fruit_tree_seed": 3,
+				"scarlet_berry_seed": 7
+			},
+			"satiety": 4,
+			"totals": {
+				"feeding": {
+					"dew_leaf": 2
+				},
+				"harvests": {
+					"dew_grass": 9,
+					"jade_fruit_tree": 2,
+					"moon_cap": 6,
+					"scarlet_berry": 8
+				},
+				"planted": {
+					"dew_grass": 12,
+					"jade_fruit_tree": 1,
+					"moon_cap": 8,
+					"scarlet_berry": 4
+				},
+				"revenue": 704,
+				"spending": {
+					"production": 12,
+					"seed": 0,
+					"tool": 110
+				},
+				"yield": {
+					"dew_grass_seed": 5,
+					"dew_leaf": 12,
+					"jade_fruit": 8,
+					"jade_fruit_tree_seed": 1,
+					"moon_cap_flesh": 10,
+					"moon_cap_seed": 2,
+					"scarlet_berry_fruit": 25,
+					"scarlet_berry_seed": 6
+				}
+			}
+		},
+		{
+			"ap_after_save": 24,
+			"balance": 714,
+			"crops": 8,
+			"day": 15,
+			"inventory": {
+				"dew_grass_seed": 3,
+				"dew_leaf": 1,
+				"jade_fruit_tree_seed": 3,
+				"scarlet_berry_seed": 8
+			},
+			"satiety": 3,
+			"totals": {
+				"feeding": {
+					"dew_leaf": 2
+				},
+				"harvests": {
+					"dew_grass": 9,
+					"jade_fruit_tree": 2,
+					"moon_cap": 6,
+					"scarlet_berry": 10
+				},
+				"planted": {
+					"dew_grass": 12,
+					"jade_fruit_tree": 1,
+					"moon_cap": 8,
+					"scarlet_berry": 4
+				},
+				"revenue": 776,
+				"spending": {
+					"production": 12,
+					"seed": 0,
+					"tool": 110
+				},
+				"yield": {
+					"dew_grass_seed": 5,
+					"dew_leaf": 12,
+					"jade_fruit": 8,
+					"jade_fruit_tree_seed": 1,
+					"moon_cap_flesh": 10,
+					"moon_cap_seed": 2,
+					"scarlet_berry_fruit": 31,
+					"scarlet_berry_seed": 7
+				}
+			}
+		},
+		{
+			"ap_after_save": 24,
+			"balance": 714,
+			"crops": 8,
+			"day": 16,
+			"inventory": {
+				"dew_grass_seed": 3,
+				"dew_leaf": 1,
+				"jade_fruit_tree_seed": 3,
+				"scarlet_berry_seed": 8
+			},
+			"satiety": 2,
+			"totals": {
+				"feeding": {
+					"dew_leaf": 2
+				},
+				"harvests": {
+					"dew_grass": 9,
+					"jade_fruit_tree": 2,
+					"moon_cap": 6,
+					"scarlet_berry": 10
+				},
+				"planted": {
+					"dew_grass": 12,
+					"jade_fruit_tree": 1,
+					"moon_cap": 8,
+					"scarlet_berry": 4
+				},
+				"revenue": 776,
+				"spending": {
+					"production": 12,
+					"seed": 0,
+					"tool": 110
+				},
+				"yield": {
+					"dew_grass_seed": 5,
+					"dew_leaf": 12,
+					"jade_fruit": 8,
+					"jade_fruit_tree_seed": 1,
+					"moon_cap_flesh": 10,
+					"moon_cap_seed": 2,
+					"scarlet_berry_fruit": 31,
+					"scarlet_berry_seed": 7
+				}
+			}
+		},
+		{
+			"ap_after_save": 24,
+			"balance": 974,
+			"crops": 8,
+			"day": 17,
+			"inventory": {
+				"dew_grass_seed": 1,
+				"dew_leaf": 1,
+				"jade_fruit_tree_seed": 3,
+				"scarlet_berry_seed": 8
+			},
+			"satiety": 1,
+			"totals": {
+				"feeding": {
+					"dew_leaf": 2
+				},
+				"harvests": {
+					"dew_grass": 12,
+					"jade_fruit_tree": 3,
+					"moon_cap": 8,
+					"scarlet_berry": 12
+				},
+				"planted": {
+					"dew_grass": 15,
+					"jade_fruit_tree": 2,
+					"moon_cap": 10,
+					"scarlet_berry": 6
+				},
+				"revenue": 1052,
+				"spending": {
+					"production": 12,
+					"seed": 16,
+					"tool": 110
+				},
+				"yield": {
+					"dew_grass_seed": 6,
+					"dew_leaf": 17,
+					"jade_fruit": 13,
+					"jade_fruit_tree_seed": 2,
+					"moon_cap_flesh": 14,
+					"moon_cap_seed": 2,
+					"scarlet_berry_fruit": 36,
+					"scarlet_berry_seed": 9
+				}
+			}
+		},
+		{
+			"ap_after_save": 24,
+			"balance": 974,
+			"crops": 8,
+			"day": 18,
+			"inventory": {
+				"dew_grass_seed": 1,
+				"dew_leaf": 1,
+				"jade_fruit_tree_seed": 3,
+				"scarlet_berry_seed": 8
+			},
+			"satiety": 0,
+			"totals": {
+				"feeding": {
+					"dew_leaf": 2
+				},
+				"harvests": {
+					"dew_grass": 12,
+					"jade_fruit_tree": 3,
+					"moon_cap": 8,
+					"scarlet_berry": 12
+				},
+				"planted": {
+					"dew_grass": 15,
+					"jade_fruit_tree": 2,
+					"moon_cap": 10,
+					"scarlet_berry": 6
+				},
+				"revenue": 1052,
+				"spending": {
+					"production": 12,
+					"seed": 16,
+					"tool": 110
+				},
+				"yield": {
+					"dew_grass_seed": 6,
+					"dew_leaf": 17,
+					"jade_fruit": 13,
+					"jade_fruit_tree_seed": 2,
+					"moon_cap_flesh": 14,
+					"moon_cap_seed": 2,
+					"scarlet_berry_fruit": 36,
+					"scarlet_berry_seed": 9
+				}
+			}
+		},
+		{
+			"ap_after_save": 24,
+			"balance": 974,
+			"crops": 8,
+			"day": 19,
+			"inventory": {
+				"dew_grass_seed": 1,
+				"jade_fruit_tree_seed": 3,
+				"scarlet_berry_seed": 8
+			},
+			"satiety": 5,
+			"totals": {
+				"feeding": {
+					"dew_leaf": 3
+				},
+				"harvests": {
+					"dew_grass": 12,
+					"jade_fruit_tree": 3,
+					"moon_cap": 8,
+					"scarlet_berry": 12
+				},
+				"planted": {
+					"dew_grass": 15,
+					"jade_fruit_tree": 2,
+					"moon_cap": 10,
+					"scarlet_berry": 6
+				},
+				"revenue": 1052,
+				"spending": {
+					"production": 12,
+					"seed": 16,
+					"tool": 110
+				},
+				"yield": {
+					"dew_grass_seed": 6,
+					"dew_leaf": 17,
+					"jade_fruit": 13,
+					"jade_fruit_tree_seed": 2,
+					"moon_cap_flesh": 14,
+					"moon_cap_seed": 2,
+					"scarlet_berry_fruit": 36,
+					"scarlet_berry_seed": 9
+				}
+			}
+		},
+		{
+			"ap_after_save": 24,
+			"balance": 974,
+			"crops": 8,
+			"day": 20,
+			"inventory": {
+				"dew_grass_seed": 1,
+				"jade_fruit_tree_seed": 3,
+				"scarlet_berry_seed": 8
+			},
+			"satiety": 4,
+			"totals": {
+				"feeding": {
+					"dew_leaf": 3
+				},
+				"harvests": {
+					"dew_grass": 12,
+					"jade_fruit_tree": 3,
+					"moon_cap": 8,
+					"scarlet_berry": 12
+				},
+				"planted": {
+					"dew_grass": 15,
+					"jade_fruit_tree": 2,
+					"moon_cap": 10,
+					"scarlet_berry": 6
+				},
+				"revenue": 1052,
+				"spending": {
+					"production": 12,
+					"seed": 16,
+					"tool": 110
+				},
+				"yield": {
+					"dew_grass_seed": 6,
+					"dew_leaf": 17,
+					"jade_fruit": 13,
+					"jade_fruit_tree_seed": 2,
+					"moon_cap_flesh": 14,
+					"moon_cap_seed": 2,
+					"scarlet_berry_fruit": 36,
+					"scarlet_berry_seed": 9
+				}
+			}
+		},
+		{
+			"ap_after_save": 24,
+			"balance": 1125,
+			"crops": 8,
+			"day": 21,
+			"inventory": {
+				"dew_leaf": 1,
+				"jade_fruit_tree_seed": 3,
+				"scarlet_berry_seed": 8
+			},
+			"satiety": 3,
+			"totals": {
+				"feeding": {
+					"dew_leaf": 3
+				},
+				"harvests": {
+					"dew_grass": 15,
+					"jade_fruit_tree": 3,
+					"moon_cap": 10,
+					"scarlet_berry": 14
+				},
+				"planted": {
+					"dew_grass": 18,
+					"jade_fruit_tree": 2,
+					"moon_cap": 12,
+					"scarlet_berry": 6
+				},
+				"revenue": 1216,
+				"spending": {
+					"production": 12,
+					"seed": 29,
+					"tool": 110
+				},
+				"yield": {
+					"dew_grass_seed": 7,
+					"dew_leaf": 21,
+					"jade_fruit": 13,
+					"jade_fruit_tree_seed": 2,
+					"moon_cap_flesh": 18,
+					"moon_cap_seed": 3,
+					"scarlet_berry_fruit": 43,
+					"scarlet_berry_seed": 9
+				}
+			}
+		},
+		{
+			"ap_after_save": 24,
+			"balance": 1125,
+			"crops": 8,
+			"day": 22,
+			"inventory": {
+				"dew_leaf": 1,
+				"jade_fruit_tree_seed": 3,
+				"scarlet_berry_seed": 8
+			},
+			"satiety": 2,
+			"totals": {
+				"feeding": {
+					"dew_leaf": 3
+				},
+				"harvests": {
+					"dew_grass": 15,
+					"jade_fruit_tree": 3,
+					"moon_cap": 10,
+					"scarlet_berry": 14
+				},
+				"planted": {
+					"dew_grass": 18,
+					"jade_fruit_tree": 2,
+					"moon_cap": 12,
+					"scarlet_berry": 6
+				},
+				"revenue": 1216,
+				"spending": {
+					"production": 12,
+					"seed": 29,
+					"tool": 110
+				},
+				"yield": {
+					"dew_grass_seed": 7,
+					"dew_leaf": 21,
+					"jade_fruit": 13,
+					"jade_fruit_tree_seed": 2,
+					"moon_cap_flesh": 18,
+					"moon_cap_seed": 3,
+					"scarlet_berry_fruit": 43,
+					"scarlet_berry_seed": 9
+				}
+			}
+		},
+		{
+			"ap_after_save": 24,
+			"balance": 1185,
+			"crops": 8,
+			"day": 23,
+			"inventory": {
+				"dew_leaf": 1,
+				"jade_fruit_tree_seed": 3,
+				"scarlet_berry_seed": 10
+			},
+			"satiety": 1,
+			"totals": {
+				"feeding": {
+					"dew_leaf": 3
+				},
+				"harvests": {
+					"dew_grass": 15,
+					"jade_fruit_tree": 3,
+					"moon_cap": 10,
+					"scarlet_berry": 16
+				},
+				"planted": {
+					"dew_grass": 18,
+					"jade_fruit_tree": 2,
+					"moon_cap": 12,
+					"scarlet_berry": 6
+				},
+				"revenue": 1276,
+				"spending": {
+					"production": 12,
+					"seed": 29,
+					"tool": 110
+				},
+				"yield": {
+					"dew_grass_seed": 7,
+					"dew_leaf": 21,
+					"jade_fruit": 13,
+					"jade_fruit_tree_seed": 2,
+					"moon_cap_flesh": 18,
+					"moon_cap_seed": 3,
+					"scarlet_berry_fruit": 48,
+					"scarlet_berry_seed": 11
+				}
+			}
+		},
+		{
+			"ap_after_save": 24,
+			"balance": 1185,
+			"crops": 8,
+			"day": 24,
+			"inventory": {
+				"dew_leaf": 1,
+				"jade_fruit_tree_seed": 3,
+				"scarlet_berry_seed": 10
+			},
+			"satiety": 0,
+			"totals": {
+				"feeding": {
+					"dew_leaf": 3
+				},
+				"harvests": {
+					"dew_grass": 15,
+					"jade_fruit_tree": 3,
+					"moon_cap": 10,
+					"scarlet_berry": 16
+				},
+				"planted": {
+					"dew_grass": 18,
+					"jade_fruit_tree": 2,
+					"moon_cap": 12,
+					"scarlet_berry": 6
+				},
+				"revenue": 1276,
+				"spending": {
+					"production": 12,
+					"seed": 29,
+					"tool": 110
+				},
+				"yield": {
+					"dew_grass_seed": 7,
+					"dew_leaf": 21,
+					"jade_fruit": 13,
+					"jade_fruit_tree_seed": 2,
+					"moon_cap_flesh": 18,
+					"moon_cap_seed": 3,
+					"scarlet_berry_fruit": 48,
+					"scarlet_berry_seed": 11
+				}
+			}
+		},
+		{
+			"ap_after_save": 24,
+			"balance": 1309,
+			"crops": 8,
+			"day": 25,
+			"inventory": {
+				"dew_leaf": 1,
+				"jade_fruit_tree_seed": 3,
+				"scarlet_berry_seed": 8
+			},
+			"satiety": 5,
+			"totals": {
+				"feeding": {
+					"dew_leaf": 4
+				},
+				"harvests": {
+					"dew_grass": 18,
+					"jade_fruit_tree": 3,
+					"moon_cap": 12,
+					"scarlet_berry": 18
+				},
+				"planted": {
+					"dew_grass": 21,
+					"jade_fruit_tree": 2,
+					"moon_cap": 14,
+					"scarlet_berry": 8
+				},
+				"revenue": 1418,
+				"spending": {
+					"production": 12,
+					"seed": 47,
+					"tool": 110
+				},
+				"yield": {
+					"dew_grass_seed": 8,
+					"dew_leaf": 24,
+					"jade_fruit": 13,
+					"jade_fruit_tree_seed": 2,
+					"moon_cap_flesh": 21,
+					"moon_cap_seed": 4,
+					"scarlet_berry_fruit": 55,
+					"scarlet_berry_seed": 11
+				}
+			}
+		},
+		{
+			"ap_after_save": 24,
+			"balance": 1309,
+			"crops": 8,
+			"day": 26,
+			"inventory": {
+				"dew_leaf": 1,
+				"jade_fruit_tree_seed": 3,
+				"scarlet_berry_seed": 8
+			},
+			"satiety": 4,
+			"totals": {
+				"feeding": {
+					"dew_leaf": 4
+				},
+				"harvests": {
+					"dew_grass": 18,
+					"jade_fruit_tree": 3,
+					"moon_cap": 12,
+					"scarlet_berry": 18
+				},
+				"planted": {
+					"dew_grass": 21,
+					"jade_fruit_tree": 2,
+					"moon_cap": 14,
+					"scarlet_berry": 8
+				},
+				"revenue": 1418,
+				"spending": {
+					"production": 12,
+					"seed": 47,
+					"tool": 110
+				},
+				"yield": {
+					"dew_grass_seed": 8,
+					"dew_leaf": 24,
+					"jade_fruit": 13,
+					"jade_fruit_tree_seed": 2,
+					"moon_cap_flesh": 21,
+					"moon_cap_seed": 4,
+					"scarlet_berry_fruit": 55,
+					"scarlet_berry_seed": 11
+				}
+			}
+		},
+		{
+			"ap_after_save": 24,
+			"balance": 1405,
+			"crops": 8,
+			"day": 27,
+			"inventory": {
+				"dew_leaf": 1,
+				"jade_fruit_tree_seed": 4,
+				"scarlet_berry_seed": 8
+			},
+			"satiety": 3,
+			"totals": {
+				"feeding": {
+					"dew_leaf": 4
+				},
+				"harvests": {
+					"dew_grass": 18,
+					"jade_fruit_tree": 4,
+					"moon_cap": 12,
+					"scarlet_berry": 18
+				},
+				"planted": {
+					"dew_grass": 21,
+					"jade_fruit_tree": 2,
+					"moon_cap": 14,
+					"scarlet_berry": 8
+				},
+				"revenue": 1514,
+				"spending": {
+					"production": 12,
+					"seed": 47,
+					"tool": 110
+				},
+				"yield": {
+					"dew_grass_seed": 8,
+					"dew_leaf": 24,
+					"jade_fruit": 17,
+					"jade_fruit_tree_seed": 3,
+					"moon_cap_flesh": 21,
+					"moon_cap_seed": 4,
+					"scarlet_berry_fruit": 55,
+					"scarlet_berry_seed": 11
+				}
+			}
+		},
+		{
+			"ap_after_save": 24,
+			"balance": 1405,
+			"crops": 8,
+			"day": 28,
+			"inventory": {
+				"dew_leaf": 1,
+				"jade_fruit_tree_seed": 4,
+				"scarlet_berry_seed": 8
+			},
+			"satiety": 2,
+			"totals": {
+				"feeding": {
+					"dew_leaf": 4
+				},
+				"harvests": {
+					"dew_grass": 18,
+					"jade_fruit_tree": 4,
+					"moon_cap": 12,
+					"scarlet_berry": 18
+				},
+				"planted": {
+					"dew_grass": 21,
+					"jade_fruit_tree": 2,
+					"moon_cap": 14,
+					"scarlet_berry": 8
+				},
+				"revenue": 1514,
+				"spending": {
+					"production": 12,
+					"seed": 47,
+					"tool": 110
+				},
+				"yield": {
+					"dew_grass_seed": 8,
+					"dew_leaf": 24,
+					"jade_fruit": 17,
+					"jade_fruit_tree_seed": 3,
+					"moon_cap_flesh": 21,
+					"moon_cap_seed": 4,
+					"scarlet_berry_fruit": 55,
+					"scarlet_berry_seed": 11
+				}
+			}
+		},
+		{
+			"ap_after_save": 24,
+			"balance": 1579,
+			"crops": 8,
+			"day": 29,
+			"inventory": {
+				"dew_leaf": 1,
+				"jade_fruit_tree_seed": 4,
+				"scarlet_berry_seed": 9
+			},
+			"satiety": 1,
+			"totals": {
+				"feeding": {
+					"dew_leaf": 4
+				},
+				"harvests": {
+					"dew_grass": 21,
+					"jade_fruit_tree": 4,
+					"moon_cap": 14,
+					"scarlet_berry": 20
+				},
+				"planted": {
+					"dew_grass": 24,
+					"jade_fruit_tree": 2,
+					"moon_cap": 16,
+					"scarlet_berry": 8
+				},
+				"revenue": 1696,
+				"spending": {
+					"production": 12,
+					"seed": 55,
+					"tool": 110
+				},
+				"yield": {
+					"dew_grass_seed": 11,
+					"dew_leaf": 29,
+					"jade_fruit": 17,
+					"jade_fruit_tree_seed": 3,
+					"moon_cap_flesh": 26,
+					"moon_cap_seed": 5,
+					"scarlet_berry_fruit": 61,
+					"scarlet_berry_seed": 12
+				}
+			}
+		},
+		{
+			"ap_after_save": 24,
+			"balance": 1651,
+			"crops": 8,
+			"day": 30,
+			"inventory": {
+				"dew_leaf": 1,
+				"jade_fruit_tree_seed": 4,
+				"scarlet_berry_seed": 9
+			},
+			"satiety": 0,
+			"totals": {
+				"feeding": {
+					"dew_leaf": 4
+				},
+				"harvests": {
+					"dew_grass": 21,
+					"jade_fruit_tree": 5,
+					"moon_cap": 14,
+					"scarlet_berry": 20
+				},
+				"planted": {
+					"dew_grass": 24,
+					"jade_fruit_tree": 2,
+					"moon_cap": 16,
+					"scarlet_berry": 8
+				},
+				"revenue": 1768,
+				"spending": {
+					"production": 12,
+					"seed": 55,
+					"tool": 110
+				},
+				"yield": {
+					"dew_grass_seed": 11,
+					"dew_leaf": 29,
+					"jade_fruit": 20,
+					"jade_fruit_tree_seed": 3,
+					"moon_cap_flesh": 26,
+					"moon_cap_seed": 5,
+					"scarlet_berry_fruit": 61,
+					"scarlet_berry_seed": 12
+				}
+			}
+		},
+		{
+			"ap_after_save": 24,
+			"balance": 1735,
+			"crops": 8,
+			"day": 31,
+			"inventory": {
+				"jade_fruit_tree_seed": 4,
+				"scarlet_berry_seed": 10
+			},
+			"satiety": 5,
+			"totals": {
+				"feeding": {
+					"dew_leaf": 5
+				},
+				"harvests": {
+					"dew_grass": 21,
+					"jade_fruit_tree": 5,
+					"moon_cap": 14,
+					"scarlet_berry": 22
+				},
+				"planted": {
+					"dew_grass": 24,
+					"jade_fruit_tree": 2,
+					"moon_cap": 16,
+					"scarlet_berry": 8
+				},
+				"revenue": 1852,
+				"spending": {
+					"production": 12,
+					"seed": 55,
+					"tool": 110
+				},
+				"yield": {
+					"dew_grass_seed": 11,
+					"dew_leaf": 29,
+					"jade_fruit": 20,
+					"jade_fruit_tree_seed": 3,
+					"moon_cap_flesh": 26,
+					"moon_cap_seed": 5,
+					"scarlet_berry_fruit": 68,
+					"scarlet_berry_seed": 13
+				}
+			}
+		},
+		{
+			"ap_after_save": 24,
+			"balance": 1735,
+			"crops": 8,
+			"day": 32,
+			"inventory": {
+				"jade_fruit_tree_seed": 4,
+				"scarlet_berry_seed": 10
+			},
+			"satiety": 4,
+			"totals": {
+				"feeding": {
+					"dew_leaf": 5
+				},
+				"harvests": {
+					"dew_grass": 21,
+					"jade_fruit_tree": 5,
+					"moon_cap": 14,
+					"scarlet_berry": 22
+				},
+				"planted": {
+					"dew_grass": 24,
+					"jade_fruit_tree": 2,
+					"moon_cap": 16,
+					"scarlet_berry": 8
+				},
+				"revenue": 1852,
+				"spending": {
+					"production": 12,
+					"seed": 55,
+					"tool": 110
+				},
+				"yield": {
+					"dew_grass_seed": 11,
+					"dew_leaf": 29,
+					"jade_fruit": 20,
+					"jade_fruit_tree_seed": 3,
+					"moon_cap_flesh": 26,
+					"moon_cap_seed": 5,
+					"scarlet_berry_fruit": 68,
+					"scarlet_berry_seed": 13
+				}
+			}
+		},
+		{
+			"ap_after_save": 24,
+			"balance": 2008,
+			"crops": 8,
+			"day": 33,
+			"inventory": {
+				"dew_leaf": 1,
+				"jade_fruit_tree_seed": 4,
+				"scarlet_berry_seed": 9
+			},
+			"satiety": 3,
+			"totals": {
+				"feeding": {
+					"dew_leaf": 5
+				},
+				"harvests": {
+					"dew_grass": 24,
+					"jade_fruit_tree": 6,
+					"moon_cap": 16,
+					"scarlet_berry": 24
+				},
+				"planted": {
+					"dew_grass": 27,
+					"jade_fruit_tree": 3,
+					"moon_cap": 18,
+					"scarlet_berry": 10
+				},
+				"revenue": 2146,
+				"spending": {
+					"production": 12,
+					"seed": 76,
+					"tool": 110
+				},
+				"yield": {
+					"dew_grass_seed": 13,
+					"dew_leaf": 34,
+					"jade_fruit": 25,
+					"jade_fruit_tree_seed": 4,
+					"moon_cap_flesh": 31,
+					"moon_cap_seed": 5,
+					"scarlet_berry_fruit": 74,
+					"scarlet_berry_seed": 14
+				}
+			}
+		},
+		{
+			"ap_after_save": 24,
+			"balance": 2008,
+			"crops": 8,
+			"day": 34,
+			"inventory": {
+				"dew_leaf": 1,
+				"jade_fruit_tree_seed": 4,
+				"scarlet_berry_seed": 9
+			},
+			"satiety": 2,
+			"totals": {
+				"feeding": {
+					"dew_leaf": 5
+				},
+				"harvests": {
+					"dew_grass": 24,
+					"jade_fruit_tree": 6,
+					"moon_cap": 16,
+					"scarlet_berry": 24
+				},
+				"planted": {
+					"dew_grass": 27,
+					"jade_fruit_tree": 3,
+					"moon_cap": 18,
+					"scarlet_berry": 10
+				},
+				"revenue": 2146,
+				"spending": {
+					"production": 12,
+					"seed": 76,
+					"tool": 110
+				},
+				"yield": {
+					"dew_grass_seed": 13,
+					"dew_leaf": 34,
+					"jade_fruit": 25,
+					"jade_fruit_tree_seed": 4,
+					"moon_cap_flesh": 31,
+					"moon_cap_seed": 5,
+					"scarlet_berry_fruit": 74,
+					"scarlet_berry_seed": 14
+				}
+			}
+		},
+		{
+			"ap_after_save": 24,
+			"balance": 2008,
+			"crops": 8,
+			"day": 35,
+			"inventory": {
+				"dew_leaf": 1,
+				"jade_fruit_tree_seed": 4,
+				"scarlet_berry_seed": 9
+			},
+			"satiety": 1,
+			"totals": {
+				"feeding": {
+					"dew_leaf": 5
+				},
+				"harvests": {
+					"dew_grass": 24,
+					"jade_fruit_tree": 6,
+					"moon_cap": 16,
+					"scarlet_berry": 24
+				},
+				"planted": {
+					"dew_grass": 27,
+					"jade_fruit_tree": 3,
+					"moon_cap": 18,
+					"scarlet_berry": 10
+				},
+				"revenue": 2146,
+				"spending": {
+					"production": 12,
+					"seed": 76,
+					"tool": 110
+				},
+				"yield": {
+					"dew_grass_seed": 13,
+					"dew_leaf": 34,
+					"jade_fruit": 25,
+					"jade_fruit_tree_seed": 4,
+					"moon_cap_flesh": 31,
+					"moon_cap_seed": 5,
+					"scarlet_berry_fruit": 74,
+					"scarlet_berry_seed": 14
+				}
+			}
+		},
+		{
+			"ap_after_save": 24,
+			"balance": 2008,
+			"crops": 8,
+			"day": 36,
+			"inventory": {
+				"dew_leaf": 1,
+				"jade_fruit_tree_seed": 4,
+				"scarlet_berry_seed": 9
+			},
+			"satiety": 0,
+			"totals": {
+				"feeding": {
+					"dew_leaf": 5
+				},
+				"harvests": {
+					"dew_grass": 24,
+					"jade_fruit_tree": 6,
+					"moon_cap": 16,
+					"scarlet_berry": 24
+				},
+				"planted": {
+					"dew_grass": 27,
+					"jade_fruit_tree": 3,
+					"moon_cap": 18,
+					"scarlet_berry": 10
+				},
+				"revenue": 2146,
+				"spending": {
+					"production": 12,
+					"seed": 76,
+					"tool": 110
+				},
+				"yield": {
+					"dew_grass_seed": 13,
+					"dew_leaf": 34,
+					"jade_fruit": 25,
+					"jade_fruit_tree_seed": 4,
+					"moon_cap_flesh": 31,
+					"moon_cap_seed": 5,
+					"scarlet_berry_fruit": 74,
+					"scarlet_berry_seed": 14
+				}
+			}
+		},
+		{
+			"ap_after_save": 24,
+			"balance": 2145,
+			"crops": 8,
+			"day": 37,
+			"inventory": {
+				"dew_leaf": 1,
+				"jade_fruit_tree_seed": 4,
+				"scarlet_berry_seed": 10
+			},
+			"satiety": 5,
+			"totals": {
+				"feeding": {
+					"dew_leaf": 6
+				},
+				"harvests": {
+					"dew_grass": 27,
+					"jade_fruit_tree": 6,
+					"moon_cap": 18,
+					"scarlet_berry": 26
+				},
+				"planted": {
+					"dew_grass": 30,
+					"jade_fruit_tree": 3,
+					"moon_cap": 20,
+					"scarlet_berry": 10
+				},
+				"revenue": 2296,
+				"spending": {
+					"production": 12,
+					"seed": 89,
+					"tool": 110
+				},
+				"yield": {
+					"dew_grass_seed": 15,
+					"dew_leaf": 39,
+					"jade_fruit": 25,
+					"jade_fruit_tree_seed": 4,
+					"moon_cap_flesh": 36,
+					"moon_cap_seed": 6,
+					"scarlet_berry_fruit": 78,
+					"scarlet_berry_seed": 15
+				}
+			}
+		},
+		{
+			"ap_after_save": 24,
+			"balance": 2145,
+			"crops": 8,
+			"day": 38,
+			"inventory": {
+				"dew_leaf": 1,
+				"jade_fruit_tree_seed": 4,
+				"scarlet_berry_seed": 10
+			},
+			"satiety": 4,
+			"totals": {
+				"feeding": {
+					"dew_leaf": 6
+				},
+				"harvests": {
+					"dew_grass": 27,
+					"jade_fruit_tree": 6,
+					"moon_cap": 18,
+					"scarlet_berry": 26
+				},
+				"planted": {
+					"dew_grass": 30,
+					"jade_fruit_tree": 3,
+					"moon_cap": 20,
+					"scarlet_berry": 10
+				},
+				"revenue": 2296,
+				"spending": {
+					"production": 12,
+					"seed": 89,
+					"tool": 110
+				},
+				"yield": {
+					"dew_grass_seed": 15,
+					"dew_leaf": 39,
+					"jade_fruit": 25,
+					"jade_fruit_tree_seed": 4,
+					"moon_cap_flesh": 36,
+					"moon_cap_seed": 6,
+					"scarlet_berry_fruit": 78,
+					"scarlet_berry_seed": 15
+				}
+			}
+		},
+		{
+			"ap_after_save": 24,
+			"balance": 2193,
+			"crops": 8,
+			"day": 39,
+			"inventory": {
+				"dew_leaf": 1,
+				"jade_fruit_tree_seed": 4,
+				"scarlet_berry_seed": 11
+			},
+			"satiety": 3,
+			"totals": {
+				"feeding": {
+					"dew_leaf": 6
+				},
+				"harvests": {
+					"dew_grass": 27,
+					"jade_fruit_tree": 6,
+					"moon_cap": 18,
+					"scarlet_berry": 28
+				},
+				"planted": {
+					"dew_grass": 30,
+					"jade_fruit_tree": 3,
+					"moon_cap": 20,
+					"scarlet_berry": 10
+				},
+				"revenue": 2344,
+				"spending": {
+					"production": 12,
+					"seed": 89,
+					"tool": 110
+				},
+				"yield": {
+					"dew_grass_seed": 15,
+					"dew_leaf": 39,
+					"jade_fruit": 25,
+					"jade_fruit_tree_seed": 4,
+					"moon_cap_flesh": 36,
+					"moon_cap_seed": 6,
+					"scarlet_berry_fruit": 82,
+					"scarlet_berry_seed": 16
+				}
+			}
+		},
+		{
+			"ap_after_save": 24,
+			"balance": 2193,
+			"crops": 8,
+			"day": 40,
+			"inventory": {
+				"dew_leaf": 1,
+				"jade_fruit_tree_seed": 4,
+				"scarlet_berry_seed": 11
+			},
+			"satiety": 2,
+			"totals": {
+				"feeding": {
+					"dew_leaf": 6
+				},
+				"harvests": {
+					"dew_grass": 27,
+					"jade_fruit_tree": 6,
+					"moon_cap": 18,
+					"scarlet_berry": 28
+				},
+				"planted": {
+					"dew_grass": 30,
+					"jade_fruit_tree": 3,
+					"moon_cap": 20,
+					"scarlet_berry": 10
+				},
+				"revenue": 2344,
+				"spending": {
+					"production": 12,
+					"seed": 89,
+					"tool": 110
+				},
+				"yield": {
+					"dew_grass_seed": 15,
+					"dew_leaf": 39,
+					"jade_fruit": 25,
+					"jade_fruit_tree_seed": 4,
+					"moon_cap_flesh": 36,
+					"moon_cap_seed": 6,
+					"scarlet_berry_fruit": 82,
+					"scarlet_berry_seed": 16
+				}
+			}
+		},
+		{
+			"ap_after_save": 24,
+			"balance": 2326,
+			"crops": 8,
+			"day": 41,
+			"inventory": {
+				"dew_leaf": 1,
+				"jade_fruit_tree_seed": 4,
+				"scarlet_berry_seed": 10
+			},
+			"satiety": 1,
+			"totals": {
+				"feeding": {
+					"dew_leaf": 6
+				},
+				"harvests": {
+					"dew_grass": 30,
+					"jade_fruit_tree": 6,
+					"moon_cap": 20,
+					"scarlet_berry": 30
+				},
+				"planted": {
+					"dew_grass": 33,
+					"jade_fruit_tree": 3,
+					"moon_cap": 22,
+					"scarlet_berry": 12
+				},
+				"revenue": 2498,
+				"spending": {
+					"production": 12,
+					"seed": 110,
+					"tool": 110
+				},
+				"yield": {
+					"dew_grass_seed": 17,
+					"dew_leaf": 44,
+					"jade_fruit": 25,
+					"jade_fruit_tree_seed": 4,
+					"moon_cap_flesh": 39,
+					"moon_cap_seed": 6,
+					"scarlet_berry_fruit": 88,
+					"scarlet_berry_seed": 17
+				}
+			}
+		},
+		{
+			"ap_after_save": 24,
+			"balance": 2326,
+			"crops": 8,
+			"day": 42,
+			"inventory": {
+				"dew_leaf": 1,
+				"jade_fruit_tree_seed": 4,
+				"scarlet_berry_seed": 10
+			},
+			"satiety": 0,
+			"totals": {
+				"feeding": {
+					"dew_leaf": 6
+				},
+				"harvests": {
+					"dew_grass": 30,
+					"jade_fruit_tree": 6,
+					"moon_cap": 20,
+					"scarlet_berry": 30
+				},
+				"planted": {
+					"dew_grass": 33,
+					"jade_fruit_tree": 3,
+					"moon_cap": 22,
+					"scarlet_berry": 12
+				},
+				"revenue": 2498,
+				"spending": {
+					"production": 12,
+					"seed": 110,
+					"tool": 110
+				},
+				"yield": {
+					"dew_grass_seed": 17,
+					"dew_leaf": 44,
+					"jade_fruit": 25,
+					"jade_fruit_tree_seed": 4,
+					"moon_cap_flesh": 39,
+					"moon_cap_seed": 6,
+					"scarlet_berry_fruit": 88,
+					"scarlet_berry_seed": 17
+				}
+			}
+		},
+		{
+			"ap_after_save": 24,
+			"balance": 2446,
+			"crops": 8,
+			"day": 43,
+			"inventory": {
+				"jade_fruit_tree_seed": 5,
+				"scarlet_berry_seed": 10
+			},
+			"satiety": 5,
+			"totals": {
+				"feeding": {
+					"dew_leaf": 7
+				},
+				"harvests": {
+					"dew_grass": 30,
+					"jade_fruit_tree": 7,
+					"moon_cap": 20,
+					"scarlet_berry": 30
+				},
+				"planted": {
+					"dew_grass": 33,
+					"jade_fruit_tree": 3,
+					"moon_cap": 22,
+					"scarlet_berry": 12
+				},
+				"revenue": 2618,
+				"spending": {
+					"production": 12,
+					"seed": 110,
+					"tool": 110
+				},
+				"yield": {
+					"dew_grass_seed": 17,
+					"dew_leaf": 44,
+					"jade_fruit": 30,
+					"jade_fruit_tree_seed": 5,
+					"moon_cap_flesh": 39,
+					"moon_cap_seed": 6,
+					"scarlet_berry_fruit": 88,
+					"scarlet_berry_seed": 17
+				}
+			}
+		},
+		{
+			"ap_after_save": 24,
+			"balance": 2446,
+			"crops": 8,
+			"day": 44,
+			"inventory": {
+				"jade_fruit_tree_seed": 5,
+				"scarlet_berry_seed": 10
+			},
+			"satiety": 4,
+			"totals": {
+				"feeding": {
+					"dew_leaf": 7
+				},
+				"harvests": {
+					"dew_grass": 30,
+					"jade_fruit_tree": 7,
+					"moon_cap": 20,
+					"scarlet_berry": 30
+				},
+				"planted": {
+					"dew_grass": 33,
+					"jade_fruit_tree": 3,
+					"moon_cap": 22,
+					"scarlet_berry": 12
+				},
+				"revenue": 2618,
+				"spending": {
+					"production": 12,
+					"seed": 110,
+					"tool": 110
+				},
+				"yield": {
+					"dew_grass_seed": 17,
+					"dew_leaf": 44,
+					"jade_fruit": 30,
+					"jade_fruit_tree_seed": 5,
+					"moon_cap_flesh": 39,
+					"moon_cap_seed": 6,
+					"scarlet_berry_fruit": 88,
+					"scarlet_berry_seed": 17
+				}
+			}
+		},
+		{
+			"ap_after_save": 24,
+			"balance": 2611,
+			"crops": 8,
+			"day": 45,
+			"inventory": {
+				"dew_leaf": 1,
+				"jade_fruit_tree_seed": 5,
+				"scarlet_berry_seed": 12
+			},
+			"satiety": 3,
+			"totals": {
+				"feeding": {
+					"dew_leaf": 7
+				},
+				"harvests": {
+					"dew_grass": 33,
+					"jade_fruit_tree": 7,
+					"moon_cap": 22,
+					"scarlet_berry": 32
+				},
+				"planted": {
+					"dew_grass": 36,
+					"jade_fruit_tree": 3,
+					"moon_cap": 24,
+					"scarlet_berry": 12
+				},
+				"revenue": 2796,
+				"spending": {
+					"production": 12,
+					"seed": 123,
+					"tool": 110
+				},
+				"yield": {
+					"dew_grass_seed": 19,
+					"dew_leaf": 48,
+					"jade_fruit": 30,
+					"jade_fruit_tree_seed": 5,
+					"moon_cap_flesh": 44,
+					"moon_cap_seed": 7,
+					"scarlet_berry_fruit": 95,
+					"scarlet_berry_seed": 19
+				}
+			}
+		}
+	],
+	"failures": [],
+	"initial_inventory": {
+		"dew_grass_seed": 10,
+		"jade_fruit_tree_seed": 3,
+		"moon_cap_seed": 6,
+		"scarlet_berry_seed": 5
+	},
+	"initial_money": 60,
+	"oracle": {
+		"feeding": {
+			"dew_leaf": 7
+		},
+		"harvests": {
+			"dew_grass": 33,
+			"jade_fruit_tree": 7,
+			"moon_cap": 22,
+			"scarlet_berry": 32
+		},
+		"planted": {
+			"dew_grass": 36,
+			"jade_fruit_tree": 3,
+			"moon_cap": 24,
+			"scarlet_berry": 12
+		},
+		"revenue": 2796,
+		"spending": {
+			"production": 12,
+			"seed": 123,
+			"tool": 110
+		},
+		"yield": {
+			"dew_grass_seed": 19,
+			"dew_leaf": 48,
+			"jade_fruit": 30,
+			"jade_fruit_tree_seed": 5,
+			"moon_cap_flesh": 44,
+			"moon_cap_seed": 7,
+			"scarlet_berry_fruit": 95,
+			"scarlet_berry_seed": 19
+		}
+	},
+	"policy": "8 fixed plots; retain one dew leaf; sell other food; buy seeds when depleted; buy tools with 25-stone reserve; advanced harvesting only; reload on days 15 and 30",
+	"report": {
+		"balance": 2611,
+		"end_day": 45,
+		"feeding": {
+			"dew_leaf": 7
+		},
+		"harvests": {
+			"dew_grass": 33,
+			"jade_fruit_tree": 7,
+			"moon_cap": 22,
+			"scarlet_berry": 32
+		},
+		"net": 2551,
+		"planted": {
+			"dew_grass": 36,
+			"jade_fruit_tree": 3,
+			"moon_cap": 24,
+			"scarlet_berry": 12
+		},
+		"revenue": 2796,
+		"schema": 1,
+		"spending": {
+			"production": 12,
+			"seed": 123,
+			"tool": 110
+		},
+		"start_day": 0,
+		"yield": {
+			"dew_grass_seed": 19,
+			"dew_leaf": 48,
+			"jade_fruit": 30,
+			"jade_fruit_tree_seed": 5,
+			"moon_cap_flesh": 44,
+			"moon_cap_seed": 7,
+			"scarlet_berry_fruit": 95,
+			"scarlet_berry_seed": 19
+		}
+	},
+	"schema": 1,
+	"tool_purchases": [
+		{
+			"day": 1,
+			"kind": "hoe",
+			"price": 30
+		},
+		{
+			"day": 5,
+			"kind": "harvester",
+			"price": 40
+		},
+		{
+			"day": 5,
+			"kind": "sower",
+			"price": 40
+		}
+	]
+}
