@@ -123,7 +123,8 @@ func _button(parent: Node, text: String, action: Callable) -> Button:
 	button.set_meta("action_name",text)
 	button.tooltip_text = text
 	button.accessibility_name = text
-	button.pressed.connect(action)
+	button.pressed.connect(func():
+		if not is_instance_valid(confirmation): action.call())
 	parent.add_child(button)
 	return button
 
@@ -501,6 +502,7 @@ func _show_slots() -> void:
 	sidebar.add_child(row)
 	_icon(row,"settings","显示设置",_show_settings)
 	_icon(row,"help","经营手册",_show_help)
+	_icon(row,"close","退出游戏",func(): _confirm("退出灵田？",func(): get_tree().quit()))
 
 func _new(slot: int, overwrite: bool) -> void:
 	var result := world.start_new(slot,overwrite)
