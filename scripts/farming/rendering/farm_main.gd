@@ -23,6 +23,7 @@ const Phase06SlotTests := preload("res://scripts/farming/tests/phase06_slots.gd"
 const Phase06DemoTests := preload("res://scripts/farming/tests/phase06_demo.gd")
 const Phase06RecordsTests := preload("res://scripts/farming/tests/phase06_records.gd")
 const Phase06ToolsTests := preload("res://scripts/farming/tests/phase06_tools.gd")
+const Phase06ExperienceTests := preload("res://scripts/farming/tests/phase06_experience.gd")
 const FarmTerrainRenderer := preload("res://scripts/farming/rendering/terrain_renderer.gd")
 const CropRenderer := preload("res://scripts/farming/rendering/crop_renderer.gd")
 const Phase04Tests := preload("res://scripts/farming/tests/phase04_foundation.gd")
@@ -1286,6 +1287,9 @@ func _run_farmtest() -> void:
 	var tool_tests = Phase06ToolsTests.new()
 	fails.append_array(await tool_tests.run(get_tree()))
 	if not tool_tests.completed: fails.append("P6.d工具检查未完整执行")
+	var experience_tests = Phase06ExperienceTests.new()
+	fails.append_array(await experience_tests.run(get_tree()))
+	if not experience_tests.completed: fails.append("P6.e教学与设置检查未完整执行")
 
 	grid.reset()
 	renderer.refresh_dynamic_all()
