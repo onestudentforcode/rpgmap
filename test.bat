@@ -8,10 +8,10 @@ if errorlevel 1 goto :failed
 echo [test 2/4] Current farming tools and V1 config
 python -m unittest discover -s tools/farming -p test_*.py -v
 if errorlevel 1 goto :failed
-echo [test 3/4] Current farming game flow
+echo [test 3/4] Independent V0 farming regression
 call play.bat farm --farmtest
 if errorlevel 1 goto :failed
-echo [test 4/4] Independent V1 foundation
+echo [test 4/4] Current V1 model and Phase6.5 UI
 call test-v1.bat
 if errorlevel 1 goto :failed
 echo FARMING TEST SUITE OK

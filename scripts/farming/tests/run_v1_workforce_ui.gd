@@ -11,7 +11,7 @@ func check(condition: bool,label: String) -> void:
 
 func find_button(parent: Node,text: String):
 	for child in parent.get_children():
-		if child is Button and child.text == text: return child
+		if child is Button and (child.text == text or child.get_meta("action_name","") == text or str(child.get_meta("action_name","")).begins_with(text+" ·")): return child
 		var found = find_button(child,text)
 		if found != null: return found
 	return null
@@ -25,6 +25,7 @@ func _initialize() -> void:
 	_run.call_deferred()
 
 func _run() -> void:
+	root.size = Vector2i(1280,720)
 	var directory := "user://test_v1_workforce_ui_%d" % Time.get_ticks_usec()
 	ui = Scene.instantiate()
 	ui.store = Store.new(directory)
@@ -33,6 +34,7 @@ func _run() -> void:
 	check(not ui._started and ui.store.active_slot() == 0,"V1 starts at own three slot selector")
 	click("新建槽1")
 	check(ui._started and ui.store.active_slot() == 1,"UI binds selected V1 slot")
+	click("雇工")
 	click("雇佣一人（无固定费用）")
 	check(ui.world.workforce.state["workers"].size() == 1 and ui.selected_worker == 1,"UI hires selectable employee")
 	click("框选追加负责区域")
@@ -58,7 +60,7 @@ func _run() -> void:
 	check(ui.digest_body.get_child_count() >= 2 and ui.world.journal["history"].back()["totals"]["plantings"] == {"golden_wheat":1},"digest renders structured actual daily entries")
 	await process_frame
 	await process_frame
-	check(ui.digest.size.y <= 110 and ui.digest.position.y + ui.digest.size.y < ui.toolbar.position.y,"daily digest stays compact without covering whole board")
+	check(ui.digest.size.y <= 220 and ui.digest.position.y + ui.digest.size.y < ui.toolbar_panel.position.y,"daily digest stays compact: %s at %s / toolbar %s / UI %s" % [ui.digest.size,ui.digest.position,ui.toolbar_panel.position,ui.ui_root.size])
 	check(ui.store.read_slot(1)["snapshot"] == ui.world.to_snapshot(),"UI day auto saves full labour state")
 	click("查看")
 	ui.apply_rectangle(Rect2i(17,8,1,1))
@@ -72,19 +74,17 @@ func _run() -> void:
 	click("结束当天")
 	check(ui.world.inventory.count("clean_water") == 30 and ui.world.primeval_stones == 51,"resource commission reflected in warehouse and payroll")
 	click("行囊/交易")
-	check(find_button(ui,"买1 · 3元石") != null,"market exposes priced seed inputs")
+	check(ui.trade_total.text.contains("买入总价 3") and not ui.trade_buy.disabled,"market exposes quantity and priced seed inputs")
 	click("订单")
 	check(find_button(ui,"清水×12 → 13元石") != null,"orders expose necessary quantity and reward")
 	click("雇工")
 	var preferences := 0
-	for child in ui.sidebar.get_children():
-		if child is HBoxContainer:
-			for field in child.get_children():
-				if field is SpinBox:
-					preferences += 1
-					if preferences == 1:
-						field.value = 0
+	for field in ui.sidebar.find_children("*","SpinBox",true,false):
+		if field.has_meta("preference"):
+			preferences += 1
+			if field.get_meta("preference") == "source": field.value = 0
 	check(preferences == 8 and ui.world.workforce.state["workers"][0]["priorities"]["source"] == 0,"work preferences editable including disable")
+	ui._close_page()
 	click("开垦")
 	ui.camera.position = Vector2(450,220)
 	await process_frame
@@ -97,7 +97,7 @@ func _run() -> void:
 	event.pressed = false
 	ui.board.gui_input.emit(event)
 	check(ui.world.workforce.state["marks"].any(func(mark): return mark["cell"] == [4,3] and mark["kind"] == "till"),"actual board mouse coordinates create intended world cell mark")
-	check(ui.board.size.x <= 432 and ui.toolbar.position.y + ui.toolbar.size.y <= 360,"map toolbar within base viewport")
+	check(ui.board.position.x + ui.board.size.x <= ui.ui_root.size.x and ui.toolbar_panel.position.y + ui.toolbar_panel.size.y <= ui.ui_root.size.y,"map toolbar within responsive viewport")
 	var before: Dictionary = ui.world.to_snapshot()
 	check(ui.world.workforce.task_status(Vector2i(2,2),"harvest") == "等待植物成熟" and before == ui.world.to_snapshot(),"task inspection does not execute or charge pending work")
 	click("手册")
@@ -115,6 +115,7 @@ func _run() -> void:
 	await process_frame
 	check(ui._context == "recap" and ui.world.journal["frozen"],"day45 automatically offers frozen recap without preventing further play")
 	var frozen: Array = ui.world.journal["terms"].duplicate(true)
+	click("继续经营")
 	click("结束当天")
 	check(ui.world.clock.total_days == 46 and ui.world.journal["terms"] == frozen,"continue beyond45 through real day button with recap intact")
 	for slot in [1,2,3]:

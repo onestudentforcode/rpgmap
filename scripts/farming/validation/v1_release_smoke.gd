@@ -11,6 +11,7 @@ func check(condition: bool, label: String) -> void:
 func run() -> void:
 	await get_tree().process_frame
 	check(not shell._started and shell.world._items.size() == 18,"V1 default menu and baked resource catalogue")
+	check(ProjectSettings.get_setting("application/config/name") == "Sisyphus Mall MVP","historical application identity preserves existing user save paths")
 	if OS.has_feature("farm_demo_v1_release"):
 		check(not ResourceLoader.exists("res://scenes/farming/farm_demo.tscn") and not ResourceLoader.exists("res://scripts/farming/tests/run_v1_journal.gd"),"release contains no V0 scene or development tests")
 	var count := 0
@@ -19,6 +20,13 @@ func run() -> void:
 			var texture = load("res://"+texture_path)
 			if texture is Texture2D and not texture.get_image().is_empty(): count += 1
 	check(count == 7,"all four ground textures and three transition atlases decode")
+	var symbols: Dictionary = JSON.parse_string(FileAccess.get_file_as_string("res://assets/farming/ui/manifest.json"))
+	var decoded := 0
+	for ident in symbols["icons"]:
+		var icon = load("res://assets/farming/ui/%s.svg" % ident)
+		if icon is Texture2D and icon.get_size() == Vector2(64,64) and not icon.get_image().is_empty(): decoded += 1
+	check(decoded == symbols["icons"].size(),"all Phase6.5 vector symbols decode from exported resources")
+	check(shell.get_window().content_scale_mode == Window.CONTENT_SCALE_MODE_DISABLED and shell.tool_buttons["clear"].accessibility_name.contains("清理"),"V1 responsive layout and compact accessible icon controls")
 	shell._new(1,false)
 	var world = shell.world
 	check(shell._started and world.primeval_stones == 60,"new V1 slot uses initial60")
