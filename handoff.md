@@ -1,7 +1,7 @@
 # handoff — 跨机器开发交接
 
-> 最后更新：2026-10-10（Demo V0与V1均已关闭；Phase 6.5 UI美化与交互完善已立项）。
-> **现行迭代：** 用户确认Demo V1宣布完成，交付为现有玩法及独立Windows占位美术包。下一阶段为[Phase 6.5](docs/farming/phase-06.5-UI美化与交互完善.md)，位于V1与V2之间，当前待实施。V1入口`play.bat v1`，基线规则见[demo-v1-plan.md](docs/farming/demo-v1-plan.md)、[雇佣](docs/farming/demo-v1-employment.md)、[体验与回顾](docs/farming/demo-v1-体验与回顾.md)和[资源表](docs/farming/demo-v1-resources.md)；默认工作区游戏仍为V0。
+> 最后更新：2026-10-11（Demo V0与V1均已关闭；Phase 6.5首版界面设计已完成，代码待实施）。
+> **现行迭代：** 用户确认Demo V1宣布完成，交付为现有玩法及独立Windows占位美术包。当前为[Phase 6.5](docs/farming/phase-06.5-UI美化与交互完善.md)，位于V1与V2之间，首版设计见[界面设计稿](docs/farming/ui-design/phase65-interface.md)及[美术指导](docs/farming/ui-design/phase65-art-direction.md)，下一步实施P6.5.a。V1入口`play.bat v1`，基线规则见[demo-v1-plan.md](docs/farming/demo-v1-plan.md)、[雇佣](docs/farming/demo-v1-employment.md)、[体验与回顾](docs/farming/demo-v1-体验与回顾.md)和[资源表](docs/farming/demo-v1-resources.md)；默认入口在Phase 6.5收尾后切换，当前仍为V0。
 > 交接对象：新机器上的开发者或 AI 会话。
 > **开工前必读：§2 新机器清单 → §6 命令自检；现行主线是种植模块，先读 [docs/farming/master-plan.md](docs/farming/master-plan.md)；改 demo 地图前必读 [docs/map-schema.md](docs/map-schema.md)。**
 
@@ -69,6 +69,7 @@
 |------|------|--------|
 | [docs/farming/master-plan.md](docs/farming/master-plan.md) | **灵植经营模块总 Phase 规划（现行主线）** | **开工先读** |
 | [docs/farming/phase-06.5-UI美化与交互完善.md](docs/farming/phase-06.5-UI美化与交互完善.md) | **当前阶段：UI清点、三个实施批次与验收规则** | **推进当前主线时** |
+| [docs/farming/ui-design/phase65-interface.md](docs/farming/ui-design/phase65-interface.md) | 用户决定、布局/尺寸、图标与四条高频流程；含交互草图入口 | 实施Phase 6.5时 |
 | [docs/farming/demo-v1-plan.md](docs/farming/demo-v1-plan.md) | 已关闭V1的玩法基线、实施与验收记录 | 查阅现行玩法时 |
 | [docs/farming/demo-v1-employment.md](docs/farming/demo-v1-employment.md) | 普通雇工、任务标记、调度与存档规则 | 调整派工时 |
 | [docs/farming/phase-04-四类作物扩展.md](docs/farming/phase-04-四类作物扩展.md) | V0介质与大画布契约、执行记录 | 查阅既有作物/资产时 |
@@ -133,7 +134,7 @@ play.bat farm0                             # Phase 0 拼接验证场景（历史
 
 ## 7. 当前闭环与后续阶段
 
-**Demo V1已完成并关闭（2026-10-10，用户确认）。当前为Phase 6.5立项，尚未修改UI代码。** 按布局/基础交互→高频经营面板→统一视觉推进；下一步从工具栏、地格详情、全局窗口、数量交易和基础反馈开始。具体范围见[Phase 6.5文档](docs/farming/phase-06.5-UI美化与交互完善.md)。V1生产/经济/订单/普通雇工/日存档规则沿用，UI图标与缩略图单独成批；完整场景美术另列批次，养殖等V2内容仍待设计。
+**Demo V1已完成并关闭（2026-10-10，用户确认）。Phase 6.5首版设计已完成，尚未修改游戏UI代码。** 以2560×1440为主，明亮柔和配色、小图标和悬停说明，不再要求像素风；后续图片必须核对拼接与机位。按布局/基础交互→高频经营面板→统一视觉推进，下一步实施P6.5.a。具体范围见[Phase 6.5文档](docs/farming/phase-06.5-UI美化与交互完善.md)。V1生产/经济/订单/普通雇工/日存档规则沿用，UI图标与缩略图单独成批；完整场景美术另列批次，养殖等V2内容仍待设计。
 
 现行V1：逐条摘要/时节小结、首次45天总计与三个时节小计已接入；无注入经营路线初始60→298，121项新记录和49项界面检查通过。占位美术独立包`dist/LingTianDemoV1-Windows-x64.zip`，解压运行`LingTianDemoV1.exe`，说明见[demo-v1-操作说明](docs/farming/demo-v1-操作说明.md)。重建使用`tools/farming/build_v1_demo.ps1 -GodotExe <控制台路径>`，需匹配的Windows release模板；10项打包后冒烟通过。旧V1从升级当天开始记录，已过45天的旧档无法补造首次回顾。下述Phase记录为V0基线。
 

@@ -1,0 +1,35 @@
+{
+  "schema": 1,
+  "status": "design-draft",
+  "scope": "phase65-ui",
+  "date": "2026-10-11",
+  "direction": ["暖米白", "浅茶绿", "柔陶色", "明亮", "轻松经营"],
+  "tokens": {
+    "background": "#f6f4ed",
+    "panel": "#fffdf8",
+    "surface": "#eef2e8",
+    "border": "#cfd8c6",
+    "text": "#334238",
+    "muted": "#58665a",
+    "accent": "#58745b",
+    "accent_soft": "#deebd9",
+    "accent_text": "#fffdf8",
+    "warning": "#855b32",
+    "warning_soft": "#f6e8d2",
+    "error": "#9b4e42",
+    "error_soft": "#f8e4df",
+    "water": "#446976",
+    "water_soft": "#deedf0"
+  },
+  "ramps": {
+    "tea": ["#37533f", "#5b7b60", "#8caa88", "#c1d4b6", "#e7efdf"],
+    "paper": ["#887f70", "#b4ac9d", "#d9d3c4", "#eeeade", "#fffdf8"],
+    "clay": ["#784e3f", "#a5745d", "#c9a58b", "#e4cdb4", "#f5e8d7"]
+  },
+  "contrast_pairs": [
+    ["text", "background"], ["text", "panel"], ["text", "surface"],
+    ["text", "accent_soft"], ["muted", "panel"], ["muted", "surface"],
+    ["muted", "accent_soft"], ["accent_text", "accent"],
+    ["warning", "warning_soft"], ["error", "error_soft"], ["water", "water_soft"]
+  ]
+}
