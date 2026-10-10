@@ -183,6 +183,23 @@ func _run() -> void:
 			await process_frame
 			check(ui.window_panel.position.x >= 0 and ui.window_panel.position.y >= 0 and ui.window_panel.size.y <= ui.ui_root.size.y and ui.camera.zoom == map_zoom,"settings fits and UI scale preserves map zoom %s/%s" % [dimensions,scaling])
 			ui._close_page()
+			ui._select_tool("inspect")
+			await process_frame
+			var cell := Vector2i(5,4)
+			var local_point: Vector2 = ui.map_port.get_canvas_transform()*(Vector2(cell)*64+Vector2(32,32))
+			var screen_point: Vector2 = ui.board.get_global_transform_with_canvas()*local_point
+			var pointer := InputEventMouseButton.new()
+			pointer.button_index = MOUSE_BUTTON_LEFT
+			pointer.position = screen_point
+			pointer.global_position = screen_point
+			pointer.pressed = true
+			Input.parse_input_event(pointer)
+			await process_frame
+			pointer = pointer.duplicate()
+			pointer.pressed = false
+			Input.parse_input_event(pointer)
+			await process_frame
+			check(ui.selected == cell,"real viewport pointer maps to cell after resize/scale %s/%s (point %s; got %s)" % [dimensions,scaling,screen_point,ui.selected])
 	ui._ui_scale = 1.0
 	root.size = Vector2i(1280,720)
 	ui._layout()
