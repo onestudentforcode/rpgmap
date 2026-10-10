@@ -286,7 +286,7 @@ func facility_at(cell: Vector2i) -> Dictionary:
 			return row.duplicate(true)
 	return {}
 
-func build_facility(cell: Vector2i, facility_id: String) -> Dictionary:
+func can_build_facility(cell: Vector2i, facility_id: String) -> Dictionary:
 	var ap := int(config["construction"]["build_ap"])
 	var checked := _can_act(ap)
 	if not checked["ok"]:
@@ -300,14 +300,22 @@ func build_facility(cell: Vector2i, facility_id: String) -> Dictionary:
 		if not inventory.has(ident, int(definition["materials"][ident])):
 			return _error("建设材料不足：" + _items[ident]["name"])
 	var footprint: Array = definition["footprint"]
-	var tilled_before := []
 	for dy in range(int(footprint[1])):
 		for dx in range(int(footprint[0])):
 			var target := cell + Vector2i(dx,dy)
 			if _source_cells.has(target):
 				return _error("设施不能覆盖资源点")
-			if grid.in_bounds(target.x, target.y) and grid.state_at(target) == Grid.State.TILLED:
-				tilled_before.append(target)
+	return grid.can_reserve(cell,int(footprint[0]),int(footprint[1]),"v1_facility:%d" % _next_facility_uid)
+
+func build_facility(cell: Vector2i, facility_id: String) -> Dictionary:
+	var checked := can_build_facility(cell,facility_id)
+	if not checked["ok"]: return checked
+	var ap := int(config["construction"]["build_ap"])
+	var definition: Dictionary = facility_defs[facility_id]
+	var footprint: Array = definition["footprint"]
+	var tilled_before := []
+	for target in checked["cells"]:
+		if grid.state_at(target) == Grid.State.TILLED: tilled_before.append(target)
 	var uid := _next_facility_uid
 	checked = grid.reserve(cell, int(footprint[0]), int(footprint[1]), "v1_facility:%d" % uid)
 	if not checked["ok"]:

@@ -164,7 +164,7 @@ func untill(cell: Vector2i) -> Dictionary:
 
 ## 原子占用：全部格子合法才整体生效。target_state 默认 OCCUPIED（设施/障碍）；
 ## 传 PLANTED 用于播种（此时各格必须已是 TILLED）。prev 记录占用前状态，release 恢复。
-func reserve(origin: Vector2i, fw: int, fh: int, holder: String,
+func can_reserve(origin: Vector2i, fw: int, fh: int, holder: String,
 		target_state: int = State.OCCUPIED) -> Dictionary:
 	if _holders.has(holder):
 		return {"ok": false, "reason": "holder_exists"}
@@ -184,6 +184,14 @@ func reserve(origin: Vector2i, fw: int, fh: int, holder: String,
 			if target_state == State.PLANTED and st != State.TILLED:
 				return {"ok": false, "reason": "not_tilled:" + STATE_NAMES[st]}
 			cells.append(c)
+	return {"ok": true, "reason": "", "cells": cells}
+
+
+func reserve(origin: Vector2i, fw: int, fh: int, holder: String,
+		target_state: int = State.OCCUPIED) -> Dictionary:
+	var checked := can_reserve(origin, fw, fh, holder, target_state)
+	if not checked["ok"]: return checked
+	var cells: Array[Vector2i] = checked["cells"]
 	for c in cells:  # 后落：全部合法才整体生效
 		_prev[c] = _state[c.y][c.x]
 		_state[c.y][c.x] = target_state

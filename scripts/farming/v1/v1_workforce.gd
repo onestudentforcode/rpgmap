@@ -151,6 +151,20 @@ func _target(cell: Vector2i, kind: String) -> Dictionary:
 	var allowed := kind == "clear" or (kind == "harvest" and mode != "fell_replant") or (kind == "fell" and mode in ["tap_or_fell", "fell_replant"])
 	return {"ok": allowed, "cell": Vector2i(int(crop["origin"][0]),int(crop["origin"][1]))}
 
+func preview(rect: Rect2i, kind: String) -> Dictionary:
+	var valid := []
+	var invalid := []
+	var targets := []
+	if kind not in KINDS or kind == "source" or rect.size.x <= 0 or rect.size.y <= 0 or rect.size.x > world.grid.width or rect.size.y > world.grid.height:
+		return {"valid":valid,"invalid":invalid,"targets":targets}
+	for cell in footprint(rect):
+		var target := _target(cell,kind)
+		if target["ok"]:
+			valid.append(cell)
+			if target["cell"] not in targets: targets.append(target["cell"])
+		else: invalid.append(cell)
+	return {"valid":valid,"invalid":invalid,"targets":targets}
+
 func mark(rect: Rect2i, kind: String, priority: int = 5) -> Dictionary:
 	var checked: Dictionary = world._can_act(0)
 	if not checked["ok"]:
