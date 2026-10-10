@@ -8,9 +8,11 @@ if "%V1_GODOT%"=="" set "V1_GODOT=C:\Users\88445\Desktop\code\daoyan\.tools\godo
 if not exist "%V1_GODOT%" goto :failed
 "%V1_GODOT%" --headless --path . --script res://scripts/farming/tests/run_v1_foundation.gd
 if errorlevel 1 goto :failed
+"%V1_GODOT%" --headless --path . --script res://scripts/farming/tests/run_v1_production.gd
+if errorlevel 1 goto :failed
 popd
 exit /b 0
 :failed
-echo V1 FOUNDATION SUITE FAILED
+echo V1 SUITE FAILED
 popd
 exit /b 1

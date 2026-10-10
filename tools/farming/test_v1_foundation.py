@@ -111,6 +111,23 @@ class V1FoundationTests(unittest.TestCase):
             change(self.source)
             self.invalid()
 
+    def test_fixed_light_config_requires_bounded_nonoverlapping_regions(self):
+        for region in [{'rect': [19, 13, 2, 2], 'level': 30},
+                       {'rect': [0, 9, 1, 1], 'level': 30},
+                       {'rect': [0, 0, 0, 2], 'level': 30},
+                       {'rect': [0, 0, 1, 1], 'level': True}]:
+            self.setUp()
+            self.source['config']['light']['regions'].append(region)
+            self.invalid()
+
+    def test_environment_parameters_are_complete_and_positive(self):
+        for mutation in [lambda s: s['config']['environment'].pop('optimal_water'),
+                         lambda s: s['config']['environment'].update(low_water_efficiency=0),
+                         lambda s: s['config']['environment'].update(low_light_efficiency=101)]:
+            self.setUp()
+            mutation(self.source)
+            self.invalid()
+
 
 if __name__ == '__main__':
     unittest.main()
