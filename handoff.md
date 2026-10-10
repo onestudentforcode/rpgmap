@@ -1,7 +1,7 @@
 # handoff — 跨机器开发交接
 
 > 最后更新：2026-10-10（种植模块Phase 0–6已关闭，Windows灵田Demo已交付）。
-> **现行迭代：** 上述交付命名为Demo V0；Demo V1.a～d及V1.e首批普通雇工、框选标记、地格选种与可操作场景已完成，入口`play.bat v1`，规则见[demo-v1-plan.md](docs/farming/demo-v1-plan.md)、[demo-v1-employment.md](docs/farming/demo-v1-employment.md)与[demo-v1-resources.md](docs/farming/demo-v1-resources.md)。继续V1.e体验/视觉完善和V1.f首次45天回顾/发布包，默认游戏仍为V0。
+> **现行迭代：** 上述交付命名为Demo V0；Demo V1.a～d、V1.e农务派工/可跳过提示及V1.f首批逐条摘要/45天回顾/独立Windows占位美术包已完成。工作区入口`play.bat v1`，规则见[demo-v1-plan.md](docs/farming/demo-v1-plan.md)、[雇佣](docs/farming/demo-v1-employment.md)、[体验与回顾](docs/farming/demo-v1-体验与回顾.md)和[资源表](docs/farming/demo-v1-resources.md)。继续正式视觉与更广的策略平衡，默认工作区游戏仍为V0。
 > 交接对象：新机器上的开发者或 AI 会话。
 > **开工前必读：§2 新机器清单 → §6 命令自检；现行主线是种植模块，先读 [docs/farming/master-plan.md](docs/farming/master-plan.md)；改 demo 地图前必读 [docs/map-schema.md](docs/map-schema.md)。**
 
@@ -102,6 +102,7 @@ scripts/main.gd（状态机：移动/对话/菜单/战斗桩/切图）
 ```
 play.bat                        # 当前农场（默认主场景）
 play.bat v1                     # V1三槽、农务派工、加工、市场与订单
+test-v1.bat                     # V1模型、界面、经营记录与隔离冒烟
 test.bat                        # 当前农场：资产QC + 工具测试 + 游戏流程（不运行旧内容）
 play.bat --selftest             # 仅农场逻辑测试（headless）
 play.bat --shots=DIR            # 当前农场截图
@@ -130,6 +131,8 @@ play.bat farm0                             # Phase 0 拼接验证场景（历史
 `godot --headless --path . --import`。
 
 ## 7. 当前闭环与后续阶段
+
+现行V1：逐条摘要/时节小结、首次45天总计与三个时节小计已接入；无注入经营路线初始60→298，121项新记录和49项界面检查通过。占位美术独立包`dist/LingTianDemoV1-Windows-x64.zip`，解压运行`LingTianDemoV1.exe`，说明见[demo-v1-操作说明](docs/farming/demo-v1-操作说明.md)。重建使用`tools/farming/build_v1_demo.ps1 -GodotExe <控制台路径>`，需匹配的Windows release模板；10项打包后冒烟通过。旧V1从升级当天开始记录，已过45天的旧档无法补造首次回顾。下述Phase记录为V0基线。
 
 Phase 0–5已关闭；Phase5以本仓库种植经济闭环为完成条件，对上游保留适配接口。
 Phase6范围已由用户确认，草案见[phase-06](docs/farming/phase-06-Demo体验与三槽存档.md)：
