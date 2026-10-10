@@ -185,6 +185,7 @@ func _snapshot_guards() -> void:
 	var old := prior_world.to_snapshot()
 	old["schema"] = 2
 	old.erase("orders")
+	old.erase("workforce")
 	old["economy"] = {"primeval_stones": old["economy"]["primeval_stones"]}
 	for field in ["facilities", "next_facility_uid", "next_batch_uid"]:
 		old["world"].erase(field)

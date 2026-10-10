@@ -14,6 +14,10 @@ if errorlevel 1 goto :failed
 if errorlevel 1 goto :failed
 "%V1_GODOT%" --headless --path . --script res://scripts/farming/tests/run_v1_orders.gd
 if errorlevel 1 goto :failed
+"%V1_GODOT%" --headless --path . --script res://scripts/farming/tests/run_v1_workforce.gd
+if errorlevel 1 goto :failed
+"%V1_GODOT%" --headless --path . --script res://scripts/farming/tests/run_v1_workforce_ui.gd
+if errorlevel 1 goto :failed
 popd
 exit /b 0
 :failed

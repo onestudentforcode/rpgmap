@@ -154,6 +154,18 @@ class V1FoundationTests(unittest.TestCase):
             mutation(self.source['orders'])
             self.invalid()
 
+    def test_worker_limits_and_care_thresholds_are_checked(self):
+        for mutation in [lambda w: w.update(max_workers=3),
+                         lambda w: w.update(daily_work_limit=True),
+                         lambda w: w.update(fee_per_success=0),
+                         lambda w: w.update(default_budget=-1),
+                         lambda w: w.update(water_threshold=101),
+                         lambda w: w.update(fertility_threshold=0),
+                         lambda w: w.pop('max_workers')]:
+            self.setUp()
+            mutation(self.source['config']['workers'])
+            self.invalid()
+
 
 if __name__ == '__main__':
     unittest.main()

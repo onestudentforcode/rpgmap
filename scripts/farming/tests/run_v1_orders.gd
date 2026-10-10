@@ -4,6 +4,7 @@ const Snapshot := preload("res://scripts/farming/v1/v1_snapshot.gd")
 const Data := preload("res://scripts/farming/v1/v1_data.gd")
 const Orders := preload("res://scripts/farming/v1/v1_orders.gd")
 const Store := preload("res://scripts/farming/v1/v1_slot_store.gd")
+const Workforce := preload("res://scripts/farming/v1/v1_workforce.gd")
 var failures: Array[String] = []
 var checks := 0
 
@@ -30,6 +31,7 @@ func fixture(day: int, revenue: int) -> World:
 	var snapshot := Snapshot.fresh()
 	snapshot["clock"]["total_days"] = day
 	snapshot["world"]["sources"]["day"] = day
+	snapshot["workforce"] = Workforce.fresh(day)
 	snapshot["economy"]["sales_revenue"] = revenue
 	snapshot["orders"] = Orders.generate(day, revenue)
 	var world := World.new()
@@ -171,6 +173,7 @@ func _validation() -> void:
 		var old := before.duplicate(true)
 		old["schema"] = schema
 		old.erase("orders")
+		old.erase("workforce")
 		old["economy"] = {"primeval_stones": 55}
 		if schema == 1:
 			old.erase("world")

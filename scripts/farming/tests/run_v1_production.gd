@@ -202,6 +202,7 @@ func _validation() -> void:
 	basis["schema"] = 1
 	basis.erase("world")
 	basis.erase("orders")
+	basis.erase("workforce")
 	basis["economy"] = {"primeval_stones": basis["economy"]["primeval_stones"]}
 	basis["clock"]["total_days"] = 7
 	var upgraded := Snapshot.normalize(basis)
