@@ -203,7 +203,7 @@ func _validation() -> void:
 	basis.erase("world")
 	basis["clock"]["total_days"] = 7
 	var upgraded := Snapshot.normalize(basis)
-	check(upgraded["ok"] and upgraded["snapshot"]["schema"] == 2 and upgraded["snapshot"]["world"]["sources"]["day"] == 7, "only V1.a foundation upgrades to blank world")
+	check(upgraded["ok"] and upgraded["snapshot"]["schema"] == Snapshot.SCHEMA and upgraded["snapshot"]["world"]["sources"]["day"] == 7, "only V1.a foundation upgrades to blank world")
 	var exposure := world.instance_at(cell)
 	exposure["progress"] = 0
 	check(world.instance_at(cell)["progress"] == 200, "query returns detached crop")

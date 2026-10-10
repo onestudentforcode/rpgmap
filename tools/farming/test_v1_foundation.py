@@ -128,6 +128,15 @@ class V1FoundationTests(unittest.TestCase):
             mutation(self.source)
             self.invalid()
 
+    def test_construction_policy_has_no_refund_loophole(self):
+        for mutation in [lambda s: s['config']['construction'].update(refund_percent=100),
+                         lambda s: s['config']['construction'].update(build_ap=0),
+                         lambda s: s['config']['construction'].update(demolish_ap=True),
+                         lambda s: s['config']['construction'].pop('demolish_ap')]:
+            self.setUp()
+            mutation(self.source)
+            self.invalid()
+
 
 if __name__ == '__main__':
     unittest.main()

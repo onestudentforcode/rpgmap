@@ -10,6 +10,8 @@ if not exist "%V1_GODOT%" goto :failed
 if errorlevel 1 goto :failed
 "%V1_GODOT%" --headless --path . --script res://scripts/farming/tests/run_v1_production.gd
 if errorlevel 1 goto :failed
+"%V1_GODOT%" --headless --path . --script res://scripts/farming/tests/run_v1_processing.gd
+if errorlevel 1 goto :failed
 popd
 exit /b 0
 :failed
