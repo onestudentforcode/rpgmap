@@ -40,6 +40,8 @@ var inventory: FarmInventory
 var economy: FarmEconomy
 var economy_panel: FarmEconomyPanel
 var crop_r: CropRenderer
+const Records := preload("res://scripts/farming/core/economy/farm_records.gd")
+var records = Records.new()
 var demo_controller
 var demo_snapshot: Dictionary = {}
 
@@ -472,6 +474,8 @@ func _on_cells_changed(_cells: Array[Vector2i]) -> void:
 
 
 func _on_day_changed(_total: int) -> void:
+	if demo_controller != null:
+		records.finish_day(_total, economy.primeval_stones)
 	crop_mgr.on_day_changed()
 	economy.on_day_changed()
 	if _overlay_marks != null:
@@ -662,6 +666,8 @@ func _reason_text(reason: String) -> String:
 
 func capture_snapshot() -> Dictionary:
 	var snapshot := _snapshot_extra.duplicate(true)
+	if demo_controller != null:
+		snapshot["records"] = records.data.duplicate(true)
 	snapshot.merge({
 		"schema": 3,
 		"clock": clock.to_save(),
@@ -712,6 +718,13 @@ func apply_snapshot(value, silent: bool = true) -> bool:
 		return false
 	clock.apply_save(parsed["clock"])
 	economy = loaded_economy
+	if demo_controller != null:
+		records.data = parsed.get("records", Records.fresh(int(parsed["clock"]["total_days"]))).duplicate(true)
+		if not crop_mgr.planted.is_connected(records.planted):
+			crop_mgr.planted.connect(records.planted)
+			crop_mgr.harvested.connect(records.harvested)
+		economy.traded.connect(records.traded)
+		economy.fed.connect(records.fed)
 	_snapshot_extra = parsed.duplicate(true)
 	for key in ["schema", "clock", "grid", "crops", "inventory", "economy"]:
 		_snapshot_extra.erase(key)

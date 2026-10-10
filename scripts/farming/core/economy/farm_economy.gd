@@ -1,5 +1,7 @@
 extends RefCounted
 ## Pure module state. Currency and material dictionary semantics match upstream.
+signal traded(item_id: String, quantity: int, buying: bool, amount: int, kind: String)
+signal fed(item_id: String, quantity: int)
 var primeval_stones := 60
 var gu: Dictionary = {}
 var items: Dictionary = {}
@@ -63,6 +65,7 @@ func trade(item_id: String, quantity: int, buying: bool) -> Dictionary:
 		if not _inventory.remove(item_id, quantity):
 			return _error("库存不足")
 		primeval_stones += amount
+	traded.emit(item_id, quantity, buying, amount, String(item.get("kind", "")))
 	return {"ok": true, "amount": amount}
 
 
@@ -84,6 +87,7 @@ func feed(item_id: String) -> Dictionary:
 	gu["feeding_count"] = int(gu["feeding_count"]) + 1
 	var consumed: Dictionary = gu["materials_consumed"]
 	consumed[item_id] = int(consumed.get(item_id, 0)) + quantity
+	fed.emit(item_id, quantity)
 	return {"ok": true, "quantity": quantity}
 
 

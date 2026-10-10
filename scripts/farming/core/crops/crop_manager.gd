@@ -9,6 +9,8 @@ extends RefCounted
 ## 消费方以 preload 引用。
 
 signal crops_changed()
+signal planted(crop_id: String)
+signal harvested(crop_id: String, products: Array)
 
 const LandGrid := preload("res://scripts/farming/core/grid/land_grid.gd")
 
@@ -121,6 +123,7 @@ func plant(cell: Vector2i, crop_id: String) -> Dictionary:
 		"state": CropState.GROWING,
 	}
 	crops_changed.emit()
+	planted.emit(crop_id)
 	return {"ok": true, "uid": uid, "reason": ""}
 
 
@@ -174,6 +177,7 @@ func harvest(cell: Vector2i) -> Dictionary:
 		var q := rng.randi_range(int(e["min"]), int(e["max"]))
 		if q > 0:
 			items.append({"item_id": e["item_id"], "qty": q})
+	harvested.emit(String(inst["crop_id"]), items)
 	inst["harvest_count"] = int(inst["harvest_count"]) + 1
 	if def["harvest_type"] == "remove":
 		_remove(inst)

@@ -2,6 +2,7 @@ extends RefCounted
 ## Validates detached snapshots before any live world or slot is changed.
 const Data := preload("res://scripts/farming/core/farm_data.gd")
 const Economy := preload("res://scripts/farming/core/economy/farm_economy.gd")
+const Records := preload("res://scripts/farming/core/economy/farm_records.gd")
 const Inventory := preload("res://scripts/farming/core/inventory/farm_inventory.gd")
 
 static func fresh() -> Dictionary:
@@ -68,6 +69,10 @@ static func normalize(value) -> Dictionary:
 			return fail("钱包或蛊虫数据非法")
 	out["schema"] = 3
 	out["economy"] = economy.to_save()
+	if out.has("records") and not Records.valid(out["records"], int(clock["total_days"]), crops, items):
+		return fail("经营记录或回顾数据非法")
+	if out.has("records"):
+		out["records"] = Records.normalize(out["records"])
 	return {"ok": true, "snapshot": out}
 
 static func _grid(data: Dictionary, config: Dictionary) -> Dictionary:
