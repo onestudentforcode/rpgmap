@@ -2,6 +2,11 @@
   "config": {
     "ap_per_day": 24,
     "ap_weight": 1,
+    "construction": {
+      "build_ap": 1,
+      "demolish_ap": 1,
+      "refund_percent": 0
+    },
     "day_weight": 1,
     "days_per_term": 15,
     "environment": {

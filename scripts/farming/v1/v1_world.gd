@@ -1,5 +1,5 @@
 extends RefCounted
-## V1.b production model; mutate an action completely before clock.spend triggers day/save.
+## V1 production model; settle crop/processing state before the single daily save.
 signal changed()
 signal daily_settled(total_days: int, saved: bool)
 const Data := preload("res://scripts/farming/v1/v1_data.gd")
@@ -15,10 +15,16 @@ var primeval_stones := 60
 var config: Dictionary
 var crop_defs: Dictionary
 var source_defs: Dictionary
+var facility_defs: Dictionary
+var recipe_defs: Dictionary
 var crops: Dictionary = {}
+var facilities: Dictionary = {}
 var environment: Array = []
 var _light: Array = []
 var _next_uid := 1
+var _next_facility_uid := 1
+var _next_batch_uid := 1
+var _tilled_under_buildings: Dictionary = {}
 var _source_used: Dictionary = {}
 var _source_day := 0
 var _source_cells: Dictionary = {}
@@ -30,6 +36,8 @@ func _init(slot_store = null) -> void:
 	config = Data.load_data()["config"]
 	crop_defs = Data.definitions("crops")
 	source_defs = Data.definitions("sources")
+	facility_defs = Data.definitions("facilities")
+	recipe_defs = Data.definitions("recipes")
 	grid = Grid.new()
 	clock = Clock.new()
 	inventory = Inventory.new()
@@ -222,6 +230,108 @@ func collect(ident: String) -> Dictionary:
 	inventory.add(definition["item"], quantity)
 	return _finish(int(definition["ap"]), {"ok": true, "item_id": definition["item"], "quantity": quantity})
 
+func facility_at(cell: Vector2i) -> Dictionary:
+	for row in facilities.values():
+		var footprint: Array = facility_defs[row["facility_id"]]["footprint"]
+		var origin: Array = row["origin"]
+		if Rect2i(int(origin[0]), int(origin[1]), int(footprint[0]), int(footprint[1])).has_point(cell):
+			return row.duplicate(true)
+	return {}
+
+func build_facility(cell: Vector2i, facility_id: String) -> Dictionary:
+	var ap := int(config["construction"]["build_ap"])
+	var checked := _can_act(ap)
+	if not checked["ok"]:
+		return checked
+	if not facility_defs.has(facility_id):
+		return _error("未知设施")
+	var definition: Dictionary = facility_defs[facility_id]
+	if primeval_stones < int(definition["cash"]):
+		return _error("建设元石不足")
+	for ident in definition["materials"]:
+		if not inventory.has(ident, int(definition["materials"][ident])):
+			return _error("建设材料不足：" + ident)
+	var footprint: Array = definition["footprint"]
+	var tilled_before := []
+	for dy in range(int(footprint[1])):
+		for dx in range(int(footprint[0])):
+			var target := cell + Vector2i(dx,dy)
+			if _source_cells.has(target):
+				return _error("设施不能覆盖资源点")
+			if grid.in_bounds(target.x, target.y) and grid.state_at(target) == Grid.State.TILLED:
+				tilled_before.append(target)
+	var uid := _next_facility_uid
+	checked = grid.reserve(cell, int(footprint[0]), int(footprint[1]), "v1_facility:%d" % uid)
+	if not checked["ok"]:
+		return checked
+	for target in tilled_before:
+		_tilled_under_buildings[target] = true
+	for ident in definition["materials"]:
+		inventory.remove(ident, int(definition["materials"][ident]))
+	primeval_stones -= int(definition["cash"])
+	_next_facility_uid += 1
+	facilities[uid] = {"uid": uid, "facility_id": facility_id, "origin": [cell.x,cell.y], "batch": {}}
+	return _finish(ap, {"ok": true, "facility_uid": uid})
+
+func demolish_facility(uid: int) -> Dictionary:
+	var ap := int(config["construction"]["demolish_ap"])
+	var checked := _can_act(ap)
+	if not checked["ok"]:
+		return checked
+	if not facilities.has(uid) or not facilities[uid]["batch"].is_empty():
+		return _error("只能拆除空闲设施")
+	var cells: Array = grid.holder_cells("v1_facility:%d" % uid).duplicate()
+	grid.release("v1_facility:%d" % uid)
+	for target in cells:
+		_tilled_under_buildings.erase(target)
+	facilities.erase(uid)
+	# No construction refunds and no destruction of processing/ready batches.
+	return _finish(ap, {"ok": true})
+
+func start_batch(facility_uid: int, recipe_id: String) -> Dictionary:
+	if not facilities.has(facility_uid) or not recipe_defs.has(recipe_id):
+		return _error("未知设施或配方")
+	var recipe: Dictionary = recipe_defs[recipe_id]
+	var checked := _can_act(int(recipe["start_ap"]))
+	if not checked["ok"]:
+		return checked
+	var facility: Dictionary = facilities[facility_uid]
+	if facility["facility_id"] != recipe["facility"] or not facility["batch"].is_empty():
+		return _error("设施不适用或已有未收取批次")
+	for ident in recipe["inputs"]:
+		if not inventory.has(ident, int(recipe["inputs"][ident])):
+			return _error("加工投入不足：" + ident)
+	for ident in recipe["inputs"]:
+		inventory.remove(ident, int(recipe["inputs"][ident]))
+	var batch_id := _next_batch_uid
+	_next_batch_uid += 1
+	var inputs := {}
+	var outputs := {}
+	for ident in recipe["inputs"]:
+		inputs[ident] = int(recipe["inputs"][ident])
+	for ident in recipe["outputs"]:
+		outputs[ident] = int(recipe["outputs"][ident])
+	facility["batch"] = {"batch_id": batch_id, "recipe_id": recipe_id, "inputs": inputs,
+		"outputs": outputs, "start_day": clock.total_days,
+		"finish_day": clock.total_days + int(recipe["days"]), "status": "processing"}
+	return _finish(int(recipe["start_ap"]), {"ok": true, "batch_id": batch_id})
+
+func claim_batch(facility_uid: int, expected_batch_id: int) -> Dictionary:
+	if not facilities.has(facility_uid):
+		return _error("未知设施")
+	var batch: Dictionary = facilities[facility_uid]["batch"]
+	if batch.is_empty() or batch["batch_id"] != expected_batch_id or batch["status"] != "ready":
+		return _error("批次未完成、已收取或已过期")
+	var recipe: Dictionary = recipe_defs[batch["recipe_id"]]
+	var checked := _can_act(int(recipe["claim_ap"]))
+	if not checked["ok"]:
+		return checked
+	var outputs: Dictionary = batch["outputs"].duplicate(true)
+	for ident in outputs:
+		inventory.add(ident, int(outputs[ident]))
+	facilities[facility_uid]["batch"] = {}
+	return _finish(int(recipe["claim_ap"]), {"ok": true, "batch_id": expected_batch_id, "items": outputs})
+
 func _on_day_changed(day: int) -> void:
 	for uid in crops:
 		var row: Dictionary = crops[uid]
@@ -252,6 +362,10 @@ func _on_day_changed(day: int) -> void:
 	_source_day = day
 	for ident in _source_used:
 		_source_used[ident] = 0
+	for row in facilities.values():
+		var batch: Dictionary = row["batch"]
+		if not batch.is_empty() and batch["status"] == "processing" and day >= int(batch["finish_day"]):
+			batch["status"] = "ready"
 	if _store != null:
 		var saved: Dictionary = _store.commit(to_snapshot())
 		daily_save_error = "" if saved["ok"] else String(saved["reason"])
@@ -261,15 +375,19 @@ func to_snapshot() -> Dictionary:
 	var tilled := []
 	for y in range(grid.height):
 		for x in range(grid.width):
-			if grid.state_at(Vector2i(x,y)) in [Grid.State.TILLED, Grid.State.PLANTED]:
+			if grid.state_at(Vector2i(x,y)) in [Grid.State.TILLED, Grid.State.PLANTED] or _tilled_under_buildings.has(Vector2i(x,y)):
 				tilled.append([x,y])
 	var rows := []
 	for uid in crops.keys():
 		rows.append(crops[uid].duplicate(true))
-	return {"product": "farm_demo_v1", "schema": 2, "clock": clock.to_save(),
+	var buildings := []
+	for row in facilities.values():
+		buildings.append(row.duplicate(true))
+	return {"product": "farm_demo_v1", "schema": Snapshot.SCHEMA, "clock": clock.to_save(),
 		"economy": {"primeval_stones": primeval_stones}, "inventory": inventory.to_save(),
 		"world": {"map_id": config["map_id"], "tilled": tilled, "environment": environment.duplicate(true),
-			"crops": rows, "next_uid": _next_uid, "sources": {"day": _source_day, "used": _source_used.duplicate()}}}
+			"crops": rows, "next_uid": _next_uid, "sources": {"day": _source_day, "used": _source_used.duplicate()},
+			"facilities": buildings, "next_facility_uid": _next_facility_uid, "next_batch_uid": _next_batch_uid}}
 
 func apply_snapshot(value) -> Dictionary:
 	var checked := Snapshot.normalize(value)
@@ -285,6 +403,20 @@ func apply_snapshot(value) -> Dictionary:
 		var definition: Dictionary = crop_defs[row["crop_id"]]
 		grid.reserve(Vector2i(int(row["origin"][0]), int(row["origin"][1])), int(definition["footprint"][0]), int(definition["footprint"][1]), "v1_crop:%d" % int(row["uid"]), Grid.State.PLANTED)
 		crops[int(row["uid"])] = row.duplicate(true)
+	facilities.clear()
+	_tilled_under_buildings.clear()
+	for row in world["facilities"]:
+		var definition: Dictionary = facility_defs[row["facility_id"]]
+		var origin := Vector2i(int(row["origin"][0]), int(row["origin"][1]))
+		for dy in range(int(definition["footprint"][1])):
+			for dx in range(int(definition["footprint"][0])):
+				var cell := origin + Vector2i(dx,dy)
+				if grid.state_at(cell) == Grid.State.TILLED:
+					_tilled_under_buildings[cell] = true
+		grid.reserve(origin, int(definition["footprint"][0]), int(definition["footprint"][1]), "v1_facility:%d" % int(row["uid"]))
+		facilities[int(row["uid"])] = row.duplicate(true)
+	_next_facility_uid = int(world["next_facility_uid"])
+	_next_batch_uid = int(world["next_batch_uid"])
 	clock.apply_save(snapshot["clock"])
 	inventory.apply_save(snapshot["inventory"])
 	primeval_stones = int(snapshot["economy"]["primeval_stones"])

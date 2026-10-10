@@ -46,6 +46,11 @@
           "level": 30
         }
       ]
+    },
+    "construction": {
+      "build_ap": 1,
+      "demolish_ap": 1,
+      "refund_percent": 0
     }
   },
   "resources": [

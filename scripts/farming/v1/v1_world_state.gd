@@ -1,5 +1,5 @@
 extends RefCounted
-## Detached world validation. Occupancy is derived from crop footprints, never duplicated in saves.
+## Detached world validation. Crops and facilities share one derived occupancy map.
 const Data := preload("res://scripts/farming/v1/v1_data.gd")
 
 static func whole(value, minimum: int = 0, maximum: int = 9000000000000) -> bool:
@@ -26,13 +26,14 @@ static func fresh(day: int = 0) -> Dictionary:
 	for ident in Data.definitions("sources"):
 		used[ident] = 0
 	return {"map_id": config["map_id"], "tilled": [], "environment": environment,
-		"crops": [], "next_uid": 1, "sources": {"day": day, "used": used}}
+		"crops": [], "next_uid": 1, "sources": {"day": day, "used": used},
+		"facilities": [], "next_facility_uid": 1, "next_batch_uid": 1}
 
 static func coordinate(value, width: int, height: int) -> bool:
 	return value is Array and value.size() == 2 and whole(value[0], 0, width-1) and whole(value[1], 0, height-1)
 
 static func normalize(value, day: int) -> Dictionary:
-	if not exact(value, ["map_id", "tilled", "environment", "crops", "next_uid", "sources"]):
+	if not exact(value, ["map_id", "tilled", "environment", "crops", "next_uid", "sources", "facilities", "next_facility_uid", "next_batch_uid"]):
 		return fail("世界快照字段损坏")
 	var map := Data.load_map()
 	var width := int(map["size"][0])
@@ -101,5 +102,60 @@ static func normalize(value, day: int) -> Dictionary:
 		uids[row["uid"]] = true
 		crops.append({"uid": int(row["uid"]), "crop_id": row["crop_id"], "origin": [origin.x, origin.y],
 			"progress": int(row["progress"]), "state": row["state"], "harvest_count": int(row["harvest_count"])})
+	if not whole(value["next_facility_uid"], 1) or not whole(value["next_batch_uid"], 1) or not value["facilities"] is Array or value["facilities"].size() > width * height:
+		return fail("设施或批次序号非法")
+	var facility_defs := Data.definitions("facilities")
+	var recipe_defs := Data.definitions("recipes")
+	var facilities := []
+	var facility_uids := {}
+	var batch_uids := {}
+	for row in value["facilities"]:
+		if not exact(row, ["uid", "facility_id", "origin", "batch"]) or not whole(row["uid"], 1, int(value["next_facility_uid"])-1) or facility_uids.has(row["uid"]):
+			return fail("设施字段或序号非法")
+		if not row["facility_id"] is String or not facility_defs.has(row["facility_id"]) or not coordinate(row["origin"], width, height):
+			return fail("设施定义或坐标非法")
+		var definition: Dictionary = facility_defs[row["facility_id"]]
+		var origin := Vector2i(int(row["origin"][0]), int(row["origin"][1]))
+		for dy in range(int(definition["footprint"][1])):
+			for dx in range(int(definition["footprint"][0])):
+				var cell := origin + Vector2i(dx,dy)
+				if cell.x >= width or cell.y >= height or occupied.has(cell) or source_cells.has(cell) or not tillable.get(map["grid"][cell.y][cell.x], false):
+					return fail("设施越界、重叠或覆盖不可建设地形")
+				occupied[cell] = true
+		var batch = row["batch"]
+		if not batch is Dictionary:
+			return fail("加工批次字段损坏")
+		var normalized_batch := {}
+		if not batch.is_empty():
+			if not exact(batch, ["batch_id", "recipe_id", "inputs", "outputs", "start_day", "finish_day", "status"]) or not whole(batch["batch_id"], 1, int(value["next_batch_uid"])-1) or batch_uids.has(batch["batch_id"]):
+				return fail("加工批次字段或序号非法")
+			if not batch["recipe_id"] is String or not recipe_defs.has(batch["recipe_id"]):
+				return fail("未知加工配方")
+			var recipe: Dictionary = recipe_defs[batch["recipe_id"]]
+			if recipe["facility"] != row["facility_id"] or not whole(batch["start_day"], 0, day) or not whole(batch["finish_day"]) or batch["finish_day"] != batch["start_day"] + recipe["days"]:
+				return fail("加工设施或完成日期非法")
+			var expected_status := "ready" if batch["finish_day"] <= day else "processing"
+			if batch["status"] != expected_status:
+				return fail("加工状态与游戏日不一致")
+			var inputs := _quantities(batch["inputs"], recipe["inputs"])
+			var outputs := _quantities(batch["outputs"], recipe["outputs"])
+			if not inputs["ok"] or not outputs["ok"]:
+				return fail("加工批次投入或产物非法")
+			normalized_batch = {"batch_id": int(batch["batch_id"]), "recipe_id": batch["recipe_id"], "inputs": inputs["data"], "outputs": outputs["data"],
+				"start_day": int(batch["start_day"]), "finish_day": int(batch["finish_day"]), "status": expected_status}
+			batch_uids[batch["batch_id"]] = true
+		facility_uids[row["uid"]] = true
+		facilities.append({"uid": int(row["uid"]), "facility_id": row["facility_id"], "origin": [origin.x, origin.y], "batch": normalized_batch})
 	return {"ok": true, "world": {"map_id": map["id"], "tilled": tilled, "environment": environment,
-		"crops": crops, "next_uid": int(value["next_uid"]), "sources": {"day": day, "used": used}}}
+		"crops": crops, "next_uid": int(value["next_uid"]), "sources": {"day": day, "used": used},
+		"facilities": facilities, "next_facility_uid": int(value["next_facility_uid"]), "next_batch_uid": int(value["next_batch_uid"])}}
+
+static func _quantities(value, expected: Dictionary) -> Dictionary:
+	if not exact(value, expected.keys()):
+		return fail("物品数量表非法")
+	var out := {}
+	for ident in expected:
+		if not whole(value[ident], 1, 1000000) or value[ident] != expected[ident]:
+			return fail("物品数量非法")
+		out[ident] = int(value[ident])
+	return {"ok": true, "data": out}

@@ -70,6 +70,8 @@ def _compile(source):
     for key in ['ap_weight', 'day_weight']:
         require(positive(config[key]), 'invalid cost weight')
     require(integer(config['standard_action_ap'], 1), 'invalid standard action AP')
+    construction = config['construction']
+    require(set(construction) == {'build_ap', 'demolish_ap', 'refund_percent'} and integer(construction['build_ap'], 1, config['ap_per_day']) and integer(construction['demolish_ap'], 1, config['ap_per_day']) and integer(construction['refund_percent'], 0, 0), 'invalid construction policy')
     quantities(config['start_inventory'], resources, 'start_inventory')
     environment_keys = {'initial_water', 'initial_fertility', 'irrigate_units', 'irrigate_gain', 'fertilize_units', 'fertilize_gain', 'optimal_water', 'optimal_fertility', 'low_water_efficiency', 'low_fertility_efficiency', 'light_tolerance', 'low_light_efficiency'}
     require(set(config['environment']) == environment_keys, 'incomplete environment config')
@@ -130,7 +132,7 @@ def _compile(source):
         require(entry['item'] in resources and integer(entry['quantity'], 1) and integer(entry['daily_limit'], entry['quantity']) and entry['daily_limit'] % entry['quantity'] == 0 and integer(entry['ap'], 1, config['ap_per_day']), f'{ident}: daily capacity')
         known_sources[entry['item']].append(ident)
     for ident, facility in facilities.items():
-        require(pair(facility['footprint']) and integer(facility['cash']), f'{ident}: facility')
+        require(pair(facility['footprint']) and facility['footprint'][0] <= width and facility['footprint'][1] <= height and integer(facility['cash']), f'{ident}: facility')
         quantities(facility['materials'], resources, ident)
         for iid in facility['materials']: consumers[iid].append('build:' + ident)
     for ident, recipe in recipes.items():
