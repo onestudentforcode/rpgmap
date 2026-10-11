@@ -49,16 +49,16 @@ func _camera_bottom_margin() -> float:
 
 func _diet_selector(habitat: Dictionary, caption: String, diet_kind: String, slot: String) -> void:
 	var husbandry := hus()
-	var row := HBoxContainer.new()
-	sidebar.add_child(row)
-	_label(row,caption)
+	# Caption and selector stack vertically: side-by-side clips both at 360px.
+	_label(sidebar,caption)
 	var selector := OptionButton.new()
+	selector.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	for diet in husbandry.species_def(habitat["species_id"])[diet_kind]:
 		selector.add_item("%s：%s" % [diet["name"],_materials(diet["inputs"])])
 		selector.set_item_metadata(selector.item_count-1,diet["id"])
 		if diet["id"] == habitat[slot]: selector.select(selector.item_count-1)
 	selector.item_selected.connect(func(index): _result(husbandry.set_diet(int(habitat["facility_uid"]),diet_kind,slot,selector.get_item_metadata(index))); _show_cell())
-	row.add_child(selector)
+	sidebar.add_child(selector)
 
 func _show_habitat(facility: Dictionary) -> void:
 	var uid := int(facility["uid"])
