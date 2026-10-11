@@ -593,13 +593,25 @@ func _on_day_changed(day: int) -> void:
 	# internal reconciliation failure blocks the commit instead of bypassing it.
 	var ledger_error := _settle_ledger(day-1)
 	Journal.settle(journal,day,primeval_stones,inventory.to_save(),workforce.state["report"]["workers"])
+	# P8 runs the new day's opening devices only after day D is fully frozen, so
+	# a 45-day recap never mixes in day D+1 consumption. V1/V2 keep it inert.
+	_opening_devices(day)
+	_commit_day(day, ledger_error)
+	daily_settled.emit(day, _store != null and daily_save_error.is_empty())
+
+## Day D+1 opening device step, executed inside the settlement transaction.
+func _opening_devices(_day: int) -> void:
+	pass
+
+## Publish the settled day. The default products save the settled state directly;
+## P8 wraps this in a candidate transaction with full rollback on failure.
+func _commit_day(_day: int, ledger_error: String) -> void:
 	if _store != null:
 		if not ledger_error.is_empty():
 			daily_save_error = ledger_error
 		else:
 			var saved: Dictionary = _store.commit(to_snapshot())
 			daily_save_error = "" if saved["ok"] else String(saved["reason"])
-	daily_settled.emit(day, _store != null and daily_save_error.is_empty())
 
 func to_snapshot() -> Dictionary:
 	var tilled := []

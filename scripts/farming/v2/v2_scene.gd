@@ -321,6 +321,10 @@ func _worker_sources(worker_id: int) -> Array:
 			out.append(source)
 	return out
 
+## Water panel line; derived products reword it when the action changes meaning.
+func _water_action_text(quote: Dictionary) -> String:
+	return "维护：%s → +40（1AP）· %s" % [_materials(quote["inputs"]) if quote["ok"] else "清水×2",String(quote["reason"]) if not quote["ok"] else "可执行"]
+
 func _show_habitat(facility: Dictionary) -> void:
 	var uid := int(facility["uid"])
 	var husbandry := hus()
@@ -387,7 +391,7 @@ func _show_habitat(facility: Dictionary) -> void:
 			var predicted := maxi(0,int(habitat["water"])-int(husbandry.settings["water"]["decay"]))
 			_label(sidebar,"日结后预计%d · %s" % [predicted,"还可支持%d次日结成长" % support if support > 0 else "已达暂停线，先维护水体再投喂"])
 			var water_quote := husbandry.quote_water(uid)
-			_label(sidebar,"维护：%s → +40（1AP）· %s" % [_materials(water_quote["inputs"]) if water_quote["ok"] else "清水×2",String(water_quote["reason"]) if not water_quote["ok"] else "可执行"])
+			_label(sidebar,_water_action_text(water_quote))
 			var water_button := _icon(sidebar,"clean_water","维护水体（1AP）",func(): _result(husbandry.maintain_water(uid)); _show_cell())
 			water_button.disabled = not water_quote["ok"]
 		else:

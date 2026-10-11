@@ -15,10 +15,26 @@ var preferences := {"watched": []}
 func _init(slot_store = null) -> void:
 	# Built before super: the base constructor applies a fresh snapshot through the
 	# overrides below, and the modules only read shared members after that.
-	husbandry = Husbandry.new(self, V2Data.load_data())
-	ledger = ResourceLedger.new(self)
-	reports = Reports.new(self)
-	super(slot_store, V2Data, V2Snapshot)
+	husbandry = _make_husbandry()
+	ledger = _make_ledger()
+	reports = _make_reports()
+	super(slot_store, _catalog(), _codec())
+
+## Product seams so derived worlds can swap the namespace without copying _init.
+func _catalog():
+	return V2Data
+
+func _codec():
+	return V2Snapshot
+
+func _make_husbandry():
+	return Husbandry.new(self, V2Data.load_data())
+
+func _make_ledger():
+	return ResourceLedger.new(self)
+
+func _make_reports():
+	return Reports.new(self)
 
 func _report_event(entry: Dictionary) -> void:
 	reports.record(entry)

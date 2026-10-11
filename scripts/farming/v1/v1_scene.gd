@@ -1307,6 +1307,9 @@ func _show_market() -> void:
 	sidebar.move_child(card.get_parent(),categories.get_index()+1)
 	_heading(card,item["name"])
 	_label(card,"持有%d · 单价 买%d / 卖%d元石 · 可购%d / 可售%d" % [world.inventory.count(market_item),item["buy_price"],item["sell_price"],int(world.primeval_stones/maxi(1,item["buy_price"])) if item["buy_price"] > 0 else 0,world.inventory.count(market_item) if item["sell_price"] > 0 else 0])
+	var market_lock := _market_lock_text(market_item)
+	if not market_lock.is_empty():
+		_label(card,market_lock)
 	var row := HBoxContainer.new()
 	card.add_child(row)
 	_label(row,"数量")
@@ -1325,16 +1328,23 @@ func _show_market() -> void:
 	trade_spin.value_changed.connect(func(value): trade_quantity = int(value); _update_trade())
 	_update_trade()
 
+## Derived products can block purchases (e.g. research-gated seeds); default: open.
+func _market_lock_text(_item_id: String) -> String:
+	return ""
+
 func _update_trade() -> void:
 	var item: Dictionary = world._items[market_item]
 	var buy := int(item["buy_price"])*trade_quantity
 	var sell := int(item["sell_price"])*trade_quantity
+	var market_lock := _market_lock_text(market_item)
 	trade_total.text = "买入总价 %d / 卖出总价 %d 元石" % [buy,sell]
-	trade_buy.disabled = item["buy_price"] <= 0 or buy > world.primeval_stones
+	trade_buy.disabled = item["buy_price"] <= 0 or buy > world.primeval_stones or not market_lock.is_empty()
 	trade_sell.disabled = item["sell_price"] <= 0 or trade_quantity > world.inventory.count(market_item)
-	trade_buy.tooltip_text = "不可采购" if item["buy_price"] <= 0 else ("元石不足，需%d" % buy if buy > world.primeval_stones else "买入%d份 · %d元石" % [trade_quantity,buy])
+	trade_buy.tooltip_text = market_lock if not market_lock.is_empty() else ("不可采购" if item["buy_price"] <= 0 else ("元石不足，需%d" % buy if buy > world.primeval_stones else "买入%d份 · %d元石" % [trade_quantity,buy]))
 	trade_sell.tooltip_text = "不可出售" if item["sell_price"] <= 0 else ("库存不足，持有%d" % world.inventory.count(market_item) if trade_quantity > world.inventory.count(market_item) else "出售%d份 · %d元石" % [trade_quantity,sell])
-	if trade_buy.disabled and item["buy_price"] > 0: trade_total.text += " · 元石不足"
+	if not market_lock.is_empty():
+		trade_total.text += " · " + market_lock
+	elif trade_buy.disabled and item["buy_price"] > 0: trade_total.text += " · 元石不足"
 	if trade_sell.disabled and item["sell_price"] > 0: trade_total.text += " · 库存不足"
 
 func _trade(buying: bool) -> void:
