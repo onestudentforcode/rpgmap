@@ -1,0 +1,46 @@
+{
+  "schema": 1,
+  "id": "farm_02",
+  "name": "灵田·水库",
+  "size": [
+    20,
+    22
+  ],
+  "legend": {
+    "g": "grass",
+    "d": "dirt",
+    "s": "stone",
+    "w": "water"
+  },
+  "rows": [
+    "gggggggggggggggggggg",
+    "gggggddddddggggggggg",
+    "ggggddddddddggggddgg",
+    "ggggddddddddggggddgg",
+    "gggggddddddggggggggg",
+    "gggggggggggggggggggg",
+    "ssssssssssssssssssss",
+    "gggggggggggggggggggg",
+    "gggggggggggggggsssgg",
+    "gggggggggggggggsssgg",
+    "gggggggggggggggsssgg",
+    "gggggggggggggggggggg",
+    "gggggggggggggggggggg",
+    "gggggggggggggggggggg",
+    "wwwwwwwwwwwwwwwwwwww",
+    "wwwwwwwwwwwwwwwwwwww",
+    "wwwwwwwwwwwwwwwwwwww",
+    "wwwwwwwwwwwwwwwwwwww",
+    "wwwwwwwwwwwwwwwwwwww",
+    "wwwwwwwwwwwwwwwwwwww",
+    "wwwwwwwwwwwwwwwwwwww",
+    "wwwwwwwwwwwwwwwwwwww"
+  ],
+  "product": "farm_demo_v2",
+  "reservoir": [
+    0,
+    14,
+    20,
+    8
+  ]
+}

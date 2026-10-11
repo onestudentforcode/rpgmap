@@ -45,7 +45,7 @@ func build(root: Node2D, grid: LandGrid, terrains_data: Dictionary) -> bool:
 		tileset.add_source(src_ground, next_src)
 		t["_src_ground"] = next_src
 		next_src += 1
-		if int(t["layer"]) > 0 or t["dynamic"]:  # 上层/动态层：过渡 atlas（256 配置）
+		if (int(t["layer"]) > 0 and t.get("edge_mode") != "full") or t["dynamic"]:  # 上层/动态层：过渡 atlas（256 配置）
 			var trans := _load_tex(t["textures"]["trans"])
 			if trans == null:
 				return false
@@ -82,7 +82,7 @@ func update_cells(cells: Array[Vector2i]) -> void:
 	for c in cells:
 		if not _grid.in_bounds(c.x, c.y):
 			continue
-		if _grid.state_at(c) == LandGrid.State.TILLED:
+		if not _grid.medium_at(c).is_empty():
 			layer.set_cell(c, _dynamic_src, _dynamic_atlas(c))
 		else:
 			layer.erase_cell(c)
@@ -120,18 +120,23 @@ func _rebuild_static() -> void:
 		if t["dynamic"] or int(t["layer"]) == 0:
 			continue
 		var layer: TileMapLayer = layers[t["id"]]
-		var src: int = t["_src_trans"]
+		var full: bool = t.get("edge_mode") == "full"
+		var src: int = t["_src_ground"] if full else t["_src_trans"]
 		var tid: String = t["id"]
 		for y in range(_grid.height):
 			for x in range(_grid.width):
 				var cell := Vector2i(x, y)
 				if _grid.terrain_at(cell) == tid:
-					layer.set_cell(cell, src, _static_atlas(tid, cell))
+					layer.set_cell(cell, src, Vector2i.ZERO if full else _static_atlas(tid, cell))
 
 
 ## 全量刷新动态层（读档/复位后调用；常规变更走 update_cells 增量）。
 func refresh_dynamic_all() -> void:
-	update_cells(_grid.cells_with_state(LandGrid.State.TILLED))
+	var cells: Array[Vector2i] = []
+	for y in range(_grid.height):
+		for x in range(_grid.width):
+			cells.append(Vector2i(x,y))
+	update_cells(cells)
 
 
 func _static_atlas(tid: String, cell: Vector2i) -> Vector2i:
@@ -146,11 +151,18 @@ func _dynamic_atlas(cell: Vector2i) -> Vector2i:
 func _tilled_pred() -> Callable:
 	# 经 LandGrid 公开接口 state_at 判定，保持渲染层零内部状态依赖
 	var grid := _grid
-	return func(x: int, y: int) -> bool: return grid.state_at(Vector2i(x, y)) == LandGrid.State.TILLED
+	return func(x: int, y: int) -> bool: return not grid.medium_at(Vector2i(x, y)).is_empty()
 
 
 func _load_tex(rel: String) -> Texture2D:
-	var img := Image.load_from_file("res://" + rel)
+	var path := "res://" + rel
+	if OS.has_feature("farm_demo_release") or OS.has_feature("farm_demo_v1_release") or OS.has_feature("farm_demo_v2_release"):
+		return load(path) as Texture2D
+	var img := Image.new()
+	var error := img.load_svg_from_string(FileAccess.get_file_as_string(path)) if path.ends_with(".svg") else img.load_png_from_buffer(FileAccess.get_file_as_bytes(path))
+	if error != OK:
+		push_error("[farm] 无法解码纹理 " + path)
+		return null
 	if img == null or img.is_empty():
 		push_error("[farm] 无法加载纹理 res://" + rel)
 		return null

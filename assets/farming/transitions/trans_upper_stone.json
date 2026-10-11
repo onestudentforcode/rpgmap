@@ -19,5 +19,17 @@
   },
   "bit_meaning": "置位 = 该方向邻格同属本上层地形",
   "atlas_of": "col = bitmask & 15, row = bitmask >> 4",
-  "source_tool": "tools/farming/gen_farm_terrains.py"
+  "source_tool": "tools/farming/gen_farm_terrains.py",
+  "mask_config": {
+    "outer_radius": 13,
+    "diagonal_radius": 6,
+    "dither_rows": 2,
+    "dither_periods": [
+      2,
+      4
+    ],
+    "rim_width": 2,
+    "rim_dark_factor": 0.85,
+    "rim_deep_factor": 0.72
+  }
 }

@@ -1,6 +1,9 @@
 # handoff — 跨机器开发交接
 
-> 最后更新：2026-10-08 @ dev（灵植经营模块立项，总规划落地）。
+> 最后更新：2026-10-11（P7/V2已关闭；P8范围问答完成，生态/工艺/研究与分阶段设计已统一起草）。
+> **现行版本：** [Phase7 / Demo V2](docs/farming/phase-07-V2养殖与资源循环.md)。默认`play.bat`/F5为V2；三槽`user://farm_demo_v2_slots`、schema11，无迁移；2×2圈舍/水场、4只容量、20×22及下方20×8水库、钢绵羊/滤藻鲤与专责负责人均实装。V2人数不限，一人一设施，不参与农务，按成功工作收费。双45日路线、完整导出/解压包及回归证据见[验收记录](docs/farming/phase07-v2-playtest.md)、[P7.f](docs/farming/phase-07f-试玩验收与V2交付.md)。软件交付通过，原生OS鼠标全流程未执行。
+> **下一阶段：** [P8生态产业网络与工艺研究](docs/farming/phase-08-生态产业网络与工艺研究.md)范围已确认，设计已起草、代码未开始。先读[资源/工艺表](docs/farming/phase-08-资源与工艺表.md)、[研究关系](docs/farming/phase-08-研究与生产关系.md)与[P8.a～h计划](docs/farming/phase-08-分阶段实施计划.md)，下一实施入口P8.a。新配数为待验证初值；多设施负责人/兼任尚未实现，现行仍为P7一人一设施。用户确认P7剩余待办不紧急，不将其作为P8前置。
+> **后续现场补验：** 原生Computer Use连接管道缺失，待有桌面控制条件时补完整新档→建设→养育/生产→回流/交易→委派→读档/回顾及窗口/全屏焦点检查。引擎GUI事件与截图已通过；原生人工测试尚未执行，经用户确认不阻塞P7关闭。
 > 交接对象：新机器上的开发者或 AI 会话。
 > **开工前必读：§2 新机器清单 → §6 命令自检；现行主线是种植模块，先读 [docs/farming/master-plan.md](docs/farming/master-plan.md)；改 demo 地图前必读 [docs/map-schema.md](docs/map-schema.md)。**
 
@@ -10,8 +13,8 @@
    星露谷式多城镇（单镇多张功能地图 + 特殊交互点）和野外战斗触发图（地图只抛事件不承载战斗）。
 2. **daoyan 接入不是现阶段任务**：`docs/daoyan-reuse-plan.md` + `-answers.md` 是背景资料
    （将来移植的目标形态与接口摸底），实验期间**只读不改** daoyan 仓库。
-3. **正式美术由 ComfyUI 生成（另一台机器）**：本机负责规格制定、资产清单（manifest）、
-   占位图生成与 QC 验收；美术到位后零代码替换。
+3. **现行正式美术使用内置image_gen**：用户确认本机没有ComfyUI；历史脚本与跨机器移交保留为备选；
+   原图与候选保留在工作目录，正式图通过 QC 和场景审核后同名接入。
 
 ## 2. 新机器快速上手（checklist）
 
@@ -21,9 +24,9 @@
 4. 告诉启动脚本引擎路径（二选一）：
    - 设环境变量 `GODOT_EXE` / `GODOT_EXE_CONSOLE` 指向 Godot 可执行文件（推荐）
    - 或直接改 `play.bat` 顶部的默认路径
-5. 首次运行 `play.bat --selftest`：Godot 会自动重建 `*.import`（被 gitignore，属正常）；
-   **预期输出 SELFTEST OK（35 项）**——这就是基线健全的证明
-6. 跑起来看一眼：`play.bat`（暖色百货）、`play.bat dusk`（暮色换肤）、`play.bat wilds`（野外）
+5. 首次运行 `test.bat`：执行当前种植模块的资产QC、工具测试、农场流程和独立V1测试；`test-v1.bat`可单跑V1编译产物、三槽/报价、种植/环境/资源点、加工/回流、订单/rank/经济及普通雇工/框选派工界面检查；
+   **预期输出 FARMING TEST SUITE OK**；`play.bat --selftest`单跑V1隔离冒烟，V0逻辑用`play.bat farm --farmtest`。
+6. 运行`play.bat`或Godot F5进入V2；`play.bat v2`等价。`test-v2.bat`运行完整模型/双45日/GUI事件/源码冒烟，构建用`tools/farming/build_v2_demo.ps1`；包在`dist/LingTianDemoV2-Windows-x64.zip`。V1/V0用显式`v1`/`v0`，旧演示`demo`，phase00 `farm0`。
 
 ## 3. 当前状态
 
@@ -51,9 +54,14 @@
     AP 归零自动次日）+ 作物生命周期（GROWING/MATURE/REGROWING/EXHAUSTED，
     有限次再生+枯竭清理）+ 多素材产出（确定性掷量）+ 库存 + 存档 v2；
     farmtest 40 项全过（详见 [phase-02](docs/farming/phase-02-核心种植系统.md)）
-  - 当前：**Phase 3 已展开待执行** → [phase-03-AI作物资产管线.md](docs/farming/phase-03-AI作物资产管线.md)
-    （资产契约/采购单 manifest 协议/QC 工具/AI 生成工作流/正式素材替换 + P1-C 处理；
-    执行前提：ComfyUI 出图机可用）
+  - **Phase 3 已关闭**：四类地面与现有两种植物正式图片已接入，资产管线与过渡验收完成；
+    详见 [phase-03](docs/farming/phase-03-AI作物资产管线.md)。
+  - **Phase 4 已关闭**：四类作物运行、介质/多格/存档和正式图齐备；用户审核果树B＋菌菇A后完成衍生。
+    清单31项均交付或程序生成，31项QC/20项工具/67项流程及前后遮挡像素验证通过；
+    详见[phase-04](docs/farming/phase-04-四类作物扩展.md)。
+  - **Phase 5已关闭（本仓库闭环）**：60元石、木属性食材、饱食度6（每日/指定成功行为各减1）、
+    集市/喂养面板、介质材料消耗、schema3兼容存档；31项QC/23项工具/97项流程检查通过。
+    详见[phase-05](docs/farming/phase-05-喂养与经济闭环.md)；上游实际接线尚未实施。
 - demo 实验的 P5/P6 **暂缓**（P5 跨机器出图协作模式由种植模块 Phase 3 继承）
 - 开放问题（命名/持久化深度/战斗桩深度）见 demo-phases.md §6，均给了默认值，不阻塞
 
@@ -62,6 +70,22 @@
 | 文档 | 内容 | 何时读 |
 |------|------|--------|
 | [docs/farming/master-plan.md](docs/farming/master-plan.md) | **灵植经营模块总 Phase 规划（现行主线）** | **开工先读** |
+| [docs/farming/phase-08-生态产业网络与工艺研究.md](docs/farming/phase-08-生态产业网络与工艺研究.md) | **当前P8范围、生态与人力/日界契约，未实施** | **推进当前主线先读** |
+| [docs/farming/phase-08-资源与工艺表.md](docs/farming/phase-08-资源与工艺表.md) | 6物种/8设施/24工艺，资源ID/价格/守恒/成本初值 | 配数与配置落地前 |
+| [docs/farming/phase-08-研究与生产关系.md](docs/farming/phase-08-研究与生产关系.md) | 三层12研究DAG、样本来源与三组生产网 | 实施解锁与路线前 |
+| [docs/farming/phase-08-分阶段实施计划.md](docs/farming/phase-08-分阶段实施计划.md) | P8.a～h顺序、边界验证、双90日无注入验收 | 每批实施前 |
+| [docs/farming/phase-07-V2养殖与资源循环.md](docs/farming/phase-07-V2养殖与资源循环.md) | 已关闭P7 / V2范围、实现与验收 | 核对现行基线时 |
+| [docs/farming/phase-07a-验收记录.md](docs/farming/phase-07a-验收记录.md) | 已完成底座、实际10日台账与尚未验收养殖边界 | 核对当前运行事实 |
+| [docs/farming/phase-07b-养殖基础与成长.md](docs/farming/phase-07b-养殖基础与成长.md) | 已完成幼体/成长/基础维护、水体与资源一览的设计依据 | 调整既有养殖时 |
+| [docs/farming/phase-07c-特殊生产与养殖回流.md](docs/farming/phase-07c-特殊生产与养殖回流.md) | 暂不生产、特殊周期/唯一收取、粪肥回流与供货 | 实施P7.c前 |
+| [docs/farming/phase-07d-设施负责人.md](docs/farming/phase-07d-设施负责人.md) | 一人一设施不兼职、开放人数、巡栏/计件费与现金风险 | 实施P7.d前 |
+| [docs/farming/phase-07e-经营总览与资源关注.md](docs/farming/phase-07e-经营总览与资源关注.md) | 总览定位、初始空关注提示/按槽保存、条目与45天累计 | 实施P7.e前 |
+| [docs/farming/phase-07f-试玩验收与V2交付.md](docs/farming/phase-07f-试玩验收与V2交付.md) | 双路线45日、回归/UI/Windows包及验收后默认切V2 | 实施P7.f前 |
+| [docs/farming/phase-06.5-UI美化与交互完善.md](docs/farming/phase-06.5-UI美化与交互完善.md) | 已验收UI基线、三个批次与验收规则 | 调整界面时 |
+| [docs/farming/ui-design/phase65-interface.md](docs/farming/ui-design/phase65-interface.md) | 用户决定、布局/尺寸、图标与四条高频流程；含交互草图入口 | 实施Phase 6.5时 |
+| [docs/farming/demo-v1-plan.md](docs/farming/demo-v1-plan.md) | 已关闭V1的玩法基线、实施与验收记录 | 查阅现行玩法时 |
+| [docs/farming/demo-v1-employment.md](docs/farming/demo-v1-employment.md) | 普通雇工、任务标记、调度与存档规则 | 调整派工时 |
+| [docs/farming/phase-04-四类作物扩展.md](docs/farming/phase-04-四类作物扩展.md) | V0介质与大画布契约、执行记录 | 查阅既有作物/资产时 |
 | [docs/demo-phases.md](docs/demo-phases.md) | demo 实验阶段规划与验收记录（P0–P4） | 内核/工作流背景 |
 | [docs/map-schema.md](docs/map-schema.md) | 地图/主题数据格式 + bake 流程 | **改 demo 地图/改主题前** |
 | [docs/assets-spec.md](docs/assets-spec.md) | 美术资产规格（ComfyUI 对接） | demo 美术回填时；种植模块美术规范以 Phase 0/3 新产出为准 |
@@ -91,10 +115,15 @@ scripts/main.gd（状态机：移动/对话/菜单/战斗桩/切图）
 ## 6. 常用命令
 
 ```
-play.bat                        # 启动（默认主题）
-play.bat <theme>                # 主题：placeholder | dusk | wilds
-play.bat --selftest             # 35 项逻辑自测（headless 逻辑 + 窗口自绘）
-play.bat --shots=DIR            # 窗口截图验收（7 张/城镇主题，4 张/野外主题）
+play.bat                        # V1明亮界面、三槽、农务派工、加工、市场与订单
+play.bat v1                     # 与默认入口等价
+play.bat v0                     # V0独立开始页与旧存档
+test-v1.bat                     # V1模型、界面、经营记录与隔离冒烟
+test.bat                        # 资产QC + 工具测试 + 独立V0回归 + 完整V1测试
+play.bat --selftest             # V1隔离冒烟（headless）
+play.bat --shots=DIR            # V1隔离预览截图
+play.bat demo wilds             # 旧商场/野外演示，显式入口
+play.bat demo --selftest         # 旧演示测试，按需单独运行
 
 python tools/bake_maps.py               # 烘焙（改 content/ 后必跑；校验失败即退出）
 python tools/gen_placeholder_assets.py  # 重新生成占位美术（读 themes/*.json 色板）
@@ -104,8 +133,12 @@ python tools/farming/bake_farm.py          # 种植数据烘焙（改 content/fa
 python tools/farming/gen_farm_terrains.py  # 重生成地形占位纹理（--verify 只校验）
 python tools/farming/gen_farm_crops.py     # 重生成作物占位阶段图（--verify 只校验）
 python tools/farming/gen_asset_manifest.py # 资产采购单（改数据/交付资产后重跑；--missing 查缺）
+python tools/farming/gen_farm_terrains.py --transitions-only # 正式地面回传后仅重建 atlas（不覆盖 ground）
+python tools/farming/qc_assets.py --target all # 正式资产统一检查（占位差异见 art-pipeline.md）
+python tools/farming/build_art_handoff.py --batch ground --output .art-work/handoff/ground # 空输出目录
 play.bat farm                              # 主农场场景（开垦/种植/采收/存档）
-play.bat farm --farmtest                   # 种植逻辑自测（40 项）
+play.bat farm --farmtest                   # 种植/经济/Demo存档流程自测（当前 234 项）
+play.bat farm --fresh                      # V0无存档开发预览；V1新游戏从默认开始页选槽
 play.bat farm0                             # Phase 0 拼接验证场景（历史回归）
 ```
 
@@ -113,21 +146,33 @@ play.bat farm0                             # Phase 0 拼接验证场景（历史
 改 `assets/` 贴图后，编辑器打开会自动重导入；纯命令行场景跑一次
 `godot --headless --path . --import`。
 
-## 7. 下一步：种植模块 Phase 3（AI 作物资产管线）
+## 7. 当前闭环与后续阶段
 
-**Phase 0/1/2 均已于 2026-10-08 关闭**（验收记录见
-[phase-00](docs/farming/phase-00-技术基线与重构准备.md) /
-[phase-01](docs/farming/phase-01-地形与土地系统.md) /
-[phase-02](docs/farming/phase-02-核心种植系统.md)）。下一步按总规划
-[master-plan §六](docs/farming/master-plan.md) 展开
-`docs/farming/phase-03-AI作物资产管线.md`（资产契约 / manifest 采购单协议 /
-`qc_assets.py` / AI 生成工作流与 style-sheet / 正式素材替换——**含 P1-C 过渡观感
-挂起项**；跨机器 ComfyUI 出图协作模式在本阶段落地，继承 demo P5 设想）。
+**Demo V1已关闭，Phase 6.5也已实施并验收。** 当时默认为V1；当前默认`play.bat`/F5已切V2，V1由`play.bat v1`进入，V0通过`play.bat v0`保留；历史应用标识不变。2560×1440主规格及三种兼容窗口、100/125/150% UI缩放通过，58个SVG与独立设置接入，79项新增UI检查、原有回归及13项发行版冒烟通过。具体见[Phase 6.5关闭记录](docs/farming/phase-06.5-UI美化与交互完善.md)。完整世界场景美术仍需另批，后续世界图片继续核对拼接、机位及光照。
+
+**Phase7/V2已完成并经用户确认关闭，原生桌面试玩移交后续补验。** 两条独立新档各45日无注入、满容量持续供料、五行供货、两种粪肥实际回流、收入再投资及46日冻结均通过。331项P7边界、19项GUI事件、12组/96张截图、V1/V0/历史回归、导出/解压各15项完整冒烟已执行。包含内嵌PCK的exe、README及逐文件manifest/SHA256；原始90日台账、哈希与命令详见[验收记录](docs/farming/phase07-v2-playtest.md)。当前schema11、默认V2、无旧档迁移、人数不限。原生Computer Use不可用，原生桌面全流程不得记为已通过；该补验不阻塞阶段关闭。
+
+**P8设计范围已确定，尚未开发。** 核心6物种、8新设施、24有效工艺＋另列堆肥变体、三层12研究，覆盖花源油料/净水/生物选矿与饲料/少量灵食；继承20×22与共享仓库。一人多设施、默认关闭的显式农务兼任共享12次成功工作/预算；研究按有效工作日，持续生产按目标与自动加工保留量。有限花源与手采共享、实际换水产污水、回收有损耗、矿料投入审计；45日回顾保留、90日完整发展验收。价格/数量/覆盖为设计初值，实际成本和经营未验收。用户选择全部回答后统一同步文档，本批仅文档，不切默认入口/schema；P7待办不作为前置，榨油已明确纳入P8、集热仍后置。
+
+现行V1：逐条摘要/时节小结、首次45天总计与三个时节小计已接入；无注入经营路线初始60→298，121项记录、51项原界面及79项Phase 6.5界面检查通过。独立包`dist/LingTianDemoV1-Windows-x64.zip`包含明亮矢量UI与占位世界美术，解压运行`LingTianDemoV1.exe`，说明见[demo-v1-操作说明](docs/farming/demo-v1-操作说明.md)。重建使用`tools/farming/build_v1_demo.ps1 -GodotExe <控制台路径>`，需匹配的Windows release模板；13项打包后冒烟通过。旧V1从升级当天开始记录，已过45天的旧档无法补造首次回顾。下述Phase记录为V0基线。
+
+Phase 0–5已关闭；Phase5以本仓库种植经济闭环为完成条件，对上游保留适配接口。
+Phase6范围已由用户确认，草案见[phase-06](docs/farming/phase-06-Demo体验与三槽存档.md)：
+开始菜单/引导、三槽每日自动存档（撤除玩家手动存读）、首个45天经营回顾、购买高级3×3工具（成功AP总成本折半向上取整）与设置。
+P6.a/P6.b已完成：默认进入Demo开始菜单、三槽选择/删除/覆盖/导入、每日自动保存及统一退出流程。F5/F9和手动存读按钮撤除。
+P6.c已完成：成功行为统计、首次45天冻结回顾与菜单重看，随所属槽保存。P6.d已完成：M工具页购买高级锄头/播种器/采收器，工具栏普/高切换、中心3×3范围、整批成功AP折半取整及工具槽隔离。P6.e已完成：七步成功操作教学、跳过/重看/日存档恢复，主菜单与游戏菜单显示设置开放。P6.f完成45天自动经营/截图审核与Windows独立包；31项QC、25项工具、234项流程，另12项试玩与8项发布检查通过。Phase6关闭，价格保留试玩初值，个人体验反馈另行调整。
+
+Windows试玩包：`dist/LingTianDemo-Windows-x64.zip`，解压运行`LingTianDemo.exe`；操作说明见`docs/farming/demo-操作说明.md`。重新构建：配置`GODOT_EXE_CONSOLE`与同版本Windows release模板，执行`tools/farming/build_demo.ps1`。发布包只含当前农场，旧demo/Phase00和开发测试不随包交付；历史工作区入口仍保留。构建产物、隔离验收日志与截图不提交Git，原始45天台账及评估位于`docs/farming/phase06-playtest.*`。
+全局显示设置单独保存于user://farm_demo_settings.cfg：全屏/窗口分辨率、垂直同步或帧率上限与FPS显示；教学状态随游戏槽保存。
+不新增作物/人物/美术/音乐，不实现蛊虫主动能力或实际上游接线。
+游戏中M打开库存/集市/喂养，R进入次日；指定行为调用`record_gu_use(behavior, succeeded)`，默认允许battle。
+现有四类作物正式图全部保留，后续美术继续适量加入东方玄幻意象；母版先人工审核后衍生。
+完整生成记录见docs/farming/art-generation-phase04.json，原图/候选/失败报告保留在.art-work/。
 
 已冻结基线（后续阶段直接遵守）：
 
 - tile **64×64**；分层地形栈 + 自研 bitmask 过渡（`trans_upper_*`）；美术规范
-  phase-00 §4 + 素材替换契约 phase-01 §2.6（**占位图将被 AI 正式图同名替换**；
+  phase-00 §4 + 素材替换契约 phase-01 §2.6（现有两种植物已使用正式图；
   逻辑零像素依赖；替换后必跑 QC → farmtest → 截图核对）
 - `LandGrid`（WILD/TILLED/PLANTED/OCCUPIED-prev/UNAVAILABLE + 原子多格占用 +
   增量信号）与 `CropManager`（GROWING/MATURE/REGROWING/EXHAUSTED、
@@ -135,9 +180,9 @@ play.bat farm0                             # Phase 0 拼接验证场景（历史
   `FarmClock`（24 时节×15 天×24AP，day_changed 离散推进）
 - 数据纪律：`content/farming/` 源 JSON → `bake_farm.py` → `baked/`（运行时唯一读取）
 
-原 demo P5（美术回填演练）暂缓；其跨机器出图协作模式
-（manifest → ComfyUI 出图 → 本机 QC → 零代码替换）由种植模块 Phase 3 资产管线继承，
-届时在 `docs/farming/` 下另立资产规范文档。
+现有正式图片不得被占位生成覆盖。使用 B 在空耕地轮换介质，每次消耗 1AP；准备菌床/朽木另扣对应商品1份；
+当前介质外观为临时色块。大画布按 sprite_size 登记，逻辑占地仍由 footprint 决定。
+默认测试仅覆盖当前种植模块，旧 demo 与 farm0 保留显式独立入口。
 
 ## 8. 机器相关差异与已知坑
 
@@ -154,10 +199,21 @@ play.bat farm0                             # Phase 0 拼接验证场景（历史
 
 ## 9. 新 AI 会话交接边界
 
-1. 先读本文档 + docs/farming/master-plan.md（现行主线），然后跑 `play.bat --selftest` 确认基线
+1. 先读本文档 + docs/farming/master-plan.md（现行主线），然后跑 `test.bat` 确认种植模块基线；详见`docs/farming/testing.md`
 2. 一切地图/主题修改走「源 JSON → bake → 验证」流程，禁止手改 `content/baked/`
-3. 保持实验边界：不接 daoyan、不做存档完整方案、不部署本地 ComfyUI（见 demo-phases §5）
+3. 不改daoyan；Phase5本仓库闭环已完成，上游实际接线另行授权。出图以image_gen及统一后处理/QC为准
 4. 提交纪律：**每个小阶段（任务级）完成即 git 提交**，不等整个 Phase 收尾；
    Phase 级收尾另加：自测全过 + 截图人工核对 + 验收记录勾选
 5. 种植模块一切以 master-plan.md 为准：一次只展开当前 Phase；旧经营地基
    （Blender 管线实验文件，见 master-plan 附录 A.3）仅作参考，禁止作为新模块依赖
+
+### P7.f技术交付命令
+
+```powershell
+.\test-v2.bat
+.\play.bat --selftest
+powershell -NoProfile -ExecutionPolicy Bypass -File tools/farming/review_v2_ui.ps1
+powershell -NoProfile -ExecutionPolicy Bypass -File tools/farming/build_v2_demo.ps1
+```
+
+界面矩阵依赖双45日回放生成的实际快照，先执行`test-v2.bat`。测试隔离槽自动清理，不使用玩家目录。构建产物/中间日志/截图分别留`dist/`、`.art-work/`、`.shots/`；完整台账与说明已提交。原生桌面鼠标完整试玩待补，具体环境错误和补验路线见P7.f记录。

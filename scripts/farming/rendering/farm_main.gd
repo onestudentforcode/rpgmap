@@ -3,15 +3,20 @@ extends Node2D
 ## 时间体系：24 时节 × 15 天 × 24 行动点（master-plan v1.1 任务 2.3）。
 ## 地形数据只读烘焙产物；渲染增量更新；存档纯逻辑数据（素材替换零影响）。
 ##
-## 运行：play.bat farm [--farmtest] [--farm-shots=DIR] [--fresh]
+## 默认入口：play.bat [--selftest] [--shots=DIR] [--fresh]；test.bat 运行当前模块测试。
+## 兼容：play.bat farm [--farmtest] [--farm-shots=DIR]。
 ##   左键 行动 · 1-9/H 选工具（0 锄头，其余种子槽） · R 休息进入次日
-##   F5 存档 · F9 读档 · WASD/方向键 平移 · 滚轮 缩放
+##   每日结束自动存入所属槽 · Esc菜单 · WASD/方向键平移 · 滚轮缩放
 
 const FarmData := preload("res://scripts/farming/core/farm_data.gd")
 const LandGrid := preload("res://scripts/farming/core/grid/land_grid.gd")
 const FarmClock := preload("res://scripts/farming/core/clock/farm_clock.gd")
 const CropManager := preload("res://scripts/farming/core/crops/crop_manager.gd")
 const FarmInventory := preload("res://scripts/farming/core/inventory/farm_inventory.gd")
+const FarmSnapshot := preload("res://scripts/farming/core/storage/farm_snapshot.gd")
+const FarmEconomy := preload("res://scripts/farming/core/economy/farm_economy.gd")
+const FarmEconomyPanel := preload("res://scripts/farming/rendering/farm_economy_panel.gd")
+const FarmUI := preload("res://scripts/farming/rendering/farm_ui_style.gd")
 const FarmTerrainRenderer := preload("res://scripts/farming/rendering/terrain_renderer.gd")
 const CropRenderer := preload("res://scripts/farming/rendering/crop_renderer.gd")
 const FarmCamera := preload("res://scripts/farming/rendering/farm_camera.gd")
@@ -26,7 +31,23 @@ var renderer: FarmTerrainRenderer
 var clock: FarmClock
 var crop_mgr: CropManager
 var inventory: FarmInventory
+var economy: FarmEconomy
+var economy_panel: FarmEconomyPanel
 var crop_r: CropRenderer
+const Tools := preload("res://scripts/farming/core/economy/farm_tools.gd")
+const Batch := preload("res://scripts/farming/core/crops/farm_batch.gd")
+var tools = Tools.new()
+var _crop_choice: OptionButton
+var _level_buttons: Dictionary = {}
+var _selected_crop := 0
+const Records := preload("res://scripts/farming/core/economy/farm_records.gd")
+var records = Records.new()
+const Tutorial := preload("res://scripts/farming/core/economy/farm_tutorial.gd")
+var tutorial = Tutorial.new()
+var _tutorial_panel: PanelContainer
+var _tutorial_hint: Label
+var demo_controller
+var demo_snapshot: Dictionary = {}
 
 var _config: Dictionary = {}
 var _items_by_id: Dictionary = {}
@@ -36,13 +57,19 @@ var _ysort: Node2D
 var _cam: Camera2D
 var _cam_ctrl: FarmCamera
 var _overlay_marks: Node2D
+var _medium_marks: Node2D
 var _hl: Node2D
 var _hud: Label
 var _hud_info: Label
 var _hud_tool: Label
+var _tool_buttons: Array[Button] = []
+var _notice_timer: Timer
+var _notice_text := ""
+var _notice_ok := true
 var _hover := Vector2i(-1, -1)
 var _tool := 0  # 0=锄头；n=种子槽 _tool_crop_ids[n-1]
 var _save_path := SAVE_PATH
+var _snapshot_extra: Dictionary = {}
 
 # 自测信号收集（lambda 捕获是值拷贝，经成员方法落盘）
 var _farmtest_got: Array[Vector2i] = []
@@ -66,6 +93,7 @@ func _ready() -> void:
 	var terrains := FarmData.load_terrains()
 	var map := FarmData.load_map(MAP_ID)
 	_config = FarmData.load_config()
+	tools.prices = _config["advanced_tools"]
 	var crops_data := FarmData.load_crops()
 	var items_data := FarmData.load_items()
 	if terrains.is_empty() or map.is_empty() or _config.is_empty() \
@@ -84,7 +112,7 @@ func _ready() -> void:
 		tillable[t["id"]] = t["tillable"]
 
 	grid = LandGrid.new()
-	grid.setup(w, h, map["grid"], tillable)
+	grid.setup(w, h, map["grid"], tillable, _medium_ids())
 	renderer = FarmTerrainRenderer.new()
 	if not renderer.build(self, grid, terrains):
 		get_tree().quit(1)
@@ -103,6 +131,8 @@ func _ready() -> void:
 	crop_mgr.setup(grid, crops_data)
 	inventory = FarmInventory.new()
 	inventory.setup(_config.get("start_inventory", {}))
+	economy = FarmEconomy.new()
+	economy.setup(_config, _items_by_id, _crops_by_id, inventory)
 	crop_r = CropRenderer.new()
 	crop_r.build(_ysort, crop_mgr)
 	clock.day_changed.connect(_on_day_changed)
@@ -111,19 +141,34 @@ func _ready() -> void:
 
 	_setup_camera(w, h)
 	_setup_overlay(w, h)
+	tutorial.changed.connect(_refresh_tutorial)
 
 	var args := OS.get_cmdline_user_args()
-	if "--farmtest" in args:
+	var testing := demo_controller == null and ("--farmtest" in args or "--selftest" in args)
+	if testing:
 		_save_path = SAVE_PATH_TEST
 		_run_farmtest.call_deferred()
+	elif demo_controller != null:
+		if not apply_snapshot(demo_snapshot):
+			push_error("Demo快照加载失败")
+			return
 	else:
-		if "--fresh" not in args:
-			_load(true)
-	for a in args:
-		if a.begins_with("--farm-shots="):
-			_run_shots(a.get_slice("=", 1))
+		var preview: bool = "--fresh" in args or Array(args).any(func(arg): return arg.begins_with("--shots") or arg.begins_with("--farm-shots"))
+		if not preview:
+			get_tree().change_scene_to_file.call_deferred("res://scenes/farming/farm_demo.tscn")
+	# Tests and screenshot demos have separate lifecycles; testing takes priority.
+	if not testing and demo_controller == null:
+		for i in range(args.size()):
+			var a: String = args[i]
+			if a.begins_with("--farm-shots=") or a.begins_with("--shots="):
+				_run_shots(a.get_slice("=", 1))
+				break
+			if a in ["--farm-shots", "--shots"] and i + 1 < args.size():
+				_run_shots(args[i + 1])
+				break
 	_update_hover(get_global_mouse_position())
 	_update_hud()
+	_refresh_tutorial()
 
 
 # ------------------------------------------------------------ 搭建
@@ -133,9 +178,16 @@ func _setup_camera(w: int, h: int) -> void:
 	_cam.position = Vector2(w, h) * (TILE * 0.5)
 	add_child(_cam)
 	_cam.make_current()
+	if demo_controller != null:
+		_cam.zoom = Vector2(0.5,0.5)
+		add_child(load("res://scripts/farming/rendering/farm_zones.gd").new())
 	_cam_ctrl = FarmCamera.new()
 	_cam_ctrl.name = "FarmCamera"
 	_cam_ctrl.setup(_cam, Vector2i(w, h), TILE)
+	if demo_controller != null:
+		_cam_ctrl.view_top = 80.0
+		_cam_ctrl.view_bottom = 78.0
+		_cam.position.y = get_viewport().get_visible_rect().size.y * 0.5 / _cam.zoom.y - _cam_ctrl.view_top / _cam.zoom.y
 	_cam_ctrl.zoom_set.connect(func(_z: float) -> void: _update_hud())
 	add_child(_cam_ctrl)
 
@@ -144,19 +196,122 @@ func _setup_overlay(w: int, h: int) -> void:
 	var layer := CanvasLayer.new()
 	layer.layer = 10
 	add_child(layer)
+	var hud_panel := PanelContainer.new()
+	hud_panel.position = Vector2(8, 6)
+	hud_panel.custom_minimum_size.x = 624
+	hud_panel.theme = FarmUI.theme()
+	layer.add_child(hud_panel)
+	var hud_box := VBoxContainer.new()
+	hud_panel.add_child(hud_box)
+	hud_box.add_theme_constant_override("separation",2)
 
 	_hud = _make_label()
-	_hud.position = Vector2(8, 6)
-	_hud.text = "灵田·壹号（Phase 2）· 左键 行动 · 1-9/H 选工具 · R 休息 · F5 存档 · F9 读档 · WASD 平移 · 滚轮 缩放"
-	layer.add_child(_hud)
+	_hud.add_theme_font_size_override("font_size", 12)
+	var status := HBoxContainer.new()
+	hud_box.add_child(status)
+	status.add_child(_hud)
+	var menu := Button.new()
+	menu.text = "槽%d · 菜单 Esc" % demo_controller.store.active_slot() if demo_controller != null else "菜单 Esc"
+	menu.pressed.connect(func():
+		if demo_controller != null:
+			demo_controller.show_pause()
+		else:
+			_flash("预览模式：无存档槽",true))
+	status.add_child(menu)
 
 	_hud_info = _make_label()
-	_hud_info.position = Vector2(8, 28)
-	layer.add_child(_hud_info)
-
+	_hud_info.add_theme_font_size_override("font_size", 11)
+	hud_box.add_child(_hud_info)
+	var dock := PanelContainer.new()
+	dock.position = Vector2(8, 282)
+	dock.custom_minimum_size = Vector2(624, 72)
+	dock.theme = FarmUI.theme()
+	layer.add_child(dock)
+	var dock_box := VBoxContainer.new()
+	dock.add_child(dock_box)
+	var tools := HBoxContainer.new()
+	dock_box.add_child(tools)
+	for kind in Tools.KINDS:
+		var button := Button.new()
+		button.text = Tools.NAMES[kind]
+		button.toggle_mode = true
+		button.pressed.connect(_select_kind.bind(kind))
+		tools.add_child(button)
+		_tool_buttons.append(button)
+		var level := Button.new()
+		level.pressed.connect(func():
+			if self.tools.switch_level(kind): _update_hud())
+		tools.add_child(level)
+		_level_buttons[kind] = level
+	_crop_choice = OptionButton.new()
+	for cid in _tool_crop_ids: _crop_choice.add_item(_crop_name(cid))
+	_crop_choice.item_selected.connect(_select_crop)
+	tools.add_child(_crop_choice)
+	var medium_button := Button.new()
+	medium_button.text = "介质 B"
+	medium_button.tooltip_text = "将鼠标移到空耕地，按B轮换介质；菌床与朽木需要材料。"
+	medium_button.pressed.connect(func(): _cycle_medium(_hover))
+	tools.add_child(medium_button)
+	var rest := Button.new()
+	rest.text = "休息 R"
+	rest.pressed.connect(func():
+		clock.end_day()
+		_flash("休息一晚 —— %s" % clock.describe(), true))
+	tools.add_child(rest)
+	var actions := HBoxContainer.new()
+	dock_box.add_child(actions)
 	_hud_tool = _make_label()
-	_hud_tool.position = Vector2(8, 50)
-	layer.add_child(_hud_tool)
+	_hud_tool.add_theme_font_size_override("font_size", 11)
+	actions.add_child(_hud_tool)
+	var market := Button.new()
+	market.text = "行囊 / 集市 M"
+	market.size_flags_horizontal = Control.SIZE_SHRINK_BEGIN
+	market.pressed.connect(_toggle_economy)
+	actions.add_child(market)
+	_tutorial_panel = PanelContainer.new()
+	_tutorial_panel.position = Vector2(8,58)
+	_tutorial_panel.custom_minimum_size = Vector2(624,52)
+	_tutorial_panel.theme = FarmUI.theme()
+	layer.add_child(_tutorial_panel)
+	var tutorial_row := HBoxContainer.new()
+	_tutorial_panel.add_child(tutorial_row)
+	_tutorial_hint = FarmUI.label("")
+	_tutorial_hint.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	_tutorial_hint.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	_tutorial_hint.add_theme_font_size_override("font_size",11)
+	tutorial_row.add_child(_tutorial_hint)
+	var skip := Button.new()
+	skip.text = "跳过教学"
+	skip.pressed.connect(tutorial.skip)
+	tutorial_row.add_child(skip)
+	var shade := ColorRect.new()
+	shade.size = Vector2(640, 360)
+	shade.color = Color(0.04, 0.08, 0.05, 0.62)
+	shade.hide()
+	layer.add_child(shade)
+	shade.gui_input.connect(func(event):
+		if event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
+			economy_panel.hide())
+	economy_panel = FarmEconomyPanel.new()
+	layer.add_child(economy_panel)
+	economy_panel.build(self)
+	economy_panel.visibility_changed.connect(func():
+		shade.visible = economy_panel.visible
+		refresh_camera_lock())
+	economy_panel.changed.connect(func(message: String, ok: bool):
+		_update_hud()
+		_flash(message, ok))
+	_notice_timer = Timer.new()
+	_notice_timer.one_shot = true
+	_notice_timer.wait_time = 4.0
+	_notice_timer.timeout.connect(_update_hud)
+	add_child(_notice_timer)
+
+	_medium_marks = Node2D.new()
+	_medium_marks.name = "PlantingMedia"
+	_medium_marks.z_index = -1  # Above ground, below Y-sort sprites.
+	_medium_marks.draw.connect(_draw_media)
+	add_child(_medium_marks)
 
 	_overlay_marks = Node2D.new()
 	_overlay_marks.name = "FieldMarks"
@@ -180,39 +335,58 @@ func _make_label() -> Label:
 	l.add_theme_color_override("font_color", Color(0.95, 0.92, 0.8))
 	l.add_theme_color_override("font_shadow_color", Color(0, 0, 0, 0.85))
 	l.add_theme_constant_override("shadow_offset_y", 1)
+	l.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	l.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	return l
 
 
 # ------------------------------------------------------------ 输入与交互
 
 func _unhandled_input(event: InputEvent) -> void:
+	if demo_controller != null and demo_controller.is_modal():
+		return
+	if event is InputEventKey and event.pressed and not event.echo and event.keycode == KEY_M:
+		_toggle_economy()
+		return
+	if economy_panel != null and economy_panel.visible:
+		if event is InputEventKey and event.pressed and event.keycode == KEY_ESCAPE:
+			economy_panel.hide()
+		return
 	if event is InputEventMouseMotion:
 		_update_hover(get_global_mouse_position())
 	elif event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
-		_act_on(_hover)
+		if not event.double_click:
+			_act_on(_hover)
 	elif event is InputEventKey and event.pressed and not event.echo:
-		if event.keycode == KEY_F5:
-			_save()
-		elif event.keycode == KEY_F9:
-			_load(false)
+		if event.keycode == KEY_ESCAPE and demo_controller != null:
+			demo_controller.show_pause()
+			get_viewport().set_input_as_handled()
 		elif event.keycode == KEY_R:
 			clock.end_day()
 			_flash("休息一晚 —— %s" % clock.describe(), true)
+		elif event.keycode == KEY_B:
+			_cycle_medium(_hover)
 		elif event.keycode == KEY_H:
-			_tool = (_tool + 1) % (_tool_crop_ids.size() + 1)
+			_select_kind({"hoe":"sower","sower":"harvester","harvester":"hoe"}[_tool_kind()])
 			_update_hud()
 		else:
 			for i in range(_tool_crop_ids.size()):
 				if event.keycode == KEY_1 + i:
-					_tool = i + 1
-					_update_hud()
+					_select_crop(i)
 
 
 func _act_on(cell: Vector2i) -> void:
+	if not grid.in_bounds(cell.x,cell.y): return
+	if tools.advanced(_tool_kind()):
+		if _tool > 0: _selected_crop = _tool-1
+		var batch: Dictionary = Batch.run(cell,_tool_kind(),_tool_crop_ids[_selected_crop],grid,crop_mgr,inventory,clock)
+		_flash("范围操作：完成%d，跳过%d · %dAP %s" % [batch["successes"],batch["skipped"],batch["ap"],batch["stopped"]],batch["ok"])
+		_update_hud()
+		return
 	# 1) 收获优先：任意工具点成熟植株
 	var hchk := crop_mgr.can_harvest(cell)
 	if hchk["ok"]:
-		if not clock.spend(clock.cost_of("harvest")):
+		if not clock.can_spend(clock.cost_of("harvest")):
 			_flash("行动点不足", false)
 			return
 		var r: Dictionary = crop_mgr.harvest(cell)
@@ -225,15 +399,20 @@ func _act_on(cell: Vector2i) -> void:
 			suffix = "（植株已枯竭，用锄头清理）"
 		elif not r["removed"]:
 			suffix = "（植株保留，再次结果中）"
+		clock.spend(clock.cost_of("harvest"))
 		_flash("收获 " + "、".join(parts) + suffix, true)
+		return
+	if _tool == -1:
+		_flash("请选择成熟植株采收",false)
 		return
 	# 2) 锄头：清理 > 开垦 > 恢复
 	if _tool == 0:
 		if crop_mgr.can_clear(cell)["ok"]:
-			if not clock.spend(clock.cost_of("clear")):
+			if not clock.can_spend(clock.cost_of("clear")):
 				_flash("行动点不足", false)
 				return
 			crop_mgr.clear(cell)
+			clock.spend(clock.cost_of("clear"))
 			_flash("已清理枯竭植株，地格恢复开垦态", true)
 			return
 		var st := grid.state_at(cell)
@@ -287,6 +466,37 @@ func _do_till(cell: Vector2i) -> void:
 		_flash(_reason_text(chk["reason"]), false)
 
 
+func _medium_ids() -> Array:
+	return _config.get("planting_media", [{"id": "soil", "name": "土壤"}]).map(func(m): return m["id"])
+
+
+func _medium_name(id: String) -> String:
+	for medium in _config.get("planting_media", [{"id": "soil", "name": "土壤"}]):
+		if medium["id"] == id:
+			return String(medium["name"])
+	return id
+
+
+func _cycle_medium(cell: Vector2i) -> void:
+	var ids := _medium_ids()
+	var next: String = ids[(ids.find(grid.medium_at(cell)) + 1) % ids.size()]
+	var chk := grid.can_prepare_medium(cell, next)
+	if not chk["ok"]:
+		_flash(_reason_text(chk["reason"]), false)
+		return
+	var cost := clock.cost_of("prepare_medium")
+	if not clock.can_spend(cost):
+		_flash("行动点不足", false)
+		return
+	var material := economy.medium_material(next)
+	if not material.is_empty() and not inventory.remove(material, 1):
+		_flash("材料不足：%s（可在集市购买）" % _item_name(material), false)
+		return
+	grid.prepare_medium(cell, next)
+	clock.spend(cost)
+	_flash("种植介质：%s" % _medium_name(next), true)
+
+
 func _reason_of_cell(cell: Vector2i) -> String:
 	var inst := crop_mgr.instance_at(cell)
 	if not inst.is_empty():
@@ -310,24 +520,98 @@ func _on_cells_changed(_cells: Array[Vector2i]) -> void:
 
 
 func _on_day_changed(_total: int) -> void:
+	if demo_controller != null:
+		tutorial.observe("grow")
+		records.finish_day(_total, economy.primeval_stones)
 	crop_mgr.on_day_changed()
+	economy.on_day_changed()
 	if _overlay_marks != null:
 		_overlay_marks.queue_redraw()
 	_update_hud()
+	if economy_panel != null and economy_panel.visible:
+		economy_panel.refresh()
+	if demo_controller != null:
+		demo_controller.save_world(capture_snapshot())
+
+
+func refresh_camera_lock() -> void:
+	if _cam_ctrl == null:
+		return
+	var locked: bool = (economy_panel != null and economy_panel.visible) or (demo_controller != null and demo_controller.is_modal())
+	_cam_ctrl.set_process(not locked)
+	_cam_ctrl.set_process_unhandled_input(not locked)
+
+
+func _toggle_economy() -> void:
+	economy_panel.visible = not economy_panel.visible
+	if economy_panel.visible:
+		economy_panel.refresh()
+
+
+## External gameplay hook; the caller supplies the completed behavior and result.
+func record_gu_use(behavior: String, succeeded: bool) -> Dictionary:
+	var result := economy.record_use(behavior, succeeded)
+	_update_hud()
+	if economy_panel != null and economy_panel.visible:
+		economy_panel.refresh()
+	return result
 
 
 # ------------------------------------------------------------ 绘制
 
 func _draw_highlight() -> void:
-	if grid != null and grid.in_bounds(_hover.x, _hover.y):
-		_hl.draw_rect(Rect2(Vector2(_hover) * TILE, Vector2.ONE * TILE),
-				Color(1.0, 0.9, 0.35, 0.95), false, 2.0)
+	if grid == null or not grid.in_bounds(_hover.x,_hover.y): return
+	var targets: Array = Batch.cells(_hover,grid) if tools.advanced(_tool_kind()) else [_hover]
+	for cell in targets:
+		var operation := Batch.action(cell,_tool_kind(),_tool_crop_ids[_selected_crop],grid,crop_mgr)
+		if not tools.advanced(_tool_kind()):
+			if crop_mgr.can_harvest(cell)["ok"]: operation = "harvest"
+			elif _tool == 0 and grid.state_at(cell) == LandGrid.State.TILLED: operation = "untill"
+		var available := not operation.is_empty()
+		if available:
+			var cost := clock.cost_of(operation)
+			available = clock.can_spend(ceili(cost / 2.0) if tools.advanced(_tool_kind()) else cost)
+			if operation == "plant": available = available and inventory.has(_tool_crop_ids[_selected_crop]+"_seed",1)
+		var color := FarmUI.JADE if available else FarmUI.ERROR
+		if tools.advanced(_tool_kind()):
+			_hl.draw_rect(Rect2(Vector2(cell)*TILE,Vector2.ONE*TILE),Color(color,0.15),true)
+		_hl.draw_rect(Rect2(Vector2(cell)*TILE,Vector2.ONE*TILE),color,false,2.0)
+	_hl.draw_rect(Rect2(Vector2(_hover)*TILE,Vector2.ONE*TILE),FarmUI.PAPER,false,3.0)
+
+func _tool_kind() -> String:
+	return "hoe" if _tool == 0 else ("harvester" if _tool == -1 else "sower")
+
+func _select_kind(kind: String) -> void:
+	if demo_controller != null: tutorial.observe("select")
+	_tool = 0 if kind == "hoe" else (-1 if kind == "harvester" else _selected_crop+1)
+	_update_hud()
+
+func _select_crop(index: int) -> void:
+	if demo_controller != null: tutorial.observe("select")
+	_selected_crop = index
+	_tool = index+1
+	_update_hud()
+
+
+func _draw_media() -> void:
+	if grid == null:
+		return
+	for y in range(grid.height):
+		for x in range(grid.width):
+			var cell := Vector2i(x, y)
+			var medium := grid.medium_at(cell)
+			if medium not in ["", "soil"]:
+				var color := Color(0.5, 0.4, 0.65, 0.3) if medium == "fungal_bed" else Color(0.3, 0.2, 0.1, 0.35)
+				_medium_marks.draw_rect(Rect2(Vector2(cell) * TILE, Vector2.ONE * TILE), color, true)
 
 
 func _draw_marks() -> void:
 	if grid == null:
 		return
+	_medium_marks.queue_redraw()
 	for c in grid.occupied_cells():  # 设施占用（红）
+		if grid.state_at(c) != LandGrid.State.OCCUPIED:
+			continue
 		_overlay_marks.draw_rect(Rect2(Vector2(c) * TILE, Vector2.ONE * TILE),
 				Color(0.85, 0.15, 0.15, 0.35), true)
 		_overlay_marks.draw_rect(Rect2(Vector2(c) * TILE, Vector2.ONE * TILE),
@@ -357,27 +641,39 @@ func _update_hud() -> void:
 		var tname: String = _terrains_by_id().get(tid, {}).get("name", tid)
 		var inst := crop_mgr.instance_at(_hover) if crop_mgr != null else {}
 		var extra := ""
+		var medium := grid.medium_at(_hover)
+		if not medium.is_empty():
+			extra = " · 介质：" + _medium_name(medium)
 		if not inst.is_empty():
-			extra = " · " + _crop_name(inst["crop_id"]) + " " + _crop_state_text(inst)
+			extra += " · " + _crop_name(inst["crop_id"]) + " " + _crop_state_text(inst)
+		var state_names := {LandGrid.State.WILD:"荒地", LandGrid.State.TILLED:"已开垦",
+			LandGrid.State.PLANTED:"种植中", LandGrid.State.OCCUPIED:"已占用", LandGrid.State.UNAVAILABLE:"不可种植"}
 		text = "(%d,%d) %s · %s%s" % [_hover.x, _hover.y, tname,
-				LandGrid.STATE_NAMES[grid.state_at(_hover)], extra]
+				state_names[grid.state_at(_hover)], extra]
 	if clock != null:
-		text += "  |  " + clock.describe()
-	_hud_info.text = text
+		_hud.text = "%s  |  元石 %d  |  木蛊 %d/6" % [clock.describe(), economy.primeval_stones, economy.gu["satiety"]]
+	var notice_active := _notice_timer != null and not _notice_timer.is_stopped()
+	_hud_info.text = _notice_text if notice_active else text
+	if notice_active:
+		_hud_info.modulate = FarmUI.JADE if _notice_ok else FarmUI.ERROR
 	if _hud_tool != null:
 		var tool_text := "工具：锄头（开垦/恢复/清理）"
 		if _tool > 0:
 			var cid: String = _tool_crop_ids[_tool - 1]
 			tool_text = "工具：播种 %s（种子×%d）" % [_crop_name(cid), inventory.count(cid + "_seed")]
-		var inv_parts := []
-		var n := 0
-		for e in inventory.entries():
-			inv_parts.append("%s×%d" % [_item_name(e["item_id"]), int(e["count"])])
-			n += 1
-			if n >= 8:
-				inv_parts.append("…")
-				break
-		_hud_tool.text = "%s  |  背包：%s" % [tool_text, "、".join(inv_parts) if not inv_parts.is_empty() else "空"]
+		_hud_tool.text = tool_text
+		_hud_tool.tooltip_text = "左键行动 · H轮换工具 · WASD/方向键平移 · 滚轮缩放 · 每日自动保存 · Esc菜单"
+		_hud_tool.text = ("高级 · 3×3 · AP折半取整" if tools.advanced(_tool_kind()) else "普通 · 单目标") + " · " + ( _crop_name(_tool_crop_ids[_tool-1]) if _tool > 0 else Tools.NAMES[_tool_kind()] )
+		for index in range(_tool_buttons.size()):
+			var kind: String = Tools.KINDS[index]
+			_tool_buttons[index].set_pressed_no_signal(kind == _tool_kind())
+			_level_buttons[kind].text = "高" if tools.advanced(kind) else "普"
+			_level_buttons[kind].disabled = not tools.data["owned"].has(kind)
+			_level_buttons[kind].tooltip_text = "切换普通/高级" if tools.data["owned"].has(kind) else "请先从集市购买高级工具"
+		if _tool > 0: _selected_crop = _tool-1
+		_crop_choice.select(_selected_crop)
+		if _hl != null: _hl.queue_redraw()
+
 
 
 func _terrains_by_id() -> Dictionary:
@@ -405,7 +701,11 @@ func _crop_state_text(inst: Dictionary) -> String:
 
 
 func _flash(msg: String, ok: bool) -> void:
-	_hud_info.modulate = Color(0.95, 0.4, 0.35) if not ok else Color(0.6, 0.95, 0.6)
+	_notice_text = msg
+	_notice_ok = ok
+	if _notice_timer != null:
+		_notice_timer.start()
+	_hud_info.modulate = FarmUI.JADE if ok else FarmUI.ERROR
 	_hud_info.text = msg
 
 
@@ -418,6 +718,8 @@ func _crop_name(cid: String) -> String:
 
 
 func _reason_text(reason: String) -> String:
+	if reason.begins_with("medium_mismatch:"):
+		return "需要种植介质：" + _medium_name(reason.get_slice(":", 1))
 	if reason.begins_with("terrain_not_tillable:"):
 		var tid := reason.get_slice(":", 1)
 		return "不可种植/开垦：%s（%s）" % [_terrains_by_id().get(tid, {}).get("name", tid), tid]
@@ -432,6 +734,8 @@ func _reason_text(reason: String) -> String:
 	if reason.begins_with("cell_busy:"):
 		return "该格已被占用/种植中（%s）" % reason.get_slice(":", 1)
 	return {
+		"unknown_medium": "未知种植介质",
+		"medium_requires_empty_tilled": "先开垦空地，再切换种植介质",
 		"out_of_bounds": "目标越界",
 		"no_crop": "这里没有植株",
 		"unknown_crop": "未知作物",
@@ -442,20 +746,33 @@ func _reason_text(reason: String) -> String:
 	}.get(reason, "无法操作：%s" % reason.replace("_", " "))
 
 
-# ------------------------------------------------------------ 存档（schema v2；接缝：Phase 5 换主游戏存档适配层）
+# ------------------------------------------------------------ 完整快照（P6.a；三槽菜单接入见P6.b）
+
+func capture_snapshot() -> Dictionary:
+	var snapshot := _snapshot_extra.duplicate(true)
+	tools.data["kind"] = _tool_kind()
+	if _tool > 0: _selected_crop = _tool-1
+	tools.data["crop"] = _tool_crop_ids[_selected_crop]
+	snapshot["tools"] = tools.data.duplicate(true)
+	if demo_controller != null:
+		snapshot["records"] = records.data.duplicate(true)
+		snapshot["tutorial"] = tutorial.data.duplicate(true)
+	snapshot.merge({
+		"schema": 3,
+		"clock": clock.to_save(),
+		"grid": grid.to_save(),
+		"crops": crop_mgr.to_save(),
+		"inventory": inventory.to_save(),
+		"economy": economy.to_save(),
+	}, true)
+	return snapshot
 
 func _save() -> void:
 	var f := FileAccess.open(_save_path, FileAccess.WRITE)
 	if f == null:
 		_flash("存档失败：无法写入", false)
 		return
-	var data := {
-		"schema": 2,
-		"clock": clock.to_save(),
-		"grid": grid.to_save(),
-		"crops": crop_mgr.to_save(),
-		"inventory": inventory.to_save(),
-	}
+	var data := capture_snapshot()
 	f.store_string(JSON.stringify(data, "\t"))
 	f.close()
 	_flash("已存档", true)
@@ -467,10 +784,20 @@ func _load(silent: bool) -> bool:
 			_flash("没有存档", false)
 		return false
 	var parsed = JSON.parse_string(FileAccess.get_file_as_string(_save_path))
-	if parsed == null or not (parsed is Dictionary) or int(parsed.get("schema", 0)) != 2:
+	return apply_snapshot(parsed, silent)
+
+
+func apply_snapshot(value, silent: bool = true) -> bool:
+	# Detached validation completes before touching any live model.
+	var checked := FarmSnapshot.normalize(value)
+	if not checked["ok"]:
 		if not silent:
-			_flash("存档版本不兼容或损坏", false)
+			_flash(checked["reason"], false)
 		return false
+	var parsed: Dictionary = checked["snapshot"]
+	var loaded_economy := FarmEconomy.new()
+	loaded_economy.setup(_config, _items_by_id, _crops_by_id, inventory)
+	loaded_economy.apply_save(parsed["economy"])
 	var ok := grid.apply_save(parsed["grid"]) \
 			and crop_mgr.apply_save(parsed["crops"]) \
 			and inventory.apply_save(parsed["inventory"])
@@ -479,6 +806,30 @@ func _load(silent: bool) -> bool:
 			_flash("存档内容异常", false)
 		return false
 	clock.apply_save(parsed["clock"])
+	tools.data = parsed.get("tools",Tools.fresh()).duplicate(true)
+	_selected_crop = _tool_crop_ids.find(tools.data["crop"])
+	_tool = 0 if tools.data["kind"] == "hoe" else (-1 if tools.data["kind"] == "harvester" else _selected_crop+1)
+	economy = loaded_economy
+	if demo_controller != null:
+		records.data = parsed.get("records", Records.fresh(int(parsed["clock"]["total_days"]))).duplicate(true)
+		tutorial.data = parsed.get("tutorial",Tutorial.fresh()).duplicate(true)
+		if not crop_mgr.planted.is_connected(tutorial.planted):
+			crop_mgr.planted.connect(tutorial.planted)
+			crop_mgr.harvested.connect(tutorial.harvested)
+			grid.cultivated.connect(tutorial.cultivated)
+		economy.traded.connect(tutorial.traded)
+		economy.fed.connect(tutorial.fed)
+		_refresh_tutorial()
+		if not crop_mgr.planted.is_connected(records.planted):
+			crop_mgr.planted.connect(records.planted)
+			crop_mgr.harvested.connect(records.harvested)
+		economy.traded.connect(records.traded)
+		economy.fed.connect(records.fed)
+	_snapshot_extra = parsed.duplicate(true)
+	for key in ["schema", "clock", "grid", "crops", "inventory", "economy"]:
+		_snapshot_extra.erase(key)
+	if economy_panel != null and economy_panel.visible:
+		economy_panel.refresh()
 	renderer.refresh_dynamic_all()
 	if _overlay_marks != null:
 		_overlay_marks.queue_redraw()
@@ -495,6 +846,19 @@ func _ok(msg: String) -> void:
 
 
 func _run_farmtest() -> void:
+	if not ResourceLoader.exists("res://scripts/farming/tests/phase05_economy.gd"):
+		push_error("发布包不包含开发测试，请在工作区运行test.bat")
+		get_tree().quit(1)
+		return
+	var Phase05Tests = load("res://scripts/farming/tests/phase05_economy.gd")
+	var Phase05ContentTests = load("res://scripts/farming/tests/phase05_content.gd")
+	var Phase06SlotTests = load("res://scripts/farming/tests/phase06_slots.gd")
+	var Phase06DemoTests = load("res://scripts/farming/tests/phase06_demo.gd")
+	var Phase06RecordsTests = load("res://scripts/farming/tests/phase06_records.gd")
+	var Phase06ToolsTests = load("res://scripts/farming/tests/phase06_tools.gd")
+	var Phase06ExperienceTests = load("res://scripts/farming/tests/phase06_experience.gd")
+	var Phase04Tests = load("res://scripts/farming/tests/phase04_foundation.gd")
+	var Phase04ContentTests = load("res://scripts/farming/tests/phase04_content.gd")
 	var fails: Array[String] = []
 	var chk: Dictionary = {}
 
@@ -880,7 +1244,7 @@ func _run_farmtest() -> void:
 
 	# 35. 作物素材契约（阶段齐全；素材替换同名覆盖）
 	var assets_ok := true
-	for cid in ["dew_grass", "scarlet_berry"]:
+	for cid in _tool_crop_ids:
 		var def_c: Dictionary = crop_mgr.def_of(cid)
 		for s in def_c["growth_stages"]:
 			if not FileAccess.file_exists("res://assets/farming/crops/%s/%s.png" % [cid, s["sprite"]]):
@@ -890,9 +1254,53 @@ func _run_farmtest() -> void:
 				if not FileAccess.file_exists("res://assets/farming/crops/%s/%s.png" % [cid, extra]):
 					assets_ok = false
 	if assets_ok:
-		_ok("作物素材契约：两种作物阶段图齐全（含 regrow 双态）")
+		_ok("作物素材契约：所有已登记作物阶段图齐全（含 regrow 双态）")
 	else:
 		fails.append("作物素材缺失")
+	fails.append_array(Phase04Tests.run())
+	# Exercise the real B-key/plant handlers, including AP and seed atomicity.
+	grid.reset()
+	crop_mgr.reset_all()
+	clock.setup(_config)
+	inventory.setup(_config.get("start_inventory", {}))
+	var medium_cell := Vector2i(1,1)
+	inventory.add("fungal_bed_material", 1)  # P5: prepare now requires a purchased material.
+	grid.till(medium_cell)
+	var before_ap := clock.ap
+	_cycle_medium(medium_cell)
+	if grid.medium_at(medium_cell)=="fungal_bed" and clock.ap==before_ap-clock.cost_of("prepare_medium"):
+		_ok("P4: B键准备介质消耗配置AP")
+	else:
+		fails.append("P4: 准备介质/AP异常")
+	_tool = _tool_crop_ids.find("dew_grass") + 1
+	var before_seed := inventory.count("dew_grass_seed")
+	before_ap = clock.ap
+	_act_on(medium_cell)
+	if inventory.count("dew_grass_seed")==before_seed and clock.ap==before_ap and crop_mgr.crops.is_empty():
+		_ok("P4: 错误介质播种不扣种子/AP，无实例")
+	else:
+		fails.append("P4: 错误介质播种出现副作用")
+	grid.prepare_medium(medium_cell,"soil")
+	_act_on(medium_cell)
+	before_ap = clock.ap
+	_cycle_medium(medium_cell)
+	if not crop_mgr.instance_at(medium_cell).is_empty() and grid.medium_at(medium_cell)=="soil" and clock.ap==before_ap:
+		_ok("P4: 种植后B键换介质被拒且不扣AP")
+	else:
+		fails.append("P4: 占用格换介质出现副作用")
+	fails.append_array(Phase04ContentTests.run(self))
+	fails.append_array(Phase05Tests.run())
+	fails.append_array(Phase05ContentTests.run(self))
+	fails.append_array(Phase06SlotTests.run())
+	fails.append_array(Phase06SlotTests.run_scene(self))
+	fails.append_array(await Phase06DemoTests.run(get_tree()))
+	fails.append_array(await Phase06RecordsTests.run(get_tree()))
+	var tool_tests = Phase06ToolsTests.new()
+	fails.append_array(await tool_tests.run(get_tree()))
+	if not tool_tests.completed: fails.append("P6.d工具检查未完整执行")
+	var experience_tests = Phase06ExperienceTests.new()
+	fails.append_array(await experience_tests.run(get_tree()))
+	if not experience_tests.completed: fails.append("P6.e教学与设置检查未完整执行")
 
 	grid.reset()
 	renderer.refresh_dynamic_all()
@@ -965,6 +1373,8 @@ func _run_shots(dir: String) -> void:
 			clock.end_day()
 			clock.end_day()
 	grid.reserve(Vector2i(12, 11), 2, 2, "demo_shot")
+	grid.prepare_medium(Vector2i(3,11),"fungal_bed")
+	grid.prepare_medium(Vector2i(7,11),"rotten_log")
 	renderer.refresh_dynamic_all()
 	_overlay_marks.queue_redraw()
 	_update_hover(Vector2(3.5 * TILE, 11.5 * TILE))
@@ -983,4 +1393,69 @@ func _run_shots(dir: String) -> void:
 		var path := dir.path_join(shot[0])
 		img.save_png(path)
 		print("[shot] %s" % path)
+	await _run_phase04_shots(dir)
 	get_tree().quit(0)
+
+
+func _run_phase04_shots(dir: String) -> void:
+	# Four real definitions; keep generated placeholders distinct from delivered art.
+	crop_mgr.reset_all()
+	grid.reset()
+	clock.setup(_config)
+	inventory.setup(_config["start_inventory"])
+	for y in range(10,13):
+		for x in range(4,12):
+			grid.till(Vector2i(x,y))
+	crop_mgr.plant(Vector2i(7,10),"jade_fruit_tree")
+	for day in range(6):
+		clock.end_day()
+	crop_mgr.plant(Vector2i(4,11),"dew_grass")
+	crop_mgr.plant(Vector2i(5,11),"scarlet_berry")
+	grid.prepare_medium(Vector2i(10,11),"fungal_bed")
+	crop_mgr.plant(Vector2i(10,11),"moon_cap")
+	for day in range(4):
+		clock.end_day()
+	_tool=_tool_crop_ids.find("jade_fruit_tree")+1
+	_update_hover(Vector2(8.5*TILE,11.5*TILE))
+	_update_hud()
+	await _capture_phase04(dir,"farm04_1_four_categories.png",Vector2(7.5*TILE,11*TILE),1.2)
+	_act_on(Vector2i(8,11))
+	_act_on(Vector2i(10,11))
+	await _capture_phase04(dir,"farm04_2_harvested_and_bed.png",Vector2(7.5*TILE,11*TILE),1.2)
+	crop_mgr.reset_all()
+	grid.reset()
+	clock.setup(_config)
+	for y in range(11,13):
+		for x in range(2,14):
+			grid.till(Vector2i(x,y))
+	crop_mgr.plant(Vector2i(11,11),"jade_fruit_tree")
+	for day in range(5):
+		clock.end_day()
+	crop_mgr.plant(Vector2i(8,11),"jade_fruit_tree")
+	for day in range(3):
+		clock.end_day()
+	crop_mgr.plant(Vector2i(5,11),"jade_fruit_tree")
+	for day in range(2):
+		clock.end_day()
+	crop_mgr.plant(Vector2i(2,11),"jade_fruit_tree")
+	_update_hover(Vector2(11.5*TILE,11.5*TILE))
+	await _capture_phase04(dir,"farm04_3_tree_stages.png",Vector2(7.5*TILE,11.5*TILE),0.7)
+
+
+func _capture_phase04(dir: String, filename: String, center: Vector2, zoom: float) -> void:
+	renderer.refresh_dynamic_all()
+	_overlay_marks.queue_redraw()
+	_cam.position=center
+	_cam.zoom=Vector2(zoom,zoom)
+	await get_tree().process_frame
+	await RenderingServer.frame_post_draw
+	var path := dir.path_join(filename)
+	get_viewport().get_texture().get_image().save_png(path)
+	print("[shot] %s" % path)
+
+
+func _refresh_tutorial() -> void:
+	if _tutorial_panel == null: return
+	_tutorial_panel.visible = demo_controller != null and tutorial.active()
+	if tutorial.active():
+		_tutorial_hint.text = "新手 %d/7 · %s" % [int(tutorial.data["step"])+1,Tutorial.HINTS[int(tutorial.data["step"])]]

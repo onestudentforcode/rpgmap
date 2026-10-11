@@ -59,9 +59,11 @@ def _rel(path):
 
 
 def _status_for(rel_path, overrides):
+    if not os.path.isfile(os.path.join(ROOT, rel_path)):
+        return "missing", overrides.get(rel_path, {}).get("note", "")
     if rel_path in overrides:
         return overrides[rel_path].get("status", "placeholder"), overrides[rel_path].get("note", "")
-    return ("placeholder" if os.path.isfile(os.path.join(ROOT, rel_path)) else "missing"), ""
+    return "placeholder", ""
 
 
 def build_manifest():
@@ -90,7 +92,7 @@ def build_manifest():
                 exists = os.path.isfile(os.path.join(ROOT, rel_t))
                 entries.append({
                     "path": rel_t, "type": kind, "status": "generated" if exists else "missing",
-                    "note": "改 ground 后运行 gen_farm_terrains.py 重生成",
+                    "note": "改 ground 后运行 gen_farm_terrains.py --transitions-only 重生成（保留 ground）",
                     "size": [1024, 1024] if kind == "atlas" else None,
                     "constraints": ["程序生成：上层纹理 × 统一掩码（不外发采购）",
                                     "alpha 二值；bm=255 tile 全不透明"],
@@ -101,15 +103,18 @@ def build_manifest():
     for c in crops["crops"]:
         cid = c["crop_id"]
         stages = c["growth_stages"]
+        size = c.get("sprite_size", [64, 64])
+        sprite_constraints = list(SPRITE_CONSTRAINTS)
+        sprite_constraints[0] = "%d×%d RGBA 透明底" % tuple(size)
         for i, s in enumerate(stages):
             rel = "assets/farming/crops/%s/%s.png" % (cid, s["sprite"])
             st, note = _status_for(rel, overrides)
-            cons = list(SPRITE_CONSTRAINTS)
+            cons = list(sprite_constraints)
             if i == len(stages) - 1:
                 cons += MATURE_EXTRA
             entries.append({
                 "path": rel, "type": "crop_stage", "status": st, "note": note,
-                "size": [64, 64], "stage": s["id"], "constraints": cons,
+                "size": size, "stage": s["id"], "constraints": cons,
                 "refs": ["crop:%s（%s/%s，%s）" % (cid, c["name"], c["category"], c["harvest_type"])],
             })
         if c["harvest_type"] == "regrow":
@@ -120,8 +125,8 @@ def build_manifest():
                 st, note = _status_for(rel, overrides)
                 entries.append({
                     "path": rel, "type": "crop_stage", "status": st, "note": note,
-                    "size": [64, 64], "stage": stage_name,
-                    "constraints": SPRITE_CONSTRAINTS + ["同母版衍生：" + desc],
+                    "size": size, "stage": stage_name,
+                    "constraints": sprite_constraints + ["同母版衍生：" + desc],
                     "refs": ["crop:%s（regrow ×%d，再生长 %d 天）" % (cid, c["max_harvests"], c["regrowth_duration"])],
                 })
 

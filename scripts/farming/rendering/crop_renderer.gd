@@ -96,9 +96,12 @@ func _tex_for(inst: Dictionary) -> Texture2D:
 
 
 func _try_load(path: String) -> Texture2D:
+	if OS.has_feature("farm_demo_release"):
+		return load(path) as Texture2D if ResourceLoader.exists(path) else null
 	if not FileAccess.file_exists(path):
 		return null
-	var img := Image.load_from_file(path)
+	var img := Image.new()
+	if img.load_png_from_buffer(FileAccess.get_file_as_bytes(path)) != OK: return null
 	if img == null or img.is_empty():
 		return null
 	return ImageTexture.create_from_image(img)

@@ -1,0 +1,301 @@
+{
+  "schema": 1,
+  "generator": "built-in image_gen",
+  "date": "2026-10-09",
+  "approved_by": "user",
+  "selected_masters": {
+    "jade_fruit_tree": "B",
+    "moon_cap": "A"
+  },
+  "workspace_records": ".art-work\\phase04c-20261009",
+  "masters": {
+    "generator": "built-in image_gen",
+    "date": "2026-10-09",
+    "approval": "user-approved 2026-10-09: jade_fruit_tree B + moon_cap A",
+    "assets": [
+      {
+        "crop_id": "jade_fruit_tree",
+        "candidate": "a",
+        "source": "exec-7a0e2e26-b659-4019-834f-d7df1b6d5f63.png",
+        "prompt": "Use case: stylized-concept. Asset type: production candidate A, mature jade_fruit_tree sprite for a Chinese xianxia farming game. Create ONE single isolated mature small orchard spirit tree, transparent background, portrait canvas with EXACT 2:3 aspect ratio (prefer 1024x1536). Pixel art designed to be read at 128x192: large crisp pixel clusters, limited discrete tonal steps, NO smooth rendering. Non-isometric oblique overhead 2.5D view, light from upper-left 10 o'clock. A gently twisting warm brown old trunk with roots joined to the trunk, a layered cloud-shaped dark green crown, 5-7 clearly readable jade-green spirit fruits with subtle jade-like natural veins. Restrained Eastern fantasy through the cloud crown silhouette and jade fruit, no floating ornaments. Palette anchors leaf #39603c #4e7b4e #639463, bark #695c46 #846741 #b08c5c, jade #3e6e64 #5fa08f #8fd0b8 #d8f0e4. Only a tiny area uses pale jade highlights. Tree height about 70-74% of full canvas, canopy width about 78% of canvas; leave generous transparent padding above and sides; center the ground contact horizontally, root bottom at 98.4% of canvas height. Clear thick connected trunk, every leaf/fruit attached to crown. No ground, soil mound, grass, rocks, cast shadow, glow, bloom, gradients, anti-aliasing, text, runes, characters, watermarks, sprite sheet or checkerboard drawn into background. This is a single image, not a presentation.",
+        "refinement": "Edit this mature jade spirit tree sprite for game production. Keep the same twisted trunk, green layered crown, six jade fruits, pixel art, upper-left lighting and colors. On an exact 1024x1536 portrait transparent canvas, make the ENTIRE tree including roots smaller: tree bbox width MUST be at most 800 pixels, height 1080-1120 pixels (70-73% canvas height); center horizontally and root bottom at y=1510. Leave empty transparent margin above and both sides. Remove ALL hazy aura, blurry green fog, brown shadow cloud and semi-transparent halos outside the hard silhouette. The ONLY nontransparent pixels must belong to the connected solid tree itself, all at full opacity; background alpha zero. No ground, shadows or isolated particles. Preserve hard discrete pixel clusters. Do not crop the tree. One sprite only."
+      },
+      {
+        "crop_id": "jade_fruit_tree",
+        "candidate": "b",
+        "source": "exec-e5a48ab6-7aa1-45a1-954e-7fe107a8b4f2.png",
+        "prompt": "Use case: stylized-concept. One mature jade fruit spirit tree, candidate B for a Chinese xianxia pixel art farming game, transparent portrait 2:3 canvas 1024x1536. Entire tree inside a broad EMPTY margin, occupy central 70 percent of canvas height and 75 percent width, root contact centered near bottom. Modest orchard tree with a short visibly twisted old brown trunk and compact horizontally tiered cloud-shaped crown, 5 small jade-colored round fruits visibly attached among leaves, natural pale jade veins on fruit only. Slightly asymmetrical elegant silhouette, calm Eastern fantasy, leaves in broad crisp pixel clusters with 3 flat tones. Camera non-isometric oblique overhead 2.5D, light upper left. Designed for final128x192, do not pack fine grain. Colors #39603c #4e7b4e #639463 green leaves, #695c46 #846741 warm wood, #5fa08f #8fd0b8 #d8f0e4 jade fruit highlights. Solid fully opaque tree and alpha0 everywhere outside tree. No halo, fog, glow, bloom, ground, soil mound, rocks, cast shadow, floating symbols, particles, text, watermark, gradient or anti-aliasing. One sprite only."
+      },
+      {
+        "crop_id": "moon_cap",
+        "candidate": "a",
+        "source": "exec-85a74a97-e451-4cb1-8c77-69556e6b36c6.png",
+        "prompt": "Use case: stylized-concept. Asset type: mature moon_cap candidate A, one single isolated medicinal spirit mushroom sprite for Chinese xianxia farming game. Transparent square canvas 1024x1024, designed to read at final64x64. Coarse crisp pixel art, broad discrete color clusters, 3-4 shade steps, no fine noise. A compact silver-violet mushroom with a wide slightly domed cap, short sturdy ivory-jade stalk and attached small root/mycelium base, all connected; one tasteful natural crescent marking on the cap, pale jade gills under the rim. Eastern fantasy expressed through moon-jade material and a lingzhi-inspired elegant rim, no magic effects. Entire subject centered, 65-70% full canvas height, 65-70% width, generous clear empty padding, bottom contact centered near98% canvas height. Non-isometric oblique overhead2.5D angle, upper-left lighting. Palette #575978 #8586a5 #b8bfd8 #d8f0e4; shadows restrained gray-violet, pale highlight only tiny area. Opaque solid silhouette, every outside pixel transparent. No glow, haze, bloom, ground, soil, grass, stones, shadows, detached tiny mushrooms, floating moon, particles, characters, text, runes, gradients, anti-aliasing, watermark, scene or sprite sheet."
+      },
+      {
+        "crop_id": "moon_cap",
+        "candidate": "b",
+        "source": "exec-7925dc75-1023-41e9-95ae-7340f7629d8e.png",
+        "prompt": "Use case: stylized-concept. Generate ONE isolated mature moon_cap medicinal spirit mushroom, candidate B for a Chinese xianxia pixel art farming game. Fully transparent SQUARE canvas, one mushroom centered, every pixel outside the silhouette alpha0. Pixel art designed for final64x64, broad chunky pixel clusters, four flat shade steps. A LOW wide smooth silver-violet domed cap with a SINGLE SMALL natural pale crescent mark on its upper-left third; no other ornate markings. A short thick creamy jade stalk supporting the cap, a tiny connected flared mycelium foot. The silhouette should be compact and recognizable as a mushroom, roughly70% canvas height and70% width, with generous empty margins; bottom contact centered near98% height. View non-isometric oblique overhead2.5D from above, restrained upper-left light. Lingzhi-inspired cap shape and subtle lunar-jade color give Eastern fantasy character. Palette anchors #575978 #8586a5 #b8bfd8 #d8f0e4, no bright neon. Opaque hard silhouette. No glow, aura, mist, bloom, ground, soil mound, cast shadow, grass, stones, detached particles, floating moon, text, runes, detailed filigree, gradients, anti-aliasing, watermark, environment, multiple sprites or sprite sheet."
+      }
+    ],
+    "discarded": [
+      {
+        "source": "exec-b944c192-9c17-4eb8-8db3-0e5fd1f2a903.png",
+        "reason": "first tree attempt; superseded by refinement, retained"
+      }
+    ]
+  },
+  "master_qc": [
+    {
+      "crop_id": "jade_fruit_tree",
+      "candidate": "a",
+      "source_sha256": "ad1afca49347bd36f8ca8f350ac7abaa93901be590b70e5b32b208761532dfe8",
+      "output_sha256": "00311dde2cceaa54cfbdfc7b86f91687d05c578cf15e9a52ebbbaed048ff5046",
+      "pad_factor": 10,
+      "alpha_threshold": 240,
+      "bbox": [
+        14,
+        62,
+        113,
+        190
+      ],
+      "height_ratio": 0.667,
+      "errors": [],
+      "warnings": [
+        "palette outside anchors: 100.0%"
+      ]
+    },
+    {
+      "crop_id": "jade_fruit_tree",
+      "candidate": "b",
+      "source_sha256": "f258e8f31ea31d4dc3d9c7f876b9ca31b9968ba5d749a6929383a5c7faa611fd",
+      "output_sha256": "e7955f9d2edf70b82f54f68b523ef3de6bb8c63264c3e70cf03f999a0ceace64",
+      "pad_factor": 9,
+      "alpha_threshold": 240,
+      "bbox": [
+        8,
+        77,
+        119,
+        190
+      ],
+      "height_ratio": 0.589,
+      "errors": [],
+      "warnings": [
+        "palette outside anchors: 100.0%"
+      ]
+    },
+    {
+      "crop_id": "moon_cap",
+      "candidate": "a",
+      "source_sha256": "416e2b8ec9672c3a69e15b13893475ed8017b206a1cd31c31784f61a81b94f57",
+      "output_sha256": "b0c42c3a4684b8701164cfeb25cb0f42130ad12d245cedbfd1a8e65aaf21f78c",
+      "pad_factor": 20,
+      "alpha_threshold": 240,
+      "bbox": [
+        7,
+        17,
+        57,
+        62
+      ],
+      "height_ratio": 0.703,
+      "errors": [],
+      "warnings": [
+        "palette outside anchors: 100.0%"
+      ]
+    },
+    {
+      "crop_id": "moon_cap",
+      "candidate": "b",
+      "source_sha256": "05540d4133caa8ca127428ba6c28babff91dfe4a5ae5910347b259c0566472d5",
+      "output_sha256": "9ac13af96a0ed9f2277beb328fd9d093bb11465744ecd08937b8a53a5a0278bb",
+      "pad_factor": 20,
+      "alpha_threshold": 240,
+      "bbox": [
+        4,
+        20,
+        60,
+        62
+      ],
+      "height_ratio": 0.656,
+      "errors": [],
+      "warnings": [
+        "palette outside anchors: 99.8%"
+      ]
+    }
+  ],
+  "derived": [
+    [
+      {
+        "crop_id": "jade_fruit_tree",
+        "stage": "stage_0",
+        "source": "exec-c432db41-6619-4de0-8794-f99deac58422.png",
+        "pad_factor": 8,
+        "reference": "../approved/assets/farming/crops/jade_fruit_tree/stage_3.png",
+        "prompt": "Edit approved jade fruit tree reference into stage_0 planted SEED for the same xianxia pixel art game. Show only ONE SMALL jade-brown oval seed pit with a fine attached root tip and a single tiny green bud touching the seed. No sapling, no trunk, no mature leaves, no fruit. Color from reference warm brown bark and restrained jade highlight. Chunky discrete pixel art, upper-left light, oblique overhead2.5D. Transparent portrait2:3 canvas1024x1536, seed subject total height around10% canvas and width10%, centered horizontally with ground contact near97%canvasheight, huge empty clear area above. All pixels attached to seed, no ground, soil mound, shadow, glow, aura, dust, text, floating ornaments or sheet. This is the earliest seed stage, much smaller than a sapling.",
+        "source_sha256": "e9d476350abf819a61dcdcecb13a9454e56d7327d4f81be4bad02370c63392a0",
+        "output_sha256": "2983ddd1b76071261ea83ce78e236a836f85304cf2187f1e9f2b07ee4fe9f696",
+        "bbox": [
+          56,
+          174,
+          72,
+          190
+        ],
+        "height": 16,
+        "errors": [],
+        "warnings": [
+          "palette outside anchors: 100.0%"
+        ]
+      },
+      {
+        "crop_id": "jade_fruit_tree",
+        "stage": "stage_1",
+        "source": "exec-38d46caf-256a-4a13-bba7-c50701f81c0b.png",
+        "pad_factor": 11,
+        "reference": "../approved/assets/farming/crops/jade_fruit_tree/stage_3.png",
+        "prompt": "Edit approved jade fruit tree reference into stage_1 SAPLING for the same xianxia farming game. One single small sapling, NO crown and NO fruit. A slender short gently curved brown stem with exactly3-4 broad pointed green leaves attached, tiny connected roots, clear juvenile silhouette. Keep the approved tree green/brown hues, chunky pixel clusters, upper-left lighting and oblique overhead2.5D view. Transparent portrait2:3 canvas1024x1536. Sapling total height about25% canvas, width about20%, root bottom near97%height, lots of truly empty transparency above and sides. Designed to read at128x192; no fine-grained texture. Solid opaque sprite with hard silhouette. Do not reuse full mature tree shape. No soil, ground, cast shadow, glow, fog, floating particles, fruits, writing or sprite sheet.",
+        "source_sha256": "a011bf85bee8e1e96d5a68b12a756df68cd05eb881b9b8a8b51585eddd0f862c",
+        "output_sha256": "c342022aa65a5d4476ede880581d70e0ba8113671329f06e5afc8ed64e9a3b30",
+        "bbox": [
+          46,
+          143,
+          81,
+          190
+        ],
+        "height": 47,
+        "errors": [],
+        "warnings": [
+          "palette outside anchors: 100.0%"
+        ]
+      },
+      {
+        "crop_id": "jade_fruit_tree",
+        "stage": "stage_2",
+        "source": "exec-6d550d5a-9947-4d39-b607-b3724e4546e8.png",
+        "pad_factor": 8,
+        "reference": "../approved/assets/farming/crops/jade_fruit_tree/stage_3.png",
+        "prompt": "Edit the APPROVED jade_fruit_tree mature sprite reference into stage_2, a YOUNG NOT YET FRUITING tree for the same Chinese xianxia pixel art game. Preserve exact green/brown palette family, upper-left lighting, non-isometric oblique overhead view, cloud-shaped leaf clusters and gently twisted trunk identity. Young tree is visibly smaller and simpler: thin trunk, two to three small connected cloud leaf clusters, no fruits at all. Single subject on transparent portrait 2:3 canvas, prefer1024x1536. Broad discrete pixel clusters designed to read at128x192; no gradients, no glow or aura, no ground or shadow. Target young-tree height about45% of canvas compared with approved mature59%, canopy notably narrower; center the contact at bottom with ample clear margin above. Every opaque pixel attached to the plant, roots minimal and connected. NO fruit, text, floating symbols, multiple sprites or background.",
+        "source_sha256": "fe64d93a5724aa3979f59ab364750e89d0bffad31264e0c27df538330f8d5591",
+        "output_sha256": "d3bc1bdb824506cd79aa5bb2ca50be58d246853197cfd02ab26d3d16730823ea",
+        "bbox": [
+          27,
+          100,
+          101,
+          190
+        ],
+        "height": 90,
+        "errors": [],
+        "warnings": [
+          "palette outside anchors: 100.0%"
+        ]
+      },
+      {
+        "crop_id": "jade_fruit_tree",
+        "stage": "stage_harvested",
+        "source": "exec-3a87aa82-b929-4409-91a4-8fb5c8daaa8e.png",
+        "pad_factor": 8,
+        "reference": "../approved/assets/farming/crops/jade_fruit_tree/stage_3.png",
+        "prompt": "Edit this approved mature jade_fruit_tree sprite into stage_harvested: REMOVE ALL FIVE JADE FRUITS and their pale highlights. Keep the mature tree's EXACT trunk curve, branch arrangement, cloud crown silhouette, canopy height and width, roots, position, camera, greens and warm browns. Healthy foliage remains; small leaf clusters can cover the former fruit spots, but no fruit or buds resembling fruit. This tree is alive and regrowing. Transparent portrait2:3 canvas1024x1536, same mature proportions59% final128x192height. Pixel art with crisp clusters, light upper-left, no halo, glow, ground or cast shadow. One sprite, not a sheet. All leaves attached. Keep roots at bottom center; no extra detail or text.",
+        "source_sha256": "5351aa52affd11a2e6e44ea057587b790f9c55b76d7a503f158ac3d67bb3fbc6",
+        "output_sha256": "5c6227b5e71b3ae19a114c62006a5d38cbf2033317936df043f7e205b8a975fc",
+        "bbox": [
+          7,
+          73,
+          121,
+          190
+        ],
+        "height": 117,
+        "errors": [],
+        "warnings": [
+          "palette outside anchors: 100.0%"
+        ]
+      },
+      {
+        "crop_id": "jade_fruit_tree",
+        "stage": "stage_exhausted",
+        "source": "exec-838c4778-444a-4a4a-8963-43e2ffa94345.png",
+        "pad_factor": 9,
+        "reference": "../approved/assets/farming/crops/jade_fruit_tree/stage_3.png",
+        "prompt": "Edit the approved mature jade fruit tree into stage_exhausted after its final harvest. SAME recognizable gently twisted trunk and branch layout, SAME mature scale and root contact, but NO fruits. Foliage now sparse GRAY-BROWN and dull ochre (#695c46 #827358), leaf clusters droop clearly downward, a few bare curved branches visible; exhausted and wilted, not burning or cut down. Keep the single continuous trunk solid warm muted brown. Pixel art, broad crisp clusters, upper-left light and non-isometric oblique overhead2.5D view. Transparent portrait2:3 canvas1024x1536, tree about59-65% canvas height, centered contact near97%height. No green healthy canopy, no fruit, no fallen detached leaves, no particles, ground, soil, shadow, glow, aura, text or sheet. This is the same tree exhausted, not another species.",
+        "source_sha256": "7580ff725489481239317fb9ed8f6f6dd0b41b7690d51c08c403c6854f219a4d",
+        "output_sha256": "9a5fd67c5289504a3c4c9abb0cdd57423476256b82783d9f8ea40778d1abb3c4",
+        "bbox": [
+          13,
+          75,
+          115,
+          190
+        ],
+        "height": 115,
+        "errors": [],
+        "warnings": [
+          "palette outside anchors: 100.0%"
+        ]
+      }
+    ],
+    [
+      {
+        "crop_id": "moon_cap",
+        "stage": "stage_0",
+        "source": "exec-8d3c1bd1-2da0-4af2-a93f-5e4453605da2.png",
+        "pad_factor": 20,
+        "reference": "../approved/assets/farming/crops/moon_cap/stage_3.png",
+        "prompt": "Edit approved moon_cap mature sprite into stage_0 MYCELIUM for same xianxia farming game. Remove the entire mushroom stalk and cap. Show only one TINY compact CONNECTED knot of pale jade-ivory branching mycelium threads with a muted violet seed-like nub in its center. All root threads touch the central knot; no isolated bits. The earliest stage, no cap or crescent yet. Keep the reference palette and upper-left light, chunky pixel art with3flat tones, oblique overhead2.5D view. Transparent square canvas, subject height around10-12% and width15%, tiny connected knot centered at bottom with huge empty margin, designed to read at64x64. No mushroom, adult shape, ground, soil, shadow, halo, glow, spores, dust, writing, symbols or sprite sheet.",
+        "source_sha256": "d078800bd0edefbdfba654a6d7fb64ef883f436f1a5776594fc95d2cf093640b",
+        "output_sha256": "bacf4909d640147645011f87659b226ce92fe0754c4ccf949f6b937ef408e72c",
+        "bbox": [
+          24,
+          51,
+          40,
+          62
+        ],
+        "height": 11,
+        "errors": [],
+        "warnings": [
+          "palette outside anchors: 100.0%"
+        ]
+      },
+      {
+        "crop_id": "moon_cap",
+        "stage": "stage_1",
+        "source": "exec-cb25dfed-56c6-4484-b4da-7c9b79c25889.png",
+        "pad_factor": 20,
+        "reference": "../approved/assets/farming/crops/moon_cap/stage_3.png",
+        "prompt": "Edit approved moon_cap mature reference into stage_1 SMALL MUSHROOM PIN for same xianxia pixel art game. ONE tiny juvenile mushroom pin with a closed rounded silver-violet cap, short pale jade stalk and connected root foot. Cap has NO full crescent/cloud pattern yet, only subtle pale rim; much smaller and simpler than mature reference. Keep exact violet/ivory family, upper-left light, oblique overhead2.5D angle and chunky pixel style. Transparent square canvas, subject height about23%canvas and width20%, bottom center near97%height with huge empty margins; designed to read at64x64. A single connected opaque sprite. NO cluster, adult ornate cap, detached spores, particles, ground, shadow, glow, haze, text or sheet.",
+        "source_sha256": "3e4563834ff0769599d1d1554956e3c1e2928a006169de32b2e3a07d9ceba654",
+        "output_sha256": "9f680336abc06e54c48aeb2b2ba892f0888da32e9522183eaf45e901463a708f",
+        "bbox": [
+          26,
+          47,
+          38,
+          62
+        ],
+        "height": 15,
+        "errors": [],
+        "warnings": [
+          "palette outside anchors: 100.0%"
+        ]
+      },
+      {
+        "crop_id": "moon_cap",
+        "stage": "stage_2",
+        "source": "exec-f06beb89-ed1d-4a58-beb2-502021f183a6.png",
+        "pad_factor": 20,
+        "reference": "../approved/assets/farming/crops/moon_cap/stage_3.png",
+        "prompt": "Edit the approved moon_cap mature mushroom into stage_2 YOUNG growing mushroom for same Chinese xianxia farming game. Preserve its silver-violet cap family, jade-ivory gills, naturally attached crescent/cloud pattern identity, oblique overhead2.5D view and upper-left lighting. Single connected mushroom, smaller gently curved cap with a faint simple crescent just beginning to appear, short pale stalk and connected tiny root foot. Visibly younger, about45% of square canvas height compared with mature70%, cap less spread and less ornate. Transparent square canvas, designed to read at64x64, broad crisp pixel clusters, discrete shades only. Center bottom contact, plenty of clear padding. NO other mushrooms, floating particles, moon orb, ground, soil mound, cast shadow, glow, haze, gradients, text or sprite sheet.",
+        "source_sha256": "ba26e5e87f0a548658d852e90e1d54d795bf787de3e730954caf43f9ecc6906a",
+        "output_sha256": "1e1647cb8a2cbd260d94024d17c54b75af0fa943716b7fbd98c630c0ad897082",
+        "bbox": [
+          19,
+          38,
+          45,
+          62
+        ],
+        "height": 24,
+        "errors": [],
+        "warnings": [
+          "palette outside anchors: 100.0%"
+        ]
+      }
+    ]
+  ]
+}

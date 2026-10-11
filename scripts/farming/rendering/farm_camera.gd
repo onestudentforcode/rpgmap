@@ -12,6 +12,8 @@ const PAN_SPEED := 480.0
 
 var cam: Camera2D
 var map_px := Vector2.ZERO
+var view_top := 0.0
+var view_bottom := 0.0
 
 
 func setup(camera: Camera2D, cells: Vector2i, tile: int) -> void:
@@ -58,4 +60,6 @@ func _clamp() -> void:
 	var half := vs * 0.5 / cam.zoom.x
 	var lo := Vector2(minf(half.x, map_px.x * 0.5), minf(half.y, map_px.y * 0.5))
 	cam.position.x = clampf(cam.position.x, lo.x, map_px.x - lo.x)
-	cam.position.y = clampf(cam.position.y, lo.y, map_px.y - lo.y)
+	var top := minf(half.y - view_top / cam.zoom.y, map_px.y * 0.5)
+	var bottom := maxf(map_px.y - half.y + view_bottom / cam.zoom.y, map_px.y * 0.5)
+	cam.position.y = clampf(cam.position.y, top, bottom)

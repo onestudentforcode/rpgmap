@@ -1,0 +1,531 @@
+<div id="lingtian65" aria-label="灵田 Phase 6.5 界面设计">
+  <style>
+    #lingtian65 {
+      --lt-bg:#f6f4ed; --lt-panel:#fffdf8; --lt-surface:#eef2e8;
+      --lt-line:#cfd8c6; --lt-text:#334238; --lt-muted:#58665a;
+      --lt-accent:#58745b; --lt-soft:#deebd9; --lt-side:272px; --lt-icon:19px;
+      position:relative; width:100%; color:var(--lt-text); background:var(--lt-bg);
+      font:400 14px/1.55 "Microsoft YaHei","PingFang SC","Noto Sans CJK SC",system-ui,sans-serif;
+      border-radius:12px; overflow:clip; color-scheme:light;
+    }
+    #lingtian65 * { box-sizing:border-box; }
+    #lingtian65 [hidden] { display:none!important; }
+    #lingtian65 button, #lingtian65 input, #lingtian65 select { font:inherit; color:inherit; }
+    #lingtian65 button { cursor:pointer; }
+    #lingtian65 button:disabled { cursor:default; opacity:.5; }
+    #lingtian65 .lt-icon {
+      display:inline-flex; align-items:center; justify-content:center; flex-shrink:0;
+      width:36px; height:36px; padding:8px; border:1px solid transparent; border-radius:7px;
+      background:transparent; color:var(--lt-text);
+    }
+    #lingtian65 .lt-icon:hover { background:var(--lt-surface); }
+    #lingtian65 .lt-icon[aria-pressed="true"] { background:var(--lt-soft); border-color:var(--lt-accent); }
+    #lingtian65 .lt-icon.lt-primary { background:var(--lt-accent); color:#fffdf8; }
+    #lingtian65 .lt-icon.lt-danger { color:#9b4e42; background:#f8e4df; }
+    #lingtian65 .lt-icon svg, #lingtian65 .lt-icon i { width:var(--lt-icon); height:var(--lt-icon); }
+    #lingtian65 .lt-top {
+      display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap;
+      gap:10px; padding:12px 18px; background:var(--lt-panel); border-bottom:1px solid var(--lt-line);
+    }
+    #lingtian65 .lt-brand { font:500 22px/1.2 "Microsoft YaHei",sans-serif; letter-spacing:3px; }
+    #lingtian65 .lt-stamp { color:#955d44; font-size:12px; letter-spacing:1px; margin-left:8px; }
+    #lingtian65 .lt-status { display:flex; flex-wrap:wrap; gap:16px; align-items:center; font-variant-numeric:tabular-nums; }
+    #lingtian65 .lt-date { display:flex; gap:10px; align-items:center; }
+    #lingtian65 .lt-term { height:4px; width:64px; background:var(--lt-surface); border-radius:3px; }
+    #lingtian65 .lt-term span { display:block; width:20%; height:100%; background:var(--lt-accent); border-radius:3px; }
+    #lingtian65 .lt-nav { display:flex; flex-wrap:wrap; gap:3px; }
+    #lingtian65 .lt-day { margin-left:10px; border-left:1px solid var(--lt-line); padding-left:10px; }
+    #lingtian65 .lt-world { display:grid; grid-template-columns:minmax(0,1fr) var(--lt-side); gap:14px; padding:14px; }
+    #lingtian65 .lt-map { position:relative; min-width:0; min-height:390px; }
+    #lingtian65 canvas { display:block; width:100%; height:100%; min-height:390px; aspect-ratio:20/14; border-radius:10px; cursor:crosshair; }
+    #lingtian65 .lt-map-top { position:absolute; left:12px; top:10px; display:flex; gap:8px; align-items:center; }
+    #lingtian65 .lt-map-label { background:var(--lt-panel); padding:4px 10px; border-radius:5px; color:var(--lt-muted); font-size:12px; }
+    #lingtian65 .lt-fit { background:var(--lt-panel); }
+    #lingtian65 .lt-brief {
+      position:absolute; left:12px; bottom:12px; max-width:calc(100% - 24px);
+      background:var(--lt-panel); border-radius:8px; padding:10px 12px; box-shadow:0 3px 10px #33423812;
+    }
+    #lingtian65 .lt-brief-head { display:flex; justify-content:space-between; align-items:center; gap:12px; }
+    #lingtian65 .lt-brief-head span { font-size:12px; color:var(--lt-muted); }
+    #lingtian65 .lt-brief p { margin:3px 0; font-size:12px; }
+    #lingtian65 .lt-side { background:var(--lt-panel); border-radius:9px; padding:15px; align-self:start; }
+    #lingtian65 .lt-side-head { display:flex; align-items:center; justify-content:space-between; gap:8px; }
+    #lingtian65 h2, #lingtian65 h3 { margin:0; font-weight:500; }
+    #lingtian65 h2 { font-size:18px; }
+    #lingtian65 h3 { font-size:14px; }
+    #lingtian65 p { margin:8px 0; }
+    #lingtian65 .lt-muted { color:var(--lt-muted); font-size:12px; }
+    #lingtian65 .lt-tag { display:inline-block; padding:2px 7px; border-radius:4px; background:var(--lt-soft); font-size:12px; }
+    #lingtian65 .lt-section { margin-top:14px; padding-top:12px; border-top:1px solid var(--lt-line); }
+    #lingtian65 .lt-value { display:flex; justify-content:space-between; align-items:center; gap:8px; margin:7px 0; font-variant-numeric:tabular-nums; }
+    #lingtian65 .lt-bar { height:5px; border-radius:3px; background:var(--lt-surface); margin:5px 0 10px; }
+    #lingtian65 .lt-bar span { display:block; height:100%; background:var(--lt-accent); border-radius:3px; }
+    #lingtian65 .lt-bar.lt-water span { background:#446976; }
+    #lingtian65 .lt-actions { display:flex; flex-wrap:wrap; gap:7px; align-items:center; margin-top:10px; }
+    #lingtian65 select, #lingtian65 input {
+      border:1px solid var(--lt-line); border-radius:5px; background:var(--lt-panel);
+      padding:6px 8px; max-width:100%; min-width:0; font-size:16px;
+    }
+    #lingtian65 .lt-side select { width:100%; font-size:14px; }
+    #lingtian65 .lt-foot {
+      display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap;
+      gap:8px; padding:0 16px 14px;
+    }
+    #lingtian65 .lt-tools { display:flex; flex-wrap:wrap; align-items:center; gap:5px; }
+    #lingtian65 .lt-tool-set { display:flex; flex-wrap:wrap; gap:5px; align-items:center; }
+    #lingtian65 .lt-priority { display:flex; align-items:center; gap:6px; color:var(--lt-muted); font-size:12px; }
+    #lingtian65 .lt-priority input { width:54px; padding:3px 5px; }
+    #lingtian65 .lt-feedback { min-height:28px; padding:6px 18px; background:var(--lt-surface); font-size:12px; }
+    #lingtian65 .lt-layer { position:absolute; inset:0; z-index:4; background:#33423838; padding:50px 18px 18px; }
+    #lingtian65 .lt-dialog {
+      position:relative; background:var(--lt-panel); max-width:840px; margin:0 auto;
+      border-radius:10px; padding:18px 20px; box-shadow:0 10px 36px #33423820;
+    }
+    #lingtian65 .lt-dialog-head { display:flex; align-items:center; justify-content:space-between; gap:12px; margin-bottom:12px; }
+    #lingtian65 .lt-tabs { display:flex; flex-wrap:wrap; gap:5px; margin-bottom:12px; }
+    #lingtian65 .lt-tab {
+      padding:5px 10px; border:0; border-bottom:2px solid transparent; background:transparent; border-radius:4px 4px 0 0;
+    }
+    #lingtian65 .lt-tab[aria-pressed="true"] { background:var(--lt-surface); border-color:var(--lt-accent); }
+    #lingtian65 .lt-two { display:grid; grid-template-columns:minmax(0,1.3fr) minmax(220px,1fr); gap:20px; }
+    #lingtian65 .lt-items { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:6px; align-content:start; }
+    #lingtian65 .lt-item {
+      display:flex; align-items:center; gap:8px; padding:9px; text-align:left; background:var(--lt-surface);
+      border:1px solid transparent; border-radius:5px; min-width:0;
+    }
+    #lingtian65 .lt-item[aria-pressed="true"] { border-color:var(--lt-accent); background:var(--lt-soft); }
+    #lingtian65 .lt-item svg { width:19px; height:19px; flex-shrink:0; }
+    #lingtian65 .lt-item span { min-width:0; }
+    #lingtian65 .lt-item small { display:block; color:var(--lt-muted); font-size:12px; }
+    #lingtian65 .lt-qty { display:flex; align-items:center; gap:6px; flex-wrap:wrap; margin:12px 0; }
+    #lingtian65 .lt-qty input { width:90px; }
+    #lingtian65 .lt-quick { border:1px solid var(--lt-line); background:var(--lt-surface); border-radius:4px; padding:4px 7px; }
+    #lingtian65 .lt-note { color:#855b32; background:#f6e8d2; padding:7px 9px; border-radius:5px; font-size:12px; }
+    #lingtian65 .lt-cards { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:12px; }
+    #lingtian65 .lt-sheet { background:var(--lt-surface); border-radius:7px; padding:14px; }
+    #lingtian65 .lt-recipe { padding:12px 0; border-bottom:1px solid var(--lt-line); }
+    #lingtian65 .lt-recipe:last-child { border:0; }
+    #lingtian65 .lt-recipe-line { display:flex; justify-content:space-between; align-items:center; gap:10px; flex-wrap:wrap; }
+    #lingtian65 .lt-ledger { width:100%; border-collapse:collapse; font-variant-numeric:tabular-nums; }
+    #lingtian65 .lt-ledger th, #lingtian65 .lt-ledger td { padding:8px 5px; border-bottom:1px solid var(--lt-line); text-align:left; font-weight:400; }
+    #lingtian65 .lt-ledger td:last-child { text-align:right; }
+    #lingtian65 .lt-prefs { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:8px; }
+    #lingtian65 .lt-prefs label { font-size:12px; }
+    #lingtian65 .lt-prefs select { width:100%; font-size:14px; }
+    #lingtian65 .lt-workers { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:16px; }
+    #lingtian65 .lt-setting { display:flex; justify-content:space-between; align-items:center; gap:12px; margin:12px 0; flex-wrap:wrap; }
+    @media (max-width:760px) {
+      #lingtian65 .lt-world { grid-template-columns:1fr; }
+      #lingtian65 .lt-map, #lingtian65 canvas { min-height:330px; }
+      #lingtian65 .lt-status { gap:10px; font-size:12px; }
+      #lingtian65 .lt-top { padding:12px; }
+      #lingtian65 .lt-side { width:100%; }
+      #lingtian65 .lt-two, #lingtian65 .lt-workers, #lingtian65 .lt-cards { grid-template-columns:1fr; }
+      #lingtian65 .lt-dialog { padding:14px; }
+      #lingtian65 .lt-layer { padding:18px 10px; }
+      #lingtian65 .lt-prefs { grid-template-columns:repeat(2,minmax(0,1fr)); }
+    }
+    @media (pointer:coarse) {
+      #lingtian65 .lt-icon { min-width:44px; min-height:44px; }
+      #lingtian65 .lt-tab, #lingtian65 .lt-quick { min-height:44px; }
+    }
+  </style>
+  <header class="lt-top">
+    <div class="lt-date"><span class="lt-brand">灵田</span><span class="lt-stamp">田间小记</span></div>
+    <div class="lt-status">
+      <div class="lt-date">第2时节 · 第<span id="lt-day-number">18</span>天 <div class="lt-term" aria-label="本时节第3天，共15天"><span></span></div></div>
+      <span>AP <span id="lt-ap">18</span>/24</span><span>元石 <span id="lt-cash">160</span></span>
+    </div>
+    <nav class="lt-nav" aria-label="经营管理">
+      <button class="lt-icon" type="button" data-action="inventory" aria-label="行囊" data-tooltip="行囊 · M"><i data-lucide="backpack" aria-hidden="true"></i></button>
+      <button class="lt-icon" type="button" data-action="market" aria-label="市场" data-tooltip="市场 · 买卖材料"><i data-lucide="store" aria-hidden="true"></i></button>
+      <button class="lt-icon" type="button" data-action="orders" aria-label="五行订单" data-tooltip="五行订单 · O"><i data-lucide="scroll-text" aria-hidden="true"></i></button>
+      <button class="lt-icon" type="button" data-action="workers" aria-label="雇工" data-tooltip="雇工 · U"><i data-lucide="users-round" aria-hidden="true"></i></button>
+      <button class="lt-icon" type="button" data-action="build" aria-label="建设" data-tooltip="建设 · B"><i data-lucide="hammer" aria-hidden="true"></i></button>
+      <button class="lt-icon" type="button" data-action="journal" aria-label="记录" data-tooltip="日报与回顾 · J"><i data-lucide="notebook-pen" aria-hidden="true"></i></button>
+      <button class="lt-icon" type="button" data-action="help" aria-label="手册" data-tooltip="操作手册"><i data-lucide="circle-help" aria-hidden="true"></i></button>
+      <button class="lt-icon" type="button" data-action="menu" aria-label="菜单" data-tooltip="菜单 · Esc"><i data-lucide="menu" aria-hidden="true"></i></button>
+      <span class="lt-day"><button class="lt-icon lt-primary" type="button" data-action="end-day" aria-label="结束当天" data-tooltip="结束当天 · 日结并自动保存"><i data-lucide="moon" aria-hidden="true"></i></button></span>
+    </nav>
+  </header>
+  <main class="lt-world">
+    <div class="lt-map">
+      <canvas id="lt-map" role="img" aria-label="20乘14格农场示意，左侧麦田与菌床，中部树木与加工设施，右侧天然资源点"></canvas>
+      <div class="lt-map-top"><span class="lt-map-label">灵田 · 阳区 / 林下阴区</span><button class="lt-icon lt-fit" type="button" data-action="fit" aria-label="回到全图" data-tooltip="回到全图 · F"><i data-lucide="maximize" aria-hidden="true"></i></button></div>
+      <div class="lt-brief">
+        <div class="lt-brief-head"><span>昨日小记</span><button class="lt-icon" type="button" data-action="journal" aria-label="查看日报详情" data-tooltip="查看日报详情"><i data-lucide="notebook-tabs" aria-hidden="true"></i></button></div>
+        <p>收成 · 谷粒 +12，秸秆 +8</p><p>加工 · 木板 +2，木屑 +1</p>
+      </div>
+    </div>
+    <aside class="lt-side" id="lt-side" aria-label="选中目标详情"></aside>
+  </main>
+  <footer class="lt-foot">
+    <div class="lt-tools">
+      <button class="lt-icon" type="button" data-action="toggle-tools" aria-label="展开农务工具" data-tooltip="展开 / 收起农务工具"><i data-lucide="shovel" aria-hidden="true"></i></button>
+      <div class="lt-tool-set" id="lt-tools"></div>
+      <label class="lt-priority">优先级 <input aria-label="任务优先级" type="number" value="5" min="1" max="9"></label>
+    </div>
+    <span class="lt-muted" id="lt-mode">查看 · 点击地格</span>
+  </footer>
+  <div class="lt-feedback" id="lt-feedback" aria-live="polite">金穗麦已成熟，可手动收获或框选收获待办。</div>
+  <div class="lt-layer" id="lt-layer" hidden><section class="lt-dialog" id="lt-dialog" role="dialog" aria-modal="true" aria-labelledby="lt-title"></section></div>
+  <script>
+    (function () {
+      const root = document.getElementById("lingtian65");
+      const find = function (selector) { return root.querySelector(selector); };
+      const state = { tool:"inspect", expanded:true, selected:[5,4], modal:"", category:"seed", item:"golden_wheat_seed", qty:1, tab:"trade", build:"", tone:"rice", iconSize:19, sideWidth:272, completed:new Set(), marks:[], lastFocus:null, pendingClear:null, delivered:new Set(), batches:{}, activeRecipes:[], day:18 };
+      const tools = [
+        ["inspect","查看","mouse-pointer-2","0"],["till","开垦","shovel","1"],["plant","播种","sprout","2"],
+        ["harvest","收获","wheat","3"],["irrigate","浇水","droplets","4"],["fertilize","施肥","leaf","5"],
+        ["fell","砍伐","axe","6"],["clear","清理","eraser","7"],["cancel","取消标记","circle-slash","8"],
+        ["area","负责区域","scan","9"]
+      ];
+      const items = [
+        ["golden_wheat_seed","金穗麦种子","sprout",8,3,0,"seed"],
+        ["fast_fir_seed","速生杉苗","tree-pine",2,8,0,"seed"],
+        ["resin_tree_seed","松脂树苗","tree-deciduous",1,10,0,"seed"],
+        ["wood_decay_spawn","木腐菇菌种","sprout",4,3,0,"seed"],
+        ["grain","谷粒","wheat",12,6,4,"food"],["straw","秸秆","wheat",8,3,1,"input"],
+        ["raw_wood","原木","logs",10,6,4,"input"],["twig","枝条","git-branch",9,3,2,"input"],
+        ["resin","松脂","droplet",4,0,6,"food"],["mushroom","木腐菇","leaf",3,0,6,"food"],
+        ["humus","腐殖土","layers",3,0,4,"food"],["raw_stone","普通岩石","mountain",12,3,1,"input"],
+        ["iron_ore","铁质矿石","pickaxe",6,4,2,"input"],["clean_water","清水","droplets",18,2,1,"food"],
+        ["wood_chip","木屑","layers",5,4,2,"input"],["wood_plank","木板","panel-top",2,0,8,"input"],
+        ["charcoal","木炭","flame",3,0,5,"food"],["iron_ingot","铁锭","box",1,0,12,"food"]
+      ];
+      const facilities = [
+        ["woodshop","木工台","hammer",8,"原木×2，岩石×2",2],
+        ["char_kiln","炭化炉","flame",12,"原木×2，岩石×3",2],
+        ["compost_bin","堆肥箱","leaf",6,"原木×1，岩石×1",1],
+        ["smelter","小型冶炼炉","anvil",20,"木板×2，岩石×6",2]
+      ];
+      let geometry = { tile:1, x:0, y:0 }, drag = null, hover = null;
+      function icon(name) { return '<i data-lucide="' + name + '" aria-hidden="true"></i>'; }
+      function action(name, label, glyph, extra) {
+        return '<button type="button" class="lt-icon ' + (extra || "") + '" data-action="' + name + '" aria-label="' + label + '" data-tooltip="' + label + '">' + icon(glyph) + '</button>';
+      }
+      function icons() { if (globalThis.lucide) globalThis.lucide.createIcons({ attrs:{ width:19,height:19 } }); }
+      function feedback(text) { find("#lt-feedback").textContent = text; }
+      function toolName() { return state.build ? "放置 " + facilities.find(function (f) { return f[0] === state.build; })[1] : tools.find(function (t) { return t[0] === state.tool; })[1]; }
+      function renderTools() {
+        find("#lt-tools").hidden = !state.expanded;
+        find("#lt-tools").innerHTML = tools.map(function (t) {
+          return '<button type="button" class="lt-icon" data-tool="' + t[0] + '" aria-label="' + t[1] + '" aria-pressed="' + (state.tool === t[0] && !state.build) + '" data-tooltip="' + t[1] + ' · ' + t[3] + '">' + icon(t[2]) + '</button>';
+        }).join("");
+        find("#lt-mode").textContent = toolName() + (state.tool === "inspect" && !state.build ? " · 点击地格" : " · 连续操作，右键退出");
+        icons(); draw();
+      }
+      function meter(label, value, water) {
+        return '<div class="lt-value"><span>' + label + '</span><span>' + value + '/100</span></div><div class="lt-bar ' + (water ? "lt-water" : "") + '"><span style="width:' + value + '%"></span></div>';
+      }
+      function objectAt(cell) {
+        const x=cell[0], y=cell[1];
+        if (y===8 && x>=15 && x<=17) return ["source",x-15];
+        if (x>=10 && x<=11 && y>=10 && y<=11) return ["facility",0];
+        if (x>=13 && x<=14 && y>=10 && y<=11) return ["facility",1];
+        if (x>=11 && x<=12 && y>=3 && y<=4) return ["tree","速生杉"];
+        if (x>=14 && x<=15 && y>=3 && y<=4) return ["tree","松脂树"];
+        if (x>=3 && x<=7 && y>=3 && y<=6 && !state.completed.has(x+","+y)) return ["wheat"];
+        if (x>=3 && x<=6 && y===11) return ["mushroom"];
+        return ["empty"];
+      }
+      function renderSide() {
+        const kind=objectAt(state.selected), coord=state.selected[0]+", "+state.selected[1];
+        const head=function (name,status) { return '<div class="lt-side-head"><h2>'+name+'</h2>'+action("collapse","收起详情","panel-right-close")+'</div><p class="lt-muted">地格 '+coord+'</p><span class="lt-tag">'+status+'</span>'; };
+        let html="";
+        if (kind[0]==="facility") {
+          const batch=state.batches[kind[1]];
+          html=head(facilities[kind[1]][1],!batch ? "空闲" : batch.days>0 ? "加工中" : "待收取");
+          if (batch) html+='<div class="lt-section"><p>'+batch.name+'</p><p>'+batch.outputs+'</p><p class="lt-muted">剩余'+batch.days+'天 · 加工期间无需每日点击</p>'+(batch.days===0 ? action("claim","收取产物 · 1AP","package-check","lt-primary") : "")+'</div>';
+          else html+='<div class="lt-section"><p>选择配方投料，完成后再收取。</p><p class="lt-muted">仓库共享 · 启动/收取各1AP</p><div class="lt-actions">'+action("processing","选择加工配方","book-open","lt-primary")+action("demolish","拆除 · 1AP，无返还","trash-2","lt-danger")+'</div></div>';
+        } else if (kind[0]==="source") {
+          const s=[["采石点",3,18,"岩石"],["采矿点",2,12,"矿石"],["泉水点",5,30,"清水"]][kind[1]];
+          html=head(s[0],"天然资源");
+          html+='<div class="lt-section"><div class="lt-value"><span>每批产量</span><span>'+s[1]+'份'+s[3]+'</span></div><div class="lt-value"><span>今日剩余</span><span>'+s[2]+'份</span></div><div class="lt-actions">'+action("collect","手动采集 · 1AP","pickaxe","lt-primary")+'</div></div><div class="lt-section"><p>资源点派工</p><select aria-label="资源点指派"><option>暂不指派</option>阿禾</option>阿青</option></select><p class="lt-muted">日结执行，成功每批收费1元石。</p></div>';
+        } else {
+          const name=kind[0]==="wheat" ? "金穗麦" : kind[0]==="tree" ? kind[1] : kind[0]==="mushroom" ? "木腐菇" : "空闲地格";
+          html=head(name,kind[0]==="empty" ? "可安排种植" : "成熟");
+          if (kind[0]!=="empty") html+='<div class="lt-section"><div class="lt-value"><span>生长</span><span>100% · 可收获</span></div><div class="lt-bar"><span style="width:100%"></span></div></div>';
+          html+=meter("水分",62,true)+meter("肥力",50,false)+'<div class="lt-value"><span>固定光照</span><span>'+(kind[0]==="mushroom" ? "30 · 阴区" : "80 · 阳区")+'</span></div>';
+          html+='<div class="lt-section"><p>持续种植计划</p><select aria-label="持续种植种子"><option>金穗麦 · 种子8份</option>速生杉 · 树苗2份</option>松脂树 · 树苗1份</option>木腐菇 · 菌种4份</option>不播种 / 保持空闲</option></select><p class="lt-muted">收获后沿用；种子和全部投入充足才重播。</p></div>';
+          if (kind[0]==="wheat") html+='<p class="lt-muted">预计收成：谷粒×3，秸秆×2</p>';
+          html+='<div class="lt-actions">'+action("manual",kind[0]==="empty" ? "手动播种 · 1AP" : kind[0]==="tree" ? "手动砍伐 · 1AP" : "手动收获 · 1AP",kind[0]==="tree" ? "axe" : kind[0]==="empty" ? "sprout" : "wheat","lt-primary")+action("water","浇水 · 清水1份 / 1AP","droplets")+action("fertilize","施肥 · 腐殖土1份 / 1AP","leaf")+(kind[0]!=="empty" ? action("clear","清理作物 · 无返还","eraser","lt-danger") : "")+'</div>';
+        }
+        find("#lt-side").innerHTML=html; icons();
+      }
+      function open(title, html, mode) {
+        if (!state.modal) state.lastFocus=document.activeElement;
+        state.modal=mode;
+        [".lt-top",".lt-world",".lt-foot"].forEach(function (s) { find(s).inert=true; });
+        find("#lt-dialog").innerHTML='<div class="lt-dialog-head"><h2 id="lt-title">'+title+'</h2>'+action("close","关闭 · Esc","x")+'</div>'+html;
+        find("#lt-layer").hidden=false;
+        icons();
+        requestAnimationFrame(function () {
+          root.style.minHeight=Math.max(580,find("#lt-dialog").offsetHeight+90)+"px";
+          const close=find('#lt-dialog [data-action="close"]'); if (close) close.focus();
+        });
+      }
+      function close() {
+        find("#lt-layer").hidden=true; state.modal=""; root.style.minHeight="";
+        [".lt-top",".lt-world",".lt-foot"].forEach(function (s) { find(s).inert=false; });
+        state.pendingClear=null;
+        if (state.lastFocus && state.lastFocus.isConnected) state.lastFocus.focus();
+      }
+      function showMarket() {
+        const categoryNames=[["seed","种子"],["input","生产投入"],["food","食材"]];
+        const selected=items.find(function (i) { return i[0]===state.item; });
+        const list=items.filter(function (i) { return i[6]===state.category; });
+        const tabs=categoryNames.map(function (c) { return '<button class="lt-tab" type="button" data-category="'+c[0]+'" aria-pressed="'+(c[0]===state.category)+'">'+c[1]+'</button>'; }).join("");
+        let html='<div class="lt-tabs"><button class="lt-tab" type="button" data-market-tab="inventory" aria-pressed="'+(state.tab==="inventory")+'">行囊</button><button class="lt-tab" type="button" data-market-tab="trade" aria-pressed="'+(state.tab==="trade")+'">市场</button></div><div class="lt-tabs">'+tabs+'</div><div class="lt-two"><div class="lt-items">';
+        html+=list.map(function (i) { return '<button type="button" class="lt-item" data-item="'+i[0]+'" aria-pressed="'+(i[0]===state.item)+'">'+icon(i[2])+'<span>'+i[1]+'<small>持有 '+i[3]+'</small></span></button>'; }).join("");
+        html+='</div><div><h3>'+selected[1]+'</h3><p class="lt-muted">库存 '+selected[3]+'份</p>';
+        if (state.tab==="trade") html+='<div class="lt-value"><span>采购单价</span><span>'+(selected[4] ? selected[4]+"元石" : "未开放采购")+'</span></div><div class="lt-value"><span>出售单价</span><span>'+(selected[5] ? selected[5]+"元石" : "未开放出售")+'</span></div><label class="lt-qty">数量 <input id="lt-quantity" type="number" value="'+state.qty+'" min="1" max="999" aria-label="交易数量">'+[1,5,10].map(function (n) { return '<button type="button" class="lt-quick" data-quantity="'+n+'">'+n+'</button>'; }).join("")+'</label><div id="lt-total"></div><div class="lt-actions">'+action("buy","买入当前数量","shopping-basket","lt-primary")+action("sell","出售当前数量","coins")+'</div>';
+        else html+='<p>共享仓库</p><p class="lt-muted">材料可用于种植、建设、加工或五行供货。</p>';
+        html+='</div></div>';
+        open("行囊与市场",html,"market"); updateTotals();
+      }
+      function updateTotals() {
+        const item=items.find(function (i) { return i[0]===state.item; }), quantity=find("#lt-quantity");
+        if (!quantity) return;
+        const n=Number(quantity.value), valid=Number.isInteger(n)&&n>0&&n<=999;
+        state.qty=valid ? n : 1;
+        const buyOk=valid&&item[4]>0&&n*item[4]<=160, sellOk=valid&&item[5]>0&&n<=item[3];
+        find("#lt-total").innerHTML=valid ? '<div class="lt-value"><span>买入总价</span><span>'+(item[4] ? n*item[4]+"元石" : "—")+'</span></div><div class="lt-value"><span>售出回款</span><span>'+(item[5] ? n*item[5]+"元石" : "—")+'</span></div>' : '<p class="lt-note">请输入1～999的整数。</p>';
+        find('[data-action="buy"]').disabled=!buyOk; find('[data-action="sell"]').disabled=!sellOk;
+        if (valid&&item[4]&&n*item[4]>160) find("#lt-total").innerHTML+='<p class="lt-note">元石不足，当前余额160。</p>';
+        if (valid&&item[5]&&n>item[3]) find("#lt-total").innerHTML+='<p class="lt-note">库存不足，当前持有'+item[3]+'。</p>';
+      }
+      function showOrders() {
+        const orders=[["木","谷粒",4,3,12,13,"grain","wheat"],["火","松脂",8,2,4,13,"resin","flame"],["水","清水",1,12,18,13,"clean_water","droplets"]];
+        open("今日五行供货",'<p class="lt-muted">每日3单 · 一转需求12 · 未完成不罚款</p><div class="lt-cards">'+orders.map(function (o) {
+          return '<article class="lt-sheet"><h3>'+o[0]+' · 一转</h3><p>'+o[1]+'</p><div class="lt-value"><span>持有 / 必要</span><span>'+o[4]+' / '+o[3]+'</span></div><p class="lt-muted">每份供养值 '+o[2]+'</p><div class="lt-section"><div class="lt-value"><span>市价＋溢价</span><span>12＋1</span></div><div class="lt-value"><span>回款</span><span>'+o[5]+'元石</span></div>'+(state.delivered.has(o[6]) ? '<p class="lt-tag">已交付 · 回款13元石</p>' : action("deliver-"+o[6],"交付 "+o[1]+"×"+o[3],"package-check","lt-primary"))+'</div></article>';
+        }).join("")+'</div>',"orders");
+      }
+      function showWorkers() {
+        const prefs=["采集","收获","开垦","播种","浇水","施肥","砍伐","清理"];
+        open("雇工与负责区域",'<p class="lt-muted">最多2人 · 成功一次1元石 · 每人每日最多12次</p><div class="lt-workers">'+["阿禾","阿青"].map(function (name,index) {
+          return '<article class="lt-sheet"><div class="lt-side-head"><h3>'+name+'</h3>'+action("pause-"+index,"暂停 / 恢复委托","pause")+'</div><label class="lt-setting">日预算 <input type="number" min="0" max="160" value="12" aria-label="'+name+'日预算" style="width:80px"></label><p class="lt-muted">工作偏好0～5，0为禁止</p><div class="lt-prefs">'+prefs.map(function (job) { return '<label>'+job+'<select aria-label="'+name+job+'偏好">'+[0,1,2,3,4,5].map(function (n) { return '<option '+(n===3 ? "selected" : "")+'>'+n+'</option>'; }).join("")+'</select></label>'; }).join("")+'</div><div class="lt-section"><div class="lt-side-head"><span>负责区域</span>'+action("add-area-"+index,"框选添加负责区域","plus")+'</div><div class="lt-value"><span>田区 '+(index+1)+' · 24格</span><span>'+action("locate-area","定位区域","locate-fixed")+action("remove-area","删除该负责区域","minus")+'</span></div></div></article>';
+        }).join("")+'</div>',"workers");
+      }
+      function showProcessing() {
+        const current=objectAt(state.selected), isChar=current[0]==="facility"&&current[1]===1;
+        const recipes=isChar ? [["枝条炭化","枝条×4","木炭×3",2]] : [["锯切木板","原木×2","木板×2，木屑×1",1],["原木粉碎","原木×1","木屑×4",1],["枝条粉碎","枝条×2","木屑×3",1]];
+        state.activeRecipes=recipes;
+        open((isChar ? "炭化炉" : "木工台")+" · 配方册",recipes.map(function (r,index) {
+          return '<article class="lt-recipe"><div class="lt-recipe-line"><h3>'+r[0]+'</h3>'+action("start-recipe-"+index,"投料启动 "+r[0]+" · 1AP","play","lt-primary")+'</div><p>'+r[1]+' → '+r[2]+'</p><p class="lt-muted">'+r[3]+'天完成 · 收取1AP · 原料由共享仓库扣除</p></article>';
+        }).join(""),"processing");
+      }
+      function showBuild() {
+        open("建设设施",'<div class="lt-workers">'+facilities.map(function (f) {
+          return '<article class="lt-sheet"><div class="lt-side-head"><h3>'+f[1]+'</h3>'+action("place-"+f[0],"放置 "+f[1],f[2])+'</div><p>'+f[3]+'元石 · '+f[5]+'×'+f[5]+'格</p><p class="lt-muted">'+f[4]+'</p></article>';
+        }).join("")+'</div>',"build");
+      }
+      function showJournal(recap) {
+        const tabs='<div class="lt-tabs"><button class="lt-tab" type="button" data-action="journal" aria-pressed="'+!recap+'">逐日条目</button><button class="lt-tab" type="button" data-action="recap" aria-pressed="'+!!recap+'">首次45天回顾</button></div>';
+        const rows=recap ? [["销售收入",28],["订单收入",312],["采购支出",6],["建设支出",46],["人工支出",50],["净现金变化","+238"]] : [["收成 · 谷粒 / 秸秆","+12 / +8"],["加工 · 木板 / 木屑","+2 / +1"],["供货 · 木一转","+13元石"],["人工 · 成功4次","−4元石"]];
+        let html=tabs+'<p class="lt-muted">'+(recap ? "首次45天 · 初始60 → 期末298元石" : "第17天 · 按事件分类，同类合并")+'</p><table class="lt-ledger"><thead><tr><th scope="col">条目</th><th scope="col">数量 / 元石</th></tr></thead><tbody>'+rows.map(function (r) { return '<tr><td>'+r[0]+'</td><td>'+r[1]+'</td></tr>'; }).join("")+'</tbody></table>';
+        if (recap) html+='<div class="lt-section"><h3>三个时节 · 净现金变化</h3><p>第1时节 −46　　第2时节 +161　　第3时节 +123</p><p class="lt-muted">期末库存另列；首次回顾冻结，之后继续经营。</p></div>';
+        open("经营小记",html,"journal");
+      }
+      function showSettings() {
+        open("显示设置",'<label class="lt-setting">全屏 <input type="checkbox" aria-label="全屏"></label><label class="lt-setting">窗口分辨率 <select aria-label="窗口分辨率"><option>2560 × 1440</option><option>1920 × 1080</option><option>1280 × 720</option></select></label><label class="lt-setting">UI缩放 <select aria-label="UI缩放"><option>100%</option><option>125%</option><option>150%</option></select></label><label class="lt-setting">帧率 <select aria-label="帧率"><option>垂直同步</option><option>60 FPS</option><option>120 FPS</option></select></label><label class="lt-setting">显示FPS <input type="checkbox" aria-label="显示FPS"></label><div class="lt-actions">'+action("apply-settings","应用并保存显示设置","check","lt-primary")+'</div>',"settings");
+      }
+      function showSlots() {
+        open("灵田 · 选择存档",'<div class="lt-cards">'+[1,2,3].map(function (n) {
+          return '<article class="lt-sheet"><h3>存档 '+n+'</h3><p>'+(n===1 ? "第18天 · 160元石" : "空存档")+'</p><p class="lt-muted">'+(n===1 ? "保存于第17天日结" : "新建独立农场")+'</p><div class="lt-actions">'+action(n===1 ? "continue" : "new-slot",""+(n===1 ? "继续经营" : "新建农场"),n===1 ? "play" : "plus","lt-primary")+(n===1 ? action("overwrite","覆盖新建","rotate-ccw","lt-danger") : "")+'</div></article>';
+        }).join("")+'</div>',"slots");
+      }
+      function confirm(title, text, next) {
+        open(title,'<p>'+text+'</p><div class="lt-actions">'+action(next,"确认","check","lt-danger")+action("close","取消","x")+'</div>',"confirm");
+      }
+      root.addEventListener("click",function (event) {
+        const b=event.target.closest("button");
+        if (!b || !root.contains(b)) { if (event.target===find("#lt-layer")) close(); return; }
+        if (state.modal && !find("#lt-dialog").contains(b)) return;
+        if (b.dataset.tool) { state.tool=b.dataset.tool; state.build=""; renderTools(); return; }
+        if (b.dataset.category) { state.category=b.dataset.category; state.item=items.find(function (i) { return i[6]===state.category; })[0]; state.qty=1; showMarket(); return; }
+        if (b.dataset.item) { state.item=b.dataset.item; state.qty=1; showMarket(); return; }
+        if (b.dataset.marketTab) { state.tab=b.dataset.marketTab; showMarket(); return; }
+        if (b.dataset.quantity) { find("#lt-quantity").value=b.dataset.quantity; updateTotals(); return; }
+        const a=b.dataset.action;
+        if (a==="close") close();
+        else if (a==="toggle-tools") { state.expanded=!state.expanded; renderTools(); }
+        else if (a==="inventory" || a==="market") { state.tab=a==="inventory" ? "inventory" : "trade"; showMarket(); }
+        else if (a==="orders") showOrders();
+        else if (a==="workers") showWorkers();
+        else if (a==="build") showBuild();
+        else if (a==="processing") showProcessing();
+        else if (a==="journal" || a==="recap") showJournal(a==="recap");
+        else if (a==="settings") showSettings();
+        else if (a==="slots") showSlots();
+        else if (a==="menu") open("菜单",'<div class="lt-actions">'+action("slots","存档选择","folder-open")+action("settings","显示设置","settings")+action("help","手册","circle-help")+action("close","返回经营","arrow-left")+'</div><p class="lt-muted">每日结束自动保存；退出时放弃当天未保存操作。</p>',"menu");
+        else if (a==="help") open("操作手册",'<p>点击地格查看详情；先分配种子，再手动操作或委托雇工。</p><p>选择农务工具后框选待办，日结时执行并按成功次数收费。</p><p>点击设施选择配方；资源点在各自详情中单独派工。</p><p class="lt-muted">右键返回查看；Esc依次取消操作、关闭窗口、进入菜单。</p>',"help");
+        else if (a==="clear") confirm("清理当前作物？","移除1株作物，不返还种子或投入。持续种植计划保留。","confirmed-clear");
+        else if (a==="demolish") confirm("拆除当前设施？","消耗1AP，不返还材料或元石。","confirmed-demolish");
+        else if (a==="overwrite") confirm("覆盖存档1？","原存档会被新农场替换。","new-slot");
+        else if (a==="confirmed-clear") { close(); state.completed.add(state.selected.join(",")); renderSide(); draw(); feedback("清理完成；种植计划保留。"); }
+        else if (a==="confirmed-demolish") { close(); feedback("拆除反馈：1AP，不返还投入。"); }
+        else if (a==="confirm-batch-clear") { const pending=state.pendingClear; close(); if (pending) state.marks.push(pending); draw(); feedback("清理待办已添加；在日结执行。"); }
+        else if (a && a.startsWith("place-")) { state.build=a.slice(6); close(); renderTools(); feedback("移动鼠标预览完整占地；点击放置，右键取消。"); }
+        else if (a && a.startsWith("add-area-")) { close(); state.tool="area"; state.build=""; renderTools(); feedback("框选负责区域；完成后可继续添加。"); }
+        else if (a==="locate-area") { close(); state.marks.push([[3,3],[7,6]]); draw(); feedback("已定位负责区域。"); }
+        else if (a==="remove-area") { b.closest(".lt-value").remove(); feedback("已删除该负责区域。"); }
+        else if (a && a.startsWith("pause-")) { b.setAttribute("aria-pressed",b.getAttribute("aria-pressed")!=="true"); feedback("委托状态已调整，仍按日结工作量计费。"); }
+        else if (a && a.startsWith("deliver-")) { state.delivered.add(a.slice(8)); showOrders(); feedback("供货结算：必要数量交付，回款13元石。"); }
+        else if (a==="buy" || a==="sell") { const i=items.find(function (x) { return x[0]===state.item; }); feedback((a==="buy" ? "买入 " : "出售 ")+i[1]+"×"+state.qty+" · "+state.qty*i[a==="buy" ? 4 : 5]+"元石"); }
+        else if (a && a.startsWith("start-recipe-")) { const r=state.activeRecipes[Number(a.slice(13))]; const f=objectAt(state.selected); state.batches[f[1]]={name:r[0],outputs:r[2],days:r[3]}; close(); renderSide(); feedback("投料启动；加工期间无需每日点击，完成后再收取。"); }
+        else if (a==="claim") { delete state.batches[objectAt(state.selected)[1]]; renderSide(); feedback("已收取加工产物，设施恢复空闲。"); }
+        else if (a==="manual") feedback("操作反馈：按当前目标收获/播种，成功消耗1AP。");
+        else if (a==="water") feedback("浇水反馈：清水−1，AP−1，水分+30（上限100）。");
+        else if (a==="fertilize") feedback("施肥反馈：腐殖土−1，AP−1，肥力+30（上限100）。");
+        else if (a==="collect") feedback("采集反馈：产物入共享仓库，AP−1，今日额度同步减少。");
+        else if (a==="fit") { state.marks=[]; draw(); feedback("已回到全图。"); }
+        else if (a==="collapse") { find("#lt-side").hidden=true; find(".lt-world").style.gridTemplateColumns="1fr"; draw(); }
+        else if (a==="continue" || a==="new-slot" || a==="apply-settings") { close(); feedback(a==="apply-settings" ? "显示偏好已选择。" : "进入农场，选择地格开始经营。"); }
+        else if (a==="end-day") { state.day++; find("#lt-day-number").textContent=state.day; Object.values(state.batches).forEach(function (batch) { batch.days=Math.max(0,batch.days-1); }); renderSide(); feedback("日结：雇工工作 → 生长与加工 → 订单刷新 → 自动存档。"); showJournal(false); }
+      });
+      root.addEventListener("input",function (event) { if (event.target.id==="lt-quantity") updateTotals(); });
+      root.addEventListener("keydown",function (event) {
+        if (event.key==="Tab" && state.modal) {
+          const controls=Array.from(find("#lt-dialog").querySelectorAll("button:not(:disabled),input:not(:disabled),select:not(:disabled)"));
+          const first=controls[0],last=controls[controls.length-1];
+          if (event.shiftKey&&document.activeElement===first) { event.preventDefault(); last.focus(); }
+          else if (!event.shiftKey&&document.activeElement===last) { event.preventDefault(); first.focus(); }
+          return;
+        }
+        if (event.key!=="Escape") return;
+        event.preventDefault();
+        if (state.modal) close();
+        else if (state.tool!=="inspect" || state.build || drag) { state.tool="inspect"; state.build=""; drag=null; renderTools(); }
+        else find('[data-action="menu"]').click();
+      });
+      const canvas=find("#lt-map");
+      function cell(event) {
+        const r=canvas.getBoundingClientRect();
+        return [Math.max(0,Math.min(19,Math.floor((event.clientX-r.left-geometry.x)/geometry.tile))),Math.max(0,Math.min(13,Math.floor((event.clientY-r.top-geometry.y)/geometry.tile)))];
+      }
+      function buildAllowed(at) {
+        const size=facilities.find(function (f) { return f[0]===state.build; })[5];
+        for (let y=at[1];y<at[1]+size;y++) for (let x=at[0];x<at[0]+size;x++) {
+          if (x>=20 || y>=14 || x===8 || y===8 || objectAt([x,y])[0]!=="empty") return false;
+        }
+        return true;
+      }
+      function eligible(at) {
+        const kind=objectAt(at)[0];
+        if (state.tool==="area" || state.tool==="cancel") return true;
+        if (kind==="source" || kind==="facility" || at[0]===8 || at[1]===8) return false;
+        if (state.tool==="clear") return kind!=="empty";
+        if (state.tool==="fell") return kind==="tree";
+        if (state.tool==="harvest") return kind==="wheat" || kind==="mushroom" || (kind==="tree"&&objectAt(at)[1]==="松脂树");
+        if (state.tool==="plant") return kind==="empty"&&at[0]>=3&&at[0]<=7&&at[1]>=3&&at[1]<=6;
+        if (state.tool==="till") return kind==="empty";
+        return kind!=="empty";
+      }
+      function rectangleCount(rect) {
+        let valid=0,total=0;
+        for (let y=Math.min(rect[0][1],rect[1][1]);y<=Math.max(rect[0][1],rect[1][1]);y++)
+          for (let x=Math.min(rect[0][0],rect[1][0]);x<=Math.max(rect[0][0],rect[1][0]);x++) { total++; if (eligible([x,y])) valid++; }
+        return { valid:valid,total:total };
+      }
+      canvas.addEventListener("contextmenu",function (event) { event.preventDefault(); if (state.modal) return; state.tool="inspect"; state.build=""; drag=null; renderTools(); });
+      canvas.addEventListener("pointerdown",function (event) {
+        if (state.modal || event.button!==0) return;
+        const c=cell(event);
+        if (state.build) {
+          if (!buildAllowed(c)) { feedback("当前位置占地冲突或越界；没有执行建设。"); return; }
+          const f=facilities.find(function (item) { return item[0]===state.build; });
+          state.marks.push([c,[c[0]+f[5]-1,c[1]+f[5]-1]]);
+          feedback("放置 "+f[1]+" · 连续放置模式"); draw();
+        }
+        else if (state.tool==="inspect") { state.selected=c; find("#lt-side").hidden=false; find(".lt-world").style.gridTemplateColumns=""; renderSide(); draw(); }
+        else { drag=[c,c]; canvas.setPointerCapture(event.pointerId); }
+      });
+      canvas.addEventListener("pointermove",function (event) { hover=cell(event); if (drag) drag[1]=hover; draw(); });
+      canvas.addEventListener("pointerleave",function () { hover=null; draw(); });
+      canvas.addEventListener("pointerup",function () {
+        if (!drag || state.modal) return;
+        const rect=drag,count=rectangleCount(rect); drag=null;
+        if (!count.valid) { feedback("没有符合条件的地格；未添加标记。"); draw(); return; }
+        if (state.tool==="clear") {
+          confirm("添加批量清理待办？","覆盖"+count.valid+"格，跳过"+(count.total-count.valid)+"格；符合条件的作物将于日结移除，不返还投入。","confirm-batch-clear");
+          state.pendingClear=rect;
+        } else { state.marks.push(rect); feedback(toolName()+"标记覆盖"+count.valid+"格，跳过"+(count.total-count.valid)+"格；工具继续保持选中。"); }
+        draw();
+      });
+      function draw() {
+        const rect=canvas.getBoundingClientRect(); if (!rect.width) return;
+        const ratio=Math.min(2,window.devicePixelRatio||1);
+        canvas.width=Math.round(rect.width*ratio); canvas.height=Math.round(rect.height*ratio);
+        const c=canvas.getContext("2d"); c.scale(ratio,ratio);
+        const w=rect.width,h=rect.height,t=Math.min(w/20,h/14), ox=(w-t*20)/2,oy=(h-t*14)/2;
+        geometry={tile:t,x:ox,y:oy};
+        c.fillStyle="#dce7c8"; c.fillRect(0,0,w,h);
+        function box(x,y,ww,hh,color,r) { c.fillStyle=color; c.beginPath(); c.roundRect(ox+x*t,oy+y*t,ww*t,hh*t,(r||0)*t); c.fill(); }
+        function ellipse(x,y,rx,ry,color) { c.fillStyle=color; c.beginPath(); c.ellipse(ox+x*t,oy+y*t,rx*t,ry*t,0,0,Math.PI*2); c.fill(); }
+        for (let y=0;y<14;y++) for (let x=0;x<20;x++) {
+          if ((x*7+y*11)%13===0) ellipse(x+.5,y+.5,.36,.22,"#d2dfbf");
+        }
+        box(0,8,20,1,"#e9dfcc",.1); box(8,0,1,14,"#e9dfcc",.1);
+        box(2.6,2.6,5.8,4.8,"#bd9f7f",.22);
+        box(2.6,10.5,4.6,1.7,"#aec5a1",.2);
+        for (let y=3;y<=6;y++) for (let x=3;x<=7;x++) {
+          c.strokeStyle="#d5b896"; c.lineWidth=1; c.beginPath(); c.moveTo(ox+x*t,oy+(y+.9)*t); c.lineTo(ox+(x+.9)*t,oy+(y+.9)*t); c.stroke();
+          if (state.completed.has(x+","+y)) continue;
+          for (let k=0;k<3;k++) {
+            const xx=x+.26+k*.21,yy=y+.72;
+            c.strokeStyle="#8c8e52"; c.lineWidth=Math.max(1,t*.035); c.beginPath(); c.moveTo(ox+xx*t,oy+yy*t); c.lineTo(ox+(xx+.02)*t,oy+(yy-.48)*t); c.stroke();
+            ellipse(xx,yy-.44,.055,.12,"#d6bf69"); ellipse(xx-.055,yy-.33,.06,.09,"#e6d292");
+          }
+        }
+        for (let x=3;x<=6;x++) { ellipse(x+.5,11.55,.22,.12,"#8ba481"); box(x+.45,11.1,.1,.5,"#eee8da",.03); ellipse(x+.5,11.1,.29,.16,"#a99883"); ellipse(x+.4,11.03,.06,.035,"#ddd1bb"); }
+        function tree(x,y,resin) {
+          ellipse(x+1,y+1.7,.8,.27,"#b5c9a6"); box(x+.86,y+.7,.22,1,"#907454",.05);
+          if (!resin) {
+            c.fillStyle="#6f9672"; c.beginPath(); c.moveTo(ox+(x+1)*t,oy+(y-.4)*t); c.lineTo(ox+(x+.2)*t,oy+(y+1.2)*t); c.lineTo(ox+(x+1.8)*t,oy+(y+1.2)*t); c.closePath(); c.fill();
+            c.fillStyle="#87aa81"; c.beginPath(); c.moveTo(ox+(x+1)*t,oy+(y-.2)*t); c.lineTo(ox+(x+.5)*t,oy+(y+.65)*t); c.lineTo(ox+(x+1.5)*t,oy+(y+.65)*t); c.closePath(); c.fill();
+          } else { ellipse(x+.65,y+.4,.7,.57,"#83a27c"); ellipse(x+1.32,y+.65,.65,.6,"#7a9b74"); ellipse(x+.88,y+.18,.6,.42,"#99b58c"); ellipse(x+1.1,y+1.08,.07,.08,"#d2b36a"); }
+        }
+        tree(11,3,false); tree(14,3,true);
+        box(10,10,2,2,"#c8b395",.16); box(10.12,10.12,1.76,.62,"#a89377",.07); box(10.32,10.95,1.36,.28,"#ecd7b8",.04);
+        box(13,10,2,2,"#b5ad9c",.16); ellipse(14,10.8,.61,.68,"#978d7a"); ellipse(14,10.94,.25,.21,"#7e715b");
+        for (let x=15;x<=16;x++) { ellipse(x+.5,8.5,.37,.28,x===15 ? "#aaa998" : "#9d9c8c"); ellipse(x+.35,8.36,.16,.1,"#c6c8b4"); }
+        ellipse(17.5,8.5,.4,.33,"#9bc7ce"); ellipse(17.4,8.43,.24,.16,"#c6e0de");
+        c.strokeStyle="#c0d1b0"; c.lineWidth=.55;
+        for (let x=0;x<=20;x++) { c.beginPath(); c.moveTo(ox+x*t,oy); c.lineTo(ox+x*t,oy+14*t); c.stroke(); }
+        for (let y=0;y<=14;y++) { c.beginPath(); c.moveTo(ox,oy+y*t); c.lineTo(ox+20*t,oy+y*t); c.stroke(); }
+        function outline(a,b,color) {
+          const x=Math.min(a[0],b[0]),y=Math.min(a[1],b[1]),ww=Math.abs(a[0]-b[0])+1,hh=Math.abs(a[1]-b[1])+1;
+          c.fillStyle=color+"22"; c.fillRect(ox+x*t,oy+y*t,ww*t,hh*t); c.strokeStyle=color; c.lineWidth=1.7; c.strokeRect(ox+x*t+1,oy+y*t+1,ww*t-2,hh*t-2);
+        }
+        state.marks.forEach(function (m) { outline(m[0],m[1],"#58745b"); });
+        outline(state.selected,state.selected,"#58745b");
+        if (drag) {
+          for (let y=Math.min(drag[0][1],drag[1][1]);y<=Math.max(drag[0][1],drag[1][1]);y++)
+            for (let x=Math.min(drag[0][0],drag[1][0]);x<=Math.max(drag[0][0],drag[1][0]);x++) outline([x,y],[x,y],eligible([x,y]) ? "#58745b" : "#9b4e42");
+          const count=rectangleCount(drag);
+          find("#lt-mode").textContent=toolName()+" · 有效"+count.valid+"格 / 跳过"+(count.total-count.valid)+"格";
+        }
+        if (hover && state.build) {
+          const f=facilities.find(function (item) { return item[0]===state.build; });
+          const end=[hover[0]+f[5]-1,hover[1]+f[5]-1],valid=buildAllowed(hover);
+          outline(hover,end,valid ? "#58745b" : "#9b4e42");
+        }
+      }
+      function applyDesign() {
+        root.style.setProperty("--lt-bg",state.tone==="porcelain" ? "#f1f5ef" : "#f6f4ed");
+        root.style.setProperty("--lt-panel",state.tone==="porcelain" ? "#fcfefa" : "#fffdf8");
+        root.style.setProperty("--lt-side",state.sideWidth+"px");
+        root.style.setProperty("--lt-icon",state.iconSize+"px"); draw();
+      }
+      renderTools(); renderSide(); applyDesign();
+      new ResizeObserver(draw).observe(canvas);
+      if (globalThis.Tweak) {
+        const tweak=new Tweak({ container:root,onChange:applyDesign });
+        tweak.addSelect(state,"tone",{ label:"明亮底色",options:[{label:"暖米白",value:"rice"},{label:"白瓷浅茶",value:"porcelain"}] });
+        tweak.addSlider(state,"iconSize",{ label:"图标大小",min:18,max:22,step:1,unit:"px" });
+        tweak.addSlider(state,"sideWidth",{ label:"详情宽度",min:248,max:304,step:8,unit:"px" });
+      }
+    })();
+  </script>
+</div>

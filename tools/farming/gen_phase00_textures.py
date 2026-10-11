@@ -19,7 +19,7 @@ QC（生成与 --verify 共用，对应 phase-00 §4 美术规范）：
   python tools/farming/gen_phase00_textures.py            生成 + QC
   python tools/farming/gen_phase00_textures.py --verify   只校验现有文件
 
-色源：content/themes/wilds.json palette_overrides（草=floor_a 族，泥=carpet 族）——
+色源：tools/farming/palette.json（初值来自 wilds，草=floor_a 族，泥=carpet 族）——
 美术规范 §4.3「色域延续 wilds 主题」。
 """
 
@@ -49,37 +49,15 @@ BITS = {"N": 1, "E": 2, "S": 4, "W": 8, "NE": 16, "SE": 32, "SW": 64, "NW": 128}
 
 
 def _load_ramps():
-    """从 wilds 主题读取色板；缺失时用同名默认值兜底。"""
-    pal = {}
-    path = os.path.join(ROOT, "content", "themes", "wilds.json")
-    try:
-        with open(path, "r", encoding="utf-8") as f:
-            pal = json.load(f).get("palette_overrides", {})
-    except Exception:
-        pass
+    """从独立 farming palette 读取冻结色板。"""
+    from asset_common import load_palette, rgb
+    palette = load_palette()
+    g, d = [list(map(rgb, palette["ground"][key])) for key in ("grass", "dirt")]
+    leaf = list(map(rgb, palette["crops"]["leaf"]))
+    return ({"dark": g[0], "dot": g[1], "base": g[2], "hi": g[3]},
+            {"deep": d[0], "dark": d[1], "base": d[2], "hi": d[3]},
+            {"dark": leaf[0], "base": leaf[1]})
 
-    def rgb(key, default):
-        v = pal.get(key, default).lstrip("#")
-        return tuple(int(v[i:i + 2], 16) for i in (0, 2, 4))
-
-    grass = {
-        "dark": rgb("floor_a_line", "#6a9151"),
-        "base": rgb("floor_a", "#79a05c"),
-        "hi": rgb("floor_a_hi", "#8cb069"),
-        "dot": rgb("floor_a_dot", "#6d9454"),
-    }
-    dirt_dark = rgb("carpet_dark", "#846741")
-    dirt = {
-        "base": rgb("carpet", "#9a7a4e"),
-        "dark": dirt_dark,
-        "hi": rgb("carpet_pat", "#b08c5c"),
-        "deep": tuple(max(0, int(c * 0.78)) for c in dirt_dark),
-    }
-    leaf = {
-        "dark": rgb("leaf", "#39603c"),
-        "base": rgb("leaf_hi", "#4e7b4e"),
-    }
-    return grass, dirt, leaf
 
 
 # ---------------------------------------------------------------- 无缝地面
@@ -411,6 +389,11 @@ def main():
 
     fails = []
     if not ns.verify:
+        from asset_common import protect_delivered
+        try:
+            protect_delivered(list(OUT.values()))
+        except ValueError as exc:
+            ap.error(str(exc))
         grass_r, dirt_r, leaf_r = _load_ramps()
         rng = random.Random(SEED)
         grass = _make_ground([grass_r["dark"], grass_r["base"], grass_r["base"], grass_r["hi"]],
