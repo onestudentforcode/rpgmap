@@ -7,7 +7,7 @@ config_version=5
 [application]
 
 config/name="Sisyphus Mall MVP"
-run/main_scene="res://scenes/farming/farm_v1.tscn"
+run/main_scene="res://scenes/farming/farm_v2.tscn"
 config/features=PackedStringArray("4.7")
 
 [display]

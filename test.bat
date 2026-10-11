@@ -14,7 +14,7 @@ if errorlevel 1 goto :failed
 echo [test 4/4] Current V1 model and Phase6.5 UI
 call test-v1.bat
 if errorlevel 1 goto :failed
-echo [test V2] Phase 7.a data, manual tools, reservoir and startup ledger
+echo [test V2] Complete Phase 7 checks, two45-day routes, GUI events and release smoke
 call test-v2.bat
 if errorlevel 1 goto :failed
 echo FARMING TEST SUITE OK
