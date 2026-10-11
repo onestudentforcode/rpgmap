@@ -2502,6 +2502,57 @@
         }
       ],
       "unit": "群"
+    },
+    {
+      "base_diets": [
+        {
+          "id": "culture_water",
+          "inputs": {
+            "clean_water": 1
+          },
+          "juvenile_only": true,
+          "name": "培养清水"
+        }
+      ],
+      "claim_removes": false,
+      "cycle_days": 2,
+      "default_base_diet": "culture_water",
+      "default_special_diet": "bio_purify",
+      "facility": "purifying_bed",
+      "growth_days": 2,
+      "id": "purifying_mat",
+      "juvenile_price": 6,
+      "name": "净水菌毯",
+      "outputs": {},
+      "research": "biofiltration",
+      "special_diets": [
+        {
+          "id": "bio_purify",
+          "inputs": {
+            "wastewater": 4,
+            "wood_chip": 1
+          },
+          "name": "菌毯净水运行",
+          "outputs": {
+            "clean_water": 2,
+            "sludge": 1
+          }
+        },
+        {
+          "id": "recover_nutrients",
+          "inputs": {
+            "filter_media": 1,
+            "wastewater": 4
+          },
+          "name": "营养液回收运行",
+          "outputs": {
+            "clean_water": 1,
+            "nutrient_liquid": 2,
+            "sludge": 1
+          }
+        }
+      ],
+      "unit": "培养单位"
     }
   ],
   "orders": {
@@ -4427,6 +4478,7 @@
         "nutrient_mat_provider",
         "oilseed_flower_provider",
         "orders",
+        "purifying_mat",
         "purifying_mat_provider",
         "research:field_maintenance",
         "sale",
@@ -4469,6 +4521,8 @@
       "consumers": [
         "bio_purify",
         "compost_chips",
+        "diet:purifying_mat:bio_purify",
+        "purifying_mat",
         "purifying_mat_provider",
         "sale",
         "wood_decay_mushroom"
@@ -5424,7 +5478,9 @@
     {
       "buy_price": 0,
       "consumers": [
+        "diet:purifying_mat:recover_nutrients",
         "nutrient_mat_provider",
+        "purifying_mat",
         "recover_nutrients",
         "sale"
       ],
@@ -5455,7 +5511,10 @@
       "buy_price": 0,
       "consumers": [
         "bio_purify",
+        "diet:purifying_mat:bio_purify",
+        "diet:purifying_mat:recover_nutrients",
         "nutrient_mat_provider",
+        "purifying_mat",
         "purifying_mat_provider",
         "recover_nutrients",
         "research:biofiltration",
@@ -6040,42 +6099,6 @@
     }
   ],
   "species": [
-    {
-      "base_diets": [
-        {
-          "id": "culture_water",
-          "inputs": {
-            "clean_water": 1
-          },
-          "juvenile_only": true,
-          "name": "培养清水"
-        }
-      ],
-      "claim_removes": false,
-      "cycle_days": 2,
-      "default_base_diet": "culture_water",
-      "default_special_diet": "bio_purify",
-      "facility": "purifying_bed",
-      "growth_days": 2,
-      "id": "purifying_mat",
-      "juvenile_price": 6,
-      "name": "净水菌毯",
-      "outputs": {},
-      "research": "biofiltration",
-      "special_diets": [
-        {
-          "id": "bio_purify",
-          "inputs": {},
-          "name": "菌毯净水运行"
-        },
-        {
-          "id": "recover_nutrients",
-          "inputs": {},
-          "name": "营养液回收运行"
-        }
-      ],
-      "unit": "培养单位"
-    },
     {
       "base_diets": [
         {

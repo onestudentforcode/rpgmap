@@ -85,7 +85,7 @@ def providers(source):
     # --- Old livestock: same derivation as V2, unchanged standard rounds.
     # bell_bee keeps its custom flower-field round below and is skipped here.
     for ident, a in animals.items():
-        if ident == 'bell_bee':
+        if ident in ('bell_bee', 'purifying_mat'):
             continue
         require(common.integer(a['juvenile_price'], 1) and common.integer(a['growth_days'], 1) and common.integer(a['cycle_days'], 1) and type(a['claim_removes']) is bool, f'{ident}: lifecycle')
         f = facilities[a['facility']]
@@ -150,8 +150,11 @@ def providers(source):
                                            outputs={'wastewater': int(change['wastewater'])}, days=0,
                                            start_ap=water['maintenance_ap'], claim_ap=0, cash=0)
     # --- Purifying mats: juvenile culture water plus one living processing round x4.
-    mat = species_p8['purifying_mat']
+    mat = animals['purifying_mat']
     _check_species(mat, facilities, resources, research)
+    for diet in mat['special_diets']:
+        require('outputs' in diet, 'purifying_mat diets carry their per-unit outputs')
+        common.quantities(diet['outputs'], resources, 'purifying_mat')
     for recipe_id, provider_id in (('bio_purify', 'purifying_mat_provider'), ('recover_nutrients', 'nutrient_mat_provider')):
         recipe = recipes[recipe_id]
         _living_recipe(recipe_id, recipe, resources, research)

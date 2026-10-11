@@ -3181,9 +3181,7 @@
       },
       "claim_removes": false,
       "research": "beekeeping"
-    }
-  ],
-  "species": [
+    },
     {
       "id": "purifying_mat",
       "name": "净水菌毯",
@@ -3207,19 +3205,36 @@
         {
           "id": "bio_purify",
           "name": "菌毯净水运行",
-          "inputs": {}
+          "inputs": {
+            "wastewater": 4,
+            "wood_chip": 1
+          },
+          "outputs": {
+            "clean_water": 2,
+            "sludge": 1
+          }
         },
         {
           "id": "recover_nutrients",
           "name": "营养液回收运行",
-          "inputs": {}
+          "inputs": {
+            "wastewater": 4,
+            "filter_media": 1
+          },
+          "outputs": {
+            "nutrient_liquid": 2,
+            "clean_water": 1,
+            "sludge": 1
+          }
         }
       ],
       "default_special_diet": "bio_purify",
       "outputs": {},
       "claim_removes": false,
       "research": "biofiltration"
-    },
+    }
+  ],
+  "species": [
     {
       "id": "rock_mole",
       "name": "啮岩鼹",
