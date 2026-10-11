@@ -32,14 +32,21 @@ def providers(source):
         f=facilities[a['facility']]
         require(f.get('kind') == 'habitat' and f.get('capacity') == 4 and f.get('species') == [ident] and f['footprint'] == [2,2], f'{ident}: habitat capacity')
         require(f.get('terrain') == ('water' if ident == 'filter_algae_carp' else 'land'), f'{ident}: terrain')
-        for diets in [a['base_diets'],a['special_diets']]:
+        for diets, default_key in [(a['base_diets'],'default_base_diet'),(a['special_diets'],'default_special_diet')]:
             require(isinstance(diets,list) and bool(diets), f'{ident}: diets')
-            for diet in diets: common.quantities(diet,resources,ident)
+            ids=[diet.get('id') for diet in diets]
+            require(all(isinstance(i,str) and i for i in ids) and len(set(ids)) == len(ids), f'{ident}: diet ids must be unique non-empty strings')
+            for diet in diets:
+                require(isinstance(diet.get('name'),str) and diet['name'].strip(), f'{ident}: {diet["id"]} needs a name')
+                common.quantities(diet['inputs'],resources,ident)
+            require(a.get(default_key) in ids, f'{ident}: {default_key} must name one of the diets')
+        base_default=next(diet for diet in a['base_diets'] if diet['id'] == a['default_base_diet'])
+        special_default=next(diet for diet in a['special_diets'] if diet['id'] == a['default_special_diet'])
         common.quantities(a['outputs'],resources,ident)
         # Fish are consumed each round; recurring wool excludes establishing the flock.
         days=a['cycle_days'] + (a['growth_days'] if a['claim_removes'] else 0)
-        inputs=Counter({iid:q*days*4 for iid,q in a['base_diets'][0].items()})
-        inputs.update({iid:q*4 for iid,q in a['special_diets'][0].items()})
+        inputs=Counter({iid:q*days*4 for iid,q in base_default['inputs'].items()})
+        inputs.update({iid:q*4 for iid,q in special_default['inputs'].items()})
         water_ap=0
         if f['terrain'] == 'water':
             inputs.update(water['maintenance_inputs']); water_ap=water['maintenance_ap']
@@ -53,7 +60,7 @@ def compile_config(source, map_data=None):
         items={i['id']:i for i in out['resources']}
         for a in out['livestock']:
             for diet in a['base_diets']+a['special_diets']:
-                for iid in diet: items[iid]['consumers']=sorted(set(items[iid]['consumers'])|{a['id']})
+                for iid in diet['inputs']: items[iid]['consumers']=sorted(set(items[iid]['consumers'])|{a['id']})
         for iid in out['husbandry']['water']['maintenance_inputs']:
             items[iid]['consumers']=sorted(set(items[iid]['consumers'])|{'water_maintenance'})
         out['purchase_audit']=purchase_audit(out)

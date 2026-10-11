@@ -33,8 +33,21 @@ class V2FoundationTests(unittest.TestCase):
                 self.row('cost_models','fish')[key]=value
                 self.invalid(); self.source=original
     def test_runtime_diet_change_requires_cost_rebake(self):
-        self.row('livestock','filter_algae_carp')['base_diets'][0]['algae_feed']=2
+        self.row('livestock','filter_algae_carp')['base_diets'][0]['inputs']['algae_feed']=2
         self.invalid()
+    def test_diet_ids_and_defaults_are_audited(self):
+        original=copy.deepcopy(self.source)
+        sheep=self.row('livestock','steel_sheep')
+        self.assertEqual(sheep['default_base_diet'],'grass_meal')
+        self.assertEqual(sheep['default_special_diet'],'iron_supplement')
+        carp=self.row('livestock','filter_algae_carp')
+        self.assertEqual(carp['default_base_diet'],'algae_meal')
+        self.assertEqual(carp['default_special_diet'],'grain_fatten')
+        self.row('livestock','steel_sheep')['default_base_diet']='missing_diet'; self.invalid()
+        self.setUp(); self.row('livestock','steel_sheep')['base_diets'][1]['id']='grass_meal'; self.invalid()
+        self.setUp(); del self.row('livestock','filter_algae_carp')['base_diets'][0]['name']; self.invalid()
+        self.setUp(); self.row('livestock','filter_algae_carp')['base_diets'][0]['inputs']['algae_feed']=2
+        self.invalid(); self.source=original
     def test_livestock_not_inventory_and_capacity(self):
         self.assertFalse({'steel_sheep','filter_algae_carp'} & {r['id'] for r in self.source['resources']})
         self.row('facilities','fish_pond')['capacity']=5

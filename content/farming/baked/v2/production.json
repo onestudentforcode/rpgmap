@@ -869,16 +869,26 @@
     {
       "base_diets": [
         {
-          "clean_water": 1,
-          "fodder_grass": 1
+          "id": "grass_meal",
+          "inputs": {
+            "clean_water": 1,
+            "fodder_grass": 1
+          },
+          "name": "牧草餐"
         },
         {
-          "clean_water": 1,
-          "grain": 1
+          "id": "grain_meal",
+          "inputs": {
+            "clean_water": 1,
+            "grain": 1
+          },
+          "name": "谷粒餐"
         }
       ],
       "claim_removes": false,
       "cycle_days": 3,
+      "default_base_diet": "grass_meal",
+      "default_special_diet": "iron_supplement",
       "facility": "pen",
       "growth_days": 6,
       "id": "steel_sheep",
@@ -890,18 +900,28 @@
       },
       "special_diets": [
         {
-          "iron_ore": 1
+          "id": "iron_supplement",
+          "inputs": {
+            "iron_ore": 1
+          },
+          "name": "含铁补料"
         }
       ]
     },
     {
       "base_diets": [
         {
-          "algae_feed": 1
+          "id": "algae_meal",
+          "inputs": {
+            "algae_feed": 1
+          },
+          "name": "藻料餐"
         }
       ],
       "claim_removes": true,
       "cycle_days": 2,
+      "default_base_diet": "algae_meal",
+      "default_special_diet": "grain_fatten",
       "facility": "fish_pond",
       "growth_days": 4,
       "id": "filter_algae_carp",
@@ -913,7 +933,11 @@
       },
       "special_diets": [
         {
-          "grain": 1
+          "id": "grain_fatten",
+          "inputs": {
+            "grain": 1
+          },
+          "name": "谷粒育肥"
         }
       ]
     }

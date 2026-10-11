@@ -1244,19 +1244,33 @@
       "cycle_days": 3,
       "base_diets": [
         {
-          "fodder_grass": 1,
-          "clean_water": 1
+          "id": "grass_meal",
+          "name": "牧草餐",
+          "inputs": {
+            "fodder_grass": 1,
+            "clean_water": 1
+          }
         },
         {
-          "grain": 1,
-          "clean_water": 1
+          "id": "grain_meal",
+          "name": "谷粒餐",
+          "inputs": {
+            "grain": 1,
+            "clean_water": 1
+          }
         }
       ],
+      "default_base_diet": "grass_meal",
       "special_diets": [
         {
-          "iron_ore": 1
+          "id": "iron_supplement",
+          "name": "含铁补料",
+          "inputs": {
+            "iron_ore": 1
+          }
         }
       ],
+      "default_special_diet": "iron_supplement",
       "outputs": {
         "steel_wool": 1,
         "sheep_manure": 1
@@ -1272,14 +1286,24 @@
       "cycle_days": 2,
       "base_diets": [
         {
-          "algae_feed": 1
+          "id": "algae_meal",
+          "name": "藻料餐",
+          "inputs": {
+            "algae_feed": 1
+          }
         }
       ],
+      "default_base_diet": "algae_meal",
       "special_diets": [
         {
-          "grain": 1
+          "id": "grain_fatten",
+          "name": "谷粒育肥",
+          "inputs": {
+            "grain": 1
+          }
         }
       ],
+      "default_special_diet": "grain_fatten",
       "outputs": {
         "fish_meat": 3,
         "fish_manure": 1
