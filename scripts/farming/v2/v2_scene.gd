@@ -18,7 +18,7 @@ func _init() -> void:
 	manual_mode = true
 	minimum_map_zoom = 0.1
 	settings = Settings.new("user://farm_demo_v2_settings.cfg", minimum_map_zoom)
-	product_title = "灵田 Demo V2 · P7.b"
+	product_title = "灵田 Demo V2 · P7.c"
 	terrain_path = "res://content/farming/baked/v2/terrains.json"
 	preview_prefix = "v2"
 func _make_store(directory: String = ""):
@@ -60,6 +60,24 @@ func _diet_selector(habitat: Dictionary, caption: String, diet_kind: String, slo
 	selector.item_selected.connect(func(index): _result(husbandry.set_diet(int(habitat["facility_uid"]),diet_kind,slot,selector.get_item_metadata(index))); _show_cell())
 	sidebar.add_child(selector)
 
+## Special slot: legal recipes plus "暂不生产", which keeps the last recipe saved.
+func _special_selector(habitat: Dictionary) -> void:
+	var husbandry := hus()
+	_label(sidebar,"特殊食物 · 成体生产计划")
+	var selector := OptionButton.new()
+	selector.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	selector.add_item("暂不生产（保留当前食谱）")
+	selector.set_item_metadata(0,"")
+	if not habitat["production_enabled"]: selector.select(0)
+	var index := 1
+	for diet in husbandry.species_def(habitat["species_id"])["special_diets"]:
+		selector.add_item("%s：%s" % [diet["name"],_materials(diet["inputs"])])
+		selector.set_item_metadata(index,diet["id"])
+		if habitat["production_enabled"] and diet["id"] == habitat["special_diet_id"]: selector.select(index)
+		index += 1
+	selector.item_selected.connect(func(choice): _result(husbandry.set_special_diet(int(habitat["facility_uid"]),selector.get_item_metadata(choice))); _show_cell())
+	sidebar.add_child(selector)
+
 func _show_habitat(facility: Dictionary) -> void:
 	var uid := int(facility["uid"])
 	var husbandry := hus()
@@ -71,23 +89,42 @@ func _show_habitat(facility: Dictionary) -> void:
 		_habitat_expanded = false
 		_habitat_expanded_uid = uid
 	_picture(sidebar,facility["facility_id"],64)
-	_heading(sidebar,"%s · %d/%d只 · 幼体%d / 成体%d" % [definition["name"],counts["total"],int(definition["capacity"]),counts["juvenile"],counts["adult"]])
+	_heading(sidebar,"%s · %d/%d只 · 幼体%d / 成体空闲%d / 周期%d / 待收%d" % [definition["name"],counts["total"],int(definition["capacity"]),counts["juvenile"],counts["idle_adults"],counts["running"],counts["ready"]])
+	var claim_quote := husbandry.quote_claim(uid)
+	if claim_quote["ok"]:
+		_label(sidebar,"待收%d只：%s%s" % [int(claim_quote["ready"]),_materials(claim_quote["outputs"]),
+			" · 出塘移除成体，不能回退" if int(claim_quote["removes"]) > 0 else " · 剪毛保留成体"])
+		var claim_button := _icon(sidebar,"claim","收取（1AP）",func(): _result(husbandry.claim(uid)); _show_cell())
+		claim_button.disabled = false
 	if habitat["default_notice"]:
 		_label(sidebar,"新建设施已采用默认配置：%s、%s、%s；尚未购入动物或投喂，选择食谱本身不扣料。" % [species["name"],
 			husbandry.diet_name(habitat["species_id"],"base_diets",habitat["basic_diet_id"]),
 			husbandry.diet_name(habitat["species_id"],"special_diets",habitat["special_diet_id"])])
 	_label(sidebar,"动物：%s（幼体%d元石/只，每设施单物种）" % [species["name"],int(species["juvenile_price"])])
 	_diet_selector(habitat,"基础食物 · 维持与成长","base_diets","basic_diet_id")
-	_diet_selector(habitat,"特殊食物 · 成体生产计划","special_diets","special_diet_id")
-	_label(sidebar,"特殊栏本阶段仅保存计划；剪毛、育肥等生产在P7.c接入执行。")
+	_special_selector(habitat)
+	if not habitat["production_enabled"]:
+		_label(sidebar,"已停止启动新周期；已有周期仍按原投入继续，需要每日基础维护。")
 	var quote := husbandry.quote_maintenance(uid)
 	if counts["total"] > 0:
 		var served := "今日已喂%d/%d" % [counts["fed_today"],counts["total"]]
 		if quote["ok"]:
-			_label(sidebar,"%s · 本次补喂%d只：%s · 成功1AP" % [served,int(quote["targets"]),_materials(quote["inputs"])])
+			var basic: Dictionary = quote["basic"]
+			var special: Dictionary = quote["special"]
+			if int(basic["targets"]) > 0:
+				_label(sidebar,"%s · 本次基础补喂%d只：%s" % [served,int(basic["targets"]),_materials(basic["inputs"])])
+			else:
+				_label(sidebar,"%s · %s" % [served,String(basic["reason"])])
+			if int(special["targets"]) > 0 and special["ok"]:
+				_label(sidebar,"特殊投喂：%d只空闲成体 × %s" % [int(special["targets"]),_materials(special["inputs"])])
+			elif int(special["targets"]) > 0:
+				_label(sidebar,"特殊未启动：%s" % String(special["reason"]))
+			else:
+				_label(sidebar,"特殊无启动对象：%s" % String(special["reason"]))
+			_label(sidebar,"整体维护成功一次仅扣1AP；基础/特殊分支各自整批执行，缺料不部分投。")
 		else:
 			_label(sidebar,"%s · %s" % [served,String(quote["reason"])])
-		var feed := _icon(sidebar,"fodder_grass","整体基础维护（1AP）",func(): _result(husbandry.maintain(uid)); _show_cell())
+		var feed := _icon(sidebar,"fodder_grass","整体维护（1AP）",func(): _result(husbandry.maintain(uid)); _show_cell())
 		feed.disabled = not quote["ok"]
 		var care := husbandry.care_quote(habitat,0)
 		var coverage := PackedStringArray()
@@ -133,21 +170,37 @@ func _show_habitat(facility: Dictionary) -> void:
 	else:
 		_label(sidebar,"容量已满%d/%d；成长不释放空位。" % [counts["total"],int(definition["capacity"])])
 	if counts["total"] > 0:
+		var abandon := husbandry.abandon_quote(uid)
+		if int(abandon["pending"]) > 0 or int(abandon["running"]) > 0:
+			_label(sidebar,"清退将放弃：待收产物%s、在制周期投入%s" % [_materials(abandon["outputs"]) if not abandon["outputs"].is_empty() else "无",
+				_materials(abandon["inputs"]) if not abandon["inputs"].is_empty() else "无"])
 		var expand := _icon(sidebar,"inspect","展开/收起个体明细",func(): _habitat_expanded = not _habitat_expanded; _show_cell())
 		expand.toggle_mode = true
 		expand.button_pressed = _habitat_expanded
 		if _habitat_expanded:
 			var target := int(species["growth_days"])
+			var cycle_days := int(species["cycle_days"])
 			for individual in habitat["individuals"]:
 				var service: Dictionary = individual["base_service"]
 				var fed := "今日已喂·%s" % husbandry.diet_name(habitat["species_id"],"base_diets",String(service["diet_id"])) if int(service["day"]) == world.clock.total_days else "今日未喂"
-				if individual["stage"] == "adult":
-					_label(sidebar,"#%d 成体 · 继续基础维持；特殊生产待P7.c · %s" % [int(individual["uid"]),fed])
+				var cycle: Dictionary = individual.get("cycle",{})
+				if cycle.is_empty():
+					if individual["stage"] == "adult":
+						_label(sidebar,"#%d 成体空闲 · 下次整体维护可投特殊料 · %s" % [int(individual["uid"]),fed])
+					else:
+						_label(sidebar,"#%d 幼体 · 成长%d/%d有效日 · %s" % [int(individual["uid"]),int(int(individual["growth"])/100),target,fed])
+				elif cycle["status"] == "ready":
+					_label(sidebar,"#%d 待收 · %s（收取不受当日投喂/水体限制）" % [int(individual["uid"]),_materials(cycle["outputs"])])
 				else:
-					_label(sidebar,"#%d 幼体 · 成长%d/%d有效日 · %s" % [int(individual["uid"]),int(int(individual["growth"])/100),target,fed])
+					var remaining := int((int(cycle["goal"])-int(cycle["progress"]))/100)
+					_label(sidebar,"#%d 周期%d/%d有效日 · 预计第%d日完成（连续正常维护时）· %s" % [int(individual["uid"]),int(int(cycle["progress"])/100),cycle_days,world.clock.total_days+remaining+1,fed])
 	if counts["total"] > 0:
-		_icon(sidebar,"fell","清退全部动物（1AP，不退款、不返饲料、无产物）",func():
-			_confirm("清退%s的全部%d只动物？不退款、不返还饲料、无产物，消耗1AP。" % [definition["name"],counts["total"]],
+		_icon(sidebar,"fell","清退全部动物（1AP，不退款、不返饲料、不产物）",func():
+			var give_up := husbandry.abandon_quote(uid)
+			var detail := ""
+			if int(give_up["pending"]) > 0: detail += "；放弃待收产物" + _materials(give_up["outputs"])
+			if int(give_up["running"]) > 0: detail += "；放弃在制投入" + _materials(give_up["inputs"])
+			_confirm("清退%s的全部%d只动物？不退款、不返饲料、不产物%s，消耗1AP。" % [definition["name"],counts["total"],detail],
 				func(): _result(husbandry.cull(uid)); _show_cell()))
 		_label(sidebar,"非空设施需先清退全部动物才能拆除。")
 	else:
@@ -391,6 +444,27 @@ func _preview(directory: String) -> void:
 	selected = Vector2i(0,14)
 	_show_cell()
 	await _shot(directory,"habitat_pond")
+	# Screenshot fixture only: force adulthood, start real cycles and advance days.
+	var fixture_pen: Dictionary = (world as V2World).husbandry.habitat_of(2)
+	for individual in fixture_pen["individuals"]:
+		individual["stage"] = "adult"
+		individual["growth"] = 600
+	var fixture_pond: Dictionary = (world as V2World).husbandry.habitat_of(1)
+	for individual in fixture_pond["individuals"]:
+		individual["stage"] = "adult"
+		individual["growth"] = 400
+	(world as V2World).grant_scaffold({"iron_ore":2,"grain":4,"fodder_grass":4,"clean_water":8,"algae_feed":4})
+	hus().maintain(2)
+	hus().maintain(1)
+	world.end_day()
+	world.end_day()
+	_habitat_expanded = true
+	selected = Vector2i(7,1)
+	_show_cell()
+	await _shot(directory,"production_sheep")
+	selected = Vector2i(0,14)
+	_show_cell()
+	await _shot(directory,"production_carp")
 	_show_resources()
 	await _shot(directory,"resources")
 	var preview_directory: String = store.slot_path(1).get_base_dir()

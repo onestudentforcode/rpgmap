@@ -1,11 +1,11 @@
 extends RefCounted
-## Schema 8 adds the husbandry habitats and the resource ledger; no legacy migration.
+## Schema 9 adds special production cycles; schemas 8 and older are not migrated.
 const Common := preload("res://scripts/farming/v1/v1_snapshot.gd")
 const Scalars := preload("res://scripts/farming/v1/v1_world_state.gd")
 const Data := preload("res://scripts/farming/v2/v2_data.gd")
 const Husbandry := preload("res://scripts/farming/v2/v2_husbandry.gd")
 const Ledger := preload("res://scripts/farming/v2/v2_resource_ledger.gd")
-const SCHEMA := 8
+const SCHEMA := 9
 
 static func fresh() -> Dictionary:
 	var snapshot: Dictionary = Common.fresh(Data, SCHEMA)
@@ -15,7 +15,7 @@ static func fresh() -> Dictionary:
 		if int(config["start_inventory"][item]) > 0:
 			opening[item] = int(config["start_inventory"][item])
 	snapshot["ledger"] = {"pending": {"day": 0, "opening": opening, "inflows": {}, "outflows": {}}, "history": []}
-	snapshot["world"]["husbandry"] = {"habitats": [], "next_animal_uid": 1}
+	snapshot["world"]["husbandry"] = {"habitats": [], "next_animal_uid": 1, "next_cycle_uid": 1}
 	return snapshot
 
 static func fail(reason: String) -> Dictionary:

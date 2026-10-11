@@ -35,19 +35,13 @@ func demolish_facility(uid: int) -> Dictionary:
 func _record_flow(inflows: Dictionary, outflows: Dictionary, reason: String) -> void:
 	ledger.record(inflows, outflows, reason)
 
-## Test/preview scaffolding only: grants stock and widens today's opening balance
-## so fixtures can prepare states without faking gameplay flows. Gameplay code,
-## workers and panels must never call this.
+## Test/preview scaffolding only: grants stock as an explicitly labelled inflow so
+## the books stay balanced and day-to-day continuity holds. Gameplay code, workers
+## and panels must never call this; no-injection replays never use it.
 func grant_scaffold(items: Dictionary) -> void:
 	for item in items:
 		inventory.add(item, int(items[item]))
-	var pending: Dictionary = ledger.state["pending"]
-	for item in items:
-		var widened := int(pending["opening"].get(item, 0)) + int(items[item])
-		if widened > 0:
-			pending["opening"][item] = widened
-		elif pending["opening"].has(item):
-			pending["opening"].erase(item)
+	ledger.record(items, {}, "脚手架注入")
 
 func _settle_husbandry(completed_day: int) -> void:
 	husbandry.settle(completed_day)
