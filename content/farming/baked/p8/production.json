@@ -2242,6 +2242,21 @@
       "research": "mineral_materials"
     }
   ],
+  "flowers": {
+    "contents": {
+      "nectar": 2,
+      "pollen": 1
+    },
+    "light_tolerance": 20,
+    "min_fertility": 30,
+    "min_water": 30,
+    "oilseed_window": [
+      300,
+      500
+    ],
+    "range": 2,
+    "share_capacity": 1
+  },
   "husbandry": {
     "base_missing": "pause",
     "claim_ap": 1,
@@ -2452,6 +2467,41 @@
           "name": "谷粒育肥"
         }
       ]
+    },
+    {
+      "base_diets": [
+        {
+          "flower_source": true,
+          "id": "flower_share",
+          "inputs": {
+            "clean_water": 1
+          },
+          "name": "花源份额＋清水"
+        }
+      ],
+      "claim_removes": false,
+      "cycle_days": 3,
+      "default_base_diet": "flower_share",
+      "default_special_diet": "honey_cycle",
+      "facility": "bee_hive",
+      "growth_days": 3,
+      "id": "bell_bee",
+      "juvenile_price": 6,
+      "name": "蜜盏蜂",
+      "outputs": {
+        "beeswax": 1,
+        "honey": 2
+      },
+      "research": "beekeeping",
+      "special_diets": [
+        {
+          "flower_source": true,
+          "id": "honey_cycle",
+          "inputs": {},
+          "name": "酿蜜周期"
+        }
+      ],
+      "unit": "群"
     }
   ],
   "orders": {
@@ -4356,6 +4406,7 @@
       "buy_price": 2,
       "consumers": [
         "algae_dew_soup",
+        "bell_bee",
         "bell_bee_provider",
         "break_ore_provider",
         "break_stone_provider",
@@ -5989,41 +6040,6 @@
     }
   ],
   "species": [
-    {
-      "base_diets": [
-        {
-          "flower_source": true,
-          "id": "flower_share",
-          "inputs": {
-            "clean_water": 1
-          },
-          "name": "花源份额＋清水"
-        }
-      ],
-      "claim_removes": false,
-      "cycle_days": 3,
-      "default_base_diet": "flower_share",
-      "default_special_diet": "honey_cycle",
-      "facility": "bee_hive",
-      "growth_days": 3,
-      "id": "bell_bee",
-      "juvenile_price": 6,
-      "name": "蜜盏蜂",
-      "outputs": {
-        "beeswax": 1,
-        "honey": 2
-      },
-      "research": "beekeeping",
-      "special_diets": [
-        {
-          "flower_source": true,
-          "id": "honey_cycle",
-          "inputs": {},
-          "name": "酿蜜周期"
-        }
-      ],
-      "unit": "群"
-    },
     {
       "base_diets": [
         {

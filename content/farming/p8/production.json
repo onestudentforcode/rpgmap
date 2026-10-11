@@ -3146,9 +3146,7 @@
         "fish_manure": 1
       },
       "claim_removes": true
-    }
-  ],
-  "species": [
+    },
     {
       "id": "bell_bee",
       "name": "蜜盏蜂",
@@ -3183,7 +3181,9 @@
       },
       "claim_removes": false,
       "research": "beekeeping"
-    },
+    }
+  ],
+  "species": [
     {
       "id": "purifying_mat",
       "name": "净水菌毯",
@@ -3673,5 +3673,20 @@
       },
       "maintenance_ap": 1
     }
+  },
+  "flowers": {
+    "range": 2,
+    "share_capacity": 1,
+    "contents": {
+      "nectar": 2,
+      "pollen": 1
+    },
+    "min_water": 30,
+    "min_fertility": 30,
+    "light_tolerance": 20,
+    "oilseed_window": [
+      300,
+      500
+    ]
   }
 }
