@@ -20,6 +20,10 @@ func _make_store(directory: String = ""):
 func _make_world(slot_store):
 	return P8World.new(slot_store)
 
+func _extra_nav() -> void:
+	super()
+	_icon(top_nav,"research_bench","研究 · 三层工艺网络",_show_research)
+
 func _water_action_text(quote: Dictionary) -> String:
 	if not quote["ok"]:
 		return "换水：%s" % String(quote["reason"])
@@ -66,10 +70,7 @@ func _show_build() -> void:
 func _show_facility(facility: Dictionary) -> void:
 	var definition: Dictionary = world.facility_defs[facility["facility_id"]]
 	if definition.get("kind") == "research":
-		_picture(sidebar,facility["facility_id"],64)
-		_heading(sidebar,definition["name"])
-		_label(sidebar,"研究台可建造与拆除；研究项目、样本与解锁将在后续阶段接入，当前没有可执行配方。")
-		_icon(sidebar,"clear","拆除（1AP，无返还）",func(): _confirm("拆除%s？不返还建设材料或元石，消耗1AP。" % definition["name"],func(): _result(world.demolish_facility(int(facility["uid"]))); _show_cell()))
+		_show_research_bench(facility)
 		return
 	if definition.get("kind") == "habitat":
 		super(facility)
@@ -308,7 +309,7 @@ func _worker_report_extra(report: Dictionary) -> String:
 	for entry in report["facilities"]:
 		var steps: Dictionary = entry["steps"]
 		var parts := PackedStringArray()
-		for step in ["收取", "水体维护", "整体维护", "投料", "加工收取"]:
+		for step in ["收取", "水体维护", "整体维护", "研究", "投料", "加工收取"]:
 			if int(steps.get(step, 0)) > 0: parts.append("%s×%d" % [step, int(steps[step])])
 		if parts.is_empty(): parts.append("无待办")
 		var skipped: Array = entry["skipped"]
@@ -333,3 +334,127 @@ func _show_worker_duties(worker: Dictionary) -> void:
 		button.button_pressed = level == String(duty["priority"])
 	_label(sidebar,"关闭兼任保留区域/类别/资源点设置，仅停止执行农务；不撤销全农场待办标记。")
 	super(worker)
+
+
+# --- P8.c research ----------------------------------------------------------
+
+const RESEARCH_STATUS := {"locked": "锁定", "ready": "可启动", "active": "在研", "paused": "已暂停", "done": "已完成"}
+
+func _project_status(project_id: String) -> String:
+	if world.research.is_completed(project_id):
+		return "done"
+	var active: Dictionary = world.research.project_of(project_id)
+	if not active.is_empty():
+		return "paused" if bool(active["paused"]) else "active"
+	var definition: Dictionary = world.research.project_def(project_id)
+	for prerequisite in definition["prerequisites"]:
+		if not world.research.is_completed(String(prerequisite)):
+			return "locked"
+	return "ready"
+
+func _sample_route(item_id: String) -> String:
+	var item: Dictionary = world._items[item_id]
+	var parts := PackedStringArray()
+	for source in item["sources"]:
+		if source == "market":
+			parts.append("市集采购")
+		elif world.recipe_defs.has(source):
+			parts.append("配方·%s（%s）" % [RECIPES[source], world.facility_defs[String(world.recipe_defs[source]["facility"])]["name"]])
+		elif world.crop_defs.has(source):
+			parts.append("种植·%s" % CROPS[source])
+		elif world.source_defs.has(source):
+			parts.append("资源点采集")
+		elif world.husbandry.species_defs.has(source):
+			parts.append("养殖·%s" % world.husbandry.species_def(source)["name"])
+	return item["name"] + "：" + ("、".join(parts) if not parts.is_empty() else "暂无来源")
+
+func _show_research_bench(facility: Dictionary) -> void:
+	var uid := int(facility["uid"])
+	var definition: Dictionary = world.facility_defs[facility["facility_id"]]
+	_picture(sidebar,facility["facility_id"],64)
+	_heading(sidebar,definition["name"])
+	var active: Dictionary = world.research.active_project(uid)
+	if active.is_empty():
+		_label(sidebar,"空闲 · 选择项目并支付样本与启动费；启动本身0AP、不产生有效日。")
+		var startable := []
+		for project_id in world.research.project_defs():
+			if _project_status(String(project_id)) == "ready" and world.research.project_of(String(project_id)).is_empty():
+				startable.append(String(project_id))
+		startable.sort()
+		if startable.is_empty():
+			_label(sidebar,"当前无可启动项目：先完成前置研究（见研究页）。")
+		else:
+			var selector := OptionButton.new()
+			selector.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+			for index in range(startable.size()):
+				var def: Dictionary = world.research.project_def(startable[index])
+				selector.add_item("%s · %d元石＋%s · %d有效日" % [def["name"], int(def["fee"]), _materials(def["samples"]), int(def["days"])])
+				selector.set_item_metadata(index, startable[index])
+			sidebar.add_child(selector)
+			_icon(sidebar,"play","启动所选研究",func():
+				var project_id := String(selector.get_item_metadata(maxi(0, selector.selected)))
+				var quote: Dictionary = world.research.quote_start(uid, project_id)
+				if not quote["ok"]:
+					_result({"ok": false, "reason": "；".join(PackedStringArray(quote["blockers"]))})
+					return
+				_confirm("启动%s？一次性支付%d元石并消耗样本%s；暂停不退款。" % [world.research.project_def(project_id)["name"], int(quote["fee"]), _materials(quote["samples"])],
+					func(): _result(world.research.start(uid, project_id)); _show_cell()))
+	else:
+		var def: Dictionary = world.research.project_def(String(active["id"]))
+		_heading(sidebar,"%s · %d/%d有效日" % [def["name"], int(active["progress"]), int(def["days"])])
+		_bar(sidebar,"研究进度",int(active["progress"]),int(def["days"]))
+		_label(sidebar,"样本与启动费已支付；每天一次研究工作：手动1AP，或由负责人日结执行（1元石）。")
+		var work_quote: Dictionary = world.research.work_quote(uid)
+		if work_quote["ok"]:
+			_icon(sidebar,"play","手动研究（1AP，登记今日收据）",func(): _result(world.research.work(uid)); _show_cell())
+		else:
+			_label(sidebar,String(work_quote["reason"]))
+		var pause := _icon(sidebar,"cancel","暂停/恢复（保留投入与进度）",func(): _result(world.research.set_paused(uid, not bool(active["paused"]))); _show_cell())
+		pause.text = "恢复研究" if bool(active["paused"]) else "暂停研究"
+	_owner_section(uid)
+	if active.is_empty():
+		_icon(sidebar,"clear","拆除（1AP，无返还）",func(): _confirm("拆除%s？不返还建设材料或元石，消耗1AP。" % definition["name"],func(): _result(world.demolish_facility(uid)); _show_cell()))
+	else:
+		_label(sidebar,"在研研究台不能拆除；完成或暂停处理后再操作。已完成的研究知识归全农场，拆除空台不丢失。")
+
+func _show_research() -> void:
+	_context = "research"
+	_page("研究 · 三层工艺网络")
+	_label(sidebar,"已完成的研究全场共享；启动付样本与元石，每天一次有效工作：手动1AP或负责人1元石。")
+	var completed := 0
+	for layer in [1, 2, 3]:
+		_heading(sidebar,"第%d层" % layer)
+		for project_id in world.research.project_defs():
+			var def: Dictionary = world.research.project_defs()[project_id]
+			if int(def["layer"]) != layer:
+				continue
+			if world.research.is_completed(String(project_id)):
+				completed += 1
+			var status := _project_status(String(project_id))
+			var card := _card(sidebar)
+			_heading(card,"%s · %s" % [def["name"], RESEARCH_STATUS[status]])
+			if status == "active":
+				var active: Dictionary = world.research.project_of(String(project_id))
+				_label(card,"进度%d/%d有效日（研究台#%d%s）" % [int(active["progress"]), int(def["days"]), int(active["bench_uid"]), "，已暂停" if bool(active["paused"]) else ""])
+			var prereqs := PackedStringArray()
+			for prerequisite in def["prerequisites"]:
+				var mark: String = "✓" if world.research.is_completed(String(prerequisite)) else "…"
+				prereqs.append("%s%s" % [mark, String(world.research.project_def(String(prerequisite)).get("name", prerequisite))])
+			_label(card,"前置：%s" % ("、".join(prereqs) if not prereqs.is_empty() else "无"))
+			var samples := PackedStringArray()
+			for item in def["samples"]:
+				samples.append("%s %d/%d" % [world._items[String(item)]["name"], world.inventory.count(String(item)), int(def["samples"][item])])
+			_label(card,"样本：%s · 启动%d元石 · %d有效日" % ["、".join(samples) if not samples.is_empty() else "无", int(def["fee"]), int(def["days"])])
+			var unlocks := PackedStringArray()
+			var registry: Dictionary = def["unlocks"]
+			if not registry["facilities"].is_empty(): unlocks.append("设施%d座" % registry["facilities"].size())
+			if not registry["recipes"].is_empty(): unlocks.append("配方%d条" % registry["recipes"].size())
+			if not registry["purchases"].is_empty(): unlocks.append("采购%d项" % registry["purchases"].size())
+			if not registry["crops"].is_empty(): unlocks.append("种植%d种" % registry["crops"].size())
+			if not registry["species"].is_empty(): unlocks.append("物种%d种" % registry["species"].size())
+			if not registry["diets"].is_empty(): unlocks.append("食谱%d种" % registry["diets"].size())
+			_label(card,"解锁：%s" % ("、".join(unlocks) if not unlocks.is_empty() else "能力标记"))
+			for item in def["samples"]:
+				_label(card,"获取路线 · " + _sample_route(String(item)))
+	_label(sidebar,"已完成%d/12项 · 未实施路线（花源/净化/岩兽等）在解锁后由后续阶段接入执行。" % completed)
+	_icon(sidebar,"build","营建研究台",_show_build)

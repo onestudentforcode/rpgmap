@@ -6,6 +6,7 @@ const P8Snapshot := preload("res://scripts/farming/p8/p8_snapshot.gd")
 const P8Husbandry := preload("res://scripts/farming/p8/p8_husbandry.gd")
 const P8Operations := preload("res://scripts/farming/p8/p8_operations.gd")
 const P8Workforce := preload("res://scripts/farming/p8/p8_workforce.gd")
+const P8Research := preload("res://scripts/farming/p8/p8_research.gd")
 
 ## Session-only transaction state: the settled candidate awaiting a successful
 ## write, and the pre-action state a failed commit restores. Never persisted.
@@ -13,9 +14,12 @@ var _pending_day := {}
 var _day_checkpoint := {}
 ## Facility ownership, production strategies, reserves and the scheduler.
 var operations
+## Research benches, farm-wide completed knowledge and daily receipts.
+var research
 
 func _init(slot_store = null) -> void:
 	operations = P8Operations.new(self)
+	research = P8Research.new(self)
 	super(slot_store)
 
 func _catalog():
@@ -32,8 +36,45 @@ func _make_workforce():
 
 func _settle_workforce(completed_day: int) -> void:
 	# The unified P8 scheduler replaces the V1/V2 settle: facilities, research
-	# (P8.c) and opted-in farm duty share one quota and budget per worker.
+	# and opted-in farm duty share one quota and budget per worker.
 	operations.settle(completed_day)
+
+## Research advances from today's receipts after husbandry and before the
+## reports archive, so unlock events land on the completed day.
+func _settle_husbandry(completed_day: int) -> void:
+	husbandry.settle(completed_day)
+	research.settle(completed_day)
+	reports.settle(completed_day)
+
+func begin_research_settle(completed_day: int) -> void:
+	research.begin_settle(completed_day)
+
+func finish_research_settle() -> void:
+	research.finish_settle()
+
+## Scheduler seam: owned research benches with an open receipt slot today.
+func _research_candidates(worker: Dictionary) -> Array:
+	var out := []
+	for uid in operations.facilities_of(int(worker["id"])):
+		var facility: Dictionary = facilities.get(uid, {})
+		if facility.is_empty() or facility_defs[String(facility["facility_id"])].get("kind") != "research":
+			continue
+		if research.work_quote(int(uid))["ok"]:
+			out.append(operations._candidate(_tier_of(String(operations.state["facilities"][uid]["priority"])), 3, int(uid), "研究",
+				"研究台#%d推进" % uid, "research:%d" % uid,
+				func(): return research.work(int(uid), "worker")))
+	return out
+
+func _tier_of(level: String) -> int:
+	return {"high": 0, "normal": 1, "low": 2}[level]
+
+func demolish_facility(uid: int) -> Dictionary:
+	if research != null and not research.active_project(uid).is_empty():
+		return _error("研究台有在研项目，完成或处理后才能拆除")
+	var result: Dictionary = super.demolish_facility(uid)
+	if result["ok"] and facilities.get(uid, {}).is_empty() and research != null:
+		research.forget_bench(uid)
+	return result
 
 func _facility_removed(uid: int) -> void:
 	super(uid)
@@ -42,19 +83,21 @@ func _facility_removed(uid: int) -> void:
 func to_snapshot() -> Dictionary:
 	var snapshot := super.to_snapshot()
 	snapshot["world"]["p8"] = operations.to_save()
+	snapshot["world"]["research"] = research.to_save()
 	return snapshot
 
 func _snapshot_applied(snapshot: Dictionary) -> void:
 	super(snapshot)
 	if snapshot["world"].has("p8"):
 		operations.apply_save(snapshot["world"]["p8"])
+	if snapshot["world"].has("research"):
+		research.apply_save(snapshot["world"]["research"])
 
 # --- Research gating -------------------------------------------------------
 
-## P8.c owns real research progress; until it lands every gated item stays
-## explicitly non-executable instead of silently open.
-func _research_done(_research_id: String) -> bool:
-	return false
+## Completed research is farm-wide knowledge; every gated def reads it live.
+func _research_done(research_id: String) -> bool:
+	return research.is_completed(research_id)
 
 func research_block(research_id: String) -> String:
 	if research_id.is_empty() or _research_done(research_id):

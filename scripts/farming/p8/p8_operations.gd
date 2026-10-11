@@ -101,8 +101,9 @@ func set_production(facility_uid: int, enabled: bool, recipe_id: String, target_
 	if enabled:
 		if not world.recipe_defs.has(recipe_id) or String(world.recipe_defs[recipe_id]["facility"]) != String(facility["facility_id"]):
 			return _error("配方不属于该设施")
-		if not world.research_block(String(world.recipe_defs[recipe_id].get("research", ""))).is_empty():
-			return _error("配方尚未解锁")
+		var blocked: String = world.research_block(String(world.recipe_defs[recipe_id].get("research", "")))
+		if not blocked.is_empty():
+			return _error(blocked)
 		if not world.recipe_defs[recipe_id]["outputs"].has(target_item):
 			return _error("目标物品不是该配方产物")
 		if not Scalars.whole(target_qty, 1):
@@ -184,6 +185,8 @@ func settle(completed_day: int) -> void:
 		reports.append({"worker_id": int(worker["id"]), "name": worker["name"], "success": 0, "fee": 0,
 			"counts": {}, "facilities": [], "reason": "已暂停" if worker["paused"] else "没有可执行工作"})
 	husbandry.begin_patrols(completed_day, [])
+	if world.has_method("begin_research_settle"):
+		world.begin_research_settle(completed_day)
 	world._labour_action = true
 	var fee := int(workforce.settings["fee_per_success"])
 	var limit := int(workforce.settings["daily_work_limit"])
@@ -216,6 +219,9 @@ func settle(completed_day: int) -> void:
 			world.primeval_stones -= fee
 			workforce.state["spent"] = int(workforce.state["spent"]) + fee
 			world._cash("labour_spend", fee)
+			world._report_event({"category": "labour", "facility_uid": int(picked.get("facility_uid", 0)),
+				"kind": String(picked.get("step", picked.get("kind", "农务"))), "count": 1, "items": {},
+				"note": String(worker["name"])})
 			report["success"] = int(report["success"]) + 1
 			report["fee"] = int(report["fee"]) + fee
 			report["reason"] = "工作完成：" + String(picked["label"])
@@ -234,6 +240,8 @@ func settle(completed_day: int) -> void:
 			break
 	world._labour_action = false
 	husbandry.finish_patrols()
+	if world.has_method("finish_research_settle"):
+		world.finish_research_settle()
 	for report in reports:
 		if int(report["success"]) >= limit:
 			report["reason"] = "达到每日工作上限"
@@ -281,7 +289,7 @@ func _candidates(worker: Dictionary) -> Array:
 				var recipe_id := String(state["production"][uid]["recipe_id"])
 				out.append(_candidate(tier, 4, uid, "投料", "设施#%d启动%s" % [uid, recipe_id], "start:%d" % uid,
 					func(): return world.start_batch(uid, recipe_id)))
-	out.append_array(_research_candidates(worker))
+	out.append_array(world._research_candidates(worker))
 	if bool(worker.get("farm_duty", {}).get("enabled", false)):
 		var order := 0
 		for job in world.workforce._jobs(worker):
@@ -300,10 +308,6 @@ func _candidates(worker: Dictionary) -> Array:
 func _candidate(tier: int, class_order: int, uid: int, step: String, label: String, condition: String, action: Callable) -> Dictionary:
 	return {"tier": tier, "class": class_order, "uid": uid, "order": 0, "step": step,
 		"label": label, "condition": condition, "facility_uid": uid, "action": action}
-
-## Research candidates join the schedule in P8.c; the seam stays empty here.
-func _research_candidates(_worker: Dictionary) -> Array:
-	return []
 
 ## First runnable candidate by (tier, class); same-group candidates rotate by a
 ## per-group cursor so one facility cannot monopolise a tier, and conditions
@@ -393,7 +397,7 @@ func apply_save(value: Dictionary) -> void:
 		state["waiting"][int(row["uid"])] = int(row["day"])
 
 ## Detached validation against the already normalized base world snapshot.
-static func normalize(value, day: int, world: Dictionary, workforce: Dictionary, catalog) -> Dictionary:
+static func normalize(value, day: int, world: Dictionary, workforce: Dictionary, catalog, completed_research: Array = []) -> Dictionary:
 	if not value is Dictionary or not Scalars.exact(value, ["facilities", "production", "reserves", "waiting"]):
 		return Scalars.fail("P8运营快照字段非法")
 	var facility_defs: Dictionary = catalog.definitions("facilities")
@@ -434,8 +438,8 @@ static func normalize(value, day: int, world: Dictionary, workforce: Dictionary,
 			var recipe = recipe_defs.get(String(row["recipe_id"]))
 			if recipe == null or String(recipe["facility"]) != String(facilities[uid]["facility_id"]):
 				return Scalars.fail("策略配方不属于该设施")
-			if recipe.get("research", "") != "":
-				return Scalars.fail("策略配方需先解锁（研究接入后放开）")
+			if String(recipe.get("research", "")) != "" and not completed_research.has(String(recipe.get("research", ""))):
+				return Scalars.fail("策略配方未解锁")
 			if not recipe["outputs"].has(String(row["target_item"])) or not Scalars.whole(row["target_qty"], 1):
 				return Scalars.fail("策略目标非法")
 		out["production"].append({"uid": uid, "enabled": bool(row["enabled"]), "recipe_id": String(row["recipe_id"]),

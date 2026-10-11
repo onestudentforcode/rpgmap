@@ -194,7 +194,7 @@ static func normalize(value, day: int, catalog = Data) -> Dictionary:
 			seen_uids[int(entry["uid"])] = true
 			var steps := {}
 			for step in entry["steps"]:
-				if step not in ["收取","水体维护","整体维护","投料","加工收取"] or not Scalars.whole(entry["steps"][step],1,int(config["daily_work_limit"])):
+				if step not in ["收取","水体维护","整体维护","研究","投料","加工收取"] or not Scalars.whole(entry["steps"][step],1,int(config["daily_work_limit"])):
 					return Scalars.fail("设施工作步骤非法")
 				steps[step] = int(entry["steps"][step])
 				steps_total += steps[step]
