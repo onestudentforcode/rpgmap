@@ -30,6 +30,9 @@ func demolish_facility(uid: int) -> Dictionary:
 	var result := super.demolish_facility(uid)
 	if result.get("ok", false):
 		husbandry.forget(uid)
+		for worker in workforce.state["workers"]:
+			if int(worker.get("caretaker_facility", 0)) == uid:
+				worker.erase("caretaker_facility")
 	return result
 
 func _record_flow(inflows: Dictionary, outflows: Dictionary, reason: String) -> void:
@@ -44,6 +47,9 @@ func grant_scaffold(items: Dictionary) -> void:
 	ledger.record(items, {}, "脚手架注入")
 
 func _settle_husbandry(completed_day: int) -> void:
+	# Caretaker patrols run inside the completed service day, before growth and
+	# cycles settle; a cycle finished by this settle waits for the next day.
+	husbandry.run_patrols(completed_day)
 	husbandry.settle(completed_day)
 
 func _settle_ledger(completed_day: int) -> String:

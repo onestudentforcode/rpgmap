@@ -1,11 +1,11 @@
 extends RefCounted
-## Schema 9 adds special production cycles; schemas 8 and older are not migrated.
+## Schema 10 adds exclusive facility caretakers; schemas 9 and older are not migrated.
 const Common := preload("res://scripts/farming/v1/v1_snapshot.gd")
 const Scalars := preload("res://scripts/farming/v1/v1_world_state.gd")
 const Data := preload("res://scripts/farming/v2/v2_data.gd")
 const Husbandry := preload("res://scripts/farming/v2/v2_husbandry.gd")
 const Ledger := preload("res://scripts/farming/v2/v2_resource_ledger.gd")
-const SCHEMA := 9
+const SCHEMA := 10
 
 static func fresh() -> Dictionary:
 	var snapshot: Dictionary = Common.fresh(Data, SCHEMA)
@@ -45,6 +45,9 @@ static func normalize(value) -> Dictionary:
 	var ledger := Ledger.normalize(raw_ledger, day, checked["snapshot"]["inventory"], Data)
 	if not ledger["ok"]:
 		return ledger
+	var bindings := Husbandry.validate_caretakers(checked["snapshot"]["workforce"], checked["snapshot"]["world"], Data)
+	if not bindings["ok"]:
+		return bindings
 	checked["snapshot"]["world"]["husbandry"] = husbandry["husbandry"]
 	checked["snapshot"]["ledger"] = ledger["ledger"]
 	return checked

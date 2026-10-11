@@ -18,7 +18,7 @@ func _init() -> void:
 	manual_mode = true
 	minimum_map_zoom = 0.1
 	settings = Settings.new("user://farm_demo_v2_settings.cfg", minimum_map_zoom)
-	product_title = "灵田 Demo V2 · P7.c"
+	product_title = "灵田 Demo V2 · P7.d"
 	terrain_path = "res://content/farming/baked/v2/terrains.json"
 	preview_prefix = "v2"
 func _make_store(directory: String = ""):
@@ -78,6 +78,89 @@ func _special_selector(habitat: Dictionary) -> void:
 	selector.item_selected.connect(func(choice): _result(husbandry.set_special_diet(int(habitat["facility_uid"]),selector.get_item_metadata(choice))); _show_cell())
 	sidebar.add_child(selector)
 
+func _worker_cap_text() -> String:
+	return "雇工 · 人数不设固定上限"
+
+func _worker_limit() -> int:
+	return 999999
+
+func _is_caretaker(worker: Dictionary) -> bool:
+	return int(worker.get("caretaker_facility", 0)) > 0
+
+func _worker_duty_text(worker: Dictionary) -> String:
+	if not _is_caretaker(worker):
+		return ""
+	var facility_uid := int(worker["caretaker_facility"])
+	if not world.facilities.has(facility_uid):
+		return "专责设施已拆除，待重新指派"
+	var facility: Dictionary = world.facilities[facility_uid]
+	return "专责%s#%d，其他农务不参与" % [world.facility_defs[facility["facility_id"]]["name"], facility_uid]
+
+func _worker_report_extra(report: Dictionary) -> String:
+	if not report.has("caretaker"):
+		return ""
+	var steps: Dictionary = report["caretaker"]["steps"]
+	var parts := PackedStringArray()
+	for step in ["收取", "水体维护", "整体维护"]:
+		if int(steps[step]) > 0: parts.append("%s×%d" % [step,int(steps[step])])
+	if parts.is_empty(): return "专责巡栏：无待办"
+	var skipped: Array = report["caretaker"]["skipped"]
+	return "专责巡栏："+"、".join(parts)+("；未完成："+"、".join(skipped) if not skipped.is_empty() else "")
+
+## Caretaker slot below the three husbandry columns: management state only.
+func _caretaker_section(habitat: Dictionary) -> void:
+	var husbandry := hus()
+	var uid := int(habitat["facility_uid"])
+	var current: Dictionary = husbandry.caretaker_of(uid)
+	_label(sidebar,"负责人 · 一人一设施，不参与其他农务")
+	var selector := OptionButton.new()
+	selector.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	selector.add_item("无人负责（玩家手动）")
+	selector.set_item_metadata(0, 0)
+	if current.is_empty(): selector.select(0)
+	var index := 1
+	for worker in world.workforce.state["workers"]:
+		var bound := int(worker.get("caretaker_facility", 0))
+		var caption: String = worker["name"]
+		if bound == uid: caption += " · 当前负责"
+		elif bound > 0: caption += " · 现负责其他设施"
+		elif not worker["areas"].is_empty() or not _worker_sources(int(worker["id"])).is_empty(): caption += " · 现负责农务"
+		selector.add_item(caption)
+		selector.set_item_metadata(index, int(worker["id"]))
+		if bound == uid: selector.select(index)
+		index += 1
+	selector.item_selected.connect(func(choice):
+		var worker_id := int(selector.get_item_metadata(choice))
+		var preview: Dictionary = husbandry.caretaker_preview(uid, worker_id)
+		if not preview["ok"]:
+			_result(preview)
+			return
+		if worker_id == 0:
+			_result(husbandry.assign_caretaker(uid, 0))
+			_show_cell()
+			return
+		var changes := PackedStringArray()
+		if int(preview["releases"]["areas"]) > 0: changes.append("解除其%d处负责区域" % int(preview["releases"]["areas"]))
+		if not preview["releases"]["sources"].is_empty(): changes.append("解除其资源点指派")
+		if not String(preview["displaced"]).is_empty(): changes.append("改派原负责人%s为待分配" % String(preview["displaced"]))
+		if preview["moving"].has("from_facility"): changes.append("从设施#%d改派" % int(preview["moving"]["from_facility"]))
+		var detail := "；".join(changes) if not changes.is_empty() else "无原安排需要解除"
+		_confirm("指派%s负责本设施？%s。指派本身0AP、0元石，首次工作在日结执行。" % [world.workforce._worker(worker_id)["name"], detail],
+			func(): _result(husbandry.assign_caretaker(uid, worker_id)); _show_cell()))
+	sidebar.add_child(selector)
+	if not current.is_empty():
+		var estimate := husbandry.patrol_estimate(uid)
+		_label(sidebar,"%s · %s · 每日预算%d元石（最多支出）
+成功一次收费1元石，无固定日薪；%s" % [current["name"],
+			"暂停中，不工作不收费" if current["paused"] else "受雇中", int(current["budget"]), estimate])
+
+func _worker_sources(worker_id: int) -> Array:
+	var out := []
+	for source in world.workforce.state["sources"]:
+		if int(world.workforce.state["sources"][source]) == worker_id:
+			out.append(source)
+	return out
+
 func _show_habitat(facility: Dictionary) -> void:
 	var uid := int(facility["uid"])
 	var husbandry := hus()
@@ -90,6 +173,7 @@ func _show_habitat(facility: Dictionary) -> void:
 		_habitat_expanded_uid = uid
 	_picture(sidebar,facility["facility_id"],64)
 	_heading(sidebar,"%s · %d/%d只 · 幼体%d / 成体空闲%d / 周期%d / 待收%d" % [definition["name"],counts["total"],int(definition["capacity"]),counts["juvenile"],counts["idle_adults"],counts["running"],counts["ready"]])
+	_caretaker_section(habitat)
 	var claim_quote := husbandry.quote_claim(uid)
 	if claim_quote["ok"]:
 		_label(sidebar,"待收%d只：%s%s" % [int(claim_quote["ready"]),_materials(claim_quote["outputs"]),
@@ -465,6 +549,16 @@ func _preview(directory: String) -> void:
 	selected = Vector2i(0,14)
 	_show_cell()
 	await _shot(directory,"production_carp")
+	world.workforce.hire("鱼倌")
+	hus().assign_caretaker(1,1)
+	_show_workers()
+	await _shot(directory,"caretaker")
+	selected = Vector2i(0,14)
+	_show_cell()
+	await _shot(directory,"caretaker_pond")
+	world.end_day()
+	_show_report()
+	await _shot(directory,"caretaker_report")
 	_show_resources()
 	await _shot(directory,"resources")
 	var preview_directory: String = store.slot_path(1).get_base_dir()

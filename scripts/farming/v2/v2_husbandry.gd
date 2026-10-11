@@ -11,6 +11,12 @@ var world:
 var state: Dictionary
 var species_defs: Dictionary
 var settings: Dictionary
+## During settlement patrols the clock has already advanced; service checks read
+## this effective day instead so worker feeding stays on the completed day.
+var _patrol_day := -1
+
+func _today() -> int:
+	return _patrol_day if _patrol_day >= 0 else world.clock.total_days
 
 func _init(owner, data: Dictionary) -> void:
 	_owner = weakref(owner)
@@ -76,7 +82,7 @@ func summary(habitat: Dictionary) -> Dictionary:
 		"idle_adults": 0, "running": 0, "ready": 0}
 	for individual in habitat["individuals"]:
 		out["adult" if individual["stage"] == "adult" else "juvenile"] += 1
-		if int(individual["base_service"]["day"]) == world.clock.total_days:
+		if int(individual["base_service"]["day"]) == _today():
 			out["fed_today"] += 1
 		var cycle: Dictionary = individual.get("cycle", {})
 		if cycle.is_empty():
@@ -91,7 +97,7 @@ func summary(habitat: Dictionary) -> Dictionary:
 func _targets_today(habitat: Dictionary) -> Array:
 	var out := []
 	for individual in habitat["individuals"]:
-		if int(individual["base_service"]["day"]) != world.clock.total_days:
+		if int(individual["base_service"]["day"]) != _today():
 			out.append(individual)
 	return out
 
@@ -101,7 +107,7 @@ func _special_targets(habitat: Dictionary) -> Array:
 	for individual in habitat["individuals"]:
 		if individual["stage"] != "adult" or not individual.get("cycle", {}).is_empty():
 			continue
-		if int(individual["base_service"]["day"]) != world.clock.total_days:
+		if int(individual["base_service"]["day"]) != _today():
 			continue
 		out.append(individual)
 	return out
@@ -168,7 +174,7 @@ func _growth_needs(habitat: Dictionary, extra: int) -> Dictionary:
 		if individual["stage"] != "juvenile":
 			continue
 		var remaining := int(species_defs[habitat["species_id"]]["growth_days"]) - int(int(individual["growth"]) / 100)
-		if int(individual["base_service"]["day"]) == world.clock.total_days:
+		if int(individual["base_service"]["day"]) == _today():
 			remaining -= 1
 		days += maxi(0, remaining)
 	days += int(species_defs[habitat["species_id"]]["growth_days"]) * extra
@@ -315,7 +321,7 @@ func quote_maintenance(facility_uid: int) -> Dictionary:
 
 ## One whole-facility action: the basic and special branches each commit atomically,
 ## services and flows are written before the single AP can trigger the day end.
-func maintain(facility_uid: int) -> Dictionary:
+func maintain(facility_uid: int, operator: String = "player", service_day: int = -1) -> Dictionary:
 	var checked: Dictionary = world._can_act(int(settings["maintenance_ap"]))
 	if not checked["ok"]:
 		return checked
@@ -323,7 +329,9 @@ func maintain(facility_uid: int) -> Dictionary:
 	if not quote["ok"]:
 		return quote
 	var habitat := habitat_of(facility_uid)
-	var day: int = world.clock.total_days
+	# Settlement patrols pass the completed service day explicitly: the clock has
+	# already advanced and worker feeding must not land on tomorrow.
+	var day: int = service_day if service_day >= 0 else world.clock.total_days
 	var served := 0
 	var started := 0
 	var inputs := {}
@@ -336,7 +344,7 @@ func maintain(facility_uid: int) -> Dictionary:
 		var diet_id: String = habitat["basic_diet_id"]
 		var diet := diet_inputs(habitat["species_id"], "base_diets", diet_id)
 		for individual in _targets_today(habitat):
-			individual["base_service"] = {"day": day, "diet_id": diet_id, "inputs": diet.duplicate(), "operator": "player"}
+			individual["base_service"] = {"day": day, "diet_id": diet_id, "inputs": diet.duplicate(), "operator": operator}
 			served += 1
 		for ident in feed:
 			inputs[ident] = int(feed[ident])
@@ -397,7 +405,7 @@ func quote_claim(facility_uid: int) -> Dictionary:
 
 ## Collect every ready individual of the facility: sheep stay idle adults, carp are
 ## removed. Optional expected ids reject stale requests instead of claiming another batch.
-func claim(facility_uid: int, expected: Array = []) -> Dictionary:
+func claim(facility_uid: int, expected: Array = [], operator: String = "player") -> Dictionary:
 	var checked: Dictionary = world._can_act(int(settings["claim_ap"]))
 	if not checked["ok"]:
 		return checked
@@ -447,7 +455,7 @@ func quote_water(facility_uid: int) -> Dictionary:
 	return {"ok": true, "current": int(habitat["water"]), "predicted": occupied,
 		"inputs": inputs.duplicate(), "gain": int(settings["water"]["maintenance_gain"]), "ap": int(settings["water"]["maintenance_ap"])}
 
-func maintain_water(facility_uid: int) -> Dictionary:
+func maintain_water(facility_uid: int, operator: String = "player") -> Dictionary:
 	var checked: Dictionary = world._can_act(int(settings["water"]["maintenance_ap"]))
 	if not checked["ok"]:
 		return checked
@@ -524,11 +532,190 @@ func settle(completed_day: int) -> void:
 					cycle["status"] = "ready"
 					cycle["ready_day"] = completed_day
 
+## Exclusive caretaker binding: one worker per habitat, one habitat per worker.
+func caretaker_of(facility_uid: int) -> Dictionary:
+	for worker in world.workforce.state["workers"]:
+		if int(worker.get("caretaker_facility", 0)) == facility_uid:
+			return worker
+	return {}
+
+func caretaker_preview(facility_uid: int, worker_id: int) -> Dictionary:
+	var checked: Dictionary = world._can_act(0)
+	if not checked["ok"]:
+		return checked
+	if not world.facilities.has(facility_uid) or world.facility_defs[world.facilities[facility_uid]["facility_id"]].get("kind") != "habitat":
+		return _error("只能指派圈舍或水场负责人")
+	if worker_id != 0 and world.workforce._worker(worker_id).is_empty():
+		return _error("未知雇工")
+	var releases := {"areas": 0, "sources": []}
+	if worker_id != 0:
+		var worker: Dictionary = world.workforce._worker(worker_id)
+		releases["areas"] = worker["areas"].size()
+		for source in world.workforce.state["sources"]:
+			if int(world.workforce.state["sources"][source]) == worker_id:
+				releases["sources"].append(source)
+	var displaced: Dictionary = caretaker_of(facility_uid)
+	var moving := {}
+	if worker_id != 0:
+		var current: int = int(world.workforce._worker(worker_id).get("caretaker_facility", 0))
+		if current > 0:
+			moving = {"from_facility": current}
+	return {"ok": true, "facility_uid": facility_uid, "worker_id": worker_id,
+		"releases": releases, "displaced": displaced.get("name", ""), "moving": moving}
+
+## Binding is management state only: 0AP, 0 stones, no feeding, no claiming.
+func assign_caretaker(facility_uid: int, worker_id: int) -> Dictionary:
+	var preview := caretaker_preview(facility_uid, worker_id)
+	if not preview["ok"]:
+		return preview
+	var workforce = world.workforce
+	for worker in workforce.state["workers"]:
+		if int(worker.get("caretaker_facility", 0)) == facility_uid and int(worker["id"]) != worker_id:
+			worker.erase("caretaker_facility")
+	if worker_id == 0:
+		world.changed.emit()
+		return {"ok": true}
+	var worker: Dictionary = workforce._worker(worker_id)
+	for other in workforce.state["workers"]:
+		if int(other.get("caretaker_facility", 0)) == facility_uid:
+			other.erase("caretaker_facility")
+	worker["caretaker_facility"] = facility_uid
+	# Exclusive scope: personal areas and source assignments end; global marks and
+	# seed plans stay for the remaining farm workers.
+	worker["areas"] = []
+	for source in workforce.state["sources"].keys().duplicate():
+		if int(workforce.state["sources"][source]) == worker_id:
+			workforce.state["sources"].erase(source)
+	world.changed.emit()
+	return {"ok": true, "released": preview["releases"]}
+
+## Read-only daily cost preview for the caretaker card.
+func patrol_estimate(facility_uid: int) -> String:
+	if not world.facilities.has(facility_uid):
+		return "设施不存在"
+	var labels := PackedStringArray()
+	if quote_claim(facility_uid)["ok"]:
+		labels.append("收取")
+	var habitat := habitat_of(facility_uid)
+	if not habitat.is_empty() and habitat.has("water") and not habitat["individuals"].is_empty() 	and int(habitat["water"]) <= int(settings["water"]["worker_threshold"]) and quote_water(facility_uid)["ok"]:
+		labels.append("水体维护")
+	if quote_maintenance(facility_uid)["ok"]:
+		labels.append("整体维护")
+	if labels.is_empty():
+		return "当前无待办，费用0"
+	return "按当前状态可能："+"→".join(labels)+"，最多约%d元石" % labels.size()
+
+## Day-end patrol per facility: claim → necessary water → whole maintenance.
+## One step per worker per round; every step rechecks budget, cash and stock.
+func run_patrols(completed_day: int) -> void:
+	var workforce = world.workforce
+	var fee := int(workforce.settings["fee_per_success"])
+	var limit := int(workforce.settings["daily_work_limit"])
+	var caretakers := []
+	for worker in workforce.state["workers"]:
+		if int(worker.get("caretaker_facility", 0)) <= 0:
+			continue
+		caretakers.append(worker)
+	if caretakers.is_empty():
+		return
+	_patrol_day = completed_day
+	var rows := {}
+	for row in workforce.state["report"]["workers"]:
+		rows[int(row["worker_id"])] = row
+	for worker in caretakers:
+		var row: Dictionary = rows[int(worker["id"])]
+		row["caretaker"] = {"facility_uid": int(worker["caretaker_facility"]),
+			"steps": {"收取": 0, "水体维护": 0, "整体维护": 0}, "skipped": []}
+		if worker["paused"]:
+			row["reason"] = "已暂停"
+	var water_done := {}
+	world._labour_action = true
+	for _round in range(limit):
+		var progressed := false
+		for worker in caretakers:
+			if worker["paused"]:
+				continue
+			var row: Dictionary = rows[int(worker["id"])]
+			if int(row["fee"]) + fee > int(worker["budget"]) or world.primeval_stones < fee:
+				if not row["caretaker"]["skipped"].has("预算或元石不足"):
+					row["caretaker"]["skipped"].append("预算或元石不足")
+				row["reason"] = "预算或元石不足"
+				continue
+			var facility_uid := int(worker["caretaker_facility"])
+			var step := _patrol_step(facility_uid, water_done, completed_day)
+			if step.is_empty():
+				if not worker["paused"] and String(row["reason"]) in ["没有可执行工作", "工作完成"]:
+					row["reason"] = "专责设施无待办"
+				continue
+			var result: Dictionary = step["action"].call()
+			if not result["ok"]:
+				if not row["caretaker"]["skipped"].has(result.get("reason", "步骤失败")):
+					row["caretaker"]["skipped"].append(String(result.get("reason", "步骤失败")))
+				continue
+			world.primeval_stones -= fee
+			workforce.state["spent"] = int(workforce.state["spent"]) + fee
+			world._cash("labour_spend", fee)
+			row["success"] = int(row["success"]) + 1
+			row["fee"] = int(row["fee"]) + fee
+			row["caretaker"]["steps"][step["kind"]] = int(row["caretaker"]["steps"][step["kind"]]) + 1
+			row["reason"] = "巡栏完成：" + String(step["kind"])
+			if step["kind"] == "水体维护":
+				water_done[facility_uid] = true
+			progressed = true
+		if not progressed:
+			break
+	_patrol_day = -1
+	world._labour_action = false
+
+func _patrol_step(facility_uid: int, water_done: Dictionary, patrol_day: int) -> Dictionary:
+	if not world.facilities.has(facility_uid):
+		return {}
+	if husbandry_claim_ready(facility_uid):
+		return {"kind": "收取", "action": func(): return claim(facility_uid, [], "worker")}
+	var habitat := habitat_of(facility_uid)
+	if not habitat.is_empty() and habitat.has("water") and not habitat["individuals"].is_empty() 	and not water_done.has(facility_uid) and int(habitat["water"]) <= int(settings["water"]["worker_threshold"]):
+		var quote := quote_water(facility_uid)
+		if quote["ok"]:
+			return {"kind": "水体维护", "action": func(): return maintain_water(facility_uid, "worker")}
+		return {"kind": "水体维护", "action": func(): return _error(String(quote["reason"]))}
+	var quote := quote_maintenance(facility_uid)
+	if quote["ok"]:
+		return {"kind": "整体维护", "action": func(): return maintain(facility_uid, "worker", patrol_day)}
+	return {}
+
+func husbandry_claim_ready(facility_uid: int) -> bool:
+	var quote := quote_claim(facility_uid)
+	return quote["ok"]
+
 func to_save() -> Dictionary:
 	return state.duplicate(true)
 
 func apply_save(value: Dictionary) -> void:
 	state = value.duplicate(true)
+
+## Caretaker bindings live in the workforce rows; cross-validate them against the
+## normalized world: real habitat facilities, one caretaker each, no farm duties left.
+static func validate_caretakers(workforce: Dictionary, world: Dictionary, catalog) -> Dictionary:
+	var facility_defs: Dictionary = catalog.definitions("facilities")
+	var facilities := {}
+	for row in world["facilities"]:
+		facilities[int(row["uid"])] = row
+	var taken := {}
+	for worker in workforce["workers"]:
+		var bound := int(worker.get("caretaker_facility", 0))
+		if bound <= 0:
+			continue
+		if not facilities.has(bound) or facility_defs[facilities[bound]["facility_id"]].get("kind") != "habitat":
+			return Scalars.fail("负责人指向未知或非养殖设施")
+		if taken.has(bound):
+			return Scalars.fail("同一设施不能有多名负责人")
+		taken[bound] = true
+		if not worker["areas"].is_empty():
+			return Scalars.fail("专责雇工不能保留负责区域")
+		for source in workforce["sources"]:
+			if int(workforce["sources"][source]) == int(worker["id"]):
+				return Scalars.fail("专责雇工不能保留资源点指派")
+	return {"ok": true}
 
 ## Detached validation against the already normalized base world snapshot.
 static func normalize(value, day: int, world: Dictionary, catalog, settings: Dictionary) -> Dictionary:
@@ -599,7 +786,7 @@ static func normalize(value, day: int, world: Dictionary, catalog, settings: Dic
 				# Same-day history may legitimately differ from the current plan.
 				if not base_ids.has(service["diet_id"]) or service["inputs"] != base_ids[service["diet_id"]]:
 					return Scalars.fail("服务食谱或投入与记录不符")
-				if service["operator"] != "player":
+				if service["operator"] not in ["player", "worker"]:
 					return Scalars.fail("未知服务来源")
 			var cycle = individual["cycle"]
 			var normalized_cycle := {}
@@ -637,7 +824,9 @@ static func normalize(value, day: int, world: Dictionary, catalog, settings: Dic
 				normalized_service = {"day": -1, "diet_id": "", "inputs": {}, "operator": ""}
 			else:
 				normalized_service = {"day": int(service["day"]), "diet_id": service["diet_id"],
-					"inputs": service["inputs"].duplicate(), "operator": "player"}
+					"inputs": service["inputs"].duplicate(), "operator": "player" if service["operator"] == "player" else "worker"}
+			if int(service["day"]) >= 0 and service["operator"] not in ["player", "worker"]:
+				return Scalars.fail("未知服务来源")
 			individuals.append({"uid": int(individual["uid"]), "stage": individual["stage"], "growth": int(individual["growth"]),
 				"base_service": normalized_service, "cycle": normalized_cycle})
 		var normalized_habitat := {"facility_uid": int(habitat["facility_uid"]), "species_id": habitat["species_id"],

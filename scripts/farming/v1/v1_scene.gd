@@ -944,9 +944,25 @@ func _show_build() -> void:
 			build_tool = ident
 			notice.text = "放置%s · 占地%d×%d，%d元石+%s · 右键取消" % [definition["name"],definition["footprint"][0],definition["footprint"][1],definition["cash"],_materials(definition["materials"])])
 
+## Derived products override these; V1 keeps its fixed two-person roster.
+func _worker_cap_text() -> String:
+	return "雇工 · 最多2人"
+
+func _worker_limit() -> int:
+	return 2
+
+func _worker_duty_text(_worker: Dictionary) -> String:
+	return ""
+
+func _is_caretaker(_worker: Dictionary) -> bool:
+	return false
+
+func _worker_report_extra(_report: Dictionary) -> String:
+	return ""
+
 func _show_workers() -> void:
 	_context = "workers"
-	_page("雇工 · 最多2人")
+	_page(_worker_cap_text())
 	_label(sidebar,"成功1次收费1元石 · 每人每日最多12次 · 日结执行，不消耗玩家AP")
 	var people := HBoxContainer.new()
 	sidebar.add_child(people)
@@ -954,11 +970,13 @@ func _show_workers() -> void:
 		var card := _card(people)
 		_heading(card,worker["name"]+(" · 当前" if worker["id"] == selected_worker else ""))
 		_label(card,"%s · 每日预算%d元石" % ["暂停" if worker["paused"] else "受雇中",worker["budget"]])
+		var duty := _worker_duty_text(worker)
+		if not duty.is_empty(): _label(card,duty)
 		for report in world.workforce.state["report"]["workers"]:
 			if report["worker_id"] == worker["id"]:
 				_label(card,"上次成功%d次 · 费用%d元石" % [report["success"],report["fee"]])
 		_icon(card,"workers","选择 "+worker["name"],func(): selected_worker = int(worker["id"]); _show_workers(); overlay.queue_redraw())
-	if world.workforce.state["workers"].size() < 2:
+	if world.workforce.state["workers"].size() < _worker_limit():
 		_icon(people,"workers","雇佣一人（无固定费用）",func():
 			var result := world.workforce.hire("雇工%d" % world.workforce.state["next_worker_id"])
 			_result(result)
@@ -981,45 +999,51 @@ func _show_workers() -> void:
 		pause.button_pressed = worker["paused"]
 		pause.toggled.connect(func(value): _result(world.workforce.configure(worker["id"],worker["budget"],value,worker["priorities"],worker["areas"])))
 		row.add_child(pause)
-		_label(sidebar,"工作偏好0～5：0禁止。个人偏好 → 标记优先级 → 默认农务顺序。")
-		var matrix := GridContainer.new()
-		matrix.set_meta("layout","matrix")
-		matrix.columns = 4 if window_panel.size.x >= 740 else 2
-		sidebar.add_child(matrix)
-		for kind in Workforce.KINDS:
-			var field := VBoxContainer.new()
-			matrix.add_child(field)
-			_label(field,NAMES[kind])
-			var preference := SpinBox.new()
-			preference.set_meta("preference",kind)
-			preference.min_value = 0
-			preference.max_value = 5
-			preference.value = worker["priorities"][kind]
-			preference.value_changed.connect(func(value):
-				var priorities: Dictionary = worker["priorities"].duplicate()
-				priorities[kind] = int(value)
-				_result(world.workforce.configure(worker["id"],worker["budget"],worker["paused"],priorities,worker["areas"])))
-			field.add_child(preference)
-		_heading(sidebar,"负责区域 · %d处" % worker["areas"].size())
-		for index in range(worker["areas"].size()):
-			var area: Array = worker["areas"][index]
-			var line := HBoxContainer.new()
-			sidebar.add_child(line)
-			var label := _label(line,"区域%d · (%d,%d) %d×%d" % [index+1,area[0],area[1],area[2],area[3]])
-			label.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-			_icon(line,"locate","定位区域%d" % (index+1),func(): _close_page(); camera.position = Vector2(float(area[0])+float(area[2])*0.5,float(area[1])+float(area[3])*0.5)*64)
-			_icon(line,"cancel","删除区域%d" % (index+1),func():
-				var areas: Array = worker["areas"].duplicate(true)
-				areas.remove_at(index)
-				_result(world.workforce.configure(worker["id"],worker["budget"],worker["paused"],worker["priorities"],areas))
-				_show_workers())
-		var actions := HBoxContainer.new()
-		sidebar.add_child(actions)
-		_icon(actions,"area","框选追加负责区域",func(): _close_page(); expanded = true; _layout(); _select_tool("area"))
-		_icon(actions,"cancel","清空负责区域",func(): _result(world.workforce.configure(worker["id"],worker["budget"],worker["paused"],worker["priorities"],[])); _show_workers())
-		_icon(actions,"clear","解雇（免费）",func(): _result(world.workforce.dismiss(worker["id"])); selected_worker = 0; _show_workers())
-		_label(sidebar,"资源点单独指派；区域之外不找农务目标。物品直接进出共享仓库。")
+		if _is_caretaker(worker):
+			_label(sidebar,"专责设施负责人：农务偏好与区域不参与执行。")
+		else:
+			_show_worker_duties(worker)
 	_icon(sidebar,"history","查看上次工作日报",_show_report)
+
+func _show_worker_duties(worker: Dictionary) -> void:
+	_label(sidebar,"工作偏好0～5：0禁止。个人偏好 → 标记优先级 → 默认农务顺序。")
+	var matrix := GridContainer.new()
+	matrix.set_meta("layout","matrix")
+	matrix.columns = 4 if window_panel.size.x >= 740 else 2
+	sidebar.add_child(matrix)
+	for kind in Workforce.KINDS:
+		var field := VBoxContainer.new()
+		matrix.add_child(field)
+		_label(field,NAMES[kind])
+		var preference := SpinBox.new()
+		preference.set_meta("preference",kind)
+		preference.min_value = 0
+		preference.max_value = 5
+		preference.value = worker["priorities"][kind]
+		preference.value_changed.connect(func(value):
+			var priorities: Dictionary = worker["priorities"].duplicate()
+			priorities[kind] = int(value)
+			_result(world.workforce.configure(worker["id"],worker["budget"],worker["paused"],priorities,worker["areas"])))
+		field.add_child(preference)
+	_heading(sidebar,"负责区域 · %d处" % worker["areas"].size())
+	for index in range(worker["areas"].size()):
+		var area: Array = worker["areas"][index]
+		var line := HBoxContainer.new()
+		sidebar.add_child(line)
+		var label := _label(line,"区域%d · (%d,%d) %d×%d" % [index+1,area[0],area[1],area[2],area[3]])
+		label.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+		_icon(line,"locate","定位区域%d" % (index+1),func(): _close_page(); camera.position = Vector2(float(area[0])+float(area[2])*0.5,float(area[1])+float(area[3])*0.5)*64)
+		_icon(line,"cancel","删除区域%d" % (index+1),func():
+			var areas: Array = worker["areas"].duplicate(true)
+			areas.remove_at(index)
+			_result(world.workforce.configure(worker["id"],worker["budget"],worker["paused"],worker["priorities"],areas))
+			_show_workers())
+	var actions := HBoxContainer.new()
+	sidebar.add_child(actions)
+	_icon(actions,"area","框选追加负责区域",func(): _close_page(); expanded = true; _layout(); _select_tool("area"))
+	_icon(actions,"cancel","清空负责区域",func(): _result(world.workforce.configure(worker["id"],worker["budget"],worker["paused"],worker["priorities"],[])); _show_workers())
+	_icon(actions,"clear","解雇（免费）",func(): _result(world.workforce.dismiss(worker["id"])); selected_worker = 0; _show_workers())
+	_label(sidebar,"资源点单独指派；区域之外不找农务目标。物品直接进出共享仓库。")
 
 func _show_report() -> void:
 	_context = "report"
@@ -1027,7 +1051,8 @@ func _show_report() -> void:
 	var report: Dictionary = world.workforce.state["report"]
 	_label(sidebar,"累计人工支出：%d元石" % world.workforce.state["spent"])
 	for worker in report["workers"]:
-		_label(sidebar,"%s：成功%d次，费用%d元石\n%s" % [worker["name"],worker["success"],worker["fee"],worker["reason"]])
+		var extra := _worker_report_extra(worker)
+		_label(sidebar,"%s：成功%d次，费用%d元石\n%s%s" % [worker["name"],worker["success"],worker["fee"],worker["reason"],("\n"+extra) if not extra.is_empty() else ""])
 		for kind in worker["counts"]: _label(sidebar,"%s %d次" % [NAMES[kind],worker["counts"][kind]])
 	if not world.daily_save_error.is_empty():
 		_label(sidebar,"保存失败，后续操作暂停。")

@@ -37,7 +37,8 @@ func hire(name: String) -> Dictionary:
 	var checked: Dictionary = world._can_act(0)
 	if not checked["ok"]:
 		return checked
-	if state["workers"].size() >= int(settings["max_workers"]) or name.strip_edges().is_empty() or name.length() > 24:
+	var cap := int(settings["max_workers"])
+	if (cap > 0 and state["workers"].size() >= cap) or name.strip_edges().is_empty() or name.length() > 24:
 		return _error("人数已满或姓名非法")
 	var priorities := {}
 	for kind in KINDS:
@@ -215,6 +216,9 @@ func _in_area(worker: Dictionary, cell: Vector2i) -> bool:
 
 func _jobs(worker: Dictionary) -> Array:
 	var jobs := []
+	# An exclusive facility caretaker takes no farm errands at all.
+	if int(worker.get("caretaker_facility", 0)) > 0:
+		return jobs
 	for source in state["sources"]:
 		if state["sources"][source] == worker["id"]:
 			jobs.append({"kind": "source", "priority": 5, "order": KINDS.find("source"), "id": 0, "source": source})
@@ -350,7 +354,7 @@ static func normalize(value, day: int, catalog = Data) -> Dictionary:
 	var map = catalog.load_map()
 	var width := int(map["size"][0])
 	var height := int(map["size"][1])
-	if not value["workers"] is Array or value["workers"].size() > int(config["max_workers"]) or not value["marks"] is Array or value["marks"].size() > width*height*KINDS.size() or not value["seed_plans"] is Array or value["seed_plans"].size() > width*height or not value["sources"] is Dictionary or not Scalars.whole(value["spent"]) or not Scalars.whole(value["next_worker_id"],1) or not Scalars.whole(value["next_mark_id"],1):
+	if not value["workers"] is Array or (int(config["max_workers"]) > 0 and value["workers"].size() > int(config["max_workers"])) or not value["marks"] is Array or value["marks"].size() > width*height*KINDS.size() or not value["seed_plans"] is Array or value["seed_plans"].size() > width*height or not value["sources"] is Dictionary or not Scalars.whole(value["spent"]) or not Scalars.whole(value["next_worker_id"],1) or not Scalars.whole(value["next_mark_id"],1):
 		return Scalars.fail("雇工人数、序号或工作列表非法")
 	var out := fresh(day)
 	out["spent"] = int(value["spent"])
@@ -359,7 +363,10 @@ static func normalize(value, day: int, catalog = Data) -> Dictionary:
 	var worker_ids := {}
 	var prior := 0
 	for worker in value["workers"]:
-		if not Scalars.exact(worker,["id","name","paused","budget","priorities","areas"]) or not Scalars.whole(worker["id"],prior+1,int(value["next_worker_id"])-1) or not worker["name"] is String or worker["name"].strip_edges().is_empty() or worker["name"].length() > 24 or not worker["paused"] is bool or not Scalars.whole(worker["budget"],0,1000000) or not Scalars.exact(worker["priorities"],KINDS):
+		if not (Scalars.exact(worker,["id","name","paused","budget","priorities","areas"]) or Scalars.exact(worker,["id","name","paused","budget","priorities","areas","caretaker_facility"])) or not Scalars.whole(worker["id"],prior+1,int(value["next_worker_id"])-1) or not worker["name"] is String or worker["name"].strip_edges().is_empty() or worker["name"].length() > 24 or not worker["paused"] is bool or not Scalars.whole(worker["budget"],0,1000000) or not Scalars.exact(worker["priorities"],KINDS):
+			return Scalars.fail("雇工设置或编号非法")
+		if worker.has("caretaker_facility") and not Scalars.whole(worker["caretaker_facility"], 0):
+			return Scalars.fail("负责人指派非法")
 			return Scalars.fail("雇工设置或编号非法")
 		var priorities := {}
 		for kind in KINDS:
@@ -370,8 +377,11 @@ static func normalize(value, day: int, catalog = Data) -> Dictionary:
 		if not areas["ok"]: return areas
 		prior = int(worker["id"])
 		worker_ids[prior] = true
-		out["workers"].append({"id": prior,"name": worker["name"],"paused": worker["paused"],
-			"budget": int(worker["budget"]),"priorities": priorities,"areas": areas["areas"]})
+		var packed := {"id": prior,"name": worker["name"],"paused": worker["paused"],
+			"budget": int(worker["budget"]),"priorities": priorities,"areas": areas["areas"]}
+		if worker.has("caretaker_facility"):
+			packed["caretaker_facility"] = int(worker["caretaker_facility"])
+		out["workers"].append(packed)
 	var sources = catalog.definitions("sources")
 	var source_cells := {}
 	for ident in sources:
@@ -408,12 +418,12 @@ static func normalize(value, day: int, catalog = Data) -> Dictionary:
 			planned[cell] = true
 		out["seed_plans"].append({"cell": [int(plan["cell"][0]),int(plan["cell"][1])],"crop_id": plan["crop_id"]})
 	var report = value["report"]
-	if not Scalars.exact(report,["day","workers"]) or not Scalars.whole(report["day"],day-1,day-1) or not report["workers"] is Array or report["workers"].size() > int(config["max_workers"]):
+	if not Scalars.exact(report,["day","workers"]) or not Scalars.whole(report["day"],day-1,day-1) or not report["workers"] is Array or (int(config["max_workers"]) > 0 and report["workers"].size() > int(config["max_workers"])):
 		return Scalars.fail("工作日报日期或人数非法")
 	var paid := 0
 	var reported := {}
 	for row in report["workers"]:
-		if not Scalars.exact(row,["worker_id","name","success","fee","counts","reason"]) or not Scalars.whole(row["worker_id"],1,int(value["next_worker_id"])-1) or reported.has(int(row["worker_id"])) or not row["name"] is String or row["name"].is_empty() or row["name"].length() > 24 or not row["reason"] is String or row["reason"].length() > 200 or not Scalars.whole(row["success"],0,int(config["daily_work_limit"])) or not Scalars.whole(row["fee"]) or not row["counts"] is Dictionary:
+		if not (Scalars.exact(row,["worker_id","name","success","fee","counts","reason"]) or Scalars.exact(row,["worker_id","name","success","fee","counts","reason","caretaker"])) or not Scalars.whole(row["worker_id"],1,int(value["next_worker_id"])-1) or reported.has(int(row["worker_id"])) or not row["name"] is String or row["name"].is_empty() or row["name"].length() > 24 or not row["reason"] is String or row["reason"].length() > 200 or not Scalars.whole(row["success"],0,int(config["daily_work_limit"])) or not Scalars.whole(row["fee"]) or not row["counts"] is Dictionary:
 			return Scalars.fail("工作日报内容非法")
 		var count := 0
 		var counts := {}
@@ -422,11 +432,34 @@ static func normalize(value, day: int, catalog = Data) -> Dictionary:
 				return Scalars.fail("工作日报次数非法")
 			counts[kind] = int(row["counts"][kind])
 			count += counts[kind]
-		if count != int(row["success"]) or int(row["fee"]) != count*int(config["fee_per_success"]):
+		var packed_row := {"worker_id": int(row["worker_id"]),"name": row["name"],"success": count,"fee": int(row["fee"]),"counts": counts,"reason": row["reason"]}
+		var patrol_total := 0
+		if row.has("caretaker"):
+			var caretaker = row["caretaker"]
+			if not Scalars.exact(caretaker,["facility_uid","steps","skipped"]) or not Scalars.whole(caretaker["facility_uid"],1) or not caretaker["steps"] is Dictionary or not caretaker["skipped"] is Array or caretaker["skipped"].size() > 6:
+				return Scalars.fail("负责人巡栏记录非法")
+			var steps := {}
+			var step_total := 0
+			for step in ["收取","水体维护","整体维护"]:
+				if not Scalars.whole(caretaker["steps"].get(step,0),0,int(config["daily_work_limit"])):
+					return Scalars.fail("负责人巡栏次数非法")
+				steps[step] = int(caretaker["steps"][step])
+				step_total += steps[step]
+			if step_total != int(row["success"]) - count:
+				return Scalars.fail("负责人巡栏次数与成功数不一致")
+			var skipped := []
+			for reason in caretaker["skipped"]:
+				if not reason is String or reason.is_empty() or reason.length() > 200:
+					return Scalars.fail("负责人停工原因非法")
+				skipped.append(reason)
+			patrol_total = step_total
+			packed_row["caretaker"] = {"facility_uid": int(caretaker["facility_uid"]),"steps": steps,"skipped": skipped}
+		if int(row["success"]) != count + patrol_total or int(row["fee"]) != int(row["success"])*int(config["fee_per_success"]):
 			return Scalars.fail("工作次数与费用不一致")
+		packed_row["success"] = count + patrol_total
 		paid += int(row["fee"])
 		reported[int(row["worker_id"])] = true
-		out["report"]["workers"].append({"worker_id": int(row["worker_id"]),"name": row["name"],"success": count,"fee": int(row["fee"]),"counts": counts,"reason": row["reason"]})
+		out["report"]["workers"].append(packed_row)
 	if paid > int(value["spent"]):
 		return Scalars.fail("日报费用超出累计人工支出")
 	return {"ok": true,"workforce": out}
