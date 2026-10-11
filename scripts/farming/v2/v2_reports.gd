@@ -51,6 +51,9 @@ func record(entry: Dictionary) -> void:
 						target[item] = int(target.get(item, 0)) + int(entry[key][item])
 					existing[key] = target
 			merged = true
+			if entry["category"] == "purchase":
+				var species: Dictionary = world.husbandry.species_def(String(entry["kind"]))
+				existing["note"] = "购入%d个体，花费%d元石" % [int(existing["count"]), int(existing["count"])*int(species["juvenile_price"])]
 			break
 	if not merged:
 		pending["entries"].append(entry.duplicate(true))
@@ -66,6 +69,17 @@ func _term_counts(entry: Dictionary) -> Dictionary:
 		elif entry[key] is Dictionary:
 			for item in entry[key]:
 				out[item] = int(entry[key][item])
+	if int(entry.get("count", 0)) > 0:
+		out[String(entry["kind"])] = int(entry["count"])
+	return out
+
+func recap_totals() -> Dictionary:
+	var out := _bucket()
+	var terms: Array = state["recap"]["terms"] if recap_active() else state["terms"]
+	for term in terms:
+		for category in CATEGORIES:
+			for key in term[category]:
+				out[category][key] = int(out[category].get(key, 0)) + int(term[category][key])
 	return out
 
 ## Runs inside the day settle, after patrols and husbandry settlement: the day's
@@ -77,11 +91,12 @@ func settle(completed_day: int) -> void:
 	if not pending["entries"].is_empty():
 		var term_index: int = clampi(int(completed_day / 15), 0, 2)
 		var bucket: Dictionary = state["terms"][term_index]
-		for entry in pending["entries"]:
-			var category: String = entry["category"]
-			var counts := _term_counts(entry)
-			for key in counts:
-				bucket[category][key] = int(bucket[category].get(key, 0)) + int(counts[key])
+		if completed_day < 45:
+			for entry in pending["entries"]:
+				var category: String = entry["category"]
+				var counts := _term_counts(entry)
+				for key in counts:
+					bucket[category][key] = int(bucket[category].get(key, 0)) + int(counts[key])
 		state["history"].append({"day": int(pending["day"]), "entries": pending["entries"].duplicate(true)})
 		while state["history"].size() > HISTORY_LIMIT:
 			state["history"].pop_front()
@@ -155,7 +170,9 @@ static func normalize(value, day: int, catalog) -> Dictionary:
 		return Scalars.fail("养殖报表字段非法")
 	var items = catalog.resources(catalog.load_data())
 	var pending = value["pending"]
-	if not Scalars.exact(pending, ["day", "entries"]) or not Scalars.whole(pending["day"], day, day) or not pending["entries"] is Array or pending["entries"].size() > 64:
+	# The slot envelope already bounds file bytes. Valid farm activity must not
+	# become unsaveable merely because it produced more than 64 facts.
+	if not Scalars.exact(pending, ["day", "entries"]) or not Scalars.whole(pending["day"], day, day) or not pending["entries"] is Array:
 		return Scalars.fail("养殖当日条目非法")
 	var out := fresh(day)
 	for entry in pending["entries"]:
@@ -170,7 +187,7 @@ static func normalize(value, day: int, catalog) -> Dictionary:
 	var previous_day := -1
 	for index in range(value["history"].size()):
 		var row = value["history"][index]
-		if not Scalars.exact(row, ["day", "entries"]) or not Scalars.whole(row["day"], previous_day + 1, day - 1) or not row["entries"] is Array or row["entries"].is_empty() or row["entries"].size() > 64:
+		if not Scalars.exact(row, ["day", "entries"]) or not Scalars.whole(row["day"], previous_day + 1, day - 1) or not row["entries"] is Array or row["entries"].is_empty():
 			return Scalars.fail("养殖报表历史日期非法")
 		previous_day = int(row["day"])
 		var entries := []
@@ -192,6 +209,8 @@ static func normalize(value, day: int, catalog) -> Dictionary:
 			return bucket
 		out["terms"][index] = bucket["bucket"]
 	var recap = value["recap"]
+	if not recap is Dictionary: return Scalars.fail("养殖回顾冻结结构非法")
+	if day >= 45 and recap.is_empty(): return Scalars.fail("第45天之后必须保留养殖回顾")
 	if not recap.is_empty():
 		if not Scalars.exact(recap, ["terms", "labour", "cash", "inventory", "animals", "ready", "running"]) or not Scalars.whole(recap["labour"]) or not Scalars.whole(recap["cash"]) or not Scalars.whole(recap["ready"]) or not Scalars.whole(recap["running"]) or day < 45:
 			return Scalars.fail("养殖回顾冻结字段非法")

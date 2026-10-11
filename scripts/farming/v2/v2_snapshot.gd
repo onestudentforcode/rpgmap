@@ -6,6 +6,7 @@ const Data := preload("res://scripts/farming/v2/v2_data.gd")
 const Husbandry := preload("res://scripts/farming/v2/v2_husbandry.gd")
 const Ledger := preload("res://scripts/farming/v2/v2_resource_ledger.gd")
 const Reports := preload("res://scripts/farming/v2/v2_reports.gd")
+const Journal := preload("res://scripts/farming/v1/v1_journal.gd")
 const SCHEMA := 11
 
 static func fresh() -> Dictionary:
@@ -40,7 +41,7 @@ static func normalize(value) -> Dictionary:
 		body.erase("reports")
 	if body.has("preferences"):
 		body.erase("preferences")
-	if body["world"] is Dictionary and body["world"].has("husbandry"):
+	if body.get("world") is Dictionary and body["world"].has("husbandry"):
 		body["world"].erase("husbandry")
 	var checked := Common.normalize(body, Data, SCHEMA, false)
 	if not checked["ok"]:
@@ -60,6 +61,15 @@ static func normalize(value) -> Dictionary:
 	var reports := Reports.normalize(raw_reports, day, Data)
 	if not reports["ok"]:
 		return reports
+	if day >= 45:
+		var recap: Dictionary = reports["reports"]["recap"]
+		var journal: Dictionary = checked["snapshot"]["journal"]
+		if recap["terms"] != reports["reports"]["terms"] or recap["cash"] != journal["end_cash"] or recap["inventory"] != journal["end_inventory"]:
+			return fail("养殖回顾与首次45天冻结账不一致")
+		var adults := 0
+		for species in recap["animals"]: adults += int(recap["animals"][species]["adult"])
+		if int(recap["ready"])+int(recap["running"]) > adults or recap["labour"] != Journal.totals(journal)["labour_spend"]:
+			return fail("养殖期末权益或人工费与冻结账不一致")
 	var items = Data.resources(Data.load_data())
 	if not raw_preferences is Dictionary or not raw_preferences.get("watched") is Array or raw_preferences["watched"].size() > items.size():
 		return fail("关注偏好字段非法")

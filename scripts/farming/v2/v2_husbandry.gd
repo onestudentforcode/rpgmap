@@ -14,6 +14,7 @@ var settings: Dictionary
 ## During settlement patrols the clock has already advanced; service checks read
 ## this effective day instead so worker feeding stays on the completed day.
 var _patrol_day := -1
+var _water_attempts := {}
 
 func _today() -> int:
 	return _patrol_day if _patrol_day >= 0 else world.clock.total_days
@@ -49,8 +50,7 @@ func diet_name(species_id: String, diet_kind: String, diet_id: String) -> String
 func is_water_habitat(facility_id: String) -> bool:
 	return world.facility_defs[facility_id].get("terrain") == "water"
 
-## Live habitat row; habitat facilities without an entry (built on the last AP tick)
-## get their notified default configuration created on first touch.
+## New facilities create their notified default configuration inside construction.
 func ensure(facility_uid: int) -> Dictionary:
 	for habitat in state["habitats"]:
 		if int(habitat["facility_uid"]) == facility_uid:
@@ -540,9 +540,11 @@ func settle(completed_day: int) -> void:
 			continue
 		var grown := 0
 		var readied := 0
+		var unserved := 0
 		var target := int(species_defs[habitat["species_id"]]["growth_days"]) * 100
 		for individual in habitat["individuals"]:
 			if int(individual["base_service"]["day"]) != completed_day:
+				unserved += 1
 				continue
 			if individual["stage"] == "juvenile":
 				individual["growth"] = mini(target, int(individual["growth"]) + 100)
@@ -557,6 +559,19 @@ func settle(completed_day: int) -> void:
 					cycle["status"] = "ready"
 					cycle["ready_day"] = completed_day
 					readied += 1
+		if unserved > 0:
+			var reason := "当日未服务，成长/周期暂停"
+			for row in world.workforce.state["report"]["workers"]:
+				if int(row.get("caretaker", {}).get("facility_uid", 0)) == int(habitat["facility_uid"]):
+					reason += "；" + String(row["reason"])
+			var need := _scale(diet_inputs(habitat["species_id"], "base_diets", habitat["basic_diet_id"]), unserved)
+			var gaps := PackedStringArray()
+			for item in need:
+				var gap: int = int(need[item]) - world.inventory.count(item)
+				if gap > 0: gaps.append("%s×%d" % [world._items[item]["name"], gap])
+			if not gaps.is_empty(): reason += "；缺少" + "、".join(gaps)
+			world._report_event({"category": "pause", "facility_uid": int(habitat["facility_uid"]),
+				"kind": "基础未服务", "count": unserved, "items": {}, "note": reason.left(120)})
 		if grown > 0:
 			world._report_event({"category": "growth", "facility_uid": int(habitat["facility_uid"]), "kind": "成年",
 				"count": grown, "items": {}, "note": ""})
@@ -637,69 +652,55 @@ func patrol_estimate(facility_uid: int) -> String:
 		return "当前无待办，费用0"
 	return "按当前状态可能："+"→".join(labels)+"，最多约%d元石" % labels.size()
 
-## Day-end patrol per facility: claim → necessary water → whole maintenance.
-## One step per worker per round; every step rechecks budget, cash and stock.
-func run_patrols(completed_day: int) -> void:
+## Farm work and caretakers share one UID round-robin scheduler. This module
+## supplies exactly one facility step per round; no second payroll queue.
+func begin_patrols(completed_day: int, rows: Array) -> void:
+	_patrol_day = completed_day
+	_water_attempts.clear()
+	for row in rows:
+		var worker: Dictionary = world.workforce._worker(int(row["worker_id"]))
+		if int(worker.get("caretaker_facility", 0)) > 0:
+			row["caretaker"] = {"facility_uid": int(worker["caretaker_facility"]),
+				"steps": {"收取": 0, "水体维护": 0, "整体维护": 0}, "skipped": []}
+
+func _patrol_block(row: Dictionary, reason: String) -> void:
+	if not row["caretaker"]["skipped"].has(reason): row["caretaker"]["skipped"].append(reason)
+	row["reason"] = reason
+
+func patrol_worker(worker: Dictionary, row: Dictionary) -> bool:
+	var uid := int(worker["caretaker_facility"])
+	var step := _patrol_step(uid, _water_attempts, _patrol_day)
+	for warning in step.get("warnings", []): _patrol_block(row, warning)
+	if not step.has("action"):
+		if step.has("blocked"):
+			_patrol_block(row, String(step["blocked"]))
+		elif int(row["success"]) == 0 and row["caretaker"]["skipped"].is_empty():
+			row["reason"] = "专责设施无待办"
+		return false
 	var workforce = world.workforce
 	var fee := int(workforce.settings["fee_per_success"])
-	var limit := int(workforce.settings["daily_work_limit"])
-	var caretakers := []
-	for worker in workforce.state["workers"]:
-		if int(worker.get("caretaker_facility", 0)) <= 0:
-			continue
-		caretakers.append(worker)
-	if caretakers.is_empty():
-		return
-	_patrol_day = completed_day
-	var rows := {}
-	for row in workforce.state["report"]["workers"]:
-		rows[int(row["worker_id"])] = row
-	for worker in caretakers:
-		var row: Dictionary = rows[int(worker["id"])]
-		row["caretaker"] = {"facility_uid": int(worker["caretaker_facility"]),
-			"steps": {"收取": 0, "水体维护": 0, "整体维护": 0}, "skipped": []}
-		if worker["paused"]:
-			row["reason"] = "已暂停"
-	var water_done := {}
-	world._labour_action = true
-	for _round in range(limit):
-		var progressed := false
-		for worker in caretakers:
-			if worker["paused"]:
-				continue
-			var row: Dictionary = rows[int(worker["id"])]
-			if int(row["fee"]) + fee > int(worker["budget"]) or world.primeval_stones < fee:
-				if not row["caretaker"]["skipped"].has("预算或元石不足"):
-					row["caretaker"]["skipped"].append("预算或元石不足")
-				row["reason"] = "预算或元石不足"
-				continue
-			var facility_uid := int(worker["caretaker_facility"])
-			var step := _patrol_step(facility_uid, water_done, completed_day)
-			if step.is_empty():
-				if not worker["paused"] and String(row["reason"]) in ["没有可执行工作", "工作完成"]:
-					row["reason"] = "专责设施无待办"
-				continue
-			var result: Dictionary = step["action"].call()
-			if not result["ok"]:
-				if not row["caretaker"]["skipped"].has(result.get("reason", "步骤失败")):
-					row["caretaker"]["skipped"].append(String(result.get("reason", "步骤失败")))
-				continue
-			world.primeval_stones -= fee
-			workforce.state["spent"] = int(workforce.state["spent"]) + fee
-			world._cash("labour_spend", fee)
-			row["success"] = int(row["success"]) + 1
-			row["fee"] = int(row["fee"]) + fee
-			row["caretaker"]["steps"][step["kind"]] = int(row["caretaker"]["steps"][step["kind"]]) + 1
-			world._report_event({"category": "labour", "facility_uid": facility_uid, "kind": String(step["kind"]),
-				"count": 1, "items": {}, "note": String(worker["name"])})
-			row["reason"] = "巡栏完成：" + String(step["kind"])
-			if step["kind"] == "水体维护":
-				water_done[facility_uid] = true
-			progressed = true
-		if not progressed:
-			break
+	if int(row["fee"]) + fee > int(worker["budget"]) or world.primeval_stones < fee:
+		_patrol_block(row, "预算或元石不足")
+		return false
+	var result: Dictionary = step["action"].call()
+	if not result["ok"]:
+		_patrol_block(row, String(result.get("reason", "步骤失败")))
+		return false
+	world.primeval_stones -= fee
+	workforce.state["spent"] = int(workforce.state["spent"]) + fee
+	world._cash("labour_spend", fee)
+	row["success"] = int(row["success"]) + 1
+	row["fee"] = int(row["fee"]) + fee
+	row["caretaker"]["steps"][step["kind"]] = int(row["caretaker"]["steps"][step["kind"]]) + 1
+	world._report_event({"category": "labour", "facility_uid": uid, "kind": String(step["kind"]),
+		"count": 1, "items": {}, "note": String(worker["name"])})
+	row["reason"] = "巡栏完成：" + String(step["kind"])
+	if step["kind"] == "水体维护": _water_attempts[uid] = true
+	return true
+
+func finish_patrols() -> void:
 	_patrol_day = -1
-	world._labour_action = false
+	_water_attempts.clear()
 
 func _patrol_step(facility_uid: int, water_done: Dictionary, patrol_day: int) -> Dictionary:
 	if not world.facilities.has(facility_uid):
@@ -707,15 +708,21 @@ func _patrol_step(facility_uid: int, water_done: Dictionary, patrol_day: int) ->
 	if husbandry_claim_ready(facility_uid):
 		return {"kind": "收取", "action": func(): return claim(facility_uid, [], "worker")}
 	var habitat := habitat_of(facility_uid)
+	var warnings := []
 	if not habitat.is_empty() and habitat.has("water") and not habitat["individuals"].is_empty() 	and not water_done.has(facility_uid) and int(habitat["water"]) <= int(settings["water"]["worker_threshold"]):
 		var quote := quote_water(facility_uid)
 		if quote["ok"]:
 			return {"kind": "水体维护", "action": func(): return maintain_water(facility_uid, "worker")}
-		return {"kind": "水体维护", "action": func(): return _error(String(quote["reason"]))}
+		# Failed buffer repair must not block feeding while the real water check
+		# still passes. Record it once; later rounds do not retry it endlessly.
+		water_done[facility_uid] = true
+		warnings.append(String(quote["reason"]))
 	var quote := quote_maintenance(facility_uid)
 	if quote["ok"]:
-		return {"kind": "整体维护", "action": func(): return maintain(facility_uid, "worker", patrol_day)}
-	return {}
+		return {"kind": "整体维护", "action": func(): return maintain(facility_uid, "worker", patrol_day), "warnings": warnings}
+	if String(quote["reason"]) not in ["场内没有动物", "全部个体今日已服务"]:
+		return {"blocked": String(quote["reason"]), "warnings": warnings}
+	return {"warnings": warnings}
 
 func husbandry_claim_ready(facility_uid: int) -> bool:
 	var quote := quote_claim(facility_uid)
@@ -769,11 +776,15 @@ static func normalize(value, day: int, world: Dictionary, catalog, settings: Dic
 	var out := {"habitats": [], "next_animal_uid": int(value["next_animal_uid"]), "next_cycle_uid": int(value["next_cycle_uid"])}
 	var seen_uids := {}
 	var seen_cycles := {}
+	var seen_facilities := {}
 	for habitat in value["habitats"]:
+		if not habitat is Dictionary: return Scalars.fail("养殖设施字段非法")
 		if not Scalars.exact(habitat, ["facility_uid", "species_id", "basic_diet_id", "special_diet_id", "production_enabled", "default_notice", "individuals"] + (["water"] if habitat.get("water") != null else [])):
 			return Scalars.fail("养殖设施字段非法")
 		if not Scalars.whole(habitat["facility_uid"], 1, max_facility_uid) or not facilities.has(int(habitat["facility_uid"])) or not habitat["species_id"] is String:
 			return Scalars.fail("养殖设施引用非法")
+		if seen_facilities.has(int(habitat["facility_uid"])): return Scalars.fail("养殖设施序号重复")
+		seen_facilities[int(habitat["facility_uid"])] = true
 		var facility: Dictionary = facilities[int(habitat["facility_uid"])]
 		var definition: Dictionary = facility_defs[facility["facility_id"]]
 		if definition.get("kind") != "habitat" or not definition["species"].has(habitat["species_id"]):
@@ -806,12 +817,12 @@ static func normalize(value, day: int, world: Dictionary, catalog, settings: Dic
 			if individual["stage"] not in ["juvenile", "adult"]:
 				return Scalars.fail("个体阶段非法")
 			if individual["stage"] == "adult":
-				if int(individual["growth"]) != target:
+				if not Scalars.whole(individual["growth"], target, target):
 					return Scalars.fail("成体成长进度非法")
 			elif not Scalars.whole(individual["growth"], 0, target - 100):
 				return Scalars.fail("幼体成长进度非法")
 			var service = individual["base_service"]
-			if not Scalars.exact(service, ["day", "diet_id", "inputs", "operator"]) or not Scalars.whole(service["day"], -1, day):
+			if not Scalars.exact(service, ["day", "diet_id", "inputs", "operator"]) or not Scalars.whole(service["day"], -1, day) or not service["inputs"] is Dictionary:
 				return Scalars.fail("服务记录非法")
 			if int(service["day"]) < 0:
 				if service["diet_id"] != "" or not service["inputs"].is_empty() or service["operator"] != "":
@@ -823,6 +834,7 @@ static func normalize(value, day: int, world: Dictionary, catalog, settings: Dic
 				if service["operator"] not in ["player", "worker"]:
 					return Scalars.fail("未知服务来源")
 			var cycle = individual["cycle"]
+			if not cycle is Dictionary: return Scalars.fail("周期字段非法")
 			var normalized_cycle := {}
 			if not cycle.is_empty():
 				if individual["stage"] != "adult":
@@ -837,7 +849,7 @@ static func normalize(value, day: int, world: Dictionary, catalog, settings: Dic
 				# Frozen outputs must stay exactly the configured species products.
 				if cycle["outputs"] != species["outputs"]:
 					return Scalars.fail("周期产物与物种配置不符")
-				if int(cycle["goal"]) != cycle_goal or not Scalars.whole(cycle["progress"], 0, cycle_goal):
+				if not Scalars.whole(cycle["goal"], cycle_goal, cycle_goal) or not Scalars.whole(cycle["progress"], 0, cycle_goal):
 					return Scalars.fail("周期目标或进度非法")
 				if not Scalars.whole(cycle["start_day"], 0, day):
 					return Scalars.fail("周期开始日非法")
@@ -870,4 +882,7 @@ static func normalize(value, day: int, world: Dictionary, catalog, settings: Dic
 		if wants_water:
 			normalized_habitat["water"] = int(habitat["water"])
 		out["habitats"].append(normalized_habitat)
+	for uid in facilities:
+		if facility_defs[facilities[uid]["facility_id"]].get("kind") == "habitat" and not seen_facilities.has(uid):
+			return Scalars.fail("养殖设施缺少配置记录")
 	return {"ok": true, "husbandry": out}

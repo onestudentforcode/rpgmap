@@ -38,25 +38,23 @@ func toggle_watch(item_id: String) -> Dictionary:
 	changed.emit()
 	return {"ok": true}
 
-func build_facility(cell: Vector2i, facility_id: String) -> Dictionary:
-	var result := super(cell, facility_id)
-	if result.get("ok", false) and facility_defs[facility_id].get("kind") == "habitat":
-		husbandry.ensure(int(result["facility_uid"]))
-		changed.emit()
-	return result
+func _facility_built(uid: int) -> void:
+	# Complete derived state before the final AP can settle and save the day.
+	if facility_defs[facilities[uid]["facility_id"]].get("kind") == "habitat":
+		husbandry.ensure(uid)
+
+func _facility_removed(uid: int) -> void:
+	husbandry.forget(uid)
+	for worker in workforce.state["workers"]:
+		if int(worker.get("caretaker_facility", 0)) == uid:
+			worker.erase("caretaker_facility")
 
 func demolish_facility(uid: int) -> Dictionary:
 	if facilities.has(uid) and facility_defs[facilities[uid]["facility_id"]].get("kind") == "habitat":
 		var habitat: Dictionary = husbandry.habitat_of(uid)
 		if not habitat.is_empty() and not habitat["individuals"].is_empty():
 			return _error("非空设施需先清退全部动物才能拆除")
-	var result := super.demolish_facility(uid)
-	if result.get("ok", false):
-		husbandry.forget(uid)
-		for worker in workforce.state["workers"]:
-			if int(worker.get("caretaker_facility", 0)) == uid:
-				worker.erase("caretaker_facility")
-	return result
+	return super.demolish_facility(uid)
 
 func _record_flow(inflows: Dictionary, outflows: Dictionary, reason: String) -> void:
 	ledger.record(inflows, outflows, reason)
@@ -69,10 +67,12 @@ func grant_scaffold(items: Dictionary) -> void:
 		inventory.add(item, int(items[item]))
 	ledger.record(items, {}, "脚手架注入")
 
+func _settle_workforce(completed_day: int) -> void:
+	workforce.settle(completed_day, husbandry)
+
 func _settle_husbandry(completed_day: int) -> void:
 	# Caretaker patrols run inside the completed service day, before growth and
 	# cycles settle; a cycle finished by this settle waits for the next day.
-	husbandry.run_patrols(completed_day)
 	husbandry.settle(completed_day)
 	reports.settle(completed_day)
 
@@ -87,15 +87,9 @@ func to_snapshot() -> Dictionary:
 	snapshot["world"]["husbandry"] = husbandry.to_save()
 	return snapshot
 
-func apply_snapshot(value) -> Dictionary:
-	var checked: Dictionary = snapshot_type.normalize(value)
-	if not checked["ok"]:
-		return checked
-	var result := super.apply_snapshot(value)
-	if not result["ok"]:
-		return result
-	husbandry.apply_save(checked["snapshot"]["world"]["husbandry"])
-	ledger.apply_save(checked["snapshot"]["ledger"])
-	reports.apply_save(checked["snapshot"]["reports"])
-	preferences = checked["snapshot"]["preferences"].duplicate(true)
-	return result
+func _snapshot_applied(snapshot: Dictionary) -> void:
+	# Observers see the fully restored product, including watch preferences.
+	husbandry.apply_save(snapshot["world"]["husbandry"])
+	ledger.apply_save(snapshot["ledger"])
+	reports.apply_save(snapshot["reports"])
+	preferences = snapshot["preferences"].duplicate(true)

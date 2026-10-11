@@ -104,6 +104,18 @@ func _settle_ledger(_completed_day: int) -> String:
 func _report_event(_entry: Dictionary) -> void:
 	pass
 
+func _facility_built(_uid: int) -> void:
+	pass
+
+func _facility_removed(_uid: int) -> void:
+	pass
+
+func _settle_workforce(completed_day: int) -> void:
+	workforce.settle(completed_day)
+
+func _snapshot_applied(_snapshot: Dictionary) -> void:
+	pass
+
 func _can_act(ap: int = 1) -> Dictionary:
 	if not daily_save_error.is_empty():
 		return _error("日存档失败，请重试保存或放弃当天：" + daily_save_error)
@@ -388,6 +400,7 @@ func build_facility(cell: Vector2i, facility_id: String) -> Dictionary:
 	facilities[uid] = {"uid": uid, "facility_id": facility_id, "origin": [cell.x,cell.y], "batch": {}}
 	_count("buildings",facility_id)
 	_cash("construction_spend",int(definition["cash"]))
+	_facility_built(uid)
 	return _finish(ap, {"ok": true, "facility_uid": uid})
 
 func demolish_facility(uid: int) -> Dictionary:
@@ -402,6 +415,7 @@ func demolish_facility(uid: int) -> Dictionary:
 	for target in cells:
 		_tilled_under_buildings.erase(target)
 	facilities.erase(uid)
+	_facility_removed(uid)
 	# No construction refunds and no destruction of processing/ready batches.
 	return _finish(ap, {"ok": true})
 
@@ -537,7 +551,7 @@ func _trade(item_id: String, quantity, buying: bool) -> Dictionary:
 	return _finish(0, {"ok": true, "item_id": item_id, "quantity": count, "total": total})
 
 func _on_day_changed(day: int) -> void:
-	workforce.settle(day-1)
+	_settle_workforce(day-1)
 	_settle_husbandry(day-1)
 	for uid in crops:
 		var row: Dictionary = crops[uid]
@@ -649,5 +663,6 @@ func apply_snapshot(value) -> Dictionary:
 	_source_day = int(world["sources"]["day"])
 	_source_used = world["sources"]["used"].duplicate()
 	daily_save_error = ""
+	_snapshot_applied(snapshot)
 	changed.emit()
 	return {"ok": true}

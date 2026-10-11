@@ -359,8 +359,9 @@ func _build() -> void:
 
 func _layout() -> void:
 	if ui_root == null: return
-	ui_root.scale = Vector2.ONE*_ui_scale
-	var dimensions := get_viewport().get_visible_rect().size/_ui_scale
+	var effective_scale := _effective_ui_scale()
+	ui_root.scale = Vector2.ONE*effective_scale
+	var dimensions := get_viewport().get_visible_rect().size/effective_scale
 	ui_root.size = dimensions
 	var margin := 24.0 if dimensions.x >= 1600 else 12.0
 	var compact := dimensions.x < 1100
@@ -405,8 +406,15 @@ func _layout() -> void:
 			"two": grid.columns = 2 if window_size.x >= 740 else 1
 			"matrix": grid.columns = 4 if window_size.x >= 740 else 2
 	window_scroll.get_meta("body").custom_minimum_size.x = window_size.x-52
+	# Container minima from the previous viewport must not keep a resized dialog wide.
+	window_panel.reset_size()
+	window_panel.size = window_size
+	window_panel.position = (dimensions-window_size)/2
 	_layout_extra()
 	_refresh_input()
+
+func _effective_ui_scale() -> float:
+	return _ui_scale
 
 ## Derived products may add HUD panels and position them here.
 func _extra_hud() -> void:
@@ -480,6 +488,7 @@ func _page(title: String) -> void:
 		if not world.daily_save_error.is_empty():
 			_label(sidebar,"日存档失败 · 后续操作暂停，请打开经营记录重试。")
 	_refresh_input()
+	_layout.call_deferred()
 
 func _close_page() -> void:
 	shade.visible = false
@@ -528,12 +537,12 @@ func _confirm(text: String, action: Callable) -> void:
 	confirmation.title = "请确认"
 	confirmation.ok_button_text = "确认"
 	confirmation.cancel_button_text = "取消"
-	confirmation.content_scale_factor = _ui_scale
+	confirmation.content_scale_factor = _effective_ui_scale()
 	confirmation.confirmed.connect(action)
 	confirmation.canceled.connect(func(): confirmation.queue_free())
 	confirmation.confirmed.connect(func(): confirmation.queue_free())
 	add_child(confirmation)
-	confirmation.popup_centered(Vector2i(Vector2(480,180)*_ui_scale))
+	confirmation.popup_centered(Vector2i(Vector2(480,180)*_effective_ui_scale()))
 
 func _show_slots() -> void:
 	_context = "slots"
@@ -800,6 +809,7 @@ func _show_cell() -> void:
 		choice.add_item("不分配")
 		choice.set_item_metadata(0,0)
 		for worker in world.workforce.state["workers"]:
+			if _is_caretaker(worker): continue
 			choice.add_item(worker["name"])
 			choice.set_item_metadata(choice.item_count-1,int(worker["id"]))
 			if world.workforce.state["sources"].get(source) == worker["id"]: choice.select(choice.item_count-1)
@@ -988,7 +998,8 @@ func _show_workers() -> void:
 	_context = "workers"
 	_page(_worker_cap_text())
 	_label(sidebar,"成功1次收费1元石 · 每人每日最多12次 · 日结执行，不消耗玩家AP")
-	var people := HBoxContainer.new()
+	var people := GridContainer.new()
+	people.columns = 2 if window_panel.size.x >= 740 else 1
 	sidebar.add_child(people)
 	for worker in world.workforce.state["workers"]:
 		var card := _card(people)
@@ -1264,7 +1275,7 @@ func _show_recap(term_index: int = -1) -> void:
 func _show_market() -> void:
 	_context = "market"
 	_page("行囊与市集 · 固定价格")
-	_label(sidebar,"共有18类物品 · 仓库共享 · 当前元石 %d" % world.primeval_stones)
+	_label(sidebar,"共有%d类物品 · 仓库共享 · 当前元石 %d" % [world._items.size(),world.primeval_stones])
 	var categories := HBoxContainer.new()
 	sidebar.add_child(categories)
 	for category in ["全部","种子","原料","加工","可供养","持有"]:

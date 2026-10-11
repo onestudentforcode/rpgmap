@@ -77,6 +77,8 @@ func configure(ident: int, budget, paused, priorities, areas) -> Dictionary:
 	var normalized := normalize_areas(areas, world.grid.width, world.grid.height)
 	if not normalized["ok"]:
 		return normalized
+	if int(worker.get("caretaker_facility", 0)) > 0 and not normalized["areas"].is_empty():
+		return _error("设施负责人只参与本设施；请先解除负责人指派，再安排农务区域")
 	worker["budget"] = int(budget)
 	worker["paused"] = paused
 	worker["priorities"] = packed
@@ -89,6 +91,8 @@ func assign_source(source: String, worker_id: int) -> Dictionary:
 		return checked
 	if not world.source_defs.has(source) or (worker_id != 0 and _worker(worker_id).is_empty()):
 		return _error("资源点或雇工非法")
+	if worker_id != 0 and int(_worker(worker_id).get("caretaker_facility", 0)) > 0:
+		return _error("设施负责人只参与本设施；请先解除负责人指派，再安排资源采集")
 	if worker_id == 0:
 		state["sources"].erase(source)
 	else:
@@ -292,12 +296,14 @@ func task_status(cell: Vector2i, kind: String) -> String:
 	elif kind in ["harvest","fell"] and world.instance_at(cell)["state"] != "mature": return "等待植物成熟"
 	return "条件就绪；需负责雇工启用该工作，日结执行"
 
-func settle(completed_day: int) -> void:
+func settle(completed_day: int, patrol = null) -> void:
 	var reports := []
 	for worker in state["workers"]:
 		reports.append({"worker_id": int(worker["id"]), "name": worker["name"], "success": 0,
 			"fee": 0, "counts": {}, "reason": "已暂停" if worker["paused"] else "没有可执行工作"})
 	var fee := int(settings["fee_per_success"])
+	if patrol != null:
+		patrol.begin_patrols(completed_day, reports)
 	world._labour_action = true
 	# One successful action per worker each round: shared targets and quota are rechecked.
 	for _round in range(int(settings["daily_work_limit"])):
@@ -306,6 +312,9 @@ func settle(completed_day: int) -> void:
 			var worker: Dictionary = state["workers"][index]
 			var report: Dictionary = reports[index]
 			if worker["paused"]:
+				continue
+			if patrol != null and int(worker.get("caretaker_facility", 0)) > 0:
+				if patrol.patrol_worker(worker, report): progressed = true
 				continue
 			if int(report["fee"])+fee > int(worker["budget"]) or world.primeval_stones < fee:
 				report["reason"] = "预算或元石不足"
@@ -332,6 +341,8 @@ func settle(completed_day: int) -> void:
 		if not progressed:
 			break
 	world._labour_action = false
+	if patrol != null:
+		patrol.finish_patrols()
 	for report in reports:
 		if report["success"] == int(settings["daily_work_limit"]):
 			report["reason"] = "达到每日工作上限"
@@ -436,7 +447,7 @@ static func normalize(value, day: int, catalog = Data) -> Dictionary:
 		var patrol_total := 0
 		if row.has("caretaker"):
 			var caretaker = row["caretaker"]
-			if not Scalars.exact(caretaker,["facility_uid","steps","skipped"]) or not Scalars.whole(caretaker["facility_uid"],1) or not caretaker["steps"] is Dictionary or not caretaker["skipped"] is Array or caretaker["skipped"].size() > 6:
+			if not Scalars.exact(caretaker,["facility_uid","steps","skipped"]) or not Scalars.whole(caretaker["facility_uid"],1) or not Scalars.exact(caretaker["steps"],["收取","水体维护","整体维护"]) or not caretaker["skipped"] is Array or caretaker["skipped"].size() > 6:
 				return Scalars.fail("负责人巡栏记录非法")
 			var steps := {}
 			var step_total := 0

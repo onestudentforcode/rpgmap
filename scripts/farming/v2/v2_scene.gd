@@ -17,19 +17,34 @@ var overview_filter := "全部"
 var overview_search := ""
 var watch_panel: PanelContainer
 var watch_body: VBoxContainer
+var _watch_limit := 0
 
 func _init() -> void:
 	store = V2Store.new()
 	manual_mode = true
 	minimum_map_zoom = 0.1
 	settings = Settings.new("user://farm_demo_v2_settings.cfg", minimum_map_zoom)
-	product_title = "灵田 Demo V2 · P7.e"
+	product_title = "灵田 Demo V2"
 	terrain_path = "res://content/farming/baked/v2/terrains.json"
 	preview_prefix = "v2"
 func _make_store(directory: String = ""):
 	return V2Store.new() if directory.is_empty() else V2Store.new(directory)
 func _make_world(slot_store):
 	return V2World.new(slot_store)
+
+func _effective_ui_scale() -> float:
+	# Preserve the requested setting, but keep the minimum supported window usable.
+	var viewport_size := get_viewport().get_visible_rect().size
+	return minf(_ui_scale,minf(viewport_size.x/960.0,viewport_size.y/540.0))
+
+func _refresh_input() -> void:
+	super._refresh_input()
+	if watch_panel != null: watch_panel.visible = _started and not shade.visible
+
+func _refresh() -> void:
+	super._refresh()
+	_refresh_watch()
+	_layout_extra()
 
 func _extra_nav() -> void:
 	_icon(top_nav,"pen","养殖总览 · 各设施状态与定位",_show_husbandry_overview)
@@ -94,13 +109,19 @@ func _extra_hud() -> void:
 
 func _layout_extra() -> void:
 	if watch_panel == null: return
+	if _watch_limit != _watch_visible_count(): _refresh_watch()
 	watch_panel.reset_size()
 	var margin := 24.0 if ui_root.size.x >= 1600 else 12.0
 	watch_panel.position = Vector2(margin+8,124)
-	watch_panel.size = Vector2(minf(560,board.size.x-16),0)
+	var available := side_panel.position.x-watch_panel.position.x-12 if side_panel.visible else board.size.x-16
+	watch_panel.size = Vector2(minf(320 if ui_root.size.x < 1100 else 560,available),0)
+
+func _watch_visible_count() -> int:
+	return 2 if ui_root.size.x < 1100 or ui_root.size.y < 650 else (3 if ui_root.size.x < 1400 else 5)
 
 func _refresh_watch() -> void:
 	if watch_body == null: return
+	_watch_limit = _watch_visible_count()
 	for child in watch_body.get_children():
 		watch_body.remove_child(child)
 		child.queue_free()
@@ -122,8 +143,7 @@ func _refresh_watch() -> void:
 		_label(row,"关注资源：在资源一览中勾选材料，查看库存和今日净增长。")
 		_icon(row,"locate","选择关注资源 · 打开资源一览",func(): resource_watched_only = false; _show_resources())
 		return
-	var compact := ui_root.size.x < 1400
-	var visible_count := 3 if compact else 5
+	var visible_count := _watch_limit
 	var shown := 0
 	for item in watched:
 		if shown >= visible_count: break
@@ -138,10 +158,12 @@ func _refresh_watch() -> void:
 				resource_mode = 0
 				resource_day = -1
 				resource_watched_only = false
+				resource_element = "全部"
+				resource_search = ""
 				resource_focus = String(item)
 				_show_resources())
 	if watched.size() > visible_count:
-		var more := _button(watch_body,"更多(%d)" % (watched.size()-visible_count),func(): resource_watched_only = true; resource_focus = ""; _show_resources())
+		var more := _button(watch_body,"更多(%d)" % (watched.size()-visible_count),func(): resource_watched_only = true; resource_element = "全部"; resource_search = ""; resource_focus = ""; _show_resources())
 		more.size_flags_horizontal = Control.SIZE_SHRINK_BEGIN
 
 
@@ -190,14 +212,18 @@ func _recap_extra(term_index: int) -> void:
 	if not reports.recap_active():
 		_label(sidebar,"养殖统计自P7.e起记录；本档未到45天或缺少养殖数据。")
 		return
-	var source: Dictionary = reports.state["recap"]["terms"] if term_index < 0 else reports.state["recap"]["terms"][term_index]
+	var source: Dictionary = reports.recap_totals() if term_index < 0 else reports.state["recap"]["terms"][term_index]
 	var card := _card(sidebar)
 	_heading(card,"养殖 · %s" % ("45天总计" if term_index < 0 else "第%d时节小计" % (term_index + 1)))
 	for category in ["purchase", "maintenance", "growth", "claim", "pause", "cull", "labour"]:
 		var bucket: Dictionary = source[category]
 		if bucket.is_empty(): continue
 		var parts := PackedStringArray()
-		for key in bucket: parts.append("%s %d" % [key, int(bucket[key])])
+		for key in bucket:
+			if key == "count": continue
+			var caption := String(world._items[key]["name"]) if world._items.has(key) else String(hus().species_def(key)["name"]) if hus().species_defs.has(key) else String(key)
+			parts.append("%s %d" % [caption, int(bucket[key])])
+		if parts.is_empty(): parts.append("合计%d" % int(bucket.get("count", 0)))
 		_label(card,"%s：%s" % [CATEGORY_NAMES[category], "、".join(parts)])
 	var recap: Dictionary = reports.state["recap"]
 	var animal_parts := PackedStringArray()
@@ -315,7 +341,7 @@ func _show_habitat(facility: Dictionary) -> void:
 		var claim_button := _icon(sidebar,"claim","收取（1AP）",func(): _result(husbandry.claim(uid)); _show_cell())
 		claim_button.disabled = false
 	if habitat["default_notice"]:
-		_label(sidebar,"新建设施已采用默认配置：%s、%s、%s；尚未购入动物或投喂，选择食谱本身不扣料。" % [species["name"],
+		_label(sidebar,"新建设施已采用默认配置：%s、%s、%s；可在下方调整，选择食谱本身不扣料。" % [species["name"],
 			husbandry.diet_name(habitat["species_id"],"base_diets",habitat["basic_diet_id"]),
 			husbandry.diet_name(habitat["species_id"],"special_diets",habitat["special_diet_id"])])
 	_label(sidebar,"动物：%s（幼体%d元石/只，每设施单物种）" % [species["name"],int(species["juvenile_price"])])
@@ -655,9 +681,7 @@ func _resource_group(title: String, rows: Array, stock_caption: String, mode_kin
 		var label := _label(header,cell)
 		label.add_theme_font_size_override("font_size",15)
 	for row in rows:
-		var line := GridContainer.new()
-		line.columns = 6
-		sidebar.add_child(line)
+		var line := header
 		var watch := CheckBox.new()
 		watch.button_pressed = String(row["item"]) in (world as V2World).preferences["watched"]
 		watch.tooltip_text = "关注后显示在主界面关注条"
@@ -676,6 +700,7 @@ func _resource_group(title: String, rows: Array, stock_caption: String, mode_kin
 		var net := float(row["net"])
 		var net_label := _label(line,"平衡" if net == 0.0 else _net_text(net,mode_kind))
 		net_label.add_theme_color_override("font_color",UI.PAPER if net >= 0.0 else UI.ERROR)
+	for row in rows:
 		if resource_focus == String(row["item"]):
 			var detail := _card(sidebar)
 			_label(detail,"明细："+String(row["name"]))
