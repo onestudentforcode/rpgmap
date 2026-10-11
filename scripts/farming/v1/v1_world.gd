@@ -287,6 +287,10 @@ func harvest(cell: Vector2i, mode: String = "harvest") -> Dictionary:
 		return _error("采收方式不适用")
 	var uid := int(instance["uid"])
 	var outputs: Dictionary = definition["fell_outputs"] if mode == "fell" and definition["mode"] == "tap_or_fell" else definition["outputs"]
+	# Derived products may add cycle-scoped bonuses (e.g. pollinated oilseed).
+	var bonus := _harvest_bonus(instance)
+	for ident in bonus:
+		outputs[ident] = int(outputs.get(ident, 0)) + int(bonus[ident])
 	for ident in outputs:
 		inventory.add(ident, int(outputs[ident]))
 	_record_flow(outputs, {}, "采收收获")
@@ -303,6 +307,10 @@ func harvest(cell: Vector2i, mode: String = "harvest") -> Dictionary:
 
 func irrigate(cell: Vector2i) -> Dictionary:
 	return _improve(cell, 0, "clean_water", "irrigate_units", "irrigate_gain")
+
+## Extra harvest outputs for derived products; the base harvest adds none.
+func _harvest_bonus(_instance: Dictionary) -> Dictionary:
+	return {}
 
 func clear_crop(cell: Vector2i) -> Dictionary:
 	var checked := _can_act()

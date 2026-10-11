@@ -7,6 +7,7 @@ const P8Husbandry := preload("res://scripts/farming/p8/p8_husbandry.gd")
 const P8Operations := preload("res://scripts/farming/p8/p8_operations.gd")
 const P8Workforce := preload("res://scripts/farming/p8/p8_workforce.gd")
 const P8Research := preload("res://scripts/farming/p8/p8_research.gd")
+const P8Flowers := preload("res://scripts/farming/p8/p8_flowers.gd")
 
 ## Session-only transaction state: the settled candidate awaiting a successful
 ## write, and the pre-action state a failed commit restores. Never persisted.
@@ -16,10 +17,13 @@ var _day_checkpoint := {}
 var operations
 ## Research benches, farm-wide completed knowledge and daily receipts.
 var research
+## Flower shares, hand picks and pollination marks.
+var flowers
 
 func _init(slot_store = null) -> void:
 	operations = P8Operations.new(self)
 	research = P8Research.new(self)
+	flowers = P8Flowers.new(self, P8Data.load_data()["flowers"])
 	super(slot_store)
 
 func _catalog():
@@ -40,10 +44,12 @@ func _settle_workforce(completed_day: int) -> void:
 	operations.settle(completed_day)
 
 ## Research advances from today's receipts after husbandry and before the
-## reports archive, so unlock events land on the completed day.
+## reports archive, so unlock events land on the completed day; unused flower
+## shares expire with the completed day.
 func _settle_husbandry(completed_day: int) -> void:
 	husbandry.settle(completed_day)
 	research.settle(completed_day)
+	flowers.settle(completed_day)
 	reports.settle(completed_day)
 
 func begin_research_settle(completed_day: int) -> void:
@@ -84,6 +90,7 @@ func to_snapshot() -> Dictionary:
 	var snapshot := super.to_snapshot()
 	snapshot["world"]["p8"] = operations.to_save()
 	snapshot["world"]["research"] = research.to_save()
+	snapshot["world"]["flowers"] = flowers.to_save()
 	return snapshot
 
 func _snapshot_applied(snapshot: Dictionary) -> void:
@@ -92,6 +99,41 @@ func _snapshot_applied(snapshot: Dictionary) -> void:
 		operations.apply_save(snapshot["world"]["p8"])
 	if snapshot["world"].has("research"):
 		research.apply_save(snapshot["world"]["research"])
+	if snapshot["world"].has("flowers"):
+		flowers.apply_save(snapshot["world"]["flowers"])
+
+## Pollination bonus: one extra oilseed per pollinated cycle at harvest.
+func _harvest_bonus(instance: Dictionary) -> Dictionary:
+	var uid := int(instance["uid"])
+	if String(instance["crop_id"]) == "oilseed_flower" and flowers.pollinated(uid):
+		flowers.forget_crop(uid)
+		return {"oilseed": 1}
+	return {}
+
+func clear_crop(cell: Vector2i) -> Dictionary:
+	var crop := instance_at(cell)
+	var result: Dictionary = super(cell)
+	if result["ok"] and not crop.is_empty():
+		flowers.forget_crop(int(crop["uid"]))
+	return result
+
+## Hand pick: one AP draws the plant's remaining share into real stock.
+func pick_flower(cell: Vector2i) -> Dictionary:
+	var checked: Dictionary = _can_act(1)
+	if not checked["ok"]:
+		return checked
+	var crop := instance_at(cell)
+	if crop.is_empty() or not flowers.is_flower_crop(String(crop["crop_id"])):
+		return _error("这里没有可采花植物")
+	var uid := int(crop["uid"])
+	var drawn: Dictionary = flowers.consume(uid, "player")
+	if not bool(drawn["ok"]):
+		return _error("今日无可用花源份额（花期未到、环境不足或已用尽）")
+	var contents: Dictionary = flowers.share_contents()
+	for item in contents:
+		inventory.add(item, int(contents[item]))
+	_record_flow(contents, {}, "采花收获")
+	return _finish(1, {"ok": true, "items": contents.duplicate(), "crop_uid": uid})
 
 # --- Research gating -------------------------------------------------------
 

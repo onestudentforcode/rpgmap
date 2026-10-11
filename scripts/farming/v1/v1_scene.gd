@@ -851,6 +851,7 @@ func _show_cell() -> void:
 		_label(sidebar,"偏好光照 %d" % definition["light"])
 		if absi(int(env["light"])-int(definition["light"])) > int(world.config["environment"]["light_tolerance"]):
 			_label(sidebar,"当前光照不合适，生长较慢。")
+		_crop_extra(crop)
 	_bar(sidebar,"水分",env["water"])
 	_bar(sidebar,"肥力",env["fertility"])
 	_label(sidebar,"固定光照 %d · 阴区更适合菌菇" % env["light"])
@@ -915,6 +916,10 @@ func _manual(kind: String) -> void:
 		"fertilize": result = world.fertilize(selected)
 	_result(result)
 	_show_cell()
+
+## Derived products render crop-specific panels (flower shares etc.) here.
+func _crop_extra(_crop: Dictionary) -> void:
+	pass
 
 func _show_facility(facility: Dictionary) -> void:
 	var uid := int(facility["uid"])

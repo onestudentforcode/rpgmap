@@ -321,6 +321,10 @@ func _worker_sources(worker_id: int) -> Array:
 			out.append(source)
 	return out
 
+## Derived products add habitat-specific panels (hive coverage etc.) here.
+func _habitat_extra(_habitat: Dictionary) -> void:
+	pass
+
 ## Water panel line; derived products reword it when the action changes meaning.
 func _water_action_text(quote: Dictionary) -> String:
 	return "维护：%s → +40（1AP）· %s" % [_materials(quote["inputs"]) if quote["ok"] else "清水×2",String(quote["reason"]) if not quote["ok"] else "可执行"]
@@ -353,6 +357,7 @@ func _show_habitat(facility: Dictionary) -> void:
 	_special_selector(habitat)
 	if not habitat["production_enabled"]:
 		_label(sidebar,"已停止启动新周期；已有周期仍按原投入继续，需要每日基础维护。")
+	_habitat_extra(habitat)
 	var quote := husbandry.quote_maintenance(uid)
 	if counts["total"] > 0:
 		var served := "今日已喂%d/%d" % [counts["fed_today"],counts["total"]]

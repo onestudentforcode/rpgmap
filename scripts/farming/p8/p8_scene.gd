@@ -458,3 +458,36 @@ func _show_research() -> void:
 				_label(card,"获取路线 · " + _sample_route(String(item)))
 	_label(sidebar,"已完成%d/12项 · 未实施路线（花源/净化/岩兽等）在解锁后由后续阶段接入执行。" % completed)
 	_icon(sidebar,"build","营建研究台",_show_build)
+
+
+# --- P8.d flower sources -----------------------------------------------------
+
+func _crop_extra(crop: Dictionary) -> void:
+	if not world.flowers.is_flower_crop(String(crop["crop_id"])):
+		return
+	var uid := int(crop["uid"])
+	var share: Dictionary = world.flowers.share_of(uid)
+	var contents: Dictionary = world.flowers.share_contents()
+	if share.is_empty():
+		_label(sidebar,"花源 · 当前不具备供花资格（成熟/花期区间/水肥光照），今日无份额。")
+		return
+	var used := int(share["used"])
+	var left := maxi(0, 1 - used)
+	if world.flowers.eligible(uid):
+		_label(sidebar,"花源 · 今日剩余份额%d/%d · 手采可得%s（1AP）" % [left, 1, _materials(contents)])
+		if world.flowers.pollinated(uid):
+			_label(sidebar,"本周期已由蜂群授粉 · 收获额外油籽+1")
+		var pick := _icon(sidebar,"nectar","手采花源（1AP）",func(): _result(world.pick_flower(Vector2i(int(crop["origin"][0]),int(crop["origin"][1])))); _show_cell())
+		pick.disabled = left < 1
+	else:
+		_label(sidebar,"花源 · 今日已初始化份额但当前水肥/光照不足，剩余份额暂停可用；恢复环境后可继续使用。")
+	if String(crop["crop_id"]) == "oilseed_flower" and not world.flowers.pollinated(uid):
+		_label(sidebar,"蜂群利用本株份额可为本周期的油籽收获+1（多次/多箱不叠加）。")
+
+func _habitat_extra(habitat: Dictionary) -> void:
+	if String(habitat["species_id"]) != "bell_bee":
+		return
+	var uid := int(habitat["facility_uid"])
+	var coverage: Dictionary = world.flowers.hive_coverage(uid)
+	_label(sidebar,"花源覆盖 · 外扩2格 · 区内花株%d株，可用份额%d份" % [int(coverage["plants"]), int(coverage["available"])])
+	_label(sidebar,"每群每日基础服务消耗1份额＋清水1；份额与手采共享，多箱按稳定顺序分配，不叠加授粉。")
