@@ -1,7 +1,7 @@
 # handoff — 跨机器开发交接
 
-> 最后更新：2026-10-11（Demo V0与V1均已关闭；Phase 6.5实现、验收和默认入口切换已完成）。
-> **现行迭代：** 用户确认Demo V1宣布完成，交付为现有玩法及独立Windows占位美术包。当前为[Phase 6.5](docs/farming/phase-06.5-UI美化与交互完善.md)，位于V1与V2之间，首版设计见[界面设计稿](docs/farming/ui-design/phase65-interface.md)及[美术指导](docs/farming/ui-design/phase65-art-direction.md)，P6.5.a～c均完成，下一轮范围待定。V1默认入口`play.bat`/F5，基线规则见[demo-v1-plan.md](docs/farming/demo-v1-plan.md)、[雇佣](docs/farming/demo-v1-employment.md)、[体验与回顾](docs/farming/demo-v1-体验与回顾.md)和[资源表](docs/farming/demo-v1-resources.md)；默认入口已切换V1，`play.bat v0`保留V0，应用标识及存档路径不变。
+> 最后更新：2026-10-11（Demo V0、V1及Phase 6.5已完成；Phase 7 / V2首版草案已建立，代码未实施）。
+> **现行迭代：** [Phase 7 / Demo V2养殖与资源循环](docs/farming/phase-07-V2养殖与资源循环.md)处于设计草案阶段。用户已确认畜牧和水产各一条路线、缺食物或水暂停并可恢复，不引入死亡/疾病/寿命；物种、繁殖、日常维持、地图和存档仍待确认。玩家主动AP入口问题列为P7.a。已验收的[Phase 6.5](docs/farming/phase-06.5-UI美化与交互完善.md)为视觉与交互基线，默认`play.bat`/F5仍运行V1；`play.bat v0`保留V0，原应用标识及存档路径不变。
 > 交接对象：新机器上的开发者或 AI 会话。
 > **开工前必读：§2 新机器清单 → §6 命令自检；现行主线是种植模块，先读 [docs/farming/master-plan.md](docs/farming/master-plan.md)；改 demo 地图前必读 [docs/map-schema.md](docs/map-schema.md)。**
 
@@ -135,7 +135,9 @@ play.bat farm0                             # Phase 0 拼接验证场景（历史
 
 ## 7. 当前闭环与后续阶段
 
-**Demo V1已关闭，Phase 6.5也已实施并验收。** 默认`play.bat`/F5为明亮V1界面，V0通过`play.bat v0`保留；历史应用标识不变。2560×1440主规格及三种兼容窗口、100/125/150% UI缩放通过，58个SVG与独立设置接入，79项新增UI检查、原有回归及13项发行版冒烟通过。具体见[Phase 6.5关闭记录](docs/farming/phase-06.5-UI美化与交互完善.md)。下一轮范围待定；完整世界场景美术及养殖等V2内容仍需另行设计，后续世界图片继续核对拼接、机位及光照。
+**Demo V1已关闭，Phase 6.5也已实施并验收。** 默认`play.bat`/F5为明亮V1界面，V0通过`play.bat v0`保留；历史应用标识不变。2560×1440主规格及三种兼容窗口、100/125/150% UI缩放通过，58个SVG与独立设置接入，79项新增UI检查、原有回归及13项发行版冒烟通过。具体见[Phase 6.5关闭记录](docs/farming/phase-06.5-UI美化与交互完善.md)。完整世界场景美术仍需另批，后续世界图片继续核对拼接、机位及光照。
+
+**Phase 7 / V2已起草，尚未开始实现。** 当前先确认[阶段草案§8](docs/farming/phase-07-V2养殖与资源循环.md#8-下一轮待确认清单)的六项提案，再冻结资源表并实施P7.a～f。畜牧＋水产各一条路线及缺料恢复已确认，不应重新询问；其他候选和数值不得视为已冻结需求。当前手动操作在地格侧栏，工具栏框选仍只创建雇工待办，新入口仅列入设计，尚未改代码。
 
 现行V1：逐条摘要/时节小结、首次45天总计与三个时节小计已接入；无注入经营路线初始60→298，121项记录、51项原界面及79项Phase 6.5界面检查通过。独立包`dist/LingTianDemoV1-Windows-x64.zip`包含明亮矢量UI与占位世界美术，解压运行`LingTianDemoV1.exe`，说明见[demo-v1-操作说明](docs/farming/demo-v1-操作说明.md)。重建使用`tools/farming/build_v1_demo.ps1 -GodotExe <控制台路径>`，需匹配的Windows release模板；13项打包后冒烟通过。旧V1从升级当天开始记录，已过45天的旧档无法补造首次回顾。下述Phase记录为V0基线。
 
