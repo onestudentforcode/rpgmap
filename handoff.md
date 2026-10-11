@@ -1,8 +1,8 @@
 # handoff — 跨机器开发交接
 
-> 最后更新：2026-10-11（Demo V0、V1及Phase 6.5已完成；Phase 7 / V2的P7.a～e已实装并验收，P7.f设计齐备、待实施）。
-> **现行迭代：** [Phase 7 / Demo V2养殖与资源循环](docs/farming/phase-07-V2养殖与资源循环.md)：钢绵羊＋滤藻鲤，仅购幼体，不做繁殖/死亡/疾病/寿命。圈舍/水场2×2、三栏配置、同种容量4含幼体，玩家/专责负责人整体维护，特殊栏可暂不生产。基础20×22、下方20×8水库；付费扩张后置、无需存档迁移。P7.a完成操作入口/水库/独立数据与三槽（[验收](docs/farming/phase-07a-验收记录.md)，schema7已被8取代）。P7.b完成购入幼体/整体基础维护/食谱三栏/成长/水体指标/清退/资源账与“资源一览”页（[phase-07b](docs/farming/phase-07b-养殖基础与成长.md)）。P7.c完成特殊生产周期、两分支整体维护、“暂不生产”、剪毛/出塘收取与粪肥堆肥回流（schema 9，[phase-07c](docs/farming/phase-07c-特殊生产与养殖回流.md)，55项测试＋24日生产回放）。P7.d完成专属设施负责人：人数上限开放（0＝不限）、一人一设施独占指派、日结巡栏（收取→必要修水→整体维护）与计件费用（schema 10，[phase-07d](docs/farming/phase-07d-设施负责人.md)，43项测试＋24日托管回放）。P7.e完成经营总览与资源关注：养殖总览页（定位/筛选/需处理）、主界面关注资源条（初始空、按槽保存）、事实报表v2_reports（日条目/时节累计/45天冻结回顾）、日报/记事/手册接入，V2快照升至**schema 11**（旧档提示重开），[phase-07e](docs/farming/phase-07e-经营总览与资源关注.md)含35项测试。下一步实施[P7.f](docs/farming/phase-07f-试玩验收与V2交付.md)双路线45日试玩与交付。默认`play.bat`/F5仍V1，开发V2用`play.bat v2`。
-> **文档推进规则：** P7.b～f已分别先问答再起草，本轮按用户要求全部确定后统一同步，不重复询问已确认范围。资源统计为实际日收支＋已结算7日均值，未领取不入账；关注初始空、显示用途、按槽日结保存。负责人一人一设施、不兼职、不引入工种，V2开放人数且成功1元石/无固定日薪。两条独立45日无注入路线通过、完整包验收后默认V2并保留旧显式入口。P7.a～c已落地（schema9、养殖运行时、特殊生产、资源账）；P7.d～f仍为设计稿，人数上限2未变。
+> 最后更新：2026-10-11（V0/V1、Phase6.5已完成；P7.a～f代码、自动验收及Windows发行候选交付，原生桌面完整鼠标试玩待补验）。
+> **现行版本：** [Phase7 / Demo V2](docs/farming/phase-07-V2养殖与资源循环.md)。默认`play.bat`/F5为V2；三槽`user://farm_demo_v2_slots`、schema11，无迁移；2×2圈舍/水场、4只容量、20×22及下方20×8水库、钢绵羊/滤藻鲤与专责负责人均实装。V2人数不限，一人一设施，不参与农务，按成功工作收费。双45日路线、完整导出/解压包及回归证据见[验收记录](docs/farming/phase07-v2-playtest.md)、[P7.f](docs/farming/phase-07f-试玩验收与V2交付.md)。软件交付通过，原生OS鼠标全流程未执行。
+> **下一项现场检查：** 原生Computer Use连接管道缺失，待有桌面控制条件时补完整新档→建设→养育/生产→回流/交易→委派→读档/回顾。引擎GUI事件与截图已通过，不能冒充这项原生人工测试。其余验收已落地，不重新询问用户已确认的设计范围。
 > 交接对象：新机器上的开发者或 AI 会话。
 > **开工前必读：§2 新机器清单 → §6 命令自检；现行主线是种植模块，先读 [docs/farming/master-plan.md](docs/farming/master-plan.md)；改 demo 地图前必读 [docs/map-schema.md](docs/map-schema.md)。**
 
@@ -25,7 +25,7 @@
    - 或直接改 `play.bat` 顶部的默认路径
 5. 首次运行 `test.bat`：执行当前种植模块的资产QC、工具测试、农场流程和独立V1测试；`test-v1.bat`可单跑V1编译产物、三槽/报价、种植/环境/资源点、加工/回流、订单/rank/经济及普通雇工/框选派工界面检查；
    **预期输出 FARMING TEST SUITE OK**；`play.bat --selftest`单跑V1隔离冒烟，V0逻辑用`play.bat farm --farmtest`。
-6. 运行`play.bat`或Godot F5进入V1明亮界面，首次选择独立V1槽新建；`play.bat v1`等价。V2开发场景用`play.bat v2`，独立验收`test-v2.bat`；养殖运行模型仍待接入。V0用`play.bat v0`，旧演示用`play.bat demo`，历史phase00用`play.bat farm0`。
+6. 运行`play.bat`或Godot F5进入V2；`play.bat v2`等价。`test-v2.bat`运行完整模型/双45日/GUI事件/源码冒烟，构建用`tools/farming/build_v2_demo.ps1`；包在`dist/LingTianDemoV2-Windows-x64.zip`。V1/V0用显式`v1`/`v0`，旧演示`demo`，phase00 `farm0`。
 
 ## 3. 当前状态
 
@@ -143,9 +143,9 @@ play.bat farm0                             # Phase 0 拼接验证场景（历史
 
 ## 7. 当前闭环与后续阶段
 
-**Demo V1已关闭，Phase 6.5也已实施并验收。** 默认`play.bat`/F5为明亮V1界面，V0通过`play.bat v0`保留；历史应用标识不变。2560×1440主规格及三种兼容窗口、100/125/150% UI缩放通过，58个SVG与独立设置接入，79项新增UI检查、原有回归及13项发行版冒烟通过。具体见[Phase 6.5关闭记录](docs/farming/phase-06.5-UI美化与交互完善.md)。完整世界场景美术仍需另批，后续世界图片继续核对拼接、机位及光照。
+**Demo V1已关闭，Phase 6.5也已实施并验收。** 当时默认为V1；当前默认`play.bat`/F5已切V2，V1由`play.bat v1`进入，V0通过`play.bat v0`保留；历史应用标识不变。2560×1440主规格及三种兼容窗口、100/125/150% UI缩放通过，58个SVG与独立设置接入，79项新增UI检查、原有回归及13项发行版冒烟通过。具体见[Phase 6.5关闭记录](docs/farming/phase-06.5-UI美化与交互完善.md)。完整世界场景美术仍需另批，后续世界图片继续核对拼接、机位及光照。
 
-**Phase 7 / V2的P7.a已完成，P7.b～f均为设计稿、已完成逐阶段问答。** P7.a已接入默认手动/委托切换、侧栏动作前移、独立V2数据/schema7三槽、20×22与水域占地；草料种植和藻料加工可运行，养殖设施仍为空。下一步按[P7.b](docs/farming/phase-07b-养殖基础与成长.md)接幼体、三栏提示、实际服务/成长、水体与资源账，再按c→d→e→f实施。特殊可暂不生产；负责人专责一设施、不兼职、无工种/设施优先级，取消V2原2人固定上限而保持成功1元石/无固定日薪；总览定位与空关注提示在e。最终两路线各45日无注入，手动后托管/额外早售粮早托管，验证4只/尾供料、回流/供货/再投资及Windows包，验收后默认V2。繁殖、付费扩张和迁移不加入；P7.b拟议schema8，实际仍7，版本按实施契约回写。
+**Phase7/V2技术交付已完成，原生桌面试玩待补。** 两条独立新档各45日无注入、满容量持续供料、五行供货、两种粪肥实际回流、收入再投资及46日冻结均通过。331项P7边界、19项GUI事件、12组/96张截图、V1/V0/历史回归、导出/解压各15项完整冒烟已执行。包含内嵌PCK的exe、README及逐文件manifest/SHA256；原始90日台账、哈希与命令详见[验收记录](docs/farming/phase07-v2-playtest.md)。当前schema11、默认V2、无旧档迁移、人数不限。原生Computer Use不可用，原生桌面全流程不得记为已通过。
 
 现行V1：逐条摘要/时节小结、首次45天总计与三个时节小计已接入；无注入经营路线初始60→298，121项记录、51项原界面及79项Phase 6.5界面检查通过。独立包`dist/LingTianDemoV1-Windows-x64.zip`包含明亮矢量UI与占位世界美术，解压运行`LingTianDemoV1.exe`，说明见[demo-v1-操作说明](docs/farming/demo-v1-操作说明.md)。重建使用`tools/farming/build_v1_demo.ps1 -GodotExe <控制台路径>`，需匹配的Windows release模板；13项打包后冒烟通过。旧V1从升级当天开始记录，已过45天的旧档无法补造首次回顾。下述Phase记录为V0基线。
 
@@ -199,3 +199,14 @@ Windows试玩包：`dist/LingTianDemo-Windows-x64.zip`，解压运行`LingTianDe
    Phase 级收尾另加：自测全过 + 截图人工核对 + 验收记录勾选
 5. 种植模块一切以 master-plan.md 为准：一次只展开当前 Phase；旧经营地基
    （Blender 管线实验文件，见 master-plan 附录 A.3）仅作参考，禁止作为新模块依赖
+
+### P7.f技术交付命令
+
+```powershell
+.\test-v2.bat
+.\play.bat --selftest
+powershell -NoProfile -ExecutionPolicy Bypass -File tools/farming/review_v2_ui.ps1
+powershell -NoProfile -ExecutionPolicy Bypass -File tools/farming/build_v2_demo.ps1
+```
+
+界面矩阵依赖双45日回放生成的实际快照，先执行`test-v2.bat`。测试隔离槽自动清理，不使用玩家目录。构建产物/中间日志/截图分别留`dist/`、`.art-work/`、`.shots/`；完整台账与说明已提交。原生桌面鼠标完整试玩待补，具体环境错误和补验路线见P7.f记录。
