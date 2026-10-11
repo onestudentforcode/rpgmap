@@ -101,6 +101,9 @@ func _settle_husbandry(_completed_day: int) -> void:
 func _settle_ledger(_completed_day: int) -> String:
 	return ""
 
+func _report_event(_entry: Dictionary) -> void:
+	pass
+
 func _can_act(ap: int = 1) -> Dictionary:
 	if not daily_save_error.is_empty():
 		return _error("日存档失败，请重试保存或放弃当天：" + daily_save_error)

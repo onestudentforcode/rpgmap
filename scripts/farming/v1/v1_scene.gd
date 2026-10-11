@@ -119,6 +119,7 @@ func _ready() -> void:
 	for ident in world.recipe_defs: RECIPES[ident] = world.recipe_defs[ident].get("name",RECIPES.get(ident,ident))
 	_last_inventory = world.inventory.to_save()
 	_build()
+	_extra_hud()
 	get_viewport().size_changed.connect(_layout)
 	world.changed.connect(_refresh)
 	world.daily_settled.connect(_daily_summary)
@@ -404,7 +405,30 @@ func _layout() -> void:
 			"two": grid.columns = 2 if window_size.x >= 740 else 1
 			"matrix": grid.columns = 4 if window_size.x >= 740 else 2
 	window_scroll.get_meta("body").custom_minimum_size.x = window_size.x-52
+	_layout_extra()
 	_refresh_input()
+
+## Derived products may add HUD panels and position them here.
+func _extra_hud() -> void:
+	pass
+
+func _layout_extra() -> void:
+	pass
+
+func _digest_husbandry(_day: int) -> Array:
+	return []
+
+func _report_page_extra() -> void:
+	pass
+
+func _history_day_extra(_day: int) -> Array:
+	return []
+
+func _recap_extra(_term_index: int) -> void:
+	pass
+
+func _help_extra() -> void:
+	pass
 
 func _refresh_input() -> void:
 	board.mouse_filter = Control.MOUSE_FILTER_STOP if _started and not shade.visible else Control.MOUSE_FILTER_IGNORE
@@ -1054,6 +1078,7 @@ func _show_report() -> void:
 		var extra := _worker_report_extra(worker)
 		_label(sidebar,"%s：成功%d次，费用%d元石\n%s%s" % [worker["name"],worker["success"],worker["fee"],worker["reason"],("\n"+extra) if not extra.is_empty() else ""])
 		for kind in worker["counts"]: _label(sidebar,"%s %d次" % [NAMES[kind],worker["counts"][kind]])
+	_report_page_extra()
 	if not world.daily_save_error.is_empty():
 		_label(sidebar,"保存失败，后续操作暂停。")
 		_button(sidebar,"重试日存档",func(): _result(world.retry_day_save()); _show_report())
@@ -1071,6 +1096,7 @@ func _show_help() -> void:
 		_icon(sidebar,"cancel","跳过操作提示",func(): _result(world.guide_dismiss(true)); _show_help())
 		_icon(sidebar,"play","恢复操作提示",func(): _result(world.guide_dismiss(false)); _show_help())
 	_icon(sidebar,"history","查看经营记录",_show_history)
+	_help_extra()
 
 func _entries(report: Dictionary) -> Array:
 	var row: Dictionary = report["totals"]
@@ -1120,6 +1146,8 @@ func _daily_summary(day: int, saved: bool) -> void:
 	if day%15 == 0 and day <= 45:
 		var term: Dictionary = world.journal["terms"][int(day/15)-1]
 		entries.push_front("[时节] 本节收入%d、支出%d，净现金变化%d元石" % [Journal.income(term),Journal.expense(term),Journal.income(term)-Journal.expense(term)])
+	for line in _digest_husbandry(day-1):
+		entries.push_front(line)
 	var compact := ui_root.size.y < 600
 	var limit := 1 if compact else 3
 	if compact: title.text = "第%d天 · %d条记事" % [day,entries.size()]
@@ -1166,6 +1194,8 @@ func _show_history() -> void:
 			_picture(line,kind,24)
 			var label := _label(line,entry)
 			label.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+		for line in _history_day_extra(int(report["day"])):
+			_label(card,line)
 		# Historical aggregates retain no cell identity. Only current, still-existing targets are linked.
 		for recipe in report["totals"]["batches_completed"]:
 			for facility in world.facilities.values():
@@ -1229,6 +1259,7 @@ func _show_recap(term_index: int = -1) -> void:
 		_label(sidebar,"记录期初%d → 第45天期末%d元石；库存另列，不折算利润。" % [state["start_cash"],state["end_cash"]])
 		if not state["end_inventory"].is_empty(): _label(sidebar,"期末库存："+_materials(state["end_inventory"]))
 	_icon(sidebar,"play","继续经营",_close_page)
+	_recap_extra(term_index)
 
 func _show_market() -> void:
 	_context = "market"

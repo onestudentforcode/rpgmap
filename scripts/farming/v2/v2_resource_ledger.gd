@@ -79,10 +79,10 @@ func settle(completed_day: int, inventory: Dictionary) -> String:
 	var closing: Dictionary = checked["closing"]
 	for item in closing:
 		if int(inventory.get(item, 0)) != int(closing[item]):
-			return "资源账与库存不一致：" + item
+			return "资源账与库存不一致：%s（账%d，实%d）" % [item,int(closing[item]),int(inventory.get(item, 0))]
 	for item in inventory:
 		if int(inventory[item]) > 0 and int(closing.get(item, 0)) != int(inventory[item]):
-			return "资源账与库存不一致：" + item
+			return "资源账与库存不一致：%s（账%d，实%d）" % [item,int(closing.get(item, 0)),int(inventory[item])]
 	state["history"].append({"day": int(pending["day"]), "opening": pending["opening"].duplicate(),
 		"inflows": _flows(pending["inflows"]), "outflows": _flows(pending["outflows"]), "closing": closing})
 	while state["history"].size() > HISTORY_LIMIT:

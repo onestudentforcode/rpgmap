@@ -12,13 +12,18 @@ var resource_day := -1
 var resource_element := "全部"
 var resource_search := ""
 var resource_focus := ""
+var resource_watched_only := false
+var overview_filter := "全部"
+var overview_search := ""
+var watch_panel: PanelContainer
+var watch_body: VBoxContainer
 
 func _init() -> void:
 	store = V2Store.new()
 	manual_mode = true
 	minimum_map_zoom = 0.1
 	settings = Settings.new("user://farm_demo_v2_settings.cfg", minimum_map_zoom)
-	product_title = "灵田 Demo V2 · P7.d"
+	product_title = "灵田 Demo V2 · P7.e"
 	terrain_path = "res://content/farming/baked/v2/terrains.json"
 	preview_prefix = "v2"
 func _make_store(directory: String = ""):
@@ -27,6 +32,7 @@ func _make_world(slot_store):
 	return V2World.new(slot_store)
 
 func _extra_nav() -> void:
+	_icon(top_nav,"pen","养殖总览 · 各设施状态与定位",_show_husbandry_overview)
 	_icon(top_nav,"locate","资源一览 · 每日净变化",_show_resources)
 
 ## Typed accessors for V2-only modules the typed V1 shell cannot see.
@@ -77,6 +83,134 @@ func _special_selector(habitat: Dictionary) -> void:
 		index += 1
 	selector.item_selected.connect(func(choice): _result(husbandry.set_special_diet(int(habitat["facility_uid"]),selector.get_item_metadata(choice))); _show_cell())
 	sidebar.add_child(selector)
+
+## Main-UI watch strip: per-slot preference, empty by default with a purpose note.
+func _extra_hud() -> void:
+	watch_panel = PanelContainer.new()
+	ui_root.add_child(watch_panel)
+	watch_body = VBoxContainer.new()
+	watch_panel.add_child(watch_body)
+	_refresh_watch()
+
+func _layout_extra() -> void:
+	if watch_panel == null: return
+	watch_panel.reset_size()
+	var margin := 24.0 if ui_root.size.x >= 1600 else 12.0
+	watch_panel.position = Vector2(margin+8,124)
+	watch_panel.size = Vector2(minf(560,board.size.x-16),0)
+
+func _refresh_watch() -> void:
+	if watch_body == null: return
+	for child in watch_body.get_children():
+		watch_body.remove_child(child)
+		child.queue_free()
+	var watched: Array = (world as V2World).preferences["watched"]
+	var today: Dictionary = books().day_view(-1)
+	var totals_in := {}
+	var totals_out := {}
+	for item in today.get("inflows",{}):
+		var total := 0
+		for reason in today["inflows"][item]: total += int(today["inflows"][item][reason])
+		totals_in[item] = total
+	for item in today.get("outflows",{}):
+		var total := 0
+		for reason in today["outflows"][item]: total += int(today["outflows"][item][reason])
+		totals_out[item] = total
+	if watched.is_empty():
+		var row := HBoxContainer.new()
+		watch_body.add_child(row)
+		_label(row,"关注资源：在资源一览中勾选材料，查看库存和今日净增长。")
+		_icon(row,"locate","选择关注资源 · 打开资源一览",func(): resource_watched_only = false; _show_resources())
+		return
+	var compact := ui_root.size.x < 1400
+	var visible_count := 3 if compact else 5
+	var shown := 0
+	for item in watched:
+		if shown >= visible_count: break
+		shown += 1
+		var line := HBoxContainer.new()
+		watch_body.add_child(line)
+		_picture(line,item,22)
+		var net := int(totals_in.get(item,0)) - int(totals_out.get(item,0))
+		_label(line,"%s %d · 今日%s%d" % [world._items[item]["name"],world.inventory.count(item),"+" if net > 0 else "",net] if net != 0 else "%s %d · 今日平衡" % [world._items[item]["name"],world.inventory.count(item)])
+		line.gui_input.connect(func(event):
+			if event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
+				resource_mode = 0
+				resource_day = -1
+				resource_watched_only = false
+				resource_focus = String(item)
+				_show_resources())
+	if watched.size() > visible_count:
+		var more := _button(watch_body,"更多(%d)" % (watched.size()-visible_count),func(): resource_watched_only = true; resource_focus = ""; _show_resources())
+		more.size_flags_horizontal = Control.SIZE_SHRINK_BEGIN
+
+
+const CATEGORY_NAMES := {"purchase": "购入", "maintenance": "维护", "growth": "成长/生产", "claim": "收取", "pause": "暂停", "cull": "清退", "labour": "人工"}
+
+func _entry_text(entry: Dictionary) -> String:
+	var name := "设施#%d" % int(entry.get("facility_uid", 0))
+	for facility in world.facilities.values():
+		if int(facility["uid"]) == int(entry.get("facility_uid", -1)):
+			name = world.facility_defs[facility["facility_id"]]["name"] + "#%d" % int(facility["uid"])
+	var counts := ""
+	if int(entry.get("count", 0)) > 0: counts += "%d次/只" % int(entry["count"])
+	if not entry.get("items", {}).is_empty(): counts += " " + _materials(entry["items"])
+	var note := String(entry.get("note", ""))
+	if not note.is_empty(): counts += " · " + note
+	return "[%s] %s · %s%s" % [CATEGORY_NAMES.get(String(entry["category"]), String(entry["category"])), name, String(entry.get("kind", "")), ("：" + counts) if not counts.is_empty() else ""]
+
+## Up to two husbandry highlights for the daily digest, newest first.
+func _digest_husbandry(day: int) -> Array:
+	var out := []
+	var reports = (world as V2World).reports
+	for entry in reports.day_entries(day):
+		if String(entry["category"]) in ["claim", "pause", "cull"]:
+			out.append("[养殖] " + _entry_text(entry))
+	return out.slice(0, 2)
+
+func _report_page_extra() -> void:
+	var reports = (world as V2World).reports
+	var day := int(world.workforce.state["report"]["day"])
+	var entries: Array = reports.day_entries(day)
+	if entries.is_empty(): return
+	_heading(sidebar,"养殖条目 · 第%d天" % (day + 1))
+	for entry in entries:
+		_label(sidebar,_entry_text(entry))
+
+func _history_day_extra(day: int) -> Array:
+	var out := []
+	var reports = (world as V2World).reports
+	# Journal history stamps the new day; reports archive the completed service day.
+	for entry in reports.day_entries(day - 1):
+		out.append("[养殖] " + _entry_text(entry))
+	return out
+
+func _recap_extra(term_index: int) -> void:
+	var reports = (world as V2World).reports
+	if not reports.recap_active():
+		_label(sidebar,"养殖统计自P7.e起记录；本档未到45天或缺少养殖数据。")
+		return
+	var source: Dictionary = reports.state["recap"]["terms"] if term_index < 0 else reports.state["recap"]["terms"][term_index]
+	var card := _card(sidebar)
+	_heading(card,"养殖 · %s" % ("45天总计" if term_index < 0 else "第%d时节小计" % (term_index + 1)))
+	for category in ["purchase", "maintenance", "growth", "claim", "pause", "cull", "labour"]:
+		var bucket: Dictionary = source[category]
+		if bucket.is_empty(): continue
+		var parts := PackedStringArray()
+		for key in bucket: parts.append("%s %d" % [key, int(bucket[key])])
+		_label(card,"%s：%s" % [CATEGORY_NAMES[category], "、".join(parts)])
+	var recap: Dictionary = reports.state["recap"]
+	var animal_parts := PackedStringArray()
+	for species in recap["animals"]:
+		animal_parts.append("%s 幼%d/成%d" % [hus().species_def(species)["name"], int(recap["animals"][species]["juvenile"]), int(recap["animals"][species]["adult"])])
+	_label(card,"期末：元石%d · 人工累计%d · 待收周期%d · 在制%d\n在养：%s" % [int(recap["cash"]), int(recap["labour"]), int(recap["ready"]), int(recap["running"]), "、".join(animal_parts) if not animal_parts.is_empty() else "无"])
+	_label(card,"期末仓库与在养个体为冻结快照，不按后续经营重算；未收权益不是可出售库存。")
+
+func _help_extra() -> void:
+	_heading(sidebar,"养殖与负责人")
+	_label(sidebar,"圈舍/水场2×2、同种容量4：购入幼体→每日整体维护→成体投特殊料→剪毛保留/出塘移除；缺料或缺水只暂停，补齐恢复。")
+	_label(sidebar,"粪肥经堆肥箱回田；负责人一人一设施、日结巡栏（收取→必要修水→整体维护），成功一次1元石，人数不设上限。")
+	_label(sidebar,"资源一览按实际收支记账，完成未领不计增长；勾选“关注”后主界面显示库存与今日净变化。")
 
 func _worker_cap_text() -> String:
 	return "雇工 · 人数不设固定上限"
@@ -290,6 +424,129 @@ func _show_habitat(facility: Dictionary) -> void:
 	else:
 		_icon(sidebar,"clear","拆除（1AP，无返还）",func(): _result(world.demolish_facility(uid)); _show_cell())
 
+## One row per habitat facility, by stable UID; read-only, 0AP locate.
+func _show_husbandry_overview() -> void:
+	_context = "overview"
+	_page("养殖总览")
+	var husbandry := hus()
+	var habitats := []
+	for facility in world.facilities.values():
+		if world.facility_defs[facility["facility_id"]].get("kind") != "habitat": continue
+		habitats.append(facility)
+	var totals := {"juvenile": 0, "adult": 0, "ready": 0}
+	for facility in habitats:
+		var habitat: Dictionary = husbandry.habitat_of(int(facility["uid"]))
+		if habitat.is_empty(): continue
+		var counts := husbandry.summary(habitat)
+		totals["juvenile"] += int(counts["juvenile"])
+		totals["adult"] += int(counts["adult"])
+		totals["ready"] += int(counts["ready"])
+	_label(sidebar,"设施%d座 · 幼体%d / 成体%d · 待收%d只（羊只与鱼尾分列，不合并件数）" % [habitats.size(),totals["juvenile"],totals["adult"],totals["ready"]])
+	var controls := HBoxContainer.new()
+	sidebar.add_child(controls)
+	var filter := OptionButton.new()
+	for option in ["全部","圈舍","水场","待收","需处理"]:
+		filter.add_item(option)
+		if option == overview_filter: filter.select(filter.item_count-1)
+	filter.item_selected.connect(func(index): overview_filter = filter.get_item_text(index); _show_husbandry_overview())
+	controls.add_child(filter)
+	var search := LineEdit.new()
+	search.placeholder_text = "搜索名称或UID"
+	search.text = overview_search
+	search.custom_minimum_size.x = 130
+	search.text_submitted.connect(func(value): overview_search = value; _show_husbandry_overview())
+	controls.add_child(search)
+	if habitats.is_empty():
+		_label(sidebar,"建造圈舍或水场后，可在这里查看养殖和维护情况。")
+		_icon(sidebar,"build","打开建设目录",_show_build)
+		return
+	var matched := false
+	for facility in habitats:
+		var uid := int(facility["uid"])
+		var habitat: Dictionary = husbandry.habitat_of(uid)
+		var summary: Dictionary = husbandry.summary(habitat)
+		var definition: Dictionary = world.facility_defs[facility["facility_id"]]
+		var is_pond: bool = definition.get("terrain") == "water"
+		if overview_filter == "圈舍" and is_pond: continue
+		if overview_filter == "水场" and not is_pond: continue
+		if overview_filter == "待收" and int(summary["ready"]) == 0: continue
+		if overview_filter == "需处理" and not _needs_attention(uid): continue
+		if not overview_search.is_empty():
+			var text := "%s#%d (%d,%d)" % [definition["name"],uid,int(facility["origin"][0]),int(facility["origin"][1])]
+			if not text.contains(overview_search) and not String(habitat["species_id"]).contains(overview_search): continue
+		matched = true
+		var card := _card(sidebar)
+		var row := HBoxContainer.new()
+		card.add_child(row)
+		_picture(row,facility["facility_id"],36)
+		_heading(row,"%s#%d（%d,%d）" % [definition["name"],uid,int(facility["origin"][0]),int(facility["origin"][1])])
+		_icon(row,"locate","定位并打开设施详情",func(): _locate_facility(uid))
+		_label(card,"在养：%s %d/%d · 幼体%d / 成体%d（待收%d为成体子集）" % [husbandry.species_def(habitat["species_id"])["name"],
+			int(summary["total"]),int(definition["capacity"]),int(summary["juvenile"]),int(summary["adult"]),int(summary["ready"])])
+		var quote: Dictionary = husbandry.quote_maintenance(uid)
+		var served_line := "今日已喂%d/%d" % [int(summary["fed_today"]),int(summary["total"])]
+		if int(summary["total"]) == 0:
+			served_line = "空场 · 购入幼体后开始养育"
+		elif quote["ok"]:
+			served_line += " · 本次可执行：基础%d" % int(quote["basic"]["targets"])
+			if int(quote["special"]["targets"]) > 0: served_line += "＋特殊%d" % int(quote["special"]["targets"])
+		else:
+			served_line += " · " + String(quote["reason"])
+		_label(card,served_line)
+		var production := "生产：空闲%d / 周期%d / 待收%d" % [int(summary["idle_adults"]),int(summary["running"]),int(summary["ready"])]
+		if not habitat["production_enabled"]: production += " · 计划：暂不生产（已有周期继续）"
+		_label(card,production)
+		if habitat.has("water"):
+			var support := husbandry.water_support_days(habitat)
+			_label(card,"水体：%d/100 · 日结后预计%d · %s" % [int(habitat["water"]),maxi(0,int(habitat["water"])-5),"还可支持%d次日结" % support if support > 0 else "已达暂停线"])
+		var caretaker: Dictionary = husbandry.caretaker_of(uid)
+		if caretaker.is_empty():
+			_label(card,"负责人：无人 · 手动维护；可在设施详情中指派。")
+		else:
+			_label(card,"负责人：%s · %s · 每日预算%d元石（最多支出）\n%s" % [caretaker["name"],"暂停中" if caretaker["paused"] else "专责本设施",int(caretaker["budget"]),husbandry.patrol_estimate(uid)])
+		for line in _attention_lines(uid):
+			_label(card,line)
+	if not matched:
+		_label(sidebar,"没有符合筛选的设施；可清除筛选后查看全部。")
+		_button(sidebar,"清除筛选",func(): overview_filter = "全部"; overview_search = ""; _show_husbandry_overview())
+
+## Explainable attention set: blocked quotes, low water, stalled caretakers.
+func _needs_attention(facility_uid: int) -> bool:
+	return not _attention_lines(facility_uid).is_empty()
+
+func _attention_lines(facility_uid: int) -> Array:
+	var husbandry := hus()
+	var lines := []
+	var habitat: Dictionary = husbandry.habitat_of(facility_uid)
+	if habitat.is_empty() or habitat["individuals"].is_empty():
+		return lines
+	var quote: Dictionary = husbandry.quote_maintenance(facility_uid)
+	if not quote["ok"] and String(quote.get("reason","")) != "全部个体今日已服务":
+		lines.append("需处理：" + String(quote["reason"]))
+	if habitat.has("water") and int(habitat["water"]) <= int(husbandry.settings["water"]["pause_threshold"]):
+		lines.append("需处理：水体已达暂停线，先维护水体。")
+	var caretaker: Dictionary = husbandry.caretaker_of(facility_uid)
+	if not caretaker.is_empty() and caretaker["paused"]:
+		var summary: Dictionary = husbandry.summary(habitat)
+		if int(summary["fed_today"]) < int(summary["total"]):
+			lines.append("需处理：负责人暂停且今日未喂，可手动维护。")
+	return lines
+
+## Locate closes the window, centres the full 2x2 footprint and opens the detail;
+## a stale UID never selects a facility built later on the same spot.
+func _locate_facility(facility_uid: int) -> void:
+	for facility in world.facilities.values():
+		if int(facility["uid"]) != facility_uid: continue
+		_close_page()
+		var origin: Array = facility["origin"]
+		var footprint: Array = world.facility_defs[facility["facility_id"]]["footprint"]
+		camera.position = (Vector2(float(origin[0]),float(origin[1]))+Vector2(float(footprint[0]),float(footprint[1]))*0.5)*64.0
+		selected = Vector2i(int(origin[0]),int(origin[1]))
+		_show_cell()
+		return
+	notice.text = "该设施已不存在"
+	notice.add_theme_color_override("font_color",UI.ERROR)
+
 func _show_resources() -> void:
 	_context = "resources"
 	_page("资源一览 · 每日净变化")
@@ -324,7 +581,18 @@ func _show_resources() -> void:
 		filter.add_item(ELEMENTS[element])
 		filter.set_item_metadata(filter.item_count-1,element)
 		if resource_element == element: filter.select(filter.item_count-1)
-	filter.item_selected.connect(func(index): resource_element = String(filter.get_item_metadata(index)); _show_resources())
+	filter.add_item("仅关注")
+	filter.set_item_metadata(filter.item_count-1,"watched")
+	if resource_watched_only: filter.select(filter.item_count-1)
+	filter.item_selected.connect(func(index):
+		var choice := String(filter.get_item_metadata(index))
+		if choice == "watched":
+			resource_watched_only = true
+			resource_element = "全部"
+		else:
+			resource_watched_only = false
+			resource_element = choice
+		_show_resources())
 	controls.add_child(filter)
 	var search := LineEdit.new()
 	search.placeholder_text = "搜索资源名称"
@@ -357,9 +625,11 @@ func _show_resources() -> void:
 		totals_in = view["totals_in"]
 		totals_out = view["totals_out"]
 		reasons = {"in": view["inflows"], "out": view["outflows"]}
+	_label(sidebar,"勾选“关注”后，所选材料显示在主界面关注条；仅由玩家勾选。")
 	var rows := []
 	for item in world._items:
 		var definition: Dictionary = world._items[item]
+		if resource_watched_only and not String(item) in (world as V2World).preferences["watched"]: continue
 		if resource_element != "全部" and definition["element"] != resource_element: continue
 		if not resource_search.is_empty() and not definition["name"].contains(resource_search): continue
 		var inflow := 0.0
@@ -379,15 +649,20 @@ func _show_resources() -> void:
 func _resource_group(title: String, rows: Array, stock_caption: String, mode_kind: int, reasons: Dictionary) -> void:
 	_heading(sidebar,"%s · %d种" % [title,rows.size()])
 	var header := GridContainer.new()
-	header.columns = 5
+	header.columns = 6
 	sidebar.add_child(header)
-	for cell in ["资源",stock_caption,"入库","出库","净变化"]:
+	for cell in ["关注","资源",stock_caption,"入库","出库","净变化"]:
 		var label := _label(header,cell)
 		label.add_theme_font_size_override("font_size",15)
 	for row in rows:
 		var line := GridContainer.new()
-		line.columns = 5
+		line.columns = 6
 		sidebar.add_child(line)
+		var watch := CheckBox.new()
+		watch.button_pressed = String(row["item"]) in (world as V2World).preferences["watched"]
+		watch.tooltip_text = "关注后显示在主界面关注条"
+		watch.toggled.connect(func(value): world.toggle_watch(String(row["item"])); _refresh_watch(); _show_resources())
+		line.add_child(watch)
 		var name_label := _label(line,String(row["name"]))
 		name_label.mouse_filter = Control.MOUSE_FILTER_STOP
 		name_label.gui_input.connect(func(event):
@@ -516,11 +791,9 @@ func _preview(directory: String) -> void:
 	world.primeval_stones += 40
 	hus().purchase(2,2)
 	hus().purchase(1,2)
-	world.inventory.add("fodder_grass",4)
-	world.inventory.add("clean_water",8)
+	(world as V2World).grant_scaffold({"fodder_grass":4,"clean_water":8,"algae_feed":4})
 	hus().maintain(2)
 	hus().maintain_water(1)
-	world.inventory.add("algae_feed",4)
 	hus().maintain(1)
 	selected = Vector2i(7,1)
 	_show_cell()
@@ -559,6 +832,13 @@ func _preview(directory: String) -> void:
 	world.end_day()
 	_show_report()
 	await _shot(directory,"caretaker_report")
+	_show_husbandry_overview()
+	await _shot(directory,"overview")
+	_close_page()
+	world.toggle_watch("fodder_grass")
+	world.toggle_watch("clean_water")
+	_refresh_watch()
+	await _shot(directory,"watch_strip")
 	_show_resources()
 	await _shot(directory,"resources")
 	var preview_directory: String = store.slot_path(1).get_base_dir()

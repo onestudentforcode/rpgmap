@@ -4,16 +4,39 @@ const V2Data := preload("res://scripts/farming/v2/v2_data.gd")
 const V2Snapshot := preload("res://scripts/farming/v2/v2_snapshot.gd")
 const Husbandry := preload("res://scripts/farming/v2/v2_husbandry.gd")
 const ResourceLedger := preload("res://scripts/farming/v2/v2_resource_ledger.gd")
+const Reports := preload("res://scripts/farming/v2/v2_reports.gd")
 
 var husbandry
 var ledger
+var reports
+## Per-slot UI preference state; persisted only by the daily autosave.
+var preferences := {"watched": []}
 
 func _init(slot_store = null) -> void:
 	# Built before super: the base constructor applies a fresh snapshot through the
 	# overrides below, and the modules only read shared members after that.
 	husbandry = Husbandry.new(self, V2Data.load_data())
 	ledger = ResourceLedger.new(self)
+	reports = Reports.new(self)
 	super(slot_store, V2Data, V2Snapshot)
+
+func _report_event(entry: Dictionary) -> void:
+	reports.record(entry)
+
+## Watching is a preference, not a game action: 0AP, 0 stones, order kept.
+func toggle_watch(item_id: String) -> Dictionary:
+	var checked := _can_act(0)
+	if not checked["ok"]:
+		return checked
+	if not _items.has(item_id):
+		return _error("未知资源")
+	var watched: Array = preferences["watched"]
+	if item_id in watched:
+		watched.erase(item_id)
+	else:
+		watched.append(item_id)
+	changed.emit()
+	return {"ok": true}
 
 func build_facility(cell: Vector2i, facility_id: String) -> Dictionary:
 	var result := super(cell, facility_id)
@@ -51,6 +74,7 @@ func _settle_husbandry(completed_day: int) -> void:
 	# cycles settle; a cycle finished by this settle waits for the next day.
 	husbandry.run_patrols(completed_day)
 	husbandry.settle(completed_day)
+	reports.settle(completed_day)
 
 func _settle_ledger(completed_day: int) -> String:
 	return ledger.settle(completed_day, inventory.to_save())
@@ -58,6 +82,8 @@ func _settle_ledger(completed_day: int) -> String:
 func to_snapshot() -> Dictionary:
 	var snapshot := super.to_snapshot()
 	snapshot["ledger"] = ledger.to_save()
+	snapshot["reports"] = reports.to_save()
+	snapshot["preferences"] = preferences.duplicate(true)
 	snapshot["world"]["husbandry"] = husbandry.to_save()
 	return snapshot
 
@@ -70,4 +96,6 @@ func apply_snapshot(value) -> Dictionary:
 		return result
 	husbandry.apply_save(checked["snapshot"]["world"]["husbandry"])
 	ledger.apply_save(checked["snapshot"]["ledger"])
+	reports.apply_save(checked["snapshot"]["reports"])
+	preferences = checked["snapshot"]["preferences"].duplicate(true)
 	return result

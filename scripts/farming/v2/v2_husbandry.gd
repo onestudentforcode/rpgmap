@@ -203,6 +203,8 @@ func purchase(facility_uid: int, count: int) -> Dictionary:
 	if world.primeval_stones < total:
 		return _error("元石不足")
 	world.primeval_stones -= total
+	# Juvenile purchases are real cash outflow inside the existing purchase total.
+	world._cash("purchase_spend", total)
 	var purchased := []
 	for _index in range(count):
 		var uid := int(state["next_animal_uid"])
@@ -211,6 +213,8 @@ func purchase(facility_uid: int, count: int) -> Dictionary:
 			"base_service": {"day": -1, "diet_id": "", "inputs": {}, "operator": ""},
 			"cycle": {}})
 		habitat["individuals"].append(purchased[-1])
+	world._report_event({"category": "purchase", "facility_uid": facility_uid, "kind": String(habitat["species_id"]),
+		"count": count, "items": {}, "note": "购入%d只，花费%d元石" % [count,total]})
 	return world._finish(0, {"ok": true, "purchased": purchased, "total": total,
 		"species_id": habitat["species_id"], "quote": quote})
 
@@ -367,6 +371,12 @@ func maintain(facility_uid: int, operator: String = "player", service_day: int =
 			inputs[ident] = int(inputs.get(ident, 0)) + int(feed_special[ident])
 	if served == 0 and started == 0:
 		return _error("本次维护没有可执行工作")
+	if served > 0:
+		world._report_event({"category": "maintenance", "facility_uid": facility_uid, "kind": "基础服务",
+			"count": served, "items": quote["basic"]["inputs"], "note": ""})
+	if started > 0:
+		world._report_event({"category": "maintenance", "facility_uid": facility_uid, "kind": "特殊投料",
+			"count": started, "items": quote["special"]["inputs"], "note": ""})
 	var outcome := {"ok": true, "served": served, "started": started, "inputs": inputs}
 	if served > 0 and started > 0:
 		outcome["detail"] = "基础完成，%d只成体已启动周期" % started
@@ -430,6 +440,9 @@ func claim(facility_uid: int, expected: Array = [], operator: String = "player")
 			habitat["individuals"].erase(individual)
 		else:
 			individual["cycle"] = {}
+	world._report_event({"category": "claim", "facility_uid": facility_uid, "kind": "收取",
+		"count": int(quote["ready"]), "items": outputs,
+		"note": "移除%d只" % int(quote["removes"]) if int(quote["removes"]) > 0 else "保留%d只" % int(quote["keeps"])})
 	return world._finish(int(settings["claim_ap"]), {"ok": true, "outputs": outputs.duplicate(),
 		"kept": int(quote["keeps"]), "removed": int(quote["removes"]), "ids": quote["ids"].duplicate()})
 
@@ -467,6 +480,8 @@ func maintain_water(facility_uid: int, operator: String = "player") -> Dictionar
 	for ident in inputs:
 		world.inventory.remove(ident, int(inputs[ident]))
 	world._record_flow({}, inputs, "水体维护")
+	world._report_event({"category": "maintenance", "facility_uid": facility_uid, "kind": "水体维护",
+		"count": 1, "items": inputs, "note": "水体+%d" % int(quote["gain"])})
 	habitat["water"] = mini(int(settings["water"]["maximum"]), int(habitat["water"]) + int(quote["gain"]))
 	return world._finish(int(quote["ap"]), {"ok": true, "water": int(habitat["water"]), "inputs": inputs})
 
@@ -502,7 +517,12 @@ func cull(facility_uid: int) -> Dictionary:
 	if habitat.is_empty() or habitat["individuals"].is_empty():
 		return _error("空场没有可清退的动物")
 	var removed := int(habitat["individuals"].size())
+	var abandoned := abandon_quote(facility_uid)
 	habitat["individuals"] = []
+	world._report_event({"category": "cull", "facility_uid": facility_uid, "kind": "清退",
+		"count": removed, "items": {}, "note": "放弃待收%s与在制%s" % [
+			"、".join(abandoned["outputs"].keys()) if not abandoned["outputs"].is_empty() else "无",
+			"、".join(abandoned["inputs"].keys()) if not abandoned["inputs"].is_empty() else "无"]})
 	return world._finish(int(settings["maintenance_ap"]), {"ok": true, "removed": removed})
 
 ## Day settlement happens after workers and before crops; a valid day advances both
@@ -515,7 +535,11 @@ func settle(completed_day: int) -> void:
 			habitat["water"] = maxi(0, int(habitat["water"]) - int(settings["water"]["decay"]))
 			paused = int(habitat["water"]) <= int(settings["water"]["pause_threshold"])
 		if paused:
+			world._report_event({"category": "pause", "facility_uid": int(habitat["facility_uid"]), "kind": "水体暂停",
+				"count": int(habitat["individuals"].size()), "items": {}, "note": "水体已降至%d" % int(habitat["water"])})
 			continue
+		var grown := 0
+		var readied := 0
 		var target := int(species_defs[habitat["species_id"]]["growth_days"]) * 100
 		for individual in habitat["individuals"]:
 			if int(individual["base_service"]["day"]) != completed_day:
@@ -525,12 +549,20 @@ func settle(completed_day: int) -> void:
 				if int(individual["growth"]) >= target:
 					individual["stage"] = "adult"
 					individual["growth"] = target
+					grown += 1
 			var cycle: Dictionary = individual.get("cycle", {})
 			if not cycle.is_empty() and cycle["status"] == "running":
 				cycle["progress"] = mini(int(cycle["goal"]), int(cycle["progress"]) + 100)
 				if int(cycle["progress"]) >= int(cycle["goal"]):
 					cycle["status"] = "ready"
 					cycle["ready_day"] = completed_day
+					readied += 1
+		if grown > 0:
+			world._report_event({"category": "growth", "facility_uid": int(habitat["facility_uid"]), "kind": "成年",
+				"count": grown, "items": {}, "note": ""})
+		if readied > 0:
+			world._report_event({"category": "growth", "facility_uid": int(habitat["facility_uid"]), "kind": "就绪待收",
+				"count": readied, "items": {}, "note": ""})
 
 ## Exclusive caretaker binding: one worker per habitat, one habitat per worker.
 func caretaker_of(facility_uid: int) -> Dictionary:
@@ -658,6 +690,8 @@ func run_patrols(completed_day: int) -> void:
 			row["success"] = int(row["success"]) + 1
 			row["fee"] = int(row["fee"]) + fee
 			row["caretaker"]["steps"][step["kind"]] = int(row["caretaker"]["steps"][step["kind"]]) + 1
+			world._report_event({"category": "labour", "facility_uid": facility_uid, "kind": String(step["kind"]),
+				"count": 1, "items": {}, "note": String(worker["name"])})
 			row["reason"] = "巡栏完成：" + String(step["kind"])
 			if step["kind"] == "水体维护":
 				water_done[facility_uid] = true
