@@ -91,6 +91,16 @@ func _init(slot_store = null, catalog = Data, codec = Snapshot) -> void:
 func _error(reason: String) -> Dictionary:
 	return {"ok": false, "reason": reason}
 
+## Controlled seams for derived products; V1 keeps all of them inert.
+func _record_flow(_inflows: Dictionary, _outflows: Dictionary, _reason: String) -> void:
+	pass
+
+func _settle_husbandry(_completed_day: int) -> void:
+	pass
+
+func _settle_ledger(_completed_day: int) -> String:
+	return ""
+
 func _can_act(ap: int = 1) -> Dictionary:
 	if not daily_save_error.is_empty():
 		return _error("日存档失败，请重试保存或放弃当天：" + daily_save_error)
@@ -234,6 +244,7 @@ func plant(cell: Vector2i, crop_id: String) -> Dictionary:
 		return checked
 	for ident in inputs:
 		inventory.remove(ident, int(inputs[ident]))
+	_record_flow({}, inputs, "播种投料")
 	var uid := _next_uid
 	_next_uid += 1
 	crops[uid] = {"uid": uid, "crop_id": crop_id, "origin": [cell.x, cell.y], "progress": 0, "state": "growing", "harvest_count": 0}
@@ -259,6 +270,7 @@ func harvest(cell: Vector2i, mode: String = "harvest") -> Dictionary:
 	var outputs: Dictionary = definition["fell_outputs"] if mode == "fell" and definition["mode"] == "tap_or_fell" else definition["outputs"]
 	for ident in outputs:
 		inventory.add(ident, int(outputs[ident]))
+	_record_flow(outputs, {}, "采收收获")
 	if definition["mode"] == "tap_or_fell" and mode == "harvest":
 		crops[uid]["harvest_count"] = int(crops[uid]["harvest_count"]) + 1
 		crops[uid]["progress"] = 0
@@ -300,6 +312,7 @@ func _improve(cell: Vector2i, field: int, item: String, units: String, gain: Str
 	if environment[index][field] >= 100 or not inventory.has(item, amount):
 		return _error("环境已满或缺少投入")
 	inventory.remove(item, amount)
+	_record_flow({}, {item: amount}, "浇水" if field == 0 else "施肥")
 	environment[index][field] = mini(100, int(environment[index][field]) + int(config["environment"][gain]))
 	_count("fieldwork","irrigate" if field == 0 else "fertilize")
 	return _finish(1, {"ok": true})
@@ -316,6 +329,7 @@ func collect(ident: String) -> Dictionary:
 		return _error("今日资源点配额不足")
 	_source_used[ident] = int(_source_used[ident]) + quantity
 	inventory.add(definition["item"], quantity)
+	_record_flow({definition["item"]: quantity}, {}, "资源采集")
 	_count("collected",definition["item"],quantity)
 	return _finish(int(definition["ap"]), {"ok": true, "item_id": definition["item"], "quantity": quantity})
 
@@ -365,6 +379,7 @@ func build_facility(cell: Vector2i, facility_id: String) -> Dictionary:
 		_tilled_under_buildings[target] = true
 	for ident in definition["materials"]:
 		inventory.remove(ident, int(definition["materials"][ident]))
+	_record_flow({}, definition["materials"].duplicate(), "建设材料")
 	primeval_stones -= int(definition["cash"])
 	_next_facility_uid += 1
 	facilities[uid] = {"uid": uid, "facility_id": facility_id, "origin": [cell.x,cell.y], "batch": {}}
@@ -402,6 +417,7 @@ func start_batch(facility_uid: int, recipe_id: String) -> Dictionary:
 			return _error("加工投入不足：" + _items[ident]["name"])
 	for ident in recipe["inputs"]:
 		inventory.remove(ident, int(recipe["inputs"][ident]))
+	_record_flow({}, recipe["inputs"].duplicate(), "加工投料")
 	var batch_id := _next_batch_uid
 	_next_batch_uid += 1
 	var inputs := {}
@@ -430,6 +446,7 @@ func claim_batch(facility_uid: int, expected_batch_id: int) -> Dictionary:
 	var outputs: Dictionary = batch["outputs"].duplicate(true)
 	for ident in outputs:
 		inventory.add(ident, int(outputs[ident]))
+	_record_flow(outputs, {}, "加工收取")
 	facilities[facility_uid]["batch"] = {}
 	for ident in outputs: _count("processed",ident,int(outputs[ident]))
 	return _finish(int(recipe["claim_ap"]), {"ok": true, "batch_id": expected_batch_id, "items": outputs})
@@ -467,6 +484,7 @@ func deliver_order(order_id: int, item_id: String) -> Dictionary:
 		return _error("元石或收入越界")
 	# Inventory, receipt and revenue change together before observers or daily saves.
 	inventory.remove(item_id, int(quote["quantity"]))
+	_record_flow({}, {item_id: int(quote["quantity"])}, "订单交付")
 	for entry in _orders["entries"]:
 		if entry["id"] == order_id:
 			entry["status"] = "completed"
@@ -503,11 +521,13 @@ func _trade(item_id: String, quantity, buying: bool) -> Dictionary:
 			return _error("元石不足或库存越界")
 		primeval_stones -= total
 		inventory.add(item_id, count)
+		_record_flow({item_id: count}, {}, "市场采购")
 		_cash("purchase_spend",total)
 	else:
 		if not inventory.has(item_id, count) or not Scalars.whole(primeval_stones + total) or not Scalars.whole(gross_revenue() + total):
 			return _error("库存不足或收入越界")
 		inventory.remove(item_id, count)
+		_record_flow({}, {item_id: count}, "市场出售")
 		primeval_stones += total
 		_sales_revenue += total
 		_cash("sales_revenue",total)
@@ -515,6 +535,7 @@ func _trade(item_id: String, quantity, buying: bool) -> Dictionary:
 
 func _on_day_changed(day: int) -> void:
 	workforce.settle(day-1)
+	_settle_husbandry(day-1)
 	for uid in crops:
 		var row: Dictionary = crops[uid]
 		var definition: Dictionary = crop_defs[row["crop_id"]]
@@ -551,10 +572,16 @@ func _on_day_changed(day: int) -> void:
 			batch["status"] = "ready"
 			_count("batches_completed",batch["recipe_id"])
 	_orders = Orders.advance(_orders, day, gross_revenue(), data_source)
+	# The resource ledger closes before the report and the single daily save; an
+	# internal reconciliation failure blocks the commit instead of bypassing it.
+	var ledger_error := _settle_ledger(day-1)
 	Journal.settle(journal,day,primeval_stones,inventory.to_save(),workforce.state["report"]["workers"])
 	if _store != null:
-		var saved: Dictionary = _store.commit(to_snapshot())
-		daily_save_error = "" if saved["ok"] else String(saved["reason"])
+		if not ledger_error.is_empty():
+			daily_save_error = ledger_error
+		else:
+			var saved: Dictionary = _store.commit(to_snapshot())
+			daily_save_error = "" if saved["ok"] else String(saved["reason"])
 	daily_settled.emit(day, _store != null and daily_save_error.is_empty())
 
 func to_snapshot() -> Dictionary:

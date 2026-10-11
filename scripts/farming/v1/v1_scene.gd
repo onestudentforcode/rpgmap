@@ -143,6 +143,10 @@ func _button(parent: Node, text: String, action: Callable) -> Button:
 	parent.add_child(button)
 	return button
 
+## Derived products may append navigation entries here; V1 adds none.
+func _extra_nav() -> void:
+	pass
+
 func _icon(parent: Node, ident: String, text: String, action: Callable, extent: int = 36) -> Button:
 	var button := _button(parent,"",action)
 	button.icon = Icons.get_icon(ident)
@@ -233,6 +237,7 @@ func _build() -> void:
 	_icon(top_nav,"help","手册",_show_help)
 	_icon(top_nav,"fit","回到全图 · F",_fit_map)
 	_icon(top_nav,"inspect","展开/收起地格详情",func(): _side_open = not _side_open; _layout())
+	_extra_nav()
 	map_view = SubViewportContainer.new()
 	map_view.stretch = true
 	map_view.mouse_filter = Control.MOUSE_FILTER_IGNORE
@@ -883,7 +888,8 @@ func _show_facility(facility: Dictionary) -> void:
 	_picture(sidebar,facility["facility_id"],64)
 	_heading(sidebar,world.facility_defs[facility["facility_id"]]["name"])
 	if world.facility_defs[facility["facility_id"]].get("kind") == "habitat":
-		_label(sidebar,"养殖预备设施 · 容量4只\n本批仅支持建设；购入幼体、食谱与维护将在P7.b/c接入。")
+		_show_habitat(facility)
+		return
 	if not batch.is_empty():
 		_heading(sidebar,"待收取" if batch["status"] == "ready" else "加工中")
 		_label(sidebar,RECIPES[batch["recipe_id"]])
@@ -907,6 +913,12 @@ func _show_facility(facility: Dictionary) -> void:
 			var start := _icon(card,"play","启动 "+RECIPES[ident],func(): _result(world.start_batch(uid,ident)); _show_cell())
 			start.disabled = _missing(recipe["inputs"]) != "投入齐备" or world.clock.ap < 1
 		_icon(sidebar,"clear","拆除（1AP，无返还）",func(): _confirm("拆除%s？不返还建设材料或元石，消耗1AP。" % world.facility_defs[facility["facility_id"]]["name"],func(): _result(world.demolish_facility(uid)); _show_cell()))
+
+## Habitat facilities render through this seam; V1 keeps the P7.a boundary notice.
+func _show_habitat(facility: Dictionary) -> void:
+	_label(sidebar,"养殖预备设施 · 容量4只\n本批仅支持建设；购入幼体、食谱与维护将在P7.b/c接入。")
+	_label(sidebar,"空场 · 养殖功能待接入")
+	_icon(sidebar,"clear","拆除（1AP，无返还）",func(): _result(world.demolish_facility(int(facility["uid"]))); _show_cell())
 
 func _show_build() -> void:
 	_context = "build"
