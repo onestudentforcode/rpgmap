@@ -1,8 +1,8 @@
 # handoff — 跨机器开发交接
 
-> 最后更新：2026-10-11（V0/V1、Phase6.5及P7/V2已完成；用户确认关闭P7，原生桌面试玩移交后续补验）。
+> 最后更新：2026-10-11（P7/V2已关闭；P8范围问答完成，生态/工艺/研究与分阶段设计已统一起草）。
 > **现行版本：** [Phase7 / Demo V2](docs/farming/phase-07-V2养殖与资源循环.md)。默认`play.bat`/F5为V2；三槽`user://farm_demo_v2_slots`、schema11，无迁移；2×2圈舍/水场、4只容量、20×22及下方20×8水库、钢绵羊/滤藻鲤与专责负责人均实装。V2人数不限，一人一设施，不参与农务，按成功工作收费。双45日路线、完整导出/解压包及回归证据见[验收记录](docs/farming/phase07-v2-playtest.md)、[P7.f](docs/farming/phase-07f-试玩验收与V2交付.md)。软件交付通过，原生OS鼠标全流程未执行。
-> **下一阶段：** P7已关闭，P8目标与范围尚未确定、文档尚未起草；先确定下一阶段主目标，再承接[Phase 7关闭记录](docs/farming/phase-07-V2养殖与资源循环.md)中的后续事项，不重新询问用户已确认的P7设计范围。
+> **下一阶段：** [P8生态产业网络与工艺研究](docs/farming/phase-08-生态产业网络与工艺研究.md)范围已确认，设计已起草、代码未开始。先读[资源/工艺表](docs/farming/phase-08-资源与工艺表.md)、[研究关系](docs/farming/phase-08-研究与生产关系.md)与[P8.a～h计划](docs/farming/phase-08-分阶段实施计划.md)，下一实施入口P8.a。新配数为待验证初值；多设施负责人/兼任尚未实现，现行仍为P7一人一设施。用户确认P7剩余待办不紧急，不将其作为P8前置。
 > **后续现场补验：** 原生Computer Use连接管道缺失，待有桌面控制条件时补完整新档→建设→养育/生产→回流/交易→委派→读档/回顾及窗口/全屏焦点检查。引擎GUI事件与截图已通过；原生人工测试尚未执行，经用户确认不阻塞P7关闭。
 > 交接对象：新机器上的开发者或 AI 会话。
 > **开工前必读：§2 新机器清单 → §6 命令自检；现行主线是种植模块，先读 [docs/farming/master-plan.md](docs/farming/master-plan.md)；改 demo 地图前必读 [docs/map-schema.md](docs/map-schema.md)。**
@@ -70,9 +70,13 @@
 | 文档 | 内容 | 何时读 |
 |------|------|--------|
 | [docs/farming/master-plan.md](docs/farming/master-plan.md) | **灵植经营模块总 Phase 规划（现行主线）** | **开工先读** |
-| [docs/farming/phase-07-V2养殖与资源循环.md](docs/farming/phase-07-V2养殖与资源循环.md) | **当前Phase 7 / V2范围、分阶段推进与验收** | **推进当前主线时** |
+| [docs/farming/phase-08-生态产业网络与工艺研究.md](docs/farming/phase-08-生态产业网络与工艺研究.md) | **当前P8范围、生态与人力/日界契约，未实施** | **推进当前主线先读** |
+| [docs/farming/phase-08-资源与工艺表.md](docs/farming/phase-08-资源与工艺表.md) | 6物种/8设施/24工艺，资源ID/价格/守恒/成本初值 | 配数与配置落地前 |
+| [docs/farming/phase-08-研究与生产关系.md](docs/farming/phase-08-研究与生产关系.md) | 三层12研究DAG、样本来源与三组生产网 | 实施解锁与路线前 |
+| [docs/farming/phase-08-分阶段实施计划.md](docs/farming/phase-08-分阶段实施计划.md) | P8.a～h顺序、边界验证、双90日无注入验收 | 每批实施前 |
+| [docs/farming/phase-07-V2养殖与资源循环.md](docs/farming/phase-07-V2养殖与资源循环.md) | 已关闭P7 / V2范围、实现与验收 | 核对现行基线时 |
 | [docs/farming/phase-07a-验收记录.md](docs/farming/phase-07a-验收记录.md) | 已完成底座、实际10日台账与尚未验收养殖边界 | 核对当前运行事实 |
-| [docs/farming/phase-07b-养殖基础与成长.md](docs/farming/phase-07b-养殖基础与成长.md) | **下一实施阶段：幼体/成长/基础维护、水体与资源一览** | 实施P7.b前 |
+| [docs/farming/phase-07b-养殖基础与成长.md](docs/farming/phase-07b-养殖基础与成长.md) | 已完成幼体/成长/基础维护、水体与资源一览的设计依据 | 调整既有养殖时 |
 | [docs/farming/phase-07c-特殊生产与养殖回流.md](docs/farming/phase-07c-特殊生产与养殖回流.md) | 暂不生产、特殊周期/唯一收取、粪肥回流与供货 | 实施P7.c前 |
 | [docs/farming/phase-07d-设施负责人.md](docs/farming/phase-07d-设施负责人.md) | 一人一设施不兼职、开放人数、巡栏/计件费与现金风险 | 实施P7.d前 |
 | [docs/farming/phase-07e-经营总览与资源关注.md](docs/farming/phase-07e-经营总览与资源关注.md) | 总览定位、初始空关注提示/按槽保存、条目与45天累计 | 实施P7.e前 |
@@ -147,6 +151,8 @@ play.bat farm0                             # Phase 0 拼接验证场景（历史
 **Demo V1已关闭，Phase 6.5也已实施并验收。** 当时默认为V1；当前默认`play.bat`/F5已切V2，V1由`play.bat v1`进入，V0通过`play.bat v0`保留；历史应用标识不变。2560×1440主规格及三种兼容窗口、100/125/150% UI缩放通过，58个SVG与独立设置接入，79项新增UI检查、原有回归及13项发行版冒烟通过。具体见[Phase 6.5关闭记录](docs/farming/phase-06.5-UI美化与交互完善.md)。完整世界场景美术仍需另批，后续世界图片继续核对拼接、机位及光照。
 
 **Phase7/V2已完成并经用户确认关闭，原生桌面试玩移交后续补验。** 两条独立新档各45日无注入、满容量持续供料、五行供货、两种粪肥实际回流、收入再投资及46日冻结均通过。331项P7边界、19项GUI事件、12组/96张截图、V1/V0/历史回归、导出/解压各15项完整冒烟已执行。包含内嵌PCK的exe、README及逐文件manifest/SHA256；原始90日台账、哈希与命令详见[验收记录](docs/farming/phase07-v2-playtest.md)。当前schema11、默认V2、无旧档迁移、人数不限。原生Computer Use不可用，原生桌面全流程不得记为已通过；该补验不阻塞阶段关闭。
+
+**P8设计范围已确定，尚未开发。** 核心6物种、8新设施、24有效工艺＋另列堆肥变体、三层12研究，覆盖花源油料/净水/生物选矿与饲料/少量灵食；继承20×22与共享仓库。一人多设施、默认关闭的显式农务兼任共享12次成功工作/预算；研究按有效工作日，持续生产按目标与自动加工保留量。有限花源与手采共享、实际换水产污水、回收有损耗、矿料投入审计；45日回顾保留、90日完整发展验收。价格/数量/覆盖为设计初值，实际成本和经营未验收。用户选择全部回答后统一同步文档，本批仅文档，不切默认入口/schema；P7待办不作为前置，榨油已明确纳入P8、集热仍后置。
 
 现行V1：逐条摘要/时节小结、首次45天总计与三个时节小计已接入；无注入经营路线初始60→298，121项记录、51项原界面及79项Phase 6.5界面检查通过。独立包`dist/LingTianDemoV1-Windows-x64.zip`包含明亮矢量UI与占位世界美术，解压运行`LingTianDemoV1.exe`，说明见[demo-v1-操作说明](docs/farming/demo-v1-操作说明.md)。重建使用`tools/farming/build_v1_demo.ps1 -GodotExe <控制台路径>`，需匹配的Windows release模板；13项打包后冒烟通过。旧V1从升级当天开始记录，已过45天的旧档无法补造首次回顾。下述Phase记录为V0基线。
 
