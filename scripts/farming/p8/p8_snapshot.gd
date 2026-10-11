@@ -1,6 +1,7 @@
 extends RefCounted
-## Schema 12: the P8 namespace on the validated V2 body plus per-habitat
-## water-change day markers. No migration from V2 or early development saves.
+## Schema 13 adds the P8 operations section (facility ownership, production
+## strategies, reserves, backlog) and the P8 roster shape with farm duty.
+## No migration from V2, schema-12 development or earlier saves.
 const Common := preload("res://scripts/farming/v1/v1_snapshot.gd")
 const Scalars := preload("res://scripts/farming/v1/v1_world_state.gd")
 const Data := preload("res://scripts/farming/p8/p8_data.gd")
@@ -8,7 +9,9 @@ const Husbandry := preload("res://scripts/farming/v2/v2_husbandry.gd")
 const Ledger := preload("res://scripts/farming/v2/v2_resource_ledger.gd")
 const Reports := preload("res://scripts/farming/v2/v2_reports.gd")
 const Journal := preload("res://scripts/farming/v1/v1_journal.gd")
-const SCHEMA := 12
+const P8Workforce := preload("res://scripts/farming/p8/p8_workforce.gd")
+const P8Operations := preload("res://scripts/farming/p8/p8_operations.gd")
+const SCHEMA := 13
 
 static func fresh() -> Dictionary:
 	var snapshot: Dictionary = Common.fresh(Data, SCHEMA)
@@ -21,6 +24,12 @@ static func fresh() -> Dictionary:
 	snapshot["reports"] = Reports.fresh(0)
 	snapshot["preferences"] = {"watched": []}
 	snapshot["world"]["husbandry"] = {"habitats": [], "next_animal_uid": 1, "next_cycle_uid": 1}
+	snapshot["world"]["p8"] = {"facilities": [], "production": [], "reserves": [], "waiting": []}
+	var workers := []
+	for worker in snapshot["workforce"]["workers"]:
+		worker["farm_duty"] = {"enabled": false, "priority": "normal"}
+		workers.append(worker)
+	snapshot["workforce"]["workers"] = workers
 	return snapshot
 
 static func fail(reason: String) -> Dictionary:
@@ -35,30 +44,37 @@ static func normalize(value) -> Dictionary:
 	var raw_ledger = body.get("ledger", null)
 	var raw_reports = body.get("reports", null)
 	var raw_preferences = body.get("preferences", null)
-	var raw_husbandry = body.get("world", {}).get("husbandry", null) if body.get("world") is Dictionary else null
+	var world_section = body.get("world") if body.get("world") is Dictionary else {}
+	var raw_husbandry = world_section.get("husbandry", null) if world_section is Dictionary else null
+	var raw_operations = world_section.get("p8", null) if world_section is Dictionary else null
 	if body.has("ledger"):
 		body.erase("ledger")
 	if body.has("reports"):
 		body.erase("reports")
 	if body.has("preferences"):
 		body.erase("preferences")
-	if body.get("world") is Dictionary and body["world"].has("husbandry"):
-		body["world"].erase("husbandry")
-	var checked := Common.normalize(body, Data, SCHEMA, false)
+	if world_section is Dictionary:
+		if world_section.has("husbandry"):
+			world_section.erase("husbandry")
+		if world_section.has("p8"):
+			world_section.erase("p8")
+		body["world"] = world_section
+	var checked := Common.normalize(body, Data, SCHEMA, false, P8Workforce)
 	if not checked["ok"]:
 		return checked
-	if raw_ledger == null or raw_husbandry == null or raw_reports == null or raw_preferences == null:
-		return fail("P8快照缺少养殖、资源账、报表或偏好字段")
+	if raw_ledger == null or raw_husbandry == null or raw_reports == null or raw_preferences == null or raw_operations == null:
+		return fail("P8快照缺少养殖、运营、资源账、报表或偏好字段")
 	var day := int(checked["snapshot"]["clock"]["total_days"])
+	var workforce: Dictionary = checked["snapshot"]["workforce"]
 	var husbandry := _normalize_husbandry(raw_husbandry, day, checked["snapshot"]["world"])
 	if not husbandry["ok"]:
 		return husbandry
 	var ledger := Ledger.normalize(raw_ledger, day, checked["snapshot"]["inventory"], Data)
 	if not ledger["ok"]:
 		return ledger
-	var bindings := Husbandry.validate_caretakers(checked["snapshot"]["workforce"], checked["snapshot"]["world"], Data)
-	if not bindings["ok"]:
-		return bindings
+	var operations := P8Operations.normalize(raw_operations, day, checked["snapshot"]["world"], workforce, Data)
+	if not operations["ok"]:
+		return operations
 	var reports := Reports.normalize(raw_reports, day, Data)
 	if not reports["ok"]:
 		return reports
@@ -81,6 +97,7 @@ static func normalize(value) -> Dictionary:
 			return fail("关注资源非法或重复")
 		watched.append(item)
 	checked["snapshot"]["world"]["husbandry"] = husbandry["husbandry"]
+	checked["snapshot"]["world"]["p8"] = operations["operations"]
 	checked["snapshot"]["ledger"] = ledger["ledger"]
 	checked["snapshot"]["reports"] = reports["reports"]
 	checked["snapshot"]["preferences"] = {"watched": watched}

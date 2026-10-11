@@ -85,7 +85,7 @@ func _init(slot_store = null, catalog = Data, codec = Snapshot) -> void:
 	for ident in source_defs:
 		var position: Array = source_defs[ident]["position"]
 		_source_cells[Vector2i(int(position[0]), int(position[1]))] = ident
-	workforce = Workforce.new(self)
+	workforce = _make_workforce()
 	apply_snapshot(snapshot_type.fresh())
 
 func _error(reason: String) -> Dictionary:
@@ -112,6 +112,10 @@ func _facility_removed(_uid: int) -> void:
 
 func _settle_workforce(completed_day: int) -> void:
 	workforce.settle(completed_day)
+
+## Derived products swap the roster module; V1 keeps the shared workforce.
+func _make_workforce():
+	return Workforce.new(self)
 
 func _snapshot_applied(_snapshot: Dictionary) -> void:
 	pass

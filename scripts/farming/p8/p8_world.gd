@@ -4,11 +4,19 @@ extends "res://scripts/farming/v2/v2_world.gd"
 const P8Data := preload("res://scripts/farming/p8/p8_data.gd")
 const P8Snapshot := preload("res://scripts/farming/p8/p8_snapshot.gd")
 const P8Husbandry := preload("res://scripts/farming/p8/p8_husbandry.gd")
+const P8Operations := preload("res://scripts/farming/p8/p8_operations.gd")
+const P8Workforce := preload("res://scripts/farming/p8/p8_workforce.gd")
 
 ## Session-only transaction state: the settled candidate awaiting a successful
 ## write, and the pre-action state a failed commit restores. Never persisted.
 var _pending_day := {}
 var _day_checkpoint := {}
+## Facility ownership, production strategies, reserves and the scheduler.
+var operations
+
+func _init(slot_store = null) -> void:
+	operations = P8Operations.new(self)
+	super(slot_store)
 
 func _catalog():
 	return P8Data
@@ -18,6 +26,28 @@ func _codec():
 
 func _make_husbandry():
 	return P8Husbandry.new(self, P8Data.load_data())
+
+func _make_workforce():
+	return P8Workforce.new(self)
+
+func _settle_workforce(completed_day: int) -> void:
+	# The unified P8 scheduler replaces the V1/V2 settle: facilities, research
+	# (P8.c) and opted-in farm duty share one quota and budget per worker.
+	operations.settle(completed_day)
+
+func _facility_removed(uid: int) -> void:
+	super(uid)
+	operations.forget_facility(uid)
+
+func to_snapshot() -> Dictionary:
+	var snapshot := super.to_snapshot()
+	snapshot["world"]["p8"] = operations.to_save()
+	return snapshot
+
+func _snapshot_applied(snapshot: Dictionary) -> void:
+	super(snapshot)
+	if snapshot["world"].has("p8"):
+		operations.apply_save(snapshot["world"]["p8"])
 
 # --- Research gating -------------------------------------------------------
 

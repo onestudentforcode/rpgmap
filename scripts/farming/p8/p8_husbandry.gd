@@ -3,6 +3,11 @@ extends "res://scripts/farming/v2/v2_husbandry.gd"
 ## change that also produces wastewater stock (the T04 research sample source),
 ## and research-gated optional diets stay unselectable until unlocked.
 
+## P8 ownership lives in the operations registry, not on the worker row.
+func caretaker_of(facility_uid: int) -> Dictionary:
+	var owner: int = world.operations.owner_of(facility_uid)
+	return world.workforce._worker(owner) if owner > 0 else {}
+
 func ensure(facility_uid: int) -> Dictionary:
 	var habitat: Dictionary = super(facility_uid)
 	if habitat.has("water") and not habitat.has("water_change_day"):
