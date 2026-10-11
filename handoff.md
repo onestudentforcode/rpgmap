@@ -1,8 +1,8 @@
 # handoff — 跨机器开发交接
 
-> 最后更新：2026-10-11（P7/V2已关闭；P8范围问答完成，生态/工艺/研究与分阶段设计已统一起草）。
+> 最后更新：2026-10-11（P7/V2已关闭；P8总纲与P8.a～h八份独立开发文档已齐备、未实施）。
 > **现行版本：** [Phase7 / Demo V2](docs/farming/phase-07-V2养殖与资源循环.md)。默认`play.bat`/F5为V2；三槽`user://farm_demo_v2_slots`、schema11，无迁移；2×2圈舍/水场、4只容量、20×22及下方20×8水库、钢绵羊/滤藻鲤与专责负责人均实装。V2人数不限，一人一设施，不参与农务，按成功工作收费。双45日路线、完整导出/解压包及回归证据见[验收记录](docs/farming/phase07-v2-playtest.md)、[P7.f](docs/farming/phase-07f-试玩验收与V2交付.md)。软件交付通过，原生OS鼠标全流程未执行。
-> **下一阶段：** [P8生态产业网络与工艺研究](docs/farming/phase-08-生态产业网络与工艺研究.md)范围已确认，设计已起草、代码未开始。先读[资源/工艺表](docs/farming/phase-08-资源与工艺表.md)、[研究关系](docs/farming/phase-08-研究与生产关系.md)与[P8.a～h计划](docs/farming/phase-08-分阶段实施计划.md)，下一实施入口P8.a。新配数为待验证初值；多设施负责人/兼任尚未实现，现行仍为P7一人一设施。用户确认P7剩余待办不紧急，不将其作为P8前置。
+> **下一阶段：** [P8生态产业网络与工艺研究](docs/farming/phase-08-生态产业网络与工艺研究.md)范围已确认，总纲与八份开发稿已齐备、代码未开始。先读[资源/工艺表](docs/farming/phase-08-资源与工艺表.md)、[研究关系](docs/farming/phase-08-研究与生产关系.md)与[开发稿索引](docs/farming/phase-08-分阶段实施计划.md#独立开发文档索引)，下一实施入口[P8.a](docs/farming/phase-08a-数据配数与事务底座.md)。P8.e先做基础净化，进阶路线待P8.f提供砂砾后联验；新配数为待验证初值，多设施/兼任尚未实现，现行仍P7一人一设施。用户确认P7剩余待办不紧急，不作为P8前置。
 > **后续现场补验：** 原生Computer Use连接管道缺失，待有桌面控制条件时补完整新档→建设→养育/生产→回流/交易→委派→读档/回顾及窗口/全屏焦点检查。引擎GUI事件与截图已通过；原生人工测试尚未执行，经用户确认不阻塞P7关闭。
 > 交接对象：新机器上的开发者或 AI 会话。
 > **开工前必读：§2 新机器清单 → §6 命令自检；现行主线是种植模块，先读 [docs/farming/master-plan.md](docs/farming/master-plan.md)；改 demo 地图前必读 [docs/map-schema.md](docs/map-schema.md)。**
@@ -73,7 +73,8 @@
 | [docs/farming/phase-08-生态产业网络与工艺研究.md](docs/farming/phase-08-生态产业网络与工艺研究.md) | **当前P8范围、生态与人力/日界契约，未实施** | **推进当前主线先读** |
 | [docs/farming/phase-08-资源与工艺表.md](docs/farming/phase-08-资源与工艺表.md) | 6物种/8设施/24工艺，资源ID/价格/守恒/成本初值 | 配数与配置落地前 |
 | [docs/farming/phase-08-研究与生产关系.md](docs/farming/phase-08-研究与生产关系.md) | 三层12研究DAG、样本来源与三组生产网 | 实施解锁与路线前 |
-| [docs/farming/phase-08-分阶段实施计划.md](docs/farming/phase-08-分阶段实施计划.md) | P8.a～h顺序、边界验证、双90日无注入验收 | 每批实施前 |
+| [docs/farming/phase-08-分阶段实施计划.md](docs/farming/phase-08-分阶段实施计划.md) | P8.a～h八份开发稿索引、e/f联验、双90日门禁 | 每批实施前 |
+| [docs/farming/phase-08a-数据配数与事务底座.md](docs/farming/phase-08a-数据配数与事务底座.md) | 下一入口：独立档案、成本编译/分摊、日界候选及基础换水 | 实施P8.a前 |
 | [docs/farming/phase-07-V2养殖与资源循环.md](docs/farming/phase-07-V2养殖与资源循环.md) | 已关闭P7 / V2范围、实现与验收 | 核对现行基线时 |
 | [docs/farming/phase-07a-验收记录.md](docs/farming/phase-07a-验收记录.md) | 已完成底座、实际10日台账与尚未验收养殖边界 | 核对当前运行事实 |
 | [docs/farming/phase-07b-养殖基础与成长.md](docs/farming/phase-07b-养殖基础与成长.md) | 已完成幼体/成长/基础维护、水体与资源一览的设计依据 | 调整既有养殖时 |
