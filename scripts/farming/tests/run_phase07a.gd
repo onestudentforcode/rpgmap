@@ -36,7 +36,7 @@ func _run() -> void:
 	check(not Snapshot.normalize(bad)["ok"],"20x22 environment is required")
 	var initial := world.to_snapshot()
 	check(not world.till(Vector2i(0,14))["ok"] and world.to_snapshot() == initial,"water cannot be tilled, failure is free")
-	world.inventory.add("raw_wood",10); world.inventory.add("raw_stone",20)
+	world.grant_scaffold({"raw_wood":10,"raw_stone":20})
 	initial = world.to_snapshot()
 	for entry in [[Vector2i(0,0),"fish_pond"],[Vector2i(0,13),"fish_pond"],[Vector2i(19,21),"fish_pond"],[Vector2i(0,14),"pen"],[Vector2i(0,14),"algae_tank"]]:
 		check(not world.build_facility(entry[0],entry[1])["ok"] and world.to_snapshot() == initial,"invalid footprint is atomic: "+str(entry))
