@@ -84,8 +84,8 @@ func is_bee_habitat(facility_uid: int) -> bool:
 	return not habitat.is_empty() and String(habitat["species_id"]) == "bell_bee"
 
 ## Bees add one live flower share per unfed unit on top of the V2 quote.
-func quote_maintenance(facility_uid: int) -> Dictionary:
-	var quote: Dictionary = super(facility_uid)
+func _bee_quote(facility_uid: int) -> Dictionary:
+	var quote: Dictionary = super.quote_maintenance(facility_uid)
 	if not quote["ok"] or not is_bee_habitat(facility_uid):
 		return quote
 	var needed := int(quote["basic"]["targets"])
@@ -99,9 +99,7 @@ func quote_maintenance(facility_uid: int) -> Dictionary:
 
 ## Whole-hive action: basic feeding draws real water plus internal flower
 ## shares; the honey cycle starts for idle adults (no extra stock inputs).
-func maintain(facility_uid: int, operator: String = "player", service_day: int = -1) -> Dictionary:
-	if not is_bee_habitat(facility_uid):
-		return super(facility_uid, operator, service_day)
+func _bee_maintain(facility_uid: int, operator: String = "player", service_day: int = -1) -> Dictionary:
 	var checked: Dictionary = world._can_act(int(settings["maintenance_ap"]))
 	if not checked["ok"]:
 		return checked
@@ -159,4 +157,161 @@ func maintain(facility_uid: int, operator: String = "player", service_day: int =
 			"count": started, "items": {}, "note": "开启酿蜜周期"})
 	var outcome := {"ok": true, "served": served, "started": started, "shares": consumed_shares.duplicate()}
 	outcome["detail"] = ("基础完成，%d群开启酿蜜周期" % started) if started > 0 else "基础完成；清水×%d，内部花源%d份" % [served, served]
+	return world._finish(int(settings["maintenance_ap"]), outcome)
+
+# --- P8.e purifying mats -----------------------------------------------------
+
+func is_mat_habitat(facility_uid: int) -> bool:
+	if not world.facilities.has(facility_uid):
+		return false
+	var habitat := habitat_of(facility_uid)
+	return not habitat.is_empty() and String(habitat["species_id"]) == "purifying_mat"
+
+## Mat maintenance: only juveniles drink culture water; running adults advance
+## on their stamped service day without any base-diet input; idle adults start
+## processing cycles whose inputs are paid once at the cycle start.
+func _mat_quote(facility_uid: int) -> Dictionary:
+	if not world.facilities.has(facility_uid):
+		return _error("未知设施")
+	var habitat := habitat_of(facility_uid)
+	if habitat.is_empty():
+		return _error("养殖配置尚未初始化")
+	var juveniles := 0
+	var runners := 0
+	var idle_adults := 0
+	for individual in habitat["individuals"]:
+		if int(individual["base_service"]["day"]) == _today():
+			continue
+		if individual["stage"] == "juvenile":
+			juveniles += 1
+		elif not individual.get("cycle", {}).is_empty():
+			# Ready units wait for the claim; they take no further paid service.
+			if String(individual["cycle"]["status"]) == "running":
+				runners += 1
+		else:
+			idle_adults += 1
+	var basic := {"targets": 0, "inputs": {}, "ok": false, "reason": ""}
+	if juveniles > 0:
+		basic["targets"] = juveniles
+		basic["inputs"] = _scale(diet_inputs("purifying_mat", "base_diets", String(habitat["basic_diet_id"])), juveniles)
+		basic["ok"] = true
+		for ident in basic["inputs"]:
+			if not world.inventory.has(ident, int(basic["inputs"][ident])):
+				basic["ok"] = false
+				basic["reason"] = "缺少培养清水：" + world._items[ident]["name"]
+				break
+	var special := {"targets": 0, "inputs": {}, "ok": false, "reason": "", "enabled": bool(habitat["production_enabled"])}
+	if not bool(habitat["production_enabled"]):
+		special["reason"] = "已停止启动新批次；已有批次仍按原投入继续"
+	elif idle_adults > 0:
+		special["targets"] = idle_adults
+		special["inputs"] = _scale(diet_inputs("purifying_mat", "special_diets", String(habitat["special_diet_id"])), idle_adults)
+		special["ok"] = true
+		for ident in special["inputs"]:
+			var reserved := int(basic["inputs"].get(ident, 0)) if basic["ok"] else 0
+			if world.inventory.count(ident) - reserved < int(special["inputs"][ident]):
+				special["ok"] = false
+				special["reason"] = "缺少处理投入：" + world._items[ident]["name"]
+				break
+	elif juveniles == 0 and runners == 0:
+		special["reason"] = "没有空闲成体可启动批次"
+	if not basic["ok"] and basic["targets"] > 0:
+		return _error(String(basic["reason"]))
+	if juveniles == 0 and runners == 0 and int(special["targets"]) == 0:
+		if habitat["individuals"].is_empty():
+			return _error("床内没有培养单位")
+		return _error("全部单位今日已维护")
+	var work: bool = (int(basic["targets"]) > 0 and basic["ok"]) or runners > 0 or (int(special["targets"]) > 0 and special["ok"])
+	if not work:
+		var reason := String(basic["reason"]) if int(basic["targets"]) > 0 else ""
+		if int(special["targets"]) > 0:
+			reason += "；批次未启动：" + String(special["reason"])
+		return _error(reason if not reason.is_empty() else "本次维护没有可执行工作")
+	return {"ok": true, "basic": basic, "special": special, "runners": runners, "ap": int(settings["maintenance_ap"])}
+
+func maintain(facility_uid: int, operator: String = "player", service_day: int = -1) -> Dictionary:
+	if is_bee_habitat(facility_uid):
+		return _bee_maintain(facility_uid, operator, service_day)
+	if is_mat_habitat(facility_uid):
+		return _mat_maintain(facility_uid, operator, service_day)
+	return super(facility_uid, operator, service_day)
+
+func quote_maintenance(facility_uid: int) -> Dictionary:
+	if is_bee_habitat(facility_uid):
+		return _bee_quote(facility_uid)
+	if is_mat_habitat(facility_uid):
+		return _mat_quote(facility_uid)
+	return super(facility_uid)
+
+func _mat_maintain(facility_uid: int, operator: String = "player", service_day: int = -1) -> Dictionary:
+	var checked: Dictionary = world._can_act(int(settings["maintenance_ap"]))
+	if not checked["ok"]:
+		return checked
+	var quote := _mat_quote(facility_uid)
+	if not quote["ok"]:
+		return quote
+	var habitat := habitat_of(facility_uid)
+	var day: int = service_day if service_day >= 0 else world.clock.total_days
+	var basic: Dictionary = quote["basic"]
+	var special: Dictionary = quote["special"]
+	var inputs := {}
+	var juveniles := 0
+	var stamped := 0
+	var started := 0
+	if int(basic["targets"]) > 0 and basic["ok"]:
+		for ident in basic["inputs"]:
+			world.inventory.remove(ident, int(basic["inputs"][ident]))
+			inputs[ident] = int(basic["inputs"][ident])
+		world._record_flow({}, basic["inputs"], "菌毯培养")
+	var diet_id: String = String(habitat["basic_diet_id"])
+	var diet := diet_inputs("purifying_mat", "base_diets", diet_id)
+	var species: Dictionary = species_defs["purifying_mat"]
+	var special_outputs := diet_outputs("purifying_mat", "special_diets", String(habitat["special_diet_id"]))
+	for individual in habitat["individuals"]:
+		if int(individual["base_service"]["day"]) == _today():
+			continue
+		if individual["stage"] == "juvenile":
+			individual["base_service"] = {"day": day, "diet_id": diet_id, "inputs": diet.duplicate(), "operator": operator}
+			juveniles += 1
+			stamped += 1
+		elif not individual.get("cycle", {}).is_empty() and String(individual["cycle"]["status"]) == "running":
+			# Running batches advance on the stamped service day; the inputs
+			# were paid in full once at the cycle start.
+			individual["base_service"] = {"day": day, "diet_id": diet_id, "inputs": {}, "operator": operator}
+			stamped += 1
+	if int(special["targets"]) > 0 and special["ok"]:
+		for ident in special["inputs"]:
+			world.inventory.remove(ident, int(special["inputs"][ident]))
+			inputs[ident] = int(inputs.get(ident, 0)) + int(special["inputs"][ident])
+		world._record_flow({}, special["inputs"], "净化启动")
+		for individual in habitat["individuals"]:
+			if individual["stage"] != "adult" or not individual.get("cycle", {}).is_empty() or int(individual["base_service"]["day"]) == _today():
+				continue
+			var cycle_uid := int(state["next_cycle_uid"])
+			state["next_cycle_uid"] = cycle_uid + 1
+			individual["base_service"] = {"day": day, "diet_id": diet_id, "inputs": {}, "operator": operator}
+			individual["cycle"] = {"uid": cycle_uid, "diet_id": String(habitat["special_diet_id"]),
+				"start_day": day, "inputs": diet_inputs("purifying_mat", "special_diets", String(habitat["special_diet_id"])),
+				"outputs": special_outputs.duplicate(), "progress": 0,
+				"goal": int(species["cycle_days"]) * 100, "status": "running", "ready_day": -1}
+			started += 1
+			stamped += 1
+	if stamped == 0:
+		return _error("本次维护没有可执行工作")
+	if juveniles > 0:
+		world._report_event({"category": "maintenance", "facility_uid": facility_uid, "kind": "基础服务",
+			"count": juveniles, "items": quote["basic"]["inputs"], "note": "幼体培养清水"})
+	if started > 0:
+		world._report_event({"category": "maintenance", "facility_uid": facility_uid, "kind": "特殊投料",
+			"count": started, "items": quote["special"]["inputs"], "note": "启动净化批次"})
+	if juveniles == 0 and started == 0:
+		world._report_event({"category": "maintenance", "facility_uid": facility_uid, "kind": "基础服务",
+			"count": int(quote["runners"]), "items": {}, "note": "推进在制批次"})
+	var outcome := {"ok": true, "served": stamped, "started": started, "inputs": inputs}
+	if started > 0:
+		outcome["detail"] = "培养%d幼体；启动%d个净化批次" % [juveniles, started]
+	elif juveniles > 0:
+		outcome["detail"] = "培养%d幼体；推进%d个在制批次" % [juveniles, int(quote["runners"])]
+	else:
+		outcome["detail"] = "推进%d个在制批次" % int(quote["runners"])
 	return world._finish(int(settings["maintenance_ap"]), outcome)

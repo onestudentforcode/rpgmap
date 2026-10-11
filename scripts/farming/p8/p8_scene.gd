@@ -485,6 +485,10 @@ func _crop_extra(crop: Dictionary) -> void:
 		_label(sidebar,"蜂群利用本株份额可为本周期的油籽收获+1（多次/多箱不叠加）。")
 
 func _habitat_extra(habitat: Dictionary) -> void:
+	if String(habitat["species_id"]) == "purifying_mat":
+		_label(sidebar,"培养单位购入即占位（不入仓库）；幼体每日清水1培养，成体只按处理配方取料，无批次时待机不扣水。")
+		_label(sidebar,"污水仅来自水场真实换水；炭砂滤料所需砂砾由啮岩鼹破石取得（P8.f路线）。")
+		return
 	if String(habitat["species_id"]) != "bell_bee":
 		return
 	var uid := int(habitat["facility_uid"])

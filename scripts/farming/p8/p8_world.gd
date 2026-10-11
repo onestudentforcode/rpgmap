@@ -167,6 +167,8 @@ func plant(cell: Vector2i, crop_id: String) -> Dictionary:
 	return super(cell, crop_id)
 
 func buy(item_id: String, quantity) -> Dictionary:
+	if item_id == "purifying_mat_culture":
+		return _error("培养单位请在净水菌床面板直接购入：扣款即占位，不入仓库")
 	if _items.has(item_id):
 		var blocked := research_block(String(_items[item_id].get("research", "")))
 		if not blocked.is_empty():
