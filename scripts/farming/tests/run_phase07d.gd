@@ -132,6 +132,12 @@ func _patrol_checks() -> void:
 	world.workforce.configure(1,1,false,caretaker["priorities"],[])
 	world.grant_scaffold({"fodder_grass":4,"clean_water":4,"iron_ore":2})
 	world.end_day()
+	# Reach a genuinely ready cycle: claiming consumes the one-step budget,
+	# leaving a valid feed/restart job blocked. A completed one-job day is not
+	# a budget failure merely because its budget happens to be exhausted.
+	world.end_day()
+	world.grant_scaffold({"fodder_grass":4,"clean_water":4})
+	world.end_day()
 	var budget_row: Dictionary = world.workforce.state["report"]["workers"][0]
 	check(int(budget_row["fee"]) <= 1 and budget_row["caretaker"]["skipped"].has("预算或元石不足"),"a tight budget stops the patrol with an explicit reason")
 	world.workforce.configure(1,12,false,caretaker["priorities"],[])
