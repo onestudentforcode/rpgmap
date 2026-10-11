@@ -1,8 +1,8 @@
 # handoff — 跨机器开发交接
 
-> 最后更新：2026-10-11（Demo V0、V1及Phase 6.5已完成；Phase 7 / V2的P7.a已实装，P7.b设计稿已起草，尚未实施）。
-> **现行迭代：** [Phase 7 / Demo V2养殖与资源循环](docs/farming/phase-07-V2养殖与资源循环.md)：钢绵羊＋滤藻鲤，仅购幼体，不做繁殖/死亡/疾病/寿命。圈舍/水场2×2、三栏配置、同种容量4含幼体，玩家/雇工整体维护。基础20×22、下方20×8水库；付费扩张后置、无需存档迁移。P7.a已完成操作/配数/水库/schema7三槽，[验收记录](docs/farming/phase-07a-验收记录.md)含10日无注入台账。[P7.b设计稿](docs/farming/phase-07b-养殖基础与成长.md)已完成问答，覆盖购入/基础服务/成长/水体与资源一览；特殊生产和养殖雇工在后续阶段。默认`play.bat`/F5仍V1，开发V2用`play.bat v2`。
-> **文档推进规则：** 用户要求每个Phase 7小阶段起草前先提问，当前仅展开P7.b；不提前起草P7.c～f。新增资源统计建议为真实日收支＋7日均值，周期材料只在实际领取日入账；关注材料主界面展示建议P7.e接入。草稿不代表实现或验收完成，拟议schema8尚未改代码。
+> 最后更新：2026-10-11（Demo V0、V1及Phase 6.5已完成；Phase 7 / V2的P7.a已实装，P7.b～f设计齐备、尚未实施/验收）。
+> **现行迭代：** [Phase 7 / Demo V2养殖与资源循环](docs/farming/phase-07-V2养殖与资源循环.md)：钢绵羊＋滤藻鲤，仅购幼体，不做繁殖/死亡/疾病/寿命。圈舍/水场2×2、三栏配置、同种容量4含幼体，玩家/专责负责人整体维护，特殊栏可暂不生产。基础20×22、下方20×8水库；付费扩张后置、无需存档迁移。P7.a已完成操作/配数/水库/schema7三槽，[验收记录](docs/farming/phase-07a-验收记录.md)含10日无注入台账。下一步实施[P7.b](docs/farming/phase-07b-养殖基础与成长.md)：购入/基础服务/成长/水体与资源账；再按c～f生产、人力、界面和交付推进。默认`play.bat`/F5仍V1，开发V2用`play.bat v2`。
+> **文档推进规则：** P7.b～f已分别先问答再起草，本轮按用户要求全部确定后统一同步，不重复询问已确认范围。资源统计为实际日收支＋已结算7日均值，未领取不入账；关注初始空、显示用途、按槽日结保存。负责人一人一设施、不兼职、不引入工种，V2开放人数且成功1元石/无固定日薪。两条独立45日无注入路线通过、完整包验收后默认V2并保留旧显式入口。草稿不代表交付，实际仍schema7/人数上限2；拟议schema8与新字段尚未改代码。
 > 交接对象：新机器上的开发者或 AI 会话。
 > **开工前必读：§2 新机器清单 → §6 命令自检；现行主线是种植模块，先读 [docs/farming/master-plan.md](docs/farming/master-plan.md)；改 demo 地图前必读 [docs/map-schema.md](docs/map-schema.md)。**
 
@@ -70,7 +70,12 @@
 |------|------|--------|
 | [docs/farming/master-plan.md](docs/farming/master-plan.md) | **灵植经营模块总 Phase 规划（现行主线）** | **开工先读** |
 | [docs/farming/phase-07-V2养殖与资源循环.md](docs/farming/phase-07-V2养殖与资源循环.md) | **当前Phase 7 / V2范围、分阶段推进与验收** | **推进当前主线时** |
-| [docs/farming/phase-07b-养殖基础与成长.md](docs/farming/phase-07b-养殖基础与成长.md) | **当前设计稿：幼体/成长/基础维护、水体与资源一览** | 实施P7.b前 |
+| [docs/farming/phase-07a-验收记录.md](docs/farming/phase-07a-验收记录.md) | 已完成底座、实际10日台账与尚未验收养殖边界 | 核对当前运行事实 |
+| [docs/farming/phase-07b-养殖基础与成长.md](docs/farming/phase-07b-养殖基础与成长.md) | **下一实施阶段：幼体/成长/基础维护、水体与资源一览** | 实施P7.b前 |
+| [docs/farming/phase-07c-特殊生产与养殖回流.md](docs/farming/phase-07c-特殊生产与养殖回流.md) | 暂不生产、特殊周期/唯一收取、粪肥回流与供货 | 实施P7.c前 |
+| [docs/farming/phase-07d-设施负责人.md](docs/farming/phase-07d-设施负责人.md) | 一人一设施不兼职、开放人数、巡栏/计件费与现金风险 | 实施P7.d前 |
+| [docs/farming/phase-07e-经营总览与资源关注.md](docs/farming/phase-07e-经营总览与资源关注.md) | 总览定位、初始空关注提示/按槽保存、条目与45天累计 | 实施P7.e前 |
+| [docs/farming/phase-07f-试玩验收与V2交付.md](docs/farming/phase-07f-试玩验收与V2交付.md) | 双路线45日、回归/UI/Windows包及验收后默认切V2 | 实施P7.f前 |
 | [docs/farming/phase-06.5-UI美化与交互完善.md](docs/farming/phase-06.5-UI美化与交互完善.md) | 已验收UI基线、三个批次与验收规则 | 调整界面时 |
 | [docs/farming/ui-design/phase65-interface.md](docs/farming/ui-design/phase65-interface.md) | 用户决定、布局/尺寸、图标与四条高频流程；含交互草图入口 | 实施Phase 6.5时 |
 | [docs/farming/demo-v1-plan.md](docs/farming/demo-v1-plan.md) | 已关闭V1的玩法基线、实施与验收记录 | 查阅现行玩法时 |
@@ -140,7 +145,7 @@ play.bat farm0                             # Phase 0 拼接验证场景（历史
 
 **Demo V1已关闭，Phase 6.5也已实施并验收。** 默认`play.bat`/F5为明亮V1界面，V0通过`play.bat v0`保留；历史应用标识不变。2560×1440主规格及三种兼容窗口、100/125/150% UI缩放通过，58个SVG与独立设置接入，79项新增UI检查、原有回归及13项发行版冒烟通过。具体见[Phase 6.5关闭记录](docs/farming/phase-06.5-UI美化与交互完善.md)。完整世界场景美术仍需另批，后续世界图片继续核对拼接、机位及光照。
 
-**Phase 7 / V2的P7.a已完成，P7.b仍为设计稿。** P7.a已接入默认手动/委托切换、侧栏动作前移、独立V2数据/schema7三槽、20×22与水域占地；草料种植和藻料加工可运行，养殖设施仍为空。按[P7.b](docs/farming/phase-07b-养殖基础与成长.md)接购买幼体、三栏提示、实际服务/成长、水体与资源账；特殊生产在P7.c、养殖雇工在P7.d、主界面关注条建议P7.e。每小阶段先问再起草，既有确认不重复询问；繁殖、付费扩张和迁移不加入本阶段。P7.b新增快照契约建议schema8，目前代码仍7，不要把草稿版本当运行版本。
+**Phase 7 / V2的P7.a已完成，P7.b～f均为设计稿、已完成逐阶段问答。** P7.a已接入默认手动/委托切换、侧栏动作前移、独立V2数据/schema7三槽、20×22与水域占地；草料种植和藻料加工可运行，养殖设施仍为空。下一步按[P7.b](docs/farming/phase-07b-养殖基础与成长.md)接幼体、三栏提示、实际服务/成长、水体与资源账，再按c→d→e→f实施。特殊可暂不生产；负责人专责一设施、不兼职、无工种/设施优先级，取消V2原2人固定上限而保持成功1元石/无固定日薪；总览定位与空关注提示在e。最终两路线各45日无注入，手动后托管/额外早售粮早托管，验证4只/尾供料、回流/供货/再投资及Windows包，验收后默认V2。繁殖、付费扩张和迁移不加入；P7.b拟议schema8，实际仍7，版本按实施契约回写。
 
 现行V1：逐条摘要/时节小结、首次45天总计与三个时节小计已接入；无注入经营路线初始60→298，121项记录、51项原界面及79项Phase 6.5界面检查通过。独立包`dist/LingTianDemoV1-Windows-x64.zip`包含明亮矢量UI与占位世界美术，解压运行`LingTianDemoV1.exe`，说明见[demo-v1-操作说明](docs/farming/demo-v1-操作说明.md)。重建使用`tools/farming/build_v1_demo.ps1 -GodotExe <控制台路径>`，需匹配的Windows release模板；13项打包后冒烟通过。旧V1从升级当天开始记录，已过45天的旧档无法补造首次回顾。下述Phase记录为V0基线。
 
