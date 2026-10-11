@@ -22,6 +22,7 @@ try {
         if ($exitCode -ne 0 -or $result -match 'SCRIPT ERROR:|ERROR:' -or $result -notmatch $marker) { throw "P8 check failed: $name ($log)" }
     }
     Invoke-GodotCheck 'phase08a' @('--script','res://scripts/farming/tests/run_phase08a.gd') 'PHASE08A TEST OK'
+    Invoke-GodotCheck 'phase08b' @('--script','res://scripts/farming/tests/run_phase08b.gd') 'PHASE08B TEST OK'
     Invoke-GodotCheck 'release' @('res://scenes/farming/farm_p8.tscn','--','--p8-smoke') 'P8 RELEASE SMOKE OK'
     Write-Output 'P8 P8.a SUITE OK'
 } finally { Pop-Location }

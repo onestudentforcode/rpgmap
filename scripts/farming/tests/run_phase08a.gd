@@ -56,7 +56,7 @@ func _namespace() -> void:
 	check(world.data_source.load_data()["product"] == "farm_demo_p8", "P8 product identity")
 	check(world._items.size() == 63 and world.facility_defs.size() == 15, "63 resources and 15 facilities registered")
 	check(world.recipe_defs.size() == 40 and world.crop_defs.size() == 7, "40 recipes and 7 crops registered")
-	check(P8Snapshot.fresh()["schema"] == 12, "schema 12 snapshots")
+	check(P8Snapshot.fresh()["schema"] == 13, "schema 13 snapshots")
 	check(not P8Snapshot.normalize(V2Snapshot.fresh())["ok"], "V2 snapshots rejected by the P8 codec")
 	check(not V2Snapshot.normalize(P8Snapshot.fresh())["ok"], "P8 snapshots rejected by the V2 codec")
 	check(world.start_new(1)["ok"], "start a P8 slot")
