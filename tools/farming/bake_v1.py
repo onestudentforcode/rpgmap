@@ -91,7 +91,7 @@ def _compile(source, product='farm_demo_v1', providers=None, map_data=None):
         lit_cells |= cells
     workers = config['workers']
     require(set(workers) == {'fee_per_success', 'daily_work_limit', 'max_workers', 'default_budget', 'water_threshold', 'fertility_threshold'}, 'incomplete worker config')
-    require(integer(workers['fee_per_success'], 1) and integer(workers['daily_work_limit'], 1, 100) and integer(workers['max_workers'], 1, 2) and integer(workers['default_budget']), 'invalid worker capacity/fee')
+    require(integer(workers['fee_per_success'], 1) and integer(workers['daily_work_limit'], 1, 100) and integer(workers['max_workers'], 0, 2) and integer(workers['default_budget']), 'invalid worker capacity/fee')
     require(integer(workers['water_threshold'], 1, 100) and integer(workers['fertility_threshold'], 1, 100), 'invalid worker care threshold')
     for ident, item in resources.items():
         require(item['element'] in ELEMENTS and item['form'] in ['solid', 'liquid', 'gas', 'energy'] and item['stage'] in ['primary', 'intermediate', 'refined'], f'{ident}: classification')

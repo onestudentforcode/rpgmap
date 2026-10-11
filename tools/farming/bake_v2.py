@@ -21,6 +21,7 @@ def providers(source):
     for ident, facility in facilities.items():
         require(facility.get('terrain','land') in ('land','water'), f'{ident}: unknown build terrain')
         require(facility.get('terrain','land') != 'water' or ident == 'fish_pond', f'{ident}: only water farms use water terrain')
+    require(source['config']['workers']['max_workers'] == 0, 'V2 must drop the fixed worker cap')
     h = source['husbandry']
     require(h['reference_population'] == 4 and h['maintenance_ap'] == 1 and h['claim_ap'] == 1, 'invalid whole-facility reference')
     require(h['base_missing'] == 'pause' and h['special_consumption'] == 'cycle_start' and h['service_day'] == 'before_day_end' and h['ready_requires_base'] is True, 'invalid service policy')
