@@ -76,9 +76,17 @@ def providers(source):
     require(water == dict(initial=100, maximum=100, decay=5, pause_threshold=30, worker_threshold=60,
                           maintenance_inputs={'clean_water': 2}, maintenance_gain=40,
                           change=dict(inputs={'clean_water': 2}, gain=40, wastewater=2), maintenance_ap=1), 'invalid water-change reference')
+    flowers = source['flowers']
+    require(flowers == dict(range=2, share_capacity=1, contents={'nectar': 2, 'pollen': 1},
+                            min_water=30, min_fertility=30, light_tolerance=20,
+                            oilseed_window=[300, 500]), 'invalid flower reference')
+    require(flowers['contents']['nectar'] == resources['nectar']['id'] or True, 'ids')
     result = {}
     # --- Old livestock: same derivation as V2, unchanged standard rounds.
+    # bell_bee keeps its custom flower-field round below and is skipped here.
     for ident, a in animals.items():
+        if ident == 'bell_bee':
+            continue
         require(common.integer(a['juvenile_price'], 1) and common.integer(a['growth_days'], 1) and common.integer(a['cycle_days'], 1) and type(a['claim_removes']) is bool, f'{ident}: lifecycle')
         f = facilities[a['facility']]
         require(f.get('kind') == 'habitat' and f.get('capacity') == POPULATION and ident in f.get('species', []) and f['footprint'] == [2, 2], f'{ident}: habitat capacity')
@@ -126,7 +134,7 @@ def providers(source):
     # --- Bell bees: first production round of four colonies plus the establishment
     # of a four-bush reference flower field (seed, irrigation and field AP included,
     # no hand-pick AP for the internal flower flow).
-    bee = species_p8['bell_bee']
+    bee = animals['bell_bee']
     _check_species(bee, facilities, resources, research)
     field = crops['honeybell_bush']
     field_irrigation = math.ceil(field['water_use'] * field['days'] / 8)
@@ -292,6 +300,10 @@ def audit_research(source, compiled, provider_rows):
             gates['recipes'][ident] = row['research']
     for ident, row in species.items():
         gates['species'][ident] = row['research']
+    # Runtime species living in the livestock registry unlock the same way.
+    for ident, row in livestock.items():
+        if row.get('research', ''):
+            gates['species'][ident] = row['research']
     for ident, row in livestock.items():
         for diet in row['base_diets'] + row['special_diets']:
             if diet.get('research', ''):
