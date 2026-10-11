@@ -1,7 +1,7 @@
 # handoff — 跨机器开发交接
 
 > 最后更新：2026-10-11（Demo V0、V1及Phase 6.5已完成；Phase 7 / V2范围已确认，配数待补，代码未实施）。
-> **现行迭代：** [Phase 7 / Demo V2养殖与资源循环](docs/farming/phase-07-V2养殖与资源循环.md)：钢绵羊＋滤藻鲤，仅购幼体，不做繁殖/死亡/疾病/寿命。圈舍/水场2×2、三栏配置（动物/基础食物/特殊食物）、同种容量4且幼体计数，由玩家或雇工整体维护。原20×14陆地下接20×8水库，基础20×22，水场只在水库建造；付费扩张后置，无需旧档兼容或迁移。下一批补资源与配数，玩家主动AP入口列为P7.a。已验收的[Phase 6.5](docs/farming/phase-06.5-UI美化与交互完善.md)为视觉基线，当前代码及默认`play.bat`/F5仍为V1。
+> **现行迭代：** [Phase 7 / Demo V2养殖与资源循环](docs/farming/phase-07-V2养殖与资源循环.md)：钢绵羊＋滤藻鲤，仅购幼体，不做繁殖/死亡/疾病/寿命。圈舍/水场2×2、三栏配置（动物/基础食物/特殊食物）、同种容量4且幼体计数，由玩家或雇工整体维护。原20×14陆地下接20×8水库，基础20×22，水场只在水库建造；付费扩张后置，无需旧档兼容或迁移。P7.a已完成操作入口、配数审计、20×22水库地图与V2独立schema7三槽；[验收记录](docs/farming/phase-07a-验收记录.md)含10日无注入台账。下一批P7.b/c实现购买幼体、三栏配置、成长、维护、水体与产出。已验收的[Phase 6.5](docs/farming/phase-06.5-UI美化与交互完善.md)为视觉基线，当前代码及默认`play.bat`/F5仍为V1。
 > 交接对象：新机器上的开发者或 AI 会话。
 > **开工前必读：§2 新机器清单 → §6 命令自检；现行主线是种植模块，先读 [docs/farming/master-plan.md](docs/farming/master-plan.md)；改 demo 地图前必读 [docs/map-schema.md](docs/map-schema.md)。**
 
@@ -24,7 +24,7 @@
    - 或直接改 `play.bat` 顶部的默认路径
 5. 首次运行 `test.bat`：执行当前种植模块的资产QC、工具测试、农场流程和独立V1测试；`test-v1.bat`可单跑V1编译产物、三槽/报价、种植/环境/资源点、加工/回流、订单/rank/经济及普通雇工/框选派工界面检查；
    **预期输出 FARMING TEST SUITE OK**；`play.bat --selftest`单跑V1隔离冒烟，V0逻辑用`play.bat farm --farmtest`。
-6. 运行`play.bat`或Godot F5进入V1明亮界面，首次选择独立V1槽新建；`play.bat v1`等价。V0用`play.bat v0`，旧演示用`play.bat demo`，历史phase00用`play.bat farm0`。
+6. 运行`play.bat`或Godot F5进入V1明亮界面，首次选择独立V1槽新建；`play.bat v1`等价。V2开发场景用`play.bat v2`，独立验收`test-v2.bat`；养殖运行模型仍待接入。V0用`play.bat v0`，旧演示用`play.bat demo`，历史phase00用`play.bat farm0`。
 
 ## 3. 当前状态
 
