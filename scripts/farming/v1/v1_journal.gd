@@ -58,12 +58,12 @@ static func settle(state: Dictionary, day: int, cash: int, inventory: Dictionary
 			state["end_inventory"] = inventory.duplicate(true)
 	state["pending"] = bucket()
 
-static func _normalize_bucket(value) -> Dictionary:
+static func _normalize_bucket(value, catalog = Data) -> Dictionary:
 	if not Scalars.exact(value,COUNTS+CASH): return Scalars.fail("经营统计字段非法")
-	var crops := Data.definitions("crops")
-	var recipes := Data.definitions("recipes")
-	var items := Data.resources(Data.load_data())
-	var facilities := Data.definitions("facilities")
+	var crops = catalog.definitions("crops")
+	var recipes = catalog.definitions("recipes")
+	var items = catalog.resources(catalog.load_data())
+	var facilities = catalog.definitions("facilities")
 	var allowed := {"plantings":crops,"harvests":crops,"matured":crops,"cleared":crops,
 		"produce":items,"collected":items,"processed":items,"delivered_items":items,
 		"batches_started":recipes,"batches_completed":recipes,"buildings":facilities,
@@ -82,23 +82,23 @@ static func _normalize_bucket(value) -> Dictionary:
 	if not Scalars.whole(income(out)) or not Scalars.whole(expense(out)): return Scalars.fail("经营合计越界")
 	return {"ok":true,"bucket":out}
 
-static func normalize(value, day: int) -> Dictionary:
+static func normalize(value, day: int, catalog = Data) -> Dictionary:
 	if not Scalars.exact(value,fresh().keys()) or not Scalars.whole(value["start_day"],0,day) or not Scalars.whole(value["start_cash"]) or not value["frozen"] is bool or value["frozen"] != (day >= 45) or not value["terms"] is Array or value["terms"].size() != 3 or not value["history"] is Array or value["history"].size() > mini(15,day-int(value["start_day"])):
 		return Scalars.fail("经营记录日期或结构非法")
 	var out := fresh(int(value["start_day"]),int(value["start_cash"]))
 	out["frozen"] = value["frozen"]
 	for index in range(3):
-		var checked := _normalize_bucket(value["terms"][index])
+		var checked := _normalize_bucket(value["terms"][index], catalog)
 		if not checked["ok"]: return checked
 		if (index*15 >= day or (index+1)*15 <= int(value["start_day"])) and checked["bucket"] != bucket(): return Scalars.fail("未经历时节不能有统计")
 		out["terms"][index] = checked["bucket"]
-	var pending := _normalize_bucket(value["pending"])
+	var pending := _normalize_bucket(value["pending"], catalog)
 	if not pending["ok"]: return pending
 	out["pending"] = pending["bucket"]
 	for index in range(value["history"].size()):
 		var row = value["history"][index]
 		if not Scalars.exact(row,["day","totals","warnings"]) or not Scalars.whole(row["day"],day-value["history"].size()+index+1,day-value["history"].size()+index+1) or not row["warnings"] is Array or row["warnings"].size() > 2: return Scalars.fail("日报日期或告警非法")
-		var checked := _normalize_bucket(row["totals"])
+		var checked := _normalize_bucket(row["totals"], catalog)
 		if not checked["ok"]: return checked
 		var warnings := []
 		for warning in row["warnings"]:
@@ -106,7 +106,7 @@ static func normalize(value, day: int) -> Dictionary:
 			warnings.append(warning.duplicate())
 		out["history"].append({"day":int(row["day"]),"totals":checked["bucket"],"warnings":warnings})
 	if not Scalars.whole(value["end_cash"]) or not value["end_inventory"] is Dictionary: return Scalars.fail("回顾期末库存非法")
-	var items := Data.resources(Data.load_data())
+	var items = catalog.resources(catalog.load_data())
 	for ident in value["end_inventory"]:
 		if not items.has(ident) or not Scalars.whole(value["end_inventory"][ident],1): return Scalars.fail("回顾期末库存物品非法")
 		out["end_inventory"][ident] = int(value["end_inventory"][ident])

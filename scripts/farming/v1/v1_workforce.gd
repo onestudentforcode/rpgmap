@@ -13,7 +13,7 @@ var settings: Dictionary
 
 func _init(owner) -> void:
 	_owner = weakref(owner)
-	settings = Data.load_data()["config"]["workers"]
+	settings = owner.data_source.load_data()["config"]["workers"]
 	state = fresh()
 
 static func fresh(day: int = 0) -> Dictionary:
@@ -343,11 +343,11 @@ static func normalize_areas(areas, width: int, height: int) -> Dictionary:
 		out.append([int(rect[0]),int(rect[1]),int(rect[2]),int(rect[3])])
 	return {"ok": true, "areas": out}
 
-static func normalize(value, day: int) -> Dictionary:
+static func normalize(value, day: int, catalog = Data) -> Dictionary:
 	if not Scalars.exact(value, fresh().keys()):
 		return Scalars.fail("雇工快照字段非法")
-	var config: Dictionary = Data.load_data()["config"]["workers"]
-	var map := Data.load_map()
+	var config: Dictionary = catalog.load_data()["config"]["workers"]
+	var map = catalog.load_map()
 	var width := int(map["size"][0])
 	var height := int(map["size"][1])
 	if not value["workers"] is Array or value["workers"].size() > int(config["max_workers"]) or not value["marks"] is Array or value["marks"].size() > width*height*KINDS.size() or not value["seed_plans"] is Array or value["seed_plans"].size() > width*height or not value["sources"] is Dictionary or not Scalars.whole(value["spent"]) or not Scalars.whole(value["next_worker_id"],1) or not Scalars.whole(value["next_mark_id"],1):
@@ -372,7 +372,7 @@ static func normalize(value, day: int) -> Dictionary:
 		worker_ids[prior] = true
 		out["workers"].append({"id": prior,"name": worker["name"],"paused": worker["paused"],
 			"budget": int(worker["budget"]),"priorities": priorities,"areas": areas["areas"]})
-	var sources := Data.definitions("sources")
+	var sources = catalog.definitions("sources")
 	var source_cells := {}
 	for ident in sources:
 		source_cells[Vector2i(int(sources[ident]["position"][0]),int(sources[ident]["position"][1]))] = true
@@ -382,7 +382,7 @@ static func normalize(value, day: int) -> Dictionary:
 		out["sources"][ident] = int(value["sources"][ident])
 	var mark_ids := {}
 	var mark_cells := {}
-	var terrain := Data.tillable_map()
+	var terrain = catalog.tillable_map()
 	for mark_entry in value["marks"]:
 		if not Scalars.exact(mark_entry,["id","kind","cell","priority"]) or not Scalars.whole(mark_entry["id"],1,int(value["next_mark_id"])-1) or mark_ids.has(int(mark_entry["id"])) or mark_entry["kind"] not in KINDS or mark_entry["kind"] == "source" or not Scalars.coordinate(mark_entry["cell"],width,height) or not Scalars.whole(mark_entry["priority"],1,9):
 			return Scalars.fail("任务标记非法")
@@ -396,7 +396,7 @@ static func normalize(value, day: int) -> Dictionary:
 		if mark_entry["kind"] in ["harvest","fell","clear"]:
 			mark_cells[exclusive_key] = true
 		out["marks"].append({"id": int(mark_entry["id"]),"kind": mark_entry["kind"],"cell": [cell.x,cell.y],"priority": int(mark_entry["priority"])})
-	var crop_defs := Data.definitions("crops")
+	var crop_defs = catalog.definitions("crops")
 	var planned := {}
 	for plan in value["seed_plans"]:
 		if not Scalars.exact(plan,["cell","crop_id"]) or not Scalars.coordinate(plan["cell"],width,height) or not crop_defs.has(plan["crop_id"]):

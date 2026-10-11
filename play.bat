@@ -11,6 +11,7 @@ if /i "%~1"=="demo" goto :select_demo
 if /i "%~1"=="farm0" goto :select_farm0
 if /i "%~1"=="farm" goto :select_farm
 if /i "%~1"=="v1" goto :select_v1
+if /i "%~1"=="v2" goto :select_v2
 if /i "%~1"=="v0" goto :select_v0
 if "%~1"=="" goto :args
 set "FIRST=%~1"
@@ -24,6 +25,10 @@ goto :consume_mode
 :select_v0
 set "MODE=farm"
 set "SCENE=scenes/farming/farm_demo.tscn"
+goto :consume_mode
+:select_v2
+set "MODE=v2"
+set "SCENE=scenes/farming/farm_v2.tscn"
 goto :consume_mode
 :select_v1
 set "MODE=v1"
@@ -47,7 +52,9 @@ if "%~1"=="" goto :launch
 set "ARG=%~1"
 if /i "%ARG%"=="--selftest" if not "%MODE%"=="demo" set "ARG=--farmtest"
 if /i "%ARG%"=="--farmtest" if "%MODE%"=="v1" set "ARG=--v1-smoke"
+if /i "%ARG%"=="--farmtest" if "%MODE%"=="v2" set "ARG=--v2-smoke"
 if /i "%ARG:~0,8%"=="--shots=" if "%MODE%"=="v1" set "ARG=--v1-shots=%ARG:~8%"
+if /i "%ARG:~0,8%"=="--shots=" if "%MODE%"=="v2" set "ARG=--v2-shots=%ARG:~8%"
 if /i "%ARG%"=="--farmtest" if "%MODE%"=="farm" set "SCENE=scenes/farming/farm_main.tscn"
 if /i "%ARG:~0,8%"=="--shots=" if "%MODE%"=="farm" set "SCENE=scenes/farming/farm_main.tscn"
 if /i "%ARG:~0,13%"=="--farm-shots=" if "%MODE%"=="farm" set "SCENE=scenes/farming/farm_main.tscn"
@@ -60,6 +67,8 @@ if /i "%ARG%"=="--farmtest" set "CONSOLE=1"
 if /i "%ARG%"=="--farmtest" set "HEADLESS=--headless"
 if /i "%ARG%"=="--v1-smoke" set "CONSOLE=1"
 if /i "%ARG%"=="--v1-smoke" set "HEADLESS=--headless"
+if /i "%ARG%"=="--v2-smoke" set "CONSOLE=1"
+if /i "%ARG%"=="--v2-smoke" set "HEADLESS=--headless"
 if /i "%ARG:~0,11%"=="--v1-shots=" set "CONSOLE=1"
 if /i "%ARG:~0,8%"=="--shots=" set "CONSOLE=1"
 if /i "%ARG:~0,13%"=="--farm-shots=" set "CONSOLE=1"
@@ -89,6 +98,10 @@ if not exist "%PROJECT%\assets\farming\ground\ground_grass.png" (
     exit /b 1
 )
 :run
+if "%MODE%"=="v2" (
+    python "%PROJECT%\tools\farming\bake_v2.py" --check
+    if errorlevel 1 exit /b 1
+)
 "%EXE%" %HEADLESS% --path "%PROJECT%" %SCENE% -- %FARGS%
 exit /b %errorlevel%
 :usage
@@ -97,6 +110,7 @@ echo play.bat --selftest               V1 runtime smoke, isolated slots, headles
 echo play.bat --shots=DIR              V1 UI screenshots, isolated slots
 echo play.bat v0                      Historical V0 menu and independent saves
 echo play.bat farm --farmtest          Same current farm logic test
+echo play.bat v2                      V2 Phase 7.a, reservoir and manual tools
 echo play.bat v1                      V1 farm with work designations and employees
 echo play.bat farm --fresh             Unsaved developer preview only
 echo play.bat farm --farm-shots=DIR    Same current farm screenshots

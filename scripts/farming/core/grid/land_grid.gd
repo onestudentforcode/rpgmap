@@ -165,7 +165,9 @@ func untill(cell: Vector2i) -> Dictionary:
 ## 原子占用：全部格子合法才整体生效。target_state 默认 OCCUPIED（设施/障碍）；
 ## 传 PLANTED 用于播种（此时各格必须已是 TILLED）。prev 记录占用前状态，release 恢复。
 func can_reserve(origin: Vector2i, fw: int, fh: int, holder: String,
-		target_state: int = State.OCCUPIED) -> Dictionary:
+		target_state: int = State.OCCUPIED, required_terrain: String = "") -> Dictionary:
+	if not required_terrain.is_empty() and (required_terrain != "water" or target_state != State.OCCUPIED):
+		return {"ok": false, "reason": "invalid_build_terrain"}
 	if _holders.has(holder):
 		return {"ok": false, "reason": "holder_exists"}
 	if fw <= 0 or fh <= 0:
@@ -179,7 +181,9 @@ func can_reserve(origin: Vector2i, fw: int, fh: int, holder: String,
 			var st := state_at(c)
 			if st == State.OCCUPIED or st == State.PLANTED:
 				return {"ok": false, "reason": "cell_busy:" + STATE_NAMES[st]}
-			if st == State.UNAVAILABLE:
+			if not required_terrain.is_empty() and terrain_at(c) != required_terrain:
+				return {"ok": false, "reason": "requires_terrain:" + required_terrain}
+			if st == State.UNAVAILABLE and required_terrain.is_empty():
 				return {"ok": false, "reason": "terrain_not_tillable:" + terrain_at(c)}
 			if target_state == State.PLANTED and st != State.TILLED:
 				return {"ok": false, "reason": "not_tilled:" + STATE_NAMES[st]}
@@ -188,8 +192,8 @@ func can_reserve(origin: Vector2i, fw: int, fh: int, holder: String,
 
 
 func reserve(origin: Vector2i, fw: int, fh: int, holder: String,
-		target_state: int = State.OCCUPIED) -> Dictionary:
-	var checked := can_reserve(origin, fw, fh, holder, target_state)
+		target_state: int = State.OCCUPIED, required_terrain: String = "") -> Dictionary:
+	var checked := can_reserve(origin, fw, fh, holder, target_state, required_terrain)
 	if not checked["ok"]: return checked
 	var cells: Array[Vector2i] = checked["cells"]
 	for c in cells:  # 后落：全部合法才整体生效

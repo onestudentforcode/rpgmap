@@ -16,14 +16,14 @@ static func exact(value, keys: Array) -> bool:
 static func fail(reason: String) -> Dictionary:
 	return {"ok": false, "reason": reason}
 
-static func fresh(day: int = 0) -> Dictionary:
-	var map := Data.load_map()
-	var config: Dictionary = Data.load_data()["config"]
+static func fresh(day: int = 0, catalog = Data) -> Dictionary:
+	var map = catalog.load_map()
+	var config: Dictionary = catalog.load_data()["config"]
 	var environment := []
 	for _index in range(int(map["size"][0]) * int(map["size"][1])):
 		environment.append([int(config["environment"]["initial_water"]), int(config["environment"]["initial_fertility"])])
 	var used := {}
-	for ident in Data.definitions("sources"):
+	for ident in catalog.definitions("sources"):
 		used[ident] = 0
 	return {"map_id": config["map_id"], "tilled": [], "environment": environment,
 		"crops": [], "next_uid": 1, "sources": {"day": day, "used": used},
@@ -32,15 +32,15 @@ static func fresh(day: int = 0) -> Dictionary:
 static func coordinate(value, width: int, height: int) -> bool:
 	return value is Array and value.size() == 2 and whole(value[0], 0, width-1) and whole(value[1], 0, height-1)
 
-static func normalize(value, day: int) -> Dictionary:
+static func normalize(value, day: int, catalog = Data) -> Dictionary:
 	if not exact(value, ["map_id", "tilled", "environment", "crops", "next_uid", "sources", "facilities", "next_facility_uid", "next_batch_uid"]):
 		return fail("世界快照字段损坏")
-	var map := Data.load_map()
+	var map = catalog.load_map()
 	var width := int(map["size"][0])
 	var height := int(map["size"][1])
 	if value["map_id"] != map["id"] or not whole(value["next_uid"], 1):
 		return fail("地图或作物序号非法")
-	var source_defs := Data.definitions("sources")
+	var source_defs = catalog.definitions("sources")
 	var sources = value["sources"]
 	if not exact(sources, ["day", "used"]) or not whole(sources["day"]) or sources["day"] != day or not exact(sources["used"], source_defs.keys()):
 		return fail("资源点日期或额度字段非法")
@@ -57,7 +57,7 @@ static func normalize(value, day: int) -> Dictionary:
 		return fail("耕地列表非法")
 	var tilled := []
 	var seen := {}
-	var tillable := Data.tillable_map()
+	var tillable = catalog.tillable_map()
 	for pair in value["tilled"]:
 		if not coordinate(pair, width, height):
 			return fail("耕地坐标非法")
@@ -75,7 +75,7 @@ static func normalize(value, day: int) -> Dictionary:
 		environment.append([int(pair[0]), int(pair[1])])
 	if not value["crops"] is Array or value["crops"].size() > width * height:
 		return fail("作物列表非法")
-	var crop_defs := Data.definitions("crops")
+	var crop_defs = catalog.definitions("crops")
 	var crops := []
 	var occupied := {}
 	var uids := {}
@@ -104,8 +104,8 @@ static func normalize(value, day: int) -> Dictionary:
 			"progress": int(row["progress"]), "state": row["state"], "harvest_count": int(row["harvest_count"])})
 	if not whole(value["next_facility_uid"], 1) or not whole(value["next_batch_uid"], 1) or not value["facilities"] is Array or value["facilities"].size() > width * height:
 		return fail("设施或批次序号非法")
-	var facility_defs := Data.definitions("facilities")
-	var recipe_defs := Data.definitions("recipes")
+	var facility_defs = catalog.definitions("facilities")
+	var recipe_defs = catalog.definitions("recipes")
 	var facilities := []
 	var facility_uids := {}
 	var batch_uids := {}
@@ -119,7 +119,7 @@ static func normalize(value, day: int) -> Dictionary:
 		for dy in range(int(definition["footprint"][1])):
 			for dx in range(int(definition["footprint"][0])):
 				var cell := origin + Vector2i(dx,dy)
-				if cell.x >= width or cell.y >= height or occupied.has(cell) or source_cells.has(cell) or not tillable.get(map["grid"][cell.y][cell.x], false):
+				if cell.x >= width or cell.y >= height or occupied.has(cell) or source_cells.has(cell) or not (map["grid"][cell.y][cell.x] == "water" if definition.get("terrain") == "water" else tillable.get(map["grid"][cell.y][cell.x], false)):
 					return fail("设施越界、重叠或覆盖不可建设地形")
 				occupied[cell] = true
 		var batch = row["batch"]

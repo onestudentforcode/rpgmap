@@ -45,14 +45,15 @@ def fraction(value):
 def pack(value):
     return {'numerator': value.numerator, 'denominator': value.denominator}
 
-def compile_config(source):
+def compile_config(source, product='farm_demo_v1', providers=None, map_data=None):
     try:
-        return _compile(source)
+        return _compile(source, product, providers or {}, map_data)
     except (KeyError, TypeError, AttributeError, ZeroDivisionError, OverflowError) as exc:
         raise ValueError(f'invalid V1 field: {exc}') from exc
 
-def _compile(source):
-    require(isinstance(source, dict) and integer(source.get('schema'), 1, 1) and source.get('product') == 'farm_demo_v1', 'V1 schema/product required')
+def _compile(source, product='farm_demo_v1', providers=None, map_data=None):
+    providers = providers or {}
+    require(isinstance(source, dict) and integer(source.get('schema'), 1, 1) and source.get('product') == product, 'schema/product required')
     out = copy.deepcopy(source)
     resources = registry(out['resources'], 'resources')
     models = registry(out['cost_models'], 'cost_models')
@@ -63,8 +64,10 @@ def _compile(source):
     config = out['config']
     require(isinstance(config['map_id'], str) and config['map_id'].isascii() and config['map_id'].replace('_', '').isalnum(), 'invalid map id')
     map_path = ROOT / 'content/farming/baked/maps' / (config['map_id'] + '.json')
-    require(map_path.exists(), 'missing V1 base map')
-    map_data = json.loads(map_path.read_text(encoding='utf-8'))
+    if map_data is None:
+        require(map_path.exists(), 'missing base map')
+        map_data = json.loads(map_path.read_text(encoding='utf-8'))
+    require(map_data['id'] == config['map_id'], 'map identity mismatch')
     width, height = map_data['size']
     require(integer(config['initial_primeval_stones']) and integer(config['ap_per_day'], 1) and config['days_per_term'] == 15, 'invalid economy/time')
     for key in ['ap_weight', 'day_weight']:
@@ -144,18 +147,24 @@ def _compile(source):
         quantities(recipe['outputs'], resources, ident)
         for iid in recipe['inputs']: consumers[iid].append(ident)
         for iid in recipe['outputs']: known_sources[iid].append(ident)
+    for ident, producer in providers.items():
+        require(producer['facility'] in facilities, f'{ident}: missing facility')
+        quantities(producer['inputs'], resources, ident)
+        quantities(producer['outputs'], resources, ident)
+        for iid in producer['inputs']: consumers[iid].append(ident)
+        for iid in producer['outputs']: known_sources[iid].append(ident)
     # A canonical cost basis must describe a real production batch, not a parallel
     # independently edited recipe with a different yield or processing duration.
     for ident, model in models.items():
         basis = model['basis']
         kind, producer_id = basis['kind'], basis['id']
-        groups = {'recipe': recipes, 'crop': crops, 'source': sources}
+        groups = {'recipe': recipes, 'crop': crops, 'source': sources, 'animal': providers}
         require(kind in groups and producer_id in groups[kind], f'{ident}: missing production basis')
         producer = groups[kind][producer_id]
         expected = ({producer['item']: producer['quantity']} if kind == 'source' else producer['outputs'])
         require({iid: row['quantity'] for iid, row in model['outputs'].items()} == expected, f'{ident}: basis yield mismatch')
-        if kind == 'recipe':
-            require(model['inputs'] == producer['inputs'] and model['days'] == producer['days'] and model['ap'] == producer['start_ap'] + producer['claim_ap'], f'{ident}: recipe cost mismatch')
+        if kind in ('recipe', 'animal'):
+            require(model['inputs'] == producer['inputs'] and model['days'] == producer['days'] and model['ap'] == producer['start_ap'] + producer['claim_ap'] and model['cash'] == producer.get('cash', 0), f'{ident}: production cost mismatch')
         elif kind == 'source':
             require(not model['inputs'] and model['days'] == 0 and model['ap'] == producer['ap'], f'{ident}: collection cost mismatch')
         else:
@@ -176,6 +185,8 @@ def _compile(source):
             if set(facility['materials']) <= reachable: built.add(ident)
         for recipe in recipes.values():
             if recipe['facility'] in built and set(recipe['inputs']) <= reachable: reachable.update(recipe['outputs'])
+        for producer in providers.values():
+            if producer['facility'] in built and set(producer['inputs']) <= reachable: reachable.update(producer['outputs'])
         if before == (len(reachable), len(built)): break
     require(reachable == set(resources) and built == set(facilities), 'unreachable resource/facility construction dependency')
     for iid in resources: require(known_sources[iid] and consumers[iid], f'{iid}: orphan source/consumer')

@@ -45,7 +45,7 @@ func build(root: Node2D, grid: LandGrid, terrains_data: Dictionary) -> bool:
 		tileset.add_source(src_ground, next_src)
 		t["_src_ground"] = next_src
 		next_src += 1
-		if int(t["layer"]) > 0 or t["dynamic"]:  # 上层/动态层：过渡 atlas（256 配置）
+		if (int(t["layer"]) > 0 and t.get("edge_mode") != "full") or t["dynamic"]:  # 上层/动态层：过渡 atlas（256 配置）
 			var trans := _load_tex(t["textures"]["trans"])
 			if trans == null:
 				return false
@@ -120,13 +120,14 @@ func _rebuild_static() -> void:
 		if t["dynamic"] or int(t["layer"]) == 0:
 			continue
 		var layer: TileMapLayer = layers[t["id"]]
-		var src: int = t["_src_trans"]
+		var full: bool = t.get("edge_mode") == "full"
+		var src: int = t["_src_ground"] if full else t["_src_trans"]
 		var tid: String = t["id"]
 		for y in range(_grid.height):
 			for x in range(_grid.width):
 				var cell := Vector2i(x, y)
 				if _grid.terrain_at(cell) == tid:
-					layer.set_cell(cell, src, _static_atlas(tid, cell))
+					layer.set_cell(cell, src, Vector2i.ZERO if full else _static_atlas(tid, cell))
 
 
 ## 全量刷新动态层（读档/复位后调用；常规变更走 update_cells 增量）。
@@ -158,7 +159,8 @@ func _load_tex(rel: String) -> Texture2D:
 	if OS.has_feature("farm_demo_release") or OS.has_feature("farm_demo_v1_release"):
 		return load(path) as Texture2D
 	var img := Image.new()
-	if img.load_png_from_buffer(FileAccess.get_file_as_bytes(path)) != OK:
+	var error := img.load_svg_from_string(FileAccess.get_file_as_string(path)) if path.ends_with(".svg") else img.load_png_from_buffer(FileAccess.get_file_as_bytes(path))
+	if error != OK:
 		push_error("[farm] 无法解码纹理 " + path)
 		return null
 	if img == null or img.is_empty():

@@ -319,6 +319,8 @@ def main():
         if not fn.endswith(".json"):
             continue
         data = _load_json(os.path.join(maps_dir, fn))
+        if data.get("product") == "farm_demo_v2":
+            continue  # Independent registry and validation belong to bake_v2.
         if validate_map(data, reg, msgs) is not None:
             maps.append(data)
 

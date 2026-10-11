@@ -12,6 +12,8 @@ const Grid := preload("res://scripts/farming/core/grid/land_grid.gd")
 const Clock := preload("res://scripts/farming/core/clock/farm_clock.gd")
 const Inventory := preload("res://scripts/farming/core/inventory/farm_inventory.gd")
 
+var data_source = Data
+var snapshot_type = Snapshot
 var grid: Grid
 var clock: Clock
 var inventory: Inventory
@@ -55,19 +57,21 @@ func _count(key: String, ident: String, quantity: int = 1) -> void:
 func _cash(key: String, amount: int) -> void:
 	Journal.add_cash(journal,key,amount)
 
-func _init(slot_store = null) -> void:
+func _init(slot_store = null, catalog = Data, codec = Snapshot) -> void:
+	data_source = catalog
+	snapshot_type = codec
 	_store = slot_store
-	config = Data.load_data()["config"]
-	_items = Data.resources(Data.load_data())
-	crop_defs = Data.definitions("crops")
-	source_defs = Data.definitions("sources")
-	facility_defs = Data.definitions("facilities")
-	recipe_defs = Data.definitions("recipes")
+	config = data_source.load_data()["config"]
+	_items = data_source.resources(data_source.load_data())
+	crop_defs = data_source.definitions("crops")
+	source_defs = data_source.definitions("sources")
+	facility_defs = data_source.definitions("facilities")
+	recipe_defs = data_source.definitions("recipes")
 	grid = Grid.new()
 	clock = Clock.new()
 	inventory = Inventory.new()
-	var map := Data.load_map()
-	grid.setup(int(map["size"][0]), int(map["size"][1]), map["grid"], Data.tillable_map())
+	var map = data_source.load_map()
+	grid.setup(int(map["size"][0]), int(map["size"][1]), map["grid"], data_source.tillable_map())
 	clock.setup({"time": {"ap_per_day": config["ap_per_day"], "days_per_term": config["days_per_term"]}})
 	clock.day_changed.connect(_on_day_changed)
 	for y in range(grid.height):
@@ -82,7 +86,7 @@ func _init(slot_store = null) -> void:
 		var position: Array = source_defs[ident]["position"]
 		_source_cells[Vector2i(int(position[0]), int(position[1]))] = ident
 	workforce = Workforce.new(self)
-	apply_snapshot(Snapshot.fresh())
+	apply_snapshot(snapshot_type.fresh())
 
 func _error(reason: String) -> Dictionary:
 	return {"ok": false, "reason": reason}
@@ -91,7 +95,7 @@ func _can_act(ap: int = 1) -> Dictionary:
 	if not daily_save_error.is_empty():
 		return _error("日存档失败，请重试保存或放弃当天：" + daily_save_error)
 	if _store != null and _store.active_slot() == 0:
-		return _error("尚未选择V1存档槽")
+		return _error("尚未选择存档槽")
 	if not _labour_action and not clock.can_spend(ap):
 		return _error("行动点不足")
 	return {"ok": true}
@@ -111,7 +115,7 @@ func _finish(ap: int, result: Dictionary) -> Dictionary:
 func start_new(slot: int, overwrite_confirmed: bool = false) -> Dictionary:
 	if _store == null:
 		return _error("未配置存档服务")
-	var created: Dictionary = _store.create_slot(slot, Snapshot.fresh(), overwrite_confirmed)
+	var created: Dictionary = _store.create_slot(slot, snapshot_type.fresh(), overwrite_confirmed)
 	if created["ok"]:
 		apply_snapshot(created["snapshot"])
 	return created
@@ -126,7 +130,7 @@ func open_game(slot: int) -> Dictionary:
 
 func abandon_day() -> Dictionary:
 	if _store == null or _store.active_slot() == 0:
-		return _error("尚未选择V1存档槽")
+		return _error("尚未选择存档槽")
 	return open_game(_store.active_slot())
 
 func end_day() -> Dictionary:
@@ -174,6 +178,43 @@ func till(cell: Vector2i) -> Dictionary:
 	checked = grid.till(cell)
 	if checked["ok"]: _count("fieldwork","till")
 	return _finish(1, checked) if checked["ok"] else checked
+
+## Read-only quote for a single manual target, using grid and inventory preflights.
+func action_quote(cell: Vector2i, kind: String) -> Dictionary:
+	var checked := _can_act()
+	if not checked["ok"]: return checked
+	if not grid.in_bounds(cell.x,cell.y): return _error("地格越界")
+	var inputs := {}
+	var crop := instance_at(cell)
+	match kind:
+		"till":
+			if not source_at(cell).is_empty(): return _error("资源点不能开垦")
+			checked = grid.can_till(cell)
+			if not checked["ok"]: return checked
+		"plant":
+			var plan := workforce.seed_plan(cell)
+			if plan.is_empty(): return _error("请先给地格分配种子")
+			var definition: Dictionary = crop_defs[plan["crop_id"]]
+			inputs = definition["inputs"].duplicate()
+			inputs[definition["seed"]] = int(inputs.get(definition["seed"],0))+1
+			checked = grid.can_reserve(cell,int(definition["footprint"][0]),int(definition["footprint"][1]),"manual_preview",Grid.State.PLANTED)
+			if not checked["ok"]: return checked
+		"harvest", "fell":
+			if crop.is_empty() or crop["state"] != "mature": return _error("没有成熟植物")
+			var mode: String = crop_defs[crop["crop_id"]]["mode"]
+			if kind == "harvest" and mode == "fell_replant": return _error("取材请使用砍伐")
+			if kind == "fell" and mode not in ["fell_replant","tap_or_fell"]: return _error("此植物不能砍伐")
+		"clear":
+			if crop.is_empty(): return _error("没有可清理的作物")
+		"irrigate", "fertilize":
+			if grid.state_at(cell) not in [Grid.State.TILLED,Grid.State.PLANTED]: return _error("只能改善已开垦的土地")
+			var field := 0 if kind == "irrigate" else 1
+			if environment[cell.y*grid.width+cell.x][field] >= 100: return _error("环境已满")
+			inputs["clean_water" if field == 0 else "humus"] = int(config["environment"]["irrigate_units" if field == 0 else "fertilize_units"])
+		_: return _error("请选择农务工具")
+	for iid in inputs:
+		if not inventory.has(iid,int(inputs[iid])): return _error("缺少投入："+_items[iid]["name"])
+	return {"ok":true,"ap":1,"inputs":inputs,"crop_uid":int(crop.get("uid",0))}
 
 func plant(cell: Vector2i, crop_id: String) -> Dictionary:
 	var checked := _can_act()
@@ -305,7 +346,7 @@ func can_build_facility(cell: Vector2i, facility_id: String) -> Dictionary:
 			var target := cell + Vector2i(dx,dy)
 			if _source_cells.has(target):
 				return _error("设施不能覆盖资源点")
-	return grid.can_reserve(cell,int(footprint[0]),int(footprint[1]),"v1_facility:%d" % _next_facility_uid)
+	return grid.can_reserve(cell,int(footprint[0]),int(footprint[1]),"v1_facility:%d" % _next_facility_uid, Grid.State.OCCUPIED, "water" if definition.get("terrain") == "water" else "")
 
 func build_facility(cell: Vector2i, facility_id: String) -> Dictionary:
 	var checked := can_build_facility(cell,facility_id)
@@ -317,7 +358,7 @@ func build_facility(cell: Vector2i, facility_id: String) -> Dictionary:
 	for target in checked["cells"]:
 		if grid.state_at(target) == Grid.State.TILLED: tilled_before.append(target)
 	var uid := _next_facility_uid
-	checked = grid.reserve(cell, int(footprint[0]), int(footprint[1]), "v1_facility:%d" % uid)
+	checked = grid.reserve(cell, int(footprint[0]), int(footprint[1]), "v1_facility:%d" % uid, Grid.State.OCCUPIED, "water" if definition.get("terrain") == "water" else "")
 	if not checked["ok"]:
 		return checked
 	for target in tilled_before:
@@ -397,7 +438,7 @@ func gross_revenue() -> int:
 	return _sales_revenue + _order_revenue
 
 func unlocked_rank() -> int:
-	return Data.unlocked_rank(gross_revenue())
+	return data_source.unlocked_rank(gross_revenue())
 
 func daily_orders() -> Array:
 	return _orders["entries"].duplicate(true)
@@ -410,7 +451,7 @@ func order_quote(order_id: int, item_id: String) -> Dictionary:
 		if entry["id"] == order_id:
 			if entry["status"] != "open":
 				return _error("订单已结算")
-			return Data.demand_quote(entry["path"], int(entry["rank"]), int(entry["demand"]), item_id)
+			return data_source.demand_quote(entry["path"], int(entry["rank"]), int(entry["demand"]), item_id)
 	return _error("订单不存在或已过期")
 
 func deliver_order(order_id: int, item_id: String) -> Dictionary:
@@ -509,7 +550,7 @@ func _on_day_changed(day: int) -> void:
 		if not batch.is_empty() and batch["status"] == "processing" and day >= int(batch["finish_day"]):
 			batch["status"] = "ready"
 			_count("batches_completed",batch["recipe_id"])
-	_orders = Orders.advance(_orders, day, gross_revenue())
+	_orders = Orders.advance(_orders, day, gross_revenue(), data_source)
 	Journal.settle(journal,day,primeval_stones,inventory.to_save(),workforce.state["report"]["workers"])
 	if _store != null:
 		var saved: Dictionary = _store.commit(to_snapshot())
@@ -528,7 +569,7 @@ func to_snapshot() -> Dictionary:
 	var buildings := []
 	for row in facilities.values():
 		buildings.append(row.duplicate(true))
-	return {"product": "farm_demo_v1", "schema": Snapshot.SCHEMA, "clock": clock.to_save(),
+	return {"product": data_source.load_data()["product"], "schema": snapshot_type.SCHEMA, "clock": clock.to_save(),
 		"economy": {"primeval_stones": primeval_stones, "sales_revenue": _sales_revenue, "order_revenue": _order_revenue},
 		"inventory": inventory.to_save(), "orders": _orders.duplicate(true),
 		"workforce": workforce.state.duplicate(true),
@@ -538,7 +579,7 @@ func to_snapshot() -> Dictionary:
 			"facilities": buildings, "next_facility_uid": _next_facility_uid, "next_batch_uid": _next_batch_uid}}
 
 func apply_snapshot(value) -> Dictionary:
-	var checked := Snapshot.normalize(value)
+	var checked = snapshot_type.normalize(value)
 	if not checked["ok"]:
 		return checked
 	var snapshot: Dictionary = checked["snapshot"]
@@ -561,7 +602,7 @@ func apply_snapshot(value) -> Dictionary:
 				var cell := origin + Vector2i(dx,dy)
 				if grid.state_at(cell) == Grid.State.TILLED:
 					_tilled_under_buildings[cell] = true
-		grid.reserve(origin, int(definition["footprint"][0]), int(definition["footprint"][1]), "v1_facility:%d" % int(row["uid"]))
+		grid.reserve(origin, int(definition["footprint"][0]), int(definition["footprint"][1]), "v1_facility:%d" % int(row["uid"]), Grid.State.OCCUPIED, "water" if definition.get("terrain") == "water" else "")
 		facilities[int(row["uid"])] = row.duplicate(true)
 	_next_facility_uid = int(world["next_facility_uid"])
 	_next_batch_uid = int(world["next_batch_uid"])

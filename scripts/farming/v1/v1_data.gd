@@ -15,8 +15,8 @@ static func resources(data: Dictionary) -> Dictionary:
 		out[item["id"]] = item
 	return out
 
-static func load_map() -> Dictionary:
-	return JSON.parse_string(FileAccess.get_file_as_string("res://content/farming/baked/maps/%s.json" % load_data()["config"]["map_id"]))
+static func load_map(data: Dictionary = {}) -> Dictionary:
+	return JSON.parse_string(FileAccess.get_file_as_string("res://content/farming/baked/maps/%s.json" % (load_data() if data.is_empty() else data)["config"]["map_id"]))
 
 static func tillable_map() -> Dictionary:
 	var data: Dictionary = JSON.parse_string(FileAccess.get_file_as_string("res://content/farming/baked/terrains.json"))
@@ -25,29 +25,29 @@ static func tillable_map() -> Dictionary:
 		out[terrain["id"]] = terrain["tillable"]
 	return out
 
-static func definitions(section: String) -> Dictionary:
+static func definitions(section: String, data: Dictionary = {}) -> Dictionary:
 	var out := {}
-	for row in load_data()[section]:
+	for row in (load_data() if data.is_empty() else data)[section]:
 		out[row["id"]] = row
 	return out
 
-static func light_at(cell: Vector2i) -> int:
-	var light: Dictionary = load_data()["config"]["light"]
+static func light_at(cell: Vector2i, data: Dictionary = {}) -> int:
+	var light: Dictionary = (load_data() if data.is_empty() else data)["config"]["light"]
 	for region in light["regions"]:
 		var rect: Array = region["rect"]
 		if Rect2i(int(rect[0]), int(rect[1]), int(rect[2]), int(rect[3])).has_point(cell):
 			return int(region["level"])
 	return int(light["default"])
 
-static func supply_quote(path: String, rank: int, item_id: String) -> Dictionary:
-	var data := load_data()
+static func supply_quote(path: String, rank: int, item_id: String, data: Dictionary = {}) -> Dictionary:
+	if data.is_empty(): data = load_data()
 	if data.is_empty():
 		return {"ok": false, "reason": "V1配置缺失"}
-	return demand_quote(path, rank, int(data["orders"]["base_demand"]) * rank, item_id)
+	return demand_quote(path, rank, int(data["orders"]["base_demand"]) * rank, item_id, data)
 
 ## Independent consumer request adapter. Demand is explicit; no Gu state is required.
-static func demand_quote(path: String, rank: int, demand: int, item_id: String) -> Dictionary:
-	var data := load_data()
+static func demand_quote(path: String, rank: int, demand: int, item_id: String, data: Dictionary = {}) -> Dictionary:
+	if data.is_empty(): data = load_data()
 	if data.is_empty() or rank < 1 or rank > 5 or demand < 1 or demand > 5000000 or path not in data["orders"]["paths"]:
 		return {"ok": false, "reason": "流派或转数非法"}
 	var item: Dictionary = resources(data).get(item_id, {})
@@ -60,8 +60,8 @@ static func demand_quote(path: String, rank: int, demand: int, item_id: String) 
 		"demand": demand, "quantity": quantity, "provided": quantity * int(item["supply_value"]),
 		"base": base, "premium": premium, "payout": base + premium}
 
-static func unlocked_rank(gross_revenue: int) -> int:
-	var data := load_data()
+static func unlocked_rank(gross_revenue: int, data: Dictionary = {}) -> int:
+	if data.is_empty(): data = load_data()
 	var rank := 1
 	for candidate in range(1, 6):
 		if gross_revenue >= int(data["orders"]["rank_unlock_revenue"][str(candidate)]):

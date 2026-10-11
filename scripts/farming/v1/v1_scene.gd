@@ -10,8 +10,15 @@ const Icons := preload("res://scripts/farming/v1/v1_ui_icons.gd")
 const Settings := preload("res://scripts/farming/v1/v1_settings.gd")
 const Journal := preload("res://scripts/farming/v1/v1_journal.gd")
 const NAMES := {"inspect":"查看","till":"开垦","plant":"播种","harvest":"收获","irrigate":"浇水","fertilize":"施肥","fell":"砍伐","clear":"清理","cancel":"取消标记","area":"负责区域","source":"资源采集"}
-const CROPS := {"golden_wheat":"金穗麦","fast_fir":"速生杉","resin_tree":"松脂树","wood_decay_mushroom":"木腐菇"}
-const RECIPES := {"saw_planks":"锯切木板","shred_wood":"原木粉碎","shred_twigs":"枝条粉碎","char_twigs":"枝条炭化","compost_straw":"秸秆堆肥","compost_twigs":"枝条堆肥","compost_chips":"木屑堆肥","smelt_charcoal":"木炭冶炼","smelt_resin":"松脂冶炼"}
+var CROPS := {"golden_wheat":"金穗麦","fast_fir":"速生杉","resin_tree":"松脂树","wood_decay_mushroom":"木腐菇"}
+var RECIPES := {"saw_planks":"锯切木板","shred_wood":"原木粉碎","shred_twigs":"枝条粉碎","char_twigs":"枝条炭化","compost_straw":"秸秆堆肥","compost_twigs":"枝条堆肥","compost_chips":"木屑堆肥","smelt_charcoal":"木炭冶炼","smelt_resin":"松脂冶炼"}
+var manual_mode := false
+var minimum_map_zoom := 0.25
+var product_title := "灵田 Demo V1"
+var terrain_path := "res://content/farming/baked/terrains.json"
+var preview_prefix := "v1"
+var mode_button: Button
+var priority_controls: HBoxContainer
 var settings = Settings.new()
 var ui_root: Control
 var top: HBoxContainer
@@ -72,13 +79,19 @@ var guide_hint: Label
 var digest: PanelContainer
 var digest_body: VBoxContainer
 var _context := "slots"
-const GUIDE_TEXT := {"seed":"点击地格分配种子；收获后保留选种。", "designation":"展开农务工具、框选标记，再给雇工分配负责区域。", "plant":"开垦完整占地后播种；雇工在日结工作，缺料会等待。", "processing":"建设加工设施，投料后按天完成，再点击收取。", "order":"打开订单交付同属性食材；也可出售，再买种子投资。"}
+const GUIDE_TEXT := {"seed":"点击地格分配种子；收获后保留选种。", "designation":"手动工具点击立即执行；切换委托可框选待办，再给雇工分配区域。", "plant":"开垦完整占地后播种；雇工在日结工作，缺料会等待。", "processing":"建设加工设施，投料后按天完成，再点击收取。", "order":"打开订单交付同属性食材；也可出售，再买种子投资。"}
 
 class Overlay extends Node2D:
 	var owner_ref: WeakRef
 	func _draw() -> void:
 		var ui = owner_ref.get_ref()
 		if ui != null: ui.draw_map(self)
+
+func _make_store(directory: String = ""):
+	return Store.new() if directory.is_empty() else Store.new(directory)
+
+func _make_world(slot_store):
+	return World.new(slot_store)
 
 func _ready() -> void:
 	theme = UI.theme()
@@ -87,21 +100,23 @@ func _ready() -> void:
 	get_window().gui_embed_subwindows = true
 	get_window().min_size = Vector2i(960,540)
 	if DisplayServer.get_name() == "headless" and get_window().size.x < 960: get_window().size = Vector2i(1280,720)
-	DisplayServer.window_set_title("灵田 Demo V1")
+	DisplayServer.window_set_title(product_title)
 	get_tree().auto_accept_quit = false
 	var shots := ""
 	var smoke := false
 	for arg in OS.get_cmdline_user_args():
-		if arg.begins_with("--v1-shots="): shots = arg.trim_prefix("--v1-shots=")
-		if arg == "--v1-smoke": smoke = true
+		if arg.begins_with("--"+preview_prefix+"-shots="): shots = arg.trim_prefix("--"+preview_prefix+"-shots=")
+		if arg == "--"+preview_prefix+"-smoke": smoke = true
 	_preview_mode = smoke or not shots.is_empty()
 	if _preview_mode:
-		store = Store.new("user://v1_scene_preview_%d" % Time.get_ticks_usec())
+		store = _make_store("user://%s_scene_preview_%d" % [preview_prefix,Time.get_ticks_usec()])
 	else:
 		settings.load_settings()
 		if not OS.get_cmdline_args().has("--resolution"): settings.apply_display()
 	_ui_scale = float(settings.data["ui_scale"])/100.0
-	world = World.new(store)
+	world = _make_world(store)
+	for ident in world.crop_defs: CROPS[ident] = world.crop_defs[ident].get("name",CROPS.get(ident,ident))
+	for ident in world.recipe_defs: RECIPES[ident] = world.recipe_defs[ident].get("name",RECIPES.get(ident,ident))
 	_last_inventory = world.inventory.to_save()
 	_build()
 	get_viewport().size_changed.connect(_layout)
@@ -111,7 +126,7 @@ func _ready() -> void:
 	_refresh()
 	if not shots.is_empty(): _preview.call_deferred(shots)
 	if smoke:
-		var probe = load("res://scripts/farming/validation/v1_release_smoke.gd").new()
+		var probe = load("res://scripts/farming/validation/%s_release_smoke.gd" % preview_prefix).new()
 		probe.shell = self
 		add_child(probe)
 		probe.run.call_deferred()
@@ -231,10 +246,10 @@ func _build() -> void:
 	root.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
 	map_port.add_child(root)
 	terrain = Terrain.new()
-	terrain.build(root,world.grid,JSON.parse_string(FileAccess.get_file_as_string("res://content/farming/baked/terrains.json")))
+	terrain.build(root,world.grid,JSON.parse_string(FileAccess.get_file_as_string(terrain_path)))
 	world.grid.cells_changed.connect(terrain.update_cells)
 	camera = Camera2D.new()
-	camera.position = Vector2(640,448)
+	camera.position = Vector2(world.grid.width,world.grid.height)*32.0
 	camera.zoom = Vector2.ONE*float(settings.data["map_zoom"])
 	root.add_child(camera)
 	overlay = Overlay.new()
@@ -253,15 +268,19 @@ func _build() -> void:
 	var row := HBoxContainer.new()
 	toolbar.add_child(row)
 	_icon(row,"till","展开/收起农务工具",func(): expanded = not expanded; _layout(),40)
-	tool_caption = _label(row,"农务 · 查看")
-	_label(row,"优先级")
+	mode_button = _button(row,"手动" if manual_mode else "委托",func(): _set_manual(not manual_mode))
+	mode_button.tooltip_text = "切换立即执行 / 框选委托；已提交待办继续保留"
+	tool_caption = _label(row,"")
+	priority_controls = HBoxContainer.new()
+	row.add_child(priority_controls)
+	_label(priority_controls,"优先级")
 	var urgency := SpinBox.new()
 	urgency.min_value = 1
 	urgency.max_value = 9
 	urgency.value = task_priority
 	urgency.custom_minimum_size.x = 82
 	urgency.value_changed.connect(func(value): task_priority = int(value))
-	row.add_child(urgency)
+	priority_controls.add_child(urgency)
 	tool_grid = GridContainer.new()
 	tool_grid.columns = 10
 	toolbar.add_child(tool_grid)
@@ -345,6 +364,10 @@ func _layout() -> void:
 	help_row.size = Vector2(dimensions.x-2*margin,36)
 	guide_hint.visible = not compact
 	tool_grid.visible = expanded
+	priority_controls.visible = not manual_mode
+	for ident in ["cancel","area"]: tool_buttons[ident].visible = not manual_mode
+	mode_button.text = "手动" if manual_mode else "委托"
+	tool_caption.text = _tool_text()
 	tool_grid.columns = 10 if dimensions.x >= 800 else 5
 	toolbar_panel.reset_size()
 	toolbar_panel.position = Vector2(margin,dimensions.y-32-toolbar_panel.get_combined_minimum_size().y)
@@ -382,12 +405,20 @@ func _refresh_input() -> void:
 	board.mouse_filter = Control.MOUSE_FILTER_STOP if _started and not shade.visible else Control.MOUSE_FILTER_IGNORE
 
 func _fit_map() -> void:
-	camera.position = Vector2(640,448)
-	var zoom := minf(board.size.x/1280.0,board.size.y/896.0)*0.94
+	var extent := Vector2(world.grid.width,world.grid.height)*64.0
+	camera.position = extent*0.5
+	var zoom := minf(board.size.x/extent.x,board.size.y/extent.y)*0.94
 	camera.zoom = Vector2.ONE*clampf(zoom,0.25,3.0)
 
+func _camera_bottom_margin() -> float:
+	return 0.0
+
+func _tool_text() -> String:
+	if not build_tool.is_empty(): return "营建 · 手动1AP"
+	return NAMES[tool]+(" · 成功1AP" if manual_mode else (" · 无雇工，待办等待" if world.workforce.state["workers"].is_empty() else " · 日结执行"))
+
 func _refresh() -> void:
-	tool_caption.text = "营建" if not build_tool.is_empty() else "农务 · "+NAMES[tool]
+	tool_caption.text = _tool_text()
 	var day := world.clock.total_days+1
 	header.text = "灵田  ·  第%d时节 %d/15日     行动 %d/24     元石 %d" % [int((day-1)/15)+1,int((day-1)%15)+1,world.clock.ap,world.primeval_stones]
 	if settings.data["show_fps"]: header.text += "   %d FPS" % Engine.get_frames_per_second()
@@ -480,7 +511,7 @@ func _show_slots() -> void:
 	digest.visible = false
 	_page("灵田 · 三个存档")
 	_label(sidebar,"种植、加工、供货，把一方田园经营成自己的天地。")
-	_label(sidebar,"每日结束自动存档。V1存档独立保存，首次45天后仍可继续经营。")
+	_label(sidebar,"每日结束自动存档。%s存档独立保存，首次45天后仍可继续经营。" % product_title)
 	var cards := GridContainer.new()
 	cards.set_meta("layout","slots")
 	cards.columns = 3 if window_panel.size.x >= 900 else 1
@@ -496,7 +527,7 @@ func _show_slots() -> void:
 		elif info["status"] != "empty": _label(card,"存档无法读取；可新建覆盖。")
 		else: _label(card,"空白田园 · 初始60元石")
 		_icon(card,"plant","新建槽%d" % slot,func():
-			if info["status"] != "empty": _confirm("覆盖卷%d？旧V1存档与经营进度将被永久替换。" % slot,_new.bind(slot,true))
+			if info["status"] != "empty": _confirm("覆盖卷%d？该版本存档与经营进度将被永久替换。" % slot,_new.bind(slot,true))
 			else: _new(slot,false))
 	var row := HBoxContainer.new()
 	sidebar.add_child(row)
@@ -585,13 +616,25 @@ func _show_settings() -> void:
 	if not settings.warning.is_empty(): _label(sidebar,settings.warning)
 	_label(sidebar,"本阶段暂无音乐，音量选项随音频内容接入。")
 
+func _set_manual(value: bool) -> void:
+	manual_mode = value
+	_drag = false
+	build_tool = ""
+	_hover = Vector2i(-1,-1)
+	hover_hint.text = ""
+	if tool in ["cancel","area"] and value: tool = "inspect"
+	_select_tool(tool)
+	_layout()
+	overlay.queue_redraw()
+
 func _select_tool(kind: String) -> void:
+	if manual_mode and kind in ["cancel","area"]: kind = "inspect"
 	tool = kind
 	build_tool = ""
 	_drag = false
 	for ident in tool_buttons: tool_buttons[ident].set_pressed_no_signal(ident == kind)
-	tool_caption.text = "农务 · "+NAMES[kind]
-	notice.text = "当前工具：%s · 框选添加待办，日结由雇工执行。" % NAMES[kind]
+	tool_caption.text = _tool_text()
+	notice.text = "当前工具：%s · %s" % [NAMES[kind],"点击单个目标立即执行，成功消耗1AP。" if manual_mode else "框选添加待办，日结由雇工执行。"]
 	if kind == "clear": notice.text = "当前工具：清理 · 不返还投入；保留选种会重播。"
 	if kind == "cancel": notice.text = "当前工具：取消标记 · 地格选种仍保留。"
 	if kind == "area": notice.text = "当前工具：负责区域 · 为选中雇工框选，可追加多处。"
@@ -613,7 +656,7 @@ func _board_input(event: InputEvent) -> void:
 			_select_tool("inspect")
 		elif event.pressed and event.button_index in [MOUSE_BUTTON_WHEEL_UP,MOUSE_BUTTON_WHEEL_DOWN]:
 			var anchor: Vector2 = map_port.get_canvas_transform().affine_inverse()*event.position
-			var zoom := clampf(camera.zoom.x*(1.2 if event.button_index == MOUSE_BUTTON_WHEEL_UP else 1.0/1.2),0.25,3.0)
+			var zoom := clampf(camera.zoom.x*(1.2 if event.button_index == MOUSE_BUTTON_WHEEL_UP else 1.0/1.2),minimum_map_zoom,3.0)
 			camera.zoom = Vector2.ONE*zoom
 			camera.position = anchor-(event.position-Vector2(map_port.size)*0.5)/zoom
 		elif event.button_index == MOUSE_BUTTON_LEFT:
@@ -628,6 +671,9 @@ func _board_input(event: InputEvent) -> void:
 					selected = _drag_end
 					_result(world.build_facility(selected,build_tool))
 					_show_cell()
+				elif manual_mode:
+					if _drag_start == _drag_end: _apply_manual(_drag_end)
+					else: notice.text = "手动模式请点击单个目标；框选请切换委托。"
 				else: apply_rectangle(_rect(_drag_start,_drag_end))
 	elif event is InputEventMouseMotion:
 		_hover = _cell(event.position)
@@ -640,6 +686,9 @@ func _update_hover() -> void:
 	if not build_tool.is_empty():
 		var result := world.can_build_facility(_hover,build_tool)
 		hover_hint.text = "%s · %s" % [world.facility_defs[build_tool]["name"],"可放置 · 点击建造" if result["ok"] else result["reason"]]
+	elif manual_mode and tool != "inspect":
+		var quote := world.action_quote(_hover,tool)
+		hover_hint.text = NAMES[tool]+(" · 成功1AP · "+_materials(quote["inputs"]) if quote["ok"] else " · "+quote["reason"])
 	elif _drag and tool not in ["inspect","area","cancel"]:
 		var preview := world.workforce.preview(_rect(_drag_start,_drag_end),tool)
 		hover_hint.text = "%s · 有效%d格 / 跳过%d格 · %d个目标" % [NAMES[tool],preview["valid"].size(),preview["invalid"].size(),preview["targets"].size()]
@@ -652,6 +701,23 @@ func _update_hover() -> void:
 		elif not source.is_empty(): hover_hint.text += {"stone_source":"采石点","ore_source":"采矿点","spring_source":"泉水点"}[source]+" · 今日剩余%d" % world.source_remaining(source)
 		elif not facility.is_empty(): hover_hint.text += world.facility_defs[facility["facility_id"]]["name"]
 		else: hover_hint.text += "点击查看 · "+NAMES[tool]
+
+func _apply_manual(cell: Vector2i) -> void:
+	if not _started or not world.grid.in_bounds(cell.x,cell.y): return
+	selected = cell
+	_side_open = true
+	if tool == "inspect": _show_cell(); _layout(); return
+	var quote := world.action_quote(cell,tool)
+	if not quote["ok"]: _result(quote); return
+	if tool == "clear":
+		_confirm("清理当前植物？不返还投入和产物；保留选种。",_run_manual.bind(cell,tool,int(quote["crop_uid"])))
+	else: _run_manual(cell,tool)
+
+func _run_manual(cell: Vector2i, kind: String, expected_uid: int = -1) -> void:
+	if expected_uid >= 0 and int(world.instance_at(cell).get("uid",0)) != expected_uid:
+		_result({"ok":false,"reason":"目标已变化，请重新选择"}); return
+	selected = cell
+	_manual(kind)
 
 func apply_rectangle(rect: Rect2i) -> void:
 	if not _started or rect.size.x <= 0 or rect.size.y <= 0: return
@@ -715,10 +781,31 @@ func _show_cell() -> void:
 	if not facility.is_empty(): _show_facility(facility); return
 	var crop := world.instance_at(selected)
 	if not crop.is_empty(): selected = Vector2i(int(crop["origin"][0]),int(crop["origin"][1]))
-	var env := world.environment_at(selected)
+	if world.grid.terrain_at(selected) == "water":
+		_heading(sidebar,"水库 · 水域")
+		_label(sidebar,"可建设2×2水场，四格都须位于水库内。")
+		_icon(sidebar,"build","选择水场并放置",_show_build)
+		return
 	if not crop.is_empty():
 		_picture(sidebar,crop["crop_id"],64)
 		_heading(sidebar,CROPS[crop["crop_id"]]+(" · 成熟" if crop["state"] == "mature" else " · 生长中"))
+	_label(sidebar,"手动操作 · 每次成功消耗1AP")
+	var row := HBoxContainer.new()
+	sidebar.add_child(row)
+	for kind in ["till","plant","harvest","irrigate","fertilize","fell","clear"]:
+		var eligible: Dictionary = world.workforce._target(selected,kind)
+		if not eligible["ok"]: continue
+		if kind == "plant" and (world.workforce.seed_plan(selected).is_empty() or not crop.is_empty()): continue
+		var button := _icon(row,kind,"手动%s（1AP）" % NAMES[kind],func():
+			if kind == "clear": _confirm("清理%s？不返还投入与未成熟产物；保留选种。" % CROPS[crop["crop_id"]],_run_manual.bind(selected,kind,int(crop.get("uid",0))))
+			else: _manual(kind))
+		if kind in ["harvest","fell"]: button.disabled = crop.get("state") != "mature"
+		if kind in ["irrigate","fertilize"]:
+			var item := "clean_water" if kind == "irrigate" else "humus"
+			button.disabled = world.inventory.count(item) < 1
+			button.tooltip_text += " · 消耗%s×1（持有%d）" % [world._items[item]["name"],world.inventory.count(item)]
+	var env := world.environment_at(selected)
+	if not crop.is_empty():
 		var definition: Dictionary = world.crop_defs[crop["crop_id"]]
 		var target := int(definition["cycle_days"] if crop["harvest_count"] > 0 else definition["days"])*100
 		_bar(sidebar,"生长",int(crop["progress"])*100.0/target)
@@ -745,7 +832,7 @@ func _show_cell() -> void:
 	seeds.item_selected.connect(func(index): _result(world.workforce.set_seed(selected,seeds.get_item_metadata(index))); _show_cell())
 	sidebar.add_child(seeds)
 	if not plan.is_empty():
-		_label(sidebar,"自动播种："+world.workforce.task_status(selected,"plant"))
+		_label(sidebar,"委托续播：采收清空后沿用选种" if not crop.is_empty() else "自动播种："+world.workforce.task_status(selected,"plant"))
 		var definition: Dictionary = world.crop_defs[plan["crop_id"]]
 		var inputs: Dictionary = definition["inputs"].duplicate()
 		inputs[definition["seed"]] = int(inputs.get(definition["seed"],0))+1
@@ -753,21 +840,6 @@ func _show_cell() -> void:
 		_label(sidebar,_missing(inputs))
 		_label(sidebar,"占地%d×%d，全部开垦且空闲才能播种。" % definition["footprint"])
 		_label(sidebar,"基础%d天 · 偏好光照%d\n产物：%s" % [definition["days"],definition["light"],_materials(definition["outputs"])])
-	_label(sidebar,"手动操作 · 每次成功消耗1AP")
-	var row := HBoxContainer.new()
-	sidebar.add_child(row)
-	for kind in ["till","plant","harvest","irrigate","fertilize","fell","clear"]:
-		var eligible: Dictionary = world.workforce._target(selected,kind)
-		if not eligible["ok"]: continue
-		if kind == "plant" and (plan.is_empty() or not crop.is_empty()): continue
-		var button := _icon(row,kind,"手动%s（1AP）" % NAMES[kind],func():
-			if kind == "clear": _confirm("清理%s？不返还投入与未成熟产物；保留选种。" % CROPS[crop["crop_id"]],_manual.bind(kind))
-			else: _manual(kind))
-		if kind in ["harvest","fell"]: button.disabled = crop.get("state") != "mature"
-		if kind in ["irrigate","fertilize"]:
-			var item := "clean_water" if kind == "irrigate" else "humus"
-			button.disabled = world.inventory.count(item) < 1
-			button.tooltip_text += " · 消耗%s×1（持有%d）" % [world._items[item]["name"],world.inventory.count(item)]
 	_label(sidebar,"养护每次：清水×1（持有%d）或腐殖土×1（持有%d）" % [world.inventory.count("clean_water"),world.inventory.count("humus")])
 	_icon(sidebar,"build","选择设施并放置",_show_build)
 
@@ -785,6 +857,8 @@ func _materials(counts: Dictionary) -> String:
 	return "、".join(parts)
 
 func _manual(kind: String) -> void:
+	var quote := world.action_quote(selected,kind)
+	if not quote["ok"]: _result(quote); return
 	var result := {"ok":false,"reason":"请先给地格分配种子"}
 	match kind:
 		"till": result = world.till(selected)
@@ -808,6 +882,8 @@ func _show_facility(facility: Dictionary) -> void:
 	var batch: Dictionary = facility["batch"]
 	_picture(sidebar,facility["facility_id"],64)
 	_heading(sidebar,world.facility_defs[facility["facility_id"]]["name"])
+	if world.facility_defs[facility["facility_id"]].get("kind") == "habitat":
+		_label(sidebar,"养殖预备设施 · 容量4只\n本批仅支持建设；购入幼体、食谱与维护将在P7.b/c接入。")
 	if not batch.is_empty():
 		_heading(sidebar,"待收取" if batch["status"] == "ready" else "加工中")
 		_label(sidebar,RECIPES[batch["recipe_id"]])
@@ -819,7 +895,7 @@ func _show_facility(facility: Dictionary) -> void:
 		var claim := _icon(sidebar,"claim","收取（1AP）",func(): _result(world.claim_batch(uid,int(batch["batch_id"]))); _show_cell())
 		claim.disabled = batch["status"] != "ready"
 	else:
-		_label(sidebar,"空闲 · 选择配方")
+		_label(sidebar,"空场 · 养殖功能待接入" if world.facility_defs[facility["facility_id"]].get("kind") == "habitat" else "空闲 · 选择配方")
 		for ident in world.recipe_defs:
 			var recipe: Dictionary = world.recipe_defs[ident]
 			if recipe["facility"] != facility["facility_id"]: continue
@@ -1222,9 +1298,12 @@ func _process(delta: float) -> void:
 	if shade.visible or _text_focus() or is_instance_valid(confirmation): return
 	var dir := Input.get_vector("move_left","move_right","move_up","move_down")
 	camera.position += dir*(400.0/camera.zoom.x)*delta
-	var half := Vector2(map_port.size)*0.5/camera.zoom.x
-	camera.position.x = clampf(camera.position.x,minf(half.x,640.0),maxf(640.0,1280.0-half.x))
-	camera.position.y = clampf(camera.position.y,minf(half.y,448.0),maxf(448.0,896.0-half.y))
+	var extent := Vector2(world.grid.width,world.grid.height)*64.0
+	var margin := _camera_bottom_margin()
+	var half := (Vector2(map_port.size)-Vector2(0,margin))*0.5/camera.zoom.x
+	var offset := margin*0.5/camera.zoom.x
+	camera.position.x = clampf(camera.position.x,minf(half.x,extent.x*0.5),maxf(extent.x*0.5,extent.x-half.x))
+	camera.position.y = clampf(camera.position.y-offset,minf(half.y,extent.y*0.5),maxf(extent.y*0.5,extent.y-half.y))+offset
 
 func _unhandled_key_input(event: InputEvent) -> void:
 	if not event is InputEventKey or not event.pressed or event.echo: return
@@ -1297,7 +1376,10 @@ func draw_map(target: Node2D) -> void:
 		target.draw_rect(rect,Color(0.35,0.6,0.4,0.3) if valid else Color(0.7,0.25,0.2,0.3))
 		target.draw_rect(rect,UI.JADE if valid else UI.ERROR,false,3*readable)
 		target.draw_texture_rect(Icons.get_icon(build_tool),rect.grow(-12),false,Color(1,1,1,0.65))
-	if _drag:
+	if manual_mode and tool != "inspect" and build_tool.is_empty() and world.grid.in_bounds(_hover.x,_hover.y):
+		var valid: bool = world.action_quote(_hover,tool)["ok"]
+		target.draw_rect(Rect2(Vector2(_hover)*64,Vector2(64,64)),UI.JADE if valid else UI.ERROR,false,2*readable)
+	if _drag and not manual_mode:
 		var rect := _rect(_drag_start,_drag_end)
 		if tool not in ["inspect","area","cancel"]:
 			var preview := world.workforce.preview(rect,tool)
@@ -1315,7 +1397,7 @@ func _shot(directory: String, name: String) -> void:
 	await RenderingServer.frame_post_draw
 	get_viewport().get_texture().get_image().save_png(directory+"/"+name+".png")
 
-func _preview(directory: String) -> void:
+func _prepare_preview(directory: String) -> void:
 	DirAccess.make_dir_recursive_absolute(directory)
 	var desired := Vector2i.ZERO
 	for arg in OS.get_cmdline_user_args():
@@ -1341,6 +1423,9 @@ func _preview(directory: String) -> void:
 	for arg in OS.get_cmdline_user_args():
 		if arg.begins_with("--ui-scale="): _ui_scale = float(arg.trim_prefix("--ui-scale="))/100.0
 	_layout()
+
+func _preview(directory: String) -> void:
+	await _prepare_preview(directory)
 	await _shot(directory,"slots")
 	_new(1,false)
 	world.workforce.hire("阿禾")
