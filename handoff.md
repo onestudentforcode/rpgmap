@@ -1,7 +1,7 @@
 # handoff — 跨机器开发交接
 
-> 最后更新：2026-10-11（Demo V0与V1均已关闭；Phase 6.5首版界面设计已完成，代码待实施）。
-> **现行迭代：** 用户确认Demo V1宣布完成，交付为现有玩法及独立Windows占位美术包。当前为[Phase 6.5](docs/farming/phase-06.5-UI美化与交互完善.md)，位于V1与V2之间，首版设计见[界面设计稿](docs/farming/ui-design/phase65-interface.md)及[美术指导](docs/farming/ui-design/phase65-art-direction.md)，下一步实施P6.5.a。V1入口`play.bat v1`，基线规则见[demo-v1-plan.md](docs/farming/demo-v1-plan.md)、[雇佣](docs/farming/demo-v1-employment.md)、[体验与回顾](docs/farming/demo-v1-体验与回顾.md)和[资源表](docs/farming/demo-v1-resources.md)；默认入口在Phase 6.5收尾后切换，当前仍为V0。
+> 最后更新：2026-10-11（Demo V0与V1均已关闭；Phase 6.5实现、验收和默认入口切换已完成）。
+> **现行迭代：** 用户确认Demo V1宣布完成，交付为现有玩法及独立Windows占位美术包。当前为[Phase 6.5](docs/farming/phase-06.5-UI美化与交互完善.md)，位于V1与V2之间，首版设计见[界面设计稿](docs/farming/ui-design/phase65-interface.md)及[美术指导](docs/farming/ui-design/phase65-art-direction.md)，P6.5.a～c均完成，下一轮范围待定。V1默认入口`play.bat`/F5，基线规则见[demo-v1-plan.md](docs/farming/demo-v1-plan.md)、[雇佣](docs/farming/demo-v1-employment.md)、[体验与回顾](docs/farming/demo-v1-体验与回顾.md)和[资源表](docs/farming/demo-v1-resources.md)；默认入口已切换V1，`play.bat v0`保留V0，应用标识及存档路径不变。
 > 交接对象：新机器上的开发者或 AI 会话。
 > **开工前必读：§2 新机器清单 → §6 命令自检；现行主线是种植模块，先读 [docs/farming/master-plan.md](docs/farming/master-plan.md)；改 demo 地图前必读 [docs/map-schema.md](docs/map-schema.md)。**
 
@@ -23,8 +23,8 @@
    - 设环境变量 `GODOT_EXE` / `GODOT_EXE_CONSOLE` 指向 Godot 可执行文件（推荐）
    - 或直接改 `play.bat` 顶部的默认路径
 5. 首次运行 `test.bat`：执行当前种植模块的资产QC、工具测试、农场流程和独立V1测试；`test-v1.bat`可单跑V1编译产物、三槽/报价、种植/环境/资源点、加工/回流、订单/rank/经济及普通雇工/框选派工界面检查；
-   **预期输出 FARMING TEST SUITE OK**；`play.bat --selftest`可只跑农场逻辑。
-6. 运行`play.bat v1`进入新V1农务派工场景，首次选择独立V1槽并新建。`play.bat`或Godot F5仍进入V0开始菜单；旧演示通过`play.bat demo`显式进入。
+   **预期输出 FARMING TEST SUITE OK**；`play.bat --selftest`单跑V1隔离冒烟，V0逻辑用`play.bat farm --farmtest`。
+6. 运行`play.bat`或Godot F5进入V1明亮界面，首次选择独立V1槽新建；`play.bat v1`等价。V0用`play.bat v0`，旧演示用`play.bat demo`，历史phase00用`play.bat farm0`。
 
 ## 3. 当前状态
 
@@ -102,12 +102,13 @@ scripts/main.gd（状态机：移动/对话/菜单/战斗桩/切图）
 ## 6. 常用命令
 
 ```
-play.bat                        # 当前农场（默认主场景）
-play.bat v1                     # V1三槽、农务派工、加工、市场与订单
+play.bat                        # V1明亮界面、三槽、农务派工、加工、市场与订单
+play.bat v1                     # 与默认入口等价
+play.bat v0                     # V0独立开始页与旧存档
 test-v1.bat                     # V1模型、界面、经营记录与隔离冒烟
-test.bat                        # 当前农场：资产QC + 工具测试 + 游戏流程（不运行旧内容）
-play.bat --selftest             # 仅农场逻辑测试（headless）
-play.bat --shots=DIR            # 当前农场截图
+test.bat                        # 资产QC + 工具测试 + 独立V0回归 + 完整V1测试
+play.bat --selftest             # V1隔离冒烟（headless）
+play.bat --shots=DIR            # V1隔离预览截图
 play.bat demo wilds             # 旧商场/野外演示，显式入口
 play.bat demo --selftest         # 旧演示测试，按需单独运行
 
@@ -124,7 +125,7 @@ python tools/farming/qc_assets.py --target all # 正式资产统一检查（占�
 python tools/farming/build_art_handoff.py --batch ground --output .art-work/handoff/ground # 空输出目录
 play.bat farm                              # 主农场场景（开垦/种植/采收/存档）
 play.bat farm --farmtest                   # 种植/经济/Demo存档流程自测（当前 234 项）
-play.bat --fresh                           # 无存档开发预览；玩家新游戏从默认菜单选槽
+play.bat farm --fresh                      # V0无存档开发预览；V1新游戏从默认开始页选槽
 play.bat farm0                             # Phase 0 拼接验证场景（历史回归）
 ```
 
@@ -134,9 +135,9 @@ play.bat farm0                             # Phase 0 拼接验证场景（历史
 
 ## 7. 当前闭环与后续阶段
 
-**Demo V1已完成并关闭（2026-10-10，用户确认）。Phase 6.5首版设计已完成，尚未修改游戏UI代码。** 以2560×1440为主，明亮柔和配色、小图标和悬停说明，不再要求像素风；后续图片必须核对拼接与机位。按布局/基础交互→高频经营面板→统一视觉推进，下一步实施P6.5.a。具体范围见[Phase 6.5文档](docs/farming/phase-06.5-UI美化与交互完善.md)。V1生产/经济/订单/普通雇工/日存档规则沿用，UI图标与缩略图单独成批；完整场景美术另列批次，养殖等V2内容仍待设计。
+**Demo V1已关闭，Phase 6.5也已实施并验收。** 默认`play.bat`/F5为明亮V1界面，V0通过`play.bat v0`保留；历史应用标识不变。2560×1440主规格及三种兼容窗口、100/125/150% UI缩放通过，58个SVG与独立设置接入，79项新增UI检查、原有回归及13项发行版冒烟通过。具体见[Phase 6.5关闭记录](docs/farming/phase-06.5-UI美化与交互完善.md)。下一轮范围待定；完整世界场景美术及养殖等V2内容仍需另行设计，后续世界图片继续核对拼接、机位及光照。
 
-现行V1：逐条摘要/时节小结、首次45天总计与三个时节小计已接入；无注入经营路线初始60→298，121项新记录和49项界面检查通过。占位美术独立包`dist/LingTianDemoV1-Windows-x64.zip`，解压运行`LingTianDemoV1.exe`，说明见[demo-v1-操作说明](docs/farming/demo-v1-操作说明.md)。重建使用`tools/farming/build_v1_demo.ps1 -GodotExe <控制台路径>`，需匹配的Windows release模板；10项打包后冒烟通过。旧V1从升级当天开始记录，已过45天的旧档无法补造首次回顾。下述Phase记录为V0基线。
+现行V1：逐条摘要/时节小结、首次45天总计与三个时节小计已接入；无注入经营路线初始60→298，121项记录、51项原界面及79项Phase 6.5界面检查通过。独立包`dist/LingTianDemoV1-Windows-x64.zip`包含明亮矢量UI与占位世界美术，解压运行`LingTianDemoV1.exe`，说明见[demo-v1-操作说明](docs/farming/demo-v1-操作说明.md)。重建使用`tools/farming/build_v1_demo.ps1 -GodotExe <控制台路径>`，需匹配的Windows release模板；13项打包后冒烟通过。旧V1从升级当天开始记录，已过45天的旧档无法补造首次回顾。下述Phase记录为V0基线。
 
 Phase 0–5已关闭；Phase5以本仓库种植经济闭环为完成条件，对上游保留适配接口。
 Phase6范围已由用户确认，草案见[phase-06](docs/farming/phase-06-Demo体验与三槽存档.md)：
