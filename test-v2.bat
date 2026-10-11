@@ -13,13 +13,17 @@ if not exist ".art-work" mkdir .art-work
 if errorlevel 1 goto :failed
 "%V2_GODOT%" --headless --path . --script res://scripts/farming/tests/run_phase07b.gd
 if errorlevel 1 goto :failed
+"%V2_GODOT%" --headless --path . --script res://scripts/farming/tests/run_phase07c.gd
+if errorlevel 1 goto :failed
 "%V2_GODOT%" --headless --path . --script res://scripts/farming/tests/run_v2_startup_ledger.gd
 if errorlevel 1 goto :failed
 "%V2_GODOT%" --headless --path . --script res://scripts/farming/tests/run_v2_husbandry_replay.gd
 if errorlevel 1 goto :failed
+"%V2_GODOT%" --headless --path . --script res://scripts/farming/tests/run_v2_production_replay.gd
+if errorlevel 1 goto :failed
 "%V2_GODOT%" --headless --path . res://scenes/farming/farm_v2.tscn -- --v2-smoke
 if errorlevel 1 goto :failed
-echo V2 P7.b SUITE OK
+echo V2 P7.c SUITE OK
 popd
 exit /b 0
 :failed

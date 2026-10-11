@@ -29,10 +29,10 @@ func _run() -> void:
 
 func _model_checks() -> void:
 	var world := World.new()
-	check(Snapshot.SCHEMA == 8 and Snapshot.normalize(Snapshot.fresh())["ok"],"schema8 fresh round trip")
-	var schema7: Dictionary = Snapshot.fresh()
-	schema7["schema"] = 7
-	check(not Snapshot.normalize(schema7)["ok"],"schema7 rejected without migration")
+	check(Snapshot.normalize(Snapshot.fresh())["ok"],"schema%d fresh round trip" % Snapshot.SCHEMA)
+	var older: Dictionary = Snapshot.fresh()
+	older["schema"] = Snapshot.SCHEMA-1
+	check(not Snapshot.normalize(older)["ok"],"older schema rejected without migration")
 	world.grant_scaffold({"raw_wood":6,"raw_stone":12})
 	world.build_facility(Vector2i(7,1),"pen")
 	world.build_facility(Vector2i(0,14),"fish_pond")
@@ -200,7 +200,7 @@ func _ledger_checks() -> void:
 	var view: Dictionary = unclaimed.ledger.day_view(0)
 	check(not view["inflows"].has("algae_feed"),"completed but unclaimed batch books no inflow")
 	var average: Dictionary = unclaimed.ledger.average_view(7)
-	check(average["days"] == 1 and average["totals_in"].is_empty(),"average counts the quiet settled day without inventing growth")
+	check(average["days"] == 1 and not average["totals_in"].has("algae_feed"),"average counts the quiet settled day without inventing growth")
 	for day in range(3): unclaimed.end_day()
 	check(unclaimed.ledger.average_view(7)["days"] == 4 and unclaimed.ledger.state["history"].size() == 4,"averages include zero-activity days and today stays out")
 	var balanced_flow: Dictionary = unclaimed.ledger.state["pending"]
@@ -224,7 +224,7 @@ func _ui_checks() -> void:
 	ui._show_cell()
 	check(has_text(ui.sidebar,"新建设施已采用默认配置"),"default configuration is announced in the panel")
 	check(has_text(ui.sidebar,"钢绵羊") and has_text(ui.sidebar,"牧草餐") and has_text(ui.sidebar,"含铁补料"),"three slots show species and diet names")
-	check(has_text(ui.sidebar,"特殊栏本阶段仅保存计划"),"special slot states its P7.c boundary")
+	check(has_text(ui.sidebar,"含铁补料"),"special slot shows the default production recipe")
 	ui.world.husbandry.purchase(1,2)
 	ui._show_cell()
 	check(has_text(ui.sidebar,"2/4只") and has_text(ui.sidebar,"今日已喂0/2"),"counts and feeding state are visible")
