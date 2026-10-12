@@ -90,6 +90,11 @@ static func normalize(value) -> Dictionary:
 	var research := P8Research.normalize(raw_research, day, checked["snapshot"]["world"], Data)
 	if not research["ok"]:
 		return research
+	var species_defs := Data.definitions("livestock")
+	for habitat in husbandry["husbandry"]["habitats"]:
+		var gate := String(species_defs[String(habitat["species_id"])].get("research", ""))
+		if not habitat["individuals"].is_empty() and not gate.is_empty() and not research["research"]["completed"].has(gate):
+			return fail("已购入物种缺少前置研究：" + gate)
 	var flower_sources := P8Flowers.normalize(raw_flowers, day, checked["snapshot"]["world"], Data)
 	if not flower_sources["ok"]:
 		return flower_sources

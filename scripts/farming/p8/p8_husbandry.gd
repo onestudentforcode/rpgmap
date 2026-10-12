@@ -14,6 +14,13 @@ func ensure(facility_uid: int) -> Dictionary:
 		habitat["water_change_day"] = -1
 	return habitat
 
+func quote_purchase(facility_uid: int, count: int) -> Dictionary:
+	var habitat := habitat_of(facility_uid)
+	if not habitat.is_empty():
+		var blocked: String = world.research_block(String(species_defs[String(habitat["species_id"])].get("research", "")))
+		if not blocked.is_empty(): return _error(blocked)
+	return super(facility_uid, count)
+
 ## Read-only change quote; one real change per habitat per service day.
 func quote_water(facility_uid: int) -> Dictionary:
 	var base: Dictionary = super(facility_uid)
@@ -179,6 +186,8 @@ func set_yard_species(facility_uid: int, species_id: String) -> Dictionary:
 	var habitat := ensure(facility_uid)
 	if not habitat["individuals"].is_empty():
 		return _error("非空工作场不能更换物种；先清退全部动物")
+	var blocked: String = world.research_block(String(species_defs[species_id].get("research", "")))
+	if not blocked.is_empty(): return _error(blocked)
 	habitat["species_id"] = species_id
 	habitat["basic_diet_id"] = species_defs[species_id]["default_base_diet"]
 	habitat["special_diet_id"] = species_defs[species_id]["default_special_diet"]
