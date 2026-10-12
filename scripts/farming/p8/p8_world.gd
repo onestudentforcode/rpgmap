@@ -45,7 +45,9 @@ func _make_workforce():
 func _settle_workforce(completed_day: int) -> void:
 	# The unified P8 scheduler replaces the V1/V2 settle: facilities, research
 	# and opted-in farm duty share one quota and budget per worker.
+	flowers.begin_settle(completed_day)
 	operations.settle(completed_day)
+	flowers.finish_settle()
 
 ## Research advances from today's receipts after husbandry and before the
 ## reports archive, so unlock events land on the completed day; unused flower

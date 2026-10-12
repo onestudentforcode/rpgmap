@@ -11,6 +11,18 @@ var world:
 		return _owner.get_ref()
 var state := {"shares": [], "pollinated": []}
 var settings: Dictionary
+## Clock advances before workers run. Their flower draws still belong to the
+## completed day, including shares initialized by a UI preview on that day.
+var _settle_day := -1
+
+func _today() -> int:
+	return _settle_day if _settle_day >= 0 else world.clock.total_days
+
+func begin_settle(completed_day: int) -> void:
+	_settle_day = completed_day
+
+func finish_settle() -> void:
+	_settle_day = -1
 
 func _init(owner, flower_settings: Dictionary) -> void:
 	_owner = weakref(owner)
@@ -52,12 +64,12 @@ func eligible(crop_uid: int) -> bool:
 func share_of(crop_uid: int) -> Dictionary:
 	for row in state["shares"]:
 		if int(row["uid"]) == crop_uid:
-			if int(row["day"]) != world.clock.total_days:
+			if int(row["day"]) != _today():
 				return {}
 			return row
 	if not eligible(crop_uid):
 		return {}
-	var row := {"uid": crop_uid, "day": world.clock.total_days, "used": 0}
+	var row := {"uid": crop_uid, "day": _today(), "used": 0}
 	state["shares"].append(row)
 	return row
 
@@ -80,7 +92,7 @@ func consume(crop_uid: int, consumer: String) -> Dictionary:
 
 func release(crop_uid: int, undo_pollination: bool) -> void:
 	for row in state["shares"]:
-		if int(row["uid"]) == crop_uid and int(row["day"]) == world.clock.total_days:
+		if int(row["uid"]) == crop_uid and int(row["day"]) == _today():
 			row["used"] = maxi(0, int(row["used"]) - 1)
 	if undo_pollination:
 		state["pollinated"].erase(crop_uid)
@@ -141,6 +153,7 @@ func to_save() -> Dictionary:
 	return state.duplicate(true)
 
 func apply_save(value: Dictionary) -> void:
+	_settle_day = -1
 	state = value.duplicate(true)
 
 ## Detached validation: current-day shares reference living flower crops and
