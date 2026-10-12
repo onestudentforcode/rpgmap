@@ -161,6 +161,32 @@ func _bee_maintain(facility_uid: int, operator: String = "player", service_day: 
 
 # --- P8.e purifying mats -----------------------------------------------------
 
+## Mixed yards pick their single species while empty; 0AP management only.
+func set_yard_species(facility_uid: int, species_id: String) -> Dictionary:
+	var checked: Dictionary = world._can_act(0)
+	if not checked["ok"]:
+		return checked
+	if not world.facilities.has(facility_uid):
+		return _error("未知设施")
+	var facility: Dictionary = world.facilities[facility_uid]
+	if world.facility_defs[String(facility["facility_id"])].get("kind") != "habitat":
+		return _error("该设施不能养殖")
+	if not species_defs.has(species_id):
+		return _error("未知物种")
+	var definition: Dictionary = world.facility_defs[String(facility["facility_id"])]
+	if not definition.get("species", []).has(species_id):
+		return _error("该设施不接纳此物种")
+	var habitat := ensure(facility_uid)
+	if not habitat["individuals"].is_empty():
+		return _error("非空工作场不能更换物种；先清退全部动物")
+	habitat["species_id"] = species_id
+	habitat["basic_diet_id"] = species_defs[species_id]["default_base_diet"]
+	habitat["special_diet_id"] = species_defs[species_id]["default_special_diet"]
+	habitat["production_enabled"] = true
+	habitat["default_notice"] = true
+	world.changed.emit()
+	return {"ok": true}
+
 func is_mat_habitat(facility_uid: int) -> bool:
 	if not world.facilities.has(facility_uid):
 		return false

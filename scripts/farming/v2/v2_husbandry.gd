@@ -878,7 +878,8 @@ static func normalize(value, day: int, world: Dictionary, catalog, settings: Dic
 					if int(cycle["progress"]) > cycle_goal - 100 or int(cycle["ready_day"]) != -1:
 						return Scalars.fail("进行中周期进度或就绪日非法")
 				elif cycle["status"] == "ready":
-					if int(cycle["progress"]) != cycle_goal or not Scalars.whole(cycle["ready_day"], 0, day) or int(cycle["ready_day"]) <= int(cycle["start_day"]):
+					# One-day cycles legitimately finish on their start day.
+					if int(cycle["progress"]) != cycle_goal or not Scalars.whole(cycle["ready_day"], 0, day) or int(cycle["ready_day"]) < int(cycle["start_day"]):
 						return Scalars.fail("待收周期进度或就绪日非法")
 				else:
 					return Scalars.fail("周期状态非法")

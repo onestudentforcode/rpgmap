@@ -58,7 +58,18 @@ func _show_build() -> void:
 		if not locked.is_empty():
 			_label(card,"未解锁：%s" % locked)
 		else:
-			_label(card,_missing(definition["materials"]))
+			_label(card,_missing(_substituted_preview(String(ident))))
+			if definition["materials"].has("raw_stone"):
+				var choice := OptionButton.new()
+				choice.add_item("建材：原石")
+				choice.add_item("建材：复合石板 1:1替石")
+				choice.add_item("建材：再生填料 2:1替石")
+				choice.set_item_metadata(0, "")
+				choice.set_item_metadata(1, "panel")
+				choice.set_item_metadata(2, "fill")
+				choice.selected = 0
+				choice.item_selected.connect(func(index): world.build_substitute = String(choice.get_item_metadata(index)); _show_build())
+				card.add_child(choice)
 			_icon(card,"build","放置 "+definition["name"],func():
 				_close_page()
 				_select_tool("inspect")
@@ -108,6 +119,13 @@ func _show_facility(facility: Dictionary) -> void:
 			start.disabled = _missing(recipe["inputs"]) != "投入齐备" or world.clock.ap < 1
 	_production_section(facility)
 	_icon(sidebar,"clear","拆除（1AP，无返还）",func(): _confirm("拆除%s？不返还建设材料或元石，消耗1AP。" % definition["name"],func(): _result(world.demolish_facility(uid)); _show_cell()))
+
+func _substituted_preview(facility_id: String) -> Dictionary:
+	world.build_substitute = String(world.build_substitute)
+	if world.build_substitute.is_empty():
+		return world.facility_defs[facility_id]["materials"]
+	var swap: Dictionary = world._substituted_materials(facility_id)
+	return swap if not swap.is_empty() else world.facility_defs[facility_id]["materials"]
 
 func _help_extra() -> void:
 	super()
@@ -485,6 +503,20 @@ func _crop_extra(crop: Dictionary) -> void:
 		_label(sidebar,"蜂群利用本株份额可为本周期的油籽收获+1（多次/多箱不叠加）。")
 
 func _habitat_extra(habitat: Dictionary) -> void:
+	if String(world.facility_defs[String(world.facilities[int(habitat["facility_uid"])]["facility_id"])].get("id", "")) == "rock_workyard" or world.facility_defs[String(world.facilities[int(habitat["facility_uid"])]["facility_id"])].get("species", []).size() > 1:
+		if habitat["individuals"].is_empty():
+			_label(sidebar,"本场只能养一种岩兽；空场可切换物种后再购入。")
+			var picker := OptionButton.new()
+			for species_id in world.facility_defs[String(world.facilities[int(habitat["facility_uid"])]["facility_id"])]["species"]:
+				picker.add_item("%s（幼体%d元石）" % [world.husbandry.species_def(String(species_id))["name"], int(world.husbandry.species_def(String(species_id))["juvenile_price"])])
+				picker.set_item_metadata(picker.item_count - 1, String(species_id))
+				if String(habitat["species_id"]) == String(species_id):
+					picker.select(picker.item_count - 1)
+			picker.item_selected.connect(func(index): _result(world.husbandry.set_yard_species(int(habitat["facility_uid"]), String(picker.get_item_metadata(index)))); _show_cell())
+			sidebar.add_child(picker)
+			return
+		_label(sidebar,"单场单物种：日粮维持成长/有效日，加工矿料在启动轮一次付清；基础食物不产矿。")
+		return
 	if String(habitat["species_id"]) == "purifying_mat":
 		_label(sidebar,"培养单位购入即占位（不入仓库）；幼体每日清水1培养，成体只按处理配方取料，无批次时待机不扣水。")
 		_label(sidebar,"污水仅来自水场真实换水；炭砂滤料所需砂砾由啮岩鼹破石取得（P8.f路线）。")

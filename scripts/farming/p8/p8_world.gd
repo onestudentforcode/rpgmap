@@ -152,11 +152,44 @@ func _research_name(research_id: String) -> String:
 			return String(row["name"])
 	return research_id
 
+## Explicit construction substitutes for the plain-stone part of a build:
+## composite panels 1:1 or reclaimed fill 2:1; special materials never swap.
+var build_substitute := ""
+
+func _substituted_materials(facility_id: String) -> Dictionary:
+	var materials: Dictionary = facility_defs[facility_id]["materials"].duplicate()
+	if build_substitute.is_empty() or not materials.has("raw_stone"):
+		return materials
+	var stones := int(materials["raw_stone"])
+	materials.erase("raw_stone")
+	if build_substitute == "panel":
+		materials["composite_stone_panel"] = int(materials.get("composite_stone_panel", 0)) + stones
+	elif build_substitute == "fill":
+		materials["reclaimed_fill"] = int(materials.get("reclaimed_fill", 0)) + stones * 2
+	return materials
+
+## Swap the facility's material group for the substituted one around the shared
+## validation/build so the plain-stone part is replaced as one whole group.
+func _with_substituted(facility_id: String, action: Callable) -> Dictionary:
+	var definition: Dictionary = facility_defs[facility_id]
+	var original: Dictionary = definition["materials"]
+	definition["materials"] = _substituted_materials(facility_id)
+	var result: Dictionary = action.call()
+	definition["materials"] = original
+	return result
+
 func can_build_facility(cell: Vector2i, facility_id: String) -> Dictionary:
 	if facility_defs.has(facility_id):
 		var blocked := research_block(String(facility_defs[facility_id].get("research", "")))
 		if not blocked.is_empty():
 			return _error(blocked)
+	if not build_substitute.is_empty() and facility_defs[facility_id]["materials"].has("raw_stone"):
+		return _with_substituted(facility_id, func(): return super.can_build_facility(cell, facility_id))
+	return super(cell, facility_id)
+
+func build_facility(cell: Vector2i, facility_id: String) -> Dictionary:
+	if not build_substitute.is_empty() and facility_defs[facility_id]["materials"].has("raw_stone"):
+		return _with_substituted(facility_id, func(): return super.build_facility(cell, facility_id))
 	return super(cell, facility_id)
 
 func plant(cell: Vector2i, crop_id: String) -> Dictionary:
