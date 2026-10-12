@@ -211,7 +211,7 @@ func _freeze_boundary() -> void:
 			break
 	check(world.clock.total_days == 46, "46 days settled")
 	check(world.journal["frozen"], "journal frozen after day 45")
-	check(world.journal["end_cash"] == 60, "recap keeps the day-45 cash")
+	check(world.journal["end_cash"] == int(world.config["initial_primeval_stones"]), "recap keeps the day-45 cash")
 	check(world.journal["history"].size() == 15, "journal keeps 15 day rows")
 	var ledger_history: Array = world.ledger.state["history"]
 	check(ledger_history.size() == 15 and int(ledger_history[-1]["day"]) == 45, "ledger rolls to day 45")

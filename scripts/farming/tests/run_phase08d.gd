@@ -324,6 +324,16 @@ func _competition_and_pollination() -> void:
 	check(harvested["ok"], "oilseed harvest runs")
 	check(world.inventory.count("oilseed") == 4 + 1, "pollinated cycle pays one extra oilseed")
 	check(not world.flowers.pollinated(oil), "pollination cleared with the harvest")
+	check(int(world.crop_defs["oilseed_flower"]["outputs"]["oilseed"]) == 4, "pollination never changes the crop definition")
+	world.buy("oilseed_flower_seed", 1)
+	world.till(Vector2i(9, 2))
+	check(world.plant(Vector2i(9, 2), "oilseed_flower")["ok"], "replant the next independent oilseed cycle")
+	var next_crop: Dictionary = world.instance_at(Vector2i(9, 2))
+	world.crops[int(next_crop["uid"])]["state"] = "mature"
+	world.crops[int(next_crop["uid"])]["progress"] = world.crop_defs["oilseed_flower"]["days"] * 100
+	var plain: Dictionary = world.harvest(Vector2i(9, 2), "harvest")
+	check(plain["ok"] and int(plain["items"]["oilseed"]) == 4, "the following unpollinated harvest pays the base yield")
+
 
 # --- 5. Processing recipes behind their research ------------------------------------
 

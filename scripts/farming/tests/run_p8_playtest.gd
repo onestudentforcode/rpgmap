@@ -1,7 +1,7 @@
 extends SceneTree
-## P8.h no-injection dual 90-day routes via real world interfaces only.
+## P8.h no-injection dual configurable routes via real world interfaces only.
 ## Route A leads with flowers and later delegation; B researches water/rock
-## first and delegates earlier. Separate 90-day books never extend the frozen
+## first and delegates earlier. Separate full-run books never extend the frozen
 ## player recap. Failed/deferred actions and every actual closed day are saved.
 const P8World := preload("res://scripts/farming/p8/p8_world.gd")
 const P8Store := preload("res://scripts/farming/p8/p8_slot_store.gd")
@@ -18,6 +18,26 @@ var frozen_recap := {}
 var daily_count := 0
 var route_summaries := {}
 var audit_root := "res://.art-work/p8-playtest"
+var horizon := 120
+var selected_routes := ["A", "B"]
+var receipts: FileAccess
+var claimed := {}
+var claimed_days := {}
+var receipt_index := 0
+const WHEAT := [Vector2i(6, 8), Vector2i(7, 8), Vector2i(8, 8), Vector2i(9, 8)]
+const MUSHROOMS := [Vector2i(0, 10), Vector2i(1, 10), Vector2i(2, 10), Vector2i(3, 10)]
+const LAMP_FLOWERS := [Vector2i(6, 11), Vector2i(7, 11), Vector2i(6, 12), Vector2i(7, 12)]
+
+func record_operation(entry: Dictionary) -> void:
+	receipt_index += 1
+	var row: Dictionary = entry.duplicate(true)
+	row["sequence"] = receipt_index
+	receipts.store_line(JSON.stringify(row))
+	if row["kind"] in ["batch", "cycle"] and row["stage"] == "claim" and int(row["day"]) < horizon:
+		var recipe := String(row["recipe"])
+		claimed[recipe] = int(claimed.get(recipe, 0)) + 1
+		if not claimed_days.has(recipe): claimed_days[recipe] = int(row["day"]) + 1
+
 
 func validate_layout(world, plan: Array) -> void:
 	var occupied := {}
@@ -33,10 +53,12 @@ func validate_layout(world, plan: Array) -> void:
 				check(not occupied.has(cell) and world.source_at(cell).is_empty(), active_route + " no facility overlap " + str(cell))
 				occupied[cell] = true
 	var fields := []
-	for x in range(4, 8): fields.append(Vector2i(x, 4))
+	fields.append_array(WHEAT)
 	for y in [4, 5]:
 		for x in [11, 12]: fields.append(Vector2i(x, y))
-	for x in range(2, 9): fields.append(Vector2i(x, 3))
+	fields.append_array(MUSHROOMS)
+	fields.append_array(LAMP_FLOWERS)
+	fields.append_array([Vector2i(0, 7), Vector2i(1, 7), Vector2i(0, 8), Vector2i(1, 8), Vector2i(2, 7), Vector2i(3, 7), Vector2i(2, 8), Vector2i(3, 8)])
 	fields.append_array([Vector2i(9, 2), Vector2i(10, 2), Vector2i(9, 3), Vector2i(10, 3), Vector2i(11, 2), Vector2i(12, 2)])
 	for cell in fields:
 		check(not occupied.has(cell) and world.source_at(cell).is_empty() and world.grid.can_till(cell)["ok"], active_route + " usable crop cell " + str(cell))
@@ -65,12 +87,13 @@ func archive_day(world, day: int) -> void:
 		fees += int(worker["fee"])
 		successes += int(worker["success"])
 	check(fees == successes and fees == int(bucket["labour_spend"]), active_route + " day %d wages match real work" % day)
-	check(world.primeval_stones == 60 + Journal.income(totals) - Journal.expense(totals), active_route + " day %d cash balances" % day)
+	check(world.primeval_stones == int(world.config["initial_primeval_stones"]) + Journal.income(totals) - Journal.expense(totals), active_route + " day %d cash balances" % day)
 	daily_count += 1
 	daily.store_line(JSON.stringify({"day": day, "cash": world.primeval_stones, "journal": bucket,
 		"ledger": world.ledger.day_view(day - 1), "workers": world.workforce.state["report"],
 		"research": world.research.to_save(), "facilities": world.to_snapshot()["world"]["facilities"],
-		"husbandry": world.husbandry.to_save(), "devices": world.devices.to_save(), "report": world.reports.to_save()}))
+		"husbandry": world.husbandry.to_save(), "devices": world.devices.to_save(), "report": world.reports.to_save(),
+		"opening": world.ledger.day_view(-1), "crops": world.to_snapshot()["world"]["crops"], "operations": world.operations.to_save()}))
 	if day == 45:
 		frozen_recap = world.reports.state["recap"].duplicate(true)
 		write_json(active_route + "-recap45.json", frozen_recap)
@@ -103,20 +126,25 @@ func count_of(world, facility_id: String) -> int:
 func _initialize() -> void:
 	for argument in OS.get_cmdline_user_args():
 		if argument.begins_with("--audit-root="): audit_root = argument.trim_prefix("--audit-root=")
+		if argument.begins_with("--days="): horizon = int(argument.trim_prefix("--days="))
+		if argument.begins_with("--route="): selected_routes = [argument.trim_prefix("--route=")]
+	check(horizon >= 90 and horizon <= 180, "经营跨度在90至180日内")
 	DirAccess.make_dir_recursive_absolute(ProjectSettings.globalize_path(audit_root))
 	var manifest := {}
 	for name in ["content/farming/p8/production.json", "content/farming/baked/p8/production.json",
 			"content/farming/baked/maps/farm_02.json", "scripts/farming/tests/run_p8_playtest.gd",
-			"scripts/farming/p8/p8_flowers.gd", "scripts/farming/p8/p8_world.gd"]:
+			"scripts/farming/p8/p8_flowers.gd", "scripts/farming/p8/p8_world.gd",
+			"scripts/farming/p8/p8_operations.gd", "scripts/farming/p8/p8_husbandry.gd", "scripts/farming/p8/p8_devices.gd", "scripts/farming/p8/p8_snapshot.gd", "scripts/farming/p8/p8_scene.gd", "scripts/farming/p8/p8_workforce.gd", "scripts/farming/p8/p8_research.gd",
+			"scripts/farming/v1/v1_world.gd", "scripts/farming/v2/v2_husbandry.gd", "scripts/farming/v2/v2_resource_ledger.gd"]:
 		manifest[name] = FileAccess.get_sha256("res://" + name)
 	write_json("manifest.json", manifest)
-	_run_route("A")
-	_run_route("B")
-	check(route_summaries["A"]["research_order"] != route_summaries["B"]["research_order"], "routes have different research histories")
+	for route in selected_routes: _run_route(String(route))
+	if selected_routes.size() == 2:
+		check(route_summaries["A"]["research_order"] != route_summaries["B"]["research_order"], "routes have different research histories")
 	var summary := FileAccess.open(audit_root.path_join("summary.json"), FileAccess.WRITE)
-	summary.store_string(JSON.stringify({"routes": route_summaries, "failures": failures, "checks": checks}, "\t"))
+	summary.store_string(JSON.stringify({"settings": {"days": horizon, "initial_currency": int(P8World.P8Data.load_data()["config"]["initial_primeval_stones"])}, "routes": route_summaries, "failures": failures, "checks": checks}, "\t"))
 	for failure in failures: printerr(failure)
-	print("P8 TWO90 PLAYTEST %s · %d checks" % ["OK" if failures.is_empty() else "FAIL", checks])
+	print("P8 OPERATIONS PLAYTEST %s · %d days · %d checks" % ["OK" if failures.is_empty() else "FAIL", horizon, checks])
 	quit(0 if failures.is_empty() else 1)
 
 # --- Research -----------------------------------------------------------------------
@@ -153,6 +181,41 @@ func _start_research(world) -> void:
 
 # --- Habitat upkeep -------------------------------------------------------------------
 
+func _configure_habitats(world) -> void:
+	for uid in world.facilities:
+		var habitat: Dictionary = world.husbandry.habitat_of(int(uid))
+		if habitat.is_empty(): continue
+		var species := String(habitat["species_id"])
+		var recipe := String(habitat["special_diet_id"])
+		var target := ""
+		var quantity := 8
+		match species:
+			"bell_bee":
+				recipe = "honey_cycle"; target = "honey"; quantity = 14
+			"rock_mole":
+				recipe = "break_stone" if world.inventory.count("gravel") < 8 else "break_ore"
+				target = "gravel" if recipe == "break_stone" else "crushed_ore"; quantity = 8 if recipe == "break_stone" else 20
+			"rock_belly_beast":
+				recipe = "concentrate_ore"; target = "ore_concentrate"
+				if world.inventory.count("land_feed") > 0:
+					act(world, "beast compound base feed", func(): return world.husbandry.set_base_diet(int(uid), "land_meal"))
+				else:
+					act(world, "beast grass base feed", func(): return world.husbandry.set_base_diet(int(uid), "grass_water_meal"))
+			"purifying_mat":
+				recipe = "recover_nutrients" if world.research.is_completed("water_recirculation") and world.inventory.count("filter_media") > 0 and world.inventory.count("nutrient_liquid") < 6 else "bio_purify"
+				target = "nutrient_liquid" if recipe == "recover_nutrients" else "sludge"; quantity = 6
+			"filter_algae_carp":
+				recipe = "grain_fatten"; target = "fish_meat"; quantity = 8
+				var diet := "water_meal" if world.inventory.count("water_feed") >= 2 else ("dense_meal" if world.inventory.count("dense_algae") >= 4 else "algae_meal")
+				act(world, "fish base feed", func(): return world.husbandry.set_base_diet(int(uid), diet))
+			"steel_sheep":
+				recipe = "mineral_supplement" if world.inventory.count("mineral_feed") > 0 else "iron_supplement"
+				target = "steel_wool"; quantity = 4
+		if target.is_empty(): continue
+		var current: Dictionary = world.operations.state["production"].get(int(uid), {})
+		if current.get("recipe_id") != recipe or current.get("target_qty") != quantity or not current.get("enabled", false):
+			act(world, "habitat target " + recipe, func(): return world.operations.set_production(int(uid), true, recipe, target, quantity))
+
 func _maintain_habitats(world) -> void:
 	for uid in world.facilities.keys().duplicate():
 		var facility: Dictionary = world.facilities[int(uid)]
@@ -169,20 +232,6 @@ func _maintain_habitats(world) -> void:
 		var quote: Dictionary = world.husbandry.quote_maintenance(int(uid))
 		if quote["ok"]:
 			act(world, "world.husbandry.maintain(int(uid))", func(): return world.husbandry.maintain(int(uid)))
-	# Mole: crushed ore for the beast chain, gravel when ore is stocked.
-	var mole_yard := uid_of(world, "rock_workyard", 0)
-	if mole_yard != 0 and not world.husbandry.habitat_of(mole_yard).is_empty():
-		if world.inventory.count("gravel") < 8:
-			act(world, "stone first for research and filters", func(): return world.husbandry.set_special_diet(mole_yard, "break_stone"))
-		elif world.inventory.count("crushed_ore") < 12:
-			act(world, "world.husbandry.set_special_diet(mole_yard, \"break_ore\")", func(): return world.husbandry.set_special_diet(mole_yard, "break_ore"))
-	# Mats: nutrient recovery once filter media exists, purify otherwise.
-	var bed := uid_of(world, "purifying_bed")
-	if bed != 0 and not world.husbandry.habitat_of(bed).is_empty():
-		if world.inventory.count("filter_media") >= 1 and world.inventory.count("nutrient_liquid") < 4:
-			act(world, "world.husbandry.set_special_diet(bed, \"recover_nutrients\")", func(): return world.husbandry.set_special_diet(bed, "recover_nutrients"))
-		else:
-			act(world, "world.husbandry.set_special_diet(bed, \"bio_purify\")", func(): return world.husbandry.set_special_diet(bed, "bio_purify"))
 
 # --- Farming ---------------------------------------------------------------------------
 
@@ -190,12 +239,10 @@ func _farm_wheat(world) -> void:
 	for crop in world.crops.values().duplicate(true):
 		if String(crop["crop_id"]) == "golden_wheat" and String(crop["state"]) == "mature":
 			act(world, "world.harvest(Vector2i(int(crop[\"origin\"][0]), int(crop[\"origin\"][1])), \"harvest\")", func(): return world.harvest(Vector2i(int(crop["origin"][0]), int(crop["origin"][1])), "harvest"))
-	for x in range(4, 8):
-		var cell := Vector2i(x, 4)
+	for cell in WHEAT:
 		if world.grid.state_at(cell) == 0 and world.source_at(cell).is_empty() and world.facility_at(cell).is_empty():
 			act(world, "world.till(cell)", func(): return world.till(cell))
-	for x in range(4, 8):
-		var cell := Vector2i(x, 4)
+	for cell in WHEAT:
 		if world.grid.state_at(cell) == 1 and world.inventory.count("golden_wheat_seed") > 0:
 			act(world, "world.plant(cell, \"golden_wheat\")", func(): return world.plant(cell, "golden_wheat"))
 	for crop in world.crops.values().duplicate(true):
@@ -224,8 +271,7 @@ func _farm_feed(world) -> void:
 		if String(crop["crop_id"]) == "wood_decay_mushroom" and String(crop["state"]) == "mature":
 			act(world, "world.harvest(Vector2i(int(crop[\"origin\"][0]), int(crop[\"origin\"][1])), \"harvest\")", func(): return world.harvest(Vector2i(int(crop["origin"][0]), int(crop["origin"][1])), "harvest"))
 	if world.inventory.count("mushroom") < 12 and world.inventory.count("wood_decay_spawn") > 0 and world.inventory.count("wood_chip") >= 3:
-		for x in range(2, 9):
-			var cell := Vector2i(x, 3)
+		for cell in MUSHROOMS:
 			if world.grid.state_at(cell) == 0 and world.source_at(cell).is_empty() and world.facility_at(cell).is_empty():
 				act(world, "world.till(cell)", func(): return world.till(cell))
 			if world.grid.state_at(cell) == 1 and world.inventory.count("wood_chip") >= 3 and world.inventory.count("wood_decay_spawn") > 0:
@@ -236,9 +282,9 @@ func _farm_flowers(world) -> void:
 		if String(crop["crop_id"]) != "honeybell_bush" and String(crop["crop_id"]) != "oilseed_flower":
 			continue
 		var origin := Vector2i(int(crop["origin"][0]), int(crop["origin"][1]))
-		if int(world.environment_at(origin)["water"]) < 45 and world.inventory.count("clean_water") >= 1:
+		if not (origin in LAMP_FLOWERS) and int(world.environment_at(origin)["water"]) < 45 and world.inventory.count("clean_water") >= 1:
 			act(world, "world.irrigate(origin)", func(): return world.irrigate(origin))
-		if int(world.environment_at(origin)["fertility"]) < 45 and world.inventory.count("humus") >= 1:
+		if not (origin in LAMP_FLOWERS) and int(world.environment_at(origin)["fertility"]) < 45 and world.inventory.count("humus") >= 1:
 			act(world, "world.fertilize(origin)", func(): return world.fertilize(origin))
 	for crop in world.crops.values().duplicate(true):
 		if String(crop["crop_id"]) == "honeybell_bush" and String(crop["state"]) == "mature":
@@ -272,6 +318,71 @@ func _farm_flowers(world) -> void:
 				act(world, "world.plant(cell, \"oilseed_flower\")", func(): return world.plant(cell, "oilseed_flower"))
 				break
 
+func _farm_trees(world) -> void:
+	for pair in [["fast_fir", Vector2i(0, 7)], ["resin_tree", Vector2i(2, 7)]]:
+		var id := String(pair[0])
+		var cell: Vector2i = pair[1]
+		var crop: Dictionary = world.instance_at(cell)
+		if not crop.is_empty():
+			if crop["state"] == "mature":
+				act(world, "harvest tree " + id, func(): return world.harvest(cell, "fell" if id == "fast_fir" else "harvest"))
+			elif world.environment_at(cell)["water"] < 35 and world.inventory.count("clean_water") >= 1:
+				act(world, "water tree", func(): return world.irrigate(cell))
+			continue
+		if world.inventory.count(String(world.crop_defs[id]["seed"])) == 0 and world.primeval_stones >= 40:
+			act(world, "tree seed purchase", func(): return world.buy(String(world.crop_defs[id]["seed"]), 1))
+		var footprint: Array = world.crop_defs[id]["footprint"]
+		for y in range(int(footprint[1])):
+			for x in range(int(footprint[0])):
+				var part := cell + Vector2i(x, y)
+				if world.grid.state_at(part) == 0:
+					act(world, "till tree footprint", func(): return world.till(part))
+		if world.inventory.count(String(world.crop_defs[id]["seed"])) > 0:
+			act(world, "plant tree " + id, func(): return world.plant(cell, id))
+
+func _farm_lamp_flowers(world) -> void:
+	if uid_of(world, "growth_lamp") == 0: return
+	for index in range(LAMP_FLOWERS.size()):
+		var cell: Vector2i = LAMP_FLOWERS[index]
+		if not world.instance_at(cell).is_empty(): continue
+		var id := "honeybell_bush" if index < 2 else "oilseed_flower"
+		var seed := String(world.crop_defs[id]["seed"])
+		if world.inventory.count(seed) == 0:
+			act(world, "lamp field seed purchase", func(): return world.buy(seed, 1))
+		if world.grid.state_at(cell) == 0:
+			act(world, "till lamp field", func(): return world.till(cell))
+		if world.grid.state_at(cell) == 1 and world.inventory.count(seed) > 0:
+			act(world, "plant lamp flower", func(): return world.plant(cell, id))
+	_hand_surplus(world, uid_of(world, "bee_hive", 1))
+
+func _hand_surplus(world, hive: int) -> void:
+	if hive == 0: return
+	var candidates: Array = world.flowers.hive_candidates(hive)
+	while candidates.size() > 2:
+		var honeybell := 0
+		for uid in candidates:
+			if world.crops[int(uid)]["crop_id"] == "honeybell_bush":
+				honeybell = int(uid)
+				break
+		if honeybell == 0 or world.clock.total_days != active_day: break
+		var crop: Dictionary = world.crops[honeybell]
+		var cell := Vector2i(int(crop["origin"][0]), int(crop["origin"][1]))
+		var picked: Dictionary = act(world, "hand pick surplus shared flower", func(): return world.pick_flower(cell))
+		if not picked["ok"]: break
+		candidates = world.flowers.hive_candidates(hive)
+
+func _configure_devices(world) -> void:
+	var station := uid_of(world, "field_service_station")
+	if station != 0 and world.devices.device_of(station).is_empty():
+		act(world, "configure field services", func(): return world.devices.configure_station(station, true, true, 45))
+	var lamp := uid_of(world, "growth_lamp")
+	if lamp != 0:
+		# Reserve working capital in oil: load shedding leaves processing room
+		# for wax and spirit food instead of permanently starving those recipes.
+		var lit: bool = world.inventory.count("refined_oil") >= 4
+		if world.devices.device_of(lamp).get("enabled", false) != lit:
+			act(world, "lamp fuel reserve switch", func(): return world.devices.configure_lamp(lamp, lit))
+
 # --- Economy ------------------------------------------------------------------------------
 
 func _source_topups(world) -> void:
@@ -303,6 +414,8 @@ func _buy_build_materials(world, plan: Array) -> void:
 				break
 		if already:
 			continue
+		if String(entry[0]) == "bee_hive" and int(entry[1]) == 5 and not world.research.is_completed("mineral_materials"): continue
+		if String(entry[0]) == "farm_processor" and int(entry[1]) == 10 and not world.research.is_completed("advanced_feed_oil_wax"): continue
 		var definition: Dictionary = world.facility_defs.get(String(entry[0]), {})
 		if definition.is_empty():
 			continue
@@ -328,6 +441,8 @@ func _build_plan_step(world, plan: Array) -> void:
 				break
 		if already:
 			continue
+		if String(entry[0]) == "bee_hive" and int(entry[1]) == 5 and not world.research.is_completed("mineral_materials"): continue
+		if String(entry[0]) == "farm_processor" and int(entry[1]) == 10 and not world.research.is_completed("advanced_feed_oil_wax"): continue
 		if String(entry[3]) != "":
 			var gate := String(world.husbandry.species_defs[String(entry[3])].get("research", ""))
 			if not world.research_block(gate).is_empty(): continue
@@ -354,53 +469,91 @@ func _stock_plan_step(world, plan: Array) -> void:
 			act(world, "world.husbandry.purchase(uid, int(entry[2]) - habitat[\"individuals\"].size())", func(): return world.husbandry.purchase(uid, int(entry[2]) - habitat["individuals"].size()))
 
 func _process_batches(world, plan: Array) -> void:
-	for entry in plan:
-		var facility_uid := uid_of(world, String(entry[0]))
-		if facility_uid == 0:
-			continue
+	for item in world._items:
+		var keep := sample_reserve(world, String(item))
+		if keep != int(world.operations.state["reserves"].get(item, 0)):
+			act(world, "reserve research samples " + String(item), func(): return world.operations.set_reserve(String(item), keep))
+	var handled := {}
+	# Unclaimed recipes have first refusal, but only when their real inputs exist.
+	plan = plan.filter(func(entry): return String(entry[0]) != "kitchen" or int(claimed.get(String(entry[1]), 0)) < 2)
+	var ordered: Array = plan.filter(func(entry): return not claimed.has(String(entry[1])))
+	ordered.append_array(plan.filter(func(entry): return claimed.has(String(entry[1]))))
+	# Fuel is an operating input: prioritise replenishment ahead of optional meals.
+	for rid in ["press_oilseed", "refine_oil", "mill_grain"]:
+		if (rid == "refine_oil" and world.inventory.count("refined_oil") < 4) or (rid == "press_oilseed" and world.inventory.count("crude_oil") < 4) or (rid == "mill_grain" and world.operations.effective_stock("grain_meal") < 2):
+			for entry in plan:
+				if String(entry[1]) == rid:
+					ordered.erase(entry)
+					ordered.push_front(entry)
+					break
+	# A requested new product gets one production window before repeating
+	# established buffer recipes; fuel shortages pause lamps safely meanwhile.
+	var first_products: Array = ordered.filter(func(entry): return not claimed.has(String(entry[1])))
+	first_products.append_array(ordered.filter(func(entry): return claimed.has(String(entry[1]))))
+	for entry in first_products:
+		var facility_uid := uid_of(world, String(entry[0]), int(entry[4]) if entry.size() > 4 else 0)
+		if facility_uid == 0 or handled.has(facility_uid): continue
 		var facility: Dictionary = world.facilities[facility_uid]
-		if not facility["batch"].is_empty():
+		if not facility["batch"].is_empty() and world.operations.owner_of(facility_uid) == 0:
 			var batch: Dictionary = facility["batch"]
-			if String(batch.get("status", "")) == "ready" and batch.has("batch_id"):
-				act(world, "world.claim_batch(facility_uid, int(batch[\"batch_id\"]))", func(): return world.claim_batch(facility_uid, int(batch["batch_id"])))
+			if String(batch.get("status", "")) == "ready":
+				act(world, "world.claim_batch", func(): return world.claim_batch(facility_uid, int(batch["batch_id"])))
+			handled[facility_uid] = true
 			continue
+		# Configure the NEXT batch while the paid batch is still running/ready.
+		# Otherwise an owner can claim and restart it in the same settlement,
+		# leaving the driver no idle window in which to select another recipe.
 		var recipe: Dictionary = world.recipe_defs.get(String(entry[1]), {})
-		if recipe.is_empty():
-			continue
-		if not world.research_block(String(recipe.get("research", ""))).is_empty():
-			continue
+		if recipe.is_empty() or not world.research_block(String(recipe.get("research", ""))).is_empty(): continue
 		var ok := true
 		for item in recipe["inputs"]:
-			if world.inventory.count(String(item)) < int(recipe["inputs"][item]) + sample_reserve(world, String(item)):
+			if world.operations.effective_stock(String(item)) < int(recipe["inputs"][item]) + sample_reserve(world, String(item)):
 				ok = false
-				break
-		if ok and world.inventory.count(String(entry[2])) < int(entry[3]):
-			act(world, "world.start_batch(facility_uid, String(entry[1]))", func(): return world.start_batch(facility_uid, String(entry[1])))
+		var target := int(entry[3])
+		if not claimed.has(String(entry[1])):
+			target = maxi(target, world.operations.effective_stock(String(entry[2])) + int(recipe["outputs"][String(entry[2])]))
+		if not ok or world.operations.effective_stock(String(entry[2])) >= target: continue
+		if world.operations.owner_of(facility_uid) != 0:
+			act(world, "configure automatic processing " + String(entry[1]), func(): return world.operations.set_production(facility_uid, true, String(entry[1]), String(entry[2]), target))
+		else:
+			act(world, "world.start_batch " + String(entry[1]), func(): return world.start_batch(facility_uid, String(entry[1])))
+		handled[facility_uid] = true
+	# An idle owner must not keep an obsolete strategy that starves the next recipe.
+	for uid in world.facilities:
+		if world.operations.owner_of(int(uid)) == 0 or handled.has(int(uid)): continue
+		var strategy: Dictionary = world.operations.state["production"].get(int(uid), {})
+		if strategy.get("enabled", false) and not world.operations.recipe_definition(int(uid), String(strategy["recipe_id"])).get("living", false):
+			var kind := String(world.facility_defs[String(world.facilities[uid]["facility_id"])].get("kind", ""))
+			if kind != "habitat":
+				act(world, "pause idle processor", func(): return world.operations.set_production(int(uid), false, String(strategy["recipe_id"]), String(strategy["target_item"]), int(strategy["target_qty"])))
+
 
 func _delegate(world) -> void:
 	if world.clock.total_days != active_day: return
 	if world.workforce.state["workers"].is_empty():
 		if active_day < (35 if active_route == "A" else 20) or world.primeval_stones < 12: return
-		var hired: Dictionary = act(world, "hire facility owner", func(): return world.workforce.hire("产业负责人" + active_route))
-		if not hired["ok"]: return
-	var worker: Dictionary = world.workforce.state["workers"][0]
-	# One person explicitly owns several facilities, using one shared budget.
-	act(world, "world.workforce.configure(int(worker[\"id\"]), 4, false, worker[\"priorities\"], [])", func(): return world.workforce.configure(int(worker["id"]), 4, false, worker["priorities"], []))
-	for type_id in ["bee_hive", "fish_pond", "purifying_bed"]:
-		# Keep real manual water changes until the recycling samples exist;
-		# the owner later changes water only at the configured threshold.
-		if type_id == "fish_pond" and not world.research.is_completed("water_recirculation"): continue
-		var uid := uid_of(world, type_id)
-		if uid != 0 and world.operations.owner_of(uid) == 0:
-			act(world, "world.operations.assign_owner(uid, int(worker[\"id\"]))", func(): return world.operations.assign_owner(uid, int(worker["id"])))
-	var hive := uid_of(world, "bee_hive")
-	if hive != 0 and world.operations.owner_of(hive) != 0:
-		act(world, "world.operations.set_priority(hive, \"high\")", func(): return world.operations.set_priority(hive, "high"))
-	var bench := uid_of(world, "research_bench")
-	if bench != 0 and world.operations.owner_of(bench) == 0:
-		act(world, "assign research owner", func(): return world.operations.assign_owner(bench, int(worker["id"])))
+		act(world, "hire facility owner", func(): return world.workforce.hire("Owner " + active_route))
+	if world.workforce.state["workers"].size() == 1 and active_day >= 50 and world.primeval_stones >= 80:
+		act(world, "hire processing owner", func(): return world.workforce.hire("Processing " + active_route))
+	for worker in world.workforce.state["workers"]:
+		var ident := int(worker["id"])
+		act(world, "configure shared work budget", func(): return world.workforce.configure(ident, 6 if ident == 1 else 12, false, worker["priorities"], []))
+		if ident == 2:
+			act(world, "explicit farm duty", func(): return world.workforce.set_farm_duty(ident, true, "normal"))
+			act(world, "assign spring collection", func(): return world.workforce.assign_source("spring_source", ident))
+		for uid in world.facilities:
+			var type_id := String(world.facilities[uid]["facility_id"])
+			var first := type_id in ["fish_pond", "purifying_bed", "research_bench"] or (type_id == "bee_hive" and int(uid) == uid_of(world, "bee_hive"))
+			if (ident == 1) != first or type_id in ["field_service_station", "growth_lamp"]: continue
+			if type_id == "fish_pond" and not world.research.is_completed("water_recirculation"): continue
+			if world.operations.owner_of(int(uid)) == 0:
+				act(world, "assign facility owner", func(): return world.operations.assign_owner(int(uid), ident))
+
 
 func _sell_surplus(world) -> void:
+	for item in ["honey_cake", "fish_spirit_meal", "dew_soup", "fire_paste", "earth_pill", "gold_food", "reclaimed_fill"]:
+		if world.inventory.count(item) > sample_reserve(world, item):
+			act(world, "world.sell " + item, func(): return world.sell(item, 1))
 	if world.inventory.count("grain") > 10:
 		act(world, "world.sell(\"grain\", world.inventory.count(\"grain\") - 10)", func(): return world.sell("grain", world.inventory.count("grain") - 10))
 	if world.inventory.count("straw") > 10:
@@ -420,7 +573,8 @@ func _deliver_orders(world) -> void:
 			var quote: Dictionary = world.order_quote(int(order["id"]), String(item))
 			var stock: int = world.inventory.count(String(item))
 			var keep := maxi(2, sample_reserve(world, String(item)))
-			if item == "clean_water": keep = maxi(8, keep)
+			if item in ["clean_water", "refined_oil"]: keep = maxi(8, keep)
+			if item == "honey": keep = maxi(6, keep)
 			if quote["ok"] and int(quote["quantity"]) + keep <= stock and stock > best_stock:
 				best = String(item)
 				best_stock = stock
@@ -442,12 +596,17 @@ func _run_route(route: String) -> void:
 	totals = Journal.bucket()
 	frozen_recap = {}
 	daily_count = 0
+	claimed = {}
+	claimed_days = {}
+	receipt_index = 0
+	receipts = FileAccess.open(audit_root.path_join(route + "-receipts.jsonl"), FileAccess.WRITE)
 	audit = FileAccess.open(audit_root.path_join(route + "-actions.jsonl"), FileAccess.WRITE)
 	daily = FileAccess.open(audit_root.path_join(route + "-days.jsonl"), FileAccess.WRITE)
 	var store := P8Store.new(audit_root.path_join(route + "-slots"))
 	var world := P8World.new(store)
 	check(world.start_new(1, true)["ok"], route + " fresh independent slot")
 	world.clock.day_changed.connect(func(day: int): archive_day(world, day))
+	world.operation_recorded.connect(record_operation)
 	var build_plan: Array
 	if route == "A":
 		build_plan = [
@@ -457,9 +616,10 @@ func _run_route(route: String) -> void:
 			["rock_workyard", 3, 1, "rock_mole"],
 			["rock_workyard", 5, 1, "rock_belly_beast"],
 			["research_bench", 3, 4, ""],
-			["farm_processor", 13, 3, ""],
+			["farm_processor", 13, 3, ""], ["farm_processor", 10, 7, ""],
 			["char_kiln", 17, 3, ""], ["algae_tank", 13, 5, ""],
 			["smelter", 13, 1, ""], ["kitchen", 9, 4, ""], ["pen", 15, 1, ""],
+			["field_service_station", 7, 9, ""], ["growth_lamp", 7, 13, ""], ["bee_hive", 5, 9, ""],
 		]
 	else:
 		build_plan = [
@@ -469,15 +629,16 @@ func _run_route(route: String) -> void:
 			["rock_workyard", 5, 1, "rock_belly_beast"],
 			["purifying_bed", 0, 1, ""], ["bee_hive", 7, 1, ""],
 			["research_bench", 3, 4, ""],
-			["farm_processor", 13, 3, ""],
+			["farm_processor", 13, 3, ""], ["farm_processor", 10, 7, ""],
 			["char_kiln", 17, 3, ""], ["algae_tank", 13, 5, ""],
 			["smelter", 13, 1, ""], ["kitchen", 9, 4, ""], ["pen", 15, 1, ""],
+			["field_service_station", 7, 9, ""], ["growth_lamp", 7, 13, ""], ["bee_hive", 5, 9, ""],
 		]
 	var stock_plan: Array = [["fish_pond", 0, 2], ["rock_workyard", 0, 2], ["bee_hive", 0, 2],
-		["purifying_bed", 0, 2], ["rock_workyard", 1, 2], ["pen", 0, 1]]
+		["purifying_bed", 0, 2], ["rock_workyard", 1, 2], ["pen", 0, 1], ["bee_hive", 1, 2]]
 	validate_layout(world, build_plan)
 	var day := 0
-	while world.clock.total_days < 90:
+	while world.clock.total_days < horizon:
 		day = world.clock.total_days
 		active_day = day
 		# Sources first so clean_water exists when bees need it; research and
@@ -492,6 +653,7 @@ func _run_route(route: String) -> void:
 		if world.inventory.count("wood_decay_spawn") < 3 and world.primeval_stones >= 29:
 			act(world, "fungus spawn purchase", func(): return world.buy("wood_decay_spawn", 3 - world.inventory.count("wood_decay_spawn")))
 		_research_day(world)
+		_configure_habitats(world)
 		_maintain_habitats(world)
 		_start_research(world)
 		if world.research.is_completed("flower_cultivation"):
@@ -502,19 +664,30 @@ func _run_route(route: String) -> void:
 		_delegate(world)
 		_farm_wheat(world)
 		_farm_feed(world)
+		_farm_trees(world)
+		_farm_lamp_flowers(world)
+		_hand_surplus(world, uid_of(world, "bee_hive"))
+		_configure_devices(world)
 		var process_plan: Array = [
 			["compost_bin", "compost_straw", "humus", 6],
 			["woodshop", "saw_planks", "wood_plank", 4],
 			["woodshop", "shred_wood", "wood_chip", 6],
 			["char_kiln", "char_twigs", "charcoal", 6],
 			["farm_processor", "mill_grain", "grain_meal", 4],
-			["farm_processor", "mill_grass", "grass_meal", 4],
+			["farm_processor", "mill_grass", "grass_meal", 6, 1],
 			["farm_processor", "press_oilseed", "crude_oil", 8],
-			["farm_processor", "refine_oil", "refined_oil", 4],
-			["farm_processor", "blend_land_feed", "land_feed", 2],
+			["farm_processor", "refine_oil", "refined_oil", 10],
+			["farm_processor", "blend_land_feed", "land_feed", 4, 1],
+			["farm_processor", "blend_water_feed", "water_feed", 8, 1],
+			["farm_processor", "mineral_feed", "mineral_feed", 4, 1],
+			["farm_processor", "refine_wax", "refined_wax", 2],
 			["smelter", "smelt_charcoal", "iron_ingot", 2],
 			["smelter", "smelt_concentrate", "iron_ingot", 4],
-			["woodshop", "make_filter_media", "filter_media", 2],
+			["woodshop", "make_filter_media", "filter_media", 4],
+			["woodshop", "assemble_stone_panel", "composite_stone_panel", 4],
+			["woodshop", "recover_fill", "reclaimed_fill", 4],
+			["compost_bin", "compost_oil_cake", "humus", 6],
+			["compost_bin", "compost_spent_filter", "humus", 6],
 			["algae_tank", "culture_algae", "algae_feed", 6],
 			["algae_tank", "dense_algae_culture", "dense_algae", 4],
 			["kitchen", "honey_grain_cake", "honey_cake", 4],
@@ -534,8 +707,6 @@ func _run_route(route: String) -> void:
 				act(world, "world.buy(\"fodder_grass\", 10 - world.inventory.count(\"fodder_grass\"))", func(): return world.buy("fodder_grass", 10 - world.inventory.count("fodder_grass")))
 		if world.inventory.count("fodder_grass") < 10:
 			process_plan = process_plan.filter(func(entry): return String(entry[1]) != "mill_grass")
-		if world.inventory.count("honey") < 5:
-			process_plan = process_plan.filter(func(entry): return ["honey_grain_cake", "oil_honey_paste", "honey_mineral_food"].has(String(entry[1])) == false)
 		if not world.research.is_completed("mineral_materials") and world.inventory.count("ore_concentrate") < 2:
 			process_plan = process_plan.filter(func(entry): return String(entry[1]) != "smelt_concentrate")
 		if not world.research.is_completed("composite_spirit_food") and world.inventory.count("dense_algae") < 2:
@@ -565,7 +736,7 @@ func _run_route(route: String) -> void:
 			var before: Dictionary = world.to_snapshot()
 			check(world.open_game(1)["ok"] and JSON.parse_string(JSON.stringify(world.to_snapshot())) == JSON.parse_string(JSON.stringify(before)), route + " exit and restore day " + str(world.clock.total_days))
 	# --- Assertions ---
-	check(world.clock.total_days == 90 and daily_count == 90, route + " exactly 90 closed days")
+	check(world.clock.total_days == horizon and daily_count == horizon, route + " exactly %d closed days" % horizon)
 	for project in ["flower_cultivation", "beekeeping", "farm_preparation", "biofiltration", "rock_handling",
 			"advanced_feed_oil_wax", "ore_concentration", "water_recirculation", "basic_spirit_cooking",
 			"field_maintenance", "mineral_materials", "composite_spirit_food"]:
@@ -587,13 +758,14 @@ func _run_route(route: String) -> void:
 	check(int(world.workforce.state["spent"]) > 0 and int(totals["labour_spend"]) == int(world.workforce.state["spent"]), route + " real paid delegation")
 	check(not world.workforce.state["workers"].is_empty() and world.operations.facilities_of(1).size() >= 2, route + " one owner multiple facilities")
 	check(world.journal["frozen"], route + " 45-day recap frozen")
-	route_summaries[route] = {"day": world.clock.total_days, "cash": world.primeval_stones, "wages": world.workforce.state["spent"],
+	route_summaries[route] = {"day": world.clock.total_days, "cash": world.primeval_stones, "wages": world.workforce.state["spent"], "claimed": claimed.duplicate(), "claimed_days": claimed_days.duplicate(),
 		"research_order": world.research.state["completed"].duplicate(true), "totals": totals.duplicate(true)}
-	write_json(route + "-day90.json", world.to_snapshot())
+	write_json(route + "-day%d.json" % horizon, world.to_snapshot())
 	var day91: Dictionary = world.end_day()
-	write_json(route + "-day91.json", world.to_snapshot())
-	check(day91["ok"] and world.clock.total_days == 91 and world.reports.state["recap"] == frozen_recap, route + " day 91 continues without rewriting the recap")
+	write_json(route + "-day%d.json" % (horizon + 1), world.to_snapshot())
+	check(day91["ok"] and world.clock.total_days == horizon + 1 and world.reports.state["recap"] == frozen_recap, route + " continues without rewriting the recap")
 	print("P8 ROUTE ", route, " day=", world.clock.total_days, " stones=", world.primeval_stones,
 		" research=", world.research.state["completed"].size(), "/12 wages=", world.workforce.state["spent"])
+	receipts.close()
 	audit.close()
 	daily.close()
