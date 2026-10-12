@@ -290,7 +290,7 @@ func harvest(cell: Vector2i, mode: String = "harvest") -> Dictionary:
 	if mode not in ["harvest", "fell"] or (mode == "fell" and definition["mode"] not in ["tap_or_fell", "fell_replant"]):
 		return _error("采收方式不适用")
 	var uid := int(instance["uid"])
-	var outputs: Dictionary = definition["fell_outputs"] if mode == "fell" and definition["mode"] == "tap_or_fell" else definition["outputs"]
+	var outputs: Dictionary = (definition["fell_outputs"] if mode == "fell" and definition["mode"] == "tap_or_fell" else definition["outputs"]).duplicate()
 	# Derived products may add cycle-scoped bonuses (e.g. pollinated oilseed).
 	var bonus := _harvest_bonus(instance)
 	for ident in bonus:

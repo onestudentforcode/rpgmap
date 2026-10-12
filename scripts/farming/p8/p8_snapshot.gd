@@ -101,7 +101,7 @@ static func normalize(value) -> Dictionary:
 	var device_state := P8Devices.normalize(raw_devices, day, checked["snapshot"]["world"], Data)
 	if not device_state["ok"]:
 		return device_state
-	var operations := P8Operations.normalize(raw_operations, day, checked["snapshot"]["world"], workforce, Data, research["research"]["completed"])
+	var operations := P8Operations.normalize(raw_operations, day, checked["snapshot"]["world"], workforce, Data, research["research"]["completed"], husbandry["husbandry"])
 	if not operations["ok"]:
 		return operations
 	var reports := Reports.normalize(raw_reports, day, Data)

@@ -453,9 +453,9 @@ def audit_layout(source):
         blocked.add(spot)
     require(len(blocked) <= width * height, 'layout overflows the land')
     land_used = sum(1 for cell in blocked)
-    budget = {'initial_stones': 60, 'research_bench': 8, 't01_fee': 4, 't01_seeds': 8 + 4,
+    budget = {'initial_stones': int(source['config']['initial_primeval_stones']), 'research_bench': 8, 't01_fee': 4, 't01_seeds': 8 + 4,
               'fish_pond': 12, 'two_fry': 10, 't04_fee': 4, 'notes': '参考启动草案：建研究台→T01→两种花→水场两尾鱼→T04；逐日AP/清水按实际台账另记。'}
-    require(budget['initial_stones'] >= budget['research_bench'] + budget['t01_fee'] + budget['t01_seeds'] + budget['fish_pond'] + budget['two_fry'] + budget['t04_fee'], 'startup budget draft exceeds 60 stones')
+    require(budget['initial_stones'] >= budget['research_bench'] + budget['t01_fee'] + budget['t01_seeds'] + budget['fish_pond'] + budget['two_fry'] + budget['t04_fee'], 'startup budget draft exceeds configured initial stones')
     return {'land_used': land_used, 'land_total': width * height, 'flower_cells': flowers,
             'placements': {ident: (sorted(cells)[0] if cells else 'water') for ident, cells in placed.items()},
             'startup_budget': budget}

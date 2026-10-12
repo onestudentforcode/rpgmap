@@ -197,23 +197,21 @@ func _caretaker_section(habitat: Dictionary) -> void:
 
 ## Processing panels add the owner block, the continuous production strategy
 ## and the farm-wide reserve editor.
-func _production_section(facility: Dictionary) -> void:
+func _production_section(facility: Dictionary, show_owner: bool = true) -> void:
 	var uid := int(facility["uid"])
-	_owner_section(uid)
+	if show_owner: _owner_section(uid)
 	_heading(sidebar,"持续生产 · 默认关闭")
 	var strategy: Dictionary = ops().strategy_of(uid)
 	var enabled := CheckButton.new()
 	enabled.text = "启用自动投料（达到目标停止新批，在制照常完成）"
 	enabled.button_pressed = bool(strategy["enabled"])
-	enabled.toggled.connect(func(value):
-		_result(ops().set_production(uid, value, String(strategy["recipe_id"]), String(strategy["target_item"]), int(strategy["target_qty"])))
-		_show_cell())
+	enabled.tooltip_text = "先选择配方、产物和数量，再点击保存策略"
 	sidebar.add_child(enabled)
-	var facility_id := String(world.facilities[uid]["facility_id"])
 	var unlocked := []
-	for ident in world.recipe_defs:
-		var recipe: Dictionary = world.recipe_defs[ident]
-		if String(recipe["facility"]) == facility_id and world.research_block(String(recipe.get("research", ""))).is_empty():
+	var recipe_options: Dictionary = ops().available_recipes(uid)
+	for ident in recipe_options:
+		var recipe: Dictionary = recipe_options[ident]
+		if world.research_block(String(recipe.get("research", ""))).is_empty():
 			unlocked.append(ident)
 	unlocked.sort()
 	if unlocked.is_empty():
@@ -225,7 +223,7 @@ func _production_section(facility: Dictionary) -> void:
 	var recipes := OptionButton.new()
 	recipes.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	for index in range(unlocked.size()):
-		recipes.add_item(RECIPES[unlocked[index]])
+		recipes.add_item(String(recipe_options[unlocked[index]].get("name", RECIPES.get(unlocked[index], unlocked[index]))))
 		recipes.set_item_metadata(index, unlocked[index])
 		if unlocked[index] == String(strategy["recipe_id"]): recipes.select(index)
 	recipe_row.add_child(recipes)
@@ -236,14 +234,14 @@ func _production_section(facility: Dictionary) -> void:
 	targets.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	var refresh_targets := func(recipe_id: String, keep_item: String):
 		targets.clear()
-		var outputs: Dictionary = world.recipe_defs[recipe_id]["outputs"]
+		var outputs: Dictionary = recipe_options[recipe_id]["outputs"]
 		var list := outputs.keys()
 		list.sort()
 		for index in range(list.size()):
 			targets.add_item("%s（现存有效%d）" % [world._items[list[index]]["name"], ops().effective_stock(String(list[index]))])
 			targets.set_item_metadata(index, list[index])
 			if list[index] == keep_item: targets.select(index)
-	refresh_targets.call(String(strategy["recipe_id"]) if not String(strategy["recipe_id"]).is_empty() else unlocked[0], String(strategy["target_item"]))
+	refresh_targets.call(String(strategy["recipe_id"]) if unlocked.has(String(strategy["recipe_id"])) else unlocked[0], String(strategy["target_item"]))
 	target_row.add_child(targets)
 	var quantity_row := HBoxContainer.new()
 	sidebar.add_child(quantity_row)
@@ -506,6 +504,7 @@ func _crop_extra(crop: Dictionary) -> void:
 		_label(sidebar,"蜂群利用本株份额可为本周期的油籽收获+1（多次/多箱不叠加）。")
 
 func _habitat_extra(habitat: Dictionary) -> void:
+	_production_section(world.facilities[int(habitat["facility_uid"])], false)
 	if String(world.facility_defs[String(world.facilities[int(habitat["facility_uid"])]["facility_id"])].get("id", "")) == "rock_workyard" or world.facility_defs[String(world.facilities[int(habitat["facility_uid"])]["facility_id"])].get("species", []).size() > 1:
 		if habitat["individuals"].is_empty():
 			_label(sidebar,"本场只能养一种岩兽；空场可切换物种后再购入。")

@@ -2,6 +2,71 @@ extends "res://scripts/farming/v2/v2_husbandry.gd"
 ## P8 water habitats turn real water maintenance into a limited daily water
 ## change that also produces wastewater stock (the T04 research sample source),
 ## and research-gated optional diets stay unselectable until unlocked.
+var _automatic_plan := {}
+
+func quote_automatic(facility_uid: int) -> Dictionary:
+	var previous: Dictionary = _automatic_plan
+	_automatic_plan = world.operations.habitat_plan(facility_uid)
+	var quote := quote_maintenance(facility_uid)
+	_automatic_plan = previous
+	return quote
+
+func maintain_automatic(facility_uid: int, service_day: int) -> Dictionary:
+	var previous: Dictionary = _automatic_plan
+	_automatic_plan = world.operations.habitat_plan(facility_uid)
+	var strategy: Dictionary = world.operations.strategy_of(facility_uid)
+	var effective: int = world.operations.effective_stock(String(strategy["target_item"])) if strategy["enabled"] else 0
+	var result := maintain(facility_uid, "worker", service_day)
+	if result["ok"] and world.daily_save_error.is_empty():
+		world.record_operation({"kind": "automation", "stage": "habitat", "day": service_day, "uid": facility_uid,
+			"strategy": strategy, "effective_before": effective, "started": result.get("started", 0),
+			"stock_after": world.inventory.to_save(), "reserves": world.operations.state["reserves"].duplicate()})
+	_automatic_plan = previous
+	return result
+
+func _targets_today(habitat: Dictionary) -> Array:
+	var targets: Array = super(habitat)
+	if _automatic_plan.is_empty(): return targets
+	return targets.filter(func(unit): return _automatic_plan["basic"].has(int(unit["uid"])))
+
+func _special_targets(habitat: Dictionary) -> Array:
+	var targets: Array = super(habitat)
+	if _automatic_plan.is_empty(): return targets
+	return targets.filter(func(unit): return _automatic_plan["special"].has(int(unit["uid"])))
+
+func _automatic_basic(uid: int) -> bool:
+	return _automatic_plan.is_empty() or _automatic_plan["basic"].has(uid)
+
+func _automatic_special(uid: int) -> bool:
+	return _automatic_plan.is_empty() or _automatic_plan["special"].has(uid)
+
+func apply_save(value: Dictionary) -> void:
+	_automatic_plan = {}
+	super(value)
+
+## Zero-input honey cycles are valid diets. Changing the manual recipe stops
+## the old automatic strategy without rewriting receipts of running cycles.
+func set_special_diet(facility_uid: int, diet_id: String) -> Dictionary:
+	var checked: Dictionary = world._can_act(0)
+	if not checked["ok"]: return checked
+	if not world.facilities.has(facility_uid): return _error("未知设施")
+	if world.facility_defs[String(world.facilities[facility_uid]["facility_id"])].get("kind") != "habitat":
+		return _error("该设施没有养殖食谱")
+	var habitat := ensure(facility_uid)
+	if habitat.is_empty(): return _error("该设施没有养殖食谱")
+	if not diet_id.is_empty():
+		var definition: Dictionary = world.operations.recipe_definition(facility_uid, diet_id)
+		if definition.is_empty(): return _error("食谱不适用于该物种")
+		var blocked: String = world.research_block(String(definition.get("research", "")))
+		if not blocked.is_empty(): return _error(blocked)
+		habitat["special_diet_id"] = diet_id
+	habitat["production_enabled"] = not diet_id.is_empty()
+	habitat["default_notice"] = false
+	var strategy: Dictionary = world.operations.state["production"].get(facility_uid, {})
+	if not strategy.is_empty() and (diet_id.is_empty() or strategy["recipe_id"] != diet_id):
+		strategy["enabled"] = false
+	world.changed.emit()
+	return {"ok": true, "detail": "生产食谱已保存；已有批次保留原投入与产物"}
 
 ## P8 ownership lives in the operations registry, not on the worker row.
 func caretaker_of(facility_uid: int) -> Dictionary:
@@ -45,6 +110,8 @@ func maintain_water(facility_uid: int, operator: String = "player") -> Dictionar
 	if not quote["ok"]:
 		return quote
 	var habitat := habitat_of(facility_uid)
+	var before := int(habitat["water"])
+	var day := _today()
 	var inputs: Dictionary = quote["inputs"]
 	var sewage := int(quote["wastewater"])
 	if not Scalars.whole(world.inventory.count("wastewater") + sewage):
@@ -57,8 +124,13 @@ func maintain_water(facility_uid: int, operator: String = "player") -> Dictionar
 	habitat["water_change_day"] = _today()
 	world._report_event({"category": "maintenance", "facility_uid": facility_uid, "kind": "水场换水",
 		"count": 1, "items": inputs, "note": "水体+%d，产出污水%d" % [int(quote["gain"]), sewage]})
-	return world._finish(int(quote["ap"]), {"ok": true, "water": int(habitat["water"]),
+	var result: Dictionary = world._finish(int(quote["ap"]), {"ok": true, "water": int(habitat["water"]),
 		"inputs": inputs, "wastewater": sewage, "operator": operator})
+
+	if result["ok"] and world.daily_save_error.is_empty():
+		world.record_operation({"kind": "water", "stage": "change", "day": day, "uid": facility_uid,
+			"before": before, "after": result["water"], "inputs": inputs, "outputs": {"wastewater": sewage}, "operator": operator})
+	return result
 
 ## Optional diets unlocked by research stay unselectable until P8.c tracks it.
 func set_diet(facility_uid: int, diet_kind: String, slot: String, diet_id: String) -> Dictionary:
@@ -193,8 +265,9 @@ func set_yard_species(facility_uid: int, species_id: String) -> Dictionary:
 	habitat["special_diet_id"] = species_defs[species_id]["default_special_diet"]
 	habitat["production_enabled"] = true
 	habitat["default_notice"] = true
+	world.operations.state["production"].erase(facility_uid)
 	world.changed.emit()
-	return {"ok": true}
+	return {"ok": true, "detail": "物种已切换，请重新设置本场自动生产策略"}
 
 func is_mat_habitat(facility_uid: int) -> bool:
 	if not world.facilities.has(facility_uid):
@@ -215,6 +288,7 @@ func _mat_quote(facility_uid: int) -> Dictionary:
 	var runners := 0
 	var idle_adults := 0
 	for individual in habitat["individuals"]:
+		if not _automatic_basic(int(individual["uid"])) and not _automatic_special(int(individual["uid"])): continue
 		if int(individual["base_service"]["day"]) == _today():
 			continue
 		if individual["stage"] == "juvenile":
@@ -265,11 +339,37 @@ func _mat_quote(facility_uid: int) -> Dictionary:
 	return {"ok": true, "basic": basic, "special": special, "runners": runners, "ap": int(settings["maintenance_ap"])}
 
 func maintain(facility_uid: int, operator: String = "player", service_day: int = -1) -> Dictionary:
+	var first_cycle := int(state["next_cycle_uid"])
+	var day: int = service_day if service_day >= 0 else world.clock.total_days
+	var result: Dictionary
 	if is_bee_habitat(facility_uid):
-		return _bee_maintain(facility_uid, operator, service_day)
-	if is_mat_habitat(facility_uid):
-		return _mat_maintain(facility_uid, operator, service_day)
-	return super(facility_uid, operator, service_day)
+		result = _bee_maintain(facility_uid, operator, service_day)
+	elif is_mat_habitat(facility_uid):
+		result = _mat_maintain(facility_uid, operator, service_day)
+	else:
+		result = super(facility_uid, operator, service_day)
+	if result.get("ok") and world.daily_save_error.is_empty():
+		var habitat := habitat_of(facility_uid)
+		for unit in habitat["individuals"]:
+			var cycle: Dictionary = unit.get("cycle", {})
+			if not cycle.is_empty() and int(cycle["uid"]) >= first_cycle:
+				_cycle_receipt(habitat, unit, cycle, "start", day, operator)
+	return result
+
+func _cycle_receipt(habitat: Dictionary, unit: Dictionary, cycle: Dictionary, stage: String, day: int, operator: String) -> void:
+	world.record_operation({"kind": "cycle", "stage": stage, "day": day, "uid": int(habitat["facility_uid"]),
+		"batch_id": int(cycle["uid"]), "unit": int(unit["uid"]), "species": habitat["species_id"],
+		"recipe": cycle["diet_id"], "inputs": cycle["inputs"], "outputs": cycle["outputs"], "operator": operator})
+
+func claim(facility_uid: int, expected: Array = [], operator: String = "player") -> Dictionary:
+	var habitat := habitat_of(facility_uid).duplicate(true)
+	var day := _today()
+	var result: Dictionary = super(facility_uid, expected, operator)
+	if result.get("ok") and world.daily_save_error.is_empty():
+		for unit in habitat.get("individuals", []):
+			var cycle: Dictionary = unit.get("cycle", {})
+			if not cycle.is_empty() and cycle["status"] == "ready": _cycle_receipt(habitat, unit, cycle, "claim", day, operator)
+	return result
 
 func quote_maintenance(facility_uid: int) -> Dictionary:
 	if is_bee_habitat(facility_uid):
@@ -303,6 +403,7 @@ func _mat_maintain(facility_uid: int, operator: String = "player", service_day: 
 	var species: Dictionary = species_defs["purifying_mat"]
 	var special_outputs := diet_outputs("purifying_mat", "special_diets", String(habitat["special_diet_id"]))
 	for individual in habitat["individuals"]:
+		if not _automatic_basic(int(individual["uid"])): continue
 		if int(individual["base_service"]["day"]) == _today():
 			continue
 		if individual["stage"] == "juvenile":
@@ -320,6 +421,7 @@ func _mat_maintain(facility_uid: int, operator: String = "player", service_day: 
 			inputs[ident] = int(inputs.get(ident, 0)) + int(special["inputs"][ident])
 		world._record_flow({}, special["inputs"], "净化启动")
 		for individual in habitat["individuals"]:
+			if not _automatic_special(int(individual["uid"])): continue
 			if individual["stage"] != "adult" or not individual.get("cycle", {}).is_empty() or int(individual["base_service"]["day"]) == _today():
 				continue
 			var cycle_uid := int(state["next_cycle_uid"])

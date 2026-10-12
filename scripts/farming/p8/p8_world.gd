@@ -9,6 +9,12 @@ const P8Workforce := preload("res://scripts/farming/p8/p8_workforce.gd")
 const P8Research := preload("res://scripts/farming/p8/p8_research.gd")
 const P8Flowers := preload("res://scripts/farming/p8/p8_flowers.gd")
 const P8Devices := preload("res://scripts/farming/p8/p8_devices.gd")
+## Observational receipts for external business audits; never grants resources or
+## replays work. Day-save failures are still governed by the transaction below.
+signal operation_recorded(entry: Dictionary)
+
+func record_operation(entry: Dictionary) -> void:
+	operation_recorded.emit(entry.duplicate(true))
 
 ## Session-only transaction state: the settled candidate awaiting a successful
 ## write, and the pre-action state a failed commit restores. Never persisted.
@@ -120,6 +126,17 @@ func _harvest_bonus(instance: Dictionary) -> Dictionary:
 		return {"oilseed": 1}
 	return {}
 
+## Export real harvests for the ecological audit, including the single-cycle bonus.
+func harvest(cell: Vector2i, mode: String = "harvest") -> Dictionary:
+	var crop: Dictionary = instance_at(cell).duplicate(true)
+	var was_pollinated: bool = not crop.is_empty() and flowers.pollinated(int(crop["uid"]))
+	var day: int = clock.total_days
+	var result: Dictionary = super(cell, mode)
+	if result["ok"] and daily_save_error.is_empty():
+		record_operation({"kind": "harvest", "stage": mode, "day": day, "uid": crop["uid"],
+			"crop": crop["crop_id"], "origin": crop["origin"], "pollinated": was_pollinated, "outputs": result["items"]})
+	return result
+
 func clear_crop(cell: Vector2i) -> Dictionary:
 	var crop := instance_at(cell)
 	var result: Dictionary = super(cell)
@@ -223,7 +240,28 @@ func start_batch(facility_uid: int, recipe_id: String) -> Dictionary:
 		var blocked := research_block(String(recipe_defs[recipe_id].get("research", "")))
 		if not blocked.is_empty():
 			return _error(blocked)
-	return super(facility_uid, recipe_id)
+	var day := clock.total_days - 1 if _labour_action else clock.total_days
+	var before := inventory.to_save()
+	var strategy: Dictionary = operations.strategy_of(facility_uid)
+	var effective: int = operations.effective_stock(String(strategy["target_item"])) if strategy["enabled"] else 0
+	var result: Dictionary = super(facility_uid, recipe_id)
+	if result.get("ok") and daily_save_error.is_empty():
+		var batch: Dictionary = recipe_defs[recipe_id]
+		record_operation({"kind": "batch", "stage": "start", "day": day, "uid": facility_uid,
+			"batch_id": int(result["batch_id"]), "recipe": recipe_id, "inputs": batch["inputs"], "outputs": batch["outputs"],
+			"operator": "worker" if _labour_action else "player", "stock_before": before, "strategy": strategy,
+			"effective_before": effective, "reserves": operations.state["reserves"].duplicate()})
+	return result
+
+func claim_batch(facility_uid: int, expected_batch_id: int) -> Dictionary:
+	var batch: Dictionary = facilities.get(facility_uid, {}).get("batch", {}).duplicate(true)
+	var day := clock.total_days - 1 if _labour_action else clock.total_days
+	var result: Dictionary = super(facility_uid, expected_batch_id)
+	if result.get("ok") and daily_save_error.is_empty():
+		record_operation({"kind": "batch", "stage": "claim", "day": day, "uid": facility_uid,
+			"batch_id": expected_batch_id, "recipe": batch["recipe_id"], "inputs": batch["inputs"], "outputs": batch["outputs"],
+			"operator": "worker" if _labour_action else "player"})
+	return result
 
 # --- Candidate day settlement ----------------------------------------------
 

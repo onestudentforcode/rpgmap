@@ -88,6 +88,10 @@ func consume(crop_uid: int, consumer: String) -> Dictionary:
 	if consumer != "player" and String(world.crops[crop_uid]["crop_id"]) == "oilseed_flower" and not state["pollinated"].has(crop_uid):
 		state["pollinated"].append(crop_uid)
 		marked = true
+	var crop: Dictionary = world.crops[crop_uid]
+	world.record_operation({"kind": "flower", "stage": "draw", "day": _today(), "uid": crop_uid,
+		"consumer": consumer, "crop": crop["crop_id"], "origin": crop["origin"], "pollinated": marked, "eligible": eligible(crop_uid), "state": crop["state"], "progress": crop["progress"],
+		"environment": world.environment_at(Vector2i(int(crop["origin"][0]), int(crop["origin"][1])))})
 	return {"ok": true, "pollinated": marked}
 
 func release(crop_uid: int, undo_pollination: bool) -> void:
@@ -96,6 +100,7 @@ func release(crop_uid: int, undo_pollination: bool) -> void:
 			row["used"] = maxi(0, int(row["used"]) - 1)
 	if undo_pollination:
 		state["pollinated"].erase(crop_uid)
+	world.record_operation({"kind": "flower", "stage": "release", "day": _today(), "uid": crop_uid, "pollinated": undo_pollination})
 
 func pollinated(crop_uid: int) -> bool:
 	return state["pollinated"].has(crop_uid)

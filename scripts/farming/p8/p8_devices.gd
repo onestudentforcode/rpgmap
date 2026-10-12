@@ -117,6 +117,12 @@ func run_opening(day: int) -> void:
 		world.inventory.remove(String(fuel["item"]), int(fuel["units"]))
 		world._record_flow({}, {String(fuel["item"]): int(fuel["units"])}, "设备燃油")
 		state["active_lamps"].append(int(uid))
+		var affected := []
+		for crop in world.crops.values():
+			var anchor := Vector2i(int(crop["origin"][0]), int(crop["origin"][1]))
+			if coverage.has_point(anchor):
+				affected.append({"crop": crop["crop_id"], "origin": crop["origin"], "natural": world.data_source.light_at(anchor), "effective": world.environment_at(anchor)["light"]})
+		world.record_operation({"kind": "device", "stage": "lamp", "day": day, "uid": int(uid), "inputs": {String(fuel["item"]): int(fuel["units"])}, "affected": affected})
 	var services: Dictionary = settings["station"]["services"]
 	var limit := int(settings["station"]["daily_limit"])
 	for uid in _sorted_device_uids(STATION_ID):
@@ -153,7 +159,10 @@ func run_opening(day: int) -> void:
 					break
 				world.inventory.remove(String(service["item"]), int(service["units"]))
 				world._record_flow({}, {String(service["item"]): int(service["units"])}, "设备维护")
+				var before := int(world.environment[index][field])
 				world.environment[index][field] = mini(100, int(world.environment[index][field]) + int(service["gain"]))
+				world.record_operation({"kind": "device", "stage": item, "day": day, "uid": int(uid), "cell": [cell.x, cell.y],
+					"before": before, "after": int(world.environment[index][field]), "inputs": {String(service["item"]): int(service["units"])}})
 				served += 1
 			device["cursor"][item] = (offset + served) % maxi(1, targets.size())
 

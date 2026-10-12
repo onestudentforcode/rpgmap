@@ -2,7 +2,7 @@
   "schema": 1,
   "product": "farm_demo_p8",
   "config": {
-    "initial_primeval_stones": 60,
+    "initial_primeval_stones": 90,
     "ap_per_day": 24,
     "days_per_term": 15,
     "map_id": "farm_02",

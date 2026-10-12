@@ -86,6 +86,38 @@ func forget_worker(worker_id: int) -> void:
 func strategy_of(facility_uid: int) -> Dictionary:
 	return state["production"].get(facility_uid, {"enabled": false, "recipe_id": "", "target_item": "", "target_qty": 0}).duplicate(true)
 
+static func living_recipe(species: Dictionary, recipe_id: String, recipe_defs: Dictionary) -> Dictionary:
+	for diet in species.get("special_diets", []):
+		if String(diet["id"]) == recipe_id:
+			return {"id": recipe_id, "name": diet.get("name", recipe_id), "inputs": diet["inputs"].duplicate(),
+				"outputs": diet.get("outputs", species["outputs"]).duplicate(),
+				"research": diet.get("research", recipe_defs.get(recipe_id, {}).get("research", ""))}
+	return {}
+
+func recipe_definition(facility_uid: int, recipe_id: String) -> Dictionary:
+	var facility: Dictionary = world.facilities.get(facility_uid, {})
+	if facility.is_empty(): return {}
+	if world.facility_defs[facility["facility_id"]].get("kind") == "habitat":
+		var habitat: Dictionary = world.husbandry.habitat_of(facility_uid)
+		if habitat.is_empty(): return {}
+		return living_recipe(world.husbandry.species_def(String(habitat["species_id"])), recipe_id, world.recipe_defs)
+	var recipe: Dictionary = world.recipe_defs.get(recipe_id, {})
+	return recipe if String(recipe.get("facility", "")) == String(facility["facility_id"]) else {}
+
+func available_recipes(facility_uid: int) -> Dictionary:
+	var out := {}
+	var facility: Dictionary = world.facilities[facility_uid]
+	if world.facility_defs[facility["facility_id"]].get("kind") == "habitat":
+		var habitat: Dictionary = world.husbandry.habitat_of(facility_uid)
+		if not habitat.is_empty():
+			for diet in world.husbandry.species_def(String(habitat["species_id"]))["special_diets"]:
+				out[String(diet["id"])] = recipe_definition(facility_uid, String(diet["id"]))
+	else:
+		for id in world.recipe_defs:
+			var recipe := recipe_definition(facility_uid, String(id))
+			if not recipe.is_empty(): out[id] = recipe
+	return out
+
 ## Enabling a strategy never starts anything by itself; the day-end scheduler
 ## revalidates recipe, stock, reserves, owner and quota when it runs.
 func set_production(facility_uid: int, enabled: bool, recipe_id: String, target_item: String, target_qty: int) -> Dictionary:
@@ -96,18 +128,22 @@ func set_production(facility_uid: int, enabled: bool, recipe_id: String, target_
 		return _error("未知设施")
 	var facility: Dictionary = world.facilities[facility_uid]
 	var definition: Dictionary = world.facility_defs[facility["facility_id"]]
-	if definition.get("kind") in ["habitat", "research"]:
+	if definition.get("kind") == "research" or facility["facility_id"] in ["growth_lamp", "field_service_station"]:
 		return _error("该设施不使用持续生产策略")
 	if enabled:
-		if not world.recipe_defs.has(recipe_id) or String(world.recipe_defs[recipe_id]["facility"]) != String(facility["facility_id"]):
+		var recipe := recipe_definition(facility_uid, recipe_id)
+		if recipe.is_empty():
 			return _error("配方不属于该设施")
-		var blocked: String = world.research_block(String(world.recipe_defs[recipe_id].get("research", "")))
+		var blocked: String = world.research_block(String(recipe.get("research", "")))
 		if not blocked.is_empty():
 			return _error(blocked)
-		if not world.recipe_defs[recipe_id]["outputs"].has(target_item):
+		if not recipe["outputs"].has(target_item):
 			return _error("目标物品不是该配方产物")
 		if not Scalars.whole(target_qty, 1):
 			return _error("目标数量非法")
+		if definition.get("kind") == "habitat":
+			var selected: Dictionary = world.husbandry.set_special_diet(facility_uid, recipe_id)
+			if not selected["ok"]: return selected
 	state["production"][facility_uid] = {"enabled": enabled, "recipe_id": recipe_id,
 		"target_item": target_item, "target_qty": int(target_qty) if enabled else int(state["production"].get(facility_uid, {}).get("target_qty", 0))}
 	world.changed.emit()
@@ -141,9 +177,67 @@ func effective_stock(item_id: String) -> int:
 	for habitat in world.husbandry.state["habitats"]:
 		for individual in habitat["individuals"]:
 			var cycle: Dictionary = individual.get("cycle", {})
-			if not cycle.is_empty() and cycle["status"] == "ready":
+			if not cycle.is_empty():
 				total += int(cycle["outputs"].get(item_id, 0))
 	return total
+
+## A whole unit is the smallest batch. Basic care for juveniles and running
+## cycles continues even when the target is met or automatic starts are off.
+func habitat_plan(facility_uid: int) -> Dictionary:
+	var habitat: Dictionary = world.husbandry.habitat_of(facility_uid)
+	var out := {"basic": [], "special": [], "reason": "持续生产已关闭"}
+	if habitat.is_empty(): return out
+	var hus = world.husbandry
+	var species: Dictionary = hus.species_def(String(habitat["species_id"]))
+	var base: Dictionary = hus.diet_inputs(String(habitat["species_id"]), "base_diets", String(habitat["basic_diet_id"]))
+	var juvenile_only := bool(hus.diet_definition(String(habitat["species_id"]), "base_diets", String(habitat["basic_diet_id"])).get("juvenile_only", false))
+	var basic_cost := {}
+	var idle := []
+	for individual in habitat["individuals"]:
+		var cycle: Dictionary = individual.get("cycle", {})
+		if individual["stage"] == "adult" and cycle.is_empty():
+			idle.append(individual)
+		elif (individual["stage"] == "juvenile" or cycle.get("status") == "running") and int(individual["base_service"]["day"]) != hus._today():
+			out["basic"].append(int(individual["uid"]))
+			if not juvenile_only or individual["stage"] == "juvenile":
+				for item in base: basic_cost[item] = int(basic_cost.get(item, 0)) + int(base[item])
+	var strategy := strategy_of(facility_uid)
+	if not bool(strategy["enabled"]) or not bool(habitat["production_enabled"]): return out
+	if strategy["recipe_id"] != habitat["special_diet_id"]:
+		out["reason"] = "生产食谱已改变，请重新设置自动策略"
+		return out
+	var recipe := recipe_definition(facility_uid, String(strategy["recipe_id"]))
+	if recipe.is_empty(): return out
+	var blocked: String = world.research_block(String(recipe.get("research", "")))
+	if not blocked.is_empty():
+		out["reason"] = blocked
+		return out
+	var missing := int(strategy["target_qty"]) - effective_stock(String(strategy["target_item"]))
+	if missing <= 0:
+		out["reason"] = "目标库存已满足"
+		return out
+	var needed := ceili(float(missing) / int(recipe["outputs"][strategy["target_item"]]))
+	idle.sort_custom(func(a, b): return int(a["uid"]) < int(b["uid"]))
+	out["reason"] = "没有空闲成体"
+	for individual in idle:
+		if out["special"].size() >= needed: break
+		var unfed: bool = int(individual["base_service"]["day"]) != hus._today()
+		var projected: Dictionary = basic_cost.duplicate()
+		if unfed and not juvenile_only:
+			for item in base: projected[item] = int(projected.get(item, 0)) + int(base[item])
+		var possible := true
+		for item in projected:
+			if world.inventory.count(item) < int(projected[item]): possible = false
+		for item in recipe["inputs"]:
+			if world.inventory.count(item) - int(projected.get(item, 0)) - int(recipe["inputs"][item]) * (out["special"].size() + 1) < int(state["reserves"].get(item, 0)):
+				possible = false
+				out["reason"] = "原料不足或保留量阻挡：" + world._items[item]["name"]
+		if not possible: break
+		out["special"].append(int(individual["uid"]))
+		if unfed: out["basic"].append(int(individual["uid"]))
+		basic_cost = projected
+		out["reason"] = "可启动%d个单位" % out["special"].size()
+	return out
 
 ## Read-only auto-start check: target unmet, recipe legal and every input
 ## leaves the reserve untouched after a full batch.
@@ -158,6 +252,9 @@ func auto_start_block(facility_uid: int) -> String:
 	var facility: Dictionary = world.facilities.get(facility_uid, {})
 	if facility.is_empty():
 		return "设施不存在"
+	if world.facility_defs[facility["facility_id"]].get("kind") == "habitat":
+		var plan := habitat_plan(facility_uid)
+		return "" if not plan["special"].is_empty() else String(plan["reason"])
 	if not facility["batch"].is_empty():
 		return "在制批次未完成"
 	var recipe: Dictionary = world.recipe_defs.get(String(strategy["recipe_id"]), {})
@@ -276,9 +373,9 @@ func _candidates(worker: Dictionary) -> Array:
 					and husbandry.quote_water(uid)["ok"]:
 				out.append(_candidate(tier, 1, uid, "水体维护", "换水设施#%d" % uid, "water:%d" % uid,
 					func(): return husbandry.maintain_water(uid, "worker")))
-			if husbandry.quote_maintenance(uid)["ok"]:
+			if husbandry.quote_automatic(uid)["ok"]:
 				out.append(_candidate(tier, 2, uid, "整体维护", "维护设施#%d" % uid, "maintain:%d" % uid,
-					func(): return husbandry.maintain(uid, "worker", husbandry._today())))
+					func(): return husbandry.maintain_automatic(uid, husbandry._today())))
 		elif definition.get("kind") != "research":
 			var batch: Dictionary = facility["batch"]
 			if not batch.is_empty() and batch["status"] == "ready":
@@ -397,7 +494,7 @@ func apply_save(value: Dictionary) -> void:
 		state["waiting"][int(row["uid"])] = int(row["day"])
 
 ## Detached validation against the already normalized base world snapshot.
-static func normalize(value, day: int, world: Dictionary, workforce: Dictionary, catalog, completed_research: Array = []) -> Dictionary:
+static func normalize(value, day: int, world: Dictionary, workforce: Dictionary, catalog, completed_research: Array = [], husbandry: Dictionary = {}) -> Dictionary:
 	if not value is Dictionary or not Scalars.exact(value, ["facilities", "production", "reserves", "waiting"]):
 		return Scalars.fail("P8运营快照字段非法")
 	var facility_defs: Dictionary = catalog.definitions("facilities")
@@ -432,11 +529,20 @@ static func normalize(value, day: int, world: Dictionary, workforce: Dictionary,
 			return Scalars.fail("策略指向未知或重复设施")
 		seen_production[uid] = true
 		var definition: Dictionary = facility_defs[String(facilities[uid]["facility_id"])]
-		if definition.get("kind") in ["habitat", "research"]:
+		if definition.get("kind") == "research" or definition["id"] in ["growth_lamp", "field_service_station"]:
 			return Scalars.fail("该设施不使用持续生产策略")
 		if bool(row["enabled"]):
 			var recipe = recipe_defs.get(String(row["recipe_id"]))
-			if recipe == null or String(recipe["facility"]) != String(facilities[uid]["facility_id"]):
+			if definition.get("kind") == "habitat":
+				recipe = null
+				for habitat in husbandry.get("habitats", []):
+					if int(habitat["facility_uid"]) == uid:
+						recipe = living_recipe(catalog.definitions("livestock")[habitat["species_id"]], String(row["recipe_id"]), recipe_defs)
+						if row["recipe_id"] != habitat["special_diet_id"] or not habitat["production_enabled"]:
+							return Scalars.fail("活体策略与所选食谱不一致")
+			elif recipe != null and String(recipe["facility"]) != String(facilities[uid]["facility_id"]):
+				recipe = null
+			if recipe == null or recipe.is_empty():
 				return Scalars.fail("策略配方不属于该设施")
 			if String(recipe.get("research", "")) != "" and not completed_research.has(String(recipe.get("research", ""))):
 				return Scalars.fail("策略配方未解锁")
