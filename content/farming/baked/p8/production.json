@@ -2005,6 +2005,33 @@
       "water_use": 4
     }
   ],
+  "devices": {
+    "lamp": {
+      "fuel": {
+        "item": "refined_oil",
+        "units": 1
+      },
+      "light": 80,
+      "range": 2
+    },
+    "station": {
+      "daily_limit": 6,
+      "range": 2,
+      "services": {
+        "fertilize": {
+          "gain": 30,
+          "item": "humus",
+          "units": 1
+        },
+        "irrigate": {
+          "gain": 30,
+          "item": "clean_water",
+          "units": 1
+        }
+      },
+      "threshold": 30
+    }
+  },
   "facilities": [
     {
       "cash": 8,

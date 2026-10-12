@@ -3721,5 +3721,32 @@
       300,
       500
     ]
+  },
+  "devices": {
+    "station": {
+      "range": 2,
+      "threshold": 30,
+      "daily_limit": 6,
+      "services": {
+        "irrigate": {
+          "item": "clean_water",
+          "units": 1,
+          "gain": 30
+        },
+        "fertilize": {
+          "item": "humus",
+          "units": 1,
+          "gain": 30
+        }
+      }
+    },
+    "lamp": {
+      "range": 2,
+      "light": 80,
+      "fuel": {
+        "item": "refined_oil",
+        "units": 1
+      }
+    }
   }
 }

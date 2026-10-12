@@ -75,6 +75,12 @@ def providers(source):
     require(water == dict(initial=100, maximum=100, decay=5, pause_threshold=30, worker_threshold=60,
                           maintenance_inputs={'clean_water': 2}, maintenance_gain=40,
                           change=dict(inputs={'clean_water': 2}, gain=40, wastewater=2), maintenance_ap=1), 'invalid water-change reference')
+    devices = source['devices']
+    require(devices == dict(
+        station=dict(range=2, threshold=30, daily_limit=6,
+                     services={'irrigate': {'item': 'clean_water', 'units': 1, 'gain': 30},
+                               'fertilize': {'item': 'humus', 'units': 1, 'gain': 30}}),
+        lamp=dict(range=2, light=80, fuel={'item': 'refined_oil', 'units': 1})), 'invalid device reference')
     flowers = source['flowers']
     require(flowers == dict(range=2, share_capacity=1, contents={'nectar': 2, 'pollen': 1},
                             min_water=30, min_fertility=30, light_tolerance=20,
