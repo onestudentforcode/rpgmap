@@ -27,6 +27,7 @@ try {
     Invoke-GodotCheck 'phase08d' @('--script','res://scripts/farming/tests/run_phase08d.gd') 'PHASE08D TEST OK'
     Invoke-GodotCheck 'phase08e' @('--script','res://scripts/farming/tests/run_phase08e.gd') 'PHASE08E TEST OK'
     Invoke-GodotCheck 'phase08f' @('--script','res://scripts/farming/tests/run_phase08f.gd') 'PHASE08F TEST OK'
+    Invoke-GodotCheck 'phase08g' @('--script','res://scripts/farming/tests/run_phase08g.gd') 'PHASE08G TEST OK'
     Invoke-GodotCheck 'release' @('res://scenes/farming/farm_p8.tscn','--','--p8-smoke') 'P8 RELEASE SMOKE OK'
     Write-Output 'P8 P8.a SUITE OK'
 } finally { Pop-Location }
