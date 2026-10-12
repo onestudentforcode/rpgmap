@@ -1,4 +1,4 @@
-param([string]$GodotExe = $env:GODOT_EXE_CONSOLE)
+param([string]$GodotExe = $env:GODOT_EXE_CONSOLE, [switch]$IncludePlaytest)
 $ErrorActionPreference = 'Stop'
 $projectRoot = [IO.Path]::GetFullPath((Join-Path $PSScriptRoot '../..'))
 if (-not $GodotExe) { $GodotExe = 'C:\Users\88445\Desktop\code\daoyan\.tools\godot-4.7.2\engine\Godot_v4.7.2-stable_win64_console.exe' }
@@ -29,5 +29,10 @@ try {
     Invoke-GodotCheck 'phase08f' @('--script','res://scripts/farming/tests/run_phase08f.gd') 'PHASE08F TEST OK'
     Invoke-GodotCheck 'phase08g' @('--script','res://scripts/farming/tests/run_phase08g.gd') 'PHASE08G TEST OK'
     Invoke-GodotCheck 'release' @('res://scenes/farming/farm_p8.tscn','--','--p8-smoke') 'P8 RELEASE SMOKE OK'
-    Write-Output 'P8 P8.a SUITE OK'
+    if ($IncludePlaytest) {
+        Invoke-GodotCheck 'two90' @('--script','res://scripts/farming/tests/run_p8_playtest.gd','--','--audit-root=res://.art-work/p8-tests/playtest') 'P8 TWO90 PLAYTEST OK'
+        & python tools/farming/audit_p8_playtest.py (Join-Path $logRoot 'playtest')
+        if ($LASTEXITCODE -ne 0) { throw 'P8 playtest ledger audit failed.' }
+    }
+    Write-Output 'P8 DEVELOPMENT SUITE OK'
 } finally { Pop-Location }

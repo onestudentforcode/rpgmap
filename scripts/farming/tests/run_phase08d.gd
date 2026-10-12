@@ -53,6 +53,7 @@ func _initialize() -> void:
 	_shares_and_windows()
 	_hand_picks()
 	_bee_lifecycle()
+	_worker_flower_service_day()
 	_competition_and_pollination()
 	_recipes_after_research()
 	_real_route_replay()
@@ -184,6 +185,99 @@ func _bee_lifecycle() -> void:
 	check(int(after["total"]) == 2 and int(after["idle_adults"]) == 2, "colonies survive the claim")
 
 # --- 4. Share competition and pollination -----------------------------------------
+
+class FailingStore extends RefCounted:
+	var inner
+	var fail_commits := false
+	func _init(real_store): inner = real_store
+	func active_slot() -> int: return inner.active_slot()
+	func create_slot(slot: int, snapshot: Dictionary, overwrite: bool = false) -> Dictionary:
+		return inner.create_slot(slot, snapshot, overwrite)
+	func open_slot(slot: int) -> Dictionary: return inner.open_slot(slot)
+	func commit(snapshot: Dictionary) -> Dictionary:
+		return {"ok": false, "reason": "模拟写入失败"} if fail_commits else inner.commit(snapshot)
+
+func owned_bees(plant_count: int = 2, store = null) -> Dictionary:
+	var world := P8World.new(temp_store() if store == null else store)
+	check(world.start_new(1)["ok"], "owned bees fresh slot")
+	world.grant_scaffold({"raw_wood": 6, "raw_stone": 6, "wood_plank": 2,
+		"honeybell_seed": plant_count, "clean_water": 30})
+	prepare_flower_farm(world, [["beekeeping", {"nectar": 2, "pollen": 1}]])
+	check(world.build_facility(Vector2i(7, 1), "bee_hive")["ok"], "owned bees hive")
+	var hive := 0
+	for uid in world.facilities:
+		if String(world.facilities[uid]["facility_id"]) == "bee_hive": hive = int(uid)
+	for x in range(9, 9 + plant_count):
+		world.till(Vector2i(x, 1))
+		world.plant(Vector2i(x, 1), "honeybell_bush")
+	for crop in world.crops.values():
+		crop["progress"] = 600
+		crop["state"] = "mature"
+	check(world.husbandry.purchase(hive, 2)["ok"], "owned bees purchase")
+	var hired: Dictionary = world.workforce.hire("蜂场负责人")
+	check(hired["ok"] and world.operations.assign_owner(hive, int(hired["worker_id"]))["ok"], "owned bees assignment")
+	return {"world": world, "hive": hive}
+
+func check_bee_service(world, hive: int, day: int, cash: int, water: int) -> void:
+	check(world.primeval_stones == cash - 1, "worker care charges exactly one yuan")
+	check(world.inventory.count("clean_water") == water - 2, "worker care consumes two real water")
+	for individual in world.husbandry.habitat_of(hive)["individuals"]:
+		check(int(individual["growth"]) == 100 and int(individual["base_service"]["day"]) == day
+			and individual["base_service"]["operator"] == "worker", "worker receipt and growth belong to completed day")
+	check(int(world.flowers.hive_coverage(hive)["available"]) >= 2, "next day exposes fresh shares")
+
+func _worker_flower_service_day() -> void:
+	for mode in ["coverage", "quote", "last_ap", "hand_share"]:
+		var fixture := owned_bees(3 if mode == "hand_share" else 2)
+		var world = fixture["world"]
+		var hive := int(fixture["hive"])
+		if mode == "hand_share":
+			check(world.pick_flower(Vector2i(11, 1))["ok"], "manual pick shares the worker day's pool")
+		check(int(world.flowers.hive_coverage(hive)["available"]) == 2, mode + " preview sees remaining shares")
+		if mode == "quote": check(world.husbandry.quote_maintenance(hive)["ok"], "maintenance preview succeeds")
+		var day: int = world.clock.total_days
+		var cash: int = world.primeval_stones
+		var water: int = world.inventory.count("clean_water")
+		if mode == "last_ap":
+			world.clock.ap = 1
+			check(world.till(Vector2i(12, 4))["ok"], "last AP action settles care")
+		else:
+			check(world.end_day()["ok"], mode + " day commits")
+		check_bee_service(world, hive, day, cash, water)
+	var exhausted := owned_bees()
+	var world = exhausted["world"]
+	var hive := int(exhausted["hive"])
+	world.pick_flower(Vector2i(9, 1))
+	world.pick_flower(Vector2i(10, 1))
+	var cash: int = world.primeval_stones
+	var water: int = world.inventory.count("clean_water")
+	world.end_day()
+	check(world.primeval_stones == cash and world.inventory.count("clean_water") == water, "spent shares cannot be reused by worker")
+	check(int(world.husbandry.habitat_of(hive)["individuals"][0]["growth"]) == 0, "exhausted flowers pause growth")
+	var day: int = world.clock.total_days
+	world.flowers.hive_coverage(hive)
+	world.end_day()
+	check_bee_service(world, hive, day, cash, water)
+	var store := FailingStore.new(temp_store())
+	var retry_fixture := owned_bees(2, store)
+	world = retry_fixture["world"]
+	hive = int(retry_fixture["hive"])
+	world.flowers.hive_coverage(hive)
+	var before: Dictionary = world.to_snapshot()
+	store.fail_commits = true
+	check(not bool(world.end_day()["saved"]), "failed care day reports save error")
+	var rolled_back: Dictionary = world.to_snapshot()
+	for key in ["clock", "economy", "inventory"]:
+		check(rolled_back[key] == before[key], "failed care restores " + key)
+	check(rolled_back["world"]["flowers"] == before["world"]["flowers"]
+		and rolled_back["world"]["husbandry"] == before["world"]["husbandry"], "failed care restores shares and receipts")
+	store.fail_commits = false
+	check(world.retry_day_save()["ok"], "care candidate retry commits")
+	check_bee_service(world, hive, int(before["clock"]["total_days"]), int(before["economy"]["primeval_stones"]),
+		int(before["inventory"]["clean_water"]))
+	var committed: Dictionary = world.to_snapshot()
+	world.retry_day_save()
+	check(world.to_snapshot() == committed, "repeat retry never pays or feeds twice")
 
 func _competition_and_pollination() -> void:
 	var world := P8World.new(temp_store())
