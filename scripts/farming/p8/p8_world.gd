@@ -8,6 +8,7 @@ const P8Operations := preload("res://scripts/farming/p8/p8_operations.gd")
 const P8Workforce := preload("res://scripts/farming/p8/p8_workforce.gd")
 const P8Research := preload("res://scripts/farming/p8/p8_research.gd")
 const P8Flowers := preload("res://scripts/farming/p8/p8_flowers.gd")
+const P8Devices := preload("res://scripts/farming/p8/p8_devices.gd")
 
 ## Session-only transaction state: the settled candidate awaiting a successful
 ## write, and the pre-action state a failed commit restores. Never persisted.
@@ -19,11 +20,14 @@ var operations
 var research
 ## Flower shares, hand picks and pollination marks.
 var flowers
+## Field stations and growth lamps; they run inside the opening-day step.
+var devices
 
 func _init(slot_store = null) -> void:
 	operations = P8Operations.new(self)
 	research = P8Research.new(self)
 	flowers = P8Flowers.new(self, P8Data.load_data()["flowers"])
+	devices = P8Devices.new(self, P8Data.load_data()["devices"])
 	super(slot_store)
 
 func _catalog():
@@ -85,12 +89,14 @@ func demolish_facility(uid: int) -> Dictionary:
 func _facility_removed(uid: int) -> void:
 	super(uid)
 	operations.forget_facility(uid)
+	devices.forget(uid)
 
 func to_snapshot() -> Dictionary:
 	var snapshot := super.to_snapshot()
 	snapshot["world"]["p8"] = operations.to_save()
 	snapshot["world"]["research"] = research.to_save()
 	snapshot["world"]["flowers"] = flowers.to_save()
+	snapshot["world"]["devices"] = devices.to_save()
 	return snapshot
 
 func _snapshot_applied(snapshot: Dictionary) -> void:
@@ -101,6 +107,8 @@ func _snapshot_applied(snapshot: Dictionary) -> void:
 		research.apply_save(snapshot["world"]["research"])
 	if snapshot["world"].has("flowers"):
 		flowers.apply_save(snapshot["world"]["flowers"])
+	if snapshot["world"].has("devices"):
+		devices.apply_save(snapshot["world"]["devices"])
 
 ## Pollination bonus: one extra oilseed per pollinated cycle at harvest.
 func _harvest_bonus(instance: Dictionary) -> Dictionary:
@@ -230,16 +238,31 @@ func end_day() -> Dictionary:
 		_day_checkpoint = to_snapshot()
 	return super()
 
-## Day D+1 opening devices run inside the settlement transaction, after day D is
-## frozen; the foundation stage keeps the step empty and reloads never re-run it.
-func _opening_devices(_day: int) -> void:
-	pass
+## Day D+1 opening: lamps light first, then station services, all on real
+## stock; a reload or replayed candidate never triggers a second opening.
+func _opening_devices(day: int) -> void:
+	devices.run_opening(day)
 
 func start_new(slot: int, overwrite_confirmed: bool = false) -> Dictionary:
 	var created: Dictionary = super(slot, overwrite_confirmed)
 	if created["ok"]:
 		_opening_devices(0)
 	return created
+
+## Effective light: the day's active lamps lift covered cells to the lamp
+## value; everything (growth, flowers, UI) reads this one query.
+func environment_at(cell: Vector2i) -> Dictionary:
+	var env := super(cell)
+	if env.is_empty() or not devices.lamp_active_at(cell):
+		return env
+	env["light"] = maxi(int(env["light"]), int(P8Data.load_data()["devices"]["lamp"]["light"]))
+	return env
+
+func _light_at(cell: Vector2i) -> int:
+	var natural := super(cell)
+	if devices.lamp_active_at(cell):
+		return maxi(natural, int(P8Data.load_data()["devices"]["lamp"]["light"]))
+	return natural
 
 func _commit_day(_day: int, ledger_error: String) -> void:
 	if _store == null:

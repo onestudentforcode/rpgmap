@@ -13,7 +13,8 @@ const P8Workforce := preload("res://scripts/farming/p8/p8_workforce.gd")
 const P8Operations := preload("res://scripts/farming/p8/p8_operations.gd")
 const P8Research := preload("res://scripts/farming/p8/p8_research.gd")
 const P8Flowers := preload("res://scripts/farming/p8/p8_flowers.gd")
-const SCHEMA := 15
+const P8Devices := preload("res://scripts/farming/p8/p8_devices.gd")
+const SCHEMA := 16
 
 static func fresh() -> Dictionary:
 	var snapshot: Dictionary = Common.fresh(Data, SCHEMA)
@@ -29,6 +30,7 @@ static func fresh() -> Dictionary:
 	snapshot["world"]["p8"] = {"facilities": [], "production": [], "reserves": [], "waiting": []}
 	snapshot["world"]["research"] = {"projects": [], "completed": [], "bench_days": []}
 	snapshot["world"]["flowers"] = {"shares": [], "pollinated": []}
+	snapshot["world"]["devices"] = {"devices": [], "active_day": -1, "active_lamps": []}
 	var workers := []
 	for worker in snapshot["workforce"]["workers"]:
 		worker["farm_duty"] = {"enabled": false, "priority": "normal"}
@@ -53,6 +55,7 @@ static func normalize(value) -> Dictionary:
 	var raw_operations = world_section.get("p8", null) if world_section is Dictionary else null
 	var raw_research = world_section.get("research", null) if world_section is Dictionary else null
 	var raw_flowers = world_section.get("flowers", null) if world_section is Dictionary else null
+	var raw_devices = world_section.get("devices", null) if world_section is Dictionary else null
 	if body.has("ledger"):
 		body.erase("ledger")
 	if body.has("reports"):
@@ -68,11 +71,13 @@ static func normalize(value) -> Dictionary:
 			world_section.erase("research")
 		if world_section.has("flowers"):
 			world_section.erase("flowers")
+		if world_section.has("devices"):
+			world_section.erase("devices")
 		body["world"] = world_section
 	var checked := Common.normalize(body, Data, SCHEMA, false, P8Workforce)
 	if not checked["ok"]:
 		return checked
-	if raw_ledger == null or raw_husbandry == null or raw_reports == null or raw_preferences == null or raw_operations == null or raw_research == null or raw_flowers == null:
+	if raw_ledger == null or raw_husbandry == null or raw_reports == null or raw_preferences == null or raw_operations == null or raw_research == null or raw_flowers == null or raw_devices == null:
 		return fail("P8快照缺少养殖、运营、研究、花源、资源账、报表或偏好字段")
 	var day := int(checked["snapshot"]["clock"]["total_days"])
 	var workforce: Dictionary = checked["snapshot"]["workforce"]
@@ -88,6 +93,9 @@ static func normalize(value) -> Dictionary:
 	var flower_sources := P8Flowers.normalize(raw_flowers, day, checked["snapshot"]["world"], Data)
 	if not flower_sources["ok"]:
 		return flower_sources
+	var device_state := P8Devices.normalize(raw_devices, day, checked["snapshot"]["world"], Data)
+	if not device_state["ok"]:
+		return device_state
 	var operations := P8Operations.normalize(raw_operations, day, checked["snapshot"]["world"], workforce, Data, research["research"]["completed"])
 	if not operations["ok"]:
 		return operations
@@ -116,6 +124,7 @@ static func normalize(value) -> Dictionary:
 	checked["snapshot"]["world"]["p8"] = operations["operations"]
 	checked["snapshot"]["world"]["research"] = research["research"]
 	checked["snapshot"]["world"]["flowers"] = flower_sources["flowers"]
+	checked["snapshot"]["world"]["devices"] = device_state["devices"]
 	checked["snapshot"]["ledger"] = ledger["ledger"]
 	checked["snapshot"]["reports"] = reports["reports"]
 	checked["snapshot"]["preferences"] = {"watched": watched}

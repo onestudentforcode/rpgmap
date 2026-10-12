@@ -83,6 +83,9 @@ func _show_facility(facility: Dictionary) -> void:
 	if definition.get("kind") == "research":
 		_show_research_bench(facility)
 		return
+	if String(facility["facility_id"]) == "field_service_station" or String(facility["facility_id"]) == "growth_lamp":
+		_show_device(facility)
+		return
 	if definition.get("kind") == "habitat":
 		super(facility)
 		return
@@ -527,3 +530,55 @@ func _habitat_extra(habitat: Dictionary) -> void:
 	var coverage: Dictionary = world.flowers.hive_coverage(uid)
 	_label(sidebar,"花源覆盖 · 外扩2格 · 区内花株%d株，可用份额%d份" % [int(coverage["plants"]), int(coverage["available"])])
 	_label(sidebar,"每群每日基础服务消耗1份额＋清水1；份额与手采共享，多箱按稳定顺序分配，不叠加授粉。")
+
+
+# --- P8.g devices ---------------------------------------------------------------
+
+func _show_device(facility: Dictionary) -> void:
+	var uid := int(facility["uid"])
+	var definition: Dictionary = world.facility_defs[facility["facility_id"]]
+	_picture(sidebar, facility["facility_id"], 64)
+	_heading(sidebar, definition["name"])
+	if String(facility["facility_id"]) == "field_service_station":
+		var device: Dictionary = world.devices.device_of(uid)
+		if device.is_empty():
+			_label(sidebar,"新站次日开日起运行；以下配置0AP、当日修改次日生效。")
+		var irrigate := CheckButton.new()
+		irrigate.text = "自动浇水（每格清水1，+30至100）"
+		irrigate.button_pressed = device.is_empty() or bool(device.get("irrigate", true))
+		var fertilize := CheckButton.new()
+		fertilize.text = "自动施肥（每格腐殖土1，+30至100）"
+		fertilize.button_pressed = device.is_empty() or bool(device.get("fertilize", true))
+		var row := HBoxContainer.new()
+		sidebar.add_child(row)
+		_label(row,"阈值")
+		var threshold := SpinBox.new()
+		threshold.min_value = 1
+		threshold.max_value = 99
+		threshold.value = int(device.get("threshold", 30))
+		threshold.custom_minimum_size.x = 80
+		row.add_child(threshold)
+		for button in [irrigate, fertilize]:
+			sidebar.add_child(button)
+		_icon(sidebar,"play","保存配置（次日开日生效）",func():
+			_result(world.devices.configure_station(uid, irrigate.button_pressed, fertilize.button_pressed, int(threshold.value)))
+			_show_cell())
+		var overview: Dictionary = world.devices.station_overview(uid)
+		_label(sidebar,"覆盖%d格 · 待浇水%d格 · 待施肥%d格 · 每项每日最多%d次，按格轮转。" % [
+			int(overview["cells"]), int(overview["low"]["irrigate"]), int(overview["low"]["fertilize"]), int(overview["limit"])])
+		_label(sidebar,"装置服务不占雇工次数、不扣玩家AP、不收工资；原料保留量不约束设备消费。")
+	else:
+		var device: Dictionary = world.devices.device_of(uid)
+		var enabled := CheckButton.new()
+		enabled.text = "启用补光（覆盖内有作物时每日精炼油1）"
+		enabled.button_pressed = not device.is_empty() and bool(device.get("enabled", false))
+		enabled.toggled.connect(func(value): _result(world.devices.configure_lamp(uid, value)); _show_cell())
+		sidebar.add_child(enabled)
+		var overview: Dictionary = world.devices.lamp_overview(uid)
+		_label(sidebar,"光照80、外扩2格取最大值不叠加；空范围不耗油。" )
+		_label(sidebar,"覆盖内作物%d株%s" % [int((overview["crops"] as Array).size()),
+			("；喜阴降效：" + "、".join(PackedStringArray((overview["shade"] as Array).map(func(c): return CROPS[c])))) if not (overview["shade"] as Array).is_empty() else ""])
+		_label(sidebar,"今日%s · 燃料%s（库存%d）" % ["已点亮" if bool(overview["active"]) else "未点亮",
+			world._items[String(overview["fuel_item"])]["name"], world.inventory.count(String(overview["fuel_item"]))])
+		_label(sidebar,"拆除立即取消剩余光照，已耗燃料不退；重建为新实例次日启用。")
+	_icon(sidebar,"clear","拆除（1AP，无返还）",func(): _confirm("拆除%s？不返还建设材料或元石，消耗1AP。" % definition["name"],func(): _result(world.demolish_facility(uid)); _show_cell()))

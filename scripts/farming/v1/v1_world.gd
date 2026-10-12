@@ -182,7 +182,11 @@ func environment_at(cell: Vector2i) -> Dictionary:
 	if not grid.in_bounds(cell.x, cell.y):
 		return {}
 	var index := cell.y * grid.width + cell.x
-	return {"water": environment[index][0], "fertility": environment[index][1], "light": _light[index]}
+	return {"water": environment[index][0], "fertility": environment[index][1], "light": _light_at(cell)}
+
+## Natural light; derived products override for lamps on the same query.
+func _light_at(cell: Vector2i) -> int:
+	return _light[cell.y * grid.width + cell.x]
 
 func source_at(cell: Vector2i) -> String:
 	return String(_source_cells.get(cell, ""))
@@ -576,7 +580,7 @@ func _on_day_changed(day: int) -> void:
 			var index: int = cell.y * grid.width + cell.x
 			water += int(environment[index][0])
 			fertility += int(environment[index][1])
-			light += int(_light[index])
+			light += int(_light_at(cell))
 		var settings: Dictionary = config["environment"]
 		var water_rate := 100 if float(water) / cells.size() >= float(settings["optimal_water"]) else int(settings["low_water_efficiency"])
 		var fertility_rate := 100 if float(fertility) / cells.size() >= float(settings["optimal_fertility"]) else int(settings["low_fertility_efficiency"])
