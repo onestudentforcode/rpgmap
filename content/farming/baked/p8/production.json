@@ -2553,6 +2553,105 @@
         }
       ],
       "unit": "培养单位"
+    },
+    {
+      "base_diets": [
+        {
+          "id": "fungus_meal",
+          "inputs": {
+            "clean_water": 1,
+            "mushroom": 1
+          },
+          "name": "菌菇清水餐"
+        }
+      ],
+      "claim_removes": false,
+      "cycle_days": 1,
+      "default_base_diet": "fungus_meal",
+      "default_special_diet": "break_stone",
+      "facility": "rock_workyard",
+      "growth_days": 3,
+      "id": "rock_mole",
+      "juvenile_price": 8,
+      "name": "啮岩鼹",
+      "outputs": {
+        "gravel": 2,
+        "stone_powder": 1
+      },
+      "research": "rock_handling",
+      "special_diets": [
+        {
+          "id": "break_stone",
+          "inputs": {
+            "raw_stone": 2
+          },
+          "name": "破碎石材轮",
+          "outputs": {
+            "gravel": 2,
+            "stone_powder": 1
+          }
+        },
+        {
+          "id": "break_ore",
+          "inputs": {
+            "iron_ore": 2
+          },
+          "name": "破碎矿石轮",
+          "outputs": {
+            "crushed_ore": 3
+          }
+        }
+      ],
+      "unit": "只"
+    },
+    {
+      "base_diets": [
+        {
+          "id": "grass_water_meal",
+          "inputs": {
+            "clean_water": 1,
+            "fodder_grass": 1
+          },
+          "name": "牧草清水餐"
+        },
+        {
+          "id": "land_meal",
+          "inputs": {
+            "clean_water": 1,
+            "land_feed": 1
+          },
+          "name": "陆养复合餐",
+          "research": "advanced_feed_oil_wax"
+        }
+      ],
+      "claim_removes": false,
+      "cycle_days": 2,
+      "default_base_diet": "grass_water_meal",
+      "default_special_diet": "concentrate_ore",
+      "facility": "rock_workyard",
+      "growth_days": 4,
+      "id": "rock_belly_beast",
+      "juvenile_price": 12,
+      "name": "岩腹兽",
+      "outputs": {
+        "ore_concentrate": 2,
+        "tailings": 1
+      },
+      "research": "ore_concentration",
+      "special_diets": [
+        {
+          "id": "concentrate_ore",
+          "inputs": {
+            "crushed_ore": 6
+          },
+          "name": "生物选矿轮",
+          "outputs": {
+            "ore_concentrate": 2,
+            "tailings": 1
+          }
+        }
+      ],
+      "unit": "只"
     }
   ],
   "orders": {
@@ -4303,6 +4402,7 @@
         "orders",
         "research:biofiltration",
         "research:rock_handling",
+        "rock_mole",
         "sale",
         "soil_spirit_pill"
       ],
@@ -4391,6 +4491,7 @@
         "build:woodshop",
         "diet:rock_mole:break_stone",
         "research:rock_handling",
+        "rock_mole",
         "sale"
       ],
       "cost_source": "stone",
@@ -4424,6 +4525,7 @@
         "break_ore_provider",
         "diet:rock_mole:break_ore",
         "diet:steel_sheep:iron_supplement",
+        "rock_mole",
         "sale",
         "smelt_charcoal",
         "smelt_resin",
@@ -4467,6 +4569,7 @@
         "diet:bell_bee:flower_share",
         "diet:purifying_mat:culture_water",
         "diet:rock_belly_beast:grass_water_meal",
+        "diet:rock_belly_beast:land_meal",
         "diet:rock_mole:fungus_meal",
         "diet:steel_sheep:grain_meal",
         "diet:steel_sheep:grass_meal",
@@ -4481,6 +4584,8 @@
         "purifying_mat",
         "purifying_mat_provider",
         "research:field_maintenance",
+        "rock_belly_beast",
+        "rock_mole",
         "sale",
         "steel_sheep",
         "water_change",
@@ -4703,6 +4808,7 @@
         "diet:steel_sheep:grass_meal",
         "mill_grass",
         "research:ore_concentration",
+        "rock_belly_beast",
         "sale",
         "steel_sheep"
       ],
@@ -5358,8 +5464,10 @@
     {
       "buy_price": 0,
       "consumers": [
+        "diet:rock_belly_beast:land_meal",
         "diet:steel_sheep:land_meal",
         "research:field_maintenance",
+        "rock_belly_beast",
         "sale",
         "steel_sheep"
       ],
@@ -5712,6 +5820,7 @@
         "diet:rock_belly_beast:concentrate_ore",
         "mineral_feed",
         "research:ore_concentration",
+        "rock_belly_beast",
         "sale"
       ],
       "cost_source": "break_ore",
@@ -6096,87 +6205,6 @@
         8
       ],
       "quantity": 5
-    }
-  ],
-  "species": [
-    {
-      "base_diets": [
-        {
-          "id": "fungus_meal",
-          "inputs": {
-            "clean_water": 1,
-            "mushroom": 1
-          },
-          "name": "菌菇清水餐"
-        }
-      ],
-      "claim_removes": false,
-      "cycle_days": 1,
-      "default_base_diet": "fungus_meal",
-      "default_special_diet": "break_stone",
-      "facility": "rock_workyard",
-      "growth_days": 3,
-      "id": "rock_mole",
-      "juvenile_price": 8,
-      "name": "啮岩鼹",
-      "outputs": {
-        "gravel": 2,
-        "stone_powder": 1
-      },
-      "research": "rock_handling",
-      "special_diets": [
-        {
-          "id": "break_stone",
-          "inputs": {
-            "raw_stone": 2
-          },
-          "name": "破碎石材轮"
-        },
-        {
-          "id": "break_ore",
-          "inputs": {
-            "iron_ore": 2
-          },
-          "name": "破碎矿石轮"
-        }
-      ],
-      "unit": "只"
-    },
-    {
-      "base_diets": [
-        {
-          "id": "grass_water_meal",
-          "inputs": {
-            "clean_water": 1,
-            "fodder_grass": 1
-          },
-          "name": "牧草清水餐"
-        }
-      ],
-      "claim_removes": false,
-      "cycle_days": 2,
-      "default_base_diet": "grass_water_meal",
-      "default_special_diet": "concentrate_ore",
-      "facility": "rock_workyard",
-      "growth_days": 4,
-      "id": "rock_belly_beast",
-      "juvenile_price": 12,
-      "name": "岩腹兽",
-      "outputs": {
-        "ore_concentrate": 2,
-        "tailings": 1
-      },
-      "research": "ore_concentration",
-      "special_diets": [
-        {
-          "id": "concentrate_ore",
-          "inputs": {
-            "crushed_ore": 6
-          },
-          "name": "生物选矿轮"
-        }
-      ],
-      "unit": "只"
     }
   ]
 }

@@ -3232,9 +3232,7 @@
       "outputs": {},
       "claim_removes": false,
       "research": "biofiltration"
-    }
-  ],
-  "species": [
+    },
     {
       "id": "rock_mole",
       "name": "啮岩鼹",
@@ -3260,6 +3258,10 @@
           "name": "破碎石材轮",
           "inputs": {
             "raw_stone": 2
+          },
+          "outputs": {
+            "gravel": 2,
+            "stone_powder": 1
           }
         },
         {
@@ -3267,6 +3269,9 @@
           "name": "破碎矿石轮",
           "inputs": {
             "iron_ore": 2
+          },
+          "outputs": {
+            "crushed_ore": 3
           }
         }
       ],
@@ -3294,6 +3299,15 @@
             "fodder_grass": 1,
             "clean_water": 1
           }
+        },
+        {
+          "id": "land_meal",
+          "name": "陆养复合餐",
+          "inputs": {
+            "land_feed": 1,
+            "clean_water": 1
+          },
+          "research": "advanced_feed_oil_wax"
         }
       ],
       "default_base_diet": "grass_water_meal",
@@ -3303,6 +3317,10 @@
           "name": "生物选矿轮",
           "inputs": {
             "crushed_ore": 6
+          },
+          "outputs": {
+            "ore_concentrate": 2,
+            "tailings": 1
           }
         }
       ],

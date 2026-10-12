@@ -51,7 +51,6 @@ def providers(source):
     crops, new species and the real water change derive their own providers."""
     require = common.require
     animals = common.registry(source['livestock'], 'livestock')
-    species_p8 = common.registry(source['species'], 'species')
     crops = common.registry(source['crops'], 'crops')
     resources = common.registry(source['resources'], 'resources')
     recipes = common.registry(source['recipes'], 'recipes')
@@ -85,7 +84,7 @@ def providers(source):
     # --- Old livestock: same derivation as V2, unchanged standard rounds.
     # bell_bee keeps its custom flower-field round below and is skipped here.
     for ident, a in animals.items():
-        if ident in ('bell_bee', 'purifying_mat'):
+        if ident in ('bell_bee', 'purifying_mat', 'rock_mole', 'rock_belly_beast'):
             continue
         require(common.integer(a['juvenile_price'], 1) and common.integer(a['growth_days'], 1) and common.integer(a['cycle_days'], 1) and type(a['claim_removes']) is bool, f'{ident}: lifecycle')
         f = facilities[a['facility']]
@@ -150,6 +149,11 @@ def providers(source):
                                            outputs={'wastewater': int(change['wastewater'])}, days=0,
                                            start_ap=water['maintenance_ap'], claim_ap=0, cash=0)
     # --- Purifying mats: juvenile culture water plus one living processing round x4.
+    for rock in (animals['rock_mole'], animals['rock_belly_beast']):
+        _check_species(rock, facilities, resources, research)
+        for diet in rock['special_diets']:
+            require('outputs' in diet, '%s diets carry their per-unit outputs' % rock['id'])
+            common.quantities(diet['outputs'], resources, rock['id'])
     mat = animals['purifying_mat']
     _check_species(mat, facilities, resources, research)
     for diet in mat['special_diets']:
@@ -166,7 +170,7 @@ def providers(source):
                                    start_ap=round_days + 1, claim_ap=1, cash=POPULATION * mat['juvenile_price'])
     # --- Rock mole / rock belly beast: growth plus one production round x4.
     for species_id, recipe_ids in (('rock_mole', ('break_stone', 'break_ore')), ('rock_belly_beast', ('concentrate_ore',))):
-        row = species_p8[species_id]
+        row = animals[species_id]
         _check_species(row, facilities, resources, research)
         diet = next(d for d in row['base_diets'] if d['id'] == row['default_base_diet'])
         for recipe_id in recipe_ids:
@@ -241,7 +245,7 @@ def extra_consumers(source):
         labels.setdefault(item, [])
         if label not in labels[item]:
             labels[item].append(label)
-    for row in source['livestock'] + source['species']:
+    for row in source['livestock']:
         for diet in row['base_diets'] + row['special_diets']:
             for iid in diet['inputs']:
                 add(iid, f'diet:{row["id"]}:{diet["id"]}')
@@ -287,7 +291,6 @@ def audit_research(source, compiled, provider_rows):
     recipes = common.registry(source['recipes'], 'recipes')
     facilities = common.registry(source['facilities'], 'facilities')
     livestock = common.registry(source['livestock'], 'livestock')
-    species = common.registry(source['species'], 'species')
     gates = {'purchases': {}, 'crops': {}, 'facilities': {}, 'recipes': {}, 'species': {}, 'diets': {}}
     for ident, row in resources.items():
         if row.get('research', ''):
@@ -301,9 +304,7 @@ def audit_research(source, compiled, provider_rows):
     for ident, row in recipes.items():
         if row.get('research', ''):
             gates['recipes'][ident] = row['research']
-    for ident, row in species.items():
-        gates['species'][ident] = row['research']
-    # Runtime species living in the livestock registry unlock the same way.
+    # All runtime species live in the livestock registry and unlock by research.
     for ident, row in livestock.items():
         if row.get('research', ''):
             gates['species'][ident] = row['research']

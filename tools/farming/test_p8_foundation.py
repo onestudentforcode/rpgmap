@@ -30,8 +30,8 @@ class P8FoundationTests(unittest.TestCase):
         self.assertEqual(len(out['crops']),7)
         self.assertEqual(len(out['facilities']),15)
         self.assertEqual(len(out['recipes']),40)
-        self.assertEqual(len(out['livestock']),4)
-        self.assertEqual(len(self.source['species']),2)
+        self.assertEqual(len(out['livestock']),6)
+        self.assertNotIn('species', self.source)
         self.assertEqual(len(out['research']),12)
         audit=out['research_audit']
         self.assertEqual(audit['fee'],94); self.assertEqual(audit['days'],44)
@@ -75,11 +75,13 @@ class P8FoundationTests(unittest.TestCase):
     def test_species_registration_rules(self):
         self.row('livestock','bell_bee')['research']=''
         self.invalid(); self.setUp()
-        self.row('species','rock_mole')['growth_days']=0
+        self.row('livestock','rock_mole')['growth_days']=0
         self.invalid(); self.setUp()
         self.row('livestock','purifying_mat')['facility']='pen'
         self.invalid(); self.setUp()
         self.row('livestock','purifying_mat')['special_diets'][0].pop('outputs')
+        self.invalid(); self.setUp()
+        self.row('livestock','rock_mole')['special_diets'][0].pop('outputs')
         self.invalid()
         self.source['flowers']['share_capacity']=2
         self.invalid()
