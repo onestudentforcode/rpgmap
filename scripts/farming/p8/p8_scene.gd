@@ -4,6 +4,8 @@ extends "res://scripts/farming/v2/v2_scene.gd"
 ## registers the full catalog while later subphases switch the gates on.
 const P8World := preload("res://scripts/farming/p8/p8_world.gd")
 const P8Store := preload("res://scripts/farming/p8/p8_slot_store.gd")
+const Handbook := preload("res://scripts/farming/p8/p8_handbook.gd")
+var _handbook_chapter := "start"
 
 func _init() -> void:
 	store = P8Store.new()
@@ -130,14 +132,53 @@ func _substituted_preview(facility_id: String) -> Dictionary:
 	var swap: Dictionary = world._substituted_materials(facility_id)
 	return swap if not swap.is_empty() else world.facility_defs[facility_id]["materials"]
 
-func _help_extra() -> void:
-	super()
-	_heading(sidebar,"P8生态产业（开发中）")
-	_label(sidebar,"水场换水：有动物、水体未满时，清水×2换水体+40并产出污水×2；每场每天最多一次，手动与负责人共享当日标记。")
-	_label(sidebar,"新设施、新作物、新食谱与研究台内容已登记但未开放；完成研究前在营建、市集与配方页保持锁定并说明原因。")
-	_label(sidebar,"日结失败时世界回滚到触发操作前，保留唯一待提交候选；重试只写入该候选，放弃当天回到上一份有效档案。")
-	_label(sidebar,"P8负责人：一人可负责多座设施，每设施一名、分高/普通/低优先级；所有成功工作共享每日12次与个人预算。")
-	_label(sidebar,"农务兼任默认关闭，开启后按区域/类别/资源点与设施任务同池调度；持续生产按目标库存自动投料，原料保留量只挡自动批次。")
+## P8 owns its handbook: legacy V2 caretaker/manual-only guidance is inapplicable.
+func _show_help() -> void:
+	_context = "help"
+	_page("新手手册 · P8生态经营")
+	_label(sidebar,"新档%d元石 · 每天%dAP · 首次45日回顾，之后自由经营。A/B是参考路线，不是限时目标。" % [int(world.config["initial_primeval_stones"]), int(world.config["ap_per_day"])])
+	var selector := OptionButton.new()
+	selector.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	selector.set_meta("handbook_chapters", true)
+	selector.tooltip_text = "选择手册章节；阅读和翻页不消耗AP或元石"
+	for index in range(Handbook.CHAPTERS.size()):
+		var entry: Dictionary = Handbook.CHAPTERS[index]
+		selector.add_item(entry["title"])
+		selector.set_item_metadata(index, entry["id"])
+		if entry["id"] == _handbook_chapter: selector.select(index)
+	selector.item_selected.connect(func(index):
+		_handbook_chapter = String(selector.get_item_metadata(index))
+		_show_help())
+	sidebar.add_child(selector)
+	var navigation := HBoxContainer.new()
+	sidebar.add_child(navigation)
+	_label(sidebar,"常用入口 · 悬停图标查看功能；开档后可直接进入对应页面。")
+	for target in ["market", "build", "research", "workers", "resources", "orders"]:
+		var captions := {"market": "市集", "build": "营建", "research": "研究", "workers": "雇工", "resources": "资源一览", "orders": "订单"}
+		var icon_id: String = {"research": "research_bench", "resources": "locate"}.get(target, target)
+		var button := _icon(navigation, icon_id, "打开" + captions[target], _handbook_open.bind(target))
+		button.set_meta("handbook_target", target)
+		button.disabled = not _started
+	for card in Handbook.chapter(_handbook_chapter)["cards"]:
+		var body := _card(sidebar)
+		_heading(body, card["title"])
+		for index in range(card["steps"].size()):
+			_label(body,"%d. %s" % [index + 1, card["steps"][index]])
+	if _started:
+		var hints := HBoxContainer.new()
+		sidebar.add_child(hints)
+		_icon(hints,"cancel","跳过底栏操作提示",func(): _result(world.guide_dismiss(true)); _show_help())
+		_icon(hints,"play","恢复底栏操作提示",func(): _result(world.guide_dismiss(false)); _show_help())
+
+func _handbook_open(target: String) -> void:
+	if not _started: return
+	match target:
+		"market": _show_market()
+		"build": _show_build()
+		"research": _show_research()
+		"workers": _show_workers()
+		"resources": _show_resources()
+		"orders": _show_orders()
 
 # --- P8.b ownership, production strategy and reserves -----------------------
 
@@ -475,7 +516,7 @@ func _show_research() -> void:
 			_label(card,"解锁：%s" % ("、".join(unlocks) if not unlocks.is_empty() else "能力标记"))
 			for item in def["samples"]:
 				_label(card,"获取路线 · " + _sample_route(String(item)))
-	_label(sidebar,"已完成%d/12项 · 未实施路线（花源/净化/岩兽等）在解锁后由后续阶段接入执行。" % completed)
+	_label(sidebar,"已完成%d/12项 · 解锁后前往营建/市集配置生产；需要操作路线时可打开新手手册。" % completed)
 	_icon(sidebar,"build","营建研究台",_show_build)
 
 
