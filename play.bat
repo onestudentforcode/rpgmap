@@ -1,12 +1,12 @@
 @echo off
 chcp 65001 >nul
 setlocal EnableExtensions
-rem Default entry belongs to V2 / Phase 7. V1, V0 and historical content are explicit.
+rem Default entry belongs to P8 local testing. Older versions remain explicit.
 if "%~1"=="/?" goto :usage
 if /i "%~1"=="help" goto :usage
 set "PROJECT=%~dp0."
-set "MODE=v2"
-set "SCENE=scenes/farming/farm_v2.tscn"
+set "MODE=p8"
+set "SCENE=scenes/farming/farm_p8.tscn"
 if /i "%~1"=="demo" goto :select_demo
 if /i "%~1"=="farm0" goto :select_farm0
 if /i "%~1"=="farm" goto :select_farm
@@ -57,9 +57,10 @@ if "%~1"=="" goto :launch
 set "ARG=%~1"
 rem cmd may split an unquoted --key=value at '=' when launched by PowerShell.
 set "VALUE_ARG="
-for %%V in (--shot-size --ui-scale --v1-shots --v2-shots) do if /i "%ARG%"=="%%V" set "VALUE_ARG=1"
+for %%V in (--shot-size --ui-scale --v1-shots --v2-shots --p8-shots) do if /i "%ARG%"=="%%V" set "VALUE_ARG=1"
 if /i "%ARG%"=="--shots" if "%MODE%"=="v1" set "VALUE_ARG=1"
 if /i "%ARG%"=="--shots" if "%MODE%"=="v2" set "VALUE_ARG=1"
+if /i "%ARG%"=="--shots" if "%MODE%"=="p8" set "VALUE_ARG=1"
 if not defined VALUE_ARG goto :route_arg
 if "%~2"=="" (
     echo [error] %ARG% requires a value.
@@ -127,16 +128,20 @@ if "%MODE%"=="v2" (
     python "%PROJECT%\tools\farming\bake_v2.py" --check
     if errorlevel 1 exit /b 1
 )
+if "%MODE%"=="p8" (
+    python "%PROJECT%\tools\farming\bake_p8.py" --check
+    if errorlevel 1 exit /b 1
+)
 "%EXE%" %HEADLESS% --path "%PROJECT%" %SCENE% -- %FARGS%
 exit /b %errorlevel%
 :usage
-echo play.bat                         V2 husbandry demo with three independent slots
-echo play.bat --selftest               V2 complete smoke, isolated slots, headless
-echo play.bat --shots=DIR              V2 UI screenshots, isolated slots
+echo play.bat                         P8 ecology demo for local testing, three independent slots
+echo play.bat --selftest               P8 source smoke, isolated slots, headless
+echo play.bat --shots=DIR              P8 UI screenshots, isolated slots
 echo play.bat v0                      Historical V0 menu and independent saves
 echo play.bat farm --farmtest          Same current farm logic test
-echo play.bat v2                      Same V2 husbandry, reservoir and manual tools
-echo play.bat p8                      P8 ecology foundation, explicit development entry
+echo play.bat v2                      Historical V2 husbandry, reservoir and manual tools
+echo play.bat p8                      Same P8 ecology demo as the default entry
 echo play.bat v1                      V1 farm with work designations and employees
 echo play.bat farm --fresh             Unsaved developer preview only
 echo play.bat farm --farm-shots=DIR    Same current farm screenshots
@@ -146,5 +151,5 @@ echo play.bat farm0 --farmtest         Historical Phase 0 tests only
 echo test.bat                         Farming QC + tool tests + game flow
 echo test-v1.bat                      Complete V1 model and UI regression
 echo test-v2.bat                      Complete V2 checks and two45-day playthroughs
-echo test-p8.bat                      P8 foundation checks and smoke
+echo test-p8.bat                      P8 configuration, model, handbook and source smoke checks
 exit /b 0

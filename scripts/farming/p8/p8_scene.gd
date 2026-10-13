@@ -1,7 +1,6 @@
 extends "res://scripts/farming/v2/v2_scene.gd"
-## P8 development shell: independent slots/settings, research-gated build, trade
-## and diet surfaces, and the water-change habitat panel. The foundation stage
-## registers the full catalog while later subphases switch the gates on.
+## P8 local demo: independent slots/settings, research-gated ecology production,
+## shared facility owners, and the beginner handbook.
 const P8World := preload("res://scripts/farming/p8/p8_world.gd")
 const P8Store := preload("res://scripts/farming/p8/p8_slot_store.gd")
 const Handbook := preload("res://scripts/farming/p8/p8_handbook.gd")
@@ -12,7 +11,7 @@ func _init() -> void:
 	manual_mode = true
 	minimum_map_zoom = 0.1
 	settings = Settings.new("user://farm_demo_p8_settings.cfg", minimum_map_zoom)
-	product_title = "灵田 Demo P8 · 开发底座"
+	product_title = "灵田 Demo P8 · 生态经营"
 	terrain_path = "res://content/farming/baked/p8/terrains.json"
 	preview_prefix = "p8"
 
