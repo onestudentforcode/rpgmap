@@ -72,7 +72,7 @@ func _coverage(facility_uid: int) -> Rect2i:
 	var origin := Vector2i(int(facility["origin"][0]), int(facility["origin"][1]))
 	var margin := int(settings["lamp" if String(world.facility_defs[String(facility["facility_id"])]["id"]) == LAMP_ID else "station"]["range"])
 	return Rect2i(origin.x - margin, origin.y - margin,
-		int(footprint[0]) + margin * 2, int(footprint[1]) + margin * 2).intersection(Rect2i(0, 0, world.grid.width, world.grid.height))
+		int(footprint[0]) + margin * 2, int(footprint[1]) + margin * 2).intersection(world.grid.bounds())
 
 func _sorted_device_uids(kind: String) -> Array:
 	var out := []
@@ -139,7 +139,7 @@ func run_opening(day: int) -> void:
 					var cell := Vector2i(x, y)
 					if world.grid.state_at(cell) not in [1, 2]:
 						continue
-					var index: int = cell.y * world.grid.width + cell.x
+					var index: int = world.grid.index_of(cell)
 					if int(world.environment[index][field]) >= int(device["threshold"]):
 						continue
 					targets.append(cell)
@@ -152,7 +152,7 @@ func run_opening(day: int) -> void:
 				if served >= limit:
 					break
 				var cell: Vector2i = targets[(offset + step) % targets.size()]
-				var index: int = cell.y * world.grid.width + cell.x
+				var index: int = world.grid.index_of(cell)
 				if int(world.environment[index][field]) >= int(device["threshold"]):
 					continue
 				if not world.inventory.has(String(service["item"]), int(service["units"])):
@@ -177,7 +177,7 @@ func station_overview(facility_uid: int) -> Dictionary:
 				var cell := Vector2i(x, y)
 				if world.grid.state_at(cell) not in [1, 2]:
 					continue
-				var index: int = cell.y * world.grid.width + cell.x
+				var index: int = world.grid.index_of(cell)
 				for item in ["irrigate", "fertilize"]:
 					var field := 0 if item == "irrigate" else 1
 					if int(world.environment[index][field]) < int(device["threshold"]):

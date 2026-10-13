@@ -63,7 +63,7 @@ func _fit_map() -> void:
 	var bottom := _camera_bottom_margin()
 	var zoom := clampf(minf(board.size.x/extent.x,maxf(64,board.size.y-bottom)/extent.y)*0.94,minimum_map_zoom,3.0)
 	camera.zoom = Vector2.ONE*zoom
-	camera.position = extent*0.5+Vector2(0,bottom*0.5/zoom)
+	camera.position = Vector2(world.grid.origin_x*64,0)+extent*0.5+Vector2(0,bottom*0.5/zoom)
 
 func _camera_bottom_margin() -> float:
 	return 128.0 if tool_grid.columns == 10 else 176.0

@@ -104,6 +104,7 @@ static func normalize(value, day: int, catalog = Data) -> Dictionary:
 	var config: Dictionary = catalog.load_data()["config"]["workers"]
 	var map = catalog.load_map()
 	var width := int(map["size"][0])
+	var origin_x := int(map.get("origin_x", 0))
 	var height := int(map["size"][1])
 	if not value["workers"] is Array or (int(config["max_workers"]) > 0 and value["workers"].size() > int(config["max_workers"])) or not value["marks"] is Array or value["marks"].size() > width*height*KINDS.size() or not value["seed_plans"] is Array or value["seed_plans"].size() > width*height or not value["sources"] is Dictionary or not Scalars.whole(value["spent"]) or not Scalars.whole(value["next_worker_id"],1) or not Scalars.whole(value["next_mark_id"],1):
 		return Scalars.fail("雇工人数、序号或工作列表非法")
@@ -124,7 +125,7 @@ static func normalize(value, day: int, catalog = Data) -> Dictionary:
 			if not Scalars.whole(worker["priorities"][kind],0,5):
 				return Scalars.fail("雇工工作偏好非法")
 			priorities[kind] = int(worker["priorities"][kind])
-		var areas := normalize_areas(worker["areas"],width,height)
+		var areas := normalize_areas(worker["areas"],width,height,origin_x)
 		if not areas["ok"]: return areas
 		prior = int(worker["id"])
 		worker_ids[prior] = true
@@ -143,12 +144,12 @@ static func normalize(value, day: int, catalog = Data) -> Dictionary:
 	var mark_cells := {}
 	var terrain = catalog.tillable_map()
 	for mark_entry in value["marks"]:
-		if not Scalars.exact(mark_entry,["id","kind","cell","priority"]) or not Scalars.whole(mark_entry["id"],1,int(value["next_mark_id"])-1) or mark_ids.has(int(mark_entry["id"])) or mark_entry["kind"] not in KINDS or mark_entry["kind"] == "source" or not Scalars.coordinate(mark_entry["cell"],width,height) or not Scalars.whole(mark_entry["priority"],1,9):
+		if not Scalars.exact(mark_entry,["id","kind","cell","priority"]) or not Scalars.whole(mark_entry["id"],1,int(value["next_mark_id"])-1) or mark_ids.has(int(mark_entry["id"])) or mark_entry["kind"] not in KINDS or mark_entry["kind"] == "source" or not Scalars.coordinate(mark_entry["cell"],width,height,origin_x) or not Scalars.whole(mark_entry["priority"],1,9):
 			return Scalars.fail("任务标记非法")
 		var cell := Vector2i(int(mark_entry["cell"][0]), int(mark_entry["cell"][1]))
 		var key := "%s:%s" % [cell,mark_entry["kind"]]
 		var exclusive_key := "%s:crop" % cell
-		if source_cells.has(cell) or not terrain.get(map["grid"][cell.y][cell.x],false) or mark_cells.has(key) or (mark_entry["kind"] in ["harvest","fell","clear"] and mark_cells.has(exclusive_key)):
+		if source_cells.has(cell) or not terrain.get(map["grid"][cell.y][cell.x-origin_x],false) or mark_cells.has(key) or (mark_entry["kind"] in ["harvest","fell","clear"] and mark_cells.has(exclusive_key)):
 			return Scalars.fail("任务重复、互斥或地形非法")
 		mark_ids[int(mark_entry["id"])] = true
 		mark_cells[key] = true
@@ -158,11 +159,11 @@ static func normalize(value, day: int, catalog = Data) -> Dictionary:
 	var crop_defs = catalog.definitions("crops")
 	var planned := {}
 	for plan in value["seed_plans"]:
-		if not Scalars.exact(plan,["cell","crop_id"]) or not Scalars.coordinate(plan["cell"],width,height) or not crop_defs.has(plan["crop_id"]):
+		if not Scalars.exact(plan,["cell","crop_id"]) or not Scalars.coordinate(plan["cell"],width,height,origin_x) or not crop_defs.has(plan["crop_id"]):
 			return Scalars.fail("地格选种非法")
 		var shape: Array = crop_defs[plan["crop_id"]]["footprint"]
 		for cell in footprint(Rect2i(int(plan["cell"][0]),int(plan["cell"][1]),int(shape[0]),int(shape[1]))):
-			if cell.x >= width or cell.y >= height or source_cells.has(cell) or planned.has(cell) or not terrain.get(map["grid"][cell.y][cell.x],false):
+			if cell.x >= origin_x + width or cell.y >= height or source_cells.has(cell) or planned.has(cell) or not terrain.get(map["grid"][cell.y][cell.x-origin_x],false):
 				return Scalars.fail("选种占地越界或重叠")
 			planned[cell] = true
 		out["seed_plans"].append({"cell": [int(plan["cell"][0]),int(plan["cell"][1])],"crop_id": plan["crop_id"]})

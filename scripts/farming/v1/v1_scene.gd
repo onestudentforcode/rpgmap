@@ -255,7 +255,7 @@ func _build() -> void:
 	terrain.build(root,world.grid,JSON.parse_string(FileAccess.get_file_as_string(terrain_path)))
 	world.grid.cells_changed.connect(terrain.update_cells)
 	camera = Camera2D.new()
-	camera.position = Vector2(world.grid.width,world.grid.height)*32.0
+	camera.position = Vector2(world.grid.origin_x*64,0)+Vector2(world.grid.width,world.grid.height)*32.0
 	camera.zoom = Vector2.ONE*float(settings.data["map_zoom"])
 	root.add_child(camera)
 	overlay = Overlay.new()
@@ -443,7 +443,7 @@ func _refresh_input() -> void:
 
 func _fit_map() -> void:
 	var extent := Vector2(world.grid.width,world.grid.height)*64.0
-	camera.position = extent*0.5
+	camera.position = Vector2(world.grid.origin_x*64,0)+extent*0.5
 	var zoom := minf(board.size.x/extent.x,board.size.y/extent.y)*0.94
 	camera.zoom = Vector2.ONE*clampf(zoom,0.25,3.0)
 
@@ -683,8 +683,8 @@ func _cell(position: Vector2) -> Vector2i:
 	return Vector2i(floori(point.x/64.0),floori(point.y/64.0))
 
 func _rect(a: Vector2i,b: Vector2i) -> Rect2i:
-	var left := Vector2i(maxi(0,mini(a.x,b.x)),maxi(0,mini(a.y,b.y)))
-	var right := Vector2i(mini(world.grid.width-1,maxi(a.x,b.x)),mini(world.grid.height-1,maxi(a.y,b.y)))
+	var left := Vector2i(maxi(world.grid.origin_x,mini(a.x,b.x)),maxi(0,mini(a.y,b.y)))
+	var right := Vector2i(mini(world.grid.origin_x+world.grid.width-1,maxi(a.x,b.x)),mini(world.grid.height-1,maxi(a.y,b.y)))
 	return Rect2i(left,right-left+Vector2i.ONE)
 
 func _board_input(event: InputEvent) -> void:
@@ -791,7 +791,7 @@ func _mark(rect: Rect2i, kind: String, priority: int) -> void:
 func _show_cell() -> void:
 	_context = "cell"
 	shade.visible = false
-	_page("地格 (%d,%d)" % [selected.x,selected.y] if selected.x >= 0 else "一方灵田")
+	_page("地格 (%d,%d)" % [selected.x,selected.y] if world.grid.in_bounds(selected.x,selected.y) else "一方灵田")
 	if not world.grid.in_bounds(selected.x,selected.y):
 		_label(sidebar,"点击地格查看详情，展开农务工具框选待办。")
 		return
@@ -1396,7 +1396,8 @@ func _process(delta: float) -> void:
 	var margin := _camera_bottom_margin()
 	var half := (Vector2(map_port.size)-Vector2(0,margin))*0.5/camera.zoom.x
 	var offset := margin*0.5/camera.zoom.x
-	camera.position.x = clampf(camera.position.x,minf(half.x,extent.x*0.5),maxf(extent.x*0.5,extent.x-half.x))
+	var start_x := world.grid.origin_x*64.0
+	camera.position.x = clampf(camera.position.x,start_x+minf(half.x,extent.x*0.5),start_x+maxf(extent.x*0.5,extent.x-half.x))
 	camera.position.y = clampf(camera.position.y-offset,minf(half.y,extent.y*0.5),maxf(extent.y*0.5,extent.y-half.y))+offset
 
 func _unhandled_key_input(event: InputEvent) -> void:
@@ -1462,7 +1463,7 @@ func draw_map(target: Node2D) -> void:
 	for plan in world.workforce.state["seed_plans"]:
 		var position := Vector2(float(plan["cell"][0]),float(plan["cell"][1]))*64.0
 		target.draw_circle(position+Vector2(52,12),4*readable,UI.JADE)
-	if selected.x >= 0: target.draw_rect(Rect2(Vector2(selected)*64.0,Vector2(64,64)),UI.JADE,false,2*readable)
+	if world.grid.in_bounds(selected.x,selected.y): target.draw_rect(Rect2(Vector2(selected)*64.0,Vector2(64,64)),UI.JADE,false,2*readable)
 	if not build_tool.is_empty() and world.grid.in_bounds(_hover.x,_hover.y):
 		var definition: Dictionary = world.facility_defs[build_tool]
 		var valid: bool = world.can_build_facility(_hover,build_tool)["ok"]

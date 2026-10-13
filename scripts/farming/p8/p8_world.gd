@@ -8,6 +8,7 @@ const P8Operations := preload("res://scripts/farming/p8/p8_operations.gd")
 const P8Workforce := preload("res://scripts/farming/p8/p8_workforce.gd")
 const P8Research := preload("res://scripts/farming/p8/p8_research.gd")
 const P8Flowers := preload("res://scripts/farming/p8/p8_flowers.gd")
+const P8Land := preload("res://scripts/farming/p8/p8_land.gd")
 const P8Devices := preload("res://scripts/farming/p8/p8_devices.gd")
 ## Observational receipts for external business audits; never grants resources or
 ## replays work. Day-save failures are still governed by the transaction below.
@@ -28,8 +29,10 @@ var research
 var flowers
 ## Field stations and growth lamps; they run inside the opening-day step.
 var devices
+var land
 
 func _init(slot_store = null) -> void:
+	land = P8Land.new(self)
 	operations = P8Operations.new(self)
 	research = P8Research.new(self)
 	flowers = P8Flowers.new(self, P8Data.load_data()["flowers"])
@@ -101,11 +104,19 @@ func _facility_removed(uid: int) -> void:
 
 func to_snapshot() -> Dictionary:
 	var snapshot := super.to_snapshot()
+	snapshot["world"]["land"] = land.to_save()
 	snapshot["world"]["p8"] = operations.to_save()
 	snapshot["world"]["research"] = research.to_save()
 	snapshot["world"]["flowers"] = flowers.to_save()
 	snapshot["world"]["devices"] = devices.to_save()
 	return snapshot
+
+func apply_snapshot(value) -> Dictionary:
+	var checked: Dictionary = P8Snapshot.normalize(value)
+	if not checked["ok"]: return checked
+	land.apply_save(checked["snapshot"]["world"]["land"])
+	grid.cell_access = land.contains
+	return super.apply_snapshot(checked["snapshot"])
 
 func _snapshot_applied(snapshot: Dictionary) -> void:
 	super(snapshot)
@@ -206,6 +217,12 @@ func _with_substituted(facility_id: String, action: Callable) -> Dictionary:
 	return result
 
 func can_build_facility(cell: Vector2i, facility_id: String) -> Dictionary:
+	if facility_defs.has(facility_id):
+		var shape: Array = facility_defs[facility_id]["footprint"]
+		for dy in range(int(shape[1])):
+			for dx in range(int(shape[0])):
+				var target := cell + Vector2i(dx, dy)
+				if not land.contains(target): return _error(land.reason(target))
 	if facility_defs.has(facility_id):
 		var blocked := research_block(String(facility_defs[facility_id].get("research", "")))
 		if not blocked.is_empty():

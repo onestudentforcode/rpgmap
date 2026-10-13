@@ -1,0 +1,14 @@
+{
+  "version": 1,
+  "origin_x": -4,
+  "size": [32, 22],
+  "base": [0, 0, 20, 22],
+  "parcels": [
+    {"id": "east_near", "name": "东侧近田", "rect": [20, 0, 4, 8], "terrain": "grass", "price": 80, "requires": []},
+    {"id": "east_far", "name": "东侧远田", "rect": [24, 0, 4, 8], "terrain": "grass", "price": 120, "requires": ["east_near"]},
+    {"id": "east_lower", "name": "东侧下田", "rect": [20, 8, 8, 6], "terrain": "grass", "price": 180, "requires": ["east_near", "east_far"]},
+    {"id": "west_water", "name": "西侧水库", "rect": [-4, 14, 4, 8], "terrain": "water", "price": 80, "requires": []},
+    {"id": "east_water_near", "name": "东侧近岸水库", "rect": [20, 14, 4, 8], "terrain": "water", "price": 80, "requires": []},
+    {"id": "east_water_far", "name": "东侧远岸水库", "rect": [24, 14, 4, 8], "terrain": "water", "price": 120, "requires": ["east_water_near"]}
+  ]
+}

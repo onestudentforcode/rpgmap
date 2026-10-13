@@ -14,7 +14,8 @@ const P8Operations := preload("res://scripts/farming/p8/p8_operations.gd")
 const P8Research := preload("res://scripts/farming/p8/p8_research.gd")
 const P8Flowers := preload("res://scripts/farming/p8/p8_flowers.gd")
 const P8Devices := preload("res://scripts/farming/p8/p8_devices.gd")
-const SCHEMA := 16
+const Land := preload("res://scripts/farming/p8/p8_land.gd")
+const SCHEMA := 17
 
 static func fresh() -> Dictionary:
 	var snapshot: Dictionary = Common.fresh(Data, SCHEMA)
@@ -27,6 +28,7 @@ static func fresh() -> Dictionary:
 	snapshot["reports"] = Reports.fresh(0)
 	snapshot["preferences"] = {"watched": []}
 	snapshot["world"]["husbandry"] = {"habitats": [], "next_animal_uid": 1, "next_cycle_uid": 1}
+	snapshot["world"]["land"] = {"purchased": []}
 	snapshot["world"]["p8"] = {"facilities": [], "production": [], "reserves": [], "waiting": []}
 	snapshot["world"]["research"] = {"projects": [], "completed": [], "bench_days": []}
 	snapshot["world"]["flowers"] = {"shares": [], "pollinated": []}
@@ -51,6 +53,7 @@ static func normalize(value) -> Dictionary:
 	var raw_reports = body.get("reports", null)
 	var raw_preferences = body.get("preferences", null)
 	var world_section = body.get("world") if body.get("world") is Dictionary else {}
+	var raw_land = world_section.get("land", null)
 	var raw_husbandry = world_section.get("husbandry", null) if world_section is Dictionary else null
 	var raw_operations = world_section.get("p8", null) if world_section is Dictionary else null
 	var raw_research = world_section.get("research", null) if world_section is Dictionary else null
@@ -63,6 +66,7 @@ static func normalize(value) -> Dictionary:
 	if body.has("preferences"):
 		body.erase("preferences")
 	if world_section is Dictionary:
+		world_section.erase("land")
 		if world_section.has("husbandry"):
 			world_section.erase("husbandry")
 		if world_section.has("p8"):
@@ -79,6 +83,9 @@ static func normalize(value) -> Dictionary:
 		return checked
 	if raw_ledger == null or raw_husbandry == null or raw_reports == null or raw_preferences == null or raw_operations == null or raw_research == null or raw_flowers == null or raw_devices == null:
 		return fail("P8快照缺少养殖、运营、研究、花源、资源账、报表或偏好字段")
+	var ownership := Land.normalize(raw_land, checked["snapshot"]["world"], checked["snapshot"]["workforce"], Data)
+	if not ownership["ok"]: return ownership
+	checked["snapshot"]["world"]["land"] = ownership["land"]
 	var day := int(checked["snapshot"]["clock"]["total_days"])
 	var workforce: Dictionary = checked["snapshot"]["workforce"]
 	var husbandry := _normalize_husbandry(raw_husbandry, day, checked["snapshot"]["world"])

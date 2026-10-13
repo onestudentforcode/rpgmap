@@ -29,14 +29,15 @@ static func fresh(day: int = 0, catalog = Data) -> Dictionary:
 		"crops": [], "next_uid": 1, "sources": {"day": day, "used": used},
 		"facilities": [], "next_facility_uid": 1, "next_batch_uid": 1}
 
-static func coordinate(value, width: int, height: int) -> bool:
-	return value is Array and value.size() == 2 and whole(value[0], 0, width-1) and whole(value[1], 0, height-1)
+static func coordinate(value, width: int, height: int, origin_x: int = 0) -> bool:
+	return value is Array and value.size() == 2 and whole(value[0], origin_x, origin_x + width-1) and whole(value[1], 0, height-1)
 
 static func normalize(value, day: int, catalog = Data) -> Dictionary:
 	if not exact(value, ["map_id", "tilled", "environment", "crops", "next_uid", "sources", "facilities", "next_facility_uid", "next_batch_uid"]):
 		return fail("世界快照字段损坏")
 	var map = catalog.load_map()
 	var width := int(map["size"][0])
+	var origin_x := int(map.get("origin_x", 0))
 	var height := int(map["size"][1])
 	if value["map_id"] != map["id"] or not whole(value["next_uid"], 1):
 		return fail("地图或作物序号非法")
@@ -59,10 +60,10 @@ static func normalize(value, day: int, catalog = Data) -> Dictionary:
 	var seen := {}
 	var tillable = catalog.tillable_map()
 	for pair in value["tilled"]:
-		if not coordinate(pair, width, height):
+		if not coordinate(pair, width, height, origin_x):
 			return fail("耕地坐标非法")
 		var cell := Vector2i(int(pair[0]), int(pair[1]))
-		if seen.has(cell) or source_cells.has(cell) or not tillable.get(map["grid"][cell.y][cell.x], false):
+		if seen.has(cell) or source_cells.has(cell) or not tillable.get(map["grid"][cell.y][cell.x - origin_x], false):
 			return fail("耕地重复或地形不可种植")
 		seen[cell] = true
 		tilled.append([cell.x, cell.y])
@@ -82,7 +83,7 @@ static func normalize(value, day: int, catalog = Data) -> Dictionary:
 	for row in value["crops"]:
 		if not exact(row, ["uid", "crop_id", "origin", "progress", "state", "harvest_count"]) or not whole(row["uid"], 1, int(value["next_uid"])-1) or uids.has(row["uid"]):
 			return fail("作物序号或字段非法")
-		if not row["crop_id"] is String or not crop_defs.has(row["crop_id"]) or not coordinate(row["origin"], width, height) or not whole(row["harvest_count"]):
+		if not row["crop_id"] is String or not crop_defs.has(row["crop_id"]) or not coordinate(row["origin"], width, height, origin_x) or not whole(row["harvest_count"]):
 			return fail("作物定义或坐标非法")
 		var definition: Dictionary = crop_defs[row["crop_id"]]
 		var repeated: bool = row["harvest_count"] > 0
@@ -112,14 +113,14 @@ static func normalize(value, day: int, catalog = Data) -> Dictionary:
 	for row in value["facilities"]:
 		if not exact(row, ["uid", "facility_id", "origin", "batch"]) or not whole(row["uid"], 1, int(value["next_facility_uid"])-1) or facility_uids.has(row["uid"]):
 			return fail("设施字段或序号非法")
-		if not row["facility_id"] is String or not facility_defs.has(row["facility_id"]) or not coordinate(row["origin"], width, height):
+		if not row["facility_id"] is String or not facility_defs.has(row["facility_id"]) or not coordinate(row["origin"], width, height, origin_x):
 			return fail("设施定义或坐标非法")
 		var definition: Dictionary = facility_defs[row["facility_id"]]
 		var origin := Vector2i(int(row["origin"][0]), int(row["origin"][1]))
 		for dy in range(int(definition["footprint"][1])):
 			for dx in range(int(definition["footprint"][0])):
 				var cell := origin + Vector2i(dx,dy)
-				if cell.x >= width or cell.y >= height or occupied.has(cell) or source_cells.has(cell) or not (map["grid"][cell.y][cell.x] == "water" if definition.get("terrain") == "water" else tillable.get(map["grid"][cell.y][cell.x], false)):
+				if cell.x >= origin_x + width or cell.y >= height or occupied.has(cell) or source_cells.has(cell) or not (map["grid"][cell.y][cell.x - origin_x] == "water" if definition.get("terrain") == "water" else tillable.get(map["grid"][cell.y][cell.x - origin_x], false)):
 					return fail("设施越界、重叠或覆盖不可建设地形")
 				occupied[cell] = true
 		var batch = row["batch"]

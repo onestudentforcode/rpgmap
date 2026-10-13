@@ -5,6 +5,8 @@ const P8World := preload("res://scripts/farming/p8/p8_world.gd")
 const P8Store := preload("res://scripts/farming/p8/p8_slot_store.gd")
 const Handbook := preload("res://scripts/farming/p8/p8_handbook.gd")
 var _handbook_chapter := "start"
+var _land_stamp := ""
+var _land_focus := ""
 
 func _init() -> void:
 	store = P8Store.new()
@@ -21,9 +23,107 @@ func _make_store(directory: String = ""):
 func _make_world(slot_store):
 	return P8World.new(slot_store)
 
+func _refresh() -> void:
+	super()
+	var stamp := ",".join(PackedStringArray(world.land.to_save()["purchased"]))
+	if stamp != _land_stamp:
+		_land_stamp = stamp
+		terrain.refresh_all()
+		overlay.queue_redraw()
+
+func _show_land(focus: String = "") -> void:
+	_context = "land"
+	_land_focus = focus
+	_page("购地 · 连续农场与水库")
+	var land_area := 0
+	var water_area := 0
+	var spent := 0
+	for id in world.land.purchased:
+		var parcel: Dictionary = world.land.parcels[id]
+		var area: Rect2i = world.land.rect(parcel["rect"])
+		if parcel["terrain"] == "water": water_area += area.get_area()
+		else: land_area += area.get_area()
+		spent += int(parcel["price"])
+	_label(sidebar,"已增陆地%d格 · 水面%d格 · 累计购地%d元石（计入建设支出）。" % [land_area, water_area, spent])
+	_label(sidebar,"购地0AP，每日结束保存。新地仍须开垦，水场整体占地必须已购；不赠送动物/建材，也不增加泉水日产量。所有区域共享仓库、人力和时间，各水场水体独立。")
+	for id in world.land.parcels:
+		if not focus.is_empty() and id != focus: continue
+		var parcel: Dictionary = world.land.parcels[id]
+		var quote: Dictionary = world.land.quote(id)
+		var area: Rect2i = world.land.rect(parcel["rect"])
+		var card := _card(sidebar)
+		_heading(card, parcel["name"] + (" · 已购买" if quote["owned"] else " · 未购买"))
+		_label(card,"%s%d格 · %d元石 · 左上(%d,%d)，%d×%d" % ["水面" if parcel["terrain"] == "water" else "陆地", area.get_area(), parcel["price"], area.position.x, area.position.y, area.size.x, area.size.y])
+		if not quote["owned"]:
+			_label(card,"当前%d元石 · 购买后%d元石%s" % [world.primeval_stones, quote["remaining"], " · " + quote["reason"] if not quote["ok"] else ""])
+		var row := HBoxContainer.new()
+		card.add_child(row)
+		_icon(row,"locate","定位与预览购买边界",_locate_land.bind(id))
+		if not quote["owned"]:
+			var buy := _icon(row,"claim","购买%s · %d元石 · 0AP" % [parcel["name"],parcel["price"]],_confirm_land.bind(id))
+			buy.set_meta("land_buy",id)
+			buy.disabled = not quote["ok"]
+	if not focus.is_empty(): _icon(sidebar,"back","查看全部地块",_show_land)
+
+func _confirm_land(id: String) -> void:
+	var quote: Dictionary = world.land.quote(id)
+	if not quote["ok"]: _result(quote); _show_land(id); return
+	var parcel: Dictionary = world.land.parcels[id]
+	_confirm("购买%s？支付%d元石，余额%d；0AP，永久开放，日结保存。" % [parcel["name"],quote["price"],quote["remaining"]],func():
+		_result(world.land.buy(id))
+		_show_land(id))
+
+func _locate_land(id: String) -> void:
+	_land_focus = id
+	var area: Rect2i = world.land.rect(world.land.parcels[id]["rect"])
+	_close_page()
+	camera.position = Vector2(area.position + area.size/2)*64
+	selected = area.position
+	overlay.queue_redraw()
+
+func _apply_manual(cell: Vector2i) -> void:
+	var parcel: String = world.land.at(cell)
+	if _started and not parcel.is_empty() and not world.land.contains(cell):
+		selected = cell
+		_show_land(parcel)
+		return
+	super(cell)
+
+func _show_cell() -> void:
+	var parcel: String = world.land.at(selected)
+	if not parcel.is_empty() and not world.land.contains(selected):
+		_show_land(parcel)
+		return
+	super()
+
+func _board_input(event: InputEvent) -> void:
+	super(event)
+	if event is InputEventMouseMotion and _started and not shade.visible:
+		var cell := _cell(event.position)
+		var id: String = world.land.at(cell)
+		if not id.is_empty() and not world.land.contains(cell):
+			hover_hint.text = "%s · %d元石 · 点击查看购买条件" % [world.land.parcels[id]["name"],world.land.parcels[id]["price"]]
+
+func draw_map(target: Node2D) -> void:
+	super(target)
+	var font := theme.default_font
+	var readable := maxf(1.0, 1.0/(camera.zoom.x*_ui_scale))
+	for id in world.land.parcels:
+		var parcel: Dictionary = world.land.parcels[id]
+		var area: Rect2i = world.land.rect(parcel["rect"])
+		var boundary := Rect2(Vector2(area.position)*64,Vector2(area.size)*64)
+		if id not in world.land.purchased:
+			var color := Color("dce9ee") if parcel["terrain"] == "water" else Color("e4ead7")
+			target.draw_rect(boundary.grow(-2),color)
+			target.draw_rect(boundary.grow(-2),UI.JADE,false,readable)
+			var caption := "%s\n%d元石" % [parcel["name"],parcel["price"]] if boundary.size.x*camera.zoom.x*_ui_scale > 120 else str(parcel["price"])
+			target.draw_multiline_string(font,boundary.position+Vector2(8,24*readable),caption,HORIZONTAL_ALIGNMENT_CENTER,boundary.size.x-16,int(14*readable),2,UI.JADE)
+		if id == _land_focus: target.draw_rect(boundary,UI.JADE,false,3*readable)
+
 func _extra_nav() -> void:
 	super()
 	_icon(top_nav,"research_bench","研究 · 三层工艺网络",_show_research)
+	_icon(top_nav,"area","购地 · 陆地与东西侧水库",_show_land)
 
 func _water_action_text(quote: Dictionary) -> String:
 	if not quote["ok"]:

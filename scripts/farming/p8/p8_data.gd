@@ -1,13 +1,14 @@
 extends RefCounted
 ## P8 reads its own baked catalog; every query is re-declared against it because
 ## GDScript statics do not dispatch virtually through subclass overrides.
+const Land := preload("res://scripts/farming/p8/p8_land.gd")
 const Common := preload("res://scripts/farming/v1/v1_data.gd")
 static func load_data() -> Dictionary:
 	return JSON.parse_string(FileAccess.get_file_as_string("res://content/farming/baked/p8/production.json"))
 static func resources(data: Dictionary) -> Dictionary:
 	return Common.resources(data)
 static func load_map() -> Dictionary:
-	return Common.load_map(load_data())
+	return Land.expanded_map(Common.load_map(load_data()))
 static func tillable_map() -> Dictionary:
 	var result := Common.tillable_map()
 	result["water"] = false

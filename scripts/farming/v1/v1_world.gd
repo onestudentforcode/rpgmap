@@ -71,11 +71,11 @@ func _init(slot_store = null, catalog = Data, codec = Snapshot) -> void:
 	clock = Clock.new()
 	inventory = Inventory.new()
 	var map = data_source.load_map()
-	grid.setup(int(map["size"][0]), int(map["size"][1]), map["grid"], data_source.tillable_map())
+	grid.setup(int(map["size"][0]), int(map["size"][1]), map["grid"], data_source.tillable_map(), ["soil"], int(map.get("origin_x", 0)))
 	clock.setup({"time": {"ap_per_day": config["ap_per_day"], "days_per_term": config["days_per_term"]}})
 	clock.day_changed.connect(_on_day_changed)
 	for y in range(grid.height):
-		for x in range(grid.width):
+		for x in range(grid.origin_x, grid.origin_x + grid.width):
 			var level := int(config["light"]["default"])
 			for region in config["light"]["regions"]:
 				var rect: Array = region["rect"]
@@ -181,12 +181,12 @@ func retry_day_save() -> Dictionary:
 func environment_at(cell: Vector2i) -> Dictionary:
 	if not grid.in_bounds(cell.x, cell.y):
 		return {}
-	var index := cell.y * grid.width + cell.x
+	var index := grid.index_of(cell)
 	return {"water": environment[index][0], "fertility": environment[index][1], "light": _light_at(cell)}
 
 ## Natural light; derived products override for lamps on the same query.
 func _light_at(cell: Vector2i) -> int:
-	return _light[cell.y * grid.width + cell.x]
+	return _light[grid.index_of(cell)]
 
 func source_at(cell: Vector2i) -> String:
 	return String(_source_cells.get(cell, ""))
@@ -242,7 +242,7 @@ func action_quote(cell: Vector2i, kind: String) -> Dictionary:
 		"irrigate", "fertilize":
 			if grid.state_at(cell) not in [Grid.State.TILLED,Grid.State.PLANTED]: return _error("只能改善已开垦的土地")
 			var field := 0 if kind == "irrigate" else 1
-			if environment[cell.y*grid.width+cell.x][field] >= 100: return _error("环境已满")
+			if environment[grid.index_of(cell)][field] >= 100: return _error("环境已满")
 			inputs["clean_water" if field == 0 else "humus"] = int(config["environment"]["irrigate_units" if field == 0 else "fertilize_units"])
 		_: return _error("请选择农务工具")
 	for iid in inputs:
@@ -273,7 +273,7 @@ func plant(cell: Vector2i, crop_id: String) -> Dictionary:
 	crops[uid] = {"uid": uid, "crop_id": crop_id, "origin": [cell.x, cell.y], "progress": 0, "state": "growing", "harvest_count": 0}
 	# Culture water also moistens the bed; it is not charged twice as irrigation.
 	if definition["mode"] == "culture_each_cycle":
-		var index := cell.y * grid.width + cell.x
+		var index := grid.index_of(cell)
 		environment[index][0] = mini(100, int(environment[index][0]) + int(inputs.get("clean_water", 0)) * int(config["environment"]["irrigate_gain"]))
 	_count("plantings",crop_id)
 	Journal.observe(journal,"plant")
@@ -338,7 +338,7 @@ func _improve(cell: Vector2i, field: int, item: String, units: String, gain: Str
 		return checked
 	if not grid.in_bounds(cell.x, cell.y) or grid.state_at(cell) not in [Grid.State.TILLED, Grid.State.PLANTED]:
 		return _error("只能改善已开垦的土地")
-	var index := cell.y * grid.width + cell.x
+	var index := grid.index_of(cell)
 	var amount := int(config["environment"][units])
 	if environment[index][field] >= 100 or not inventory.has(item, amount):
 		return _error("环境已满或缺少投入")
@@ -577,7 +577,7 @@ func _on_day_changed(day: int) -> void:
 		var fertility := 0
 		var light := 0
 		for cell in cells:
-			var index: int = cell.y * grid.width + cell.x
+			var index: int = grid.index_of(cell)
 			water += int(environment[index][0])
 			fertility += int(environment[index][1])
 			light += int(_light_at(cell))
@@ -593,7 +593,7 @@ func _on_day_changed(day: int) -> void:
 				row["state"] = "mature"
 				_count("matured",row["crop_id"])
 		for cell in cells:
-			var index: int = cell.y * grid.width + cell.x
+			var index: int = grid.index_of(cell)
 			environment[index][0] = maxi(0, int(environment[index][0]) - int(definition["water_use"]))
 			environment[index][1] = maxi(0, int(environment[index][1]) - int(definition["fertility_use"]))
 	_source_day = day
@@ -632,7 +632,7 @@ func _commit_day(_day: int, ledger_error: String) -> void:
 func to_snapshot() -> Dictionary:
 	var tilled := []
 	for y in range(grid.height):
-		for x in range(grid.width):
+		for x in range(grid.origin_x, grid.origin_x + grid.width):
 			if grid.state_at(Vector2i(x,y)) in [Grid.State.TILLED, Grid.State.PLANTED] or _tilled_under_buildings.has(Vector2i(x,y)):
 				tilled.append([x,y])
 	var rows := []

@@ -74,7 +74,7 @@ func configure(ident: int, budget, paused, priorities, areas) -> Dictionary:
 		if not Scalars.whole(priorities[kind], 0, 5):
 			return _error("工作偏好须为0～5；0表示禁止")
 		packed[kind] = int(priorities[kind])
-	var normalized := normalize_areas(areas, world.grid.width, world.grid.height)
+	var normalized := normalize_areas(areas, world.grid.width, world.grid.height, world.grid.origin_x)
 	if not normalized["ok"]:
 		return normalized
 	if int(worker.get("caretaker_facility", 0)) > 0 and not normalized["areas"].is_empty():
@@ -348,12 +348,12 @@ func settle(completed_day: int, patrol = null) -> void:
 			report["reason"] = "达到每日工作上限"
 	state["report"] = {"day": completed_day, "workers": reports}
 
-static func normalize_areas(areas, width: int, height: int) -> Dictionary:
+static func normalize_areas(areas, width: int, height: int, origin_x: int = 0) -> Dictionary:
 	if not areas is Array or areas.size() > width*height:
 		return Scalars.fail("负责区域非法")
 	var out := []
 	for rect in areas:
-		if not rect is Array or rect.size() != 4 or not Scalars.whole(rect[0],0,width-1) or not Scalars.whole(rect[1],0,height-1) or not Scalars.whole(rect[2],1,width) or not Scalars.whole(rect[3],1,height) or int(rect[0])+int(rect[2]) > width or int(rect[1])+int(rect[3]) > height:
+		if not rect is Array or rect.size() != 4 or not Scalars.whole(rect[0],origin_x,origin_x + width-1) or not Scalars.whole(rect[1],0,height-1) or not Scalars.whole(rect[2],1,width) or not Scalars.whole(rect[3],1,height) or int(rect[0])+int(rect[2]) > origin_x + width or int(rect[1])+int(rect[3]) > height:
 			return Scalars.fail("负责区域越界")
 		out.append([int(rect[0]),int(rect[1]),int(rect[2]),int(rect[3])])
 	return {"ok": true, "areas": out}
