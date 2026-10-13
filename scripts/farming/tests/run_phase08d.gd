@@ -79,7 +79,7 @@ func _shares_and_windows() -> void:
 	world.crops[uid]["state"] = "mature"
 	check(world.flowers.share_available(uid), "mature honeybell offers its share")
 	# Mid-day dryness suspends the unused remainder; recovery unseals it.
-	var index := 1 * world.grid.width + 1
+	var index := world.grid.index_of(Vector2i(1,1))
 	world.environment[index][0] = 20
 	check(world.flowers.share_of(uid)["used"] == 0, "share stays initialized through dryness")
 	check(not world.flowers.share_available(uid), "dry plant suspends its unused share")

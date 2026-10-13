@@ -45,6 +45,8 @@ def reconcile(directory: Path, require_complete: bool = True) -> dict:
         assert hashlib.sha256((ROOT / name).read_bytes()).hexdigest() == digest, ("source changed", name)
     catalog = read_json(ROOT / "content/farming/baked/p8/production.json")
     config = catalog["config"]
+    expansion = read_json(ROOT / "content/farming/baked/p8/expansion.json")
+    parcels = {p['id']: p for p in expansion['parcels']}
     horizon, initial = summary["settings"]["days"], summary["settings"]["initial_currency"]
     assert 90 <= horizon <= 180 and 60 <= initial <= 120, "relaxation exceeds agreed bounds"
     assert config["ap_per_day"] == 24 and config["initial_primeval_stones"] == initial
@@ -129,7 +131,8 @@ def reconcile(directory: Path, require_complete: bool = True) -> dict:
             light = config["light"]
             return next((region["level"] for region in light["regions"] if inside(cell, region["rect"])), light["default"])
         for r in receipts:
-            day, kind, stage = r["day"], r["kind"], r["stage"]
+            day, kind = r["day"], r["kind"]
+            stage = "purchase" if kind == "expansion" else r["stage"]
             if day >= horizon: continue
             assert 0 <= day < horizon
             if kind in {"batch", "cycle"}:
@@ -225,6 +228,37 @@ def reconcile(directory: Path, require_complete: bool = True) -> dict:
         for day, entries in issued.items():
             assert all(inflows[day][i] >= q for i, q in entries.items()), (route, day, "unclaimed output receipts")
         assert dict(claims) == routes[route]["claimed"], "summary claims differ from actual receipts"
+        land_receipts, land_prices, bought = defaultdict(set), Counter(), set()
+        for receipt in receipts:
+            if receipt['kind'] != 'expansion': continue
+            ident = receipt['parcel']
+            assert ident in parcels and ident not in bought, 'unknown or duplicate land purchase'
+            definition = parcels[ident]
+            assert set(definition['requires']) <= bought and receipt['price'] == definition['price'], 'unpaid or out-of-order land purchase'
+            bought.add(ident)
+            land_receipts[receipt['day']].add(ident)
+            land_prices[receipt['day']] += receipt['price']
+        previous = set()
+        land_plantings, west_maintenance = 0, 0
+        for row in days:
+            day = row['day']-1
+            owned = row['land']['purchased']
+            assert len(owned) == len(set(owned)) and set(owned) <= parcels.keys(), 'invalid land rights'
+            assert set(owned) == previous | land_receipts[day], 'land rights without a successful purchase'
+            assert row['journal']['construction_spend'] >= land_prices[day], 'land price absent from cash account'
+            previous = set(owned)
+            def accessible(cell):
+                return inside(cell, expansion['base']) or any(inside(cell,parcels[p]['rect']) for p in owned)
+            for section, registry, key in [('facilities',facilities,'facility_id'), ('crops',crops,'crop_id')]:
+                for instance in row[section]:
+                    x,y = instance['origin']; w,h = registry[instance[key]]['footprint']
+                    assert all(accessible([a,b]) for b in range(y,y+h) for a in range(x,x+w)), 'occupancy crosses locked parcel'
+            land_plantings += sum(1 for crop in row['crops'] if crop['origin'] == [20,0])
+            west_uids = {f['uid'] for f in row['facilities'] if f['origin'] == [-4,14] and f['facility_id'] == 'fish_pond'}
+            west_maintenance += sum(1 for receipt in receipts if receipt['kind'] == 'cycle' and receipt['day'] == day and receipt['uid'] in west_uids and receipt['stage'] == 'start')
+        if summary['settings'].get('expansion'):
+            assert bought == parcels.keys(), 'not all parcels purchased with income'
+            assert land_plantings and west_maintenance, 'new land or west reservoir never actually used'
         assert wages > 0 and reinvested, "no paid work or industry reinvestment"
         assert {items[i]["element"] for i in delivered} >= {"wood", "fire", "earth", "water", "gold"}
         assert any(processed[i] > 0 for i in ADVANCED)
@@ -248,7 +282,8 @@ def reconcile(directory: Path, require_complete: bool = True) -> dict:
             "research": len(projects), "recipe_claims": dict(claims), "consumers": consumed,
             "unclaimed": gaps, "unconsumed": consumers, "shared_work_days": shared_days, "automatic_starts": automatic_starts,
             "device_actions": dict(device_use), "flower_draws": dict(flower_users), "lit_flower_draws": lit_draws,
-            "water_changes": len(water_changes), "failed_actions": dict(failures)}
+            "water_changes": len(water_changes), "failed_actions": dict(failures),
+            "land": {"purchased": sorted(bought), "price": sum(land_prices.values()), "crop_days": land_plantings, "west_cycles_started": west_maintenance}}
         all_claims.update(claims); all_consumers.update(consumed)
     result["unverified_recipe_claims"] = sorted(required-all_claims)
     result["unverified_recipe_consumers"] = sorted(required-all_consumers)

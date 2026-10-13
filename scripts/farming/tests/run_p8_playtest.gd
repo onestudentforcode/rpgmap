@@ -20,6 +20,7 @@ var route_summaries := {}
 var audit_root := "res://.art-work/p8-playtest"
 var horizon := 120
 var selected_routes := ["A", "B"]
+var with_expansion := false
 var receipts: FileAccess
 var claimed := {}
 var claimed_days := {}
@@ -77,6 +78,42 @@ func act(world, label: String, action: Callable) -> Dictionary:
 		"claimed_recipe": recipes.get(int(result.get("batch_id", 0)), "") if label.begins_with("world.claim_batch") and result.get("ok") else ""}))
 	return result
 
+func _expand_business(world) -> void:
+	# A late reinvestment window, not a new forced objective or free stock.
+	if active_day < 100: return
+	for id in world.land.parcels:
+		if id not in world.land.purchased and world.primeval_stones >= int(world.land.parcels[id]["price"]) + 200:
+			if world.land.quote(id)["ok"]:
+				act(world,"land.buy:" + id,func(): return world.land.buy(id))
+	if "east_near" in world.land.purchased:
+		var cell := Vector2i(20,0)
+		if world.instance_at(cell).get("state") == "mature": act(world,"expansion wheat harvest",func(): return world.harvest(cell))
+		if world.grid.state_at(cell) == 0: act(world,"expansion till",func(): return world.till(cell))
+		if world.grid.state_at(cell) == 1 and world.inventory.count("golden_wheat_seed") > 0:
+			act(world,"expansion wheat plant",func(): return world.plant(cell,"golden_wheat"))
+	if "west_water" in world.land.purchased and world.facility_at(Vector2i(-4,14)).is_empty():
+		for item in world.facility_defs["fish_pond"]["materials"]:
+			var gap: int = int(world.facility_defs["fish_pond"]["materials"][item]) - world.inventory.count(item)
+			if gap > 0 and world.primeval_stones > 200:
+				act(world,"expansion water materials",func(): return world.buy(item,gap))
+		if world.can_build_facility(Vector2i(-4,14),"fish_pond")["ok"]:
+			act(world,"expansion west water build",func(): return world.build_facility(Vector2i(-4,14),"fish_pond"))
+	var west: Dictionary = world.facility_at(Vector2i(-4,14))
+	if not west.is_empty() and world.husbandry.habitat_of(int(west["uid"]))["individuals"].is_empty() and world.primeval_stones > 200:
+		act(world,"expansion west fry purchase",func(): return world.husbandry.purchase(int(west["uid"]),2))
+	if not west.is_empty():
+		var uid := int(west["uid"])
+		for item in ["algae_feed", "grain"]:
+			if world.inventory.count(item) < 2 and world.primeval_stones > 200:
+				act(world,"expansion west food purchase",func(): return world.buy(item,2-world.inventory.count(item)))
+		act(world,"expansion west base diet",func(): return world.husbandry.set_base_diet(uid,"algae_meal"))
+		if world.husbandry.quote_claim(uid)["ok"]:
+			act(world,"expansion west fish claim",func(): return world.husbandry.claim(uid))
+		if world.husbandry.quote_water(uid)["ok"]:
+			act(world,"expansion west water maintenance",func(): return world.husbandry.maintain_water(uid))
+		if world.husbandry.quote_maintenance(uid)["ok"]:
+			act(world,"expansion west fish maintenance",func(): return world.husbandry.maintain(uid))
+
 func archive_day(world, day: int) -> void:
 	if not world.daily_save_error.is_empty(): return
 	var bucket: Dictionary = world.journal["history"][-1]["totals"]
@@ -93,7 +130,7 @@ func archive_day(world, day: int) -> void:
 		"ledger": world.ledger.day_view(day - 1), "workers": world.workforce.state["report"],
 		"research": world.research.to_save(), "facilities": world.to_snapshot()["world"]["facilities"],
 		"husbandry": world.husbandry.to_save(), "devices": world.devices.to_save(), "report": world.reports.to_save(),
-		"opening": world.ledger.day_view(-1), "crops": world.to_snapshot()["world"]["crops"], "operations": world.operations.to_save()}))
+		"opening": world.ledger.day_view(-1), "crops": world.to_snapshot()["world"]["crops"], "operations": world.operations.to_save(), "land": world.land.to_save()}))
 	if day == 45:
 		frozen_recap = world.reports.state["recap"].duplicate(true)
 		write_json(active_route + "-recap45.json", frozen_recap)
@@ -128,10 +165,12 @@ func _initialize() -> void:
 		if argument.begins_with("--audit-root="): audit_root = argument.trim_prefix("--audit-root=")
 		if argument.begins_with("--days="): horizon = int(argument.trim_prefix("--days="))
 		if argument.begins_with("--route="): selected_routes = [argument.trim_prefix("--route=")]
+		if argument == "--with-expansion": with_expansion = true
 	check(horizon >= 90 and horizon <= 180, "经营跨度在90至180日内")
 	DirAccess.make_dir_recursive_absolute(ProjectSettings.globalize_path(audit_root))
 	var manifest := {}
 	for name in ["content/farming/p8/production.json", "content/farming/baked/p8/production.json",
+			"content/farming/p8/expansion.json", "content/farming/baked/p8/expansion.json", "scripts/farming/p8/p8_land.gd", "scripts/farming/p8/p8_data.gd", "scripts/farming/core/grid/land_grid.gd", "scripts/farming/v1/v1_world_state.gd",
 			"content/farming/baked/maps/farm_02.json", "scripts/farming/tests/run_p8_playtest.gd",
 			"scripts/farming/p8/p8_flowers.gd", "scripts/farming/p8/p8_world.gd",
 			"scripts/farming/p8/p8_operations.gd", "scripts/farming/p8/p8_husbandry.gd", "scripts/farming/p8/p8_devices.gd", "scripts/farming/p8/p8_snapshot.gd", "scripts/farming/p8/p8_scene.gd", "scripts/farming/p8/p8_workforce.gd", "scripts/farming/p8/p8_research.gd",
@@ -142,7 +181,7 @@ func _initialize() -> void:
 	if selected_routes.size() == 2:
 		check(route_summaries["A"]["research_order"] != route_summaries["B"]["research_order"], "routes have different research histories")
 	var summary := FileAccess.open(audit_root.path_join("summary.json"), FileAccess.WRITE)
-	summary.store_string(JSON.stringify({"settings": {"days": horizon, "initial_currency": int(P8World.P8Data.load_data()["config"]["initial_primeval_stones"])}, "routes": route_summaries, "failures": failures, "checks": checks}, "\t"))
+	summary.store_string(JSON.stringify({"settings": {"days": horizon, "expansion": with_expansion, "initial_currency": int(P8World.P8Data.load_data()["config"]["initial_primeval_stones"])}, "routes": route_summaries, "failures": failures, "checks": checks}, "\t"))
 	for failure in failures: printerr(failure)
 	print("P8 OPERATIONS PLAYTEST %s · %d days · %d checks" % ["OK" if failures.is_empty() else "FAIL", horizon, checks])
 	quit(0 if failures.is_empty() else 1)
@@ -183,6 +222,7 @@ func _start_research(world) -> void:
 
 func _configure_habitats(world) -> void:
 	for uid in world.facilities:
+		if with_expansion and world.facilities[uid]["origin"] == [-4,14]: continue
 		var habitat: Dictionary = world.husbandry.habitat_of(int(uid))
 		if habitat.is_empty(): continue
 		var species := String(habitat["species_id"])
@@ -542,6 +582,7 @@ func _delegate(world) -> void:
 			act(world, "explicit farm duty", func(): return world.workforce.set_farm_duty(ident, true, "normal"))
 			act(world, "assign spring collection", func(): return world.workforce.assign_source("spring_source", ident))
 		for uid in world.facilities:
+			if with_expansion and world.facilities[uid]["origin"] == [-4,14]: continue
 			var type_id := String(world.facilities[uid]["facility_id"])
 			var first := type_id in ["fish_pond", "purifying_bed", "research_bench"] or (type_id == "bee_hive" and int(uid) == uid_of(world, "bee_hive"))
 			if (ident == 1) != first or type_id in ["field_service_station", "growth_lamp"]: continue
@@ -646,6 +687,7 @@ func _run_route(route: String) -> void:
 		_source_topups(world)
 		_sell_surplus(world)
 		_deliver_orders(world)
+		if with_expansion: _expand_business(world)
 		if world.inventory.count("golden_wheat_seed") < 4:
 			act(world, "wheat seed purchase", func(): return world.buy("golden_wheat_seed", mini(4 - world.inventory.count("golden_wheat_seed"), world.primeval_stones / 3)))
 		if world.inventory.count("grass_seed") < 3 and world.primeval_stones >= 26:
@@ -736,6 +778,10 @@ func _run_route(route: String) -> void:
 			var before: Dictionary = world.to_snapshot()
 			check(world.open_game(1)["ok"] and JSON.parse_string(JSON.stringify(world.to_snapshot())) == JSON.parse_string(JSON.stringify(before)), route + " exit and restore day " + str(world.clock.total_days))
 	# --- Assertions ---
+	if with_expansion:
+		check(world.land.purchased.size() == 6, route + " all six parcels bought with normal income")
+		check(world.facility_at(Vector2i(-4,14)).get("facility_id") == "fish_pond", route + " west water actually used")
+		check(int(totals["plantings"].get("golden_wheat",0)) > 0, route + " real cultivation continues")
 	check(world.clock.total_days == horizon and daily_count == horizon, route + " exactly %d closed days" % horizon)
 	for project in ["flower_cultivation", "beekeeping", "farm_preparation", "biofiltration", "rock_handling",
 			"advanced_feed_oil_wax", "ore_concentration", "water_recirculation", "basic_spirit_cooking",

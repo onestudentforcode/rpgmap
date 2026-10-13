@@ -516,6 +516,33 @@ def purchase_audit(out):
     return audit
 
 
+def expansion_output(data=None):
+    if data is None:
+        data = json.loads((ROOT / 'content/farming/p8/expansion.json').read_text(encoding='utf-8'))
+    require = common.require
+    require(set(data) == {'version', 'origin_x', 'size', 'base', 'parcels'} and data['version'] == 1, 'invalid expansion config')
+    require(data['origin_x'] == -4 and data['size'] == [32, 22] and data['base'] == [0, 0, 20, 22], 'invalid expansion envelope/base')
+    used = {(x, y) for y in range(22) for x in range(20)}
+    seen = set()
+    for parcel in data['parcels']:
+        require(set(parcel) == {'id', 'name', 'rect', 'terrain', 'price', 'requires'}, 'invalid parcel fields')
+        require(isinstance(parcel['id'], str) and parcel['id'] not in seen and parcel['name'], 'invalid parcel id/name')
+        require(type(parcel['price']) is int and 0 < parcel['price'] <= 1000000, 'invalid parcel price')
+        require(isinstance(parcel['requires'], list) and len(set(parcel['requires'])) == len(parcel['requires']) and set(parcel['requires']) <= seen, 'parcel prerequisites must precede it')
+        require(isinstance(parcel['rect'], list) and len(parcel['rect']) == 4 and all(type(v) is int for v in parcel['rect']), 'invalid parcel rectangle')
+        x, y, w, h = parcel['rect']
+        require(w > 0 and h > 0 and -4 <= x and x+w <= 28 and 0 <= y and y+h <= 22, 'parcel outside envelope')
+        cells = {(a, b) for b in range(y, y+h) for a in range(x, x+w)}
+        require(not cells & used, 'overlapping parcel')
+        require((parcel['terrain'] == 'water' and y >= 14) or (parcel['terrain'] == 'grass' and y+h <= 14 and x >= 20), 'invalid parcel terrain/location')
+        used.update(cells)
+        seen.add(parcel['id'])
+    require(len(seen) == 6 and len(used) == 440+112+96, 'invalid parcel capacity')
+    require(sum(p['rect'][2]*p['rect'][3] for p in data['parcels'] if p['terrain'] == 'grass') == 112
+            and sum(p['rect'][2]*p['rect'][3] for p in data['parcels'] if p['terrain'] == 'water') == 96, 'invalid land/water capacity')
+    return common.dump(data)
+
+
 def outputs():
     m = json.loads((ROOT / 'content/farming/maps/farm_02.json').read_text(encoding='utf-8'))
     t = json.loads(TERRAIN_SOURCE.read_text(encoding='utf-8'))
@@ -535,7 +562,8 @@ def outputs():
     map_out = dict(schema=1, id=m['id'], name=m['name'], size=m['size'], grid=grid, reservoir=m['reservoir'])
     common.require(baked_map == map_out, 'baked farm_02 map must match the V2 output')
     compiled = compile_config(json.loads(SOURCE.read_text(encoding='utf-8')), map_out)
-    return {TARGET: common.dump(compiled), TERRAIN_TARGET: common.dump(t)}
+    return {TARGET: common.dump(compiled), TERRAIN_TARGET: common.dump(t),
+            ROOT / 'content/farming/baked/p8/expansion.json': expansion_output()}
 
 
 def main():

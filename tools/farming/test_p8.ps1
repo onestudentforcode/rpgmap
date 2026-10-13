@@ -70,8 +70,9 @@ func _run() -> void:
     }
     Invoke-GodotCheck 'handbook' @('--script','res://scripts/farming/tests/run_p8_handbook.gd') 'P8 HANDBOOK UI OK'
     Invoke-GodotCheck 'handbook-doc' @('--script','res://tools/farming/export_p8_handbook.gd','--','--check') 'P8 HANDBOOK DOC OK'
+    Invoke-GodotCheck 'expansion' @('--script','res://scripts/farming/tests/run_p8_expansion.gd') 'P8 EXPANSION OK'
     if ($IncludePlaytest) {
-        Invoke-GodotCheck 'two120' @('--script','res://scripts/farming/tests/run_p8_playtest.gd','--','--audit-root=res://.art-work/p8-tests/playtest') 'P8 OPERATIONS PLAYTEST OK'
+        Invoke-GodotCheck 'two120' @('--script','res://scripts/farming/tests/run_p8_playtest.gd','--','--with-expansion','--audit-root=res://.art-work/p8-tests/playtest') 'P8 OPERATIONS PLAYTEST OK'
         & python tools/farming/audit_p8_playtest.py (Join-Path $logRoot 'playtest')
         if ($LASTEXITCODE -ne 0) { throw 'P8 playtest ledger audit failed.' }
         & python tools/farming/test_p8_playtest_audit.py (Join-Path $logRoot 'playtest') --probe-root (Join-Path $logRoot 'audit-negative')

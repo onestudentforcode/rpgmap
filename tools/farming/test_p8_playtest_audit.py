@@ -28,6 +28,8 @@ def main():
     results = {}
     names = ("cash", "stock", "wages", "claim_duplicate", "flower_overdraft",
              "water_duplicate", "reserve", "missing_recipe", "device_gain", "false_consumer")
+    if read_json(args.directory / 'summary.json')['settings'].get('expansion'):
+        names += ('land_price', 'land_rights')
     for name in names:
         folder = args.probe_root / name
         folder.mkdir(parents=True, exist_ok=True)
@@ -57,6 +59,10 @@ def main():
             summary = read_json(folder / "summary.json")
             del summary["routes"]["A"]["claimed"][rid]
             write(folder / "summary.json", summary)
+        elif name == "land_price":
+            next(r for r in receipts if r['kind'] == 'expansion')['price'] += 1
+        elif name == "land_rights":
+            next(d for d in days if d['land']['purchased'])['land']['purchased'].pop()
         elif name == "device_gain":
             next(r for r in receipts if r["kind"] == "device" and r["stage"] == "irrigate")["after"] += 1
         elif name == "false_consumer":
