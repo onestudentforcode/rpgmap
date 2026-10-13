@@ -1,9 +1,9 @@
 # handoff — 跨机器开发交接
 
-> 最后更新：2026-10-13（P8.a～g已实施，schema16；双120日四项经营补验完成，P8新手手册已接入；界面人工审核、最终旧版回归与Windows交付仍待完成，默认仍V2）。
-> **现行版本：** [Phase7 / Demo V2](docs/farming/phase-07-V2养殖与资源循环.md)。默认`play.bat`/F5为V2；三槽`user://farm_demo_v2_slots`、schema11，无迁移；2×2圈舍/水场、4只容量、20×22及下方20×8水库、钢绵羊/滤藻鲤与专责负责人均实装。V2人数不限，一人一设施，不参与农务，按成功工作收费。双45日路线、完整导出/解压包及回归证据见[验收记录](docs/farming/phase07-v2-playtest.md)、[P7.f](docs/farming/phase-07f-试玩验收与V2交付.md)。软件交付通过，原生OS鼠标全流程未执行。
-> **下一阶段：** [P8生态产业网络与工艺研究](docs/farming/phase-08-生态产业网络与工艺研究.md)推进中，开发入口`play.bat p8`、测试管线`test-p8.bat`；初始90元石，默认仍V2。当前入口[P8.h经营验收与交付](docs/farming/phase-08h-90日经营验收与交付.md)：双120日各27/27工艺收取及产物后续消费、装置/兼任经营、严格审计通过；仍需界面人工/最终回归/Windows包及默认切换。P8.a～g已落地独立schema16三槽、研究/三组生态/装置/灵食，一人多设施、显式兼任共享12次成功工作与个人预算。先读[资源/工艺表](docs/farming/phase-08-资源与工艺表.md)、[研究关系](docs/farming/phase-08-研究与生产关系.md)与[开发稿索引](docs/farming/phase-08-分阶段实施计划.md#独立开发文档索引)。最新[经营补验证据与限制](docs/farming/phase-08h-调试记录.md#10-2026-10-12四项经营补验)，冻结回放日志保留`.art-work/p8h-final2/`。玩家看[P8新手手册](docs/farming/demo-p8-新手手册.md)，也可从游戏顶栏“手册”阅读；源码与导出文本同源。默认V2仍采用P7一人一设施，版本说明分开。
-> **后续现场补验：** 原生Computer Use连接管道缺失，待有桌面控制条件时补完整新档→建设→养育/生产→回流/交易→委派→读档/回顾及窗口/全屏焦点检查。引擎GUI事件与截图已通过；原生人工测试尚未执行，经用户确认不阻塞P7关闭。
+> 最后更新：2026-10-13（P8本地测试阶段已关闭；双120日、最终回归及用户页面接受完成；默认P8，Windows独立包后置）。
+> **现行本地基线：** [P8生态产业网络与工艺研究](docs/farming/phase-08-生态产业网络与工艺研究.md)。默认`play.bat`/F5进入P8，`play.bat p8`等价；三槽`user://farm_demo_p8_slots`、schema16、独立设置、初始90元石/每天24AP、20×22地图及下方20×8水库。63资源、7植物、15设施、40配方、12研究已运行；一人多设施、默认关闭的显式兼任共享个人12次工作/预算，普通及活体自动生产按目标/在制/保留量执行。玩家阅读[P8新手手册](docs/farming/demo-p8-新手手册.md)，也可从游戏顶栏“手册”进入。
+> **验收与后续：** 双120日各27/27工艺收取及全部产物后续消费、装置/兼任经营和严格审计通过，冻结经营证据留`.art-work/p8h-final2/`。用户确认页面验收通过，Windows包移出本阶段门槛；最终回归、默认入口与关闭范围见[P8.h记录](docs/farming/phase-08h-90日经营验收与交付.md)。后续Phase尚未定范围，扩地/正式美术/音乐/繁殖寿命/上游接线另排。参考[资源/工艺表](docs/farming/phase-08-资源与工艺表.md)、[研究关系](docs/farming/phase-08-研究与生产关系.md)和[阶段索引](docs/farming/phase-08-分阶段实施计划.md#独立开发文档索引)。旧版通过`v2`/`v1`/`v0`显式进入，各自档案隔离；V2仍采用P7一人一设施规则。
+> **现场记录：** P8页面接受来自本次用户确认；代理已执行的GUI事件/截图与未执行的完整原生鼠标/窗口焦点流程分别留档，不将用户接受改写为代理执行记录。P7历史原生桌面补验同样不追加为P8前置。
 > 交接对象：新机器上的开发者或 AI 会话。
 > **开工前必读：§2 新机器清单 → §6 命令自检；现行主线是种植模块，先读 [docs/farming/master-plan.md](docs/farming/master-plan.md)；改 demo 地图前必读 [docs/map-schema.md](docs/map-schema.md)。**
 
@@ -24,9 +24,9 @@
 4. 告诉启动脚本引擎路径（二选一）：
    - 设环境变量 `GODOT_EXE` / `GODOT_EXE_CONSOLE` 指向 Godot 可执行文件（推荐）
    - 或直接改 `play.bat` 顶部的默认路径
-5. 首次运行 `test.bat`：执行当前种植模块的资产QC、工具测试、农场流程和独立V1测试；`test-v1.bat`可单跑V1编译产物、三槽/报价、种植/环境/资源点、加工/回流、订单/rank/经济及普通雇工/框选派工界面检查；
-   **预期输出 FARMING TEST SUITE OK**；`play.bat --selftest`单跑V1隔离冒烟，V0逻辑用`play.bat farm --farmtest`。
-6. 运行`play.bat`或Godot F5进入V2；`play.bat v2`等价。`test-v2.bat`运行完整模型/双45日/GUI事件/源码冒烟，构建用`tools/farming/build_v2_demo.ps1`；包在`dist/LingTianDemoV2-Windows-x64.zip`。V1/V0用显式`v1`/`v0`，旧演示`demo`，phase00 `farm0`。
+5. 首次运行 `test.bat`：执行资产QC、工具测试及V0/V1/V2/P8完整回归；`test-v1.bat`、`test-v2.bat`、`test-p8.bat`可分开运行对应版本检查。
+   **预期输出 FARMING TEST SUITE OK**；`play.bat --selftest`单跑P8源码隔离冒烟，V0逻辑用`play.bat farm --farmtest`，历史phase00/demo自测见`docs/farming/testing.md`。
+6. 运行`play.bat`或Godot F5进入P8；`play.bat p8`等价，`test-p8.bat`验证配数/模型/手册/源码冒烟。P8目前只做本地测试，独立包后置。历史V2用`play.bat v2`，其原包和`tools/farming/build_v2_demo.ps1`保留；V1/V0用`v1`/`v0`，旧演示`demo`，phase00 `farm0`。
 
 ## 3. 当前状态
 
@@ -70,12 +70,12 @@
 | 文档 | 内容 | 何时读 |
 |------|------|--------|
 | [docs/farming/master-plan.md](docs/farming/master-plan.md) | **灵植经营模块总 Phase 规划（现行主线）** | **开工先读** |
-| [docs/farming/phase-08-生态产业网络与工艺研究.md](docs/farming/phase-08-生态产业网络与工艺研究.md) | **P8范围、生态与人力/日界契约，a～g已实施、h进行中** | **推进当前主线先读** |
+| [docs/farming/phase-08-生态产业网络与工艺研究.md](docs/farming/phase-08-生态产业网络与工艺研究.md) | **P8已关闭的本地生态/研究/人力基线，Windows包后置** | **当前主线先读** |
 | [docs/farming/phase-08-资源与工艺表.md](docs/farming/phase-08-资源与工艺表.md) | 6物种/8设施/24工艺，资源ID/价格/守恒/成本初值 | 配数与配置落地前 |
 | [docs/farming/phase-08-研究与生产关系.md](docs/farming/phase-08-研究与生产关系.md) | 三层12研究DAG、样本来源与三组生产网 | 实施解锁与路线前 |
-| [docs/farming/phase-08-分阶段实施计划.md](docs/farming/phase-08-分阶段实施计划.md) | P8.a～h八份开发稿索引、e/f联验、双90日门禁 | 每批实施前 |
-| [docs/farming/phase-08a-数据配数与事务底座.md](docs/farming/phase-08a-数据配数与事务底座.md) | 下一入口：独立档案、成本编译/分摊、日界候选及基础换水 | 实施P8.a前 |
-| [docs/farming/phase-07-V2养殖与资源循环.md](docs/farming/phase-07-V2养殖与资源循环.md) | 已关闭P7 / V2范围、实现与验收 | 核对现行基线时 |
+| [docs/farming/phase-08-分阶段实施计划.md](docs/farming/phase-08-分阶段实施计划.md) | P8.a～h实际记录、e/f联验、双120日与本地关闭 | 查阅验收与改动边界 |
+| [docs/farming/phase-08a-数据配数与事务底座.md](docs/farming/phase-08a-数据配数与事务底座.md) | 已完成的独立档案、成本编译/分摊、日界候选及基础换水 | 调整底座前 |
+| [docs/farming/phase-07-V2养殖与资源循环.md](docs/farming/phase-07-V2养殖与资源循环.md) | 已关闭P7 / V2范围、实现与验收 | 核对历史养殖基线时 |
 | [docs/farming/phase-07a-验收记录.md](docs/farming/phase-07a-验收记录.md) | 已完成底座、实际10日台账与尚未验收养殖边界 | 核对当前运行事实 |
 | [docs/farming/phase-07b-养殖基础与成长.md](docs/farming/phase-07b-养殖基础与成长.md) | 已完成幼体/成长/基础维护、水体与资源一览的设计依据 | 调整既有养殖时 |
 | [docs/farming/phase-07c-特殊生产与养殖回流.md](docs/farming/phase-07c-特殊生产与养殖回流.md) | 暂不生产、特殊周期/唯一收取、粪肥回流与供货 | 实施P7.c前 |
@@ -116,16 +116,18 @@ scripts/main.gd（状态机：移动/对话/菜单/战斗桩/切图）
 ## 6. 常用命令
 
 ```
-play.bat                        # V1明亮界面、三槽、农务派工、加工、市场与订单
-play.bat v1                     # 与默认入口等价
+play.bat                        # P8本地生态经营、三槽、研究与新手手册
+play.bat p8                     # 与默认入口等价
+play.bat v2                     # 历史V2养殖基线及独立存档
+play.bat v1                     # 历史V1农务与加工基线
 play.bat v0                     # V0独立开始页与旧存档
 test-v1.bat                     # V1模型、界面、经营记录与隔离冒烟
-test.bat                        # 资产QC + 工具测试 + 独立V0回归 + 完整V1测试
-play.bat --selftest             # V1隔离冒烟（headless）
-play.bat --shots=DIR            # V1隔离预览截图
+test.bat                        # 资产QC + 工具测试 + V0/V1/V2/P8完整回归
+play.bat --selftest             # P8源码隔离冒烟（headless）
+play.bat --shots=DIR            # P8隔离预览截图
 play.bat demo wilds             # 旧商场/野外演示，显式入口
 play.bat demo --selftest         # 旧演示测试，按需单独运行
-test-p8.bat                      # P8配数审计、模型边界与开发冒烟
+test-p8.bat                      # P8配数/模型/手册一致性/源码冒烟
 
 python tools/bake_maps.py               # 烘焙（改 content/ 后必跑；校验失败即退出）
 python tools/gen_placeholder_assets.py  # 重新生成占位美术（读 themes/*.json 色板）
@@ -150,13 +152,13 @@ play.bat farm0                             # Phase 0 拼接验证场景（历史
 
 ## 7. 当前闭环与后续阶段
 
-**Demo V1已关闭，Phase 6.5也已实施并验收。** 当时默认为V1；当前默认`play.bat`/F5已切V2，V1由`play.bat v1`进入，V0通过`play.bat v0`保留；历史应用标识不变。2560×1440主规格及三种兼容窗口、100/125/150% UI缩放通过，58个SVG与独立设置接入，79项新增UI检查、原有回归及13项发行版冒烟通过。具体见[Phase 6.5关闭记录](docs/farming/phase-06.5-UI美化与交互完善.md)。完整世界场景美术仍需另批，后续世界图片继续核对拼接、机位及光照。
+**Demo V1已关闭，Phase 6.5也已实施并验收。** 当时默认为V1；当前默认`play.bat`/F5已切P8，V1由`play.bat v1`进入，V0通过`play.bat v0`保留；历史应用标识不变。2560×1440主规格及三种兼容窗口、100/125/150% UI缩放通过，58个SVG与独立设置接入，79项新增UI检查、原有回归及13项发行版冒烟通过。具体见[Phase 6.5关闭记录](docs/farming/phase-06.5-UI美化与交互完善.md)。完整世界场景美术仍需另批，后续世界图片继续核对拼接、机位及光照。
 
-**Phase7/V2已完成并经用户确认关闭，原生桌面试玩移交后续补验。** 两条独立新档各45日无注入、满容量持续供料、五行供货、两种粪肥实际回流、收入再投资及46日冻结均通过。331项P7边界、19项GUI事件、12组/96张截图、V1/V0/历史回归、导出/解压各15项完整冒烟已执行。包含内嵌PCK的exe、README及逐文件manifest/SHA256；原始90日台账、哈希与命令详见[验收记录](docs/farming/phase07-v2-playtest.md)。当前schema11、默认V2、无旧档迁移、人数不限。原生Computer Use不可用，原生桌面全流程不得记为已通过；该补验不阻塞阶段关闭。
+**Phase7/V2已完成并经用户确认关闭，原生桌面试玩移交后续补验。** 两条独立新档各45日无注入、满容量持续供料、五行供货、两种粪肥实际回流、收入再投资及46日冻结均通过。331项P7边界、19项GUI事件、12组/96张截图、V1/V0/历史回归、导出/解压各15项完整冒烟已执行。包含内嵌PCK的exe、README及逐文件manifest/SHA256；原始90日台账、哈希与命令详见[验收记录](docs/farming/phase07-v2-playtest.md)。P7关闭时schema11、默认V2、无旧档迁移、人数不限；现在由`play.bat v2`显式进入。原生Computer Use不可用，原生桌面全流程不得记为已通过；该补验不阻塞阶段关闭。
 
-**P8.a数据配数与事务底座已完成并验收。** `content/farming/p8/production.json`＋`bake_p8.py`冻结全部配数与供养值（63资源/7作物/15设施/40配方/12研究、铁/液体/分摊/DAG/布局审计）；`scripts/farming/p8/`落地schema12三槽、候选日结（失败回滚、重试一次、放弃回档）、水场换水产污水、研究门槛锁定；48个占位矢量图标。核心6物种、8新设施、24有效工艺＋3变体、12研究全部登记，玩法按P8.b～g逐阶段解锁。继承20×22与共享仓库。一人多设施、默认关闭的显式农务兼任共享12次成功工作/预算；研究按有效工作日，持续生产按目标与自动加工保留量。有限花源与手采共享、实际换水产污水、回收有损耗、矿料投入审计；45日回顾保留、90日完整发展验收。价格/数量/覆盖为设计初值，实际成本和经营未验收。用户选择全部回答后统一同步文档，本批仅文档，不切默认入口/schema；P7待办不作为前置，榨油已明确纳入P8、集热仍后置。
+**P8本地测试阶段已完成并关闭。** 数据/成本/候选日结底座、研究、三组生态、多设施负责人/兼任、普通及活体生产策略、田间装置与五行灵食均已运行。P8当前schema16，新档90元石；双120日918项检查及严格台账审核、每路线27条新工艺正常收取及全部产物后续消费通过。用户确认页面验收通过，10章新手手册与独立文档同源。完整回归及默认入口验证已登记，`play.bat`/F5默认P8；Windows独立包、扩地和正式美术另排。实际关闭证据见[P8.h](docs/farming/phase-08h-90日经营验收与交付.md)。
 
-现行V1：逐条摘要/时节小结、首次45天总计与三个时节小计已接入；无注入经营路线初始60→298，121项记录、51项原界面及79项Phase 6.5界面检查通过。独立包`dist/LingTianDemoV1-Windows-x64.zip`包含明亮矢量UI与占位世界美术，解压运行`LingTianDemoV1.exe`，说明见[demo-v1-操作说明](docs/farming/demo-v1-操作说明.md)。重建使用`tools/farming/build_v1_demo.ps1 -GodotExe <控制台路径>`，需匹配的Windows release模板；13项打包后冒烟通过。旧V1从升级当天开始记录，已过45天的旧档无法补造首次回顾。下述Phase记录为V0基线。
+历史V1基线：逐条摘要/时节小结、首次45天总计与三个时节小计已接入；无注入经营路线初始60→298，121项记录、51项原界面及79项Phase 6.5界面检查通过。独立包`dist/LingTianDemoV1-Windows-x64.zip`包含明亮矢量UI与占位世界美术，解压运行`LingTianDemoV1.exe`，说明见[demo-v1-操作说明](docs/farming/demo-v1-操作说明.md)。重建使用`tools/farming/build_v1_demo.ps1 -GodotExe <控制台路径>`，需匹配的Windows release模板；13项打包后冒烟通过。旧V1从升级当天开始记录，已过45天的旧档无法补造首次回顾。下述Phase记录为V0基线。
 
 Phase 0–5已关闭；Phase5以本仓库种植经济闭环为完成条件，对上游保留适配接口。
 Phase6范围已由用户确认，草案见[phase-06](docs/farming/phase-06-Demo体验与三槽存档.md)：
@@ -213,7 +215,7 @@ Windows试玩包：`dist/LingTianDemo-Windows-x64.zip`，解压运行`LingTianDe
 
 ```powershell
 .\test-v2.bat
-.\play.bat --selftest
+.\play.bat v2 --selftest
 powershell -NoProfile -ExecutionPolicy Bypass -File tools/farming/review_v2_ui.ps1
 powershell -NoProfile -ExecutionPolicy Bypass -File tools/farming/build_v2_demo.ps1
 ```
