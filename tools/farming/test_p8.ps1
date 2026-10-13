@@ -68,6 +68,8 @@ func _run() -> void:
     } else {
         Invoke-GodotCheck 'release' @('res://scenes/farming/farm_p8.tscn','--','--p8-smoke') 'P8 RELEASE SMOKE OK'
     }
+    Invoke-GodotCheck 'handbook' @('--script','res://scripts/farming/tests/run_p8_handbook.gd') 'P8 HANDBOOK UI OK'
+    Invoke-GodotCheck 'handbook-doc' @('--script','res://tools/farming/export_p8_handbook.gd','--','--check') 'P8 HANDBOOK DOC OK'
     if ($IncludePlaytest) {
         Invoke-GodotCheck 'two120' @('--script','res://scripts/farming/tests/run_p8_playtest.gd','--','--audit-root=res://.art-work/p8-tests/playtest') 'P8 OPERATIONS PLAYTEST OK'
         & python tools/farming/audit_p8_playtest.py (Join-Path $logRoot 'playtest')
