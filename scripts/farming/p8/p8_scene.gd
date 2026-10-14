@@ -15,11 +15,12 @@ var _land_focus := ""
 var _map_pan := false
 
 func _init() -> void:
-	store = P8Store.new()
+	var release_probe := OS.get_cmdline_user_args().has("--p85-smoke")
+	store = P8Store.new("user://p85_probe_slots_%d" % OS.get_process_id()) if release_probe else P8Store.new()
 	manual_mode = true
 	minimum_map_zoom = 0.1
-	settings = Settings.new("user://farm_demo_p8_settings.cfg", minimum_map_zoom)
-	product_title = "灵田 Demo P8 · 生态经营"
+	settings = Settings.new("user://p85_probe_settings_%d.cfg" % OS.get_process_id() if release_probe else "user://farm_demo_p8_settings.cfg", minimum_map_zoom)
+	product_title = "灵田 Demo P8.5 · 生态经营"
 	terrain_path = "res://content/farming/baked/p8/terrains.json"
 	preview_prefix = "p8"
 
@@ -43,6 +44,11 @@ func _ready() -> void:
 		material.set_shader_parameter("surface_kind",int(style["terrain_surface_kinds"][ident]))
 		material.set_shader_parameter("surface_detail",float(style["terrain_surface_detail"]))
 		terrain.layers[ident].material = material
+	if OS.get_cmdline_user_args().has("--p85-smoke"):
+		var probe = load("res://scripts/farming/validation/p85_release_smoke.gd").new()
+		probe.shell = self
+		add_child(probe)
+		probe.run.call_deferred()
 
 func _refresh() -> void:
 	super()

@@ -15,8 +15,9 @@ func _init(manifest_path: String = "res://assets/farming/crops/plant_manifest.js
 		enabled_ids.append(String(ident))
 		for key in plants[ident]["stages"]:
 			var path := String(plants[ident]["stages"][key])
+			var data_path := String(plants[ident].get("data_files",{}).get(key,path))
 			var image := Image.new()
-			var error := image.load_png_from_buffer(FileAccess.get_file_as_bytes(path)) if FileAccess.file_exists(path) else ERR_FILE_NOT_FOUND
+			var error := image.load_png_from_buffer(FileAccess.get_file_as_bytes(data_path)) if FileAccess.file_exists(data_path) else ERR_FILE_NOT_FOUND
 			if error != OK or image.is_empty():
 				_diagnose("%s/%s" % [ident, key], "cannot load %s (%d)" % [path, error])
 				continue

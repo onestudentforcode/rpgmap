@@ -12,8 +12,9 @@ func _init() -> void:
 	facilities = parsed["facilities"]
 	for ident in facilities:
 		var path := String(facilities[ident]["path"])
+		var data_path := String(facilities[ident].get("data_file",path))
 		var image := Image.new()
-		var error := image.load_png_from_buffer(FileAccess.get_file_as_bytes(path)) if FileAccess.file_exists(path) else ERR_FILE_NOT_FOUND
+		var error := image.load_png_from_buffer(FileAccess.get_file_as_bytes(data_path)) if FileAccess.file_exists(data_path) else ERR_FILE_NOT_FOUND
 		if error != OK or image.is_empty():
 			_diagnose(ident,"cannot load %s (%d)" % [path,error])
 			continue

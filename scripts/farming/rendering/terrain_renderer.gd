@@ -161,7 +161,7 @@ func _tilled_pred() -> Callable:
 
 func _load_tex(rel: String) -> Texture2D:
 	var path := "res://" + rel
-	if OS.has_feature("farm_demo_release") or OS.has_feature("farm_demo_v1_release") or OS.has_feature("farm_demo_v2_release"):
+	if OS.has_feature("farm_demo_release") or OS.has_feature("farm_demo_v1_release") or OS.has_feature("farm_demo_v2_release") or OS.has_feature("farm_demo_p8_release"):
 		return load(path) as Texture2D
 	var img := Image.new()
 	var error := img.load_svg_from_string(FileAccess.get_file_as_string(path)) if path.ends_with(".svg") else img.load_png_from_buffer(FileAccess.get_file_as_bytes(path))
