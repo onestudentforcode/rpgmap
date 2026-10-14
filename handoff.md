@@ -14,8 +14,8 @@
    星露谷式多城镇（单镇多张功能地图 + 特殊交互点）和野外战斗触发图（地图只抛事件不承载战斗）。
 2. **daoyan 接入不是现阶段任务**：`docs/daoyan-reuse-plan.md` + `-answers.md` 是背景资料
    （将来移植的目标形态与接口摸底），实验期间**只读不改** daoyan 仓库。
-3. **现行正式美术使用内置image_gen**：用户确认本机没有ComfyUI；历史脚本与跨机器移交保留为备选；
-   原图与候选保留在工作目录，正式图通过 QC 和场景审核后同名接入。
+3. **P8.5新世界素材采用Blender建模并离线渲染2D PNG**：美术工作区为`C:/Users/88445/Desktop/blender_assest`；
+   七植物已交付，游戏接入尚未实施。分阶段计划见[Phase 8.5](docs/farming/phase-08.5-建模素材接入与场景美术.md)。历史image_gen/ComfyUI资料保留；新非像素素材使用对应QC，不套旧二值alpha和量化规则。
 
 ## 2. 新机器快速上手（checklist）
 
@@ -71,6 +71,7 @@
 | 文档 | 内容 | 何时读 |
 |------|------|--------|
 | [docs/farming/master-plan.md](docs/farming/master-plan.md) | **灵植经营模块总 Phase 规划（现行主线）** | **开工先读** |
+| [docs/farming/phase-08.5-建模素材接入与场景美术.md](docs/farming/phase-08.5-建模素材接入与场景美术.md) | **P8.5草案：Blender渲染2D、植物/设施分批接入与视觉/发布验收** | 新美术接入前 |
 | [docs/farming/phase-08-生态产业网络与工艺研究.md](docs/farming/phase-08-生态产业网络与工艺研究.md) | **P8已关闭的本地生态/研究/人力基线，Windows包后置** | **当前主线先读** |
 | [docs/farming/phase-08-资源与工艺表.md](docs/farming/phase-08-资源与工艺表.md) | 6物种/8设施/24工艺，资源ID/价格/守恒/成本初值 | 配数与配置落地前 |
 | [docs/farming/phase-08-研究与生产关系.md](docs/farming/phase-08-研究与生产关系.md) | 三层12研究DAG、样本来源与三组生产网 | 实施解锁与路线前 |
