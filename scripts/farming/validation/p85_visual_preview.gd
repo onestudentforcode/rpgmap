@@ -60,6 +60,26 @@ func _run() -> void:
 	await process_frame
 	await RenderingServer.frame_post_draw
 	var error := root.get_texture().get_image().save_png(directory + "/pilot.png")
+	shell.world.crops.clear()
+	var row := 0
+	for ident in shell.world.crop_defs:
+		var definition: Dictionary = shell.world.crop_defs[ident]
+		for stage in range(4):
+			uid += 1
+			var progress := ceili(float(int(definition["days"])*100)*stage/3.0)
+			if ident == "oilseed_flower" and stage == 2: progress = 500
+			shell.world.crops[uid] = {"uid":uid,"crop_id":ident,"origin":[2+stage*4,row*2],"state":"mature" if stage == 3 else "growing","progress":progress,"harvest_count":0}
+		if ident == "oilseed_flower":
+			uid += 1
+			shell.world.crops[uid] = {"uid":uid,"crop_id":ident,"origin":[18,row*2],"state":"growing","progress":300,"harvest_count":0}
+		row += 1
+	shell.camera.position = Vector2(640,430)
+	shell.camera.zoom = Vector2.ONE * 0.9
+	shell.overlay.queue_redraw()
+	await process_frame
+	await process_frame
+	await RenderingServer.frame_post_draw
+	error = maxi(error,root.get_texture().get_image().save_png(directory + "/all-plants.png"))
 	# Exercise a real parcel purchase; scaffold money belongs only to this fixture.
 	shell.world.primeval_stones = 1000
 	for parcel_id in shell.world.land.parcels:

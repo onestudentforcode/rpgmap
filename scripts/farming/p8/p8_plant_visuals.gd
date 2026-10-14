@@ -3,7 +3,7 @@ extends RefCounted
 var plants: Dictionary = {}
 var textures: Dictionary = {}
 var diagnostics: Dictionary = {}
-var enabled_ids: Array[String] = ["golden_wheat", "resin_tree"]
+var enabled_ids: Array[String] = []
 
 func _init(manifest_path: String = "res://assets/farming/crops/plant_manifest.json") -> void:
 	var parsed = JSON.parse_string(FileAccess.get_file_as_string(manifest_path))
@@ -12,6 +12,7 @@ func _init(manifest_path: String = "res://assets/farming/crops/plant_manifest.js
 		return
 	plants = parsed["plants"]
 	for ident in plants:
+		enabled_ids.append(String(ident))
 		for key in plants[ident]["stages"]:
 			var path := String(plants[ident]["stages"][key])
 			var image := Image.new()

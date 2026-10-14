@@ -1,6 +1,8 @@
 extends SceneTree
 const Visuals := preload("res://scripts/farming/p8/p8_plant_visuals.gd")
 const Shell := preload("res://scripts/farming/p8/p8_scene.gd")
+const World := preload("res://scripts/farming/p8/p8_world.gd")
+const Store := preload("res://scripts/farming/p8/p8_slot_store.gd")
 var failures: Array[String] = []
 var checks := 0
 
@@ -42,8 +44,87 @@ func _initialize() -> void:
 	oil["state"] = "mature"
 	check(visuals.state_key(oil,definitions["oilseed_flower"],[300,500]) == "stage_3", "mature oilseed")
 	var shell := Shell.new()
-	check(shell.plant_visuals.enabled_ids == ["golden_wheat", "resin_tree"], "pilot scope")
+	check(shell.plant_visuals.enabled_ids.size() == 7, "all seven plants enabled")
 	shell.free()
+	_lifecycle(visuals)
 	for failure in failures: printerr(failure)
 	print("PHASE085 VISUALS OK: %d checks" % checks) if failures.is_empty() else print("PHASE085 VISUALS FAILED")
 	quit(0 if failures.is_empty() else 1)
+
+func _lifecycle(visuals) -> void:
+	var world := World.new(Store.new("res://.art-work/p85-life/slots-%d" % Time.get_ticks_usec()))
+	check(world.start_new(1)["ok"], "new schema17 world")
+	# Fixture unlocks/materials; operations below use the real model.
+	for project in world.research.project_defs(): world.research.state["completed"].append(project)
+	var inputs := {"clean_water":100,"raw_wood":100,"humus":100}
+	for definition in world.crop_defs.values():
+		inputs[definition["seed"]] = 10
+		for ingredient in definition["inputs"]: inputs[ingredient] = 100
+	world.grant_scaffold(inputs)
+	for ident in world.crop_defs:
+		var definition: Dictionary = world.crop_defs[ident]
+		var shape: Array = definition["footprint"]
+		var cell := Vector2i(-999,-999)
+		for y in range(0,14):
+			for x in range(0,20):
+				var candidate := Vector2i(x,y)
+				var valid := true
+				for dy in range(int(shape[1])):
+					for dx in range(int(shape[0])):
+						if not world.grid.can_till(candidate+Vector2i(dx,dy))["ok"]: valid = false
+				if valid:
+					cell = candidate
+					break
+			if cell.x != -999: break
+		check(cell.x != -999,"plantable footprint %s" % ident)
+		if cell.x == -999: continue
+		world.clock.ap = 24
+		for dy in range(int(shape[1])):
+			for dx in range(int(shape[0])): world.till(cell+Vector2i(dx,dy))
+		var planted: Dictionary = world.plant(cell,ident)
+		check(planted["ok"],"real plant %s" % ident)
+		if not planted["ok"]: continue
+		var uid := int(planted["uid"])
+		var flower_window: Array = world.flowers.settings["oilseed_window"]
+		var initial: Dictionary = visuals.visual(world.crops[uid],definition,flower_window)
+		check(not initial.is_empty() and initial["key"] == "stage_0", "new seed visual %s" % ident)
+		for stage in range(3):
+			world.crops[uid]["progress"] = ceili(float(int(definition["days"])*100)*stage/3.0)
+			var result: Dictionary = visuals.visual(world.crops[uid],definition,flower_window)
+			check(not result.is_empty() and result["rect"] == initial["rect"],"canvas %s/%d" % [ident,stage])
+		if ident == "oilseed_flower":
+			for progress in [299,300,499,500]:
+				world.crops[uid]["progress"] = progress
+				world.environment[world.grid.index_of(cell)][0] = 0
+				check(not world.flowers.eligible(uid),"dry flower production blocked")
+				check((visuals.visual(world.crops[uid],definition,flower_window)["key"] == "flowering") == (progress >= 300 and progress < 500),"dry flower morphology %d" % progress)
+		world.crops[uid]["progress"] = int(definition["days"])*100
+		world.crops[uid]["state"] = "mature"
+		var before := world.to_snapshot()
+		for i in range(10): visuals.visual(world.crops[uid],definition,flower_window)
+		check(world.to_snapshot() == before,"visual reads do not mutate model %s" % ident)
+		check(visuals.visual(world.crops[uid],definition,flower_window)["key"] == "stage_3","mature %s" % ident)
+		var restored := World.new(Store.new("res://.art-work/p85-life/restored-%d" % Time.get_ticks_usec()))
+		check(restored.apply_snapshot(before)["ok"],"schema17 restore %s" % ident)
+		check(visuals.visual(restored.crops[uid],restored.crop_defs[ident],restored.flowers.settings["oilseed_window"])["key"] == "stage_3","restored visual %s" % ident)
+		check(world._store.commit(before)["ok"],"real save %s" % ident)
+		var reopened := World.new(world._store)
+		check(reopened.open_game(1)["ok"],"real reopen %s" % ident)
+		check(visuals.visual(reopened.crops[uid],reopened.crop_defs[ident],reopened.flowers.settings["oilseed_window"])["key"] == "stage_3","disk-loaded visual %s" % ident)
+		world.clock.ap = 24
+		var harvest: Dictionary = world.harvest(cell)
+		check(harvest["ok"],"real harvest %s" % ident)
+		if definition["mode"] == "tap_or_fell":
+			check(world.crops.has(uid) and visuals.visual(world.crops[uid],definition,flower_window)["key"] == "stage_3","perennial regrow body %s" % ident)
+			world.crops[uid]["state"] = "mature"
+			check(world.harvest(cell,"fell")["ok"] and not world.crops.has(uid),"real fell removes %s" % ident)
+		else:
+			check(not world.crops.has(uid),"real harvest removes %s" % ident)
+		world.clock.ap = 24
+		var replanted: Dictionary = world.plant(cell,ident)
+		check(replanted["ok"],"real replant %s" % ident)
+		if replanted["ok"]:
+			check(visuals.visual(world.crops[int(replanted["uid"])],definition,flower_window)["key"] == "stage_0","replant new visual %s" % ident)
+			check(world.end_day()["ok"],"real day settlement %s" % ident)
+			check(not visuals.visual(world.crops[int(replanted["uid"])],definition,flower_window).is_empty(),"next-day visual %s" % ident)
+			world.clear_crop(cell)
