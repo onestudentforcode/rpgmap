@@ -1,0 +1,2032 @@
+{
+  "schema_version": 1,
+  "blender_version": "5.2.1 LTS",
+  "method": "read saved scenes; project world origin; never save sources",
+  "facilities": [
+    {
+      "id": "woodshop",
+      "footprint": [
+        2,
+        2
+      ],
+      "source_blend": "facilities/woodshop/woodshop.blend",
+      "source_blend_sha256": "ac30a8822097f140e8eaea0735561854cbb046210bb8f3e84fbeec0b9903bc86",
+      "saved_render_transparent": true,
+      "layers": {
+        "body": {
+          "camera": "FCam_Body2",
+          "camera_type": "ORTHO",
+          "camera_matrix_world": [
+            [
+              -1.0,
+              -1.4526915492751868e-07,
+              8.261329753622704e-08,
+              0.0
+            ],
+            [
+              1.5099580252808664e-07,
+              -0.5735762715339661,
+              0.8191521763801575,
+              9.829824447631836
+            ],
+            [
+              -7.16125185817873e-08,
+              0.8191521763801575,
+              0.5735762715339661,
+              7.982917308807373
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "camera_ortho_width_blender": 6.400000095367432,
+          "anchor_uv": [
+            0.49999985098838806,
+            0.640792191028595
+          ],
+          "collection": "FC_woodshop_body",
+          "objects": 49,
+          "draw_size": [
+            204.8000030517578,
+            204.8000030517578
+          ]
+        },
+        "found": {
+          "camera": "FCam_Found2",
+          "camera_type": "ORTHO",
+          "camera_matrix_world": [
+            [
+              1.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              1.0,
+              0.0,
+              7.347881115511007e-16
+            ],
+            [
+              0.0,
+              0.0,
+              1.0,
+              12.050000190734863
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "camera_ortho_width_blender": 4.0,
+          "anchor_uv": [
+            0.5,
+            0.5
+          ],
+          "collection": "FC_woodshop_found",
+          "objects": 14,
+          "draw_size": [
+            128.0,
+            128.0
+          ]
+        },
+        "fx": {
+          "camera": "FCam_Body2",
+          "camera_type": "ORTHO",
+          "camera_matrix_world": [
+            [
+              -1.0,
+              -1.4526915492751868e-07,
+              8.261329753622704e-08,
+              0.0
+            ],
+            [
+              1.5099580252808664e-07,
+              -0.5735762715339661,
+              0.8191521763801575,
+              9.829824447631836
+            ],
+            [
+              -7.16125185817873e-08,
+              0.8191521763801575,
+              0.5735762715339661,
+              7.982917308807373
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "camera_ortho_width_blender": 6.400000095367432,
+          "anchor_uv": [
+            0.49999985098838806,
+            0.640792191028595
+          ],
+          "collection": "FC_woodshop_fx",
+          "objects": 5,
+          "draw_size": [
+            204.8000030517578,
+            204.8000030517578
+          ]
+        }
+      }
+    },
+    {
+      "id": "char_kiln",
+      "footprint": [
+        2,
+        2
+      ],
+      "source_blend": "facilities/char_kiln/char_kiln.blend",
+      "source_blend_sha256": "c33c6f0688f4f60f72a220af68dc20b0a4ac4299741ce091b674f586b3dea04c",
+      "saved_render_transparent": true,
+      "layers": {
+        "body": {
+          "camera": "FCam_Body2",
+          "camera_type": "ORTHO",
+          "camera_matrix_world": [
+            [
+              -1.0,
+              -1.4526915492751868e-07,
+              8.261329753622704e-08,
+              0.0
+            ],
+            [
+              1.5099580252808664e-07,
+              -0.5735762715339661,
+              0.8191521763801575,
+              9.829824447631836
+            ],
+            [
+              -7.16125185817873e-08,
+              0.8191521763801575,
+              0.5735762715339661,
+              7.982917308807373
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "camera_ortho_width_blender": 6.400000095367432,
+          "anchor_uv": [
+            0.49999985098838806,
+            0.640792191028595
+          ],
+          "collection": "FC_char_kiln_body",
+          "objects": 23,
+          "draw_size": [
+            204.8000030517578,
+            204.8000030517578
+          ]
+        },
+        "found": {
+          "camera": "FCam_Found2",
+          "camera_type": "ORTHO",
+          "camera_matrix_world": [
+            [
+              1.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              1.0,
+              0.0,
+              7.347881115511007e-16
+            ],
+            [
+              0.0,
+              0.0,
+              1.0,
+              12.050000190734863
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "camera_ortho_width_blender": 4.0,
+          "anchor_uv": [
+            0.5,
+            0.5
+          ],
+          "collection": "FC_char_kiln_found",
+          "objects": 14,
+          "draw_size": [
+            128.0,
+            128.0
+          ]
+        },
+        "fx": {
+          "camera": "FCam_Body2",
+          "camera_type": "ORTHO",
+          "camera_matrix_world": [
+            [
+              -1.0,
+              -1.4526915492751868e-07,
+              8.261329753622704e-08,
+              0.0
+            ],
+            [
+              1.5099580252808664e-07,
+              -0.5735762715339661,
+              0.8191521763801575,
+              9.829824447631836
+            ],
+            [
+              -7.16125185817873e-08,
+              0.8191521763801575,
+              0.5735762715339661,
+              7.982917308807373
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "camera_ortho_width_blender": 6.400000095367432,
+          "anchor_uv": [
+            0.49999985098838806,
+            0.640792191028595
+          ],
+          "collection": "FC_char_kiln_fx",
+          "objects": 7,
+          "draw_size": [
+            204.8000030517578,
+            204.8000030517578
+          ]
+        }
+      }
+    },
+    {
+      "id": "compost_bin",
+      "footprint": [
+        1,
+        1
+      ],
+      "source_blend": "facilities/compost_bin/compost_bin.blend",
+      "source_blend_sha256": "93260018aac5d600848ea75064e1f621d63a5ff024bfabc8e79c08ad9bdb6ef2",
+      "saved_render_transparent": true,
+      "layers": {
+        "body": {
+          "camera": "FCam_Body1",
+          "camera_type": "ORTHO",
+          "camera_matrix_world": [
+            [
+              -1.0,
+              -1.4526915492751868e-07,
+              8.261329753622704e-08,
+              0.0
+            ],
+            [
+              1.5099580252808664e-07,
+              -0.5735762715339661,
+              0.8191521763801575,
+              9.829824447631836
+            ],
+            [
+              -7.16125185817873e-08,
+              0.8191521763801575,
+              0.5735762715339661,
+              7.782917499542236
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "camera_ortho_width_blender": 3.4000000953674316,
+          "anchor_uv": [
+            0.4999997317790985,
+            0.716835230588913
+          ],
+          "collection": "FC_compost_bin_body",
+          "objects": 13,
+          "draw_size": [
+            108.80000305175781,
+            108.80000305175781
+          ]
+        },
+        "found": {
+          "camera": "FCam_Found1",
+          "camera_type": "ORTHO",
+          "camera_matrix_world": [
+            [
+              1.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              1.0,
+              0.0,
+              7.347881115511007e-16
+            ],
+            [
+              0.0,
+              0.0,
+              1.0,
+              12.050000190734863
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "camera_ortho_width_blender": 2.0,
+          "anchor_uv": [
+            0.5,
+            0.5
+          ],
+          "collection": "FC_compost_bin_found",
+          "objects": 14,
+          "draw_size": [
+            64.0,
+            64.0
+          ]
+        },
+        "fx": {
+          "camera": "FCam_Body1",
+          "camera_type": "ORTHO",
+          "camera_matrix_world": [
+            [
+              -1.0,
+              -1.4526915492751868e-07,
+              8.261329753622704e-08,
+              0.0
+            ],
+            [
+              1.5099580252808664e-07,
+              -0.5735762715339661,
+              0.8191521763801575,
+              9.829824447631836
+            ],
+            [
+              -7.16125185817873e-08,
+              0.8191521763801575,
+              0.5735762715339661,
+              7.782917499542236
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "camera_ortho_width_blender": 3.4000000953674316,
+          "anchor_uv": [
+            0.4999997317790985,
+            0.716835230588913
+          ],
+          "collection": "FC_compost_bin_fx",
+          "objects": 6,
+          "draw_size": [
+            108.80000305175781,
+            108.80000305175781
+          ]
+        }
+      }
+    },
+    {
+      "id": "smelter",
+      "footprint": [
+        2,
+        2
+      ],
+      "source_blend": "facilities/smelter/smelter.blend",
+      "source_blend_sha256": "48ed3a7b0901b3d16b8ffded1685edaeb305fc74b1ce76c8a576389438cf949b",
+      "saved_render_transparent": true,
+      "layers": {
+        "body": {
+          "camera": "FCam_Body2",
+          "camera_type": "ORTHO",
+          "camera_matrix_world": [
+            [
+              -1.0,
+              -1.4526915492751868e-07,
+              8.261329753622704e-08,
+              0.0
+            ],
+            [
+              1.5099580252808664e-07,
+              -0.5735762715339661,
+              0.8191521763801575,
+              9.829824447631836
+            ],
+            [
+              -7.16125185817873e-08,
+              0.8191521763801575,
+              0.5735762715339661,
+              7.982917308807373
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "camera_ortho_width_blender": 6.400000095367432,
+          "anchor_uv": [
+            0.49999985098838806,
+            0.640792191028595
+          ],
+          "collection": "FC_smelter_body",
+          "objects": 26,
+          "draw_size": [
+            204.8000030517578,
+            204.8000030517578
+          ]
+        },
+        "found": {
+          "camera": "FCam_Found2",
+          "camera_type": "ORTHO",
+          "camera_matrix_world": [
+            [
+              1.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              1.0,
+              0.0,
+              7.347881115511007e-16
+            ],
+            [
+              0.0,
+              0.0,
+              1.0,
+              12.050000190734863
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "camera_ortho_width_blender": 4.0,
+          "anchor_uv": [
+            0.5,
+            0.5
+          ],
+          "collection": "FC_smelter_found",
+          "objects": 14,
+          "draw_size": [
+            128.0,
+            128.0
+          ]
+        },
+        "fx": {
+          "camera": "FCam_Body2",
+          "camera_type": "ORTHO",
+          "camera_matrix_world": [
+            [
+              -1.0,
+              -1.4526915492751868e-07,
+              8.261329753622704e-08,
+              0.0
+            ],
+            [
+              1.5099580252808664e-07,
+              -0.5735762715339661,
+              0.8191521763801575,
+              9.829824447631836
+            ],
+            [
+              -7.16125185817873e-08,
+              0.8191521763801575,
+              0.5735762715339661,
+              7.982917308807373
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "camera_ortho_width_blender": 6.400000095367432,
+          "anchor_uv": [
+            0.49999985098838806,
+            0.640792191028595
+          ],
+          "collection": "FC_smelter_fx",
+          "objects": 4,
+          "draw_size": [
+            204.8000030517578,
+            204.8000030517578
+          ]
+        }
+      }
+    },
+    {
+      "id": "pen",
+      "footprint": [
+        2,
+        2
+      ],
+      "source_blend": "facilities/pen/pen.blend",
+      "source_blend_sha256": "d77373cd4f2dd9d735266990f060290d4f693d382413aff276c7204787a8b3ab",
+      "saved_render_transparent": true,
+      "layers": {
+        "body": {
+          "camera": "FCam_Body2",
+          "camera_type": "ORTHO",
+          "camera_matrix_world": [
+            [
+              -1.0,
+              -1.4526915492751868e-07,
+              8.261329753622704e-08,
+              0.0
+            ],
+            [
+              1.5099580252808664e-07,
+              -0.5735762715339661,
+              0.8191521763801575,
+              9.829824447631836
+            ],
+            [
+              -7.16125185817873e-08,
+              0.8191521763801575,
+              0.5735762715339661,
+              7.982917308807373
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "camera_ortho_width_blender": 6.400000095367432,
+          "anchor_uv": [
+            0.49999985098838806,
+            0.640792191028595
+          ],
+          "collection": "FC_pen_body",
+          "objects": 45,
+          "draw_size": [
+            204.8000030517578,
+            204.8000030517578
+          ]
+        },
+        "found": {
+          "camera": "FCam_Found2",
+          "camera_type": "ORTHO",
+          "camera_matrix_world": [
+            [
+              1.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              1.0,
+              0.0,
+              7.347881115511007e-16
+            ],
+            [
+              0.0,
+              0.0,
+              1.0,
+              12.050000190734863
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "camera_ortho_width_blender": 4.0,
+          "anchor_uv": [
+            0.5,
+            0.5
+          ],
+          "collection": "FC_pen_found",
+          "objects": 14,
+          "draw_size": [
+            128.0,
+            128.0
+          ]
+        },
+        "fx": {
+          "camera": "FCam_Body2",
+          "camera_type": "ORTHO",
+          "camera_matrix_world": [
+            [
+              -1.0,
+              -1.4526915492751868e-07,
+              8.261329753622704e-08,
+              0.0
+            ],
+            [
+              1.5099580252808664e-07,
+              -0.5735762715339661,
+              0.8191521763801575,
+              9.829824447631836
+            ],
+            [
+              -7.16125185817873e-08,
+              0.8191521763801575,
+              0.5735762715339661,
+              7.982917308807373
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "camera_ortho_width_blender": 6.400000095367432,
+          "anchor_uv": [
+            0.49999985098838806,
+            0.640792191028595
+          ],
+          "collection": "FC_pen_fx",
+          "objects": 4,
+          "draw_size": [
+            204.8000030517578,
+            204.8000030517578
+          ]
+        }
+      }
+    },
+    {
+      "id": "fish_pond",
+      "footprint": [
+        2,
+        2
+      ],
+      "source_blend": "facilities/fish_pond/fish_pond.blend",
+      "source_blend_sha256": "1187bbc035f1e00950c15fdddf977522350073b8a6fe9e10ea701be7d32be91b",
+      "saved_render_transparent": true,
+      "layers": {
+        "body": {
+          "camera": "FCam_Body2",
+          "camera_type": "ORTHO",
+          "camera_matrix_world": [
+            [
+              -1.0,
+              -1.4526915492751868e-07,
+              8.261329753622704e-08,
+              0.0
+            ],
+            [
+              1.5099580252808664e-07,
+              -0.5735762715339661,
+              0.8191521763801575,
+              9.829824447631836
+            ],
+            [
+              -7.16125185817873e-08,
+              0.8191521763801575,
+              0.5735762715339661,
+              7.982917308807373
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "camera_ortho_width_blender": 6.400000095367432,
+          "anchor_uv": [
+            0.49999985098838806,
+            0.640792191028595
+          ],
+          "collection": "FC_fish_pond_body",
+          "objects": 33,
+          "draw_size": [
+            204.8000030517578,
+            204.8000030517578
+          ]
+        },
+        "found": {
+          "camera": "FCam_Found2",
+          "camera_type": "ORTHO",
+          "camera_matrix_world": [
+            [
+              1.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              1.0,
+              0.0,
+              7.347881115511007e-16
+            ],
+            [
+              0.0,
+              0.0,
+              1.0,
+              12.050000190734863
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "camera_ortho_width_blender": 4.0,
+          "anchor_uv": [
+            0.5,
+            0.5
+          ],
+          "collection": "FC_fish_pond_found",
+          "objects": 14,
+          "draw_size": [
+            128.0,
+            128.0
+          ]
+        },
+        "fx": {
+          "camera": "FCam_Body2",
+          "camera_type": "ORTHO",
+          "camera_matrix_world": [
+            [
+              -1.0,
+              -1.4526915492751868e-07,
+              8.261329753622704e-08,
+              0.0
+            ],
+            [
+              1.5099580252808664e-07,
+              -0.5735762715339661,
+              0.8191521763801575,
+              9.829824447631836
+            ],
+            [
+              -7.16125185817873e-08,
+              0.8191521763801575,
+              0.5735762715339661,
+              7.982917308807373
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "camera_ortho_width_blender": 6.400000095367432,
+          "anchor_uv": [
+            0.49999985098838806,
+            0.640792191028595
+          ],
+          "collection": "FC_fish_pond_fx",
+          "objects": 4,
+          "draw_size": [
+            204.8000030517578,
+            204.8000030517578
+          ]
+        }
+      }
+    },
+    {
+      "id": "algae_tank",
+      "footprint": [
+        1,
+        1
+      ],
+      "source_blend": "facilities/algae_tank/algae_tank.blend",
+      "source_blend_sha256": "834e4d5b7da747c9508fd7f4631d1a4baf63f4c2e03329a029ffce692a4a2e3a",
+      "saved_render_transparent": true,
+      "layers": {
+        "body": {
+          "camera": "FCam_Body1",
+          "camera_type": "ORTHO",
+          "camera_matrix_world": [
+            [
+              -1.0,
+              -1.4526915492751868e-07,
+              8.261329753622704e-08,
+              0.0
+            ],
+            [
+              1.5099580252808664e-07,
+              -0.5735762715339661,
+              0.8191521763801575,
+              9.829824447631836
+            ],
+            [
+              -7.16125185817873e-08,
+              0.8191521763801575,
+              0.5735762715339661,
+              7.782917499542236
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "camera_ortho_width_blender": 3.4000000953674316,
+          "anchor_uv": [
+            0.4999997317790985,
+            0.716835230588913
+          ],
+          "collection": "FC_algae_tank_body",
+          "objects": 16,
+          "draw_size": [
+            108.80000305175781,
+            108.80000305175781
+          ]
+        },
+        "found": {
+          "camera": "FCam_Found1",
+          "camera_type": "ORTHO",
+          "camera_matrix_world": [
+            [
+              1.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              1.0,
+              0.0,
+              7.347881115511007e-16
+            ],
+            [
+              0.0,
+              0.0,
+              1.0,
+              12.050000190734863
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "camera_ortho_width_blender": 2.0,
+          "anchor_uv": [
+            0.5,
+            0.5
+          ],
+          "collection": "FC_algae_tank_found",
+          "objects": 14,
+          "draw_size": [
+            64.0,
+            64.0
+          ]
+        },
+        "fx": {
+          "camera": "FCam_Body1",
+          "camera_type": "ORTHO",
+          "camera_matrix_world": [
+            [
+              -1.0,
+              -1.4526915492751868e-07,
+              8.261329753622704e-08,
+              0.0
+            ],
+            [
+              1.5099580252808664e-07,
+              -0.5735762715339661,
+              0.8191521763801575,
+              9.829824447631836
+            ],
+            [
+              -7.16125185817873e-08,
+              0.8191521763801575,
+              0.5735762715339661,
+              7.782917499542236
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "camera_ortho_width_blender": 3.4000000953674316,
+          "anchor_uv": [
+            0.4999997317790985,
+            0.716835230588913
+          ],
+          "collection": "FC_algae_tank_fx",
+          "objects": 3,
+          "draw_size": [
+            108.80000305175781,
+            108.80000305175781
+          ]
+        }
+      }
+    },
+    {
+      "id": "research_bench",
+      "footprint": [
+        1,
+        1
+      ],
+      "source_blend": "facilities/research_bench/research_bench.blend",
+      "source_blend_sha256": "9ddf2b52e09516e1d644ca0de1abfd1b42d7945119f21efb73def063cd586f34",
+      "saved_render_transparent": true,
+      "layers": {
+        "body": {
+          "camera": "FCam_Body1",
+          "camera_type": "ORTHO",
+          "camera_matrix_world": [
+            [
+              -1.0,
+              -1.4526915492751868e-07,
+              8.261329753622704e-08,
+              0.0
+            ],
+            [
+              1.5099580252808664e-07,
+              -0.5735762715339661,
+              0.8191521763801575,
+              9.829824447631836
+            ],
+            [
+              -7.16125185817873e-08,
+              0.8191521763801575,
+              0.5735762715339661,
+              7.782917499542236
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "camera_ortho_width_blender": 3.4000000953674316,
+          "anchor_uv": [
+            0.4999997317790985,
+            0.716835230588913
+          ],
+          "collection": "FC_research_bench_body",
+          "objects": 24,
+          "draw_size": [
+            108.80000305175781,
+            108.80000305175781
+          ]
+        },
+        "found": {
+          "camera": "FCam_Found1",
+          "camera_type": "ORTHO",
+          "camera_matrix_world": [
+            [
+              1.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              1.0,
+              0.0,
+              7.347881115511007e-16
+            ],
+            [
+              0.0,
+              0.0,
+              1.0,
+              12.050000190734863
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "camera_ortho_width_blender": 2.0,
+          "anchor_uv": [
+            0.5,
+            0.5
+          ],
+          "collection": "FC_research_bench_found",
+          "objects": 14,
+          "draw_size": [
+            64.0,
+            64.0
+          ]
+        },
+        "fx": {
+          "camera": "FCam_Body1",
+          "camera_type": "ORTHO",
+          "camera_matrix_world": [
+            [
+              -1.0,
+              -1.4526915492751868e-07,
+              8.261329753622704e-08,
+              0.0
+            ],
+            [
+              1.5099580252808664e-07,
+              -0.5735762715339661,
+              0.8191521763801575,
+              9.829824447631836
+            ],
+            [
+              -7.16125185817873e-08,
+              0.8191521763801575,
+              0.5735762715339661,
+              7.782917499542236
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "camera_ortho_width_blender": 3.4000000953674316,
+          "anchor_uv": [
+            0.4999997317790985,
+            0.716835230588913
+          ],
+          "collection": "FC_research_bench_fx",
+          "objects": 4,
+          "draw_size": [
+            108.80000305175781,
+            108.80000305175781
+          ]
+        }
+      }
+    },
+    {
+      "id": "bee_hive",
+      "footprint": [
+        2,
+        2
+      ],
+      "source_blend": "facilities/bee_hive/bee_hive.blend",
+      "source_blend_sha256": "265ab8eac21964b893d473702cac9418d3984da1a44147e0bde6c1973cdcab8a",
+      "saved_render_transparent": true,
+      "layers": {
+        "body": {
+          "camera": "FCam_Body2",
+          "camera_type": "ORTHO",
+          "camera_matrix_world": [
+            [
+              -1.0,
+              -1.4526915492751868e-07,
+              8.261329753622704e-08,
+              0.0
+            ],
+            [
+              1.5099580252808664e-07,
+              -0.5735762715339661,
+              0.8191521763801575,
+              9.829824447631836
+            ],
+            [
+              -7.16125185817873e-08,
+              0.8191521763801575,
+              0.5735762715339661,
+              7.982917308807373
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "camera_ortho_width_blender": 6.400000095367432,
+          "anchor_uv": [
+            0.49999985098838806,
+            0.640792191028595
+          ],
+          "collection": "FC_bee_hive_body",
+          "objects": 27,
+          "draw_size": [
+            204.8000030517578,
+            204.8000030517578
+          ]
+        },
+        "found": {
+          "camera": "FCam_Found2",
+          "camera_type": "ORTHO",
+          "camera_matrix_world": [
+            [
+              1.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              1.0,
+              0.0,
+              7.347881115511007e-16
+            ],
+            [
+              0.0,
+              0.0,
+              1.0,
+              12.050000190734863
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "camera_ortho_width_blender": 4.0,
+          "anchor_uv": [
+            0.5,
+            0.5
+          ],
+          "collection": "FC_bee_hive_found",
+          "objects": 14,
+          "draw_size": [
+            128.0,
+            128.0
+          ]
+        },
+        "fx": {
+          "camera": "FCam_Body2",
+          "camera_type": "ORTHO",
+          "camera_matrix_world": [
+            [
+              -1.0,
+              -1.4526915492751868e-07,
+              8.261329753622704e-08,
+              0.0
+            ],
+            [
+              1.5099580252808664e-07,
+              -0.5735762715339661,
+              0.8191521763801575,
+              9.829824447631836
+            ],
+            [
+              -7.16125185817873e-08,
+              0.8191521763801575,
+              0.5735762715339661,
+              7.982917308807373
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "camera_ortho_width_blender": 6.400000095367432,
+          "anchor_uv": [
+            0.49999985098838806,
+            0.640792191028595
+          ],
+          "collection": "FC_bee_hive_fx",
+          "objects": 5,
+          "draw_size": [
+            204.8000030517578,
+            204.8000030517578
+          ]
+        }
+      }
+    },
+    {
+      "id": "farm_processor",
+      "footprint": [
+        2,
+        2
+      ],
+      "source_blend": "facilities/farm_processor/farm_processor.blend",
+      "source_blend_sha256": "40d4dc712a192a5e066a1d392a97697a0ae7321040b76f1cebecf41707222c9b",
+      "saved_render_transparent": true,
+      "layers": {
+        "body": {
+          "camera": "FCam_Body2",
+          "camera_type": "ORTHO",
+          "camera_matrix_world": [
+            [
+              -1.0,
+              -1.4526915492751868e-07,
+              8.261329753622704e-08,
+              0.0
+            ],
+            [
+              1.5099580252808664e-07,
+              -0.5735762715339661,
+              0.8191521763801575,
+              9.829824447631836
+            ],
+            [
+              -7.16125185817873e-08,
+              0.8191521763801575,
+              0.5735762715339661,
+              7.982917308807373
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "camera_ortho_width_blender": 6.400000095367432,
+          "anchor_uv": [
+            0.49999985098838806,
+            0.640792191028595
+          ],
+          "collection": "FC_farm_processor_body",
+          "objects": 43,
+          "draw_size": [
+            204.8000030517578,
+            204.8000030517578
+          ]
+        },
+        "found": {
+          "camera": "FCam_Found2",
+          "camera_type": "ORTHO",
+          "camera_matrix_world": [
+            [
+              1.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              1.0,
+              0.0,
+              7.347881115511007e-16
+            ],
+            [
+              0.0,
+              0.0,
+              1.0,
+              12.050000190734863
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "camera_ortho_width_blender": 4.0,
+          "anchor_uv": [
+            0.5,
+            0.5
+          ],
+          "collection": "FC_farm_processor_found",
+          "objects": 14,
+          "draw_size": [
+            128.0,
+            128.0
+          ]
+        },
+        "fx": {
+          "camera": "FCam_Body2",
+          "camera_type": "ORTHO",
+          "camera_matrix_world": [
+            [
+              -1.0,
+              -1.4526915492751868e-07,
+              8.261329753622704e-08,
+              0.0
+            ],
+            [
+              1.5099580252808664e-07,
+              -0.5735762715339661,
+              0.8191521763801575,
+              9.829824447631836
+            ],
+            [
+              -7.16125185817873e-08,
+              0.8191521763801575,
+              0.5735762715339661,
+              7.982917308807373
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "camera_ortho_width_blender": 6.400000095367432,
+          "anchor_uv": [
+            0.49999985098838806,
+            0.640792191028595
+          ],
+          "collection": "FC_farm_processor_fx",
+          "objects": 5,
+          "draw_size": [
+            204.8000030517578,
+            204.8000030517578
+          ]
+        }
+      }
+    },
+    {
+      "id": "purifying_bed",
+      "footprint": [
+        2,
+        2
+      ],
+      "source_blend": "facilities/purifying_bed/purifying_bed.blend",
+      "source_blend_sha256": "24dbc4c1cc5385a06bd38588f56c1ab910963246fdc3b9b8099ba93ab9dd3f1e",
+      "saved_render_transparent": true,
+      "layers": {
+        "body": {
+          "camera": "FCam_Body2",
+          "camera_type": "ORTHO",
+          "camera_matrix_world": [
+            [
+              -1.0,
+              -1.4526915492751868e-07,
+              8.261329753622704e-08,
+              0.0
+            ],
+            [
+              1.5099580252808664e-07,
+              -0.5735762715339661,
+              0.8191521763801575,
+              9.829824447631836
+            ],
+            [
+              -7.16125185817873e-08,
+              0.8191521763801575,
+              0.5735762715339661,
+              7.982917308807373
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "camera_ortho_width_blender": 6.400000095367432,
+          "anchor_uv": [
+            0.49999985098838806,
+            0.640792191028595
+          ],
+          "collection": "FC_purifying_bed_body",
+          "objects": 38,
+          "draw_size": [
+            204.8000030517578,
+            204.8000030517578
+          ]
+        },
+        "found": {
+          "camera": "FCam_Found2",
+          "camera_type": "ORTHO",
+          "camera_matrix_world": [
+            [
+              1.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              1.0,
+              0.0,
+              7.347881115511007e-16
+            ],
+            [
+              0.0,
+              0.0,
+              1.0,
+              12.050000190734863
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "camera_ortho_width_blender": 4.0,
+          "anchor_uv": [
+            0.5,
+            0.5
+          ],
+          "collection": "FC_purifying_bed_found",
+          "objects": 14,
+          "draw_size": [
+            128.0,
+            128.0
+          ]
+        },
+        "fx": {
+          "camera": "FCam_Body2",
+          "camera_type": "ORTHO",
+          "camera_matrix_world": [
+            [
+              -1.0,
+              -1.4526915492751868e-07,
+              8.261329753622704e-08,
+              0.0
+            ],
+            [
+              1.5099580252808664e-07,
+              -0.5735762715339661,
+              0.8191521763801575,
+              9.829824447631836
+            ],
+            [
+              -7.16125185817873e-08,
+              0.8191521763801575,
+              0.5735762715339661,
+              7.982917308807373
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "camera_ortho_width_blender": 6.400000095367432,
+          "anchor_uv": [
+            0.49999985098838806,
+            0.640792191028595
+          ],
+          "collection": "FC_purifying_bed_fx",
+          "objects": 7,
+          "draw_size": [
+            204.8000030517578,
+            204.8000030517578
+          ]
+        }
+      }
+    },
+    {
+      "id": "rock_workyard",
+      "footprint": [
+        2,
+        2
+      ],
+      "source_blend": "facilities/rock_workyard/rock_workyard.blend",
+      "source_blend_sha256": "d149f985581a8671a93fe3ad3481789df801d63c53675da1223e3f88ca2a4796",
+      "saved_render_transparent": true,
+      "layers": {
+        "body": {
+          "camera": "FCam_Body2",
+          "camera_type": "ORTHO",
+          "camera_matrix_world": [
+            [
+              -1.0,
+              -1.4526915492751868e-07,
+              8.261329753622704e-08,
+              0.0
+            ],
+            [
+              1.5099580252808664e-07,
+              -0.5735762715339661,
+              0.8191521763801575,
+              9.829824447631836
+            ],
+            [
+              -7.16125185817873e-08,
+              0.8191521763801575,
+              0.5735762715339661,
+              7.982917308807373
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "camera_ortho_width_blender": 6.400000095367432,
+          "anchor_uv": [
+            0.49999985098838806,
+            0.640792191028595
+          ],
+          "collection": "FC_rock_workyard_body",
+          "objects": 28,
+          "draw_size": [
+            204.8000030517578,
+            204.8000030517578
+          ]
+        },
+        "found": {
+          "camera": "FCam_Found2",
+          "camera_type": "ORTHO",
+          "camera_matrix_world": [
+            [
+              1.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              1.0,
+              0.0,
+              7.347881115511007e-16
+            ],
+            [
+              0.0,
+              0.0,
+              1.0,
+              12.050000190734863
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "camera_ortho_width_blender": 4.0,
+          "anchor_uv": [
+            0.5,
+            0.5
+          ],
+          "collection": "FC_rock_workyard_found",
+          "objects": 14,
+          "draw_size": [
+            128.0,
+            128.0
+          ]
+        },
+        "fx": {
+          "camera": "FCam_Body2",
+          "camera_type": "ORTHO",
+          "camera_matrix_world": [
+            [
+              -1.0,
+              -1.4526915492751868e-07,
+              8.261329753622704e-08,
+              0.0
+            ],
+            [
+              1.5099580252808664e-07,
+              -0.5735762715339661,
+              0.8191521763801575,
+              9.829824447631836
+            ],
+            [
+              -7.16125185817873e-08,
+              0.8191521763801575,
+              0.5735762715339661,
+              7.982917308807373
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "camera_ortho_width_blender": 6.400000095367432,
+          "anchor_uv": [
+            0.49999985098838806,
+            0.640792191028595
+          ],
+          "collection": "FC_rock_workyard_fx",
+          "objects": 3,
+          "draw_size": [
+            204.8000030517578,
+            204.8000030517578
+          ]
+        }
+      }
+    },
+    {
+      "id": "kitchen",
+      "footprint": [
+        2,
+        2
+      ],
+      "source_blend": "facilities/kitchen/kitchen.blend",
+      "source_blend_sha256": "b5e2a2eced1316b7732d55cf44d9547363bb36c28731435f6fdc88440663ad31",
+      "saved_render_transparent": true,
+      "layers": {
+        "body": {
+          "camera": "FCam_Body2",
+          "camera_type": "ORTHO",
+          "camera_matrix_world": [
+            [
+              -1.0,
+              -1.4526915492751868e-07,
+              8.261329753622704e-08,
+              0.0
+            ],
+            [
+              1.5099580252808664e-07,
+              -0.5735762715339661,
+              0.8191521763801575,
+              9.829824447631836
+            ],
+            [
+              -7.16125185817873e-08,
+              0.8191521763801575,
+              0.5735762715339661,
+              7.982917308807373
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "camera_ortho_width_blender": 6.400000095367432,
+          "anchor_uv": [
+            0.49999985098838806,
+            0.640792191028595
+          ],
+          "collection": "FC_kitchen_body",
+          "objects": 31,
+          "draw_size": [
+            204.8000030517578,
+            204.8000030517578
+          ]
+        },
+        "found": {
+          "camera": "FCam_Found2",
+          "camera_type": "ORTHO",
+          "camera_matrix_world": [
+            [
+              1.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              1.0,
+              0.0,
+              7.347881115511007e-16
+            ],
+            [
+              0.0,
+              0.0,
+              1.0,
+              12.050000190734863
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "camera_ortho_width_blender": 4.0,
+          "anchor_uv": [
+            0.5,
+            0.5
+          ],
+          "collection": "FC_kitchen_found",
+          "objects": 14,
+          "draw_size": [
+            128.0,
+            128.0
+          ]
+        },
+        "fx": {
+          "camera": "FCam_Body2",
+          "camera_type": "ORTHO",
+          "camera_matrix_world": [
+            [
+              -1.0,
+              -1.4526915492751868e-07,
+              8.261329753622704e-08,
+              0.0
+            ],
+            [
+              1.5099580252808664e-07,
+              -0.5735762715339661,
+              0.8191521763801575,
+              9.829824447631836
+            ],
+            [
+              -7.16125185817873e-08,
+              0.8191521763801575,
+              0.5735762715339661,
+              7.982917308807373
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "camera_ortho_width_blender": 6.400000095367432,
+          "anchor_uv": [
+            0.49999985098838806,
+            0.640792191028595
+          ],
+          "collection": "FC_kitchen_fx",
+          "objects": 7,
+          "draw_size": [
+            204.8000030517578,
+            204.8000030517578
+          ]
+        }
+      }
+    },
+    {
+      "id": "field_service_station",
+      "footprint": [
+        2,
+        2
+      ],
+      "source_blend": "facilities/field_service_station/field_service_station.blend",
+      "source_blend_sha256": "1d4df830816bc0fa525f8b34c15cb57dd6c3bf19243cd7746fc67b6e2c0284a9",
+      "saved_render_transparent": true,
+      "layers": {
+        "body": {
+          "camera": "FCam_Body2",
+          "camera_type": "ORTHO",
+          "camera_matrix_world": [
+            [
+              -1.0,
+              -1.4526915492751868e-07,
+              8.261329753622704e-08,
+              0.0
+            ],
+            [
+              1.5099580252808664e-07,
+              -0.5735762715339661,
+              0.8191521763801575,
+              9.829824447631836
+            ],
+            [
+              -7.16125185817873e-08,
+              0.8191521763801575,
+              0.5735762715339661,
+              7.982917308807373
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "camera_ortho_width_blender": 6.400000095367432,
+          "anchor_uv": [
+            0.49999985098838806,
+            0.640792191028595
+          ],
+          "collection": "FC_field_service_station_body",
+          "objects": 29,
+          "draw_size": [
+            204.8000030517578,
+            204.8000030517578
+          ]
+        },
+        "found": {
+          "camera": "FCam_Found2",
+          "camera_type": "ORTHO",
+          "camera_matrix_world": [
+            [
+              1.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              1.0,
+              0.0,
+              7.347881115511007e-16
+            ],
+            [
+              0.0,
+              0.0,
+              1.0,
+              12.050000190734863
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "camera_ortho_width_blender": 4.0,
+          "anchor_uv": [
+            0.5,
+            0.5
+          ],
+          "collection": "FC_field_service_station_found",
+          "objects": 14,
+          "draw_size": [
+            128.0,
+            128.0
+          ]
+        },
+        "fx": {
+          "camera": "FCam_Body2",
+          "camera_type": "ORTHO",
+          "camera_matrix_world": [
+            [
+              -1.0,
+              -1.4526915492751868e-07,
+              8.261329753622704e-08,
+              0.0
+            ],
+            [
+              1.5099580252808664e-07,
+              -0.5735762715339661,
+              0.8191521763801575,
+              9.829824447631836
+            ],
+            [
+              -7.16125185817873e-08,
+              0.8191521763801575,
+              0.5735762715339661,
+              7.982917308807373
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "camera_ortho_width_blender": 6.400000095367432,
+          "anchor_uv": [
+            0.49999985098838806,
+            0.640792191028595
+          ],
+          "collection": "FC_field_service_station_fx",
+          "objects": 2,
+          "draw_size": [
+            204.8000030517578,
+            204.8000030517578
+          ]
+        }
+      }
+    },
+    {
+      "id": "growth_lamp",
+      "footprint": [
+        1,
+        1
+      ],
+      "source_blend": "facilities/growth_lamp/growth_lamp.blend",
+      "source_blend_sha256": "31db62b2d3835f285ad7d456d2e6442bc9640dfb882b2e3c799fe2373edd213e",
+      "saved_render_transparent": true,
+      "layers": {
+        "body": {
+          "camera": "FCam_Body1",
+          "camera_type": "ORTHO",
+          "camera_matrix_world": [
+            [
+              -1.0,
+              -1.4526915492751868e-07,
+              8.261329753622704e-08,
+              0.0
+            ],
+            [
+              1.5099580252808664e-07,
+              -0.5735762715339661,
+              0.8191521763801575,
+              9.829824447631836
+            ],
+            [
+              -7.16125185817873e-08,
+              0.8191521763801575,
+              0.5735762715339661,
+              7.782917499542236
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "camera_ortho_width_blender": 3.4000000953674316,
+          "anchor_uv": [
+            0.4999997317790985,
+            0.716835230588913
+          ],
+          "collection": "FC_growth_lamp_body",
+          "objects": 15,
+          "draw_size": [
+            108.80000305175781,
+            108.80000305175781
+          ]
+        },
+        "found": {
+          "camera": "FCam_Found1",
+          "camera_type": "ORTHO",
+          "camera_matrix_world": [
+            [
+              1.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              1.0,
+              0.0,
+              7.347881115511007e-16
+            ],
+            [
+              0.0,
+              0.0,
+              1.0,
+              12.050000190734863
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "camera_ortho_width_blender": 2.0,
+          "anchor_uv": [
+            0.5,
+            0.5
+          ],
+          "collection": "FC_growth_lamp_found",
+          "objects": 14,
+          "draw_size": [
+            64.0,
+            64.0
+          ]
+        },
+        "fx": {
+          "camera": "FCam_Body1",
+          "camera_type": "ORTHO",
+          "camera_matrix_world": [
+            [
+              -1.0,
+              -1.4526915492751868e-07,
+              8.261329753622704e-08,
+              0.0
+            ],
+            [
+              1.5099580252808664e-07,
+              -0.5735762715339661,
+              0.8191521763801575,
+              9.829824447631836
+            ],
+            [
+              -7.16125185817873e-08,
+              0.8191521763801575,
+              0.5735762715339661,
+              7.782917499542236
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "camera_ortho_width_blender": 3.4000000953674316,
+          "anchor_uv": [
+            0.4999997317790985,
+            0.716835230588913
+          ],
+          "collection": "FC_growth_lamp_fx",
+          "objects": 4,
+          "draw_size": [
+            108.80000305175781,
+            108.80000305175781
+          ]
+        }
+      }
+    }
+  ]
+}

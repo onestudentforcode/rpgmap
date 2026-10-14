@@ -6,6 +6,8 @@ const P8Store := preload("res://scripts/farming/p8/p8_slot_store.gd")
 const Handbook := preload("res://scripts/farming/p8/p8_handbook.gd")
 const PlantVisuals := preload("res://scripts/farming/p8/p8_plant_visuals.gd")
 var plant_visuals := PlantVisuals.new()
+const FacilityVisuals := preload("res://scripts/farming/p8/p8_facility_visuals.gd")
+var facility_visuals := FacilityVisuals.new()
 var _handbook_chapter := "start"
 var _land_stamp := ""
 var _land_focus := ""
@@ -122,9 +124,10 @@ func _draw_world_entities(target: Node2D, readable: float) -> void:
 		var building: Dictionary = world.facilities[uid]
 		var shape: Array = world.facility_defs[building["facility_id"]]["footprint"]
 		var rect := Rect2(Vector2(float(building["origin"][0]),float(building["origin"][1]))*64.0,Vector2(float(shape[0]),float(shape[1]))*64.0)
-		target.draw_rect(rect.grow(-5),Color("eee5d6"))
+		var visual: Dictionary = facility_visuals.visual(String(building["facility_id"]),rect)
+		if visual.is_empty(): target.draw_rect(rect.grow(-5),Color("eee5d6"))
 		entities.append({"kind": "facility", "id": int(uid), "data": building, "rect": rect,
-			"root": plant_visuals.ground_root(building["origin"], shape)})
+			"root": rect.get_center(), "visual": visual})
 	entities.sort_custom(func(a: Dictionary, b: Dictionary) -> bool:
 		if a["root"].y != b["root"].y: return a["root"].y < b["root"].y
 		if a["root"].x != b["root"].x: return a["root"].x < b["root"].x
@@ -139,7 +142,9 @@ func _draw_world_entities(target: Node2D, readable: float) -> void:
 			else:
 				target.draw_texture_rect(visual["texture"], visual["rect"], false)
 		else:
-			target.draw_texture_rect(Icons.get_icon(entity["data"]["facility_id"]),rect.grow(-14),false)
+			var visual: Dictionary = entity["visual"]
+			if visual.is_empty(): target.draw_texture_rect(Icons.get_icon(entity["data"]["facility_id"]),rect.grow(-14),false)
+			else: target.draw_texture_rect(visual["texture"],visual["rect"],false)
 	# All readiness markers follow every world entity, never underneath a tree.
 	for entity in entities:
 		var rect: Rect2 = entity["rect"]
@@ -147,6 +152,11 @@ func _draw_world_entities(target: Node2D, readable: float) -> void:
 			if entity["data"]["state"] == "mature": target.draw_circle(rect.end-Vector2(10,10),5*readable,UI.JADE)
 			elif entity["data"]["state"] == "regrowing": target.draw_arc(rect.end-Vector2(10,10),5*readable,0,TAU,16,UI.WATER,2*readable)
 		elif entity["data"]["batch"].get("status") == "ready": target.draw_circle(rect.end-Vector2(10,10),6*readable,UI.WATER)
+
+func _draw_facility_preview(target: Node2D, rect: Rect2) -> void:
+	var visual: Dictionary = facility_visuals.visual(build_tool,rect)
+	if visual.is_empty(): super(target,rect)
+	else: target.draw_texture_rect(visual["texture"],visual["rect"],false,Color(1,1,1,0.65))
 
 func draw_map(target: Node2D) -> void:
 	super(target)

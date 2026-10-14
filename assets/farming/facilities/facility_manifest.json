@@ -1,0 +1,426 @@
+{
+  "schema_version": 1,
+  "texture_filter": "linear",
+  "facilities": {
+    "woodshop": {
+      "footprint": [
+        2,
+        2
+      ],
+      "canvas_px": [
+        128,
+        128
+      ],
+      "path": "res://assets/farming/facilities/woodshop/body.png",
+      "sha256": "fd7d95c19297cbfc1d7fe0654571bb21cbe021ddb6a7eeb0e787f3ec304fe226",
+      "anchor_uv": [
+        0.49999985098838806,
+        0.640792191028595
+      ],
+      "draw_size": [
+        204.8000030517578,
+        204.8000030517578
+      ],
+      "scale_multiplier": 1.0,
+      "ground_placement": "footprint_center",
+      "source_blend_sha256": "ac30a8822097f140e8eaea0735561854cbb046210bb8f3e84fbeec0b9903bc86",
+      "source_png": "facilities/woodshop/woodshop_body_128.png",
+      "deferred_layers": [
+        "found",
+        "fx"
+      ]
+    },
+    "char_kiln": {
+      "footprint": [
+        2,
+        2
+      ],
+      "canvas_px": [
+        128,
+        128
+      ],
+      "path": "res://assets/farming/facilities/char_kiln/body.png",
+      "sha256": "c20c8cb99c73156e1eb3bca82c2fa130d513f019505576fe1fcde2850f643a0b",
+      "anchor_uv": [
+        0.49999985098838806,
+        0.640792191028595
+      ],
+      "draw_size": [
+        204.8000030517578,
+        204.8000030517578
+      ],
+      "scale_multiplier": 1.0,
+      "ground_placement": "footprint_center",
+      "source_blend_sha256": "c33c6f0688f4f60f72a220af68dc20b0a4ac4299741ce091b674f586b3dea04c",
+      "source_png": "facilities/char_kiln/char_kiln_body_128.png",
+      "deferred_layers": [
+        "found",
+        "fx"
+      ]
+    },
+    "compost_bin": {
+      "footprint": [
+        1,
+        1
+      ],
+      "canvas_px": [
+        64,
+        64
+      ],
+      "path": "res://assets/farming/facilities/compost_bin/body.png",
+      "sha256": "e402a7bc9c84e148bd273bd058083f67bcabc57ef522f670e9b2d179473ad48c",
+      "anchor_uv": [
+        0.4999997317790985,
+        0.716835230588913
+      ],
+      "draw_size": [
+        108.80000305175781,
+        108.80000305175781
+      ],
+      "scale_multiplier": 1.0,
+      "ground_placement": "footprint_center",
+      "source_blend_sha256": "93260018aac5d600848ea75064e1f621d63a5ff024bfabc8e79c08ad9bdb6ef2",
+      "source_png": "facilities/compost_bin/compost_bin_body_64.png",
+      "deferred_layers": [
+        "found",
+        "fx"
+      ]
+    },
+    "smelter": {
+      "footprint": [
+        2,
+        2
+      ],
+      "canvas_px": [
+        128,
+        128
+      ],
+      "path": "res://assets/farming/facilities/smelter/body.png",
+      "sha256": "02bb9e237133b3d2a8d189d5d93bba9b69d8457d055a6bf6e4978a8533d01cc6",
+      "anchor_uv": [
+        0.49999985098838806,
+        0.640792191028595
+      ],
+      "draw_size": [
+        204.8000030517578,
+        204.8000030517578
+      ],
+      "scale_multiplier": 1.0,
+      "ground_placement": "footprint_center",
+      "source_blend_sha256": "48ed3a7b0901b3d16b8ffded1685edaeb305fc74b1ce76c8a576389438cf949b",
+      "source_png": "facilities/smelter/smelter_body_128.png",
+      "deferred_layers": [
+        "found",
+        "fx"
+      ]
+    },
+    "pen": {
+      "footprint": [
+        2,
+        2
+      ],
+      "canvas_px": [
+        128,
+        128
+      ],
+      "path": "res://assets/farming/facilities/pen/body.png",
+      "sha256": "20d8b8653f22e04cfe9ba8f91976f48ae0b5d290afe3193170b8beeebb98b529",
+      "anchor_uv": [
+        0.49999985098838806,
+        0.640792191028595
+      ],
+      "draw_size": [
+        204.8000030517578,
+        204.8000030517578
+      ],
+      "scale_multiplier": 1.0,
+      "ground_placement": "footprint_center",
+      "source_blend_sha256": "d77373cd4f2dd9d735266990f060290d4f693d382413aff276c7204787a8b3ab",
+      "source_png": "facilities/pen/pen_body_128.png",
+      "deferred_layers": [
+        "found",
+        "fx"
+      ]
+    },
+    "fish_pond": {
+      "footprint": [
+        2,
+        2
+      ],
+      "canvas_px": [
+        128,
+        128
+      ],
+      "path": "res://assets/farming/facilities/fish_pond/body.png",
+      "sha256": "558d927137891b780658262886d0c3a5c129ab63c51a777964704ae1e4ebf691",
+      "anchor_uv": [
+        0.49999985098838806,
+        0.640792191028595
+      ],
+      "draw_size": [
+        204.8000030517578,
+        204.8000030517578
+      ],
+      "scale_multiplier": 1.0,
+      "ground_placement": "footprint_center",
+      "source_blend_sha256": "1187bbc035f1e00950c15fdddf977522350073b8a6fe9e10ea701be7d32be91b",
+      "source_png": "facilities/fish_pond/fish_pond_body_128.png",
+      "deferred_layers": [
+        "found",
+        "fx"
+      ]
+    },
+    "algae_tank": {
+      "footprint": [
+        1,
+        1
+      ],
+      "canvas_px": [
+        64,
+        64
+      ],
+      "path": "res://assets/farming/facilities/algae_tank/body.png",
+      "sha256": "3f2faaacab33157f2f306d859664d3e4715736b1b2658c3e41b488dc61603b99",
+      "anchor_uv": [
+        0.4999997317790985,
+        0.716835230588913
+      ],
+      "draw_size": [
+        108.80000305175781,
+        108.80000305175781
+      ],
+      "scale_multiplier": 1.0,
+      "ground_placement": "footprint_center",
+      "source_blend_sha256": "834e4d5b7da747c9508fd7f4631d1a4baf63f4c2e03329a029ffce692a4a2e3a",
+      "source_png": "facilities/algae_tank/algae_tank_body_64.png",
+      "deferred_layers": [
+        "found",
+        "fx"
+      ]
+    },
+    "research_bench": {
+      "footprint": [
+        1,
+        1
+      ],
+      "canvas_px": [
+        64,
+        64
+      ],
+      "path": "res://assets/farming/facilities/research_bench/body.png",
+      "sha256": "ef968e61916dc512a7a9c4bb93acce10fc884f3923218a8238baa03aeebab3a5",
+      "anchor_uv": [
+        0.4999997317790985,
+        0.716835230588913
+      ],
+      "draw_size": [
+        108.80000305175781,
+        108.80000305175781
+      ],
+      "scale_multiplier": 1.0,
+      "ground_placement": "footprint_center",
+      "source_blend_sha256": "9ddf2b52e09516e1d644ca0de1abfd1b42d7945119f21efb73def063cd586f34",
+      "source_png": "facilities/research_bench/research_bench_body_64.png",
+      "deferred_layers": [
+        "found",
+        "fx"
+      ]
+    },
+    "bee_hive": {
+      "footprint": [
+        2,
+        2
+      ],
+      "canvas_px": [
+        128,
+        128
+      ],
+      "path": "res://assets/farming/facilities/bee_hive/body.png",
+      "sha256": "69bfb0be06e1d85b35e2960b9a76d32957921721a773bc057bf8d7559032162e",
+      "anchor_uv": [
+        0.49999985098838806,
+        0.640792191028595
+      ],
+      "draw_size": [
+        204.8000030517578,
+        204.8000030517578
+      ],
+      "scale_multiplier": 1.0,
+      "ground_placement": "footprint_center",
+      "source_blend_sha256": "265ab8eac21964b893d473702cac9418d3984da1a44147e0bde6c1973cdcab8a",
+      "source_png": "facilities/bee_hive/bee_hive_body_128.png",
+      "deferred_layers": [
+        "found",
+        "fx"
+      ]
+    },
+    "farm_processor": {
+      "footprint": [
+        2,
+        2
+      ],
+      "canvas_px": [
+        128,
+        128
+      ],
+      "path": "res://assets/farming/facilities/farm_processor/body.png",
+      "sha256": "1b59a962f7ccb97dc83e54435a9016b01c6d5f5722fea16bb18e6c462222a41a",
+      "anchor_uv": [
+        0.49999985098838806,
+        0.640792191028595
+      ],
+      "draw_size": [
+        204.8000030517578,
+        204.8000030517578
+      ],
+      "scale_multiplier": 1.0,
+      "ground_placement": "footprint_center",
+      "source_blend_sha256": "40d4dc712a192a5e066a1d392a97697a0ae7321040b76f1cebecf41707222c9b",
+      "source_png": "facilities/farm_processor/farm_processor_body_128.png",
+      "deferred_layers": [
+        "found",
+        "fx"
+      ]
+    },
+    "purifying_bed": {
+      "footprint": [
+        2,
+        2
+      ],
+      "canvas_px": [
+        128,
+        128
+      ],
+      "path": "res://assets/farming/facilities/purifying_bed/body.png",
+      "sha256": "5816b0aa17fc4709ab11585ee99d93164481f89431a3497ccd7f64a4ee21bd99",
+      "anchor_uv": [
+        0.49999985098838806,
+        0.640792191028595
+      ],
+      "draw_size": [
+        204.8000030517578,
+        204.8000030517578
+      ],
+      "scale_multiplier": 1.0,
+      "ground_placement": "footprint_center",
+      "source_blend_sha256": "24dbc4c1cc5385a06bd38588f56c1ab910963246fdc3b9b8099ba93ab9dd3f1e",
+      "source_png": "facilities/purifying_bed/purifying_bed_body_128.png",
+      "deferred_layers": [
+        "found",
+        "fx"
+      ]
+    },
+    "rock_workyard": {
+      "footprint": [
+        2,
+        2
+      ],
+      "canvas_px": [
+        128,
+        128
+      ],
+      "path": "res://assets/farming/facilities/rock_workyard/body.png",
+      "sha256": "b03d130393e35a49e666647c5e65f2a2d4437607b624c6afc2856a2489cfb367",
+      "anchor_uv": [
+        0.49999985098838806,
+        0.640792191028595
+      ],
+      "draw_size": [
+        204.8000030517578,
+        204.8000030517578
+      ],
+      "scale_multiplier": 1.0,
+      "ground_placement": "footprint_center",
+      "source_blend_sha256": "d149f985581a8671a93fe3ad3481789df801d63c53675da1223e3f88ca2a4796",
+      "source_png": "facilities/rock_workyard/rock_workyard_body_128.png",
+      "deferred_layers": [
+        "found",
+        "fx"
+      ]
+    },
+    "kitchen": {
+      "footprint": [
+        2,
+        2
+      ],
+      "canvas_px": [
+        128,
+        128
+      ],
+      "path": "res://assets/farming/facilities/kitchen/body.png",
+      "sha256": "bee5ddb5e447e8181377acf8cbb998708f78e9efca0768462d7a2077dd692726",
+      "anchor_uv": [
+        0.49999985098838806,
+        0.640792191028595
+      ],
+      "draw_size": [
+        204.8000030517578,
+        204.8000030517578
+      ],
+      "scale_multiplier": 1.0,
+      "ground_placement": "footprint_center",
+      "source_blend_sha256": "b5e2a2eced1316b7732d55cf44d9547363bb36c28731435f6fdc88440663ad31",
+      "source_png": "facilities/kitchen/kitchen_body_128.png",
+      "deferred_layers": [
+        "found",
+        "fx"
+      ]
+    },
+    "field_service_station": {
+      "footprint": [
+        2,
+        2
+      ],
+      "canvas_px": [
+        128,
+        128
+      ],
+      "path": "res://assets/farming/facilities/field_service_station/body.png",
+      "sha256": "f5caa24aeb8f2c111ff5c45c1e311b647af02519fcb805a939478de79875b1c5",
+      "anchor_uv": [
+        0.49999985098838806,
+        0.640792191028595
+      ],
+      "draw_size": [
+        204.8000030517578,
+        204.8000030517578
+      ],
+      "scale_multiplier": 1.0,
+      "ground_placement": "footprint_center",
+      "source_blend_sha256": "1d4df830816bc0fa525f8b34c15cb57dd6c3bf19243cd7746fc67b6e2c0284a9",
+      "source_png": "facilities/field_service_station/field_service_station_body_128.png",
+      "deferred_layers": [
+        "found",
+        "fx"
+      ]
+    },
+    "growth_lamp": {
+      "footprint": [
+        1,
+        1
+      ],
+      "canvas_px": [
+        64,
+        64
+      ],
+      "path": "res://assets/farming/facilities/growth_lamp/body.png",
+      "sha256": "e900f5585a6a020e5bc2ad70550c98fcf115a7d10b50f67f9178ff8e68c1df0f",
+      "anchor_uv": [
+        0.4999997317790985,
+        0.716835230588913
+      ],
+      "draw_size": [
+        108.80000305175781,
+        108.80000305175781
+      ],
+      "scale_multiplier": 1.0,
+      "ground_placement": "footprint_center",
+      "source_blend_sha256": "31db62b2d3835f285ad7d456d2e6442bc9640dfb882b2e3c799fe2373edd213e",
+      "source_png": "facilities/growth_lamp/growth_lamp_body_64.png",
+      "deferred_layers": [
+        "found",
+        "fx"
+      ]
+    }
+  }
+}

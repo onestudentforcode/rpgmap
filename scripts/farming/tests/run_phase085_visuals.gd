@@ -45,6 +45,15 @@ func _initialize() -> void:
 	check(visuals.state_key(oil,definitions["oilseed_flower"],[300,500]) == "stage_3", "mature oilseed")
 	var shell := Shell.new()
 	check(shell.plant_visuals.enabled_ids.size() == 7, "all seven plants enabled")
+	check(shell.facility_visuals.textures.size() == 15,"all facility bodies cached")
+	for ident in shell.facility_visuals.facilities:
+		var data: Dictionary = shell.facility_visuals.facilities[ident]
+		var shape: Array = data["footprint"]
+		var rect := Rect2(Vector2(-128,64),Vector2(shape[0],shape[1])*64.0)
+		var placed: Dictionary = shell.facility_visuals.visual(ident,rect)
+		check(not placed.is_empty() and placed["root"] == rect.get_center(),"facility center %s" % ident)
+		check(is_equal_approx(placed["rect"].size.x,placed["rect"].size.y),"facility aspect %s" % ident)
+		check(shell.facility_visuals.visual(ident,rect) == placed,"preview/placed geometry %s" % ident)
 	shell.free()
 	_lifecycle(visuals)
 	for failure in failures: printerr(failure)

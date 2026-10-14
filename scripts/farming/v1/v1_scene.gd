@@ -1438,6 +1438,9 @@ func _draw_world_entities(target: Node2D, readable: float) -> void:
 		target.draw_texture_rect(Icons.get_icon(building["facility_id"]),rect.grow(-14),false)
 		if building["batch"].get("status") == "ready": target.draw_circle(rect.end-Vector2(10,10),6*readable,UI.WATER)
 
+func _draw_facility_preview(target: Node2D, rect: Rect2) -> void:
+	target.draw_texture_rect(Icons.get_icon(build_tool),rect.grow(-12),false,Color(1,1,1,0.65))
+
 func draw_map(target: Node2D) -> void:
 	var font := theme.default_font
 	var readable := maxf(1.0,1.0/(camera.zoom.x*_ui_scale))
@@ -1473,7 +1476,7 @@ func draw_map(target: Node2D) -> void:
 		var rect := Rect2(Vector2(_hover)*64,Vector2(float(definition["footprint"][0]),float(definition["footprint"][1]))*64)
 		target.draw_rect(rect,Color(0.35,0.6,0.4,0.3) if valid else Color(0.7,0.25,0.2,0.3))
 		target.draw_rect(rect,UI.JADE if valid else UI.ERROR,false,3*readable)
-		target.draw_texture_rect(Icons.get_icon(build_tool),rect.grow(-12),false,Color(1,1,1,0.65))
+		_draw_facility_preview(target,rect)
 	if manual_mode and tool != "inspect" and build_tool.is_empty() and world.grid.in_bounds(_hover.x,_hover.y):
 		var valid: bool = world.action_quote(_hover,tool)["ok"]
 		target.draw_rect(Rect2(Vector2(_hover)*64,Vector2(64,64)),UI.JADE if valid else UI.ERROR,false,2*readable)

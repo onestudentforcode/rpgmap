@@ -80,6 +80,31 @@ func _run() -> void:
 	await process_frame
 	await RenderingServer.frame_post_draw
 	error = maxi(error,root.get_texture().get_image().save_png(directory + "/all-plants.png"))
+	shell.world.crops.clear()
+	shell.world.facilities.clear()
+	var facility_index := 0
+	for ident in shell.world.facility_defs:
+		uid += 1
+		shell.world.facilities[uid] = {"uid":uid,"facility_id":ident,
+			"origin":[1+(facility_index%5)*4,2+(facility_index/5)*4],
+			"batch":{"status":"ready" if facility_index%2 == 0 else "idle"}}
+		facility_index += 1
+	shell.camera.position = Vector2(640,430)
+	shell.camera.zoom = Vector2.ONE * 0.9
+	shell.overlay.queue_redraw()
+	await process_frame
+	await process_frame
+	await RenderingServer.frame_post_draw
+	error = maxi(error,root.get_texture().get_image().save_png(directory + "/all-facilities.png"))
+	shell.build_tool = "woodshop"
+	for preview_cell in [Vector2i(0,0),Vector2i(0,14)]:
+		shell._hover = preview_cell
+		shell.overlay.queue_redraw()
+		await process_frame
+		await process_frame
+		await RenderingServer.frame_post_draw
+		error = maxi(error,root.get_texture().get_image().save_png(directory + "/build-preview-%d.png" % preview_cell.y))
+	shell.build_tool = ""
 	# Exercise a real parcel purchase; scaffold money belongs only to this fixture.
 	shell.world.primeval_stones = 1000
 	for parcel_id in shell.world.land.parcels:
