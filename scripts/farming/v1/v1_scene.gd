@@ -1424,9 +1424,7 @@ func _unhandled_key_input(event: InputEvent) -> void:
 		KEY_F: _fit_map()
 		KEY_R: _result(world.end_day())
 
-func draw_map(target: Node2D) -> void:
-	var font := theme.default_font
-	var readable := maxf(1.0,1.0/(camera.zoom.x*_ui_scale))
+func _draw_world_entities(target: Node2D, readable: float) -> void:
 	for crop in world.crops.values():
 		var shape: Array = world.crop_defs[crop["crop_id"]]["footprint"]
 		var rect := Rect2(Vector2(float(crop["origin"][0]),float(crop["origin"][1]))*64.0,Vector2(float(shape[0]),float(shape[1]))*64.0)
@@ -1439,6 +1437,11 @@ func draw_map(target: Node2D) -> void:
 		target.draw_rect(rect.grow(-5),Color("eee5d6"))
 		target.draw_texture_rect(Icons.get_icon(building["facility_id"]),rect.grow(-14),false)
 		if building["batch"].get("status") == "ready": target.draw_circle(rect.end-Vector2(10,10),6*readable,UI.WATER)
+
+func draw_map(target: Node2D) -> void:
+	var font := theme.default_font
+	var readable := maxf(1.0,1.0/(camera.zoom.x*_ui_scale))
+	_draw_world_entities(target, readable)
 	for ident in world.source_defs:
 		var definition: Dictionary = world.source_defs[ident]
 		var position := Vector2(float(definition["position"][0]),float(definition["position"][1]))*64.0

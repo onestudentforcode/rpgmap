@@ -31,6 +31,7 @@ try {
         # Godot may return 0 after a GDScript error. Check logs AND exit status.
         if ($exitCode -ne 0 -or $result -match 'SCRIPT ERROR:|ERROR:' -or $result -notmatch $marker) { throw "P8 check failed: $name ($log)" }
     }
+    Invoke-GodotCheck 'visuals085' @('--script','res://scripts/farming/tests/run_phase085_visuals.gd') 'PHASE085 VISUALS OK'
     $fixtureRoot = Join-Path $logRoot 'fixtures'
     $utf8 = [Text.UTF8Encoding]::new($false)
     foreach ($phase in @('a','b','c','d','e','f','g','h_living')) {

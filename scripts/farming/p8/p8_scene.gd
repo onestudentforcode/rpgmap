@@ -4,6 +4,8 @@ extends "res://scripts/farming/v2/v2_scene.gd"
 const P8World := preload("res://scripts/farming/p8/p8_world.gd")
 const P8Store := preload("res://scripts/farming/p8/p8_slot_store.gd")
 const Handbook := preload("res://scripts/farming/p8/p8_handbook.gd")
+const PlantVisuals := preload("res://scripts/farming/p8/p8_plant_visuals.gd")
+var plant_visuals := PlantVisuals.new()
 var _handbook_chapter := "start"
 var _land_stamp := ""
 var _land_focus := ""
@@ -103,6 +105,48 @@ func _board_input(event: InputEvent) -> void:
 		var id: String = world.land.at(cell)
 		if not id.is_empty() and not world.land.contains(cell):
 			hover_hint.text = "%s · %d元石 · 点击查看购买条件" % [world.land.parcels[id]["name"],world.land.parcels[id]["price"]]
+
+func _draw_world_entities(target: Node2D, readable: float) -> void:
+	var entities: Array[Dictionary] = []
+	for uid in world.crops:
+		var crop: Dictionary = world.crops[uid]
+		var definition: Dictionary = world.crop_defs[crop["crop_id"]]
+		var shape: Array = definition["footprint"]
+		var rect := Rect2(Vector2(float(crop["origin"][0]),float(crop["origin"][1]))*64.0,Vector2(float(shape[0]),float(shape[1]))*64.0)
+		var visual: Dictionary = plant_visuals.visual(crop, definition, world.flowers.settings["oilseed_window"])
+		if visual.is_empty():
+			target.draw_rect(rect.grow(-7),Color("deebd9") if crop["state"] != "mature" else Color("f1e2b1"))
+		entities.append({"kind": "crop", "id": int(uid), "data": crop, "rect": rect,
+			"root": plant_visuals.ground_root(crop["origin"], shape), "visual": visual})
+	for uid in world.facilities:
+		var building: Dictionary = world.facilities[uid]
+		var shape: Array = world.facility_defs[building["facility_id"]]["footprint"]
+		var rect := Rect2(Vector2(float(building["origin"][0]),float(building["origin"][1]))*64.0,Vector2(float(shape[0]),float(shape[1]))*64.0)
+		target.draw_rect(rect.grow(-5),Color("eee5d6"))
+		entities.append({"kind": "facility", "id": int(uid), "data": building, "rect": rect,
+			"root": plant_visuals.ground_root(building["origin"], shape)})
+	entities.sort_custom(func(a: Dictionary, b: Dictionary) -> bool:
+		if a["root"].y != b["root"].y: return a["root"].y < b["root"].y
+		if a["root"].x != b["root"].x: return a["root"].x < b["root"].x
+		if a["kind"] != b["kind"]: return a["kind"] < b["kind"]
+		return a["id"] < b["id"])
+	for entity in entities:
+		var rect: Rect2 = entity["rect"]
+		if entity["kind"] == "crop":
+			var visual: Dictionary = entity["visual"]
+			if visual.is_empty():
+				target.draw_texture_rect(Icons.get_icon(entity["data"]["crop_id"]),Rect2(rect.position+Vector2(10,8),rect.size-Vector2(20,20)),false)
+			else:
+				target.draw_texture_rect(visual["texture"], visual["rect"], false)
+		else:
+			target.draw_texture_rect(Icons.get_icon(entity["data"]["facility_id"]),rect.grow(-14),false)
+	# All readiness markers follow every world entity, never underneath a tree.
+	for entity in entities:
+		var rect: Rect2 = entity["rect"]
+		if entity["kind"] == "crop":
+			if entity["data"]["state"] == "mature": target.draw_circle(rect.end-Vector2(10,10),5*readable,UI.JADE)
+			elif entity["data"]["state"] == "regrowing": target.draw_arc(rect.end-Vector2(10,10),5*readable,0,TAU,16,UI.WATER,2*readable)
+		elif entity["data"]["batch"].get("status") == "ready": target.draw_circle(rect.end-Vector2(10,10),6*readable,UI.WATER)
 
 func draw_map(target: Node2D) -> void:
 	super(target)
