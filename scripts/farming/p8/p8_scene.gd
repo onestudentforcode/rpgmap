@@ -8,9 +8,11 @@ const PlantVisuals := preload("res://scripts/farming/p8/p8_plant_visuals.gd")
 var plant_visuals := PlantVisuals.new()
 const FacilityVisuals := preload("res://scripts/farming/p8/p8_facility_visuals.gd")
 var facility_visuals := FacilityVisuals.new()
+const TerrainSoften := preload("res://assets/farming/shaders/p8_terrain_soften.gdshader")
 var _handbook_chapter := "start"
 var _land_stamp := ""
 var _land_focus := ""
+var _map_pan := false
 
 func _init() -> void:
 	store = P8Store.new()
@@ -27,8 +29,22 @@ func _make_store(directory: String = ""):
 func _make_world(slot_store):
 	return P8World.new(slot_store)
 
+func _ready() -> void:
+	super()
+	overlay.texture_filter = CanvasItem.TEXTURE_FILTER_LINEAR_WITH_MIPMAPS
+	board.mouse_exited.connect(func(): _map_pan = false)
+	var style: Dictionary = JSON.parse_string(FileAccess.get_file_as_string("res://content/farming/p8/world_visuals.json"))
+	for ident in style["terrain_tones"]:
+		if not terrain.layers.has(ident): continue
+		var material := ShaderMaterial.new()
+		material.shader = TerrainSoften
+		material.set_shader_parameter("terrain_tone",Color(String(style["terrain_tones"][ident])))
+		material.set_shader_parameter("detail_strength",float(style["terrain_detail_strength"]))
+		terrain.layers[ident].material = material
+
 func _refresh() -> void:
 	super()
+	guide_hint.text = guide_hint.text.replace("WASD平移","WASD/中键平移")
 	var stamp := ",".join(PackedStringArray(world.land.to_save()["purchased"]))
 	if stamp != _land_stamp:
 		_land_stamp = stamp
@@ -101,6 +117,19 @@ func _show_cell() -> void:
 	super()
 
 func _board_input(event: InputEvent) -> void:
+	if _started and not shade.visible and not is_instance_valid(confirmation) and not _text_focus():
+		if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_MIDDLE:
+			_map_pan = event.pressed
+			return
+		if event is InputEventMouseMotion and _map_pan:
+			if event.button_mask & MOUSE_BUTTON_MASK_MIDDLE:
+				camera.position -= event.relative / camera.zoom
+				hover_hint.text = ""
+				overlay.queue_redraw()
+				return
+			_map_pan = false
+	else:
+		_map_pan = false
 	super(event)
 	if event is InputEventMouseMotion and _started and not shade.visible:
 		var cell := _cell(event.position)

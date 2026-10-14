@@ -8,11 +8,11 @@
         2
       ],
       "canvas_px": [
-        128,
-        128
+        512,
+        512
       ],
       "path": "res://assets/farming/facilities/woodshop/body.png",
-      "sha256": "fd7d95c19297cbfc1d7fe0654571bb21cbe021ddb6a7eeb0e787f3ec304fe226",
+      "sha256": "ce33fb0d0634a31797d1298e5301f8d182f56f81215eaa7ef78ac9615528b82a",
       "anchor_uv": [
         0.49999985098838806,
         0.640792191028595
@@ -28,7 +28,31 @@
       "deferred_layers": [
         "found",
         "fx"
-      ]
+      ],
+      "handoff_canvas_px": [
+        128,
+        128
+      ],
+      "runtime_variant": {
+        "method": "Blender rerender at 4x canvas; display scale unchanged",
+        "renders": {
+          "body": {
+            "source_blend": "facilities/woodshop/woodshop.blend",
+            "source_blend_sha256": "ac30a8822097f140e8eaea0735561854cbb046210bb8f3e84fbeec0b9903bc86",
+            "scene": "Scene",
+            "canvas_px": [
+              512,
+              512
+            ],
+            "anchor_uv": [
+              0.49999985098838806,
+              0.640792191028595
+            ],
+            "samples": 128,
+            "sha256": "ce33fb0d0634a31797d1298e5301f8d182f56f81215eaa7ef78ac9615528b82a"
+          }
+        }
+      }
     },
     "char_kiln": {
       "footprint": [
@@ -36,11 +60,11 @@
         2
       ],
       "canvas_px": [
-        128,
-        128
+        512,
+        512
       ],
       "path": "res://assets/farming/facilities/char_kiln/body.png",
-      "sha256": "c20c8cb99c73156e1eb3bca82c2fa130d513f019505576fe1fcde2850f643a0b",
+      "sha256": "ddc1456abc55057fc8075792d444dc3bc5e7f7e0e53eef63fcd91f7cc940206e",
       "anchor_uv": [
         0.49999985098838806,
         0.640792191028595
@@ -56,7 +80,31 @@
       "deferred_layers": [
         "found",
         "fx"
-      ]
+      ],
+      "handoff_canvas_px": [
+        128,
+        128
+      ],
+      "runtime_variant": {
+        "method": "Blender rerender at 4x canvas; display scale unchanged",
+        "renders": {
+          "body": {
+            "source_blend": "facilities/char_kiln/char_kiln.blend",
+            "source_blend_sha256": "c33c6f0688f4f60f72a220af68dc20b0a4ac4299741ce091b674f586b3dea04c",
+            "scene": "Scene",
+            "canvas_px": [
+              512,
+              512
+            ],
+            "anchor_uv": [
+              0.49999985098838806,
+              0.640792191028595
+            ],
+            "samples": 128,
+            "sha256": "ddc1456abc55057fc8075792d444dc3bc5e7f7e0e53eef63fcd91f7cc940206e"
+          }
+        }
+      }
     },
     "compost_bin": {
       "footprint": [
@@ -64,11 +112,11 @@
         1
       ],
       "canvas_px": [
-        64,
-        64
+        256,
+        256
       ],
       "path": "res://assets/farming/facilities/compost_bin/body.png",
-      "sha256": "e402a7bc9c84e148bd273bd058083f67bcabc57ef522f670e9b2d179473ad48c",
+      "sha256": "eaf6e2f77c09b6f59e57947500cf94bc152098a83f31f6abaac943d1c1e7bb12",
       "anchor_uv": [
         0.4999997317790985,
         0.716835230588913
@@ -84,7 +132,31 @@
       "deferred_layers": [
         "found",
         "fx"
-      ]
+      ],
+      "handoff_canvas_px": [
+        64,
+        64
+      ],
+      "runtime_variant": {
+        "method": "Blender rerender at 4x canvas; display scale unchanged",
+        "renders": {
+          "body": {
+            "source_blend": "facilities/compost_bin/compost_bin.blend",
+            "source_blend_sha256": "93260018aac5d600848ea75064e1f621d63a5ff024bfabc8e79c08ad9bdb6ef2",
+            "scene": "Scene",
+            "canvas_px": [
+              256,
+              256
+            ],
+            "anchor_uv": [
+              0.4999997317790985,
+              0.716835230588913
+            ],
+            "samples": 128,
+            "sha256": "eaf6e2f77c09b6f59e57947500cf94bc152098a83f31f6abaac943d1c1e7bb12"
+          }
+        }
+      }
     },
     "smelter": {
       "footprint": [
@@ -92,11 +164,11 @@
         2
       ],
       "canvas_px": [
-        128,
-        128
+        512,
+        512
       ],
       "path": "res://assets/farming/facilities/smelter/body.png",
-      "sha256": "02bb9e237133b3d2a8d189d5d93bba9b69d8457d055a6bf6e4978a8533d01cc6",
+      "sha256": "db36d286e2414ff70fddd38816c29a85df075efd0277c7e8bc515297c8f3bfb6",
       "anchor_uv": [
         0.49999985098838806,
         0.640792191028595
@@ -112,7 +184,31 @@
       "deferred_layers": [
         "found",
         "fx"
-      ]
+      ],
+      "handoff_canvas_px": [
+        128,
+        128
+      ],
+      "runtime_variant": {
+        "method": "Blender rerender at 4x canvas; display scale unchanged",
+        "renders": {
+          "body": {
+            "source_blend": "facilities/smelter/smelter.blend",
+            "source_blend_sha256": "48ed3a7b0901b3d16b8ffded1685edaeb305fc74b1ce76c8a576389438cf949b",
+            "scene": "Scene",
+            "canvas_px": [
+              512,
+              512
+            ],
+            "anchor_uv": [
+              0.49999985098838806,
+              0.640792191028595
+            ],
+            "samples": 128,
+            "sha256": "db36d286e2414ff70fddd38816c29a85df075efd0277c7e8bc515297c8f3bfb6"
+          }
+        }
+      }
     },
     "pen": {
       "footprint": [
@@ -120,11 +216,11 @@
         2
       ],
       "canvas_px": [
-        128,
-        128
+        512,
+        512
       ],
       "path": "res://assets/farming/facilities/pen/body.png",
-      "sha256": "20d8b8653f22e04cfe9ba8f91976f48ae0b5d290afe3193170b8beeebb98b529",
+      "sha256": "7b75e141f3cad21e1902704f4bfc45625b76048329e792d294d614241e309414",
       "anchor_uv": [
         0.49999985098838806,
         0.640792191028595
@@ -140,7 +236,31 @@
       "deferred_layers": [
         "found",
         "fx"
-      ]
+      ],
+      "handoff_canvas_px": [
+        128,
+        128
+      ],
+      "runtime_variant": {
+        "method": "Blender rerender at 4x canvas; display scale unchanged",
+        "renders": {
+          "body": {
+            "source_blend": "facilities/pen/pen.blend",
+            "source_blend_sha256": "d77373cd4f2dd9d735266990f060290d4f693d382413aff276c7204787a8b3ab",
+            "scene": "Scene",
+            "canvas_px": [
+              512,
+              512
+            ],
+            "anchor_uv": [
+              0.49999985098838806,
+              0.640792191028595
+            ],
+            "samples": 128,
+            "sha256": "7b75e141f3cad21e1902704f4bfc45625b76048329e792d294d614241e309414"
+          }
+        }
+      }
     },
     "fish_pond": {
       "footprint": [
@@ -148,11 +268,11 @@
         2
       ],
       "canvas_px": [
-        128,
-        128
+        512,
+        512
       ],
       "path": "res://assets/farming/facilities/fish_pond/body.png",
-      "sha256": "558d927137891b780658262886d0c3a5c129ab63c51a777964704ae1e4ebf691",
+      "sha256": "a3b2e9d366756a45e86dc6d603ab67d4a10e474a6434517b452228d2677ea7c0",
       "anchor_uv": [
         0.49999985098838806,
         0.640792191028595
@@ -168,7 +288,31 @@
       "deferred_layers": [
         "found",
         "fx"
-      ]
+      ],
+      "handoff_canvas_px": [
+        128,
+        128
+      ],
+      "runtime_variant": {
+        "method": "Blender rerender at 4x canvas; display scale unchanged",
+        "renders": {
+          "body": {
+            "source_blend": "facilities/fish_pond/fish_pond.blend",
+            "source_blend_sha256": "1187bbc035f1e00950c15fdddf977522350073b8a6fe9e10ea701be7d32be91b",
+            "scene": "Scene",
+            "canvas_px": [
+              512,
+              512
+            ],
+            "anchor_uv": [
+              0.49999985098838806,
+              0.640792191028595
+            ],
+            "samples": 128,
+            "sha256": "a3b2e9d366756a45e86dc6d603ab67d4a10e474a6434517b452228d2677ea7c0"
+          }
+        }
+      }
     },
     "algae_tank": {
       "footprint": [
@@ -176,11 +320,11 @@
         1
       ],
       "canvas_px": [
-        64,
-        64
+        256,
+        256
       ],
       "path": "res://assets/farming/facilities/algae_tank/body.png",
-      "sha256": "3f2faaacab33157f2f306d859664d3e4715736b1b2658c3e41b488dc61603b99",
+      "sha256": "caddd7c1110ec5028e871986dc980c77782f45847e169ba3ae799f371bb1bf01",
       "anchor_uv": [
         0.4999997317790985,
         0.716835230588913
@@ -196,7 +340,31 @@
       "deferred_layers": [
         "found",
         "fx"
-      ]
+      ],
+      "handoff_canvas_px": [
+        64,
+        64
+      ],
+      "runtime_variant": {
+        "method": "Blender rerender at 4x canvas; display scale unchanged",
+        "renders": {
+          "body": {
+            "source_blend": "facilities/algae_tank/algae_tank.blend",
+            "source_blend_sha256": "834e4d5b7da747c9508fd7f4631d1a4baf63f4c2e03329a029ffce692a4a2e3a",
+            "scene": "Scene",
+            "canvas_px": [
+              256,
+              256
+            ],
+            "anchor_uv": [
+              0.4999997317790985,
+              0.716835230588913
+            ],
+            "samples": 128,
+            "sha256": "caddd7c1110ec5028e871986dc980c77782f45847e169ba3ae799f371bb1bf01"
+          }
+        }
+      }
     },
     "research_bench": {
       "footprint": [
@@ -204,11 +372,11 @@
         1
       ],
       "canvas_px": [
-        64,
-        64
+        256,
+        256
       ],
       "path": "res://assets/farming/facilities/research_bench/body.png",
-      "sha256": "ef968e61916dc512a7a9c4bb93acce10fc884f3923218a8238baa03aeebab3a5",
+      "sha256": "a9ef4bef20277a88d0c0dd55dcdaf52de2c1fe4247f26d9a66be8c33c994ad9c",
       "anchor_uv": [
         0.4999997317790985,
         0.716835230588913
@@ -224,7 +392,31 @@
       "deferred_layers": [
         "found",
         "fx"
-      ]
+      ],
+      "handoff_canvas_px": [
+        64,
+        64
+      ],
+      "runtime_variant": {
+        "method": "Blender rerender at 4x canvas; display scale unchanged",
+        "renders": {
+          "body": {
+            "source_blend": "facilities/research_bench/research_bench.blend",
+            "source_blend_sha256": "9ddf2b52e09516e1d644ca0de1abfd1b42d7945119f21efb73def063cd586f34",
+            "scene": "Scene",
+            "canvas_px": [
+              256,
+              256
+            ],
+            "anchor_uv": [
+              0.4999997317790985,
+              0.716835230588913
+            ],
+            "samples": 128,
+            "sha256": "a9ef4bef20277a88d0c0dd55dcdaf52de2c1fe4247f26d9a66be8c33c994ad9c"
+          }
+        }
+      }
     },
     "bee_hive": {
       "footprint": [
@@ -232,11 +424,11 @@
         2
       ],
       "canvas_px": [
-        128,
-        128
+        512,
+        512
       ],
       "path": "res://assets/farming/facilities/bee_hive/body.png",
-      "sha256": "69bfb0be06e1d85b35e2960b9a76d32957921721a773bc057bf8d7559032162e",
+      "sha256": "c4b958ea10ea201f5dcdac4e45e44d819b561f09c6291c13f3b81493fdae9725",
       "anchor_uv": [
         0.49999985098838806,
         0.640792191028595
@@ -252,7 +444,31 @@
       "deferred_layers": [
         "found",
         "fx"
-      ]
+      ],
+      "handoff_canvas_px": [
+        128,
+        128
+      ],
+      "runtime_variant": {
+        "method": "Blender rerender at 4x canvas; display scale unchanged",
+        "renders": {
+          "body": {
+            "source_blend": "facilities/bee_hive/bee_hive.blend",
+            "source_blend_sha256": "265ab8eac21964b893d473702cac9418d3984da1a44147e0bde6c1973cdcab8a",
+            "scene": "Scene",
+            "canvas_px": [
+              512,
+              512
+            ],
+            "anchor_uv": [
+              0.49999985098838806,
+              0.640792191028595
+            ],
+            "samples": 128,
+            "sha256": "c4b958ea10ea201f5dcdac4e45e44d819b561f09c6291c13f3b81493fdae9725"
+          }
+        }
+      }
     },
     "farm_processor": {
       "footprint": [
@@ -260,11 +476,11 @@
         2
       ],
       "canvas_px": [
-        128,
-        128
+        512,
+        512
       ],
       "path": "res://assets/farming/facilities/farm_processor/body.png",
-      "sha256": "1b59a962f7ccb97dc83e54435a9016b01c6d5f5722fea16bb18e6c462222a41a",
+      "sha256": "8fadfaab4e44416f55b3d709ba0dfdb6ffcfb335c92d9f12a697ea37a2253053",
       "anchor_uv": [
         0.49999985098838806,
         0.640792191028595
@@ -280,7 +496,31 @@
       "deferred_layers": [
         "found",
         "fx"
-      ]
+      ],
+      "handoff_canvas_px": [
+        128,
+        128
+      ],
+      "runtime_variant": {
+        "method": "Blender rerender at 4x canvas; display scale unchanged",
+        "renders": {
+          "body": {
+            "source_blend": "facilities/farm_processor/farm_processor.blend",
+            "source_blend_sha256": "40d4dc712a192a5e066a1d392a97697a0ae7321040b76f1cebecf41707222c9b",
+            "scene": "Scene",
+            "canvas_px": [
+              512,
+              512
+            ],
+            "anchor_uv": [
+              0.49999985098838806,
+              0.640792191028595
+            ],
+            "samples": 128,
+            "sha256": "8fadfaab4e44416f55b3d709ba0dfdb6ffcfb335c92d9f12a697ea37a2253053"
+          }
+        }
+      }
     },
     "purifying_bed": {
       "footprint": [
@@ -288,11 +528,11 @@
         2
       ],
       "canvas_px": [
-        128,
-        128
+        512,
+        512
       ],
       "path": "res://assets/farming/facilities/purifying_bed/body.png",
-      "sha256": "5816b0aa17fc4709ab11585ee99d93164481f89431a3497ccd7f64a4ee21bd99",
+      "sha256": "06a594de0813407113b1e93d097e72eff6e4480667eae004396ee41bf6c152c2",
       "anchor_uv": [
         0.49999985098838806,
         0.640792191028595
@@ -308,7 +548,31 @@
       "deferred_layers": [
         "found",
         "fx"
-      ]
+      ],
+      "handoff_canvas_px": [
+        128,
+        128
+      ],
+      "runtime_variant": {
+        "method": "Blender rerender at 4x canvas; display scale unchanged",
+        "renders": {
+          "body": {
+            "source_blend": "facilities/purifying_bed/purifying_bed.blend",
+            "source_blend_sha256": "24dbc4c1cc5385a06bd38588f56c1ab910963246fdc3b9b8099ba93ab9dd3f1e",
+            "scene": "Scene",
+            "canvas_px": [
+              512,
+              512
+            ],
+            "anchor_uv": [
+              0.49999985098838806,
+              0.640792191028595
+            ],
+            "samples": 128,
+            "sha256": "06a594de0813407113b1e93d097e72eff6e4480667eae004396ee41bf6c152c2"
+          }
+        }
+      }
     },
     "rock_workyard": {
       "footprint": [
@@ -316,11 +580,11 @@
         2
       ],
       "canvas_px": [
-        128,
-        128
+        512,
+        512
       ],
       "path": "res://assets/farming/facilities/rock_workyard/body.png",
-      "sha256": "b03d130393e35a49e666647c5e65f2a2d4437607b624c6afc2856a2489cfb367",
+      "sha256": "1d5ec098dc3afa1f91f4cc2f1bd6d7d6280d434330416015966fcb229193ad95",
       "anchor_uv": [
         0.49999985098838806,
         0.640792191028595
@@ -336,7 +600,31 @@
       "deferred_layers": [
         "found",
         "fx"
-      ]
+      ],
+      "handoff_canvas_px": [
+        128,
+        128
+      ],
+      "runtime_variant": {
+        "method": "Blender rerender at 4x canvas; display scale unchanged",
+        "renders": {
+          "body": {
+            "source_blend": "facilities/rock_workyard/rock_workyard.blend",
+            "source_blend_sha256": "d149f985581a8671a93fe3ad3481789df801d63c53675da1223e3f88ca2a4796",
+            "scene": "Scene",
+            "canvas_px": [
+              512,
+              512
+            ],
+            "anchor_uv": [
+              0.49999985098838806,
+              0.640792191028595
+            ],
+            "samples": 128,
+            "sha256": "1d5ec098dc3afa1f91f4cc2f1bd6d7d6280d434330416015966fcb229193ad95"
+          }
+        }
+      }
     },
     "kitchen": {
       "footprint": [
@@ -344,11 +632,11 @@
         2
       ],
       "canvas_px": [
-        128,
-        128
+        512,
+        512
       ],
       "path": "res://assets/farming/facilities/kitchen/body.png",
-      "sha256": "bee5ddb5e447e8181377acf8cbb998708f78e9efca0768462d7a2077dd692726",
+      "sha256": "143a8522cc87883a081e82124d48e684da6dc8afffbb7dddd9cc74a7ff7c5880",
       "anchor_uv": [
         0.49999985098838806,
         0.640792191028595
@@ -364,7 +652,31 @@
       "deferred_layers": [
         "found",
         "fx"
-      ]
+      ],
+      "handoff_canvas_px": [
+        128,
+        128
+      ],
+      "runtime_variant": {
+        "method": "Blender rerender at 4x canvas; display scale unchanged",
+        "renders": {
+          "body": {
+            "source_blend": "facilities/kitchen/kitchen.blend",
+            "source_blend_sha256": "b5e2a2eced1316b7732d55cf44d9547363bb36c28731435f6fdc88440663ad31",
+            "scene": "Scene",
+            "canvas_px": [
+              512,
+              512
+            ],
+            "anchor_uv": [
+              0.49999985098838806,
+              0.640792191028595
+            ],
+            "samples": 128,
+            "sha256": "143a8522cc87883a081e82124d48e684da6dc8afffbb7dddd9cc74a7ff7c5880"
+          }
+        }
+      }
     },
     "field_service_station": {
       "footprint": [
@@ -372,11 +684,11 @@
         2
       ],
       "canvas_px": [
-        128,
-        128
+        512,
+        512
       ],
       "path": "res://assets/farming/facilities/field_service_station/body.png",
-      "sha256": "f5caa24aeb8f2c111ff5c45c1e311b647af02519fcb805a939478de79875b1c5",
+      "sha256": "7e6deb5a716b51811536cc79eec6ab47c6462fc5f0d2579723ddd085d36acf42",
       "anchor_uv": [
         0.49999985098838806,
         0.640792191028595
@@ -392,7 +704,31 @@
       "deferred_layers": [
         "found",
         "fx"
-      ]
+      ],
+      "handoff_canvas_px": [
+        128,
+        128
+      ],
+      "runtime_variant": {
+        "method": "Blender rerender at 4x canvas; display scale unchanged",
+        "renders": {
+          "body": {
+            "source_blend": "facilities/field_service_station/field_service_station.blend",
+            "source_blend_sha256": "1d4df830816bc0fa525f8b34c15cb57dd6c3bf19243cd7746fc67b6e2c0284a9",
+            "scene": "Scene",
+            "canvas_px": [
+              512,
+              512
+            ],
+            "anchor_uv": [
+              0.49999985098838806,
+              0.640792191028595
+            ],
+            "samples": 128,
+            "sha256": "7e6deb5a716b51811536cc79eec6ab47c6462fc5f0d2579723ddd085d36acf42"
+          }
+        }
+      }
     },
     "growth_lamp": {
       "footprint": [
@@ -400,11 +736,11 @@
         1
       ],
       "canvas_px": [
-        64,
-        64
+        256,
+        256
       ],
       "path": "res://assets/farming/facilities/growth_lamp/body.png",
-      "sha256": "e900f5585a6a020e5bc2ad70550c98fcf115a7d10b50f67f9178ff8e68c1df0f",
+      "sha256": "05cd9104361fe3bd879e0cccbfa021a3943c0eda837054cbed18398992690ac7",
       "anchor_uv": [
         0.4999997317790985,
         0.716835230588913
@@ -420,7 +756,31 @@
       "deferred_layers": [
         "found",
         "fx"
-      ]
+      ],
+      "handoff_canvas_px": [
+        64,
+        64
+      ],
+      "runtime_variant": {
+        "method": "Blender rerender at 4x canvas; display scale unchanged",
+        "renders": {
+          "body": {
+            "source_blend": "facilities/growth_lamp/growth_lamp.blend",
+            "source_blend_sha256": "31db62b2d3835f285ad7d456d2e6442bc9640dfb882b2e3c799fe2373edd213e",
+            "scene": "Scene",
+            "canvas_px": [
+              256,
+              256
+            ],
+            "anchor_uv": [
+              0.4999997317790985,
+              0.716835230588913
+            ],
+            "samples": 128,
+            "sha256": "05cd9104361fe3bd879e0cccbfa021a3943c0eda837054cbed18398992690ac7"
+          }
+        }
+      }
     }
   }
 }

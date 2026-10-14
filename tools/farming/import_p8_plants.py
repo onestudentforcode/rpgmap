@@ -171,9 +171,13 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--source", type=Path, required=True)
     parser.add_argument("--check", action="store_true", help="validate without writing")
+    parser.add_argument("--runtime-renders", type=Path, help="validated 4x Blender render batch")
     args = parser.parse_args()
     try:
         pending = prepare(args.source.resolve())
+        if args.runtime_renders:
+            from p85_runtime_variants import apply_variants
+            pending = apply_variants(pending,args.runtime_renders,'assets/farming/crops/plant_manifest.json','plants')
         changed = 0 if args.check else install(pending)
         print(f"P8 PLANT HANDOFF OK: 29 PNGs validated; {changed} files written")
     except (OSError, ValueError, KeyError) as exc:

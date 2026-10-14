@@ -10,8 +10,8 @@
         1
       ],
       "canvas_px": [
-        64,
-        64
+        256,
+        256
       ],
       "anchor_uv": [
         0.4999997019767761,
@@ -29,10 +29,79 @@
         "stage_3": "res://assets/farming/crops/golden_wheat/stage_3.png"
       },
       "sha256": {
-        "stage_0": "12ada52a498a5d3b41fa37883ba795e6e2ef52d62314aa9c55534e823612fe03",
-        "stage_1": "4e7fc805068d4aee952337532d194ec525b7e8812ccb0bd0e54843a8a20d3b79",
-        "stage_2": "767d7bea7f43b120f30b794fe71cd1d403257e8084aa90b1f63ab2074aaedec5",
-        "stage_3": "1748078567f8a027a46bc143eba1f1c81fd8e887cd8e48c36c19234f80d07723"
+        "stage_0": "3becde4678f11a1f280f236661c382d2812a01304a60a5566d5c16faea0f1352",
+        "stage_1": "ca7afdc8cb43fb5de6733b7945d611bd44c52fb83496bee7d6dc551827fd1b42",
+        "stage_2": "7eb5ce7bed1b14cdee9a3d1aba1f55f98aa8b378373718cba6b5d81a7eb968de",
+        "stage_3": "021a1e5ac73a9b27482eace4116c2ce2df6ebf6721e85e13910531155a9007ca"
+      },
+      "handoff_canvas_px": [
+        64,
+        64
+      ],
+      "runtime_variant": {
+        "method": "Blender rerender at 4x canvas; display scale unchanged",
+        "renders": {
+          "stage_0": {
+            "source_blend": "plants/golden_wheat/stage_0.blend",
+            "source_blend_sha256": "729dbb242e489785e7247462d8a32c7fcf21369982a78ad9574655d82be03f66",
+            "scene": "PG_golden_wheat_Stage0",
+            "canvas_px": [
+              256,
+              256
+            ],
+            "anchor_uv": [
+              0.4999997019767761,
+              0.9276604503393173
+            ],
+            "samples": 128,
+            "sha256": "3becde4678f11a1f280f236661c382d2812a01304a60a5566d5c16faea0f1352"
+          },
+          "stage_1": {
+            "source_blend": "plants/golden_wheat/stage_1.blend",
+            "source_blend_sha256": "bb6328f0a33e26de7c64fda1da90c9888a10a91b6f46bf556fd366fd7f1178ac",
+            "scene": "PG_golden_wheat_Stage1",
+            "canvas_px": [
+              256,
+              256
+            ],
+            "anchor_uv": [
+              0.4999997019767761,
+              0.9276604503393173
+            ],
+            "samples": 128,
+            "sha256": "ca7afdc8cb43fb5de6733b7945d611bd44c52fb83496bee7d6dc551827fd1b42"
+          },
+          "stage_2": {
+            "source_blend": "plants/golden_wheat/stage_2.blend",
+            "source_blend_sha256": "5cd986a9dc41dbb43f00bb7b176256a1a118b6a2406baa509800c27410d70c64",
+            "scene": "PG_golden_wheat_Stage2",
+            "canvas_px": [
+              256,
+              256
+            ],
+            "anchor_uv": [
+              0.4999997019767761,
+              0.9276604503393173
+            ],
+            "samples": 128,
+            "sha256": "7eb5ce7bed1b14cdee9a3d1aba1f55f98aa8b378373718cba6b5d81a7eb968de"
+          },
+          "stage_3": {
+            "source_blend": "plants/golden_wheat/stage_3.blend",
+            "source_blend_sha256": "77f4d7c8673e2e71276c7f411985a5f967e858615a3709042143e17dd9f114c8",
+            "scene": "PM_golden_wheat_Stage3",
+            "canvas_px": [
+              256,
+              256
+            ],
+            "anchor_uv": [
+              0.4999997019767761,
+              0.9276604503393173
+            ],
+            "samples": 128,
+            "sha256": "021a1e5ac73a9b27482eace4116c2ce2df6ebf6721e85e13910531155a9007ca"
+          }
+        }
       }
     },
     "fast_fir": {
@@ -41,8 +110,8 @@
         2
       ],
       "canvas_px": [
-        128,
-        192
+        512,
+        768
       ],
       "anchor_uv": [
         0.49999988079071045,
@@ -60,10 +129,79 @@
         "stage_3": "res://assets/farming/crops/fast_fir/stage_3.png"
       },
       "sha256": {
-        "stage_0": "c9131b40bad9f220dbad4f84186605d17991d446bab7584461d1e4beffa8e81d",
-        "stage_1": "51b114e48a893ac89fdaaaa2b5251ad2ccf1cab123b44e97c04c0b2ff8ea297c",
-        "stage_2": "90d9c48b46005c1ac1cd709f1b9100ede2919f1021d60c33a3991181d3c8ddfb",
-        "stage_3": "8badebfc41fc8f60e8466238e1d6691dd93d601112d4189b96bdeedf9be51464"
+        "stage_0": "6393a22cd54df1d5a3f437032bbc97c6df6a50e485b6f4f8374c40d12aff43d5",
+        "stage_1": "d44860d5e4c6d663f1573bfa3bbee33a27347f37ef6573e1506cb1139d8894a9",
+        "stage_2": "4da57817a8bfd54b9561db1aa7cb97d93157c6926500bcb714f15b42f2af6d5f",
+        "stage_3": "c6f6942719306cabeef23f9bf0768356f3ba647964ca0b2350b936e56aafbd54"
+      },
+      "handoff_canvas_px": [
+        128,
+        192
+      ],
+      "runtime_variant": {
+        "method": "Blender rerender at 4x canvas; display scale unchanged",
+        "renders": {
+          "stage_0": {
+            "source_blend": "plants/fast_fir/stage_0.blend",
+            "source_blend_sha256": "be9d39168d2d77e2df34d9afa20522cd3b0576ba9282b03a88b575e8288dd365",
+            "scene": "PG_fast_fir_Stage0",
+            "canvas_px": [
+              512,
+              768
+            ],
+            "anchor_uv": [
+              0.49999988079071045,
+              0.8753251135349274
+            ],
+            "samples": 128,
+            "sha256": "6393a22cd54df1d5a3f437032bbc97c6df6a50e485b6f4f8374c40d12aff43d5"
+          },
+          "stage_1": {
+            "source_blend": "plants/fast_fir/stage_1.blend",
+            "source_blend_sha256": "179ff8f5f7e79daceecfe50db4b9770dbaa2a97971946f7039ea01dfd3a3a0c8",
+            "scene": "PG_fast_fir_Stage1",
+            "canvas_px": [
+              512,
+              768
+            ],
+            "anchor_uv": [
+              0.49999988079071045,
+              0.8753251135349274
+            ],
+            "samples": 128,
+            "sha256": "d44860d5e4c6d663f1573bfa3bbee33a27347f37ef6573e1506cb1139d8894a9"
+          },
+          "stage_2": {
+            "source_blend": "plants/fast_fir/stage_2.blend",
+            "source_blend_sha256": "8a6db7132db4e05810e76f03b4abe96f5edb213ff3916b3040c18e268aa2c6ba",
+            "scene": "PG_fast_fir_Stage2",
+            "canvas_px": [
+              512,
+              768
+            ],
+            "anchor_uv": [
+              0.49999988079071045,
+              0.8753251135349274
+            ],
+            "samples": 128,
+            "sha256": "4da57817a8bfd54b9561db1aa7cb97d93157c6926500bcb714f15b42f2af6d5f"
+          },
+          "stage_3": {
+            "source_blend": "plants/fast_fir/stage_3.blend",
+            "source_blend_sha256": "b0f0f5643c22e3429a43289dd213eb0879ae9d46dcb6112ee12027ff0dc00579",
+            "scene": "PM_fast_fir_Stage3",
+            "canvas_px": [
+              512,
+              768
+            ],
+            "anchor_uv": [
+              0.49999988079071045,
+              0.8753251135349274
+            ],
+            "samples": 128,
+            "sha256": "c6f6942719306cabeef23f9bf0768356f3ba647964ca0b2350b936e56aafbd54"
+          }
+        }
       }
     },
     "resin_tree": {
@@ -72,8 +210,8 @@
         2
       ],
       "canvas_px": [
-        128,
-        192
+        512,
+        768
       ],
       "anchor_uv": [
         0.49999988079071045,
@@ -91,10 +229,79 @@
         "stage_3": "res://assets/farming/crops/resin_tree/stage_3.png"
       },
       "sha256": {
-        "stage_0": "de8d84ad1adffb4fd18e4cc6832bca9bc397478f4ad1d6a1221cff0246fda878",
-        "stage_1": "759d3e4da078c6c5926ea2d2ad1a7c032cede5db6b25765411df1cc2623b3e37",
-        "stage_2": "ff79323c0ad2e99f22f6357ef3e805a8db712b068bc1326d789c1a921f6f63ed",
-        "stage_3": "8753915f2c38b963266fe5a54addb32bc9fbdd9c06aba6c72dff0fbc5125323c"
+        "stage_0": "9205a994e3534464c6f38fdbf910ceba29aa18f19ddd2339f4dfa1d795835aad",
+        "stage_1": "ed37fc9f75a5e17d7650eb3c297b523c2d2e08fbf0d838a99df8d5bd3e9b170a",
+        "stage_2": "f972f3212f002534b99525d6bcf364518aa129b9a0aa69b76058120248d4be94",
+        "stage_3": "ba2de3209ac8f97c06dde0564abf082ac20d79720f99c260d25647f2a365bf12"
+      },
+      "handoff_canvas_px": [
+        128,
+        192
+      ],
+      "runtime_variant": {
+        "method": "Blender rerender at 4x canvas; display scale unchanged",
+        "renders": {
+          "stage_0": {
+            "source_blend": "plants/植物全阶段总工程.blend",
+            "source_blend_sha256": "a50b74a2640ff9e7abe6f8af966420426f64465bdb9e28aa09814fe1fd3e828e",
+            "scene": "RF_ResinTree_Stage0",
+            "canvas_px": [
+              512,
+              768
+            ],
+            "anchor_uv": [
+              0.49999988079071045,
+              0.9203707501292229
+            ],
+            "samples": 128,
+            "sha256": "9205a994e3534464c6f38fdbf910ceba29aa18f19ddd2339f4dfa1d795835aad"
+          },
+          "stage_1": {
+            "source_blend": "plants/植物全阶段总工程.blend",
+            "source_blend_sha256": "a50b74a2640ff9e7abe6f8af966420426f64465bdb9e28aa09814fe1fd3e828e",
+            "scene": "RF_ResinTree_Stage1",
+            "canvas_px": [
+              512,
+              768
+            ],
+            "anchor_uv": [
+              0.49999988079071045,
+              0.9203707501292229
+            ],
+            "samples": 128,
+            "sha256": "ed37fc9f75a5e17d7650eb3c297b523c2d2e08fbf0d838a99df8d5bd3e9b170a"
+          },
+          "stage_2": {
+            "source_blend": "plants/植物全阶段总工程.blend",
+            "source_blend_sha256": "a50b74a2640ff9e7abe6f8af966420426f64465bdb9e28aa09814fe1fd3e828e",
+            "scene": "RF_ResinTree_Stage2",
+            "canvas_px": [
+              512,
+              768
+            ],
+            "anchor_uv": [
+              0.49999988079071045,
+              0.9203707501292229
+            ],
+            "samples": 128,
+            "sha256": "f972f3212f002534b99525d6bcf364518aa129b9a0aa69b76058120248d4be94"
+          },
+          "stage_3": {
+            "source_blend": "plants/植物全阶段总工程.blend",
+            "source_blend_sha256": "a50b74a2640ff9e7abe6f8af966420426f64465bdb9e28aa09814fe1fd3e828e",
+            "scene": "RT_ResinTree_Stage3",
+            "canvas_px": [
+              512,
+              768
+            ],
+            "anchor_uv": [
+              0.49999988079071045,
+              0.9203707501292229
+            ],
+            "samples": 128,
+            "sha256": "ba2de3209ac8f97c06dde0564abf082ac20d79720f99c260d25647f2a365bf12"
+          }
+        }
       }
     },
     "wood_decay_mushroom": {
@@ -103,8 +310,8 @@
         1
       ],
       "canvas_px": [
-        64,
-        64
+        256,
+        256
       ],
       "anchor_uv": [
         0.49999967217445374,
@@ -122,10 +329,79 @@
         "stage_3": "res://assets/farming/crops/wood_decay_mushroom/stage_3.png"
       },
       "sha256": {
-        "stage_0": "d4b49e17fec959c0ce18116622bd23809b2852ecd6c358a0bf4a48a1bc8c6f97",
-        "stage_1": "26caa58d3882da6fe67e660173d2540e0c8054b3afe0c3f7b190f29acaabffa2",
-        "stage_2": "35765e4bcd8002b7cc6d0f2fd1585a56dc95be90533058531d43822c7a178797",
-        "stage_3": "35eb76c0cc0a9fb091bf64609e32a85f3b1b6c1b8471336677a4c4355ab03cd1"
+        "stage_0": "278b5a6268c54771896b9433754d92cc57af06c1e932d2ae6933a90a40cd71ee",
+        "stage_1": "1a97db9295eb1714befddda3be8286bb7e9e1b4e6fd5090593b1b4d59042af7c",
+        "stage_2": "03c002a4836a3f5ad740a2693ef13eaaa23a178a0c2d92a0982bc126cbd1346c",
+        "stage_3": "abf80c2085374a000b29e1c08abe811a99e881f78264aadaadfe66f6fadab916"
+      },
+      "handoff_canvas_px": [
+        64,
+        64
+      ],
+      "runtime_variant": {
+        "method": "Blender rerender at 4x canvas; display scale unchanged",
+        "renders": {
+          "stage_0": {
+            "source_blend": "plants/wood_decay_mushroom/stage_0.blend",
+            "source_blend_sha256": "7e22a7e71fbc5120489a239c4e8bf86f30486fb28f624a24a08d917397d50049",
+            "scene": "PG_wood_decay_mushroom_Stage0",
+            "canvas_px": [
+              256,
+              256
+            ],
+            "anchor_uv": [
+              0.49999967217445374,
+              0.9090920239686966
+            ],
+            "samples": 128,
+            "sha256": "278b5a6268c54771896b9433754d92cc57af06c1e932d2ae6933a90a40cd71ee"
+          },
+          "stage_1": {
+            "source_blend": "plants/wood_decay_mushroom/stage_1.blend",
+            "source_blend_sha256": "de7047c10f17c7ec14801c3fe1c3ad9ea8047aa273a99c12fc73365619ff70a7",
+            "scene": "PG_wood_decay_mushroom_Stage1",
+            "canvas_px": [
+              256,
+              256
+            ],
+            "anchor_uv": [
+              0.49999967217445374,
+              0.9090920239686966
+            ],
+            "samples": 128,
+            "sha256": "1a97db9295eb1714befddda3be8286bb7e9e1b4e6fd5090593b1b4d59042af7c"
+          },
+          "stage_2": {
+            "source_blend": "plants/wood_decay_mushroom/stage_2.blend",
+            "source_blend_sha256": "23628c4e27c41f83508ee1b33b80d7e796b2a0ea9de80bd1ae845f0607bdab7b",
+            "scene": "PG_wood_decay_mushroom_Stage2",
+            "canvas_px": [
+              256,
+              256
+            ],
+            "anchor_uv": [
+              0.49999967217445374,
+              0.9090920239686966
+            ],
+            "samples": 128,
+            "sha256": "03c002a4836a3f5ad740a2693ef13eaaa23a178a0c2d92a0982bc126cbd1346c"
+          },
+          "stage_3": {
+            "source_blend": "plants/wood_decay_mushroom/stage_3.blend",
+            "source_blend_sha256": "d2f4e83d7dfbf54776315d5d871027b3ef38b22088df25f3fbf52f5fec5d7975",
+            "scene": "PM_wood_decay_mushroom_Stage3",
+            "canvas_px": [
+              256,
+              256
+            ],
+            "anchor_uv": [
+              0.49999967217445374,
+              0.9090920239686966
+            ],
+            "samples": 128,
+            "sha256": "abf80c2085374a000b29e1c08abe811a99e881f78264aadaadfe66f6fadab916"
+          }
+        }
       }
     },
     "pasture_grass": {
@@ -134,8 +410,8 @@
         1
       ],
       "canvas_px": [
-        64,
-        64
+        256,
+        256
       ],
       "anchor_uv": [
         0.49999964237213135,
@@ -153,10 +429,79 @@
         "stage_3": "res://assets/farming/crops/pasture_grass/stage_3.png"
       },
       "sha256": {
-        "stage_0": "fb5d3c885a9e650ff11eaba5e2b727fe392c3ae52406195ceab5014408fb486e",
-        "stage_1": "d707c596442aeda2cb108e74ac465397f5189d278a4069747f60794572ff249e",
-        "stage_2": "5d0801197f6ad82f689fc18a115e1d35ea4f6639eb6a19e354285edb51b12838",
-        "stage_3": "b0256e7bb62a8424bc6cfd552a6582ecc5d8c33fb2665dd24cc819b9b3d571cf"
+        "stage_0": "cf4f4e29a0aab844950799195de28d5e7f64ae14069873d7379a075f7b6827c6",
+        "stage_1": "8dfeafceb284257854b7d415fdd1997fb78d51be8004ed45d027cd184cb44c27",
+        "stage_2": "38237e61d1ba5f0363a6e5336d7f13670abfe61f24eb91feddf8a88095bf9bf1",
+        "stage_3": "396f68e9713646bde6d0eacd663fd96131ed0f6cab41ebd29a5466322d6c0c88"
+      },
+      "handoff_canvas_px": [
+        64,
+        64
+      ],
+      "runtime_variant": {
+        "method": "Blender rerender at 4x canvas; display scale unchanged",
+        "renders": {
+          "stage_0": {
+            "source_blend": "plants/pasture_grass/stage_0.blend",
+            "source_blend_sha256": "eb7f0c535dca90def9c08ecea99b609a4593fb907502dbbac3d848fefe871bb8",
+            "scene": "PG_pasture_grass_Stage0",
+            "canvas_px": [
+              256,
+              256
+            ],
+            "anchor_uv": [
+              0.49999964237213135,
+              0.8095247745513916
+            ],
+            "samples": 128,
+            "sha256": "cf4f4e29a0aab844950799195de28d5e7f64ae14069873d7379a075f7b6827c6"
+          },
+          "stage_1": {
+            "source_blend": "plants/pasture_grass/stage_1.blend",
+            "source_blend_sha256": "a0b7eb8e20c36e3be24fa29c631abc5343aa504b9bc6e25d09b0f3fce345d2ec",
+            "scene": "PG_pasture_grass_Stage1",
+            "canvas_px": [
+              256,
+              256
+            ],
+            "anchor_uv": [
+              0.49999964237213135,
+              0.8095247745513916
+            ],
+            "samples": 128,
+            "sha256": "8dfeafceb284257854b7d415fdd1997fb78d51be8004ed45d027cd184cb44c27"
+          },
+          "stage_2": {
+            "source_blend": "plants/pasture_grass/stage_2.blend",
+            "source_blend_sha256": "6ca16f81ee0445215051a077677a300d8440c2cf8ced686c3e827af61436d03b",
+            "scene": "PG_pasture_grass_Stage2",
+            "canvas_px": [
+              256,
+              256
+            ],
+            "anchor_uv": [
+              0.49999964237213135,
+              0.8095247745513916
+            ],
+            "samples": 128,
+            "sha256": "38237e61d1ba5f0363a6e5336d7f13670abfe61f24eb91feddf8a88095bf9bf1"
+          },
+          "stage_3": {
+            "source_blend": "plants/pasture_grass/stage_3.blend",
+            "source_blend_sha256": "cf05a92200f074afb7ce8927d6af5e8829a4ffa3caf344eb35b52b771522b43f",
+            "scene": "PM_pasture_grass_Stage3",
+            "canvas_px": [
+              256,
+              256
+            ],
+            "anchor_uv": [
+              0.49999964237213135,
+              0.8095247745513916
+            ],
+            "samples": 128,
+            "sha256": "396f68e9713646bde6d0eacd663fd96131ed0f6cab41ebd29a5466322d6c0c88"
+          }
+        }
       }
     },
     "honeybell_bush": {
@@ -165,8 +510,8 @@
         1
       ],
       "canvas_px": [
-        64,
-        64
+        256,
+        256
       ],
       "anchor_uv": [
         0.4999997019767761,
@@ -184,10 +529,79 @@
         "stage_3": "res://assets/farming/crops/honeybell_bush/stage_3.png"
       },
       "sha256": {
-        "stage_0": "91e722420052773f0063ee1cfe0ef598ccc1421cb8be7630686b1b583950b17c",
-        "stage_1": "3c47d729f7351d9cdf1926e10a83ae269abe0c54090740d252b90504eb25e3aa",
-        "stage_2": "994b68b29310f648ef809210b5b6df5f5c0de024a3498d8569f3bfa6cf101342",
-        "stage_3": "e8dbc561cd15fbd33179f77fe9abc462a55cfa90c2745ff3bdb98aea33942ffa"
+        "stage_0": "667a044a47eb8501e1ac2b6fb72cef197fb8cad4ac71180131c8e188150e3c2a",
+        "stage_1": "b1bc0e1ef5a3a351074638b5d938d19ea6206922a25c86884cd7780e5d49006d",
+        "stage_2": "739a93108ce7ec4dfe40c98c8d5cc5c0c85b5e6aa7de4770dd6be917a8f50657",
+        "stage_3": "aa0250f9ced0430c2b1200f035efcef2d480a22d35a54e0976e074f94cb28948"
+      },
+      "handoff_canvas_px": [
+        64,
+        64
+      ],
+      "runtime_variant": {
+        "method": "Blender rerender at 4x canvas; display scale unchanged",
+        "renders": {
+          "stage_0": {
+            "source_blend": "plants/honeybell_bush/stage_0.blend",
+            "source_blend_sha256": "9e056dea8990af2da5ff9c4a2abbfcb7f537a92fb82552bbfde98289311efd3e",
+            "scene": "PG_honeybell_bush_Stage0",
+            "canvas_px": [
+              256,
+              256
+            ],
+            "anchor_uv": [
+              0.4999997019767761,
+              0.9200009256601334
+            ],
+            "samples": 128,
+            "sha256": "667a044a47eb8501e1ac2b6fb72cef197fb8cad4ac71180131c8e188150e3c2a"
+          },
+          "stage_1": {
+            "source_blend": "plants/honeybell_bush/stage_1.blend",
+            "source_blend_sha256": "5568fe6df4d3d9ece77b87e7e978c9bd4ea4e834c3a14720ac88c136ed23fa06",
+            "scene": "PG_honeybell_bush_Stage1",
+            "canvas_px": [
+              256,
+              256
+            ],
+            "anchor_uv": [
+              0.4999997019767761,
+              0.9200009256601334
+            ],
+            "samples": 128,
+            "sha256": "b1bc0e1ef5a3a351074638b5d938d19ea6206922a25c86884cd7780e5d49006d"
+          },
+          "stage_2": {
+            "source_blend": "plants/honeybell_bush/stage_2.blend",
+            "source_blend_sha256": "a028e304b7ec44b6e0f8096d52cf6eaa3d08440fc93b2343f8c5ef1c61daf760",
+            "scene": "PG_honeybell_bush_Stage2",
+            "canvas_px": [
+              256,
+              256
+            ],
+            "anchor_uv": [
+              0.4999997019767761,
+              0.9200009256601334
+            ],
+            "samples": 128,
+            "sha256": "739a93108ce7ec4dfe40c98c8d5cc5c0c85b5e6aa7de4770dd6be917a8f50657"
+          },
+          "stage_3": {
+            "source_blend": "plants/honeybell_bush/stage_3.blend",
+            "source_blend_sha256": "bc968847de24028e1bbf8a8a65e929e0b7100ab9f39016f3abf9b8332606e992",
+            "scene": "PM_honeybell_bush_Stage3",
+            "canvas_px": [
+              256,
+              256
+            ],
+            "anchor_uv": [
+              0.4999997019767761,
+              0.9200009256601334
+            ],
+            "samples": 128,
+            "sha256": "aa0250f9ced0430c2b1200f035efcef2d480a22d35a54e0976e074f94cb28948"
+          }
+        }
       }
     },
     "oilseed_flower": {
@@ -196,8 +610,8 @@
         1
       ],
       "canvas_px": [
-        64,
-        64
+        256,
+        256
       ],
       "anchor_uv": [
         0.4999997019767761,
@@ -216,11 +630,95 @@
         "flowering": "res://assets/farming/crops/oilseed_flower/flowering.png"
       },
       "sha256": {
-        "stage_0": "678ce56a05f5d31323d4e53dcaaea7675c43eca991e935c1c23dac48a39dabb3",
-        "stage_1": "db6f5af05b52b83e7a3f46ba2fd693dc1fe316d850d0e7a65c40e14d21f0cf56",
-        "stage_2": "f4080dd6ce166fe042a0aecadcd7b90beb17bfe2266a149374531ac49700de64",
-        "stage_3": "41a84be224cfadda9a59f8348a747303e8f13d99f668a83b9f57ec525c046042",
-        "flowering": "fce3f6a7cce80292f32de10b29cd0dd27ac810874ceee9203bef072d00f537a5"
+        "stage_0": "c4b77a019fd91f8d8b6d7f1ca997167eef0cdf1f0867f525c42842292de80c4b",
+        "stage_1": "daa8231f5f5f888d0247a102009a96752f86a885a279b00b0cd51da0fe15bf45",
+        "stage_2": "e5498ec1357838940228df1ba0179cbfd51c992c8be58d71bfa5bce6e698da15",
+        "stage_3": "9b85d1f5835684d528a73a6e040ee30d1647d03dcccb340029e499463fa372cd",
+        "flowering": "f254d9af2f45494c92b477c979ffddb6f5403615b098cab4ce987cb6e636d589"
+      },
+      "handoff_canvas_px": [
+        64,
+        64
+      ],
+      "runtime_variant": {
+        "method": "Blender rerender at 4x canvas; display scale unchanged",
+        "renders": {
+          "stage_0": {
+            "source_blend": "plants/oilseed_flower/stage_0.blend",
+            "source_blend_sha256": "0ba59cf593bd2a92c40c56ce3f49c9fe703b5d6a604dde797086259b1525ad21",
+            "scene": "PG_oilseed_flower_Stage0",
+            "canvas_px": [
+              256,
+              256
+            ],
+            "anchor_uv": [
+              0.4999997019767761,
+              0.9234050363302231
+            ],
+            "samples": 128,
+            "sha256": "c4b77a019fd91f8d8b6d7f1ca997167eef0cdf1f0867f525c42842292de80c4b"
+          },
+          "stage_1": {
+            "source_blend": "plants/oilseed_flower/stage_1.blend",
+            "source_blend_sha256": "870a185b3676ba893572840ed334624588cbfd8b9cf7ff8028ae05e91c0cd86f",
+            "scene": "PG_oilseed_flower_Stage1",
+            "canvas_px": [
+              256,
+              256
+            ],
+            "anchor_uv": [
+              0.4999997019767761,
+              0.9234050363302231
+            ],
+            "samples": 128,
+            "sha256": "daa8231f5f5f888d0247a102009a96752f86a885a279b00b0cd51da0fe15bf45"
+          },
+          "stage_2": {
+            "source_blend": "plants/oilseed_flower/stage_2.blend",
+            "source_blend_sha256": "db8048d2c31b4f344612050a9de2de641daf7d9912c350cf406a258ef35d43d4",
+            "scene": "PG_oilseed_flower_Stage2",
+            "canvas_px": [
+              256,
+              256
+            ],
+            "anchor_uv": [
+              0.4999997019767761,
+              0.9234050363302231
+            ],
+            "samples": 128,
+            "sha256": "e5498ec1357838940228df1ba0179cbfd51c992c8be58d71bfa5bce6e698da15"
+          },
+          "stage_3": {
+            "source_blend": "plants/oilseed_flower/stage_3.blend",
+            "source_blend_sha256": "1f50b335bf7a8470c71d7d0ff44280aad5055a93d7ead2fac7c9588f430a1c23",
+            "scene": "PM_oilseed_flower_Stage3",
+            "canvas_px": [
+              256,
+              256
+            ],
+            "anchor_uv": [
+              0.4999997019767761,
+              0.9234050363302231
+            ],
+            "samples": 128,
+            "sha256": "9b85d1f5835684d528a73a6e040ee30d1647d03dcccb340029e499463fa372cd"
+          },
+          "flowering": {
+            "source_blend": "plants/oilseed_flower/flowering.blend",
+            "source_blend_sha256": "704209a0fcda4ea233aef6dbbcd62c149bd097d1749653ae8764df6b62a9764c",
+            "scene": "PM_oilseed_flower_Flowering",
+            "canvas_px": [
+              256,
+              256
+            ],
+            "anchor_uv": [
+              0.4999997019767761,
+              0.9234050363302231
+            ],
+            "samples": 128,
+            "sha256": "f254d9af2f45494c92b477c979ffddb6f5403615b098cab4ce987cb6e636d589"
+          }
+        }
       }
     }
   }

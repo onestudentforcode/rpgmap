@@ -17,6 +17,8 @@ func _init() -> void:
 		if error != OK or image.is_empty():
 			_diagnose(ident,"cannot load %s (%d)" % [path,error])
 			continue
+		image.fix_alpha_edges()
+		image.generate_mipmaps()
 		textures[path] = ImageTexture.create_from_image(image)
 
 func _diagnose(key: String, message: String) -> void:

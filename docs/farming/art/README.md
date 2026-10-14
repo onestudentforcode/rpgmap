@@ -1,11 +1,13 @@
 # P8.5 资产接入资料
 
-日期：2026-10-14。七植物已接入并完成生命周期联验，15设施主体已导入并接入世界/建造预览；整体画面定版待P8.5.e。
+日期：2026-10-14。七植物与15设施主体已接入；e阶段高清图、地形背景与三窗口技术验收已完成，用户画面接受待确认。
 
 - [源植物交接归档](plant-assets-handoff.md)：来自美术工作区，文件链接按来源工作区解析，不能当作游戏资源路径。
 - [植物导入报告](plant-import-report.json)：29图逐文件源路径、SHA256、画布与alpha检查；对应游戏侧 `assets/farming/crops/plant_manifest.json`。
 - [设施盘点](facility-inventory.json)：覆盖当前15个游戏设施ID，记录已有图片尺寸、alpha与哈希。状态为盘点，未审批接入。
 - [设施实际渲染元数据](facility-render-metadata.json)：后台Blender只读打开15份源工程，记录各层相机矩阵、世界原点投影、正交宽度与工程哈希。
+- [运行图对比](runtime-render-comparison.json)与[窗口矩阵](visual-matrix.json)：44图轮廓对比与30截图尺寸记录。
+- [同屏美术指导](p85-visual-direction.md)：地面中间调、细节层级和透明/过滤取舍。
 
 ## 导入与核查
 
@@ -17,6 +19,12 @@ python tools/farming/inventory_p8_facilities.py --source C:/Users/88445/Desktop/
 python tools/farming/import_p8_facilities.py --source C:/Users/88445/Desktop/blender_assest --check
 python tools/farming/import_p8_facilities.py --source C:/Users/88445/Desktop/blender_assest
 ```
+
+上述不带 `--runtime-renders` 的命令重装原交接小图。当前定版运行图须先用后台Blender执行 `render_p85_runtime.py -- --source <美术工作区> --resume`，输出到 `.art-work/p85-runtime`，再给两种导入器添加 `--runtime-renders .art-work/p85-runtime`。工具先验证完整对应批次，再事务写入；相同图源和参数重复执行不会降采样或继续乘四放大。
+
+运行图为小植物256²、树512×768、单格设施256²、双格设施512²；来源工程/场景/采样数/PNG哈希逐图记录在运行清单的 `runtime_variant`。原始交接报告仍用于追溯小图，不代表当前游戏图片的哈希。当前44图RGBA解码约29.3MiB，加mipmap约39MiB（不含引擎/驱动开销）；PNG合计约3.9MB。
+
+读取PNG后在内存修正透明边RGB并生成mipmap，只改变采样，不改文件alpha、画布或根点。植物/设施共用的P8 Overlay使用Linear+mipmap，旧地形过滤和V1/V2保持原样。P8地形独立材质降低高频纹理对比，水库与UI不调色。
 
 导入器先验证完整源批次再写入，写入异常回滚本次文件变化；相同输入重复导入不改文件。保持原RGBA与连续alpha，不裁边、不量化、不删分离器官。目标尺寸采用交接小图版本，实际画面需要更高清资源时另批整族派生并更新来源校验。工具只在开发时使用，运行时没有上述绝对路径依赖。
 

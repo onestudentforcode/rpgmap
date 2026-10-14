@@ -75,9 +75,13 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--source', type=Path, required=True)
     parser.add_argument('--check', action='store_true')
+    parser.add_argument('--runtime-renders', type=Path)
     args = parser.parse_args()
     try:
         pending = prepare(args.source)
+        if args.runtime_renders:
+            from p85_runtime_variants import apply_variants
+            pending = apply_variants(pending,args.runtime_renders,'assets/farming/facilities/facility_manifest.json','facilities')
         changed = 0 if args.check else install(pending)
         print(f'P85 FACILITY IMPORT OK: 15 bodies; {changed} files written')
     except (ValueError, OSError, KeyError, StopIteration) as exc:

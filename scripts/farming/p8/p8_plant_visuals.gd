@@ -20,6 +20,8 @@ func _init(manifest_path: String = "res://assets/farming/crops/plant_manifest.js
 			if error != OK or image.is_empty():
 				_diagnose("%s/%s" % [ident, key], "cannot load %s (%d)" % [path, error])
 				continue
+			image.fix_alpha_edges()
+			image.generate_mipmaps()
 			textures[path] = ImageTexture.create_from_image(image)
 
 func _diagnose(key: String, message: String) -> void:

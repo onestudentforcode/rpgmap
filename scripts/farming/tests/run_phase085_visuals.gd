@@ -13,6 +13,7 @@ func check(ok: bool, label: String) -> void:
 func _initialize() -> void:
 	var visuals := Visuals.new()
 	check(visuals.textures.size() == 29, "29 textures cached")
+	check(visuals.textures.values()[0].get_image().has_mipmaps(),"plant mipmaps available at overview zoom")
 	check(visuals.diagnostics.is_empty(), "no missing textures")
 	var definitions: Dictionary = {}
 	var config: Dictionary = JSON.parse_string(FileAccess.get_file_as_string("res://content/farming/p8/production.json"))
@@ -46,6 +47,7 @@ func _initialize() -> void:
 	var shell := Shell.new()
 	check(shell.plant_visuals.enabled_ids.size() == 7, "all seven plants enabled")
 	check(shell.facility_visuals.textures.size() == 15,"all facility bodies cached")
+	check(shell.facility_visuals.textures.values()[0].get_image().has_mipmaps(),"facility mipmaps available")
 	for ident in shell.facility_visuals.facilities:
 		var data: Dictionary = shell.facility_visuals.facilities[ident]
 		var shape: Array = data["footprint"]

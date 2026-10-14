@@ -9,6 +9,8 @@ func _initialize() -> void:
 func _run() -> void:
 	var shell := Shell.new()
 	var directory := "res://.art-work/p85-visual-preview"
+	for argument in OS.get_cmdline_user_args():
+		if argument.begins_with("--p85-dir="): directory = argument.trim_prefix("--p85-dir=")
 	DirAccess.make_dir_recursive_absolute(directory)
 	shell.store = Store.new(directory + "/slots-%d" % Time.get_ticks_usec())
 	shell.settings = shell.settings.get_script().new(directory + "/settings.cfg", 0.1)
@@ -21,6 +23,7 @@ func _run() -> void:
 	shell.expanded = true
 	root.size = Vector2i(1920,1080)
 	await process_frame
+	await shell._prepare_preview(directory)
 	shell._layout()
 	var uid := 1
 	for i in range(4):
@@ -131,5 +134,89 @@ func _run() -> void:
 		await RenderingServer.frame_post_draw
 		error = maxi(error,root.get_texture().get_image().save_png(directory + "/negative-land.png"))
 		break
+	# Dense/mixed fixture uses real till/plant/build operations in a fresh slot.
+	shell._new(2,false)
+	for project in shell.world.research.project_defs(): shell.world.research.state["completed"].append(project)
+	var stock := {"raw_wood":100,"raw_stone":100}
+	for definition in shell.world.crop_defs.values():
+		stock[definition["seed"]] = 20
+		for ingredient in definition["inputs"]: stock[ingredient] = 100
+	shell.world.grant_scaffold(stock)
+	for ident in shell.world.crop_defs:
+		var definition: Dictionary = shell.world.crop_defs[ident]
+		var shape: Array = definition["footprint"]
+		for index in range(6 if ident in ["golden_wheat","pasture_grass"] else 2):
+			var cell := _free_cell(shell.world,shape)
+			if cell.x < 0:
+				printerr("dense fixture: no cell for ",ident)
+				quit(1)
+				return
+			shell.world.clock.ap = 24
+			for dy in range(shape[1]):
+				for dx in range(shape[0]): shell.world.till(cell+Vector2i(dx,dy))
+			var planted: Dictionary = shell.world.plant(cell,ident)
+			if not planted["ok"]:
+				printerr("dense fixture plant failed: ",planted)
+				quit(1)
+				return
+			var crop: Dictionary = shell.world.crops[int(planted["uid"])]
+			crop["state"] = "mature" if index%2 == 0 else "growing"
+			crop["progress"] = int(definition["days"])*100 if index%2 == 0 else ceili(float(int(definition["days"])*100)*0.6)
+			if ident == "oilseed_flower":
+				crop["state"] = "growing"
+				crop["progress"] = 300+index*200
+	var build_cell := _free_cell(shell.world,[2,2])
+	shell.world.clock.ap = 24
+	var neighbor: Dictionary = shell.world.build_facility(build_cell,"woodshop")
+	if not neighbor["ok"]:
+		printerr("dense neighbor failed: ",neighbor)
+		quit(1)
+		return
+	shell.digest.visible = false
+	shell.selected = build_cell
+	shell._close_page()
+	if shell.shade.visible:
+		printerr("dense fixture unexpectedly covered by a modal")
+		quit(1)
+		return
+	for zoom in [0.1,1.0,3.0]:
+		shell.camera.position = Vector2(448,180)
+		shell.camera.zoom = Vector2.ONE*zoom
+		shell.overlay.queue_redraw()
+		await process_frame
+		await process_frame
+		await RenderingServer.frame_post_draw
+		error = maxi(error,root.get_texture().get_image().save_png(directory+"/dense-%.1f.png" % zoom))
+	var before_pan := shell.camera.position
+	var before_pan_model := shell.world.to_snapshot()
+	var press := InputEventMouseButton.new()
+	press.button_index = MOUSE_BUTTON_MIDDLE
+	press.pressed = true
+	shell._board_input(press)
+	var motion := InputEventMouseMotion.new()
+	motion.button_mask = MOUSE_BUTTON_MASK_MIDDLE
+	motion.relative = Vector2(-60,-30)
+	shell._board_input(motion)
+	press.pressed = false
+	shell._board_input(press)
+	if shell.camera.position == before_pan or shell.world.to_snapshot() != before_pan_model:
+		printerr("middle pan did not move camera or mutated the world")
+		quit(1)
+		return
+	await process_frame
+	await RenderingServer.frame_post_draw
+	error = maxi(error,root.get_texture().get_image().save_png(directory+"/dense-pan.png"))
 	print("P85 VISUAL PREVIEW OK" if error == OK else "P85 VISUAL PREVIEW FAILED")
 	quit(0 if error == OK else 1)
+
+func _free_cell(world, shape: Array) -> Vector2i:
+	for y in range(1,6):
+		for x in range(1,14):
+			var candidate := Vector2i(x,y)
+			var valid := true
+			for dy in range(shape[1]):
+				for dx in range(shape[0]):
+					var cell := candidate+Vector2i(dx,dy)
+					if not world.grid.can_till(cell)["ok"] or world._source_cells.has(cell): valid = false
+			if valid: return candidate
+	return Vector2i(-1,-1)
