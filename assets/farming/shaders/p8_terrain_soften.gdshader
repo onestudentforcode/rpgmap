@@ -2,7 +2,7 @@ shader_type canvas_item;
 uniform vec4 terrain_tone : source_color = vec4(0.65, 0.73, 0.57, 1.0);
 uniform float detail_strength : hint_range(0.0, 1.0) = 0.0;
 uniform int surface_kind = 0;
-uniform float surface_detail : hint_range(0.0, 1.5) = 0.65;
+uniform float surface_detail : hint_range(0.0, 1.5) = 1.0;
 varying vec4 item_tint;
 varying vec2 ground_position;
 

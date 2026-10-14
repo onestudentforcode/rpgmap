@@ -23,7 +23,8 @@
         1.0,
         3.0
       ],
-      "middle_pan_verified_by_fixture": true
+      "middle_pan_verified_by_fixture": true,
+      "gpu_log": "passed"
     },
     {
       "viewport": [
@@ -47,7 +48,8 @@
         1.0,
         3.0
       ],
-      "middle_pan_verified_by_fixture": true
+      "middle_pan_verified_by_fixture": true,
+      "gpu_log": "passed"
     },
     {
       "viewport": [
@@ -71,7 +73,12 @@
         1.0,
         3.0
       ],
-      "middle_pan_verified_by_fixture": true
+      "middle_pan_verified_by_fixture": true,
+      "gpu_log": "passed"
     }
-  ]
+  ],
+  "terrain_candidate": "B",
+  "terrain_surface_detail": 1.0,
+  "user_selected_candidate": "B",
+  "screenshot_base": ".art-work/p85-final-visual"
 }

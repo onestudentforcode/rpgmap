@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "terrain_detail_strength": 0.0,
-  "terrain_surface_detail": 0.65,
+  "terrain_surface_detail": 1.0,
   "terrain_surface_kinds": {"grass": 0, "dirt": 1, "stone": 2, "tilled": 3},
   "terrain_tones": {
     "grass": "a4ba91",
