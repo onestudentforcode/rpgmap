@@ -15,6 +15,11 @@ func _run() -> void:
 	shell.store = Store.new(directory + "/slots-%d" % Time.get_ticks_usec())
 	shell.settings = shell.settings.get_script().new(directory + "/settings.cfg", 0.1)
 	root.add_child(shell)
+	for argument in OS.get_cmdline_user_args():
+		if argument.begins_with("--ground-detail="):
+			var detail := float(argument.trim_prefix("--ground-detail="))
+			for ident in ["grass", "dirt", "stone", "tilled"]:
+				shell.terrain.layers[ident].material.set_shader_parameter("surface_detail", detail)
 	await process_frame
 	shell._new(1, false)
 	shell.world.journal["guide"]["dismissed"] = true

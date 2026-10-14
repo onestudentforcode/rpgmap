@@ -40,6 +40,8 @@ func _ready() -> void:
 		material.shader = TerrainSoften
 		material.set_shader_parameter("terrain_tone",Color(String(style["terrain_tones"][ident])))
 		material.set_shader_parameter("detail_strength",float(style["terrain_detail_strength"]))
+		material.set_shader_parameter("surface_kind",int(style["terrain_surface_kinds"][ident]))
+		material.set_shader_parameter("surface_detail",float(style["terrain_surface_detail"]))
 		terrain.layers[ident].material = material
 
 func _refresh() -> void:
