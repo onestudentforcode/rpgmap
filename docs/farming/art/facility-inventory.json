@@ -1,0 +1,1646 @@
+{
+  "status": "inventory_only_not_approved",
+  "facilities": [
+    {
+      "id": "woodshop",
+      "name": "木工台",
+      "footprint": [
+        2,
+        2
+      ],
+      "status": "needs_render_metadata",
+      "files": [
+        {
+          "source": "facilities/woodshop/woodshop_body.png",
+          "size": [
+            1280,
+            1280
+          ],
+          "mode": "RGBA",
+          "alpha_bbox": [
+            321,
+            425,
+            991,
+            913
+          ],
+          "sha256": "3c18e2fd15a5e7a431c76956d18e59d84a5a800ac1fd0964ba6436f95a27f257"
+        },
+        {
+          "source": "facilities/woodshop/woodshop_body_128.png",
+          "size": [
+            128,
+            128
+          ],
+          "mode": "RGBA",
+          "alpha_bbox": [
+            31,
+            42,
+            100,
+            92
+          ],
+          "sha256": "fd7d95c19297cbfc1d7fe0654571bb21cbe021ddb6a7eeb0e787f3ec304fe226"
+        },
+        {
+          "source": "facilities/woodshop/woodshop_found.png",
+          "size": [
+            1280,
+            1280
+          ],
+          "mode": "RGBA",
+          "alpha_bbox": [
+            0,
+            0,
+            1280,
+            1280
+          ],
+          "sha256": "c8507c50abff21efa9ea29a71b9e4d23483725f11a2cacedb33eb382f621275a"
+        },
+        {
+          "source": "facilities/woodshop/woodshop_found_128.png",
+          "size": [
+            128,
+            128
+          ],
+          "mode": "RGBA",
+          "alpha_bbox": [
+            0,
+            0,
+            128,
+            128
+          ],
+          "sha256": "458591170177bf3a53a454366b3bda26e11ef49d2bfeebc054248967980b1929"
+        },
+        {
+          "source": "facilities/woodshop/woodshop_fx.png",
+          "size": [
+            1280,
+            1280
+          ],
+          "mode": "RGBA",
+          "alpha_bbox": [
+            475,
+            568,
+            696,
+            713
+          ],
+          "sha256": "f1d296a084e9c930e05f76f9133953ecc1f35c018065a5d5b0ae04de294df8f8"
+        },
+        {
+          "source": "facilities/woodshop/woodshop_fx_128.png",
+          "size": [
+            128,
+            128
+          ],
+          "mode": "RGBA",
+          "alpha_bbox": [
+            46,
+            56,
+            71,
+            72
+          ],
+          "sha256": "8f491c50f9420c4d3e35a7df577191f47255b4a3ba3e3c8b79960afb4f9c4a00"
+        }
+      ],
+      "blend": [
+        "facilities/woodshop/woodshop.blend"
+      ],
+      "missing": [
+        "verified per-layer camera and projected root",
+        "world-calibrated draw size",
+        "approved source version and state mapping"
+      ]
+    },
+    {
+      "id": "char_kiln",
+      "name": "炭化炉",
+      "footprint": [
+        2,
+        2
+      ],
+      "status": "needs_render_metadata",
+      "files": [
+        {
+          "source": "facilities/char_kiln/char_kiln_body.png",
+          "size": [
+            1280,
+            1280
+          ],
+          "mode": "RGBA",
+          "alpha_bbox": [
+            317,
+            325,
+            931,
+            975
+          ],
+          "sha256": "f898c0d48de43ead83f7e49531032d9bdba16fd62d01dc5984774409dbf8b122"
+        },
+        {
+          "source": "facilities/char_kiln/char_kiln_body_128.png",
+          "size": [
+            128,
+            128
+          ],
+          "mode": "RGBA",
+          "alpha_bbox": [
+            31,
+            32,
+            94,
+            98
+          ],
+          "sha256": "c20c8cb99c73156e1eb3bca82c2fa130d513f019505576fe1fcde2850f643a0b"
+        },
+        {
+          "source": "facilities/char_kiln/char_kiln_found.png",
+          "size": [
+            1280,
+            1280
+          ],
+          "mode": "RGBA",
+          "alpha_bbox": [
+            0,
+            0,
+            1280,
+            1280
+          ],
+          "sha256": "174d518b1b94fd11716027974c03c41ffd824bcfaf7f8f453346ddf40e3e5ecf"
+        },
+        {
+          "source": "facilities/char_kiln/char_kiln_found_128.png",
+          "size": [
+            128,
+            128
+          ],
+          "mode": "RGBA",
+          "alpha_bbox": [
+            0,
+            0,
+            128,
+            128
+          ],
+          "sha256": "c7eb178eaf95ad0e7d6c89d698ed49750a93d0f799692c1e8f47173b03752660"
+        },
+        {
+          "source": "facilities/char_kiln/char_kiln_fx.png",
+          "size": [
+            1280,
+            1280
+          ],
+          "mode": "RGBA",
+          "alpha_bbox": [
+            416,
+            183,
+            701,
+            657
+          ],
+          "sha256": "816b112d5f8da96c97bc3f635c84d7170d7b57138d54062b30ab934bcc1e87db"
+        },
+        {
+          "source": "facilities/char_kiln/char_kiln_fx_128.png",
+          "size": [
+            128,
+            128
+          ],
+          "mode": "RGBA",
+          "alpha_bbox": [
+            41,
+            17,
+            71,
+            67
+          ],
+          "sha256": "ce8351a7e6574d0c5717ed56450ee6497a33be8cb776813cd4227b3c29165e91"
+        }
+      ],
+      "blend": [
+        "facilities/char_kiln/char_kiln.blend"
+      ],
+      "missing": [
+        "verified per-layer camera and projected root",
+        "world-calibrated draw size",
+        "approved source version and state mapping"
+      ]
+    },
+    {
+      "id": "compost_bin",
+      "name": "堆肥箱",
+      "footprint": [
+        1,
+        1
+      ],
+      "status": "needs_render_metadata",
+      "files": [
+        {
+          "source": "facilities/compost_bin/compost_bin_body.png",
+          "size": [
+            640,
+            640
+          ],
+          "mode": "RGBA",
+          "alpha_bbox": [
+            126,
+            207,
+            467,
+            527
+          ],
+          "sha256": "a8d6b4579969600e18f184793179c17260e579b79f07a5393b184e1c63ba8e76"
+        },
+        {
+          "source": "facilities/compost_bin/compost_bin_body_64.png",
+          "size": [
+            64,
+            64
+          ],
+          "mode": "RGBA",
+          "alpha_bbox": [
+            12,
+            20,
+            48,
+            53
+          ],
+          "sha256": "e402a7bc9c84e148bd273bd058083f67bcabc57ef522f670e9b2d179473ad48c"
+        },
+        {
+          "source": "facilities/compost_bin/compost_bin_found.png",
+          "size": [
+            640,
+            640
+          ],
+          "mode": "RGBA",
+          "alpha_bbox": [
+            0,
+            0,
+            640,
+            640
+          ],
+          "sha256": "501395b278a145489a22c749c9bae4428f5d51f2e1a1452b1b9a247379f809e3"
+        },
+        {
+          "source": "facilities/compost_bin/compost_bin_found_64.png",
+          "size": [
+            64,
+            64
+          ],
+          "mode": "RGBA",
+          "alpha_bbox": [
+            0,
+            0,
+            64,
+            64
+          ],
+          "sha256": "54ea0a29f044c992d6eba9f9ace46e34ba93705525ae26c6ed866b29d7b93c32"
+        },
+        {
+          "source": "facilities/compost_bin/compost_bin_fx.png",
+          "size": [
+            640,
+            640
+          ],
+          "mode": "RGBA",
+          "alpha_bbox": [
+            242,
+            237,
+            388,
+            439
+          ],
+          "sha256": "ee138405bf632c5d115e2773d496b349220cdb3f1607e88b8a14e319c695a465"
+        },
+        {
+          "source": "facilities/compost_bin/compost_bin_fx_64.png",
+          "size": [
+            64,
+            64
+          ],
+          "mode": "RGBA",
+          "alpha_bbox": [
+            23,
+            23,
+            40,
+            45
+          ],
+          "sha256": "1693d741cd3a05ad86f1059065b2fd50095ef0dfded6d1ce508e3c66d02781b0"
+        }
+      ],
+      "blend": [
+        "facilities/compost_bin/compost_bin.blend"
+      ],
+      "missing": [
+        "verified per-layer camera and projected root",
+        "world-calibrated draw size",
+        "approved source version and state mapping"
+      ]
+    },
+    {
+      "id": "smelter",
+      "name": "小型冶炼炉",
+      "footprint": [
+        2,
+        2
+      ],
+      "status": "needs_render_metadata",
+      "files": [
+        {
+          "source": "facilities/smelter/smelter_body.png",
+          "size": [
+            1280,
+            1280
+          ],
+          "mode": "RGBA",
+          "alpha_bbox": [
+            186,
+            395,
+            1032,
+            986
+          ],
+          "sha256": "191ac81cc4a9f868d8a56f600d6556de856a8cfcae16bd30626ed14657eb6744"
+        },
+        {
+          "source": "facilities/smelter/smelter_body_128.png",
+          "size": [
+            128,
+            128
+          ],
+          "mode": "RGBA",
+          "alpha_bbox": [
+            18,
+            38,
+            104,
+            100
+          ],
+          "sha256": "02bb9e237133b3d2a8d189d5d93bba9b69d8457d055a6bf6e4978a8533d01cc6"
+        },
+        {
+          "source": "facilities/smelter/smelter_found.png",
+          "size": [
+            1280,
+            1280
+          ],
+          "mode": "RGBA",
+          "alpha_bbox": [
+            0,
+            0,
+            1280,
+            1280
+          ],
+          "sha256": "868c241edc49bdba682492a763441cac78acebf59e692b7217a930fb2762f974"
+        },
+        {
+          "source": "facilities/smelter/smelter_found_128.png",
+          "size": [
+            128,
+            128
+          ],
+          "mode": "RGBA",
+          "alpha_bbox": [
+            0,
+            0,
+            128,
+            128
+          ],
+          "sha256": "4736eff4e82a92bb81006fb75ec4675cddb3355c7332569bc480986f3a6a6293"
+        },
+        {
+          "source": "facilities/smelter/smelter_fx.png",
+          "size": [
+            1280,
+            1280
+          ],
+          "mode": "RGBA",
+          "alpha_bbox": [
+            354,
+            468,
+            775,
+            775
+          ],
+          "sha256": "e3711b0bd218cf9e48bc1bd041e655fc10a51c1a6a1da8b28bdf4d944a47ee8c"
+        },
+        {
+          "source": "facilities/smelter/smelter_fx_128.png",
+          "size": [
+            128,
+            128
+          ],
+          "mode": "RGBA",
+          "alpha_bbox": [
+            34,
+            46,
+            78,
+            78
+          ],
+          "sha256": "ba51defbfd6029e332df47422f131ced47da3ec359d2bd7d9f35335d9bf0c4cc"
+        }
+      ],
+      "blend": [
+        "facilities/smelter/smelter.blend"
+      ],
+      "missing": [
+        "verified per-layer camera and projected root",
+        "world-calibrated draw size",
+        "approved source version and state mapping"
+      ]
+    },
+    {
+      "id": "pen",
+      "name": "圈舍",
+      "footprint": [
+        2,
+        2
+      ],
+      "status": "needs_render_metadata",
+      "files": [
+        {
+          "source": "facilities/pen/pen_body.png",
+          "size": [
+            1280,
+            1280
+          ],
+          "mode": "RGBA",
+          "alpha_bbox": [
+            286,
+            358,
+            994,
+            1025
+          ],
+          "sha256": "a14c0d7b1069c89a90c8b6bd52348944e0671e5b371f30725cff9767eaf87266"
+        },
+        {
+          "source": "facilities/pen/pen_body_128.png",
+          "size": [
+            128,
+            128
+          ],
+          "mode": "RGBA",
+          "alpha_bbox": [
+            27,
+            35,
+            101,
+            104
+          ],
+          "sha256": "20d8b8653f22e04cfe9ba8f91976f48ae0b5d290afe3193170b8beeebb98b529"
+        },
+        {
+          "source": "facilities/pen/pen_found.png",
+          "size": [
+            1280,
+            1280
+          ],
+          "mode": "RGBA",
+          "alpha_bbox": [
+            0,
+            0,
+            1280,
+            1280
+          ],
+          "sha256": "9c22a563ce65533be96c733a704b2e1f322ff5f047e52f34e5d0a91d5246920b"
+        },
+        {
+          "source": "facilities/pen/pen_found_128.png",
+          "size": [
+            128,
+            128
+          ],
+          "mode": "RGBA",
+          "alpha_bbox": [
+            0,
+            0,
+            128,
+            128
+          ],
+          "sha256": "5238dd9abafe6cdd2602311394e04211187ba2e1de572d00da1c3ec3a9204d84"
+        },
+        {
+          "source": "facilities/pen/pen_fx.png",
+          "size": [
+            1280,
+            1280
+          ],
+          "mode": "RGBA",
+          "alpha_bbox": [
+            680,
+            587,
+            840,
+            869
+          ],
+          "sha256": "d242f2e3a5cb1ae6f1ac45e4e5bf8b84aba47434eb787ae83a374501b2b61264"
+        },
+        {
+          "source": "facilities/pen/pen_fx_128.png",
+          "size": [
+            128,
+            128
+          ],
+          "mode": "RGBA",
+          "alpha_bbox": [
+            67,
+            58,
+            85,
+            88
+          ],
+          "sha256": "a89f6d60722d4e5bd7f19a6a1f588626774028d12b52bd5b5365e72c6295c1a2"
+        }
+      ],
+      "blend": [
+        "facilities/pen/pen.blend"
+      ],
+      "missing": [
+        "verified per-layer camera and projected root",
+        "world-calibrated draw size",
+        "approved source version and state mapping"
+      ]
+    },
+    {
+      "id": "fish_pond",
+      "name": "水场",
+      "footprint": [
+        2,
+        2
+      ],
+      "status": "needs_render_metadata",
+      "files": [
+        {
+          "source": "facilities/fish_pond/fish_pond_body.png",
+          "size": [
+            1280,
+            1280
+          ],
+          "mode": "RGBA",
+          "alpha_bbox": [
+            266,
+            542,
+            1001,
+            1011
+          ],
+          "sha256": "f5c12218b5ee384355989d9d063cce50f01c817cfdf3ebd7cf7d1ff59bf3d770"
+        },
+        {
+          "source": "facilities/fish_pond/fish_pond_body_128.png",
+          "size": [
+            128,
+            128
+          ],
+          "mode": "RGBA",
+          "alpha_bbox": [
+            26,
+            53,
+            101,
+            102
+          ],
+          "sha256": "558d927137891b780658262886d0c3a5c129ab63c51a777964704ae1e4ebf691"
+        },
+        {
+          "source": "facilities/fish_pond/fish_pond_found.png",
+          "size": [
+            1280,
+            1280
+          ],
+          "mode": "RGBA",
+          "alpha_bbox": [
+            0,
+            0,
+            1280,
+            1280
+          ],
+          "sha256": "882bc65754baa89fd2092c9097c7e19cee68cd8c02df55faa3f9f0f0c4823b43"
+        },
+        {
+          "source": "facilities/fish_pond/fish_pond_found_128.png",
+          "size": [
+            128,
+            128
+          ],
+          "mode": "RGBA",
+          "alpha_bbox": [
+            0,
+            0,
+            128,
+            128
+          ],
+          "sha256": "5037039d916e5a4893f37a7c57a30c20ddd1692420f086b47c607ea2a21810d5"
+        },
+        {
+          "source": "facilities/fish_pond/fish_pond_fx.png",
+          "size": [
+            1280,
+            1280
+          ],
+          "mode": "RGBA",
+          "alpha_bbox": [
+            528,
+            619,
+            752,
+            820
+          ],
+          "sha256": "ad066b51a3f7c32dcde152ffedc6e9636dcdc3994c5a52904ef44bd489999a71"
+        },
+        {
+          "source": "facilities/fish_pond/fish_pond_fx_128.png",
+          "size": [
+            128,
+            128
+          ],
+          "mode": "RGBA",
+          "alpha_bbox": [
+            52,
+            61,
+            76,
+            83
+          ],
+          "sha256": "6e028bda65eda54495393e4afb19f5e54d8286af239b9127b72df15c22ecad74"
+        }
+      ],
+      "blend": [
+        "facilities/fish_pond/fish_pond.blend"
+      ],
+      "missing": [
+        "verified per-layer camera and projected root",
+        "world-calibrated draw size",
+        "approved source version and state mapping"
+      ]
+    },
+    {
+      "id": "algae_tank",
+      "name": "藻类培养槽",
+      "footprint": [
+        1,
+        1
+      ],
+      "status": "needs_render_metadata",
+      "files": [
+        {
+          "source": "facilities/algae_tank/algae_tank_body.png",
+          "size": [
+            640,
+            640
+          ],
+          "mode": "RGBA",
+          "alpha_bbox": [
+            216,
+            185,
+            424,
+            502
+          ],
+          "sha256": "9ecc524152157ae2d5517befec8f0f11b7ac16be15228774f1c9aa803c4e8084"
+        },
+        {
+          "source": "facilities/algae_tank/algae_tank_body_64.png",
+          "size": [
+            64,
+            64
+          ],
+          "mode": "RGBA",
+          "alpha_bbox": [
+            21,
+            17,
+            44,
+            51
+          ],
+          "sha256": "3f2faaacab33157f2f306d859664d3e4715736b1b2658c3e41b488dc61603b99"
+        },
+        {
+          "source": "facilities/algae_tank/algae_tank_found.png",
+          "size": [
+            640,
+            640
+          ],
+          "mode": "RGBA",
+          "alpha_bbox": [
+            0,
+            0,
+            640,
+            640
+          ],
+          "sha256": "c05bd44add3f38591a4de8618d0e152e64ccc45af769a375c34f4cfb206b20fb"
+        },
+        {
+          "source": "facilities/algae_tank/algae_tank_found_64.png",
+          "size": [
+            64,
+            64
+          ],
+          "mode": "RGBA",
+          "alpha_bbox": [
+            0,
+            0,
+            64,
+            64
+          ],
+          "sha256": "43a98a711b780bbc4f3dbca67ed44249e05dd82d0a9d5ab0a636429bdb2cc9a6"
+        },
+        {
+          "source": "facilities/algae_tank/algae_tank_fx.png",
+          "size": [
+            640,
+            640
+          ],
+          "mode": "RGBA",
+          "alpha_bbox": [
+            262,
+            171,
+            378,
+            299
+          ],
+          "sha256": "c179db425d3cbc6c5437d353221ce74c0750f79dab05d881b1121550085b2201"
+        },
+        {
+          "source": "facilities/algae_tank/algae_tank_fx_64.png",
+          "size": [
+            64,
+            64
+          ],
+          "mode": "RGBA",
+          "alpha_bbox": [
+            25,
+            16,
+            39,
+            31
+          ],
+          "sha256": "b386a51cfe2a84c68fbb5a2d807725eb5d78b86eec589cd4e649bcea2271319a"
+        }
+      ],
+      "blend": [
+        "facilities/algae_tank/algae_tank.blend"
+      ],
+      "missing": [
+        "verified per-layer camera and projected root",
+        "world-calibrated draw size",
+        "approved source version and state mapping"
+      ]
+    },
+    {
+      "id": "research_bench",
+      "name": "研究台",
+      "footprint": [
+        1,
+        1
+      ],
+      "status": "needs_render_metadata",
+      "files": [
+        {
+          "source": "facilities/research_bench/research_bench_body.png",
+          "size": [
+            640,
+            640
+          ],
+          "mode": "RGBA",
+          "alpha_bbox": [
+            166,
+            66,
+            537,
+            529
+          ],
+          "sha256": "231babea6de0df80f89b60fb19b5ad447015b529ff33a0c7ebe7ca47c4044f6b"
+        },
+        {
+          "source": "facilities/research_bench/research_bench_body_64.png",
+          "size": [
+            64,
+            64
+          ],
+          "mode": "RGBA",
+          "alpha_bbox": [
+            16,
+            5,
+            55,
+            54
+          ],
+          "sha256": "ef968e61916dc512a7a9c4bb93acce10fc884f3923218a8238baa03aeebab3a5"
+        },
+        {
+          "source": "facilities/research_bench/research_bench_found.png",
+          "size": [
+            640,
+            640
+          ],
+          "mode": "RGBA",
+          "alpha_bbox": [
+            0,
+            0,
+            640,
+            640
+          ],
+          "sha256": "d5c52273d0d9a52ff3f264e1c94238b546a9baf9e543ffce94bbfd7e981f00b8"
+        },
+        {
+          "source": "facilities/research_bench/research_bench_found_64.png",
+          "size": [
+            64,
+            64
+          ],
+          "mode": "RGBA",
+          "alpha_bbox": [
+            0,
+            0,
+            64,
+            64
+          ],
+          "sha256": "c55a458b8c2e82ede87f115af74400838d6b83fd9cf3d1d2bbe0697c2ad40af4"
+        },
+        {
+          "source": "facilities/research_bench/research_bench_fx.png",
+          "size": [
+            640,
+            640
+          ],
+          "mode": "RGBA",
+          "alpha_bbox": [
+            272,
+            86,
+            363,
+            226
+          ],
+          "sha256": "324810cb418a933d842a07d16fbfb3acffd3869feb6cda9998029b775e0815e7"
+        },
+        {
+          "source": "facilities/research_bench/research_bench_fx_64.png",
+          "size": [
+            64,
+            64
+          ],
+          "mode": "RGBA",
+          "alpha_bbox": [
+            26,
+            8,
+            38,
+            23
+          ],
+          "sha256": "b8b6327078c21657653c582a591348ccc2d3d4cac15a7329642e9f1c69a89baf"
+        }
+      ],
+      "blend": [
+        "facilities/research_bench/research_bench.blend"
+      ],
+      "missing": [
+        "verified per-layer camera and projected root",
+        "world-calibrated draw size",
+        "approved source version and state mapping"
+      ]
+    },
+    {
+      "id": "bee_hive",
+      "name": "蜂箱",
+      "footprint": [
+        2,
+        2
+      ],
+      "status": "needs_render_metadata",
+      "files": [
+        {
+          "source": "facilities/bee_hive/bee_hive_body.png",
+          "size": [
+            1280,
+            1280
+          ],
+          "mode": "RGBA",
+          "alpha_bbox": [
+            445,
+            399,
+            826,
+            927
+          ],
+          "sha256": "da2302655e2c532e3f8efce4c4e6cd153c300c7ac9f09af249acb21122c654bd"
+        },
+        {
+          "source": "facilities/bee_hive/bee_hive_body_128.png",
+          "size": [
+            128,
+            128
+          ],
+          "mode": "RGBA",
+          "alpha_bbox": [
+            43,
+            39,
+            84,
+            94
+          ],
+          "sha256": "69bfb0be06e1d85b35e2960b9a76d32957921721a773bc057bf8d7559032162e"
+        },
+        {
+          "source": "facilities/bee_hive/bee_hive_found.png",
+          "size": [
+            1280,
+            1280
+          ],
+          "mode": "RGBA",
+          "alpha_bbox": [
+            0,
+            0,
+            1280,
+            1280
+          ],
+          "sha256": "2580c814055758c5e94a6c76fb06e36b38e699b2333a535b2c51479abf0a3b53"
+        },
+        {
+          "source": "facilities/bee_hive/bee_hive_found_128.png",
+          "size": [
+            128,
+            128
+          ],
+          "mode": "RGBA",
+          "alpha_bbox": [
+            0,
+            0,
+            128,
+            128
+          ],
+          "sha256": "93f9d5a832aef17b4e68790e5e5db25cd357c1dc289806f95e713fdf7e939918"
+        },
+        {
+          "source": "facilities/bee_hive/bee_hive_fx.png",
+          "size": [
+            1280,
+            1280
+          ],
+          "mode": "RGBA",
+          "alpha_bbox": [
+            456,
+            601,
+            815,
+            863
+          ],
+          "sha256": "21c192cdf19136ca8886d2e704d14ac9233b1bc05be9fcc9d93bbf0bcd46b7b2"
+        },
+        {
+          "source": "facilities/bee_hive/bee_hive_fx_128.png",
+          "size": [
+            128,
+            128
+          ],
+          "mode": "RGBA",
+          "alpha_bbox": [
+            45,
+            59,
+            82,
+            88
+          ],
+          "sha256": "8210c948c94c99f4d20dfbe469e2dbc18e2f74b25e0a7ee8c29d509e6d921d41"
+        }
+      ],
+      "blend": [
+        "facilities/bee_hive/bee_hive.blend"
+      ],
+      "missing": [
+        "verified per-layer camera and projected root",
+        "world-calibrated draw size",
+        "approved source version and state mapping"
+      ]
+    },
+    {
+      "id": "farm_processor",
+      "name": "农产加工台",
+      "footprint": [
+        2,
+        2
+      ],
+      "status": "needs_render_metadata",
+      "files": [
+        {
+          "source": "facilities/farm_processor/farm_processor_body.png",
+          "size": [
+            1280,
+            1280
+          ],
+          "mode": "RGBA",
+          "alpha_bbox": [
+            249,
+            390,
+            983,
+            998
+          ],
+          "sha256": "ec9ec33ba0d454b5b72e0b152d8a45f6b07467b9f742dbdcbe9761ed2c31f04e"
+        },
+        {
+          "source": "facilities/farm_processor/farm_processor_body_128.png",
+          "size": [
+            128,
+            128
+          ],
+          "mode": "RGBA",
+          "alpha_bbox": [
+            24,
+            38,
+            99,
+            101
+          ],
+          "sha256": "1b59a962f7ccb97dc83e54435a9016b01c6d5f5722fea16bb18e6c462222a41a"
+        },
+        {
+          "source": "facilities/farm_processor/farm_processor_found.png",
+          "size": [
+            1280,
+            1280
+          ],
+          "mode": "RGBA",
+          "alpha_bbox": [
+            0,
+            0,
+            1280,
+            1280
+          ],
+          "sha256": "a11238e1a8297990f932e5a2c6a72c6b7bfb729280f223798d0e247015fa02f9"
+        },
+        {
+          "source": "facilities/farm_processor/farm_processor_found_128.png",
+          "size": [
+            128,
+            128
+          ],
+          "mode": "RGBA",
+          "alpha_bbox": [
+            0,
+            0,
+            128,
+            128
+          ],
+          "sha256": "c1232118cbb8d4519398c6a2e2a0df45849f370d93770122be4684d98a525f14"
+        },
+        {
+          "source": "facilities/farm_processor/farm_processor_fx.png",
+          "size": [
+            1280,
+            1280
+          ],
+          "mode": "RGBA",
+          "alpha_bbox": [
+            375,
+            499,
+            605,
+            824
+          ],
+          "sha256": "c08be17340e4f52b1cd558a45a0cbc7ec67e1824fb82cf15034f3493d2520082"
+        },
+        {
+          "source": "facilities/farm_processor/farm_processor_fx_128.png",
+          "size": [
+            128,
+            128
+          ],
+          "mode": "RGBA",
+          "alpha_bbox": [
+            36,
+            49,
+            61,
+            83
+          ],
+          "sha256": "fa7d762442a10d1b4336cb45652883e7e5c36422d97fdc18c9c55e6ccdc8ee86"
+        }
+      ],
+      "blend": [
+        "facilities/farm_processor/farm_processor.blend"
+      ],
+      "missing": [
+        "verified per-layer camera and projected root",
+        "world-calibrated draw size",
+        "approved source version and state mapping"
+      ]
+    },
+    {
+      "id": "purifying_bed",
+      "name": "净水菌床",
+      "footprint": [
+        2,
+        2
+      ],
+      "status": "needs_render_metadata",
+      "files": [
+        {
+          "source": "facilities/purifying_bed/purifying_bed_body.png",
+          "size": [
+            1280,
+            1280
+          ],
+          "mode": "RGBA",
+          "alpha_bbox": [
+            369,
+            480,
+            931,
+            1051
+          ],
+          "sha256": "f83d9c4a25f74ab69327dc21e375e84da4be715ad30e72f5d9dbaa852ec5fd0d"
+        },
+        {
+          "source": "facilities/purifying_bed/purifying_bed_body_128.png",
+          "size": [
+            128,
+            128
+          ],
+          "mode": "RGBA",
+          "alpha_bbox": [
+            36,
+            47,
+            94,
+            106
+          ],
+          "sha256": "5816b0aa17fc4709ab11585ee99d93164481f89431a3497ccd7f64a4ee21bd99"
+        },
+        {
+          "source": "facilities/purifying_bed/purifying_bed_found.png",
+          "size": [
+            1280,
+            1280
+          ],
+          "mode": "RGBA",
+          "alpha_bbox": [
+            0,
+            0,
+            1280,
+            1280
+          ],
+          "sha256": "b35463e5110624a73b46b3c629ed84d98a2f46ff53e5075bb7106a307c5a31f6"
+        },
+        {
+          "source": "facilities/purifying_bed/purifying_bed_found_128.png",
+          "size": [
+            128,
+            128
+          ],
+          "mode": "RGBA",
+          "alpha_bbox": [
+            0,
+            0,
+            128,
+            128
+          ],
+          "sha256": "48977627d7839e8c4d20b6cf7ceea1a119353a6f98d08e1aa9096d51bcd92562"
+        },
+        {
+          "source": "facilities/purifying_bed/purifying_bed_fx.png",
+          "size": [
+            1280,
+            1280
+          ],
+          "mode": "RGBA",
+          "alpha_bbox": [
+            555,
+            588,
+            730,
+            1000
+          ],
+          "sha256": "12e77edb02c73a1375aecea58bd39f0e2593d66282cf81cb4eaa489a1f5060df"
+        },
+        {
+          "source": "facilities/purifying_bed/purifying_bed_fx_128.png",
+          "size": [
+            128,
+            128
+          ],
+          "mode": "RGBA",
+          "alpha_bbox": [
+            55,
+            58,
+            74,
+            101
+          ],
+          "sha256": "1f32d5f02a0a02ee04f404ab31a24f78049e98b2df90a8bbf8963420b4b21746"
+        }
+      ],
+      "blend": [
+        "facilities/purifying_bed/purifying_bed.blend"
+      ],
+      "missing": [
+        "verified per-layer camera and projected root",
+        "world-calibrated draw size",
+        "approved source version and state mapping"
+      ]
+    },
+    {
+      "id": "rock_workyard",
+      "name": "岩兽工作场",
+      "footprint": [
+        2,
+        2
+      ],
+      "status": "needs_render_metadata",
+      "files": [
+        {
+          "source": "facilities/rock_workyard/rock_workyard_body.png",
+          "size": [
+            1280,
+            1280
+          ],
+          "mode": "RGBA",
+          "alpha_bbox": [
+            267,
+            387,
+            1013,
+            1026
+          ],
+          "sha256": "9043579341046b33a2702e26f31d9d1d27da8e06f223081328bfac588f96da6d"
+        },
+        {
+          "source": "facilities/rock_workyard/rock_workyard_body_128.png",
+          "size": [
+            128,
+            128
+          ],
+          "mode": "RGBA",
+          "alpha_bbox": [
+            26,
+            38,
+            102,
+            104
+          ],
+          "sha256": "b03d130393e35a49e666647c5e65f2a2d4437607b624c6afc2856a2489cfb367"
+        },
+        {
+          "source": "facilities/rock_workyard/rock_workyard_found.png",
+          "size": [
+            1280,
+            1280
+          ],
+          "mode": "RGBA",
+          "alpha_bbox": [
+            0,
+            0,
+            1280,
+            1280
+          ],
+          "sha256": "f74096bea0379bc1acb002c275b8794d5aaf755a1c3b829fa7ec6287e9889c63"
+        },
+        {
+          "source": "facilities/rock_workyard/rock_workyard_found_128.png",
+          "size": [
+            128,
+            128
+          ],
+          "mode": "RGBA",
+          "alpha_bbox": [
+            0,
+            0,
+            128,
+            128
+          ],
+          "sha256": "362e4945c9dc62e3b2e7a8fc6a4e31a89eee669aced28bf68e1e562cfd3560b8"
+        },
+        {
+          "source": "facilities/rock_workyard/rock_workyard_fx.png",
+          "size": [
+            1280,
+            1280
+          ],
+          "mode": "RGBA",
+          "alpha_bbox": [
+            535,
+            593,
+            705,
+            700
+          ],
+          "sha256": "e75ab580e0345016b1e11fe8e0eaad402c08b0320f5e0e942d31901abe18ed10"
+        },
+        {
+          "source": "facilities/rock_workyard/rock_workyard_fx_128.png",
+          "size": [
+            128,
+            128
+          ],
+          "mode": "RGBA",
+          "alpha_bbox": [
+            52,
+            58,
+            72,
+            71
+          ],
+          "sha256": "3fa2195ce8e88968154e1c1b0529d678e60a861509b57833613cf8811bba295c"
+        }
+      ],
+      "blend": [
+        "facilities/rock_workyard/rock_workyard.blend"
+      ],
+      "missing": [
+        "verified per-layer camera and projected root",
+        "world-calibrated draw size",
+        "approved source version and state mapping"
+      ]
+    },
+    {
+      "id": "kitchen",
+      "name": "厨房",
+      "footprint": [
+        2,
+        2
+      ],
+      "status": "needs_render_metadata",
+      "files": [
+        {
+          "source": "facilities/kitchen/kitchen_body.png",
+          "size": [
+            1280,
+            1280
+          ],
+          "mode": "RGBA",
+          "alpha_bbox": [
+            239,
+            326,
+            1009,
+            913
+          ],
+          "sha256": "a0dd77845bc450ec9e48a823c564ae15588203fca7877c26e18182ec1792db03"
+        },
+        {
+          "source": "facilities/kitchen/kitchen_body_128.png",
+          "size": [
+            128,
+            128
+          ],
+          "mode": "RGBA",
+          "alpha_bbox": [
+            23,
+            32,
+            102,
+            92
+          ],
+          "sha256": "bee5ddb5e447e8181377acf8cbb998708f78e9efca0768462d7a2077dd692726"
+        },
+        {
+          "source": "facilities/kitchen/kitchen_found.png",
+          "size": [
+            1280,
+            1280
+          ],
+          "mode": "RGBA",
+          "alpha_bbox": [
+            0,
+            0,
+            1280,
+            1280
+          ],
+          "sha256": "8d76d0bfd8b6e04a425f0dd46e85a4328c98442582555c80181fcb86b36bb59a"
+        },
+        {
+          "source": "facilities/kitchen/kitchen_found_128.png",
+          "size": [
+            128,
+            128
+          ],
+          "mode": "RGBA",
+          "alpha_bbox": [
+            0,
+            0,
+            128,
+            128
+          ],
+          "sha256": "76c7b09e4db9e8f84dd9e7bc9c9043cd2f4513857fe23139d4166ecd76f5bd40"
+        },
+        {
+          "source": "facilities/kitchen/kitchen_fx.png",
+          "size": [
+            1280,
+            1280
+          ],
+          "mode": "RGBA",
+          "alpha_bbox": [
+            555,
+            116,
+            700,
+            641
+          ],
+          "sha256": "f3818906431c32f8b4263afcc7cabf51c1b9566c93481adffdf9f3e5ba3aafb4"
+        },
+        {
+          "source": "facilities/kitchen/kitchen_fx_128.png",
+          "size": [
+            128,
+            128
+          ],
+          "mode": "RGBA",
+          "alpha_bbox": [
+            54,
+            11,
+            71,
+            65
+          ],
+          "sha256": "898fef06683a64ac1f896704242b38156ba46ef1a87a99f776115d522df56f34"
+        }
+      ],
+      "blend": [
+        "facilities/kitchen/kitchen.blend"
+      ],
+      "missing": [
+        "verified per-layer camera and projected root",
+        "world-calibrated draw size",
+        "approved source version and state mapping"
+      ]
+    },
+    {
+      "id": "field_service_station",
+      "name": "田间维护站",
+      "footprint": [
+        2,
+        2
+      ],
+      "status": "needs_render_metadata",
+      "files": [
+        {
+          "source": "facilities/field_service_station/field_service_station_body.png",
+          "size": [
+            1280,
+            1280
+          ],
+          "mode": "RGBA",
+          "alpha_bbox": [
+            402,
+            308,
+            991,
+            935
+          ],
+          "sha256": "8da1cd2f89a9f68421d2524a9aef5ee76a12da0c8866cbf6804acda7d0e3eedb"
+        },
+        {
+          "source": "facilities/field_service_station/field_service_station_body_128.png",
+          "size": [
+            128,
+            128
+          ],
+          "mode": "RGBA",
+          "alpha_bbox": [
+            39,
+            30,
+            100,
+            94
+          ],
+          "sha256": "f5caa24aeb8f2c111ff5c45c1e311b647af02519fcb805a939478de79875b1c5"
+        },
+        {
+          "source": "facilities/field_service_station/field_service_station_found.png",
+          "size": [
+            1280,
+            1280
+          ],
+          "mode": "RGBA",
+          "alpha_bbox": [
+            0,
+            0,
+            1280,
+            1280
+          ],
+          "sha256": "7e929c93507b910a457cbdaa9f7eecb8fd6d193137dc5d0cd7bbe5648c1f76f3"
+        },
+        {
+          "source": "facilities/field_service_station/field_service_station_found_128.png",
+          "size": [
+            128,
+            128
+          ],
+          "mode": "RGBA",
+          "alpha_bbox": [
+            0,
+            0,
+            128,
+            128
+          ],
+          "sha256": "b5317daae545e482d61684501c885b41ca0eaaf22bfb461fa3688699987f9f69"
+        },
+        {
+          "source": "facilities/field_service_station/field_service_station_fx.png",
+          "size": [
+            1280,
+            1280
+          ],
+          "mode": "RGBA",
+          "alpha_bbox": [
+            443,
+            617,
+            497,
+            671
+          ],
+          "sha256": "1f4fdfb5ef2511e0a1834319c7719f0f393a7d64e58d6b60cf19842de3d00d9e"
+        },
+        {
+          "source": "facilities/field_service_station/field_service_station_fx_128.png",
+          "size": [
+            128,
+            128
+          ],
+          "mode": "RGBA",
+          "alpha_bbox": [
+            43,
+            61,
+            51,
+            68
+          ],
+          "sha256": "dd74d4f389d17f5565db6e848cd060dad11ccf475c9baf487b3f282fcb6b3216"
+        }
+      ],
+      "blend": [
+        "facilities/field_service_station/field_service_station.blend"
+      ],
+      "missing": [
+        "verified per-layer camera and projected root",
+        "world-calibrated draw size",
+        "approved source version and state mapping"
+      ]
+    },
+    {
+      "id": "growth_lamp",
+      "name": "补光灯",
+      "footprint": [
+        1,
+        1
+      ],
+      "status": "needs_render_metadata",
+      "files": [
+        {
+          "source": "facilities/growth_lamp/growth_lamp_body.png",
+          "size": [
+            640,
+            640
+          ],
+          "mode": "RGBA",
+          "alpha_bbox": [
+            235,
+            62,
+            405,
+            502
+          ],
+          "sha256": "f2cc4bb1ac8809c1e2f432877b00e6557ce413d08c6e26c4a3fcca926a1b3801"
+        },
+        {
+          "source": "facilities/growth_lamp/growth_lamp_body_64.png",
+          "size": [
+            64,
+            64
+          ],
+          "mode": "RGBA",
+          "alpha_bbox": [
+            22,
+            5,
+            41,
+            51
+          ],
+          "sha256": "e900f5585a6a020e5bc2ad70550c98fcf115a7d10b50f67f9178ff8e68c1df0f"
+        },
+        {
+          "source": "facilities/growth_lamp/growth_lamp_found.png",
+          "size": [
+            640,
+            640
+          ],
+          "mode": "RGBA",
+          "alpha_bbox": [
+            0,
+            0,
+            640,
+            640
+          ],
+          "sha256": "a49f8f08b8c8c4a230bc2d72a8b84337eea8ae07438fe77d106723038db2d8d7"
+        },
+        {
+          "source": "facilities/growth_lamp/growth_lamp_found_64.png",
+          "size": [
+            64,
+            64
+          ],
+          "mode": "RGBA",
+          "alpha_bbox": [
+            0,
+            0,
+            64,
+            64
+          ],
+          "sha256": "3da450a6e641b86fbade7d038e735f9549fc65747cad0d08d4753642a820d1a4"
+        },
+        {
+          "source": "facilities/growth_lamp/growth_lamp_fx.png",
+          "size": [
+            640,
+            640
+          ],
+          "mode": "RGBA",
+          "alpha_bbox": [
+            226,
+            34,
+            395,
+            499
+          ],
+          "sha256": "1e931092351148f4f07402bbe72eac691dc216fcd56f20de69ee7040f21bda7d"
+        },
+        {
+          "source": "facilities/growth_lamp/growth_lamp_fx_64.png",
+          "size": [
+            64,
+            64
+          ],
+          "mode": "RGBA",
+          "alpha_bbox": [
+            22,
+            2,
+            40,
+            51
+          ],
+          "sha256": "56af35adf17bf202e6cd7ccd86929878d5f6f3aa5e4cf3cfc240394b22496220"
+        }
+      ],
+      "blend": [
+        "facilities/growth_lamp/growth_lamp.blend"
+      ],
+      "missing": [
+        "verified per-layer camera and projected root",
+        "world-calibrated draw size",
+        "approved source version and state mapping"
+      ]
+    }
+  ],
+  "unmapped_source_directories": [],
+  "notes": [
+    "Body/foundation/fx layers require separate metadata; foundation camera is top-down.",
+    "Root-level water well/mine/lumber and full-map previews are not auto-mapped.",
+    "Kit camera values are clues, not verified metadata from saved scene/render."
+  ]
+}

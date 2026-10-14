@@ -1,0 +1,227 @@
+{
+  "schema_version": 1,
+  "logical_cell_size": 64,
+  "texture_filter": "linear",
+  "source_commit": "1122705",
+  "plants": {
+    "golden_wheat": {
+      "footprint": [
+        1,
+        1
+      ],
+      "canvas_px": [
+        64,
+        64
+      ],
+      "anchor_uv": [
+        0.4999997019767761,
+        0.9276604503393173
+      ],
+      "draw_size": [
+        75.19999694824219,
+        75.19999694824219
+      ],
+      "scale_multiplier": 1.0,
+      "stages": {
+        "stage_0": "res://assets/farming/crops/golden_wheat/stage_0.png",
+        "stage_1": "res://assets/farming/crops/golden_wheat/stage_1.png",
+        "stage_2": "res://assets/farming/crops/golden_wheat/stage_2.png",
+        "stage_3": "res://assets/farming/crops/golden_wheat/stage_3.png"
+      },
+      "sha256": {
+        "stage_0": "12ada52a498a5d3b41fa37883ba795e6e2ef52d62314aa9c55534e823612fe03",
+        "stage_1": "4e7fc805068d4aee952337532d194ec525b7e8812ccb0bd0e54843a8a20d3b79",
+        "stage_2": "767d7bea7f43b120f30b794fe71cd1d403257e8084aa90b1f63ab2074aaedec5",
+        "stage_3": "1748078567f8a027a46bc143eba1f1c81fd8e887cd8e48c36c19234f80d07723"
+      }
+    },
+    "fast_fir": {
+      "footprint": [
+        2,
+        2
+      ],
+      "canvas_px": [
+        128,
+        192
+      ],
+      "anchor_uv": [
+        0.49999988079071045,
+        0.8753251135349274
+      ],
+      "draw_size": [
+        123.19999694824219,
+        184.79999542236328
+      ],
+      "scale_multiplier": 1.0,
+      "stages": {
+        "stage_0": "res://assets/farming/crops/fast_fir/stage_0.png",
+        "stage_1": "res://assets/farming/crops/fast_fir/stage_1.png",
+        "stage_2": "res://assets/farming/crops/fast_fir/stage_2.png",
+        "stage_3": "res://assets/farming/crops/fast_fir/stage_3.png"
+      },
+      "sha256": {
+        "stage_0": "c9131b40bad9f220dbad4f84186605d17991d446bab7584461d1e4beffa8e81d",
+        "stage_1": "51b114e48a893ac89fdaaaa2b5251ad2ccf1cab123b44e97c04c0b2ff8ea297c",
+        "stage_2": "90d9c48b46005c1ac1cd709f1b9100ede2919f1021d60c33a3991181d3c8ddfb",
+        "stage_3": "8badebfc41fc8f60e8466238e1d6691dd93d601112d4189b96bdeedf9be51464"
+      }
+    },
+    "resin_tree": {
+      "footprint": [
+        2,
+        2
+      ],
+      "canvas_px": [
+        128,
+        192
+      ],
+      "anchor_uv": [
+        0.49999988079071045,
+        0.9203707501292229
+      ],
+      "draw_size": [
+        115.2,
+        172.8
+      ],
+      "scale_multiplier": 1.0,
+      "stages": {
+        "stage_0": "res://assets/farming/crops/resin_tree/stage_0.png",
+        "stage_1": "res://assets/farming/crops/resin_tree/stage_1.png",
+        "stage_2": "res://assets/farming/crops/resin_tree/stage_2.png",
+        "stage_3": "res://assets/farming/crops/resin_tree/stage_3.png"
+      },
+      "sha256": {
+        "stage_0": "de8d84ad1adffb4fd18e4cc6832bca9bc397478f4ad1d6a1221cff0246fda878",
+        "stage_1": "759d3e4da078c6c5926ea2d2ad1a7c032cede5db6b25765411df1cc2623b3e37",
+        "stage_2": "ff79323c0ad2e99f22f6357ef3e805a8db712b068bc1326d789c1a921f6f63ed",
+        "stage_3": "8753915f2c38b963266fe5a54addb32bc9fbdd9c06aba6c72dff0fbc5125323c"
+      }
+    },
+    "wood_decay_mushroom": {
+      "footprint": [
+        1,
+        1
+      ],
+      "canvas_px": [
+        64,
+        64
+      ],
+      "anchor_uv": [
+        0.49999967217445374,
+        0.9090920239686966
+      ],
+      "draw_size": [
+        70.4000015258789,
+        70.4000015258789
+      ],
+      "scale_multiplier": 1.0,
+      "stages": {
+        "stage_0": "res://assets/farming/crops/wood_decay_mushroom/stage_0.png",
+        "stage_1": "res://assets/farming/crops/wood_decay_mushroom/stage_1.png",
+        "stage_2": "res://assets/farming/crops/wood_decay_mushroom/stage_2.png",
+        "stage_3": "res://assets/farming/crops/wood_decay_mushroom/stage_3.png"
+      },
+      "sha256": {
+        "stage_0": "d4b49e17fec959c0ce18116622bd23809b2852ecd6c358a0bf4a48a1bc8c6f97",
+        "stage_1": "26caa58d3882da6fe67e660173d2540e0c8054b3afe0c3f7b190f29acaabffa2",
+        "stage_2": "35765e4bcd8002b7cc6d0f2fd1585a56dc95be90533058531d43822c7a178797",
+        "stage_3": "35eb76c0cc0a9fb091bf64609e32a85f3b1b6c1b8471336677a4c4355ab03cd1"
+      }
+    },
+    "pasture_grass": {
+      "footprint": [
+        1,
+        1
+      ],
+      "canvas_px": [
+        64,
+        64
+      ],
+      "anchor_uv": [
+        0.49999964237213135,
+        0.8095247745513916
+      ],
+      "draw_size": [
+        67.19999694824219,
+        67.19999694824219
+      ],
+      "scale_multiplier": 1.0,
+      "stages": {
+        "stage_0": "res://assets/farming/crops/pasture_grass/stage_0.png",
+        "stage_1": "res://assets/farming/crops/pasture_grass/stage_1.png",
+        "stage_2": "res://assets/farming/crops/pasture_grass/stage_2.png",
+        "stage_3": "res://assets/farming/crops/pasture_grass/stage_3.png"
+      },
+      "sha256": {
+        "stage_0": "fb5d3c885a9e650ff11eaba5e2b727fe392c3ae52406195ceab5014408fb486e",
+        "stage_1": "d707c596442aeda2cb108e74ac465397f5189d278a4069747f60794572ff249e",
+        "stage_2": "5d0801197f6ad82f689fc18a115e1d35ea4f6639eb6a19e354285edb51b12838",
+        "stage_3": "b0256e7bb62a8424bc6cfd552a6582ecc5d8c33fb2665dd24cc819b9b3d571cf"
+      }
+    },
+    "honeybell_bush": {
+      "footprint": [
+        1,
+        1
+      ],
+      "canvas_px": [
+        64,
+        64
+      ],
+      "anchor_uv": [
+        0.4999997019767761,
+        0.9200009256601334
+      ],
+      "draw_size": [
+        72.0,
+        72.0
+      ],
+      "scale_multiplier": 1.0,
+      "stages": {
+        "stage_0": "res://assets/farming/crops/honeybell_bush/stage_0.png",
+        "stage_1": "res://assets/farming/crops/honeybell_bush/stage_1.png",
+        "stage_2": "res://assets/farming/crops/honeybell_bush/stage_2.png",
+        "stage_3": "res://assets/farming/crops/honeybell_bush/stage_3.png"
+      },
+      "sha256": {
+        "stage_0": "91e722420052773f0063ee1cfe0ef598ccc1421cb8be7630686b1b583950b17c",
+        "stage_1": "3c47d729f7351d9cdf1926e10a83ae269abe0c54090740d252b90504eb25e3aa",
+        "stage_2": "994b68b29310f648ef809210b5b6df5f5c0de024a3498d8569f3bfa6cf101342",
+        "stage_3": "e8dbc561cd15fbd33179f77fe9abc462a55cfa90c2745ff3bdb98aea33942ffa"
+      }
+    },
+    "oilseed_flower": {
+      "footprint": [
+        1,
+        1
+      ],
+      "canvas_px": [
+        64,
+        64
+      ],
+      "anchor_uv": [
+        0.4999997019767761,
+        0.9234050363302231
+      ],
+      "draw_size": [
+        75.19999694824219,
+        75.19999694824219
+      ],
+      "scale_multiplier": 1.0,
+      "stages": {
+        "stage_0": "res://assets/farming/crops/oilseed_flower/stage_0.png",
+        "stage_1": "res://assets/farming/crops/oilseed_flower/stage_1.png",
+        "stage_2": "res://assets/farming/crops/oilseed_flower/stage_2.png",
+        "stage_3": "res://assets/farming/crops/oilseed_flower/stage_3.png",
+        "flowering": "res://assets/farming/crops/oilseed_flower/flowering.png"
+      },
+      "sha256": {
+        "stage_0": "678ce56a05f5d31323d4e53dcaaea7675c43eca991e935c1c23dac48a39dabb3",
+        "stage_1": "db6f5af05b52b83e7a3f46ba2fd693dc1fe316d850d0e7a65c40e14d21f0cf56",
+        "stage_2": "f4080dd6ce166fe042a0aecadcd7b90beb17bfe2266a149374531ac49700de64",
+        "stage_3": "41a84be224cfadda9a59f8348a747303e8f13d99f668a83b9f57ec525c046042",
+        "flowering": "fce3f6a7cce80292f32de10b29cd0dd27ac810874ceee9203bef072d00f537a5"
+      }
+    }
+  }
+}
