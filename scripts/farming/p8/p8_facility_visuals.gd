@@ -1,5 +1,6 @@
 extends RefCounted
 ## Body renders only. Top-down foundation and decorative fx are deferred layers.
+const Grounding := preload("res://scripts/farming/p8/p8_grounding.gd")
 var facilities: Dictionary = {}
 var textures: Dictionary = {}
 var diagnostics: Dictionary = {}
@@ -39,3 +40,7 @@ func visual(ident: String, footprint_rect: Rect2) -> Dictionary:
 	# Facility models use (0,0) as the center of their floor, unlike plant roots.
 	var point := footprint_rect.get_center()
 	return {"texture":textures[path],"rect":Rect2(point-size*anchor,size),"root":point}
+
+func ground_root(origin: Array, footprint: Array) -> Vector2:
+	return Grounding.ground_root(origin,footprint,"facility")
+

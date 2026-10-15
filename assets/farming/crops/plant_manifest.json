@@ -29,8 +29,8 @@
         "stage_3": "res://assets/farming/crops/golden_wheat/stage_3.png"
       },
       "sha256": {
-        "stage_0": "3becde4678f11a1f280f236661c382d2812a01304a60a5566d5c16faea0f1352",
-        "stage_1": "ca7afdc8cb43fb5de6733b7945d611bd44c52fb83496bee7d6dc551827fd1b42",
+        "stage_0": "32a4950471afe0999b7b98492a5f7b70dbd98d8a65530df8dee20437d2d958cc",
+        "stage_1": "912b59c931f19de4a0b79743e5a6d41447f3b3269d5b75c68bf36864af0fc76b",
         "stage_2": "7eb5ce7bed1b14cdee9a3d1aba1f55f98aa8b378373718cba6b5d81a7eb968de",
         "stage_3": "021a1e5ac73a9b27482eace4116c2ce2df6ebf6721e85e13910531155a9007ca"
       },
@@ -54,7 +54,105 @@
               0.9276604503393173
             ],
             "samples": 128,
-            "sha256": "3becde4678f11a1f280f236661c382d2812a01304a60a5566d5c16faea0f1352"
+            "sha256": "32a4950471afe0999b7b98492a5f7b70dbd98d8a65530df8dee20437d2d958cc",
+            "recipe_fingerprint": "ca6c5a237d0afb5e6a9113751a548c175eb972e8bc60063fad5b603157838cf7",
+            "render_recipe": {
+              "schema_version": 1,
+              "scripts": {
+                "render_p85_runtime.py": "46c06c6a366fde24baf264cde92fce21559c9aa452346065140f7828b4a42586",
+                "p85_render_support.py": "ca5d9a5fd1f7784008bdc70194e3806caa77fe6d660308a3290907fe166916f0"
+              },
+              "blender_version": "5.2.1 LTS",
+              "source_blend_sha256": "729dbb242e489785e7247462d8a32c7fcf21369982a78ad9574655d82be03f66",
+              "scene": "PG_golden_wheat_Stage0",
+              "id": "golden_wheat",
+              "state": "stage_0",
+              "canvas_px": [
+                256,
+                256
+              ],
+              "anchor_uv": [
+                0.4999997019767761,
+                0.9276604503393173
+              ],
+              "geometry_overrides": {
+                "height_scale": 2.4,
+                "leaf_width_scale": 2.17,
+                "leaf_thickness_scale": 1.5,
+                "stem_radius_scale": 1.6,
+                "leaf_fan_xy_scale": 4.0
+              },
+              "recipe_sha256": "9d4428ffdf05f7f7bb0094fe72e2d6e03ace18882d04b61b89c33a43e03103bf",
+              "camera": {
+                "name": "PM_golden_wheat_Camera",
+                "type": "ORTHO",
+                "matrix_world": [
+                  [
+                    -1.0,
+                    -1.4526915492751868e-07,
+                    8.261329753622704e-08,
+                    0.0
+                  ],
+                  [
+                    1.5099580252808664e-07,
+                    -0.5735762715339661,
+                    0.8191521763801575,
+                    7.615076541900635
+                  ],
+                  [
+                    -7.16125185817873e-08,
+                    0.8191521763801575,
+                    0.5735762715339661,
+                    6.559012413024902
+                  ],
+                  [
+                    0.0,
+                    0.0,
+                    0.0,
+                    1.0
+                  ]
+                ],
+                "ortho_scale": 2.3499999046325684,
+                "sensor_fit": "HORIZONTAL"
+              },
+              "render": {
+                "engine": "CYCLES",
+                "device": "CPU",
+                "samples": 128,
+                "denoising": true,
+                "film_transparent": true,
+                "format": "PNG",
+                "color_mode": "RGBA",
+                "color_depth": "8",
+                "view_transform": "Standard",
+                "look": "None",
+                "exposure": 0.0,
+                "gamma": 1.0
+              }
+            },
+            "geometry_overrides": {
+              "parameters": {
+                "height_scale": 2.4,
+                "leaf_width_scale": 2.17,
+                "leaf_thickness_scale": 1.5,
+                "stem_radius_scale": 1.6,
+                "leaf_fan_xy_scale": 4.0
+              },
+              "modified_organs": [
+                "PG_golden_wheat_S0_GrassLeaf0_0",
+                "PG_golden_wheat_S0_GrassLeaf0_0_Midrib",
+                "PG_golden_wheat_S0_GrassLeaf0_1",
+                "PG_golden_wheat_S0_GrassLeaf0_1_Midrib",
+                "PG_golden_wheat_S0_JuvenileCulm0",
+                "PG_golden_wheat_S0_NewSpear0",
+                "PG_golden_wheat_S0_NewSpear0_Midrib"
+              ],
+              "organ_counts": {
+                "leaf": 3,
+                "stem": 1,
+                "needle": 0
+              }
+            }
           },
           "stage_1": {
             "source_blend": "plants/golden_wheat/stage_1.blend",
@@ -69,7 +167,117 @@
               0.9276604503393173
             ],
             "samples": 128,
-            "sha256": "ca7afdc8cb43fb5de6733b7945d611bd44c52fb83496bee7d6dc551827fd1b42"
+            "sha256": "912b59c931f19de4a0b79743e5a6d41447f3b3269d5b75c68bf36864af0fc76b",
+            "recipe_fingerprint": "046d7eb33274be7ee11466bd07917b995e8301b4e09330d0b6ffba216bdcfc3d",
+            "render_recipe": {
+              "schema_version": 1,
+              "scripts": {
+                "render_p85_runtime.py": "46c06c6a366fde24baf264cde92fce21559c9aa452346065140f7828b4a42586",
+                "p85_render_support.py": "e7809aa46b4a77ca48122b5f4620dcfa18743ae3adedbe841fcd108a7fa899ac"
+              },
+              "blender_version": "5.2.1 LTS",
+              "source_blend_sha256": "bb6328f0a33e26de7c64fda1da90c9888a10a91b6f46bf556fd366fd7f1178ac",
+              "scene": "PG_golden_wheat_Stage1",
+              "id": "golden_wheat",
+              "state": "stage_1",
+              "canvas_px": [
+                256,
+                256
+              ],
+              "anchor_uv": [
+                0.4999997019767761,
+                0.9276604503393173
+              ],
+              "geometry_overrides": {
+                "height_scale": 1.1,
+                "leaf_width_scale": 1.6,
+                "leaf_thickness_scale": 1.25,
+                "stem_radius_scale": 1.25
+              },
+              "recipe_sha256": "4a022d29fe5954f31c3b989e777f6403a18474be95066a0981191042e2e8cd22",
+              "camera": {
+                "name": "PM_golden_wheat_Camera",
+                "type": "ORTHO",
+                "matrix_world": [
+                  [
+                    -1.0,
+                    -1.4526915492751868e-07,
+                    8.261329753622704e-08,
+                    0.0
+                  ],
+                  [
+                    1.5099580252808664e-07,
+                    -0.5735762715339661,
+                    0.8191521763801575,
+                    7.615076541900635
+                  ],
+                  [
+                    -7.16125185817873e-08,
+                    0.8191521763801575,
+                    0.5735762715339661,
+                    6.559012413024902
+                  ],
+                  [
+                    0.0,
+                    0.0,
+                    0.0,
+                    1.0
+                  ]
+                ],
+                "ortho_scale": 2.3499999046325684,
+                "sensor_fit": "HORIZONTAL"
+              },
+              "render": {
+                "engine": "CYCLES",
+                "device": "CPU",
+                "samples": 128,
+                "denoising": true,
+                "film_transparent": true,
+                "format": "PNG",
+                "color_mode": "RGBA",
+                "color_depth": "8",
+                "view_transform": "Standard",
+                "look": "None",
+                "exposure": 0.0,
+                "gamma": 1.0
+              }
+            },
+            "geometry_overrides": {
+              "parameters": {
+                "height_scale": 1.1,
+                "leaf_width_scale": 1.6,
+                "leaf_thickness_scale": 1.25,
+                "stem_radius_scale": 1.25
+              },
+              "modified_organs": [
+                "PG_golden_wheat_S1_GrassLeaf0_0",
+                "PG_golden_wheat_S1_GrassLeaf0_0_Midrib",
+                "PG_golden_wheat_S1_GrassLeaf0_1",
+                "PG_golden_wheat_S1_GrassLeaf0_1_Midrib",
+                "PG_golden_wheat_S1_GrassLeaf1_0",
+                "PG_golden_wheat_S1_GrassLeaf1_0_Midrib",
+                "PG_golden_wheat_S1_GrassLeaf1_1",
+                "PG_golden_wheat_S1_GrassLeaf1_1_Midrib",
+                "PG_golden_wheat_S1_GrassLeaf2_0",
+                "PG_golden_wheat_S1_GrassLeaf2_0_Midrib",
+                "PG_golden_wheat_S1_GrassLeaf2_1",
+                "PG_golden_wheat_S1_GrassLeaf2_1_Midrib",
+                "PG_golden_wheat_S1_JuvenileCulm0",
+                "PG_golden_wheat_S1_JuvenileCulm1",
+                "PG_golden_wheat_S1_JuvenileCulm2",
+                "PG_golden_wheat_S1_NewSpear0",
+                "PG_golden_wheat_S1_NewSpear0_Midrib",
+                "PG_golden_wheat_S1_NewSpear1",
+                "PG_golden_wheat_S1_NewSpear1_Midrib",
+                "PG_golden_wheat_S1_NewSpear2",
+                "PG_golden_wheat_S1_NewSpear2_Midrib"
+              ],
+              "organ_counts": {
+                "leaf": 9,
+                "stem": 3,
+                "needle": 0
+              }
+            }
           },
           "stage_2": {
             "source_blend": "plants/golden_wheat/stage_2.blend",
@@ -102,6 +310,54 @@
             "sha256": "021a1e5ac73a9b27482eace4116c2ce2df6ebf6721e85e13910531155a9007ca"
           }
         }
+      },
+      "shadow": {
+        "stages": {
+          "stage_0": {
+            "size": [
+              13,
+              5
+            ],
+            "offset": [
+              0,
+              -1
+            ],
+            "opacity": 0.13
+          },
+          "stage_1": {
+            "size": [
+              21,
+              7
+            ],
+            "offset": [
+              0,
+              -1
+            ],
+            "opacity": 0.16
+          },
+          "stage_2": {
+            "size": [
+              35,
+              11
+            ],
+            "offset": [
+              0,
+              -1
+            ],
+            "opacity": 0.18
+          },
+          "stage_3": {
+            "size": [
+              43,
+              14
+            ],
+            "offset": [
+              0,
+              -1
+            ],
+            "opacity": 0.2
+          }
+        }
       }
     },
     "fast_fir": {
@@ -129,8 +385,8 @@
         "stage_3": "res://assets/farming/crops/fast_fir/stage_3.png"
       },
       "sha256": {
-        "stage_0": "6393a22cd54df1d5a3f437032bbc97c6df6a50e485b6f4f8374c40d12aff43d5",
-        "stage_1": "d44860d5e4c6d663f1573bfa3bbee33a27347f37ef6573e1506cb1139d8894a9",
+        "stage_0": "a22432559ca57d1b6cffada5011353dd46af8b6e19bff48b3ed6b4ad54e6416f",
+        "stage_1": "e7c39340ca53823c9c66b0a8381474aaa34a252694de409c52f83bb2b424999e",
         "stage_2": "4da57817a8bfd54b9561db1aa7cb97d93157c6926500bcb714f15b42f2af6d5f",
         "stage_3": "c6f6942719306cabeef23f9bf0768356f3ba647964ca0b2350b936e56aafbd54"
       },
@@ -154,7 +410,96 @@
               0.8753251135349274
             ],
             "samples": 128,
-            "sha256": "6393a22cd54df1d5a3f437032bbc97c6df6a50e485b6f4f8374c40d12aff43d5"
+            "sha256": "a22432559ca57d1b6cffada5011353dd46af8b6e19bff48b3ed6b4ad54e6416f",
+            "recipe_fingerprint": "9b85e6279ebcb48c69a7fbd23d1acab67ca61bbf3de801e882d11fc552a4b675",
+            "render_recipe": {
+              "schema_version": 1,
+              "scripts": {
+                "render_p85_runtime.py": "46c06c6a366fde24baf264cde92fce21559c9aa452346065140f7828b4a42586",
+                "p85_render_support.py": "78a83acbe35943c6a83761223b26bce990edf25fc9ea7089e1ce0d85031fc486"
+              },
+              "blender_version": "5.2.1 LTS",
+              "source_blend_sha256": "be9d39168d2d77e2df34d9afa20522cd3b0576ba9282b03a88b575e8288dd365",
+              "scene": "PG_fast_fir_Stage0",
+              "id": "fast_fir",
+              "state": "stage_0",
+              "canvas_px": [
+                512,
+                768
+              ],
+              "anchor_uv": [
+                0.49999988079071045,
+                0.8753251135349274
+              ],
+              "geometry_overrides": {
+                "height_scale": 1.7,
+                "needle_width_scale": 2.0,
+                "stem_radius_scale": 1.4
+              },
+              "recipe_sha256": "2e0f91b0fb55f57e463de551e10a3a8922651b46976e382c49337978b110d743",
+              "camera": {
+                "name": "PM_fast_fir_Camera",
+                "type": "ORTHO",
+                "matrix_world": [
+                  [
+                    -1.0,
+                    -1.4526915492751868e-07,
+                    8.261329753622704e-08,
+                    0.0
+                  ],
+                  [
+                    1.5099580252808664e-07,
+                    -0.5735762715339661,
+                    0.8191521763801575,
+                    6.948293685913086
+                  ],
+                  [
+                    -7.16125185817873e-08,
+                    0.8191521763801575,
+                    0.5735762715339661,
+                    7.511276721954346
+                  ],
+                  [
+                    0.0,
+                    0.0,
+                    0.0,
+                    1.0
+                  ]
+                ],
+                "ortho_scale": 3.8499999046325684,
+                "sensor_fit": "HORIZONTAL"
+              },
+              "render": {
+                "engine": "CYCLES",
+                "device": "CPU",
+                "samples": 128,
+                "denoising": true,
+                "film_transparent": true,
+                "format": "PNG",
+                "color_mode": "RGBA",
+                "color_depth": "8",
+                "view_transform": "Standard",
+                "look": "None",
+                "exposure": 0.0,
+                "gamma": 1.0
+              }
+            },
+            "geometry_overrides": {
+              "parameters": {
+                "height_scale": 1.7,
+                "needle_width_scale": 2.0,
+                "stem_radius_scale": 1.4
+              },
+              "modified_organs": [
+                "PG_fast_fir_S0_ApicalNeedleBud",
+                "PG_fast_fir_S0_YoungCrookedSpine"
+              ],
+              "organ_counts": {
+                "leaf": 0,
+                "stem": 1,
+                "needle": 1
+              }
+            }
           },
           "stage_1": {
             "source_blend": "plants/fast_fir/stage_1.blend",
@@ -169,7 +514,135 @@
               0.8753251135349274
             ],
             "samples": 128,
-            "sha256": "d44860d5e4c6d663f1573bfa3bbee33a27347f37ef6573e1506cb1139d8894a9"
+            "sha256": "e7c39340ca53823c9c66b0a8381474aaa34a252694de409c52f83bb2b424999e",
+            "recipe_fingerprint": "15951f83e526c99b947b4412d9575fe4c415ad06465a89d47cadb0094bc3d652",
+            "render_recipe": {
+              "schema_version": 1,
+              "scripts": {
+                "render_p85_runtime.py": "46c06c6a366fde24baf264cde92fce21559c9aa452346065140f7828b4a42586",
+                "p85_render_support.py": "78a83acbe35943c6a83761223b26bce990edf25fc9ea7089e1ce0d85031fc486"
+              },
+              "blender_version": "5.2.1 LTS",
+              "source_blend_sha256": "179ff8f5f7e79daceecfe50db4b9770dbaa2a97971946f7039ea01dfd3a3a0c8",
+              "scene": "PG_fast_fir_Stage1",
+              "id": "fast_fir",
+              "state": "stage_1",
+              "canvas_px": [
+                512,
+                768
+              ],
+              "anchor_uv": [
+                0.49999988079071045,
+                0.8753251135349274
+              ],
+              "geometry_overrides": {
+                "height_scale": 1.08,
+                "needle_width_scale": 1.4,
+                "stem_radius_scale": 1.15
+              },
+              "recipe_sha256": "2e0f91b0fb55f57e463de551e10a3a8922651b46976e382c49337978b110d743",
+              "camera": {
+                "name": "PM_fast_fir_Camera",
+                "type": "ORTHO",
+                "matrix_world": [
+                  [
+                    -1.0,
+                    -1.4526915492751868e-07,
+                    8.261329753622704e-08,
+                    0.0
+                  ],
+                  [
+                    1.5099580252808664e-07,
+                    -0.5735762715339661,
+                    0.8191521763801575,
+                    6.948293685913086
+                  ],
+                  [
+                    -7.16125185817873e-08,
+                    0.8191521763801575,
+                    0.5735762715339661,
+                    7.511276721954346
+                  ],
+                  [
+                    0.0,
+                    0.0,
+                    0.0,
+                    1.0
+                  ]
+                ],
+                "ortho_scale": 3.8499999046325684,
+                "sensor_fit": "HORIZONTAL"
+              },
+              "render": {
+                "engine": "CYCLES",
+                "device": "CPU",
+                "samples": 128,
+                "denoising": true,
+                "film_transparent": true,
+                "format": "PNG",
+                "color_mode": "RGBA",
+                "color_depth": "8",
+                "view_transform": "Standard",
+                "look": "None",
+                "exposure": 0.0,
+                "gamma": 1.0
+              }
+            },
+            "geometry_overrides": {
+              "parameters": {
+                "height_scale": 1.08,
+                "needle_width_scale": 1.4,
+                "stem_radius_scale": 1.15
+              },
+              "modified_organs": [
+                "PG_fast_fir_S1_ApicalNeedleBud",
+                "PG_fast_fir_S1_Buttress0",
+                "PG_fast_fir_S1_Buttress1",
+                "PG_fast_fir_S1_Buttress2",
+                "PG_fast_fir_S1_NeedleBrush_00",
+                "PG_fast_fir_S1_NeedleBrush_01",
+                "PG_fast_fir_S1_NeedleBrush_02",
+                "PG_fast_fir_S1_NeedleBrush_03",
+                "PG_fast_fir_S1_NeedleBrush_04",
+                "PG_fast_fir_S1_NeedleBrush_05",
+                "PG_fast_fir_S1_NeedleBrush_06",
+                "PG_fast_fir_S1_NeedleBrush_07",
+                "PG_fast_fir_S1_NeedleBrush_08",
+                "PG_fast_fir_S1_NeedleBrush_09",
+                "PG_fast_fir_S1_NeedleBrush_10",
+                "PG_fast_fir_S1_NeedleBrush_11",
+                "PG_fast_fir_S1_NeedleBrush_12",
+                "PG_fast_fir_S1_NeedleBrush_13",
+                "PG_fast_fir_S1_NeedleBrush_14",
+                "PG_fast_fir_S1_NeedleBrush_15",
+                "PG_fast_fir_S1_NeedleTwig0_0_3_-1",
+                "PG_fast_fir_S1_NeedleTwig0_0_3_1",
+                "PG_fast_fir_S1_NeedleTwig0_0_5_-1",
+                "PG_fast_fir_S1_NeedleTwig0_0_5_1",
+                "PG_fast_fir_S1_NeedleTwig0_1_3_-1",
+                "PG_fast_fir_S1_NeedleTwig0_1_3_1",
+                "PG_fast_fir_S1_NeedleTwig0_1_5_-1",
+                "PG_fast_fir_S1_NeedleTwig0_1_5_1",
+                "PG_fast_fir_S1_NeedleTwig0_2_3_-1",
+                "PG_fast_fir_S1_NeedleTwig0_2_3_1",
+                "PG_fast_fir_S1_NeedleTwig0_2_5_-1",
+                "PG_fast_fir_S1_NeedleTwig0_2_5_1",
+                "PG_fast_fir_S1_NeedleTwig0_3_3_-1",
+                "PG_fast_fir_S1_NeedleTwig0_3_3_1",
+                "PG_fast_fir_S1_NeedleTwig0_3_5_-1",
+                "PG_fast_fir_S1_NeedleTwig0_3_5_1",
+                "PG_fast_fir_S1_WhorlBranch0_0",
+                "PG_fast_fir_S1_WhorlBranch0_1",
+                "PG_fast_fir_S1_WhorlBranch0_2",
+                "PG_fast_fir_S1_WhorlBranch0_3",
+                "PG_fast_fir_S1_YoungCrookedSpine"
+              ],
+              "organ_counts": {
+                "leaf": 0,
+                "stem": 24,
+                "needle": 17
+              }
+            }
           },
           "stage_2": {
             "source_blend": "plants/fast_fir/stage_2.blend",
@@ -202,6 +675,54 @@
             "sha256": "c6f6942719306cabeef23f9bf0768356f3ba647964ca0b2350b936e56aafbd54"
           }
         }
+      },
+      "shadow": {
+        "stages": {
+          "stage_0": {
+            "size": [
+              13,
+              5
+            ],
+            "offset": [
+              0,
+              0
+            ],
+            "opacity": 0.13
+          },
+          "stage_1": {
+            "size": [
+              22,
+              8
+            ],
+            "offset": [
+              0,
+              0
+            ],
+            "opacity": 0.16
+          },
+          "stage_2": {
+            "size": [
+              40,
+              14
+            ],
+            "offset": [
+              0,
+              0
+            ],
+            "opacity": 0.2
+          },
+          "stage_3": {
+            "size": [
+              59,
+              20
+            ],
+            "offset": [
+              0,
+              0
+            ],
+            "opacity": 0.23
+          }
+        }
       }
     },
     "resin_tree": {
@@ -229,8 +750,8 @@
         "stage_3": "res://assets/farming/crops/resin_tree/stage_3.png"
       },
       "sha256": {
-        "stage_0": "9205a994e3534464c6f38fdbf910ceba29aa18f19ddd2339f4dfa1d795835aad",
-        "stage_1": "ed37fc9f75a5e17d7650eb3c297b523c2d2e08fbf0d838a99df8d5bd3e9b170a",
+        "stage_0": "2ae9a6f7aa44bc3cfd31b949e0863952a0abf5e7b735d74c7b561cfc98168d10",
+        "stage_1": "5a0b4b5d6a1672046997761af35d9138833f2c40735f9fee86cede8a2b7120f6",
         "stage_2": "f972f3212f002534b99525d6bcf364518aa129b9a0aa69b76058120248d4be94",
         "stage_3": "ba2de3209ac8f97c06dde0564abf082ac20d79720f99c260d25647f2a365bf12"
       },
@@ -254,7 +775,99 @@
               0.9203707501292229
             ],
             "samples": 128,
-            "sha256": "9205a994e3534464c6f38fdbf910ceba29aa18f19ddd2339f4dfa1d795835aad"
+            "sha256": "2ae9a6f7aa44bc3cfd31b949e0863952a0abf5e7b735d74c7b561cfc98168d10",
+            "recipe_fingerprint": "8e76bdb4155bf8c8b7d969b37c65ef874e8443294706c211398536e86f2b46c0",
+            "render_recipe": {
+              "schema_version": 1,
+              "scripts": {
+                "render_p85_runtime.py": "46c06c6a366fde24baf264cde92fce21559c9aa452346065140f7828b4a42586",
+                "p85_render_support.py": "e7809aa46b4a77ca48122b5f4620dcfa18743ae3adedbe841fcd108a7fa899ac"
+              },
+              "blender_version": "5.2.1 LTS",
+              "source_blend_sha256": "a50b74a2640ff9e7abe6f8af966420426f64465bdb9e28aa09814fe1fd3e828e",
+              "scene": "RF_ResinTree_Stage0",
+              "id": "resin_tree",
+              "state": "stage_0",
+              "canvas_px": [
+                512,
+                768
+              ],
+              "anchor_uv": [
+                0.49999988079071045,
+                0.9203707501292229
+              ],
+              "geometry_overrides": {
+                "height_scale": 1.25,
+                "needle_width_scale": 1.65,
+                "stem_radius_scale": 1.15
+              },
+              "recipe_sha256": "4a022d29fe5954f31c3b989e777f6403a18474be95066a0981191042e2e8cd22",
+              "camera": {
+                "name": "RT_Camera_Stage",
+                "type": "ORTHO",
+                "matrix_world": [
+                  [
+                    -1.0,
+                    -1.4526915492751868e-07,
+                    8.261329753622704e-08,
+                    0.0
+                  ],
+                  [
+                    1.5099580252808664e-07,
+                    -0.5735762715339661,
+                    0.8191521763801575,
+                    6.07034969329834
+                  ],
+                  [
+                    -7.16125185817873e-08,
+                    0.8191521763801575,
+                    0.5735762715339661,
+                    7.021663188934326
+                  ],
+                  [
+                    0.0,
+                    0.0,
+                    0.0,
+                    1.0
+                  ]
+                ],
+                "ortho_scale": 3.5999999046325684,
+                "sensor_fit": "HORIZONTAL"
+              },
+              "render": {
+                "engine": "CYCLES",
+                "device": "CPU",
+                "samples": 128,
+                "denoising": true,
+                "film_transparent": true,
+                "format": "PNG",
+                "color_mode": "RGBA",
+                "color_depth": "8",
+                "view_transform": "Standard",
+                "look": "None",
+                "exposure": 0.0,
+                "gamma": 1.0
+              }
+            },
+            "geometry_overrides": {
+              "parameters": {
+                "height_scale": 1.25,
+                "needle_width_scale": 1.65,
+                "stem_radius_scale": 1.15
+              },
+              "modified_organs": [
+                "RF_S0_NeedleBud",
+                "RF_S0_Root0",
+                "RF_S0_Root1",
+                "RF_S0_Root2",
+                "RF_S0_Trunk"
+              ],
+              "organ_counts": {
+                "leaf": 0,
+                "stem": 4,
+                "needle": 1
+              }
+            }
           },
           "stage_1": {
             "source_blend": "plants/植物全阶段总工程.blend",
@@ -269,7 +882,121 @@
               0.9203707501292229
             ],
             "samples": 128,
-            "sha256": "ed37fc9f75a5e17d7650eb3c297b523c2d2e08fbf0d838a99df8d5bd3e9b170a"
+            "sha256": "5a0b4b5d6a1672046997761af35d9138833f2c40735f9fee86cede8a2b7120f6",
+            "recipe_fingerprint": "758f300433fb11f6ab6518bcb928a4aeeb4b765f396b6b0201362aa88d179a5f",
+            "render_recipe": {
+              "schema_version": 1,
+              "scripts": {
+                "render_p85_runtime.py": "46c06c6a366fde24baf264cde92fce21559c9aa452346065140f7828b4a42586",
+                "p85_render_support.py": "e7809aa46b4a77ca48122b5f4620dcfa18743ae3adedbe841fcd108a7fa899ac"
+              },
+              "blender_version": "5.2.1 LTS",
+              "source_blend_sha256": "a50b74a2640ff9e7abe6f8af966420426f64465bdb9e28aa09814fe1fd3e828e",
+              "scene": "RF_ResinTree_Stage1",
+              "id": "resin_tree",
+              "state": "stage_1",
+              "canvas_px": [
+                512,
+                768
+              ],
+              "anchor_uv": [
+                0.49999988079071045,
+                0.9203707501292229
+              ],
+              "geometry_overrides": {
+                "height_scale": 1.05,
+                "needle_width_scale": 1.5,
+                "stem_radius_scale": 1.1
+              },
+              "recipe_sha256": "4a022d29fe5954f31c3b989e777f6403a18474be95066a0981191042e2e8cd22",
+              "camera": {
+                "name": "RT_Camera_Stage",
+                "type": "ORTHO",
+                "matrix_world": [
+                  [
+                    -1.0,
+                    -1.4526915492751868e-07,
+                    8.261329753622704e-08,
+                    0.0
+                  ],
+                  [
+                    1.5099580252808664e-07,
+                    -0.5735762715339661,
+                    0.8191521763801575,
+                    6.07034969329834
+                  ],
+                  [
+                    -7.16125185817873e-08,
+                    0.8191521763801575,
+                    0.5735762715339661,
+                    7.021663188934326
+                  ],
+                  [
+                    0.0,
+                    0.0,
+                    0.0,
+                    1.0
+                  ]
+                ],
+                "ortho_scale": 3.5999999046325684,
+                "sensor_fit": "HORIZONTAL"
+              },
+              "render": {
+                "engine": "CYCLES",
+                "device": "CPU",
+                "samples": 128,
+                "denoising": true,
+                "film_transparent": true,
+                "format": "PNG",
+                "color_mode": "RGBA",
+                "color_depth": "8",
+                "view_transform": "Standard",
+                "look": "None",
+                "exposure": 0.0,
+                "gamma": 1.0
+              }
+            },
+            "geometry_overrides": {
+              "parameters": {
+                "height_scale": 1.05,
+                "needle_width_scale": 1.5,
+                "stem_radius_scale": 1.1
+              },
+              "modified_organs": [
+                "RF_S1_ElbowBranch0",
+                "RF_S1_ElbowBranch1",
+                "RF_S1_NeedleBrush_00",
+                "RF_S1_NeedleBrush_01",
+                "RF_S1_NeedleBrush_02",
+                "RF_S1_NeedleBrush_03",
+                "RF_S1_NeedleBrush_04",
+                "RF_S1_NeedleBrush_05",
+                "RF_S1_NeedleBrush_06",
+                "RF_S1_NeedleBrush_07",
+                "RF_S1_NeedleBrush_08",
+                "RF_S1_NeedleBrush_09",
+                "RF_S1_Root0",
+                "RF_S1_Root1",
+                "RF_S1_Root2",
+                "RF_S1_Root3",
+                "RF_S1_Trunk",
+                "RF_S1_Twig0_0",
+                "RF_S1_Twig0_1",
+                "RF_S1_Twig0_2",
+                "RF_S1_Twig0_3",
+                "RF_S1_Twig0_4",
+                "RF_S1_Twig1_0",
+                "RF_S1_Twig1_1",
+                "RF_S1_Twig1_2",
+                "RF_S1_Twig1_3",
+                "RF_S1_Twig1_4"
+              ],
+              "organ_counts": {
+                "leaf": 0,
+                "stem": 17,
+                "needle": 10
+              }
+            }
           },
           "stage_2": {
             "source_blend": "plants/植物全阶段总工程.blend",
@@ -302,6 +1029,54 @@
             "sha256": "ba2de3209ac8f97c06dde0564abf082ac20d79720f99c260d25647f2a365bf12"
           }
         }
+      },
+      "shadow": {
+        "stages": {
+          "stage_0": {
+            "size": [
+              14,
+              5
+            ],
+            "offset": [
+              0,
+              0
+            ],
+            "opacity": 0.13
+          },
+          "stage_1": {
+            "size": [
+              23,
+              8
+            ],
+            "offset": [
+              0,
+              0
+            ],
+            "opacity": 0.16
+          },
+          "stage_2": {
+            "size": [
+              40,
+              14
+            ],
+            "offset": [
+              0,
+              0
+            ],
+            "opacity": 0.2
+          },
+          "stage_3": {
+            "size": [
+              54,
+              19
+            ],
+            "offset": [
+              0,
+              0
+            ],
+            "opacity": 0.23
+          }
+        }
       }
     },
     "wood_decay_mushroom": {
@@ -329,8 +1104,8 @@
         "stage_3": "res://assets/farming/crops/wood_decay_mushroom/stage_3.png"
       },
       "sha256": {
-        "stage_0": "278b5a6268c54771896b9433754d92cc57af06c1e932d2ae6933a90a40cd71ee",
-        "stage_1": "1a97db9295eb1714befddda3be8286bb7e9e1b4e6fd5090593b1b4d59042af7c",
+        "stage_0": "c5a786b72650bae098191b26469ec953482b3766f8446a197711593128f6f24d",
+        "stage_1": "8825110d652788cc759d9bbcd4e7c465081348177b2516186197a011ea95a4f0",
         "stage_2": "03c002a4836a3f5ad740a2693ef13eaaa23a178a0c2d92a0982bc126cbd1346c",
         "stage_3": "abf80c2085374a000b29e1c08abe811a99e881f78264aadaadfe66f6fadab916"
       },
@@ -354,7 +1129,104 @@
               0.9090920239686966
             ],
             "samples": 128,
-            "sha256": "278b5a6268c54771896b9433754d92cc57af06c1e932d2ae6933a90a40cd71ee"
+            "sha256": "c5a786b72650bae098191b26469ec953482b3766f8446a197711593128f6f24d",
+            "recipe_fingerprint": "c0dd0a191c3d5be33b05b690fa3b5057238edaa2fd6339ab29cff67a18b9dd5e",
+            "render_recipe": {
+              "schema_version": 1,
+              "scripts": {
+                "render_p85_runtime.py": "46c06c6a366fde24baf264cde92fce21559c9aa452346065140f7828b4a42586",
+                "p85_render_support.py": "78a83acbe35943c6a83761223b26bce990edf25fc9ea7089e1ce0d85031fc486"
+              },
+              "blender_version": "5.2.1 LTS",
+              "source_blend_sha256": "7e22a7e71fbc5120489a239c4e8bf86f30486fb28f624a24a08d917397d50049",
+              "scene": "PG_wood_decay_mushroom_Stage0",
+              "id": "wood_decay_mushroom",
+              "state": "stage_0",
+              "canvas_px": [
+                256,
+                256
+              ],
+              "anchor_uv": [
+                0.49999967217445374,
+                0.9090920239686966
+              ],
+              "geometry_overrides": {
+                "height_scale": 1.6,
+                "colony_xy_scale": 1.6,
+                "stem_radius_scale": 1.6
+              },
+              "recipe_sha256": "2e0f91b0fb55f57e463de551e10a3a8922651b46976e382c49337978b110d743",
+              "camera": {
+                "name": "PM_wood_decay_mushroom_Camera",
+                "type": "ORTHO",
+                "matrix_world": [
+                  [
+                    -1.0,
+                    -1.4526915492751868e-07,
+                    8.261329753622704e-08,
+                    0.0
+                  ],
+                  [
+                    1.5099580252808664e-07,
+                    -0.5735762715339661,
+                    0.8191521763801575,
+                    7.675302028656006
+                  ],
+                  [
+                    -7.16125185817873e-08,
+                    0.8191521763801575,
+                    0.5735762715339661,
+                    6.473001480102539
+                  ],
+                  [
+                    0.0,
+                    0.0,
+                    0.0,
+                    1.0
+                  ]
+                ],
+                "ortho_scale": 2.200000047683716,
+                "sensor_fit": "HORIZONTAL"
+              },
+              "render": {
+                "engine": "CYCLES",
+                "device": "CPU",
+                "samples": 128,
+                "denoising": true,
+                "film_transparent": true,
+                "format": "PNG",
+                "color_mode": "RGBA",
+                "color_depth": "8",
+                "view_transform": "Standard",
+                "look": "None",
+                "exposure": 0.0,
+                "gamma": 1.0
+              }
+            },
+            "geometry_overrides": {
+              "parameters": {
+                "height_scale": 1.6,
+                "colony_xy_scale": 1.6,
+                "stem_radius_scale": 1.6
+              },
+              "modified_organs": [
+                "PG_wood_decay_mushroom_S0_CentralColonization",
+                "PG_wood_decay_mushroom_S0_MycelialCord0",
+                "PG_wood_decay_mushroom_S0_MycelialCord1",
+                "PG_wood_decay_mushroom_S0_MycelialCord2",
+                "PG_wood_decay_mushroom_S0_MycelialCord3",
+                "PG_wood_decay_mushroom_S0_MycelialCord4",
+                "PG_wood_decay_mushroom_S0_MycelialCord5",
+                "PG_wood_decay_mushroom_S0_MycelialKnot0",
+                "PG_wood_decay_mushroom_S0_MycelialKnot2",
+                "PG_wood_decay_mushroom_S0_MycelialKnot4"
+              ],
+              "organ_counts": {
+                "leaf": 0,
+                "stem": 0,
+                "needle": 0
+              }
+            }
           },
           "stage_1": {
             "source_blend": "plants/wood_decay_mushroom/stage_1.blend",
@@ -369,7 +1241,100 @@
               0.9090920239686966
             ],
             "samples": 128,
-            "sha256": "1a97db9295eb1714befddda3be8286bb7e9e1b4e6fd5090593b1b4d59042af7c"
+            "sha256": "8825110d652788cc759d9bbcd4e7c465081348177b2516186197a011ea95a4f0",
+            "recipe_fingerprint": "cfd42623ee30389d520289ec5e471c020c89b1773534c6b929b852fdc614577a",
+            "render_recipe": {
+              "schema_version": 1,
+              "scripts": {
+                "render_p85_runtime.py": "46c06c6a366fde24baf264cde92fce21559c9aa452346065140f7828b4a42586",
+                "p85_render_support.py": "78a83acbe35943c6a83761223b26bce990edf25fc9ea7089e1ce0d85031fc486"
+              },
+              "blender_version": "5.2.1 LTS",
+              "source_blend_sha256": "de7047c10f17c7ec14801c3fe1c3ad9ea8047aa273a99c12fc73365619ff70a7",
+              "scene": "PG_wood_decay_mushroom_Stage1",
+              "id": "wood_decay_mushroom",
+              "state": "stage_1",
+              "canvas_px": [
+                256,
+                256
+              ],
+              "anchor_uv": [
+                0.49999967217445374,
+                0.9090920239686966
+              ],
+              "geometry_overrides": {
+                "height_scale": 1.15,
+                "colony_xy_scale": 1.2,
+                "stem_radius_scale": 1.4
+              },
+              "recipe_sha256": "2e0f91b0fb55f57e463de551e10a3a8922651b46976e382c49337978b110d743",
+              "camera": {
+                "name": "PM_wood_decay_mushroom_Camera",
+                "type": "ORTHO",
+                "matrix_world": [
+                  [
+                    -1.0,
+                    -1.4526915492751868e-07,
+                    8.261329753622704e-08,
+                    0.0
+                  ],
+                  [
+                    1.5099580252808664e-07,
+                    -0.5735762715339661,
+                    0.8191521763801575,
+                    7.675302028656006
+                  ],
+                  [
+                    -7.16125185817873e-08,
+                    0.8191521763801575,
+                    0.5735762715339661,
+                    6.473001480102539
+                  ],
+                  [
+                    0.0,
+                    0.0,
+                    0.0,
+                    1.0
+                  ]
+                ],
+                "ortho_scale": 2.200000047683716,
+                "sensor_fit": "HORIZONTAL"
+              },
+              "render": {
+                "engine": "CYCLES",
+                "device": "CPU",
+                "samples": 128,
+                "denoising": true,
+                "film_transparent": true,
+                "format": "PNG",
+                "color_mode": "RGBA",
+                "color_depth": "8",
+                "view_transform": "Standard",
+                "look": "None",
+                "exposure": 0.0,
+                "gamma": 1.0
+              }
+            },
+            "geometry_overrides": {
+              "parameters": {
+                "height_scale": 1.15,
+                "colony_xy_scale": 1.2,
+                "stem_radius_scale": 1.4
+              },
+              "modified_organs": [
+                "PG_wood_decay_mushroom_S1_ClosedMushroomBud0",
+                "PG_wood_decay_mushroom_S1_ClosedMushroomBud1",
+                "PG_wood_decay_mushroom_S1_ClosedMushroomBud2",
+                "PG_wood_decay_mushroom_S1_PrimordiumStipe0",
+                "PG_wood_decay_mushroom_S1_PrimordiumStipe1",
+                "PG_wood_decay_mushroom_S1_PrimordiumStipe2"
+              ],
+              "organ_counts": {
+                "leaf": 0,
+                "stem": 3,
+                "needle": 0
+              }
+            }
           },
           "stage_2": {
             "source_blend": "plants/wood_decay_mushroom/stage_2.blend",
@@ -402,6 +1367,54 @@
             "sha256": "abf80c2085374a000b29e1c08abe811a99e881f78264aadaadfe66f6fadab916"
           }
         }
+      },
+      "shadow": {
+        "stages": {
+          "stage_0": {
+            "size": [
+              12,
+              4
+            ],
+            "offset": [
+              0,
+              -1
+            ],
+            "opacity": 0.12
+          },
+          "stage_1": {
+            "size": [
+              21,
+              7
+            ],
+            "offset": [
+              0,
+              -1
+            ],
+            "opacity": 0.15
+          },
+          "stage_2": {
+            "size": [
+              33,
+              11
+            ],
+            "offset": [
+              0,
+              -1
+            ],
+            "opacity": 0.17
+          },
+          "stage_3": {
+            "size": [
+              45,
+              14
+            ],
+            "offset": [
+              0,
+              -1
+            ],
+            "opacity": 0.2
+          }
+        }
       }
     },
     "pasture_grass": {
@@ -429,8 +1442,8 @@
         "stage_3": "res://assets/farming/crops/pasture_grass/stage_3.png"
       },
       "sha256": {
-        "stage_0": "cf4f4e29a0aab844950799195de28d5e7f64ae14069873d7379a075f7b6827c6",
-        "stage_1": "8dfeafceb284257854b7d415fdd1997fb78d51be8004ed45d027cd184cb44c27",
+        "stage_0": "1baf30fa503548eedbccabecac0262f0189d90d0180ce6a429a88505ac30cea0",
+        "stage_1": "a9fc93075cb95cb2e3c6fef9afa020dd00ae45e824bf8c481e76d9abfa3a0aa9",
         "stage_2": "38237e61d1ba5f0363a6e5336d7f13670abfe61f24eb91feddf8a88095bf9bf1",
         "stage_3": "396f68e9713646bde6d0eacd663fd96131ed0f6cab41ebd29a5466322d6c0c88"
       },
@@ -454,7 +1467,104 @@
               0.8095247745513916
             ],
             "samples": 128,
-            "sha256": "cf4f4e29a0aab844950799195de28d5e7f64ae14069873d7379a075f7b6827c6"
+            "sha256": "1baf30fa503548eedbccabecac0262f0189d90d0180ce6a429a88505ac30cea0",
+            "recipe_fingerprint": "462c623050dd6f6a5bd83371d5efaa200927500cf1dc551f8655a8172804b31e",
+            "render_recipe": {
+              "schema_version": 1,
+              "scripts": {
+                "render_p85_runtime.py": "46c06c6a366fde24baf264cde92fce21559c9aa452346065140f7828b4a42586",
+                "p85_render_support.py": "ca5d9a5fd1f7784008bdc70194e3806caa77fe6d660308a3290907fe166916f0"
+              },
+              "blender_version": "5.2.1 LTS",
+              "source_blend_sha256": "eb7f0c535dca90def9c08ecea99b609a4593fb907502dbbac3d848fefe871bb8",
+              "scene": "PG_pasture_grass_Stage0",
+              "id": "pasture_grass",
+              "state": "stage_0",
+              "canvas_px": [
+                256,
+                256
+              ],
+              "anchor_uv": [
+                0.49999964237213135,
+                0.8095247745513916
+              ],
+              "geometry_overrides": {
+                "height_scale": 2.35,
+                "leaf_width_scale": 2.25,
+                "leaf_thickness_scale": 1.5,
+                "stem_radius_scale": 1.5,
+                "leaf_fan_xy_scale": 4.0
+              },
+              "recipe_sha256": "9d4428ffdf05f7f7bb0094fe72e2d6e03ace18882d04b61b89c33a43e03103bf",
+              "camera": {
+                "name": "PM_pasture_grass_Camera",
+                "type": "ORTHO",
+                "matrix_world": [
+                  [
+                    -1.0,
+                    -1.4526915492751868e-07,
+                    8.261329753622704e-08,
+                    0.0
+                  ],
+                  [
+                    1.5099580252808664e-07,
+                    -0.5735762715339661,
+                    0.8191521763801575,
+                    7.818696022033691
+                  ],
+                  [
+                    -7.16125185817873e-08,
+                    0.8191521763801575,
+                    0.5735762715339661,
+                    6.268213272094727
+                  ],
+                  [
+                    0.0,
+                    0.0,
+                    0.0,
+                    1.0
+                  ]
+                ],
+                "ortho_scale": 2.0999999046325684,
+                "sensor_fit": "HORIZONTAL"
+              },
+              "render": {
+                "engine": "CYCLES",
+                "device": "CPU",
+                "samples": 128,
+                "denoising": true,
+                "film_transparent": true,
+                "format": "PNG",
+                "color_mode": "RGBA",
+                "color_depth": "8",
+                "view_transform": "Standard",
+                "look": "None",
+                "exposure": 0.0,
+                "gamma": 1.0
+              }
+            },
+            "geometry_overrides": {
+              "parameters": {
+                "height_scale": 2.35,
+                "leaf_width_scale": 2.25,
+                "leaf_thickness_scale": 1.5,
+                "stem_radius_scale": 1.5,
+                "leaf_fan_xy_scale": 4.0
+              },
+              "modified_organs": [
+                "PG_pasture_grass_S0_DenseYoungCrown",
+                "PG_pasture_grass_S0_ErectBlade0_0",
+                "PG_pasture_grass_S0_ErectBlade0_0_Midrib",
+                "PG_pasture_grass_S0_ErectBlade0_1",
+                "PG_pasture_grass_S0_ErectBlade0_1_Midrib",
+                "PG_pasture_grass_S0_ShortTiller0"
+              ],
+              "organ_counts": {
+                "leaf": 2,
+                "stem": 2,
+                "needle": 0
+              }
+            }
           },
           "stage_1": {
             "source_blend": "plants/pasture_grass/stage_1.blend",
@@ -469,7 +1579,117 @@
               0.8095247745513916
             ],
             "samples": 128,
-            "sha256": "8dfeafceb284257854b7d415fdd1997fb78d51be8004ed45d027cd184cb44c27"
+            "sha256": "a9fc93075cb95cb2e3c6fef9afa020dd00ae45e824bf8c481e76d9abfa3a0aa9",
+            "recipe_fingerprint": "f7ae8877ee87b726ba52fe7dc0ebd44846b6b0918579c4cc00a4f730e3df46d4",
+            "render_recipe": {
+              "schema_version": 1,
+              "scripts": {
+                "render_p85_runtime.py": "46c06c6a366fde24baf264cde92fce21559c9aa452346065140f7828b4a42586",
+                "p85_render_support.py": "e7809aa46b4a77ca48122b5f4620dcfa18743ae3adedbe841fcd108a7fa899ac"
+              },
+              "blender_version": "5.2.1 LTS",
+              "source_blend_sha256": "a0b7eb8e20c36e3be24fa29c631abc5343aa504b9bc6e25d09b0f3fce345d2ec",
+              "scene": "PG_pasture_grass_Stage1",
+              "id": "pasture_grass",
+              "state": "stage_1",
+              "canvas_px": [
+                256,
+                256
+              ],
+              "anchor_uv": [
+                0.49999964237213135,
+                0.8095247745513916
+              ],
+              "geometry_overrides": {
+                "height_scale": 1.1,
+                "leaf_width_scale": 1.55,
+                "leaf_thickness_scale": 1.25,
+                "stem_radius_scale": 1.25
+              },
+              "recipe_sha256": "4a022d29fe5954f31c3b989e777f6403a18474be95066a0981191042e2e8cd22",
+              "camera": {
+                "name": "PM_pasture_grass_Camera",
+                "type": "ORTHO",
+                "matrix_world": [
+                  [
+                    -1.0,
+                    -1.4526915492751868e-07,
+                    8.261329753622704e-08,
+                    0.0
+                  ],
+                  [
+                    1.5099580252808664e-07,
+                    -0.5735762715339661,
+                    0.8191521763801575,
+                    7.818696022033691
+                  ],
+                  [
+                    -7.16125185817873e-08,
+                    0.8191521763801575,
+                    0.5735762715339661,
+                    6.268213272094727
+                  ],
+                  [
+                    0.0,
+                    0.0,
+                    0.0,
+                    1.0
+                  ]
+                ],
+                "ortho_scale": 2.0999999046325684,
+                "sensor_fit": "HORIZONTAL"
+              },
+              "render": {
+                "engine": "CYCLES",
+                "device": "CPU",
+                "samples": 128,
+                "denoising": true,
+                "film_transparent": true,
+                "format": "PNG",
+                "color_mode": "RGBA",
+                "color_depth": "8",
+                "view_transform": "Standard",
+                "look": "None",
+                "exposure": 0.0,
+                "gamma": 1.0
+              }
+            },
+            "geometry_overrides": {
+              "parameters": {
+                "height_scale": 1.1,
+                "leaf_width_scale": 1.55,
+                "leaf_thickness_scale": 1.25,
+                "stem_radius_scale": 1.25
+              },
+              "modified_organs": [
+                "PG_pasture_grass_S1_CentralSpear0",
+                "PG_pasture_grass_S1_CentralSpear0_Midrib",
+                "PG_pasture_grass_S1_DenseYoungCrown",
+                "PG_pasture_grass_S1_ErectBlade0_0",
+                "PG_pasture_grass_S1_ErectBlade0_0_Midrib",
+                "PG_pasture_grass_S1_ErectBlade0_1",
+                "PG_pasture_grass_S1_ErectBlade0_1_Midrib",
+                "PG_pasture_grass_S1_ErectBlade1_0",
+                "PG_pasture_grass_S1_ErectBlade1_0_Midrib",
+                "PG_pasture_grass_S1_ErectBlade1_1",
+                "PG_pasture_grass_S1_ErectBlade1_1_Midrib",
+                "PG_pasture_grass_S1_ErectBlade2_0",
+                "PG_pasture_grass_S1_ErectBlade2_0_Midrib",
+                "PG_pasture_grass_S1_ErectBlade2_1",
+                "PG_pasture_grass_S1_ErectBlade2_1_Midrib",
+                "PG_pasture_grass_S1_ShortTiller0",
+                "PG_pasture_grass_S1_ShortTiller1",
+                "PG_pasture_grass_S1_ShortTiller2",
+                "PG_pasture_grass_S1_WrappedSheath0",
+                "PG_pasture_grass_S1_WrappedSheath1",
+                "PG_pasture_grass_S1_WrappedSheath2"
+              ],
+              "organ_counts": {
+                "leaf": 7,
+                "stem": 7,
+                "needle": 0
+              }
+            }
           },
           "stage_2": {
             "source_blend": "plants/pasture_grass/stage_2.blend",
@@ -502,6 +1722,54 @@
             "sha256": "396f68e9713646bde6d0eacd663fd96131ed0f6cab41ebd29a5466322d6c0c88"
           }
         }
+      },
+      "shadow": {
+        "stages": {
+          "stage_0": {
+            "size": [
+              12,
+              4
+            ],
+            "offset": [
+              0,
+              -1
+            ],
+            "opacity": 0.13
+          },
+          "stage_1": {
+            "size": [
+              20,
+              7
+            ],
+            "offset": [
+              0,
+              -1
+            ],
+            "opacity": 0.16
+          },
+          "stage_2": {
+            "size": [
+              32,
+              10
+            ],
+            "offset": [
+              0,
+              -1
+            ],
+            "opacity": 0.18
+          },
+          "stage_3": {
+            "size": [
+              39,
+              13
+            ],
+            "offset": [
+              0,
+              -1
+            ],
+            "opacity": 0.2
+          }
+        }
       }
     },
     "honeybell_bush": {
@@ -529,8 +1797,8 @@
         "stage_3": "res://assets/farming/crops/honeybell_bush/stage_3.png"
       },
       "sha256": {
-        "stage_0": "667a044a47eb8501e1ac2b6fb72cef197fb8cad4ac71180131c8e188150e3c2a",
-        "stage_1": "b1bc0e1ef5a3a351074638b5d938d19ea6206922a25c86884cd7780e5d49006d",
+        "stage_0": "9806c8154b516b6b7972eaf1bb79b65b1a7671448a7f25abb0fcb7b6f91f845e",
+        "stage_1": "cfab4834a5f70e4e0ed9ca77849b64b11a7622aed008e1d52f166fb2ca010b45",
         "stage_2": "739a93108ce7ec4dfe40c98c8d5cc5c0c85b5e6aa7de4770dd6be917a8f50657",
         "stage_3": "aa0250f9ced0430c2b1200f035efcef2d480a22d35a54e0976e074f94cb28948"
       },
@@ -554,7 +1822,103 @@
               0.9200009256601334
             ],
             "samples": 128,
-            "sha256": "667a044a47eb8501e1ac2b6fb72cef197fb8cad4ac71180131c8e188150e3c2a"
+            "sha256": "9806c8154b516b6b7972eaf1bb79b65b1a7671448a7f25abb0fcb7b6f91f845e",
+            "recipe_fingerprint": "dedd568e3a3802452d65c735013a5ad80f8e8719ba7d13808e4afcd9b9ebf3ab",
+            "render_recipe": {
+              "schema_version": 1,
+              "scripts": {
+                "render_p85_runtime.py": "46c06c6a366fde24baf264cde92fce21559c9aa452346065140f7828b4a42586",
+                "p85_render_support.py": "78a83acbe35943c6a83761223b26bce990edf25fc9ea7089e1ce0d85031fc486"
+              },
+              "blender_version": "5.2.1 LTS",
+              "source_blend_sha256": "9e056dea8990af2da5ff9c4a2abbfcb7f537a92fb82552bbfde98289311efd3e",
+              "scene": "PG_honeybell_bush_Stage0",
+              "id": "honeybell_bush",
+              "state": "stage_0",
+              "canvas_px": [
+                256,
+                256
+              ],
+              "anchor_uv": [
+                0.4999997019767761,
+                0.9200009256601334
+              ],
+              "geometry_overrides": {
+                "height_scale": 1.9,
+                "leaf_width_scale": 1.8,
+                "leaf_thickness_scale": 1.4,
+                "stem_radius_scale": 1.5,
+                "leaf_fan_xy_scale": 1.8
+              },
+              "recipe_sha256": "2e0f91b0fb55f57e463de551e10a3a8922651b46976e382c49337978b110d743",
+              "camera": {
+                "name": "PM_honeybell_bush_Camera",
+                "type": "ORTHO",
+                "matrix_world": [
+                  [
+                    -1.0,
+                    -1.4526915492751868e-07,
+                    8.261329753622704e-08,
+                    0.0
+                  ],
+                  [
+                    1.5099580252808664e-07,
+                    -0.5735762715339661,
+                    0.8191521763801575,
+                    7.649490833282471
+                  ],
+                  [
+                    -7.16125185817873e-08,
+                    0.8191521763801575,
+                    0.5735762715339661,
+                    6.509863376617432
+                  ],
+                  [
+                    0.0,
+                    0.0,
+                    0.0,
+                    1.0
+                  ]
+                ],
+                "ortho_scale": 2.25,
+                "sensor_fit": "HORIZONTAL"
+              },
+              "render": {
+                "engine": "CYCLES",
+                "device": "CPU",
+                "samples": 128,
+                "denoising": true,
+                "film_transparent": true,
+                "format": "PNG",
+                "color_mode": "RGBA",
+                "color_depth": "8",
+                "view_transform": "Standard",
+                "look": "None",
+                "exposure": 0.0,
+                "gamma": 1.0
+              }
+            },
+            "geometry_overrides": {
+              "parameters": {
+                "height_scale": 1.9,
+                "leaf_width_scale": 1.8,
+                "leaf_thickness_scale": 1.4,
+                "stem_radius_scale": 1.5,
+                "leaf_fan_xy_scale": 1.8
+              },
+              "modified_organs": [
+                "PG_honeybell_bush_S0_FirstLeaf-1",
+                "PG_honeybell_bush_S0_FirstLeaf-1_Midrib",
+                "PG_honeybell_bush_S0_FirstLeaf1",
+                "PG_honeybell_bush_S0_FirstLeaf1_Midrib",
+                "PG_honeybell_bush_S0_SeedlingStem"
+              ],
+              "organ_counts": {
+                "leaf": 2,
+                "stem": 1,
+                "needle": 0
+              }
+            }
           },
           "stage_1": {
             "source_blend": "plants/honeybell_bush/stage_1.blend",
@@ -569,7 +1933,115 @@
               0.9200009256601334
             ],
             "samples": 128,
-            "sha256": "b1bc0e1ef5a3a351074638b5d938d19ea6206922a25c86884cd7780e5d49006d"
+            "sha256": "cfab4834a5f70e4e0ed9ca77849b64b11a7622aed008e1d52f166fb2ca010b45",
+            "recipe_fingerprint": "85aff29943cc63ca9928863d37ab08f73515255ade8e0f87e1a3806b7823c214",
+            "render_recipe": {
+              "schema_version": 1,
+              "scripts": {
+                "render_p85_runtime.py": "46c06c6a366fde24baf264cde92fce21559c9aa452346065140f7828b4a42586",
+                "p85_render_support.py": "78a83acbe35943c6a83761223b26bce990edf25fc9ea7089e1ce0d85031fc486"
+              },
+              "blender_version": "5.2.1 LTS",
+              "source_blend_sha256": "5568fe6df4d3d9ece77b87e7e978c9bd4ea4e834c3a14720ac88c136ed23fa06",
+              "scene": "PG_honeybell_bush_Stage1",
+              "id": "honeybell_bush",
+              "state": "stage_1",
+              "canvas_px": [
+                256,
+                256
+              ],
+              "anchor_uv": [
+                0.4999997019767761,
+                0.9200009256601334
+              ],
+              "geometry_overrides": {
+                "height_scale": 1.1,
+                "leaf_width_scale": 1.35,
+                "leaf_thickness_scale": 1.2,
+                "stem_radius_scale": 1.2
+              },
+              "recipe_sha256": "2e0f91b0fb55f57e463de551e10a3a8922651b46976e382c49337978b110d743",
+              "camera": {
+                "name": "PM_honeybell_bush_Camera",
+                "type": "ORTHO",
+                "matrix_world": [
+                  [
+                    -1.0,
+                    -1.4526915492751868e-07,
+                    8.261329753622704e-08,
+                    0.0
+                  ],
+                  [
+                    1.5099580252808664e-07,
+                    -0.5735762715339661,
+                    0.8191521763801575,
+                    7.649490833282471
+                  ],
+                  [
+                    -7.16125185817873e-08,
+                    0.8191521763801575,
+                    0.5735762715339661,
+                    6.509863376617432
+                  ],
+                  [
+                    0.0,
+                    0.0,
+                    0.0,
+                    1.0
+                  ]
+                ],
+                "ortho_scale": 2.25,
+                "sensor_fit": "HORIZONTAL"
+              },
+              "render": {
+                "engine": "CYCLES",
+                "device": "CPU",
+                "samples": 128,
+                "denoising": true,
+                "film_transparent": true,
+                "format": "PNG",
+                "color_mode": "RGBA",
+                "color_depth": "8",
+                "view_transform": "Standard",
+                "look": "None",
+                "exposure": 0.0,
+                "gamma": 1.0
+              }
+            },
+            "geometry_overrides": {
+              "parameters": {
+                "height_scale": 1.1,
+                "leaf_width_scale": 1.35,
+                "leaf_thickness_scale": 1.2,
+                "stem_radius_scale": 1.2
+              },
+              "modified_organs": [
+                "PG_honeybell_bush_S1_JuvenileBranch0",
+                "PG_honeybell_bush_S1_JuvenileBranch1",
+                "PG_honeybell_bush_S1_PairedLeaf0_11_-1",
+                "PG_honeybell_bush_S1_PairedLeaf0_11_-1_Midrib",
+                "PG_honeybell_bush_S1_PairedLeaf0_11_1",
+                "PG_honeybell_bush_S1_PairedLeaf0_11_1_Midrib",
+                "PG_honeybell_bush_S1_PairedLeaf0_5_-1",
+                "PG_honeybell_bush_S1_PairedLeaf0_5_-1_Midrib",
+                "PG_honeybell_bush_S1_PairedLeaf0_5_1",
+                "PG_honeybell_bush_S1_PairedLeaf0_5_1_Midrib",
+                "PG_honeybell_bush_S1_PairedLeaf1_11_-1",
+                "PG_honeybell_bush_S1_PairedLeaf1_11_-1_Midrib",
+                "PG_honeybell_bush_S1_PairedLeaf1_11_1",
+                "PG_honeybell_bush_S1_PairedLeaf1_11_1_Midrib",
+                "PG_honeybell_bush_S1_PairedLeaf1_5_-1",
+                "PG_honeybell_bush_S1_PairedLeaf1_5_-1_Midrib",
+                "PG_honeybell_bush_S1_PairedLeaf1_5_1",
+                "PG_honeybell_bush_S1_PairedLeaf1_5_1_Midrib",
+                "PG_honeybell_bush_S1_YoungRoot"
+              ],
+              "organ_counts": {
+                "leaf": 8,
+                "stem": 3,
+                "needle": 0
+              }
+            }
           },
           "stage_2": {
             "source_blend": "plants/honeybell_bush/stage_2.blend",
@@ -602,6 +2074,54 @@
             "sha256": "aa0250f9ced0430c2b1200f035efcef2d480a22d35a54e0976e074f94cb28948"
           }
         }
+      },
+      "shadow": {
+        "stages": {
+          "stage_0": {
+            "size": [
+              12,
+              4
+            ],
+            "offset": [
+              0,
+              -1
+            ],
+            "opacity": 0.12
+          },
+          "stage_1": {
+            "size": [
+              22,
+              7
+            ],
+            "offset": [
+              0,
+              -1
+            ],
+            "opacity": 0.16
+          },
+          "stage_2": {
+            "size": [
+              35,
+              11
+            ],
+            "offset": [
+              0,
+              -1
+            ],
+            "opacity": 0.18
+          },
+          "stage_3": {
+            "size": [
+              45,
+              15
+            ],
+            "offset": [
+              0,
+              -1
+            ],
+            "opacity": 0.21
+          }
+        }
       }
     },
     "oilseed_flower": {
@@ -630,8 +2150,8 @@
         "flowering": "res://assets/farming/crops/oilseed_flower/flowering.png"
       },
       "sha256": {
-        "stage_0": "c4b77a019fd91f8d8b6d7f1ca997167eef0cdf1f0867f525c42842292de80c4b",
-        "stage_1": "daa8231f5f5f888d0247a102009a96752f86a885a279b00b0cd51da0fe15bf45",
+        "stage_0": "45ed2ddf0ef3b0f10687801b18b2480f4b73e25c9b2716baa6242dc463c192f0",
+        "stage_1": "1a3dc91443fa27d1048615caea417e89e37db8b97e5a4404ddfbbf5ee7820e70",
         "stage_2": "e5498ec1357838940228df1ba0179cbfd51c992c8be58d71bfa5bce6e698da15",
         "stage_3": "9b85d1f5835684d528a73a6e040ee30d1647d03dcccb340029e499463fa372cd",
         "flowering": "f254d9af2f45494c92b477c979ffddb6f5403615b098cab4ce987cb6e636d589"
@@ -656,7 +2176,103 @@
               0.9234050363302231
             ],
             "samples": 128,
-            "sha256": "c4b77a019fd91f8d8b6d7f1ca997167eef0cdf1f0867f525c42842292de80c4b"
+            "sha256": "45ed2ddf0ef3b0f10687801b18b2480f4b73e25c9b2716baa6242dc463c192f0",
+            "recipe_fingerprint": "8922f3adcbc81c339acfa8f4f19fece67ad7955af59e3cb3fdcea5f1fcdfa953",
+            "render_recipe": {
+              "schema_version": 1,
+              "scripts": {
+                "render_p85_runtime.py": "46c06c6a366fde24baf264cde92fce21559c9aa452346065140f7828b4a42586",
+                "p85_render_support.py": "78a83acbe35943c6a83761223b26bce990edf25fc9ea7089e1ce0d85031fc486"
+              },
+              "blender_version": "5.2.1 LTS",
+              "source_blend_sha256": "0ba59cf593bd2a92c40c56ce3f49c9fe703b5d6a604dde797086259b1525ad21",
+              "scene": "PG_oilseed_flower_Stage0",
+              "id": "oilseed_flower",
+              "state": "stage_0",
+              "canvas_px": [
+                256,
+                256
+              ],
+              "anchor_uv": [
+                0.4999997019767761,
+                0.9234050363302231
+              ],
+              "geometry_overrides": {
+                "height_scale": 1.7,
+                "leaf_width_scale": 1.8,
+                "leaf_thickness_scale": 1.4,
+                "stem_radius_scale": 1.5,
+                "leaf_fan_xy_scale": 1.8
+              },
+              "recipe_sha256": "2e0f91b0fb55f57e463de551e10a3a8922651b46976e382c49337978b110d743",
+              "camera": {
+                "name": "PM_oilseed_flower_Camera",
+                "type": "ORTHO",
+                "matrix_world": [
+                  [
+                    -1.0,
+                    -1.4526915492751868e-07,
+                    8.261329753622704e-08,
+                    0.0
+                  ],
+                  [
+                    1.5099580252808664e-07,
+                    -0.5735762715339661,
+                    0.8191521763801575,
+                    7.620811939239502
+                  ],
+                  [
+                    -7.16125185817873e-08,
+                    0.8191521763801575,
+                    0.5735762715339661,
+                    6.550820827484131
+                  ],
+                  [
+                    0.0,
+                    0.0,
+                    0.0,
+                    1.0
+                  ]
+                ],
+                "ortho_scale": 2.3499999046325684,
+                "sensor_fit": "HORIZONTAL"
+              },
+              "render": {
+                "engine": "CYCLES",
+                "device": "CPU",
+                "samples": 128,
+                "denoising": true,
+                "film_transparent": true,
+                "format": "PNG",
+                "color_mode": "RGBA",
+                "color_depth": "8",
+                "view_transform": "Standard",
+                "look": "None",
+                "exposure": 0.0,
+                "gamma": 1.0
+              }
+            },
+            "geometry_overrides": {
+              "parameters": {
+                "height_scale": 1.7,
+                "leaf_width_scale": 1.8,
+                "leaf_thickness_scale": 1.4,
+                "stem_radius_scale": 1.5,
+                "leaf_fan_xy_scale": 1.8
+              },
+              "modified_organs": [
+                "PG_oilseed_flower_S0_Cotyledon0",
+                "PG_oilseed_flower_S0_Cotyledon0_Midrib",
+                "PG_oilseed_flower_S0_Cotyledon1",
+                "PG_oilseed_flower_S0_Cotyledon1_Midrib",
+                "PG_oilseed_flower_S0_YoungBentStem"
+              ],
+              "organ_counts": {
+                "leaf": 2,
+                "stem": 1,
+                "needle": 0
+              }
+            }
           },
           "stage_1": {
             "source_blend": "plants/oilseed_flower/stage_1.blend",
@@ -671,7 +2287,103 @@
               0.9234050363302231
             ],
             "samples": 128,
-            "sha256": "daa8231f5f5f888d0247a102009a96752f86a885a279b00b0cd51da0fe15bf45"
+            "sha256": "1a3dc91443fa27d1048615caea417e89e37db8b97e5a4404ddfbbf5ee7820e70",
+            "recipe_fingerprint": "26cc397c75d4f374fbffc0ee9766cb04c80eb48a54a7b866fd3e96fd55968486",
+            "render_recipe": {
+              "schema_version": 1,
+              "scripts": {
+                "render_p85_runtime.py": "46c06c6a366fde24baf264cde92fce21559c9aa452346065140f7828b4a42586",
+                "p85_render_support.py": "78a83acbe35943c6a83761223b26bce990edf25fc9ea7089e1ce0d85031fc486"
+              },
+              "blender_version": "5.2.1 LTS",
+              "source_blend_sha256": "870a185b3676ba893572840ed334624588cbfd8b9cf7ff8028ae05e91c0cd86f",
+              "scene": "PG_oilseed_flower_Stage1",
+              "id": "oilseed_flower",
+              "state": "stage_1",
+              "canvas_px": [
+                256,
+                256
+              ],
+              "anchor_uv": [
+                0.4999997019767761,
+                0.9234050363302231
+              ],
+              "geometry_overrides": {
+                "height_scale": 1.08,
+                "leaf_width_scale": 1.3,
+                "leaf_thickness_scale": 1.2,
+                "stem_radius_scale": 1.2
+              },
+              "recipe_sha256": "2e0f91b0fb55f57e463de551e10a3a8922651b46976e382c49337978b110d743",
+              "camera": {
+                "name": "PM_oilseed_flower_Camera",
+                "type": "ORTHO",
+                "matrix_world": [
+                  [
+                    -1.0,
+                    -1.4526915492751868e-07,
+                    8.261329753622704e-08,
+                    0.0
+                  ],
+                  [
+                    1.5099580252808664e-07,
+                    -0.5735762715339661,
+                    0.8191521763801575,
+                    7.620811939239502
+                  ],
+                  [
+                    -7.16125185817873e-08,
+                    0.8191521763801575,
+                    0.5735762715339661,
+                    6.550820827484131
+                  ],
+                  [
+                    0.0,
+                    0.0,
+                    0.0,
+                    1.0
+                  ]
+                ],
+                "ortho_scale": 2.3499999046325684,
+                "sensor_fit": "HORIZONTAL"
+              },
+              "render": {
+                "engine": "CYCLES",
+                "device": "CPU",
+                "samples": 128,
+                "denoising": true,
+                "film_transparent": true,
+                "format": "PNG",
+                "color_mode": "RGBA",
+                "color_depth": "8",
+                "view_transform": "Standard",
+                "look": "None",
+                "exposure": 0.0,
+                "gamma": 1.0
+              }
+            },
+            "geometry_overrides": {
+              "parameters": {
+                "height_scale": 1.08,
+                "leaf_width_scale": 1.3,
+                "leaf_thickness_scale": 1.2,
+                "stem_radius_scale": 1.2
+              },
+              "modified_organs": [
+                "PG_oilseed_flower_S1_ShovelLeaf0",
+                "PG_oilseed_flower_S1_ShovelLeaf0_Midrib",
+                "PG_oilseed_flower_S1_ShovelLeaf1",
+                "PG_oilseed_flower_S1_ShovelLeaf1_Midrib",
+                "PG_oilseed_flower_S1_ShovelLeaf2",
+                "PG_oilseed_flower_S1_ShovelLeaf2_Midrib",
+                "PG_oilseed_flower_S1_YoungBentStem"
+              ],
+              "organ_counts": {
+                "leaf": 3,
+                "stem": 1,
+                "needle": 0
+              }
+            }
           },
           "stage_2": {
             "source_blend": "plants/oilseed_flower/stage_2.blend",
@@ -719,7 +2431,68 @@
             "sha256": "f254d9af2f45494c92b477c979ffddb6f5403615b098cab4ce987cb6e636d589"
           }
         }
+      },
+      "shadow": {
+        "stages": {
+          "stage_0": {
+            "size": [
+              12,
+              4
+            ],
+            "offset": [
+              0,
+              -1
+            ],
+            "opacity": 0.12
+          },
+          "stage_1": {
+            "size": [
+              20,
+              7
+            ],
+            "offset": [
+              0,
+              -1
+            ],
+            "opacity": 0.15
+          },
+          "stage_2": {
+            "size": [
+              31,
+              10
+            ],
+            "offset": [
+              0,
+              -1
+            ],
+            "opacity": 0.17
+          },
+          "flowering": {
+            "size": [
+              37,
+              12
+            ],
+            "offset": [
+              0,
+              -1
+            ],
+            "opacity": 0.19
+          },
+          "stage_3": {
+            "size": [
+              39,
+              13
+            ],
+            "offset": [
+              0,
+              -1
+            ],
+            "opacity": 0.2
+          }
+        }
       }
     }
-  }
+  },
+  "visual_revision": "p86",
+  "user_accepted_sample": "2026-10-15"
 }

@@ -94,7 +94,7 @@ func _make_world(slot_store):
 	return World.new(slot_store)
 
 func _ready() -> void:
-	theme = UI.theme()
+	theme = _make_theme()
 	get_window().content_scale_mode = Window.CONTENT_SCALE_MODE_DISABLED
 	get_window().content_scale_size = Vector2i.ZERO
 	get_window().gui_embed_subwindows = true
@@ -166,6 +166,9 @@ func _clear(parent: Node) -> void:
 	for child in parent.get_children():
 		parent.remove_child(child)
 		child.queue_free()
+
+func _make_theme() -> Theme:
+	return UI.theme()
 
 func _card(parent: Node) -> VBoxContainer:
 	var panel := PanelContainer.new()
@@ -1441,16 +1444,19 @@ func _draw_world_entities(target: Node2D, readable: float) -> void:
 func _draw_facility_preview(target: Node2D, rect: Rect2) -> void:
 	target.draw_texture_rect(Icons.get_icon(build_tool),rect.grow(-12),false,Color(1,1,1,0.65))
 
-func draw_map(target: Node2D) -> void:
-	var font := theme.default_font
-	var readable := maxf(1.0,1.0/(camera.zoom.x*_ui_scale))
-	_draw_world_entities(target, readable)
+func _draw_resource_points(target: Node2D, readable: float) -> void:
 	for ident in world.source_defs:
 		var definition: Dictionary = world.source_defs[ident]
 		var position := Vector2(float(definition["position"][0]),float(definition["position"][1]))*64.0
 		target.draw_rect(Rect2(position+Vector2(4,4),Vector2(56,56)),Color("deedf0"))
 		target.draw_texture_rect(Icons.get_icon(definition["item"]),Rect2(position+Vector2(8,8),Vector2(48,48)),false)
 		if world.workforce.state["sources"].has(ident): target.draw_circle(position+Vector2(52,12),5*readable,UI.JADE)
+
+func draw_map(target: Node2D) -> void:
+	var font := theme.default_font
+	var readable := maxf(1.0,1.0/(camera.zoom.x*_ui_scale))
+	_draw_world_entities(target, readable)
+	_draw_resource_points(target,readable)
 	for worker in world.workforce.state["workers"]:
 		if worker["id"] != selected_worker: continue
 		for area in worker["areas"]:

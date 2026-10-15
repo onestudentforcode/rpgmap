@@ -1,0 +1,82 @@
+{
+  "date": "2026-10-15",
+  "phase": "P8.6",
+  "status": "implemented_tested_and_packaged",
+  "sample_user_accepted": true,
+  "sample_confirmation": "效果验收通过，继续完成",
+  "full_scene_user_review": "not separately claimed; local GPU review completed under rollout authorization",
+  "default_profile": "P8.6 integrated",
+  "save_schema": 17,
+  "assets": {
+    "plant_species": 7,
+    "plant_pngs": 29,
+    "juvenile_pngs_updated": 14,
+    "facility_bodies": 15,
+    "resource_scenery": 3,
+    "raw_pngs": 48,
+    "install_idempotence": "0 writes on repeat",
+    "visual_baseline": "p86-visual-baseline.json"
+  },
+  "full_suite": {
+    "command": "test.bat",
+    "exit_code": 0,
+    "completion_marker": "FARMING TEST SUITE OK",
+    "log": ".art-work/p86-full-regression.log",
+    "sha256": "bab4f950fd3c06310db5b4ac27418402a2573cd02522e088b19b4de9525e7575",
+    "asset_qc_checked": 75,
+    "asset_qc_failed": 0,
+    "python_tool_tests": 81,
+    "p86_production_checks": 95
+  },
+  "gpu": {
+    "frames": 42,
+    "viewports": [
+      [
+        2560,
+        1440
+      ],
+      [
+        1920,
+        1080
+      ],
+      [
+        960,
+        540
+      ]
+    ],
+    "evidence": ".art-work/p86-final-visual",
+    "checks": "p86-asset-qc.json"
+  },
+  "package": {
+    "path": "dist/LingTianDemoP86-Windows-x64.zip",
+    "bytes": 42715343,
+    "sha256": "ef832db1a428f3ff153031b840991cb816450a8e9a72791d24d9eb96c6bfd0b1",
+    "raw_png_count": 48,
+    "source_revision": "9a60fe2810a09cb0f9ebba0f81183e9d09feaf31",
+    "source_dirty": true,
+    "runtime_script_and_shader_hashes_matched": 60,
+    "probes": {
+      "standalone": {
+        "checks": 86,
+        "log": ".art-work/p86-release-logs/standalone.log",
+        "log_sha256": "7e0e19e221db0e92d0e8478251035b8ee78a06eb170871420fe46f55a45f16c6"
+      },
+      "unpacked": {
+        "checks": 86,
+        "log": ".art-work/p86-release-logs/unpacked.log",
+        "log_sha256": "7e0e19e221db0e92d0e8478251035b8ee78a06eb170871420fe46f55a45f16c6"
+      },
+      "unpacked-gpu": {
+        "checks": 87,
+        "log": ".art-work/p86-release-logs/unpacked-gpu.log",
+        "log_sha256": "f6697d17139803b447feaaf207b991a7140a9e333bc86ac6b19041f47ee45d2d"
+      }
+    }
+  },
+  "deferred": [
+    "facility found/fx layers",
+    "animal standalone models",
+    "post-harvest body variants",
+    "real-time 3D/isometric reconstruction"
+  ]
+}

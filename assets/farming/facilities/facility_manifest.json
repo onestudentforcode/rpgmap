@@ -52,6 +52,17 @@
             "sha256": "ce33fb0d0634a31797d1298e5301f8d182f56f81215eaa7ef78ac9615528b82a"
           }
         }
+      },
+      "shadow": {
+        "size": [
+          114,
+          43
+        ],
+        "offset": [
+          0,
+          8
+        ],
+        "opacity": 0.22
       }
     },
     "char_kiln": {
@@ -104,6 +115,17 @@
             "sha256": "ddc1456abc55057fc8075792d444dc3bc5e7f7e0e53eef63fcd91f7cc940206e"
           }
         }
+      },
+      "shadow": {
+        "size": [
+          111,
+          48
+        ],
+        "offset": [
+          0,
+          6
+        ],
+        "opacity": 0.22
       }
     },
     "compost_bin": {
@@ -156,6 +178,17 @@
             "sha256": "eaf6e2f77c09b6f59e57947500cf94bc152098a83f31f6abaac943d1c1e7bb12"
           }
         }
+      },
+      "shadow": {
+        "size": [
+          50,
+          20
+        ],
+        "offset": [
+          0,
+          4
+        ],
+        "opacity": 0.2
       }
     },
     "smelter": {
@@ -208,6 +241,17 @@
             "sha256": "db36d286e2414ff70fddd38816c29a85df075efd0277c7e8bc515297c8f3bfb6"
           }
         }
+      },
+      "shadow": {
+        "size": [
+          108,
+          42
+        ],
+        "offset": [
+          0,
+          7
+        ],
+        "opacity": 0.23
       }
     },
     "pen": {
@@ -260,6 +304,17 @@
             "sha256": "7b75e141f3cad21e1902704f4bfc45625b76048329e792d294d614241e309414"
           }
         }
+      },
+      "shadow": {
+        "size": [
+          117,
+          49
+        ],
+        "offset": [
+          0,
+          4
+        ],
+        "opacity": 0.16
       }
     },
     "fish_pond": {
@@ -312,6 +367,18 @@
             "sha256": "a3b2e9d366756a45e86dc6d603ab67d4a10e474a6434517b452228d2677ea7c0"
           }
         }
+      },
+      "shadow": {
+        "kind": "water",
+        "size": [
+          124,
+          84
+        ],
+        "offset": [
+          0,
+          2
+        ],
+        "opacity": 0.2
       }
     },
     "algae_tank": {
@@ -364,6 +431,17 @@
             "sha256": "caddd7c1110ec5028e871986dc980c77782f45847e169ba3ae799f371bb1bf01"
           }
         }
+      },
+      "shadow": {
+        "size": [
+          47,
+          20
+        ],
+        "offset": [
+          0,
+          5
+        ],
+        "opacity": 0.19
       }
     },
     "research_bench": {
@@ -416,6 +494,17 @@
             "sha256": "a9ef4bef20277a88d0c0dd55dcdaf52de2c1fe4247f26d9a66be8c33c994ad9c"
           }
         }
+      },
+      "shadow": {
+        "size": [
+          52,
+          21
+        ],
+        "offset": [
+          0,
+          4
+        ],
+        "opacity": 0.2
       }
     },
     "bee_hive": {
@@ -468,6 +557,17 @@
             "sha256": "c4b958ea10ea201f5dcdac4e45e44d819b561f09c6291c13f3b81493fdae9725"
           }
         }
+      },
+      "shadow": {
+        "size": [
+          105,
+          42
+        ],
+        "offset": [
+          0,
+          6
+        ],
+        "opacity": 0.2
       }
     },
     "farm_processor": {
@@ -520,6 +620,17 @@
             "sha256": "8fadfaab4e44416f55b3d709ba0dfdb6ffcfb335c92d9f12a697ea37a2253053"
           }
         }
+      },
+      "shadow": {
+        "size": [
+          110,
+          43
+        ],
+        "offset": [
+          0,
+          6
+        ],
+        "opacity": 0.22
       }
     },
     "purifying_bed": {
@@ -572,6 +683,17 @@
             "sha256": "06a594de0813407113b1e93d097e72eff6e4480667eae004396ee41bf6c152c2"
           }
         }
+      },
+      "shadow": {
+        "size": [
+          111,
+          44
+        ],
+        "offset": [
+          0,
+          4
+        ],
+        "opacity": 0.17
       }
     },
     "rock_workyard": {
@@ -624,6 +746,17 @@
             "sha256": "1d5ec098dc3afa1f91f4cc2f1bd6d7d6280d434330416015966fcb229193ad95"
           }
         }
+      },
+      "shadow": {
+        "size": [
+          112,
+          45
+        ],
+        "offset": [
+          0,
+          5
+        ],
+        "opacity": 0.21
       }
     },
     "kitchen": {
@@ -676,6 +809,17 @@
             "sha256": "143a8522cc87883a081e82124d48e684da6dc8afffbb7dddd9cc74a7ff7c5880"
           }
         }
+      },
+      "shadow": {
+        "size": [
+          111,
+          44
+        ],
+        "offset": [
+          0,
+          6
+        ],
+        "opacity": 0.21
       }
     },
     "field_service_station": {
@@ -728,6 +872,17 @@
             "sha256": "7e6deb5a716b51811536cc79eec6ab47c6462fc5f0d2579723ddd085d36acf42"
           }
         }
+      },
+      "shadow": {
+        "size": [
+          111,
+          43
+        ],
+        "offset": [
+          0,
+          6
+        ],
+        "opacity": 0.2
       }
     },
     "growth_lamp": {
@@ -780,6 +935,17 @@
             "sha256": "05cd9104361fe3bd879e0cccbfa021a3943c0eda837054cbed18398992690ac7"
           }
         }
+      },
+      "shadow": {
+        "size": [
+          42,
+          17
+        ],
+        "offset": [
+          0,
+          3
+        ],
+        "opacity": 0.19
       }
     }
   }

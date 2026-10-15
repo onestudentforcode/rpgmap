@@ -1,0 +1,103 @@
+{
+  "schema_version": 1,
+  "recipe_version": 3,
+  "name": "P8.6 seven-family juvenile geometry; accepted A recipe retained",
+  "plants": {
+    "golden_wheat": {
+      "stage_0": {
+        "height_scale": 2.4,
+        "leaf_width_scale": 2.17,
+        "leaf_thickness_scale": 1.5,
+        "stem_radius_scale": 1.6,
+        "leaf_fan_xy_scale": 4.0
+      },
+      "stage_1": {
+        "height_scale": 1.1,
+        "leaf_width_scale": 1.6,
+        "leaf_thickness_scale": 1.25,
+        "stem_radius_scale": 1.25
+      }
+    },
+    "pasture_grass": {
+      "stage_0": {
+        "height_scale": 2.35,
+        "leaf_width_scale": 2.25,
+        "leaf_thickness_scale": 1.5,
+        "stem_radius_scale": 1.5,
+        "leaf_fan_xy_scale": 4.0
+      },
+      "stage_1": {
+        "height_scale": 1.1,
+        "leaf_width_scale": 1.55,
+        "leaf_thickness_scale": 1.25,
+        "stem_radius_scale": 1.25
+      }
+    },
+    "resin_tree": {
+      "stage_0": {
+        "height_scale": 1.25,
+        "needle_width_scale": 1.65,
+        "stem_radius_scale": 1.15
+      },
+      "stage_1": {
+        "height_scale": 1.05,
+        "needle_width_scale": 1.5,
+        "stem_radius_scale": 1.1
+      }
+    },
+    "fast_fir": {
+      "stage_0": {
+        "height_scale": 1.7,
+        "needle_width_scale": 2.0,
+        "stem_radius_scale": 1.4
+      },
+      "stage_1": {
+        "height_scale": 1.08,
+        "needle_width_scale": 1.4,
+        "stem_radius_scale": 1.15
+      }
+    },
+    "oilseed_flower": {
+      "stage_0": {
+        "height_scale": 1.7,
+        "leaf_width_scale": 1.8,
+        "leaf_thickness_scale": 1.4,
+        "stem_radius_scale": 1.5,
+        "leaf_fan_xy_scale": 1.8
+      },
+      "stage_1": {
+        "height_scale": 1.08,
+        "leaf_width_scale": 1.3,
+        "leaf_thickness_scale": 1.2,
+        "stem_radius_scale": 1.2
+      }
+    },
+    "honeybell_bush": {
+      "stage_0": {
+        "height_scale": 1.9,
+        "leaf_width_scale": 1.8,
+        "leaf_thickness_scale": 1.4,
+        "stem_radius_scale": 1.5,
+        "leaf_fan_xy_scale": 1.8
+      },
+      "stage_1": {
+        "height_scale": 1.1,
+        "leaf_width_scale": 1.35,
+        "leaf_thickness_scale": 1.2,
+        "stem_radius_scale": 1.2
+      }
+    },
+    "wood_decay_mushroom": {
+      "stage_0": {
+        "height_scale": 1.6,
+        "colony_xy_scale": 1.6,
+        "stem_radius_scale": 1.6
+      },
+      "stage_1": {
+        "height_scale": 1.15,
+        "colony_xy_scale": 1.2,
+        "stem_radius_scale": 1.4
+      }
+    }
+  }
+}

@@ -9,23 +9,65 @@ var plant_visuals := PlantVisuals.new()
 const FacilityVisuals := preload("res://scripts/farming/p8/p8_facility_visuals.gd")
 var facility_visuals := FacilityVisuals.new()
 const TerrainSoften := preload("res://assets/farming/shaders/p8_terrain_soften.gdshader")
+const TrialGrounding := preload("res://scripts/farming/p8/p8_grounding.gd")
+const ProductionEnvironment := preload("res://scripts/farming/p8/p8_environment_visuals.gd")
+const P8Style := preload("res://scripts/farming/p8/p8_ui_style.gd")
+var production_visuals := true
+var _facility_thumbnails: Dictionary = {}
+var visual_trial_profile := "baseline"
+var trial_environment = null
+var _trial_grounding = null
 var _handbook_chapter := "start"
 var _land_stamp := ""
 var _land_focus := ""
 var _map_pan := false
 
 func _init() -> void:
-	var release_probe := OS.get_cmdline_user_args().has("--p85-smoke")
+	var release_probe := OS.get_cmdline_user_args().has("--p85-smoke") or OS.get_cmdline_user_args().has("--p86-smoke")
 	store = P8Store.new("user://p85_probe_slots_%d" % OS.get_process_id()) if release_probe else P8Store.new()
 	manual_mode = true
 	minimum_map_zoom = 0.1
 	settings = Settings.new("user://p85_probe_settings_%d.cfg" % OS.get_process_id() if release_probe else "user://farm_demo_p8_settings.cfg", minimum_map_zoom)
-	product_title = "灵田 Demo P8.5 · 生态经营"
+	product_title = "灵田 Demo P8.6 · 生态经营"
 	terrain_path = "res://content/farming/baked/p8/terrains.json"
 	preview_prefix = "p8"
 
 func _make_store(directory: String = ""):
 	return P8Store.new() if directory.is_empty() else P8Store.new(directory)
+
+func _make_theme() -> Theme:
+	return P8Style.theme() if production_visuals else super()
+
+func _card(parent: Node) -> VBoxContainer:
+	var body := super(parent)
+	if production_visuals: body.get_parent().add_theme_stylebox_override("panel",UI.box(P8Style.CARD,P8Style.BORDER))
+	return body
+
+func facility_thumbnail(ident: String) -> Texture2D:
+	if _facility_thumbnails.has(ident): return _facility_thumbnails[ident]
+	if not facility_visuals.facilities.has(ident): return null
+	var path := String(facility_visuals.facilities[ident]["path"])
+	if not facility_visuals.textures.has(path): return null
+	var texture: Texture2D = facility_visuals.textures[path]
+	var image := texture.get_image()
+	var region := Rect2(image.get_used_rect()).grow(8).intersection(Rect2(Vector2.ZERO,texture.get_size()))
+	var thumbnail := AtlasTexture.new()
+	thumbnail.atlas = texture
+	thumbnail.region = region
+	_facility_thumbnails[ident] = thumbnail
+	return thumbnail
+
+func _picture(parent: Node, ident: String, extent: int = 40) -> TextureRect:
+	var texture := facility_thumbnail(ident) if production_visuals else null
+	if texture == null: return super(parent,ident,extent)
+	var picture := TextureRect.new()
+	picture.texture = texture
+	picture.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+	picture.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
+	picture.custom_minimum_size = Vector2(extent,extent)
+	picture.set_meta("facility_thumbnail",ident)
+	parent.add_child(picture)
+	return picture
 
 func _make_world(slot_store):
 	return P8World.new(slot_store)
@@ -44,11 +86,72 @@ func _ready() -> void:
 		material.set_shader_parameter("surface_kind",int(style["terrain_surface_kinds"][ident]))
 		material.set_shader_parameter("surface_detail",float(style["terrain_surface_detail"]))
 		terrain.layers[ident].material = material
+	if production_visuals and style.get("production_visuals",false):
+		var configured := configure_visual_trial("integrated")
+		if not configured["ok"]: push_error("P8.6 production visuals: %s" % configured["diagnostics"])
 	if OS.get_cmdline_user_args().has("--p85-smoke"):
 		var probe = load("res://scripts/farming/validation/p85_release_smoke.gd").new()
 		probe.shell = self
 		add_child(probe)
 		probe.run.call_deferred()
+	if OS.get_cmdline_user_args().has("--p86-smoke"):
+		var probe = load("res://scripts/farming/validation/p86_release_smoke.gd").new()
+		probe.shell = self
+		add_child(probe)
+		probe.run.call_deferred()
+
+func configure_visual_trial(profile: String, runtime_dir: String = "") -> Dictionary:
+	if profile not in ["baseline","grounding","integrated"]:
+		return {"ok":false,"profile":visual_trial_profile,"replaced":[],"diagnostics":["unknown visual trial profile: "+profile]}
+	if not is_node_ready():
+		return {"ok":false,"profile":visual_trial_profile,"replaced":[],"diagnostics":["configure trial after scene ready"]}
+	var replacements: Dictionary = plant_visuals.prepare_trial_replacements(runtime_dir if profile == "integrated" else "")
+	var problems: Array = replacements["diagnostics"].duplicate()
+	var prepared_grounding = _trial_grounding
+	var prepared_environment = null
+	if profile != "baseline":
+		if prepared_grounding == null:
+			prepared_grounding = TrialGrounding.new("res://content/farming/p8/grounding.json") if production_visuals else TrialGrounding.new()
+		problems.append_array(prepared_grounding.diagnostics)
+	if profile == "integrated":
+		prepared_environment = _make_trial_environment()
+		if prepared_environment == null: problems.append("trial environment module unavailable; current profile retained")
+		else: problems.append_array(prepared_environment.prepare_assets())
+	# Nothing live changes until every requested trial component is ready.
+	if not problems.is_empty():
+		return {"ok":false,"profile":visual_trial_profile,"requested_profile":profile,"replaced":[],"diagnostics":problems}
+	if trial_environment != null: trial_environment.restore(self)
+	trial_environment = prepared_environment
+	_trial_grounding = prepared_grounding
+	plant_visuals.commit_trial_replacements(replacements)
+	visual_trial_profile = profile
+	if trial_environment != null: trial_environment.apply(self)
+	overlay.queue_redraw()
+	return {"ok":true,"profile":profile,"replaced":replacements["replaced"],"diagnostics":problems}
+
+func _make_trial_environment():
+	if production_visuals: return ProductionEnvironment.new()
+	var path := "res://scripts/farming/p8/p86_environment_trial.gd"
+	if not ResourceLoader.exists(path): return null
+	var environment_script = load(path)
+	return environment_script.new() if environment_script != null and environment_script.can_instantiate() else null
+
+func _draw_contact(target: Node2D, contact: Dictionary, modulation: Color = Color.WHITE) -> void:
+	if contact.is_empty(): return
+	target.draw_texture_rect(contact["texture"],contact["rect"],false,contact.get("color",Color.WHITE)*modulation)
+
+func _draw_resource_points(target: Node2D, readable: float) -> void:
+	if visual_trial_profile != "integrated" or trial_environment == null:
+		super(target,readable)
+		return
+	for ident in world.source_defs:
+		var definition: Dictionary = world.source_defs[ident]
+		var position := Vector2(float(definition["position"][0]),float(definition["position"][1]))*64.0
+		var visual: Dictionary = trial_environment.source_visual(ident,Rect2(position,Vector2(64,64)))
+		if visual.is_empty():
+			target.draw_rect(Rect2(position+Vector2(4,4),Vector2(56,56)),Color("deedf0"))
+			target.draw_texture_rect(Icons.get_icon(definition["item"]),Rect2(position+Vector2(8,8),Vector2(48,48)),false)
+		if world.workforce.state["sources"].has(ident): target.draw_circle(position+Vector2(52,12),5*readable,UI.JADE)
 
 func _refresh() -> void:
 	super()
@@ -165,6 +268,23 @@ func _draw_world_entities(target: Node2D, readable: float) -> void:
 		if visual.is_empty(): target.draw_rect(rect.grow(-5),Color("eee5d6"))
 		entities.append({"kind": "facility", "id": int(uid), "data": building, "rect": rect,
 			"root": rect.get_center(), "visual": visual})
+	if visual_trial_profile == "integrated" and trial_environment != null:
+		for ident in world.source_defs:
+			var definition: Dictionary = world.source_defs[ident]
+			var rect := Rect2(Vector2(float(definition["position"][0]),float(definition["position"][1]))*64.0,Vector2(64,64))
+			var visual: Dictionary = trial_environment.source_visual(ident,rect)
+			if not visual.is_empty():
+				entities.append({"kind":"source","id":0,"source_id":ident,"data":definition,"rect":rect,"root":visual["root"],"visual":visual})
+	# Ground contacts stay below every world body; bodies keep the approved root order.
+	if visual_trial_profile != "baseline" and _trial_grounding != null:
+		for entity in entities:
+			if entity["visual"].is_empty(): continue
+			if entity["kind"] == "crop":
+				_draw_contact(target,_trial_grounding.crop_shadow(entity["data"]["crop_id"],entity["visual"]["key"],entity["root"]))
+			elif entity["kind"] == "facility":
+				_draw_contact(target,_trial_grounding.facility_shadow(entity["data"]["facility_id"],entity["root"]))
+			else:
+				_draw_contact(target,_trial_grounding.source_shadow(entity["source_id"],entity["root"]))
 	entities.sort_custom(func(a: Dictionary, b: Dictionary) -> bool:
 		if a["root"].y != b["root"].y: return a["root"].y < b["root"].y
 		if a["root"].x != b["root"].x: return a["root"].x < b["root"].x
@@ -178,22 +298,28 @@ func _draw_world_entities(target: Node2D, readable: float) -> void:
 				target.draw_texture_rect(Icons.get_icon(entity["data"]["crop_id"]),Rect2(rect.position+Vector2(10,8),rect.size-Vector2(20,20)),false)
 			else:
 				target.draw_texture_rect(visual["texture"], visual["rect"], false)
-		else:
+		elif entity["kind"] == "facility":
 			var visual: Dictionary = entity["visual"]
 			if visual.is_empty(): target.draw_texture_rect(Icons.get_icon(entity["data"]["facility_id"]),rect.grow(-14),false)
 			else: target.draw_texture_rect(visual["texture"],visual["rect"],false)
+		else:
+			var visual: Dictionary = entity["visual"]
+			target.draw_texture_rect(visual["texture"],visual["rect"],false)
 	# All readiness markers follow every world entity, never underneath a tree.
 	for entity in entities:
 		var rect: Rect2 = entity["rect"]
 		if entity["kind"] == "crop":
 			if entity["data"]["state"] == "mature": target.draw_circle(rect.end-Vector2(10,10),5*readable,UI.JADE)
 			elif entity["data"]["state"] == "regrowing": target.draw_arc(rect.end-Vector2(10,10),5*readable,0,TAU,16,UI.WATER,2*readable)
-		elif entity["data"]["batch"].get("status") == "ready": target.draw_circle(rect.end-Vector2(10,10),6*readable,UI.WATER)
+		elif entity["kind"] == "facility" and entity["data"]["batch"].get("status") == "ready": target.draw_circle(rect.end-Vector2(10,10),6*readable,UI.WATER)
 
 func _draw_facility_preview(target: Node2D, rect: Rect2) -> void:
 	var visual: Dictionary = facility_visuals.visual(build_tool,rect)
 	if visual.is_empty(): super(target,rect)
-	else: target.draw_texture_rect(visual["texture"],visual["rect"],false,Color(1,1,1,0.65))
+	else:
+		if visual_trial_profile != "baseline" and _trial_grounding != null:
+			_draw_contact(target,_trial_grounding.facility_shadow(build_tool,visual["root"]),Color(1,1,1,0.65))
+		target.draw_texture_rect(visual["texture"],visual["rect"],false,Color(1,1,1,0.65))
 
 func draw_map(target: Node2D) -> void:
 	super(target)

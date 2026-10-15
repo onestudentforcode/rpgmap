@@ -1,9 +1,11 @@
 extends RefCounted
 ## Offline Blender renders: persistent textures, projected roots and fixed canvases.
+const Grounding := preload("res://scripts/farming/p8/p8_grounding.gd")
 var plants: Dictionary = {}
 var textures: Dictionary = {}
 var diagnostics: Dictionary = {}
 var enabled_ids: Array[String] = []
+var _trial_original_textures: Dictionary = {}
 
 func _init(manifest_path: String = "res://assets/farming/crops/plant_manifest.json") -> void:
 	var parsed = JSON.parse_string(FileAccess.get_file_as_string(manifest_path))
@@ -40,8 +42,41 @@ func state_key(crop: Dictionary, definition: Dictionary, flower_window: Array) -
 	return "stage_%d" % clampi(int(float(progress) * 3.0 / target), 0, 2)
 
 func ground_root(origin: Array, footprint: Array) -> Vector2:
-	return Vector2((float(origin[0]) + float(footprint[0]) * 0.5) * 64.0,
-		(float(origin[1]) + float(footprint[1])) * 64.0)
+	return Grounding.ground_root(origin,footprint)
+
+func prepare_trial_replacements(directory: String = "") -> Dictionary:
+	# Decode the entire selected subset before committing any cache replacement.
+	var prepared: Dictionary = (_trial_original_textures if not _trial_original_textures.is_empty() else textures).duplicate()
+	var replaced: Array[String] = []
+	var problems: Array[String] = []
+	if directory.is_empty(): return {"textures":prepared,"replaced":replaced,"diagnostics":problems}
+	for ident in plants:
+		for key in ["stage_0","stage_1"]:
+			var canonical := String(plants[ident]["stages"].get(key,""))
+			var path := directory.path_join(canonical.trim_prefix("res://"))
+			if not FileAccess.file_exists(path): continue
+			var image := Image.new()
+			var error := image.load_png_from_buffer(FileAccess.get_file_as_bytes(path))
+			var canvas: Array = plants[ident]["canvas_px"]
+			if error != OK or image.is_empty() or image.get_size() != Vector2i(int(canvas[0]),int(canvas[1])):
+				problems.append("invalid trial canvas: %s" % path)
+				continue
+			image.fix_alpha_edges()
+			image.generate_mipmaps()
+			prepared[canonical] = ImageTexture.create_from_image(image)
+			replaced.append("%s/%s" % [ident,key])
+	if replaced.is_empty() and problems.is_empty(): problems.append("no juvenile trial candidates found in %s" % directory)
+	return {"textures":prepared,"replaced":replaced,"diagnostics":problems}
+
+func commit_trial_replacements(prepared: Dictionary) -> void:
+	# Approved PNGs and manifests are never rewritten by the trial.
+	if _trial_original_textures.is_empty(): _trial_original_textures = textures.duplicate()
+	textures = prepared["textures"]
+
+func configure_trial_replacements(directory: String = "") -> Dictionary:
+	var prepared := prepare_trial_replacements(directory)
+	if prepared["diagnostics"].is_empty(): commit_trial_replacements(prepared)
+	return {"ok":prepared["diagnostics"].is_empty(),"replaced":prepared["replaced"] if prepared["diagnostics"].is_empty() else [],"diagnostics":prepared["diagnostics"]}
 
 func visual(crop: Dictionary, definition: Dictionary, flower_window: Array) -> Dictionary:
 	var ident := String(crop["crop_id"])
