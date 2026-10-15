@@ -1,5 +1,5 @@
 {
-  "revision": "p87-a-35deg",
+  "revision": "p87-production-35deg",
   "elevation_degrees": 35.0,
   "logical_tile_units": 64.0,
   "view_units_per_ground_unit": 1.0,
@@ -10,5 +10,5 @@
   "contact_parameters_space": "already_projected_view_units",
   "resource_camera_ortho_width": 3.4,
   "calibration_report": "res://docs/farming/art/p87-camera-calibration.json",
-  "default_enabled": false
+  "default_enabled": true
 }

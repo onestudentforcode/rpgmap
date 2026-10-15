@@ -18,6 +18,13 @@ func _run() -> void:
 	shell.set_process(false)
 	check(shell.projection.enabled and not shell.show_rulers,"production projection with no development rulers")
 	check(shell.store._directory == path,"production test uses isolated storage")
+	var tree_cast: Dictionary = shell._trial_grounding.cast_shadow("crop","resin_tree","stage_3",Vector2.ZERO)
+	check(not tree_cast.is_empty() and tree_cast["color"].a<0.15,"mature tree has restrained cast")
+	check(tree_cast["rect"].get_center().x>0 and tree_cast["rect"].get_center().y>0,"cast direction agrees across scene")
+	check(shell._trial_grounding.cast_shadow("crop","resin_tree","stage_0",Vector2.ZERO).is_empty(),"tiny seedlings avoid stacked casts")
+	check(shell._trial_grounding.cast_shadow("facility","fish_pond","",Vector2.ZERO).is_empty(),"water facility never gets opaque land cast")
+	check(shell._trial_grounding.cast_shadow("source","spring_source","",Vector2.ZERO).is_empty(),"spring retains clear water contact")
+	check(shell._trial_grounding.facility_shadow("woodshop",Vector2.ZERO)["color"].a<=0.27,"contact opacity bounded")
 	var original: Dictionary = shell.world.to_snapshot().duplicate(true)
 	var uid := 1
 	for ident in shell.world.crop_defs:
@@ -65,6 +72,18 @@ func _run() -> void:
 	check(item["visual"].is_empty(),"missing plant keeps ground fallback")
 	shell.plant_visuals.textures[path_key] = texture
 	check(not shell.collect_entities().filter(func(e: Dictionary): return e["kind"]=="crop")[0]["visual"].is_empty(),"texture recovery after fallback")
+	var facility_path: String = shell.facility_visuals.facilities["woodshop"]["path"]
+	var facility_texture: Texture2D = shell.facility_visuals.textures[facility_path]
+	shell.facility_visuals.textures.erase(facility_path)
+	shell.world.facilities[99] = {"uid":99,"facility_id":"woodshop","origin":[5,5],"batch":{"status":"idle"}}
+	check(shell.collect_entities().filter(func(e: Dictionary): return e["kind"]=="facility")[0]["visual"].is_empty(),"missing facility retains projected ground fallback")
+	shell.facility_visuals.textures[facility_path] = facility_texture
+	check(not shell.collect_entities().filter(func(e: Dictionary): return e["kind"]=="facility")[0]["visual"].is_empty(),"facility texture recovery")
+	var source_texture: Texture2D = shell.trial_environment.textures["ore_source"]
+	shell.trial_environment.textures.erase("ore_source")
+	check(shell.collect_entities().filter(func(e: Dictionary): return e["ident"]=="ore_source")[0]["visual"].is_empty(),"missing resource retains projected ground fallback")
+	shell.trial_environment.textures["ore_source"] = source_texture
+	check(not shell.collect_entities().filter(func(e: Dictionary): return e["ident"]=="ore_source")[0]["visual"].is_empty(),"resource texture recovery")
 	for failure in failures: printerr(failure)
 	print("P87 PRODUCTION %s: %d checks"%["OK" if failures.is_empty() else "FAILED",checks])
 	quit(0 if failures.is_empty() else 1)

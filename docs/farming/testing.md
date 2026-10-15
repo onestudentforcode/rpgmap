@@ -1,6 +1,8 @@
 # 当前农场测试与历史入口
 
-> **2026-10-15 P8.6：** 默认P8已启用新视觉，`test.bat`包含95项生产视觉检查；完整套件已通过。`python tools/farming/qc_p86_visuals.py`检查48图新版基准及42张GPU证据；`review_p86_full.ps1`重建三窗口矩阵，`build_p86_demo.ps1`构建并验证独立包。P8.5轮廓等价QC只适用于历史升分辨率批次，不用于本次有意修形。
+> **2026-10-15 当前P8.7：** 默认`farm_p8.tscn`加载`p87_scene.gd`，保留schema17和原玩法。完整`test.bat`通过；最终89项投影、146项生产视觉、324项GUI信号交互专项通过，阴影补充后的60帧和独立包91/91/93项重新验证。运行`review_p87_trial.ps1 -ChecksOnly`复查专项，`review_p87_full.ps1`生成正式三窗口/缩放/侧栏矩阵，`qc_p87_visuals.py`检查资源及显式冻结的投影基准，`build_p87_demo.ps1`构建隔离包；[证据](art/p87-final-validation.json)。
+
+> **P8.6历史基线：** 95项生产视觉及原48图/42帧证据保留；`qc_p86_visuals.py`、`review_p86_full.ps1`和固定原shell的`build_p86_demo.ps1`用于该历史批次。P8.5轮廓等价QC只适用于历史升分辨率批次，不用于有意修形或P8.7根点/投影调整。
 
 > P8经营基线：本地测试阶段已完成；默认`play.bat`/F5为`farm_p8.tscn`。P8使用独立三槽`user://farm_demo_p8_slots`、schema17，V2/V1/V0及历史场景均显式进入。原应用标识保持，旧档不迁移到P8。用户确认经营页面验收通过；原先后置的Windows独立包已在P8.6完成，见[交付记录](art/p86-windows-delivery.md)。
 

@@ -1,10 +1,18 @@
 # P8资产接入与美术验收资料
 
-> **P8.7计划与试样：** [P8.7相机机位与地面投影统一](../phase-08.7-相机机位与地面投影统一.md)，区分地面投影与PNG主体投影，先验证35°匹配试样；A样板已获用户接受，继续B～D；当前资源及默认入口暂保持P8.6。
+> **当前P8.7已交付：** [相机机位与地面投影统一](../phase-08.7-相机机位与地面投影统一.md)A～D完成，默认P8采用35°地面投影、原比例主体和轻量柔影。[最终验收](p87-final-validation.json)、[画面契约](p87-projection-direction.md)及[Windows交付](p87-windows-delivery.md)记录60帧和独立包验证。运行无需外部模型或重渲染。
 
-> **当前P8.6（2026-10-15）：** 用户已验收A样板；全量植物/设施接地、幼苗、三资源点、全方向水岸及轻量UI已进入默认P8。见[阶段记录](../phase-08.6-场景美术统一与可读性整改.md)、[48图/42截图检查](p86-asset-qc.json)与[Windows交付](p86-windows-delivery.md)。下文为P8.5历史管线，P8.6改用`qc_p86_visuals.py`及新视觉基准；不再以“轮廓必须等于原小图”检查有意修形。
+```powershell
+python tools/farming/bake_p8.py --check
+powershell -NoProfile -ExecutionPolicy Bypass -File tools/farming/review_p87_full.ps1
+python tools/farming/qc_p87_visuals.py
+```
 
-## 当前P8.6
+P8.7保留48份原PNG及其资产清单，另以`p87-visual-baseline.json`登记投影/柔影配置与运行脚本；普通QC不更新基准。以下为P8.6/P8.5历史管线和追溯入口。
+
+> **P8.6历史基线（2026-10-15）：** 用户已验收A样板；全量植物/设施接地、幼苗、三资源点、全方向水岸及轻量UI已进入默认P8。见[阶段记录](../phase-08.6-场景美术统一与可读性整改.md)、[48图/42截图检查](p86-asset-qc.json)与[Windows交付](p86-windows-delivery.md)。下文为P8.5历史管线，P8.6改用`qc_p86_visuals.py`及新视觉基准；不再以“轮廓必须等于原小图”检查有意修形。
+
+## P8.6历史基线
 
 当前运行资源均随仓库提交，运行和发布无需外部美术工作区。安装与重建步骤见[阶段文档](../phase-08.6-场景美术统一与可读性整改.md)，资源/根点基准见[p86-visual-baseline.json](p86-visual-baseline.json)，完整回归和包哈希见[最终证据](p86-final-validation.json)。本机已有GPU截图证据时可重新核查：
 

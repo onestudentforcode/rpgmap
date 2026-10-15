@@ -1,6 +1,6 @@
 # Phase 8.7 — 相机机位与地面投影统一
 
-日期：2026-10-15。状态：**A阶段实现、校准和三窗口检查完成，用户已接受35°样板并授权继续B～D；默认运行暂为P8.6，正式接入与交付进行中。**
+日期：2026-10-15。状态：**A～D已实现并完成技术验收；用户接受35°样板，对最终画面基本接受并要求补充阴影，补影已完成并复核。默认P8已切换P8.7，Windows独立包已交付。**
 
 ## 1. 问题与目标
 
@@ -159,3 +159,25 @@ B提交`74c4565`。区域定位增加V1默认保持原行为的覆盖入口，P8
 `run_p87_interactions.gd`324项通过：三窗口×100/125/150%请求UI缩放×侧栏开关×三档地图缩放，覆盖实际视口拾取、滚轮光标锚点、中键平移、适配取景和稳定边界；补查区域/设施/负坐标定位。通过真实`board.gui_input`信号执行开垦、选种后的播种、两格设施建设、3×2拖选委托、未购地弹窗打开/关闭及正常日结存读档。小窗口UI缩放沿用既有有效比例限制，不声称被限制的档位仍强制按150%显示。
 
 旧V1界面79项通过，含原区域定位中心断言；P8.5/P8.6的209/95项及P8.7的89/136项继续通过。上述是引擎内GUI信号测试，不写成完整原生鼠标试玩。默认入口仍未切换，D将重新验证全场GPU画面、完整`test.bat`及Windows包。
+
+## 13. D阶段最终验收与交付
+
+C提交`1eef1d9`。正式三窗口各20帧共60张GPU图，覆盖全部成长/花期、15设施、3资源点、密植混植、0.1/1.0/3.0缩放、中键平移、实际负坐标水域购地后的水场、四向/凹凸/孤岛水岸，以及100/125/150%请求UI缩放和侧栏开关。图像按实际GPU尺寸校正、检查引擎日志；岸线/成长/库存为明确标注的隔离夹具，不能当作自然经营成果。
+
+用户对最终全场图册的反馈为“适当补充一些阴影，最终画面基本上接受”。按该反馈新增P8.7独立柔影配置：陆地接触透明度小幅提高，树木随阶段、设施及矿石增加同方向低透明度软投影；幼苗stage_0不叠投影，水场和泉眼不加陆地投影。原PNG不重渲染。补影后重新审阅密植/资源/临水场景，重跑60帧、专项与Windows包；用户基本接受和补影后的代理复核分别登记，未虚构第二次用户逐图接受。
+
+最终P8.7专项为89项投影、146项生产视觉（含阴影边界及三类缺图恢复）、324项交互；旧V1界面79项、P8.5生命周期209项、P8.6生产95项继续通过。完整`test.bat`退出0并输出`FARMING TEST SUITE OK`，包括75项资源QC无失败、81项Python工具测试及V0/V1/V2/P8经营/界面/手册/扩地回归；最终补影差异另由上述专项、60帧和包验证覆盖，不把全量回归的执行时点改写成补影后重新跑过整套。
+
+全部技术检查通过后，`farm_p8.tscn`切换到正式`p87_scene.gd`，`play.bat`/F5及显式`play.bat p8`进入P8.7；`play.bat --selftest`真实默认入口20项通过。候选`farm_p87.tscn`与默认场景字节相同；V0/V1/V2原入口和档案保持。
+
+Windows独立/解压/解压GPU分别91/91/93项通过。最终ZIP为42,740,486字节，SHA256 `1af1f566c3b2c7ef281a697d9d4bac68fdf4f5e5492fc9c6cc0411c00aeb167a`；70份包内运行脚本/shader、关键配置及入口与当前工作区哈希一致。manifest如实保留D阶段提交前的dirty工作区来源，不伪称包来自后续提交。
+
+```powershell
+powershell -NoProfile -ExecutionPolicy Bypass -File tools/farming/review_p87_trial.ps1 -ChecksOnly
+powershell -NoProfile -ExecutionPolicy Bypass -File tools/farming/review_p87_full.ps1
+python tools/farming/qc_p87_visuals.py
+powershell -NoProfile -ExecutionPolicy Bypass -File tools/farming/build_p87_demo.ps1
+python tools/farming/summarize_p87_release.py
+```
+
+视觉基准`p87-visual-baseline.json`只在显式`--freeze-baseline`时更新，普通QC不改基准。最终[证据汇总](art/p87-final-validation.json)、[画面契约](art/p87-projection-direction.md)、[Windows交付](art/p87-windows-delivery.md)与[玩家说明](demo-p87-操作说明.md)已登记。历史A/B/C段落按发生时点保留，不代表当前状态仍在等待或默认仍为P8.6。

@@ -23,6 +23,9 @@ foreach ($relative in @('scenes/farming/farm_p8.tscn','scripts/farming/rendering
     'scripts/farming/rendering/farm_ui_style.gd','scripts/farming/validation/p86_release_smoke.gd',
     'scripts/farming/validation/p8_release_smoke.gd','content/farming/baked/terrains.json',
     'content/farming/baked/maps/farm_02.json','content/farming/p8/world_visuals.json','project.godot')) { Copy-ReleaseFile $relative }
+# The historical P8.6 builder must keep its own shell after P8.7 becomes default.
+$legacyScene = [IO.File]::ReadAllText((Join-Path $stageRoot 'scenes/farming/farm_p8.tscn')).Replace('p8/p87_scene.gd','p8/p8_scene.gd')
+[IO.File]::WriteAllText((Join-Path $stageRoot 'scenes/farming/farm_p8.tscn'),$legacyScene,[Text.UTF8Encoding]::new($false))
 & python (Join-Path $PSScriptRoot 'stage_p85_png_data.py') --stage $stageRoot
 if ($LASTEXITCODE -ne 0) { throw 'P8.6 raw PNG staging failed.' }
 Copy-Item -LiteralPath (Join-Path $PSScriptRoot 'export_p86.cfg') -Destination (Join-Path $stageRoot 'export_presets.cfg')

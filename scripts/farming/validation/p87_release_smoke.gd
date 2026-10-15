@@ -19,6 +19,9 @@ func run() -> void:
 	check(OS.has_feature("farm_demo_p8_release"),"actual P8 export feature")
 	check(shell.projection.enabled and absf(shell.projection.depth-0.573576436)<0.00001,"packaged 35 degree projection")
 	check(not shell.show_rulers,"production rulers disabled")
+	check(FileAccess.file_exists("res://content/farming/p8/p87_shadows.json"),"packaged soft shadow configuration")
+	check(not shell._trial_grounding.cast_shadow("crop","resin_tree","stage_3",Vector2.ZERO).is_empty(),"packaged tree cast")
+	check(shell._trial_grounding.cast_shadow("facility","fish_pond","",Vector2.ZERO).is_empty(),"packaged water contact stays clear")
 	var expected_plants := 0
 	for entry in shell.plant_visuals.plants.values(): expected_plants += entry["stages"].size()
 	check(shell.plant_visuals.textures.size() == expected_plants,"all manifest plant textures packaged")
@@ -86,6 +89,8 @@ func run() -> void:
 	check(restored.diagnostics.is_empty() and not restored.visual(seed,world.crop_defs["golden_wheat"],world.flowers.settings["oilseed_window"]).is_empty(),"resource restoration")
 	for argument in OS.get_cmdline_user_args():
 		if argument.begins_with("--p87-render-probe=") and DisplayServer.get_name() != "headless":
+			var output := argument.trim_prefix("--p87-render-probe=")
+			await shell._prepare_preview(output.get_base_dir())
 			# Synthetic mature row for exported GPU validation, after real lifecycle checks.
 			world.crops.clear()
 			var index := 0
@@ -101,7 +106,16 @@ func run() -> void:
 			await get_tree().process_frame
 			await get_tree().process_frame
 			await RenderingServer.frame_post_draw
-			check(get_viewport().get_texture().get_image().save_png(argument.trim_prefix("--p87-render-probe=")) == OK,"exported GPU frame saved")
+			var picture := get_viewport().get_texture().get_image()
+			for attempt in range(4):
+				if picture.get_size() == Vector2i(1920,1080): break
+				get_window().size += Vector2i(1920,1080)-picture.get_size()
+				await get_tree().process_frame
+				await get_tree().process_frame
+				await RenderingServer.frame_post_draw
+				picture = get_viewport().get_texture().get_image()
+			check(picture.get_size()==Vector2i(1920,1080),"exported GPU actual 1920x1080 viewport")
+			check(picture.save_png(output) == OK,"exported GPU frame saved")
 	for failure in failures: printerr(failure)
 	print("P87 RELEASE SMOKE %s: %d checks" % ["OK" if failures.is_empty() else "FAILED",checks])
 	get_tree().quit(0 if failures.is_empty() else 1)

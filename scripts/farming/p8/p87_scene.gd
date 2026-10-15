@@ -3,6 +3,7 @@ extends "res://scripts/farming/p8/p8_scene.gd"
 const GroundProjection := preload("res://scripts/farming/p8/p87_projection.gd")
 const ProjectedSurface := preload("res://assets/farming/shaders/p87_surface.gdshader")
 const ProjectedShore := preload("res://assets/farming/shaders/p87_shore.gdshader")
+const ProjectedGrounding := preload("res://scripts/farming/p8/p87_grounding.gd")
 var projection := GroundProjection.new()
 var show_rulers := false
 var last_entities: Array[Dictionary] = []
@@ -28,6 +29,7 @@ func _ready() -> void:
 		probe.run.call_deferred()
 
 func configure_visual_trial(profile: String, runtime_dir: String = "") -> Dictionary:
+	if _trial_grounding == null: _trial_grounding = ProjectedGrounding.new()
 	var result := super(profile,runtime_dir)
 	if result["ok"]:
 		_apply_projection_layers()
@@ -108,6 +110,7 @@ func contact_visual(entity: Dictionary) -> Dictionary:
 
 func _draw_world_entities(target: Node2D, readable: float) -> void:
 	last_entities = collect_entities()
+	for entity in last_entities: _draw_contact(target,cast_visual(entity))
 	for entity in last_entities: _draw_contact(target,contact_visual(entity))
 	for entity in last_entities:
 		var visual: Dictionary = entity["visual"]
@@ -129,8 +132,17 @@ func _draw_facility_preview(target: Node2D, rect: Rect2) -> void:
 	var visual: Dictionary = facility_visuals.visual(build_tool,rect)
 	if visual.is_empty(): return
 	var entry := {"kind":"facility","ident":build_tool,"root":rect.get_center(),"visual":visual}
+	_draw_contact(target,cast_visual(entry),Color(1,1,1,0.65))
 	_draw_contact(target,contact_visual(entry),Color(1,1,1,0.65))
 	target.draw_texture_rect(visual["texture"],projection.body_rect(visual,rect.get_center()),false,Color(1,1,1,0.65))
+
+func cast_visual(entity: Dictionary) -> Dictionary:
+	if entity["visual"].is_empty(): return {}
+	var point: Vector2 = entity["root"]
+	var stage := String(entity["visual"].get("key",""))
+	var cast: Dictionary = _trial_grounding.cast_shadow(entity["kind"],entity["ident"],stage,point)
+	if not cast.is_empty(): cast["rect"] = Rect2(projection.ground_to_view(point)+cast["rect"].position-point,cast["rect"].size)
+	return cast
 
 func draw_map(target: Node2D) -> void:
 	var font := theme.default_font

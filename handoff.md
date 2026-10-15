@@ -1,10 +1,10 @@
 # handoff — 跨机器开发交接
 
-> **2026-10-15 P8.6交付完成：** [场景美术统一与可读性整改](docs/farming/phase-08.6-场景美术统一与可读性整改.md)已在用户样板接受后完成B～E。默认P8启用全量接地、7植物幼苗整改、3资源点、平滑地形/全方向水岸和设施缩略图；保留35°/矩形地格、schema17及经营规则。`test.bat`、42张正式GPU截图、独立包86/86/87项检查通过；[最终证据](docs/farming/art/p86-final-validation.json)，产物`dist/LingTianDemoP86-Windows-x64.zip`。用户样板接受与代理全场复核分别记录。
+> **上一阶段P8.6基线：** [场景美术统一与可读性整改](docs/farming/phase-08.6-场景美术统一与可读性整改.md)已在用户样板接受后完成B～E。当时默认P8启用全量接地、7植物幼苗整改、3资源点、平滑地形/全方向水岸和设施缩略图；保留35°/矩形地格、schema17及经营规则。`test.bat`、42张正式GPU截图、独立包86/86/87项检查通过；[最终证据](docs/farming/art/p86-final-validation.json)，产物`dist/LingTianDemoP86-Windows-x64.zip`。用户样板接受与代理全场复核分别记录。
 
-> **P8.7进行中：** [相机机位与地面投影统一](docs/farming/phase-08.7-相机机位与地面投影统一.md)A已实现，89项投影检查及三窗口66帧通过；用户明确接受35°样板并授权继续B～D。地面显示约64×36.71，主体保持原比例，逻辑网格/schema17不变；正式接入与最终交付进行中，默认入口暂为P8.6。[A验收证据](docs/farming/art/p87-trial-validation.json)。
+> **P8.7已完成并设为默认：** [相机机位与地面投影统一](docs/farming/phase-08.7-相机机位与地面投影统一.md)A～D完成。地面约64×36.71，主体保持原比例；根点、柔影、操作逆变换、定位和相机统一，逻辑网格/schema17不变。用户接受35°样板，对最终画面基本接受并要求补影，补影已完成并由代理复核。89/146/324项专项、正式60帧、完整`test.bat`和Windows91/91/93项通过；[最终证据](docs/farming/art/p87-final-validation.json)，包为`dist/LingTianDemoP87-Windows-x64.zip`。
 
-> 最后更新：2026-10-15（P8.7 A样板已接受；当前默认运行与Windows交付仍为P8.6）。
+> 最后更新：2026-10-15（P8.7默认入口及Windows包交付；旧P8.6证据保留，分阶段提交见阶段页）。
 > **现行本地基线：** [P8生态产业网络与工艺研究](docs/farming/phase-08-生态产业网络与工艺研究.md)。默认`play.bat`/F5进入P8，`play.bat p8`等价；三槽`user://farm_demo_p8_slots`、schema17、独立设置、初始90元石/每天24AP、初始20×22地图及下方20×8水库，外接32×22连续地图；新增陆地112格/380元石、水面96格/280元石。63资源、7植物、15设施、40配方、12研究已运行；一人多设施、默认关闭的显式兼任共享个人12次工作/预算，普通及活体自动生产按目标/在制/保留量执行。玩家阅读[P8新手手册](docs/farming/demo-p8-新手手册.md)，也可从游戏顶栏“手册”进入。
 > **验收与后续：** 双120日各27/27工艺收取及全部产物后续消费、装置/兼任经营和严格审计通过，当前扩地双120日924项、12类篡改拒绝，证据`.art-work/p8-expansion/business2/`；旧冻结经营证据留`.art-work/p8h-final2/`。用户确认经营页面验收通过，经营阶段关闭范围见[P8.h记录](docs/farming/phase-08h-90日经营验收与交付.md)。场景美术与Windows独立包已在P8.6交付；动物新模型、设施工作特效、采后形态、音乐、繁殖寿命及上游接线另排。参考[资源/工艺表](docs/farming/phase-08-资源与工艺表.md)、[研究关系](docs/farming/phase-08-研究与生产关系.md)和[阶段索引](docs/farming/phase-08-分阶段实施计划.md#独立开发文档索引)。旧版通过`v2`/`v1`/`v0`显式进入，各自档案隔离；V2仍采用P7一人一设施规则。
 > **扩地收尾：** 地权与schema17实装，69项专项通过；旧schema16 P8档需重新开档，不删除或迁移原文件。购地入口、价格与事务见[扩地方案](docs/farming/phase-08h-扩地与经营余量方案.md)，最终证据见P8.h末尾记录。
@@ -18,7 +18,7 @@
    星露谷式多城镇（单镇多张功能地图 + 特殊交互点）和野外战斗触发图（地图只抛事件不承载战斗）。
 2. **daoyan 接入不是现阶段任务**：`docs/daoyan-reuse-plan.md` + `-answers.md` 是背景资料
    （将来移植的目标形态与接口摸底），实验期间**只读不改** daoyan 仓库。
-3. **P8.6世界素材采用Blender建模并离线渲染2D PNG**：美术工作区为`C:/Users/88445/Desktop/blender_assest`；
+3. **P8.7世界素材采用Blender建模并离线渲染2D PNG**：美术工作区为`C:/Users/88445/Desktop/blender_assest`；
    七植物、15设施及3资源点已接入，源工程只读，正式运行不依赖美术工作区。当前交付见[Phase 8.6](docs/farming/phase-08.6-场景美术统一与可读性整改.md)。历史image_gen/ComfyUI资料保留；新非像素素材使用对应QC，不套旧二值alpha和量化规则。
 
 ## 2. 新机器快速上手（checklist）
@@ -31,7 +31,7 @@
    - 或直接改 `play.bat` 顶部的默认路径
 5. 首次运行 `test.bat`：执行资产QC、工具测试及V0/V1/V2/P8完整回归；`test-v1.bat`、`test-v2.bat`、`test-p8.bat`可分开运行对应版本检查。
    **预期输出 FARMING TEST SUITE OK**；`play.bat --selftest`单跑P8源码隔离冒烟，V0逻辑用`play.bat farm --farmtest`，历史phase00/demo自测见`docs/farming/testing.md`。
-6. 运行`play.bat`或Godot F5进入P8；`play.bat p8`等价，`test-p8.bat`验证配数/模型/手册/源码冒烟。P8.6独立包已交付，构建入口为`tools/farming/build_p86_demo.ps1`。历史V2用`play.bat v2`，其原包和`tools/farming/build_v2_demo.ps1`保留；V1/V0用`v1`/`v0`，旧演示`demo`，phase00 `farm0`。
+6. 运行`play.bat`或Godot F5进入P8.7；`play.bat p8`等价，`test-p8.bat`验证配数/模型/手册/源码冒烟及投影/交互。P8.7独立包已交付，构建入口为`tools/farming/build_p87_demo.ps1`。历史V2用`play.bat v2`，其原包和`tools/farming/build_v2_demo.ps1`保留；V1/V0用`v1`/`v0`，旧演示`demo`，phase00 `farm0`。
 
 ## 3. 当前状态
 
@@ -75,7 +75,7 @@
 | 文档 | 内容 | 何时读 |
 |------|------|--------|
 | [docs/farming/master-plan.md](docs/farming/master-plan.md) | **灵植经营模块总 Phase 规划（现行主线）** | **开工先读** |
-| [docs/farming/phase-08.7-相机机位与地面投影统一.md](docs/farming/phase-08.7-相机机位与地面投影统一.md) | **P8.7进行中：35° A样板已接受，B～D继续实施** | 下一阶段先读 |
+| [docs/farming/phase-08.7-相机机位与地面投影统一.md](docs/farming/phase-08.7-相机机位与地面投影统一.md) | **P8.7已完成：35°投影、阴影、交互/相机及Windows交付** | 当前画面与交付先读 |
 | [docs/farming/phase-08.6-场景美术统一与可读性整改.md](docs/farming/phase-08.6-场景美术统一与可读性整改.md) | **P8.6已完成：场景统一、全场检查及Windows独立包交付** | 当前美术与交付先读 |
 | [docs/farming/phase-08.5-建模素材接入与场景美术.md](docs/farming/phase-08.5-建模素材接入与场景美术.md) | **P8.5已完成：Blender渲染2D、植物/设施接入与发布管线** | 追溯素材管线时 |
 | [docs/farming/phase-08-生态产业网络与工艺研究.md](docs/farming/phase-08-生态产业网络与工艺研究.md) | **P8已关闭的生态/研究/人力经营基线** | **经营主线先读** |
@@ -164,7 +164,7 @@ play.bat farm0                             # Phase 0 拼接验证场景（历史
 
 **Phase7/V2已完成并经用户确认关闭，原生桌面试玩移交后续补验。** 两条独立新档各45日无注入、满容量持续供料、五行供货、两种粪肥实际回流、收入再投资及46日冻结均通过。331项P7边界、19项GUI事件、12组/96张截图、V1/V0/历史回归、导出/解压各15项完整冒烟已执行。包含内嵌PCK的exe、README及逐文件manifest/SHA256；原始90日台账、哈希与命令详见[验收记录](docs/farming/phase07-v2-playtest.md)。P7关闭时schema11、默认V2、无旧档迁移、人数不限；现在由`play.bat v2`显式进入。原生Computer Use不可用，原生桌面全流程不得记为已通过；该补验不阻塞阶段关闭。
 
-**P8经营基线与P8.6场景交付已完成。** 数据/成本/候选日结底座、研究、三组生态、多设施负责人/兼任、普通及活体生产策略、田间装置与五行灵食均已运行。当前schema17，新档90元石；扩地双120日924项检查及严格台账审核、每路线27条新工艺正常收取及全部产物后续消费通过。用户确认经营页面验收通过，11章新手手册与独立文档同源。`play.bat`/F5默认P8；扩地、P8.6场景美术及Windows独立包均已交付。经营关闭证据见[P8.h](docs/farming/phase-08h-90日经营验收与交付.md)，当前视觉、回归与包证据见[P8.6](docs/farming/phase-08.6-场景美术统一与可读性整改.md)。
+**P8经营基线与P8.7投影交付已完成。** 数据/成本/候选日结底座、研究、三组生态、多设施负责人/兼任、普通及活体生产策略、田间装置与五行灵食均已运行。当前schema17，新档90元石；扩地双120日924项检查及严格台账审核、每路线27条新工艺正常收取及全部产物后续消费通过。用户确认经营页面验收通过，11章新手手册与独立文档同源。`play.bat`/F5默认P8；扩地、P8.7场景投影及Windows独立包均已交付。经营关闭证据见[P8.h](docs/farming/phase-08h-90日经营验收与交付.md)，当前投影、阴影、回归与包证据见[P8.7](docs/farming/phase-08.7-相机机位与地面投影统一.md)。
 
 历史V1基线：逐条摘要/时节小结、首次45天总计与三个时节小计已接入；无注入经营路线初始60→298，121项记录、51项原界面及79项Phase 6.5界面检查通过。独立包`dist/LingTianDemoV1-Windows-x64.zip`包含明亮矢量UI与占位世界美术，解压运行`LingTianDemoV1.exe`，说明见[demo-v1-操作说明](docs/farming/demo-v1-操作说明.md)。重建使用`tools/farming/build_v1_demo.ps1 -GodotExe <控制台路径>`，需匹配的Windows release模板；13项打包后冒烟通过。旧V1从升级当天开始记录，已过45天的旧档无法补造首次回顾。下述Phase记录为V0基线。
 
