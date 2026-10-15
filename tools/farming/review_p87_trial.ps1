@@ -24,6 +24,7 @@ function Invoke-P87([string]$Name,[string[]]$EngineArgs,[string]$Marker) {
     Write-Output "$Name OK: exit $engineExit"
 }
 Invoke-P87 'projection-tests' @('--headless','--script','res://scripts/farming/tests/run_p87_projection.gd') 'P87 PROJECTION OK'
+Invoke-P87 'production-tests' @('--headless','--script','res://scripts/farming/tests/run_p87_production.gd') 'P87 PRODUCTION OK'
 Invoke-P87 'p85-lifecycle' @('--headless','--script','res://scripts/farming/tests/run_phase085_visuals.gd') 'PHASE085 VISUALS OK'
 Invoke-P87 'p86-production' @('--headless','--script','res://scripts/farming/tests/run_p86_production.gd') 'P86 PRODUCTION OK'
 if ($ChecksOnly) { exit 0 }
