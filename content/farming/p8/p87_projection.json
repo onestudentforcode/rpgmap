@@ -1,0 +1,14 @@
+{
+  "revision": "p87-a-35deg",
+  "elevation_degrees": 35.0,
+  "logical_tile_units": 64.0,
+  "view_units_per_ground_unit": 1.0,
+  "view_origin": [0.0, 0.0],
+  "blender_units_per_tile": 2.0,
+  "blender_to_logical_axes": ["-X", "+Y"],
+  "crop_ground_reference": "footprint_center",
+  "contact_parameters_space": "already_projected_view_units",
+  "resource_camera_ortho_width": 3.4,
+  "calibration_report": "res://docs/farming/art/p87-camera-calibration.json",
+  "default_enabled": false
+}
