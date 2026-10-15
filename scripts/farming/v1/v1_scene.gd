@@ -1075,7 +1075,7 @@ func _show_worker_duties(worker: Dictionary) -> void:
 		sidebar.add_child(line)
 		var label := _label(line,"区域%d · (%d,%d) %d×%d" % [index+1,area[0],area[1],area[2],area[3]])
 		label.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-		_icon(line,"locate","定位区域%d" % (index+1),func(): _close_page(); camera.position = Vector2(float(area[0])+float(area[2])*0.5,float(area[1])+float(area[3])*0.5)*64)
+		_icon(line,"locate","定位区域%d" % (index+1),_locate_area.bind(area))
 		_icon(line,"cancel","删除区域%d" % (index+1),func():
 			var areas: Array = worker["areas"].duplicate(true)
 			areas.remove_at(index)
@@ -1228,6 +1228,10 @@ func _show_history() -> void:
 			for crop in world.crops.values():
 				if crop["crop_id"] == ident and crop["state"] == "mature":
 					_icon(card,"locate","定位现有成熟植物："+CROPS[ident],func(): _locate(Vector2i(int(crop["origin"][0]),int(crop["origin"][1]))))
+
+func _locate_area(area: Array) -> void:
+	_close_page()
+	camera.position = Vector2(float(area[0])+float(area[2])*0.5,float(area[1])+float(area[3])*0.5)*64
 
 func _locate(cell: Vector2i) -> void:
 	_close_page()

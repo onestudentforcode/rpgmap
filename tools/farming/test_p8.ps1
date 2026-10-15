@@ -34,6 +34,8 @@ try {
     Invoke-GodotCheck 'visuals085' @('--script','res://scripts/farming/tests/run_phase085_visuals.gd') 'PHASE085 VISUALS OK'
     Invoke-GodotCheck 'visuals086' @('--script','res://scripts/farming/tests/run_p86_production.gd') 'P86 PRODUCTION OK'
     Invoke-GodotCheck 'visuals087' @('--script','res://scripts/farming/tests/run_p87_production.gd') 'P87 PRODUCTION OK'
+    Invoke-GodotCheck 'projection087' @('--script','res://scripts/farming/tests/run_p87_projection.gd') 'P87 PROJECTION OK'
+    Invoke-GodotCheck 'interactions087' @('--script','res://scripts/farming/tests/run_p87_interactions.gd') 'P87 INTERACTIONS OK'
     $fixtureRoot = Join-Path $logRoot 'fixtures'
     $utf8 = [Text.UTF8Encoding]::new($false)
     foreach ($phase in @('a','b','c','d','e','f','g','h_living')) {

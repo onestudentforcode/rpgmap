@@ -57,6 +57,13 @@ func _apply_projection_layers() -> void:
 func _cell(position: Vector2) -> Vector2i:
 	return projection.cell_at(map_port.get_canvas_transform().affine_inverse()*position)
 
+func _close_page() -> void:
+	# The inherited close path redraws selected details. An unowned selection would
+	# immediately reopen the purchase dialog, including after starting another slot.
+	if _started and not world.land.at(selected).is_empty() and not world.land.contains(selected):
+		selected = Vector2i(-1,-1)
+	super()
+
 func collect_entities() -> Array[Dictionary]:
 	var result: Array[Dictionary] = []
 	for uid in world.crops:
@@ -200,9 +207,18 @@ func invalidate_projection_bounds(_cells: Array = []) -> void:
 func _fit_map() -> void:
 	var bounds := view_bounds()
 	var bottom := _camera_bottom_margin()
-	var zoom := clampf(minf(board.size.x/bounds.size.x,maxf(64,board.size.y-bottom)/bounds.size.y)*0.94,minimum_map_zoom,3.0)
+	var side := _camera_side_margin()
+	var zoom := clampf(minf(maxf(64,board.size.x-side)/bounds.size.x,maxf(64,board.size.y-bottom)/bounds.size.y)*0.94,minimum_map_zoom,3.0)
 	camera.zoom = Vector2.ONE*zoom
-	camera.position = bounds.get_center()+Vector2(0,bottom*0.5/zoom)
+	camera.position = bounds.get_center()+Vector2(side,bottom)*0.5/zoom
+
+func _camera_side_margin() -> float:
+	# Wide layouts shrink the board; compact layouts overlay the same sidebar.
+	if not side_panel.visible or ui_root.size.x >= 1100: return 0.0
+	return maxf(0.0,board.size.x-(side_panel.position.x-board.position.x-12.0))
+
+func _focus_ground(point: Vector2) -> void:
+	camera.position = projection.ground_to_view(point)+Vector2(_camera_side_margin(),_camera_bottom_margin())*0.5/camera.zoom.x
 
 func _process(delta: float) -> void:
 	if not _started: return
@@ -210,26 +226,30 @@ func _process(delta: float) -> void:
 	if shade.visible or _text_focus() or is_instance_valid(confirmation): return
 	camera.position += Input.get_vector("move_left","move_right","move_up","move_down")*(400.0/camera.zoom.x)*delta
 	var bounds := view_bounds()
-	var margin := _camera_bottom_margin()
-	var half := (Vector2(map_port.size)-Vector2(0,margin))*0.5/camera.zoom.x
-	var offset := margin*0.5/camera.zoom.x
+	var margins := Vector2(_camera_side_margin(),_camera_bottom_margin())
+	var half := (Vector2(map_port.size)-margins)*0.5/camera.zoom.x
+	var offset := margins*0.5/camera.zoom.x
 	for axis in range(2):
 		var middle := bounds.get_center()[axis]
 		var low := minf(bounds.position[axis]+half[axis],middle)
 		var high := maxf(bounds.end[axis]-half[axis],middle)
-		camera.position[axis] = clampf(camera.position[axis]-(offset if axis == 1 else 0.0),low,high)+(offset if axis == 1 else 0.0)
+		camera.position[axis] = clampf(camera.position[axis]-offset[axis],low,high)+offset[axis]
 
 func _locate(cell: Vector2i) -> void:
 	super(cell)
-	camera.position = projection.ground_to_view(Vector2(cell)*64+Vector2(32,32))
+	_focus_ground(Vector2(cell)*64+Vector2(32,32))
+
+func _locate_area(area: Array) -> void:
+	_close_page()
+	_focus_ground(Vector2(float(area[0])+float(area[2])*0.5,float(area[1])+float(area[3])*0.5)*64)
 
 func _locate_land(id: String) -> void:
 	super(id)
-	camera.position = projection.ground_to_view(camera.position)
+	_focus_ground(camera.position)
 
 func _locate_facility(uid: int) -> void:
 	super(uid)
 	for item in world.facilities.values():
 		if int(item["uid"]) == uid:
-			camera.position = projection.ground_to_view(projection.footprint(item["origin"],world.facility_defs[item["facility_id"]]["footprint"]).get_center())
+			_focus_ground(projection.footprint(item["origin"],world.facility_defs[item["facility_id"]]["footprint"]).get_center())
 			return

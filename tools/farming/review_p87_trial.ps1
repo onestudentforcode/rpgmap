@@ -25,6 +25,8 @@ function Invoke-P87([string]$Name,[string[]]$EngineArgs,[string]$Marker) {
 }
 Invoke-P87 'projection-tests' @('--headless','--script','res://scripts/farming/tests/run_p87_projection.gd') 'P87 PROJECTION OK'
 Invoke-P87 'production-tests' @('--headless','--script','res://scripts/farming/tests/run_p87_production.gd') 'P87 PRODUCTION OK'
+Invoke-P87 'interaction-tests' @('--headless','--script','res://scripts/farming/tests/run_p87_interactions.gd') 'P87 INTERACTIONS OK'
+Invoke-P87 'v1-ui-compatibility' @('--headless','--script','res://scripts/farming/tests/run_v1_phase65_ui.gd') 'V1 PHASE65 UI TEST OK'
 Invoke-P87 'p85-lifecycle' @('--headless','--script','res://scripts/farming/tests/run_phase085_visuals.gd') 'PHASE085 VISUALS OK'
 Invoke-P87 'p86-production' @('--headless','--script','res://scripts/farming/tests/run_p86_production.gd') 'P86 PRODUCTION OK'
 if ($ChecksOnly) { exit 0 }
