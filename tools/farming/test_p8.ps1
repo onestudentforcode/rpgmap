@@ -9,6 +9,8 @@ Push-Location $projectRoot
 try {
     & python tools/farming/bake_p8.py --check
     if ($LASTEXITCODE -ne 0) { throw 'P8 bake failed.' }
+    & python tools/farming/bake_encyclopedia.py --check
+    if ($LASTEXITCODE -ne 0) { throw 'Encyclopedia bake failed.' }
     & python tools/farming/test_p8_foundation.py
     if ($LASTEXITCODE -ne 0) { throw 'P8 config checks failed.' }
     function Invoke-GodotCheck([string]$name, [string[]]$arguments, [string]$marker) {

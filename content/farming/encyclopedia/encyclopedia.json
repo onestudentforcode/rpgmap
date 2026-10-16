@@ -1,0 +1,216 @@
+{
+  "format": 1,
+  "product": "farm_demo_p8",
+  "comment": "百科正式内容层的唯一人工维护源：分类目录、规则说明（唯一一份可追溯描述）与展示说明。实体静态字段全部由 tools/farming/bake_encyclopedia.py 从现行注册表生成，本文件不复制数值。格式版本与经营存档schema分开编号。",
+
+  "categories": [
+    {"id": "crops", "title": "作物与种植", "kinds": ["crop"]},
+    {"id": "husbandry", "title": "养殖与培养", "kinds": ["species"]},
+    {"id": "facilities", "title": "建筑与设施", "kinds": ["facility"]},
+    {"id": "items", "title": "材料与物品", "kinds": ["resource"]},
+    {"id": "recipes", "title": "配方与食谱", "kinds": ["recipe", "diet"]},
+    {"id": "research", "title": "研究与科技", "kinds": ["research"]},
+    {"id": "environment", "title": "资源点与环境", "kinds": ["source", "parcel", "map"]},
+    {"id": "rules", "title": "基础玩法", "kinds": ["rule"]}
+  ],
+
+  "rules": [
+    {
+      "id": "rule:day_settle", "name": "日结顺序与自动推进",
+      "statements": [
+        "AP耗尽或点“结束当天”进入日结；顺序：统一调度器（设施收取→必要换水→整体维护→研究→自动投料→农务）→ 养殖结算（水体衰减/暂停→成长与周期推进）→ 研究结算（收据推进）→ 花源份额过期 → 作物生长与水肥扣减 → 资源点配额重置 → 批次完工 → 新订单 → 台账/日志 → 次日开日装置（灯→田间站）→ 日存档",
+        "日存档失败回滚到当日操作前快照；重试只重写候选快照，不重复劳动或收费",
+        "日结推进的各种“有效日”：研究=有收据的日子；养殖=当日有基础服务；作物=环境速率（下限1/日）"
+      ],
+      "refs": [
+        {"path": "scripts/farming/v1/v1_world.gd", "symbol": "_on_day_changed"},
+        {"path": "scripts/farming/p8/p8_world.gd", "symbol": "_settle_workforce"},
+        {"path": "scripts/farming/p8/p8_world.gd", "symbol": "_settle_husbandry"}
+      ]
+    },
+    {
+      "id": "rule:crop_growth", "name": "作物生长速率公式",
+      "statements": [
+        "每日进度增量 = max(1, floor(水效×肥效×光效/10000))，单位“点”；首季目标=标称天数×100，留株再生目标=再生天数×100",
+        "水效：占地平均水分≥30→100，否则50%；肥效：平均肥力≥30→100，否则75%；光效：|平均有效光照−偏好|≤20→100，否则50%",
+        "全适宜=100点/日（即标称天数）；仅缺水或仅光照偏离=50点/日（2倍时长）；仅低肥=75点/日（4/3倍）；缺水+低肥=37点/日；三短板=18点/日",
+        "多格作物按占地格平均判速；每格每日各扣该作物的水分与肥力（成熟待收期间照扣）",
+        "环境不足只降速，不会死亡；生长不暂停（下限1点/日）"
+      ],
+      "refs": [{"path": "scripts/farming/v1/v1_world.gd", "symbol": "_on_day_changed"}]
+    },
+    {
+      "id": "rule:environment", "name": "环境值与有效光照",
+      "statements": [
+        "水分/肥力为地格环境值（0-100）：浇水耗清水×1回复+30；施肥耗腐殖土×1回复+30；≥100不可再提升",
+        "自然光照：默认80，左下阴影区30（rect [0,9,8,5]）适合喜阴菌菇",
+        "有效光照=补光灯生效时max(自然光, 80)；生长、花源资格与界面显示共用此值",
+        "环境值与库存物品严格分离：扣水分≠耗清水物品"
+      ],
+      "refs": [
+        {"path": "scripts/farming/v1/v1_world.gd", "symbol": "_improve"},
+        {"path": "scripts/farming/p8/p8_world.gd", "symbol": "_light_at"}
+      ]
+    },
+    {
+      "id": "rule:husbandry_service", "name": "养殖服务与周期口径",
+      "statements": [
+        "整体维护1AP整批执行：基础食谱喂今日未服务个体（每单位每日扣基础投入）；特殊食谱只对“当日已喂的空闲成体”启动周期，投入在周期启动一次付清",
+        "收取1AP收全部待收；物种属性决定收取后移除（鱼）或保留（羊/蜂等）",
+        "当日未服务：成长与周期均暂停（不死亡）；水场有鱼时水体日降5，≤30全场暂停",
+        "默认食谱无需研究即可选；带研究门槛的食谱须解锁；切换特殊食谱会停用自动策略但不改写在制周期",
+        "满容量参考为4单位；成本表中的“养殖参考轮”按4单位汇总，不是单只消耗"
+      ],
+      "refs": [
+        {"path": "scripts/farming/v2/v2_husbandry.gd", "symbol": "maintain"},
+        {"path": "scripts/farming/v2/v2_husbandry.gd", "symbol": "settle"}
+      ]
+    },
+    {
+      "id": "rule:flower_share", "name": "花源份额",
+      "statements": [
+        "每株花作物每日1份额，当日首次合格时初始化；日结清空未用份额",
+        "份额内容物=花蜜2+花粉1；手采1AP取得实物；蜂群饲喂消耗份额但不产出该内容物",
+        "合格条件：蜜铃灌木=成熟期；油籽花=生长进度300~499；每格水≥30、肥≥30、光照与偏好差≤20",
+        "蜂箱覆盖=占地外扩2格；手采与蜂群共享份额；蜂群用油籽花份额→该株本周期授粉（收获+1油籽，不叠加）"
+      ],
+      "refs": [
+        {"path": "scripts/farming/p8/p8_flowers.gd", "symbol": "eligible"},
+        {"path": "scripts/farming/p8/p8_flowers.gd", "symbol": "consume"}
+      ]
+    },
+    {
+      "id": "rule:research", "name": "研究系统",
+      "statements": [
+        "启动：一次性样本+费用（0AP）；前置须完成；每台一项目；全场未完成过",
+        "推进：每台每日最多1次研究工作（手动1AP / 负责人1元石）；有效日=有收据的日子；第1/2/3层对应2/4/6有效日",
+        "完成：知识全农场共享，解锁采购/种植/设施/配方/物种/食谱；解锁表与实体自身研究门槛双向核对一致",
+        "暂停保留进度与投入，不退款；在研研究台不能拆除"
+      ],
+      "refs": [
+        {"path": "scripts/farming/p8/p8_research.gd", "symbol": "start"},
+        {"path": "scripts/farming/p8/p8_research.gd", "symbol": "settle"}
+      ]
+    },
+    {
+      "id": "rule:worker_scheduler", "name": "雇工与统一调度器",
+      "statements": [
+        "雇工人数不限，雇佣0AP免费；每人每日12次成功工作、预算默认12元石、成功1次1元石；不扣玩家AP",
+        "设施归属：一人可负责多座设施（高/普通/低优先级，同级轮转）；步骤类序：收取→水体维护→整体维护→研究→投料→农务",
+        "农务兼任默认关闭；开启后8类工作按个人偏好(0~5)与标记优先级执行；浇水施肥仅当环境低于30",
+        "设施负责人步序：待收收取→水体≤60时换水→整体维护（按自动计划过滤个体）",
+        "无负责人/未启用/额度或预算不足时设施任务积压并显示等待天数"
+      ],
+      "refs": [
+        {"path": "scripts/farming/p8/p8_operations.gd", "symbol": "settle"},
+        {"path": "scripts/farming/p8/p8_operations.gd", "symbol": "_candidates"}
+      ]
+    },
+    {
+      "id": "rule:auto_production", "name": "持续生产与保留量",
+      "statements": [
+        "策略=配方+目标产物+目标数量（0AP保存，不立即投料）；养殖设施策略同步设置特殊食谱；装置与研究台不能用策略",
+        "有效库存=仓库+全部在制/待收批次产物+待收活体产物（与可用库存区分；在制不能拿去出售）",
+        "目标按“单位批”推进：缺口=目标−有效库存，启动单位数=ceil(缺口/单位产出)；活体整单位启动可略超目标",
+        "保留量只挡自动投料与活体自动启动；手动操作、交易、建造、研究、基础照料、装置耗料不受限"
+      ],
+      "refs": [
+        {"path": "scripts/farming/p8/p8_operations.gd", "symbol": "set_production"},
+        {"path": "scripts/farming/p8/p8_operations.gd", "symbol": "habitat_plan"}
+      ]
+    },
+    {
+      "id": "rule:living_mapping", "name": "活体配方的双重注册",
+      "statements": [
+        "living=true的配方（菌毯净水、营养液回收、破碎石材、破碎矿石、生物选矿）与对应物种特殊食谱是同一执行过程",
+        "实际执行走物种特殊食谱（整体维护/自动计划）；配方注册面用于设施面板、研究解锁校验与自动策略选择",
+        "查阅来源/用途时不重复计算两条注册"
+      ],
+      "refs": [
+        {"path": "scripts/farming/p8/p8_operations.gd", "symbol": "living_recipe"},
+        {"path": "scripts/farming/p8/p8_husbandry.gd", "symbol": "maintain"}
+      ]
+    },
+    {
+      "id": "rule:market", "name": "市集交易",
+      "statements": [
+        "固定价格：买价>0才可买、卖价>0才可卖；交易0AP；卖出计入销售收入",
+        "买入校验“买价×100>卖价×110”防套利；买价≥卖价",
+        "研究门槛：带研究要求的物品完成研究前在市集显示锁定（可见不可买）"
+      ],
+      "refs": [
+        {"path": "scripts/farming/v1/v1_world.gd", "symbol": "_trade"},
+        {"path": "scripts/farming/p8/p8_world.gd", "symbol": "buy"}
+      ]
+    },
+    {
+      "id": "rule:orders", "name": "五行供货与转数",
+      "statements": [
+        "每日3单，路径按日轮转（木火土水金）；首单固定1转，其余按公式轮转且不超过当前解锁转数",
+        "需求=基数12×转数；转数由累计营业收入解锁：0/120/300/650/1200元石对应1~5转",
+        "交付：物品须可供货+元素=订单路径+供养值>0；数量=ceil(需求/供养值)；回款=数量×卖价+溢价（=基数×10%向下取整）；0AP；未完成不罚款",
+        "供养值=烘焙派生的定价参考（标准成本向上取整、最低1），不是生产成本"
+      ],
+      "refs": [
+        {"path": "scripts/farming/v1/v1_orders.gd", "symbol": "generate"},
+        {"path": "scripts/farming/v1/v1_data.gd", "symbol": "demand_quote"}
+      ]
+    },
+    {
+      "id": "rule:build_substitute", "name": "建材替代",
+      "statements": [
+        "建造材料的普通岩石部分可整体替换：复合石板1:1 或 再生填料2:1；非石料部分不可替换",
+        "替代在营建界面选择，替换校验与建造共用流程"
+      ],
+      "refs": [
+        {"path": "scripts/farming/p8/p8_world.gd", "symbol": "_substituted_materials"},
+        {"path": "scripts/farming/p8/p8_scene.gd", "symbol": "_show_build"}
+      ]
+    },
+    {
+      "id": "rule:expansion", "name": "购地与连续地图",
+      "statements": [
+        "连续坐标系：基础区20×22始终可用；扩地后外接32×22（含负列号）；未购地块不可开垦/建造/标记/选种",
+        "6地块：陆地112格共380元石（东侧近80/远120/下180），水面96格共280元石（西80/东近80/东远120）",
+        "水场2×2占地须全部为已购水面；跨购买边界建造允许但占地须全已购",
+        "购地0AP；重复购买不扣款；泉水日产量不随扩水增加；各水场水体独立"
+      ],
+      "refs": [{"path": "scripts/farming/p8/p8_land.gd", "symbol": "buy"}]
+    },
+    {
+      "id": "rule:save", "name": "存档与经济",
+      "statements": [
+        "三槽日存档（user://farm_demo_p8_slots）；存档schema17；日结事务提交，失败可重试/放弃当天",
+        "初始90元石、每天24AP、15日一时节；开局物资金穗麦种8、速生杉苗2、松脂树苗1、木腐菇菌种4",
+        "收入=出售+订单；支出=采购+建设（设施/土地/幼体/研究费）+人工"
+      ],
+      "refs": [
+        {"path": "scripts/farming/p8/p8_world.gd", "symbol": "_commit_day"},
+        {"path": "scripts/farming/p8/p8_snapshot.gd", "symbol": "SCHEMA"}
+      ]
+    }
+  ],
+
+  "display": {
+    "element_names": {"wood": "木", "fire": "火", "earth": "土", "water": "水", "gold": "金"},
+    "form_names": {"solid": "固体", "liquid": "液体"},
+    "stage_names": {"primary": "初级", "intermediate": "加工品"},
+    "crop_mode_names": {
+      "harvest_replant": "收获后植株移除，需重播",
+      "fell_replant": "仅可砍伐取材，砍伐后需重播",
+      "tap_or_fell": "可留株采收（按再生周期）或砍伐移除",
+      "culture_each_cycle": "每轮培养：收获后移除，再种需重新投料"
+    },
+    "purchase_proxies": [
+      {
+        "resource": "purifying_mat_culture",
+        "text": "购买代理实体：市集不可直接购入，请在净水菌床面板购入培养单位（同价6元石/单位，扣款即占位、不入仓库）。"
+      }
+    ],
+    "terminal_products_note": "以下物品没有下游配方，出售与五行供货是其设计出口：钢绒、蜜谷灵饼、菌鱼灵膳、藻露羹、蜜油火膏、腐土菌丸、蜜炼金食。",
+    "no_use_whitelist": ["purifying_mat_culture"],
+    "no_use_whitelist_reason": "净水菌毯培养单位是购买代理，见purchase_proxies说明。"
+  },
+
+  "vertical_samples": ["crop:golden_wheat", "resource:straw"]
+}
