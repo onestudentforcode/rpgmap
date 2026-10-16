@@ -148,7 +148,7 @@ def _compile(source, product='farm_demo_v1', providers=None, map_data=None, extr
         for iid in recipe['inputs']: consumers[iid].append(ident)
         for iid in recipe['outputs']: known_sources[iid].append(ident)
     for ident, producer in providers.items():
-        require(producer['facility'] in facilities, f'{ident}: missing facility')
+        require(producer.get('independent') is True or producer['facility'] in facilities, f'{ident}: missing facility')
         quantities(producer['inputs'], resources, ident)
         quantities(producer['outputs'], resources, ident)
         for iid in producer['inputs']: consumers[iid].append(ident)
@@ -193,7 +193,7 @@ def _compile(source, product='farm_demo_v1', providers=None, map_data=None, extr
         for recipe in recipes.values():
             if recipe['facility'] in built and set(recipe['inputs']) <= reachable: reachable.update(recipe['outputs'])
         for producer in providers.values():
-            if producer['facility'] in built and set(producer['inputs']) <= reachable: reachable.update(producer['outputs'])
+            if (producer.get('independent') is True or producer['facility'] in built) and set(producer['inputs']) <= reachable: reachable.update(producer['outputs'])
         if before == (len(reachable), len(built)): break
     require(reachable == set(resources) and built == set(facilities), 'unreachable resource/facility construction dependency')
     for iid in resources: require(known_sources[iid] and consumers[iid], f'{iid}: orphan source/consumer')

@@ -55,7 +55,7 @@ func _run() -> void:
 	root.add_child(shell)
 	await process_frame
 	wiki = shell.encyclopedia
-	check(not shell._started and wiki.data["counts"]["entities"] == 187, "baked encyclopedia loads with 187 entities")
+	check(not shell._started and wiki.data["counts"]["entities"] == 196, "baked encyclopedia loads with 196 entities")
 
 	# --- static reading before any game -------------------------------------
 	var static_before: Dictionary = shell.world.to_snapshot().duplicate(true)
@@ -64,9 +64,9 @@ func _run() -> void:
 	var category_buttons := 0
 	for node in nodes(shell.sidebar):
 		if node is Button and node.has_meta("encyclopedia_category"): category_buttons += 1
-	check(category_buttons == 8, "all eight categories listed")
+	check(category_buttons == 9, "all nine categories listed")
 	check(category_button("crops") != null and category_button("crops").text.contains("7"), "crops category shows registry count")
-	check(category_button("rules").text.contains("14"), "rules category shows curated count")
+	check(category_button("rules").text.contains("15"), "rules category shows curated count")
 	check(not list_ids().is_empty(), "index list renders entries for the default category")
 	# search by Chinese name, ascii id and tag
 	for probe in [["秸秆", "resource:straw"], ["golden_wheat", "crop:golden_wheat"], ["organic", "resource:straw"]]:
@@ -127,7 +127,7 @@ func _run() -> void:
 
 	# --- rule browsing --------------------------------------------------------
 	category_button("rules").pressed.emit()
-	check("rule:crop_growth" in list_ids() and list_ids().size() == 14, "rules category lists all curated rules")
+	check("rule:crop_growth" in list_ids() and list_ids().size() == 15, "rules category lists all curated rules")
 	check(shell.world.to_snapshot() == static_before, "reading before a game changes no world state")
 
 	# --- with a running game --------------------------------------------------
@@ -161,7 +161,7 @@ func _run() -> void:
 	var wiki_categories := 0
 	for node in nodes(shell.sidebar):
 		if node is Button and node.has_meta("encyclopedia_category"): wiki_categories += 1
-	check(wiki_categories == 8, "encyclopedia tab lists all categories")
+	check(wiki_categories == 9, "encyclopedia tab lists all categories")
 	guide_tab = null
 	for node in nodes(shell.sidebar):
 		if node is Button and node.text == "新手引导": guide_tab = node

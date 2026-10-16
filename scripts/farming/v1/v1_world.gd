@@ -585,7 +585,7 @@ func _on_day_changed(day: int) -> void:
 		var water_rate := 100 if float(water) / cells.size() >= float(settings["optimal_water"]) else int(settings["low_water_efficiency"])
 		var fertility_rate := 100 if float(fertility) / cells.size() >= float(settings["optimal_fertility"]) else int(settings["low_fertility_efficiency"])
 		var light_rate := 100 if absf(float(light) / cells.size() - float(definition["light"])) <= float(settings["light_tolerance"]) else int(settings["low_light_efficiency"])
-		var growth := maxi(1, floori(float(water_rate * fertility_rate * light_rate) / 10000.0))
+		var growth := maxi(1, floori(float(water_rate * fertility_rate * light_rate) / 10000.0 * float(_crop_growth_percent(row,day-1))/100.0))
 		if row["state"] != "mature":
 			var target := int(definition["cycle_days"] if row["harvest_count"] > 0 else definition["days"]) * 100
 			row["progress"] = mini(target, int(row["progress"]) + growth)
@@ -616,6 +616,9 @@ func _on_day_changed(day: int) -> void:
 	daily_settled.emit(day, _store != null and daily_save_error.is_empty())
 
 ## Day D+1 opening device step, executed inside the settlement transaction.
+func _crop_growth_percent(_crop: Dictionary, _day: int) -> int:
+	return 100
+
 func _opening_devices(_day: int) -> void:
 	pass
 

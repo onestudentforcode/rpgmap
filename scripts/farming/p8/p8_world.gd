@@ -10,6 +10,7 @@ const P8Research := preload("res://scripts/farming/p8/p8_research.gd")
 const P8Flowers := preload("res://scripts/farming/p8/p8_flowers.gd")
 const P8Land := preload("res://scripts/farming/p8/p8_land.gd")
 const P8Devices := preload("res://scripts/farming/p8/p8_devices.gd")
+const Logistics := preload("res://scripts/farming/p8/p10_logistics.gd")
 ## Observational receipts for external business audits; never grants resources or
 ## replays work. Day-save failures are still governed by the transaction below.
 signal operation_recorded(entry: Dictionary)
@@ -30,6 +31,7 @@ var flowers
 ## Field stations and growth lamps; they run inside the opening-day step.
 var devices
 var land
+var logistics
 
 func _init(slot_store = null) -> void:
 	land = P8Land.new(self)
@@ -37,6 +39,7 @@ func _init(slot_store = null) -> void:
 	research = P8Research.new(self)
 	flowers = P8Flowers.new(self, P8Data.load_data()["flowers"])
 	devices = P8Devices.new(self, P8Data.load_data()["devices"])
+	logistics = Logistics.new(self, P8Data.load_data()["logistics"])
 	super(slot_store)
 
 func _catalog():
@@ -63,6 +66,7 @@ func _settle_workforce(completed_day: int) -> void:
 ## shares expire with the completed day.
 func _settle_husbandry(completed_day: int) -> void:
 	husbandry.settle(completed_day)
+	logistics.settle(completed_day)
 	research.settle(completed_day)
 	flowers.settle(completed_day)
 	reports.settle(completed_day)
@@ -90,6 +94,7 @@ func _tier_of(level: String) -> int:
 	return {"high": 0, "normal": 1, "low": 2}[level]
 
 func demolish_facility(uid: int) -> Dictionary:
+	if not logistics.in_host(uid).is_empty(): return _error("请先撤回入驻后勤蛊，再拆除设施")
 	if research != null and not research.active_project(uid).is_empty():
 		return _error("研究台有在研项目，完成或处理后才能拆除")
 	var result: Dictionary = super.demolish_facility(uid)
@@ -109,6 +114,7 @@ func to_snapshot() -> Dictionary:
 	snapshot["world"]["research"] = research.to_save()
 	snapshot["world"]["flowers"] = flowers.to_save()
 	snapshot["world"]["devices"] = devices.to_save()
+	snapshot["world"]["logistics"] = logistics.to_save()
 	return snapshot
 
 func apply_snapshot(value) -> Dictionary:
@@ -128,6 +134,8 @@ func _snapshot_applied(snapshot: Dictionary) -> void:
 		flowers.apply_save(snapshot["world"]["flowers"])
 	if snapshot["world"].has("devices"):
 		devices.apply_save(snapshot["world"]["devices"])
+	if snapshot["world"].has("logistics"):
+		logistics.apply_save(snapshot["world"]["logistics"])
 
 ## Pollination bonus: one extra oilseed per pollinated cycle at harvest.
 func _harvest_bonus(instance: Dictionary) -> Dictionary:
@@ -182,7 +190,7 @@ func _research_done(research_id: String) -> bool:
 func research_block(research_id: String) -> String:
 	if research_id.is_empty() or _research_done(research_id):
 		return ""
-	return "需先完成研究「%s」（研究台功能后续阶段接入）" % _research_name(research_id)
+	return "需先完成研究「%s」" % _research_name(research_id)
 
 func _research_name(research_id: String) -> String:
 	for row in P8Data.load_data()["research"]:
@@ -298,6 +306,7 @@ func end_day() -> Dictionary:
 ## Day D+1 opening: lamps light first, then station services, all on real
 ## stock; a reload or replayed candidate never triggers a second opening.
 func _opening_devices(day: int) -> void:
+	logistics.run_opening(day)
 	devices.run_opening(day)
 
 func start_new(slot: int, overwrite_confirmed: bool = false) -> Dictionary:
@@ -310,16 +319,32 @@ func start_new(slot: int, overwrite_confirmed: bool = false) -> Dictionary:
 ## value; everything (growth, flowers, UI) reads this one query.
 func environment_at(cell: Vector2i) -> Dictionary:
 	var env := super(cell)
-	if env.is_empty() or not devices.lamp_active_at(cell):
-		return env
-	env["light"] = maxi(int(env["light"]), int(P8Data.load_data()["devices"]["lamp"]["light"]))
+	if env.is_empty(): return env
+	env["light"] = _light_at(cell)
 	return env
 
 func _light_at(cell: Vector2i) -> int:
 	var natural := super(cell)
 	if devices.lamp_active_at(cell):
-		return maxi(natural, int(P8Data.load_data()["devices"]["lamp"]["light"]))
+		natural = maxi(natural, int(P8Data.load_data()["devices"]["lamp"]["light"]))
+	if logistics != null: natural = maxi(natural,logistics.light_at(cell,int(logistics.state["active_day"])))
 	return natural
+
+func _crop_growth_percent(crop: Dictionary, day: int) -> int:
+	return logistics.growth_percent(Vector2i(int(crop["origin"][0]),int(crop["origin"][1])),day)
+
+func irrigate(cell: Vector2i) -> Dictionary:
+	if logistics.at(cell).is_empty(): return super(cell)
+	var checked := _can_act(1)
+	if not checked["ok"]: return checked
+	var settings: Dictionary = config["environment"]
+	var index := grid.index_of(cell)
+	if int(environment[index][0]) >= 100 or not inventory.has("clean_water",int(settings["irrigate_units"])): return _error("水分已满或缺少清水")
+	inventory.remove("clean_water",int(settings["irrigate_units"]))
+	_record_flow({}, {"clean_water":int(settings["irrigate_units"])},"后勤蛊补水")
+	environment[index][0] = mini(100,int(environment[index][0])+int(settings["irrigate_gain"]))
+	_count("fieldwork","irrigate")
+	return _finish(1,{"ok":true})
 
 func _commit_day(_day: int, ledger_error: String) -> void:
 	if _store == null:

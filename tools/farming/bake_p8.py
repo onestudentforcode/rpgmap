@@ -188,6 +188,15 @@ def providers(source):
             provider = recipe_id + '_provider'
             result[provider] = dict(facility='rock_workyard', inputs=dict(inputs), outputs=_scaled(recipe['outputs'], POPULATION),
                                     days=round_days, start_ap=round_days + 1, claim_ap=1, cash=POPULATION * row['juvenile_price'])
+    if 'logistics' in source:
+        row = next(r for r in source['logistics']['definitions'] if r['id'] == 'rice_bag_gu')
+        production = row['production']
+        irrigations = math.ceil(production['water_use'] * production['days'] / source['config']['environment']['irrigate_gain'])
+        inputs = Counter(production['inputs'])
+        inputs['clean_water'] += irrigations * source['config']['environment']['irrigate_units']
+        result['rice_gu_provider'] = dict(independent=True, facility='', inputs=dict(inputs),
+            outputs=production['outputs'], days=production['days'], start_ap=irrigations, claim_ap=1,
+            cash=row['fee'] * production['days'])
     return result
 
 
@@ -262,6 +271,9 @@ def extra_consumers(source):
     add('composite_stone_panel', 'construction_substitute')
     add('reclaimed_fill', 'construction_substitute')
     add('purifying_mat_culture', 'species:purifying_mat')
+    for row in source.get('logistics', {}).get('definitions', []):
+        for item in row['food']:
+            add(item, 'gu_maintenance:' + row['id'])
     return labels
 
 
@@ -353,7 +365,7 @@ def audit_research(source, compiled, provider_rows):
                 if recipe['facility'] in built and set(recipe['inputs']) <= reach:
                     reach |= set(recipe['outputs'])
             for ident, producer in provider_rows.items():
-                if producer['facility'] in built and set(producer['inputs']) <= reach:
+                if (producer.get('independent') is True or producer['facility'] in built) and set(producer['inputs']) <= reach:
                     reach |= set(producer['outputs'])
             if before == (len(reach), len(built)):
                 break
@@ -463,6 +475,9 @@ def audit_layout(source):
 
 def compile_config(source, map_data=None):
     try:
+        if 'logistics' in source:
+            from validate_logistics import validate
+            validate(source)
         provider_rows = providers(source)
         out = common.compile_config(source, PRODUCT, provider_rows, map_data, extra_consumers(source))
         items = {i['id']: i for i in out['resources']}
@@ -579,7 +594,8 @@ def main():
             path.parent.mkdir(parents=True, exist_ok=True)
             path.write_bytes(data)
     supply = {row['id']: row['supply_value'] for row in json.loads(files[TARGET].decode('utf-8'))['resources'] if row['supply_allowed']}
-    print('P8 BAKE OK: 63 resources / 7 crops / 15 facilities / 40 recipes / 12 research; layout+budget audited')
+    baked = json.loads(files[TARGET].decode('utf-8'))
+    print('P8 BAKE OK: ' + ' / '.join(f'{len(baked[k])} {k}' for k in ('resources','crops','facilities','recipes','research')) + '; layout+budget audited')
     print('P8 SUPPLY VALUES: ' + ', '.join(f'{k}={v}' for k, v in sorted(supply.items())))
 
 

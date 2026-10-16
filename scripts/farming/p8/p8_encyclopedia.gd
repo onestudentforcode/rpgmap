@@ -323,7 +323,7 @@ func render_detail() -> void:
 	back.pressed.connect(_back)
 	back.size_flags_vertical = Control.SIZE_SHRINK_CENTER
 	header.add_child(back)
-	var identity := UI.label("%s · %s · ID %s" % [_kind_label(String(entity["kind"])), category_title.get(String(entity["category"]), ""), String(entity["source_id"])], true)
+	var identity := UI.label("%s · %s" % [_kind_label(String(entity["kind"])), category_title.get(String(entity["category"]), "")], true)
 	identity.autowrap_mode = TextServer.AUTOWRAP_OFF
 	identity.clip_text = true
 	detail_box.add_child(identity)
@@ -454,7 +454,7 @@ func _wrapped(text: String, muted: bool = false) -> Label:
 func _kind_label(kind: String) -> String:
 	return {"resource": "物品", "crop": "作物", "species": "物种", "diet": "食谱", "facility": "设施",
 	        "recipe": "配方", "research": "研究", "source": "资源点", "parcel": "地块", "map": "地图",
-	        "rule": "规则"}.get(kind, kind)
+	        "rule": "规则", "gu":"后勤蛊"}.get(kind, kind)
 
 # --- navigation --------------------------------------------------------------
 

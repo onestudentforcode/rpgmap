@@ -21,8 +21,8 @@ func _controls(node: Node) -> Array:
 func run() -> void:
 	await get_tree().process_frame
 	check(not shell._started and shell.manual_mode, "P8 menu and manual default")
-	check(shell.world._items.size() == 63 and shell.world.facility_defs.size() == 15, "P8 catalog registered")
-	check(shell.world.recipe_defs.size() == 40 and shell.world.crop_defs.size() == 7, "P8 recipes and crops registered")
+	check(shell.world._items.size() == 65 and shell.world.facility_defs.size() == 15, "P8 catalog registered")
+	check(shell.world.recipe_defs.size() == 41 and shell.world.crop_defs.size() == 7, "P8 recipes and crops registered")
 	shell._new(1, false)
 	var world = shell.world
 	check(world.primeval_stones == int(world.config["initial_primeval_stones"]) and world.clock.total_days == 0, "fresh P8 slot with configured stones")

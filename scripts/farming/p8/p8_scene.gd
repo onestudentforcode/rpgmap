@@ -14,6 +14,8 @@ const ProductionEnvironment := preload("res://scripts/farming/p8/p8_environment_
 const P8Style := preload("res://scripts/farming/p8/p8_ui_style.gd")
 const Encyclopedia := preload("res://scripts/farming/p8/p8_encyclopedia.gd")
 var encyclopedia := Encyclopedia.new(self)
+const LogisticsUI := preload("res://scripts/farming/p8/p10_ui.gd")
+var logistics_ui := LogisticsUI.new(self)
 var production_visuals := true
 var _facility_thumbnails: Dictionary = {}
 var visual_trial_profile := "baseline"
@@ -215,6 +217,18 @@ func _locate_land(id: String) -> void:
 	overlay.queue_redraw()
 
 func _apply_manual(cell: Vector2i) -> void:
+	if not logistics_ui.placing.is_empty():
+		var row: Dictionary = world.logistics.instance(logistics_ui.placing)
+		if row.is_empty():
+			logistics_ui.placing = ""
+			_result({"ok":false,"reason":"当前存档没有此实例，请从后勤管理页重新选择"})
+			return
+		var host_uid := int(world.facility_at(cell).get("uid",0)) if world.logistics.definition(row)["deployment"] == "host" else 0
+		_result(world.logistics.deploy(logistics_ui.placing,cell,host_uid))
+		if world.logistics.deployed(world.logistics.instance(logistics_ui.placing)): logistics_ui.placing = ""
+		selected = cell
+		_show_cell()
+		return
 	var parcel: String = world.land.at(cell)
 	if _started and not parcel.is_empty() and not world.land.contains(cell):
 		selected = cell
@@ -223,6 +237,13 @@ func _apply_manual(cell: Vector2i) -> void:
 	super(cell)
 
 func _show_cell() -> void:
+	var gu: Dictionary = world.logistics.at(selected)
+	if not gu.is_empty():
+		_context = "cell"
+		_page("后勤生产蛊")
+		logistics_ui.focused = gu["instance_id"]
+		logistics_ui.card(gu,sidebar)
+		return
 	var parcel: String = world.land.at(selected)
 	if not parcel.is_empty() and not world.land.contains(selected):
 		_show_land(parcel)
@@ -230,6 +251,7 @@ func _show_cell() -> void:
 	super()
 
 func _board_input(event: InputEvent) -> void:
+	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_RIGHT and event.pressed: logistics_ui.placing = ""
 	if _started and not shade.visible and not is_instance_valid(confirmation) and not _text_focus():
 		if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_MIDDLE:
 			_map_pan = event.pressed
@@ -341,6 +363,7 @@ func draw_map(target: Node2D) -> void:
 
 func _extra_nav() -> void:
 	super()
+	_icon(top_nav,"growth_gu","后勤蛊 · 入驻、生产与维护",logistics_ui.open)
 	_icon(top_nav,"research_bench","研究 · 三层工艺网络",_show_research)
 	_icon(top_nav,"area","购地 · 陆地与东西侧水库",_show_land)
 
@@ -404,6 +427,7 @@ func _show_build() -> void:
 ## Non-habitat panels: research benches explain the pending system, recipe cards
 ## carry an explicit lock line and stay unstartable while gated.
 func _show_facility(facility: Dictionary) -> void:
+	logistics_ui.host_section(int(facility["uid"]))
 	var definition: Dictionary = world.facility_defs[facility["facility_id"]]
 	if definition.get("kind") == "research":
 		_show_research_bench(facility)
@@ -468,8 +492,21 @@ func _encyclopedia_link(parent: Node, entity_id: String) -> Button:
 	return button
 
 func _context_refresh() -> void:
+	if _context == "logistics": logistics_ui.open()
 	if _context == "encyclopedia":
 		encyclopedia.refresh()
+
+func _show_report() -> void:
+	super()
+	if not world.logistics.state["provisioned"]: return
+	var card := _card(sidebar)
+	_heading(card,"后勤蛊 · 实际维护与生产")
+	_label(card,"后勤维护元石计入采购支出，特殊食料与稻米收取计入实际资源出入库；待收产物不计入库存。")
+	_label(card,"累计已付维护%d元石；当日开日维护属于当日，不写入前一日或已冻结回顾。" % int(world.logistics.state["spent"]))
+	for bill in world.logistics.state["history"]:
+		if int(bill["fees"]) > 0:
+			_label(card,"服务日%d：维护%d元石，食料%s" % [int(bill["day"])+1,int(bill["fees"]),logistics_ui.items_text(bill["food"])])
+	_icon(card,"growth_gu","查看部署、生产进度与收取",logistics_ui.open)
 
 func _show_help() -> void:
 	_context = "help"
@@ -797,7 +834,8 @@ func _show_research_bench(facility: Dictionary) -> void:
 			selector.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 			for index in range(startable.size()):
 				var def: Dictionary = world.research.project_def(startable[index])
-				selector.add_item("%s · %d元石＋%s · %d有效日" % [def["name"], int(def["fee"]), _materials(def["samples"]), int(def["days"])])
+				var estimate: Dictionary = world.research.quote_start(uid,startable[index])
+				selector.add_item("%s · %d元石＋%s · 预计%d有效工作日" % [def["name"], int(estimate["fee"]), _materials(estimate["samples"]), int(estimate["days"])])
 				selector.set_item_metadata(index, startable[index])
 			sidebar.add_child(selector)
 			_icon(sidebar,"play","启动所选研究",func():
@@ -810,9 +848,11 @@ func _show_research_bench(facility: Dictionary) -> void:
 					func(): _result(world.research.start(uid, project_id)); _show_cell()))
 	else:
 		var def: Dictionary = world.research.project_def(String(active["id"]))
-		_heading(sidebar,"%s · %d/%d有效日" % [def["name"], int(active["progress"]), int(def["days"])])
+		var target := maxi(1,int(def["days"])-int(active["gu"]["flat"]))
+		_heading(sidebar,"%s · %d/%d工作量" % [def["name"], int(active["progress"]), target])
+		_label(sidebar,"基础%d − 固定减免%d → 目标%d；每有效工作日推进%d；样本倍率%.2f，逐项向上取整。" % [int(def["days"]),int(active["gu"]["flat"]),target,int(active["gu"]["speed"]),float(active["gu"]["materials"])/100.0])
 		_encyclopedia_link(sidebar,"research:" + String(active["id"]))
-		_bar(sidebar,"研究进度",int(active["progress"]),int(def["days"]))
+		_bar(sidebar,"研究进度",int(active["progress"]),target)
 		_label(sidebar,"样本与启动费已支付；每天一次研究工作：手动1AP，或由负责人日结执行（1元石）。")
 		var work_quote: Dictionary = world.research.work_quote(uid)
 		if work_quote["ok"]:
@@ -821,6 +861,7 @@ func _show_research_bench(facility: Dictionary) -> void:
 			_label(sidebar,String(work_quote["reason"]))
 		var pause := _icon(sidebar,"cancel","暂停/恢复（保留投入与进度）",func(): _result(world.research.set_paused(uid, not bool(active["paused"]))); _show_cell())
 		pause.text = "恢复研究" if bool(active["paused"]) else "暂停研究"
+		_icon(sidebar,"clear","取消研究（样本/费用不退）",func(): _confirm("取消研究？已付样本与元石不退，进度清零。",func(): _result(world.research.cancel(uid)); _show_cell()))
 	_owner_section(uid)
 	if active.is_empty():
 		_icon(sidebar,"clear","拆除（1AP，无返还）",func(): _confirm("拆除%s？不返还建设材料或元石，消耗1AP。" % definition["name"],func(): _result(world.demolish_facility(uid)); _show_cell()))
@@ -874,6 +915,7 @@ func _show_research() -> void:
 # --- P8.d flower sources -----------------------------------------------------
 
 func _crop_extra(crop: Dictionary) -> void:
+	logistics_ui.effect_details(sidebar,Vector2i(int(crop["origin"][0]),int(crop["origin"][1])))
 	_encyclopedia_link(sidebar,"crop:" + String(crop["crop_id"]))
 	if not world.flowers.is_flower_crop(String(crop["crop_id"])):
 		return
@@ -962,9 +1004,12 @@ func _show_device(facility: Dictionary) -> void:
 		_label(sidebar,"装置服务不占雇工次数、不扣玩家AP、不收工资；原料保留量不约束设备消费。")
 	else:
 		var device: Dictionary = world.devices.device_of(uid)
+		var gu_mode: bool = not world.logistics.in_host(uid).is_empty()
+		if gu_mode: _label(sidebar,"当前为明光蛊供能模式：不消耗精炼油，休眠不自动回退。光照与费用见上方蛊虫槽。")
 		var enabled := CheckButton.new()
 		enabled.text = "启用补光（覆盖内有作物时每日精炼油1）"
 		enabled.button_pressed = not device.is_empty() and bool(device.get("enabled", false))
+		enabled.disabled = gu_mode
 		enabled.toggled.connect(func(value): _result(world.devices.configure_lamp(uid, value)); _show_cell())
 		sidebar.add_child(enabled)
 		var overview: Dictionary = world.devices.lamp_overview(uid)

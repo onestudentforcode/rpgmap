@@ -256,6 +256,11 @@
         "compost_spent_filter",
         0,
         0
+      ],
+      [
+        "mill_rice",
+        0,
+        0
       ]
     ]
   },
@@ -726,6 +731,18 @@
       "total": {
         "denominator": 5,
         "numerator": 144
+      }
+    },
+    "rice_round": {
+      "outputs": {
+        "rice": {
+          "denominator": 20,
+          "numerator": 41
+        }
+      },
+      "total": {
+        "denominator": 5,
+        "numerator": 41
       }
     },
     "saw": {
@@ -1858,6 +1875,25 @@
           "share": 1
         }
       }
+    },
+    {
+      "ap": 2,
+      "basis": {
+        "id": "rice_gu_provider",
+        "kind": "animal"
+      },
+      "cash": 3,
+      "days": 3,
+      "id": "rice_round",
+      "inputs": {
+        "clean_water": 1
+      },
+      "outputs": {
+        "rice": {
+          "quantity": 4,
+          "share": 1
+        }
+      }
     }
   ],
   "crops": [
@@ -2143,6 +2179,7 @@
         1,
         1
       ],
+      "gu_slot": "research_assist",
       "id": "research_bench",
       "kind": "research",
       "materials": {
@@ -2246,6 +2283,7 @@
         2,
         2
       ],
+      "gu_slot": "growth_assist",
       "id": "field_service_station",
       "materials": {
         "iron_ingot": 1,
@@ -2260,6 +2298,7 @@
         1,
         1
       ],
+      "gu_slot": "light_source",
       "id": "growth_lamp",
       "materials": {
         "composite_stone_panel": 1,
@@ -2681,6 +2720,155 @@
       "unit": "只"
     }
   ],
+  "logistics": {
+    "claim_ap": 1,
+    "definitions": [
+      {
+        "deployment": "independent",
+        "effect": "production",
+        "fee": 1,
+        "food": {},
+        "host_kinds": [],
+        "id": "rice_bag_gu",
+        "name": "饭袋草蛊",
+        "production": {
+          "days": 3,
+          "footprint": [
+            1,
+            1
+          ],
+          "inputs": {},
+          "min_light": 60,
+          "min_water": 30,
+          "outputs": {
+            "rice": 4
+          },
+          "water_use": 8
+        },
+        "range": 0,
+        "rank": 1,
+        "role": "logistics",
+        "scope": "SELF",
+        "slot": "",
+        "tags": [
+          "rice_production"
+        ],
+        "target_tags": [
+          "biological_production",
+          "logistics_gu"
+        ],
+        "value": 100
+      },
+      {
+        "deployment": "host",
+        "effect": "light",
+        "fee": 1,
+        "food": {},
+        "host_kinds": [
+          "facility"
+        ],
+        "id": "bright_gu",
+        "name": "明光蛊",
+        "range": 2,
+        "rank": 1,
+        "role": "logistics",
+        "scope": "AREA",
+        "slot": "light_source",
+        "tags": [
+          "light_source"
+        ],
+        "target_tags": [
+          "light_consumer"
+        ],
+        "value": 80
+      },
+      {
+        "deployment": "host",
+        "effect": "growth_speed",
+        "fee": 1,
+        "food": {},
+        "host_kinds": [
+          "facility"
+        ],
+        "id": "growth_gu",
+        "name": "催生蛊",
+        "range": 2,
+        "rank": 1,
+        "role": "logistics",
+        "scope": "AREA",
+        "slot": "growth_assist",
+        "tags": [
+          "growth_assist"
+        ],
+        "target_tags": [
+          "biological_production"
+        ],
+        "value": 120
+      },
+      {
+        "deployment": "host",
+        "effect": "research_flat",
+        "fee": 1,
+        "food": {},
+        "host_kinds": [
+          "research"
+        ],
+        "id": "wisdom_gu",
+        "name": "智道研究蛊",
+        "range": 0,
+        "rank": 1,
+        "role": "logistics",
+        "scope": "HOST",
+        "slot": "research_assist",
+        "tags": [
+          "research_assist",
+          "research_time_flat"
+        ],
+        "target_tags": [
+          "research_facility"
+        ],
+        "value": 1
+      },
+      {
+        "deployment": "host",
+        "effect": "research_speed",
+        "fee": 2,
+        "food": {
+          "time_feed": 1
+        },
+        "host_kinds": [
+          "research"
+        ],
+        "id": "time_gu",
+        "material_percent": 150,
+        "name": "宙道研究蛊",
+        "range": 0,
+        "rank": 1,
+        "role": "logistics",
+        "scope": "HOST",
+        "slot": "research_assist",
+        "tags": [
+          "research_assist",
+          "research_speed_multiplier"
+        ],
+        "target_tags": [
+          "research_facility"
+        ],
+        "value": 200
+      }
+    ],
+    "deploy_ap": 1,
+    "provision": [
+      "rice_bag_gu",
+      "rice_bag_gu",
+      "bright_gu",
+      "growth_gu",
+      "wisdom_gu",
+      "time_gu"
+    ],
+    "range_metric": "rect_expand_anchor",
+    "version": 1
+  },
   "orders": {
     "base_demand": 12,
     "daily_limit": 3,
@@ -3100,6 +3288,21 @@
       "raw_purchase_cost": {
         "denominator": 1,
         "numerator": 18
+      },
+      "requires_production": true
+    },
+    "rice": {
+      "buyable_leaves": {
+        "clean_water": {
+          "denominator": 1,
+          "numerator": 1
+        }
+      },
+      "payout": 13,
+      "quantity": 4,
+      "raw_purchase_cost": {
+        "denominator": 1,
+        "numerator": 2
       },
       "requires_production": true
     },
@@ -3756,6 +3959,22 @@
       },
       "research": "advanced_feed_oil_wax",
       "start_ap": 1
+    },
+    {
+      "claim_ap": 1,
+      "days": 1,
+      "facility": "farm_processor",
+      "id": "mill_rice",
+      "inputs": {
+        "rice": 3
+      },
+      "name": "稻米磨粉",
+      "optional_logistics": true,
+      "outputs": {
+        "grain_meal": 2
+      },
+      "research": "farm_preparation",
+      "start_ap": 1
     }
   ],
   "research": [
@@ -3835,7 +4054,8 @@
           "mill_grain",
           "mill_grass",
           "press_oilseed",
-          "compost_oil_cake"
+          "compost_oil_cake",
+          "mill_rice"
         ],
         "species": []
       }
@@ -4611,6 +4831,7 @@
         "purifying_mat",
         "purifying_mat_provider",
         "research:field_maintenance",
+        "rice_gu_provider",
         "rock_belly_beast",
         "rock_mole",
         "sale",
@@ -5319,7 +5540,8 @@
       ],
       "sell_price": 3,
       "sources": [
-        "mill_grain"
+        "mill_grain",
+        "mill_rice"
       ],
       "stage": "intermediate",
       "standard_cost": {
@@ -6195,6 +6417,65 @@
       "supply_value": 27,
       "tags": [
         "food"
+      ]
+    },
+    {
+      "buy_price": 0,
+      "consumers": [
+        "mill_rice",
+        "orders",
+        "sale"
+      ],
+      "cost_source": "rice_round",
+      "element": "wood",
+      "form": "solid",
+      "id": "rice",
+      "name": "稻米",
+      "path_ids": [
+        "wood"
+      ],
+      "sell_price": 3,
+      "sources": [
+        "rice_gu_provider"
+      ],
+      "stage": "primary",
+      "standard_cost": {
+        "denominator": 20,
+        "numerator": 41
+      },
+      "supply_allowed": true,
+      "supply_value": 3,
+      "tags": [
+        "food",
+        "grain"
+      ]
+    },
+    {
+      "buy_price": 2,
+      "consumers": [
+        "gu_maintenance:time_gu"
+      ],
+      "cost_source": "purchase",
+      "element": "water",
+      "form": "solid",
+      "id": "time_feed",
+      "name": "宙道食料",
+      "path_ids": [
+        "water"
+      ],
+      "sell_price": 0,
+      "sources": [
+        "market"
+      ],
+      "stage": "intermediate",
+      "standard_cost": {
+        "denominator": 1,
+        "numerator": 2
+      },
+      "supply_allowed": false,
+      "supply_value": 0,
+      "tags": [
+        "special_feed"
       ]
     }
   ],

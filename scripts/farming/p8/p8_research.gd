@@ -81,6 +81,14 @@ func quote_start(bench_uid: int, project_id: String) -> Dictionary:
 	out["samples"] = definition["samples"].duplicate()
 	out["fee"] = int(definition["fee"])
 	out["days"] = int(definition["days"])
+	var modifier: Dictionary = world.logistics.research_modifier(bench_uid)
+	out["gu"] = modifier
+	out["work_target"] = maxi(1,int(definition["days"])-int(modifier["flat"]))
+	out["days"] = ceili(float(out["work_target"])/int(modifier["speed"]))
+	for item in out["samples"]:
+		out["samples"][item] = ceili(float(out["samples"][item])*int(modifier["materials"])/100.0)
+	if not String(modifier["instance_id"]).is_empty() and not world.logistics.active(world.logistics.instance(modifier["instance_id"]),_today()):
+		out["blockers"].append("入驻蛊未获得今日运行资格，请启用并支付维护后启动")
 	if is_completed(project_id):
 		out["blockers"].append("已完成，全场共享")
 	if not project_of(project_id).is_empty():
@@ -91,9 +99,9 @@ func quote_start(bench_uid: int, project_id: String) -> Dictionary:
 		if not is_completed(String(prerequisite)):
 			out["blockers"].append("前置未完成：" + String(project_def(String(prerequisite)).get("name", prerequisite)))
 	var missing := PackedStringArray()
-	for item in definition["samples"]:
-		if world.inventory.count(String(item)) < int(definition["samples"][item]):
-			missing.append("%s×%d" % [world._items[String(item)]["name"], int(definition["samples"][item]) - world.inventory.count(String(item))])
+	for item in out["samples"]:
+		if world.inventory.count(String(item)) < int(out["samples"][item]):
+			missing.append("%s×%d" % [world._items[String(item)]["name"], int(out["samples"][item]) - world.inventory.count(String(item))])
 	if not missing.is_empty():
 		out["blockers"].append("缺少样本：" + "、".join(missing))
 	if world.primeval_stones < int(definition["fee"]):
@@ -116,7 +124,7 @@ func start(bench_uid: int, project_id: String) -> Dictionary:
 	world.primeval_stones -= int(quote["fee"])
 	world._cash("purchase_spend", int(quote["fee"]))
 	state["projects"].append({"id": project_id, "bench_uid": bench_uid, "progress": 0,
-		"start_day": world.clock.total_days, "paused": false, "worked": []})
+		"start_day": world.clock.total_days, "paused": false, "worked": [], "gu":quote["gu"].duplicate()})
 	world._report_event({"category": "growth", "facility_uid": bench_uid, "kind": "研究启动",
 		"count": 1, "items": samples, "note": "%s · 费用%d元石" % [String(project_def(project_id)["name"]), int(quote["fee"])]})
 	world.changed.emit()
@@ -129,10 +137,13 @@ func work_quote(bench_uid: int) -> Dictionary:
 		return _error("研究台空闲")
 	if bool(project["paused"]):
 		return _error("项目已暂停")
+	var gu: Dictionary = project["gu"]
+	if not String(gu["instance_id"]).is_empty() and not world.logistics.active(world.logistics.instance(gu["instance_id"]),_today()):
+		return _error("锁定蛊休眠或缺特殊食料，研究暂停；投入与进度保留")
 	if _worked_today(project):
 		return _error("今日已登记研究工作")
 	return {"ok": true, "project_id": String(project["id"]), "progress": int(project["progress"]),
-		"days": int(project_def(String(project["id"]))["days"]), "ap": 1}
+		"days": maxi(1,int(project_def(String(project["id"]))["days"])-int(gu["flat"])), "ap": 1}
 
 ## One receipt per bench per service day. Manual work spends 1 player AP;
 ## the worker path runs inside the unified scheduler without AP.
@@ -172,14 +183,24 @@ func settle(completed_day: int) -> void:
 	for project in state["projects"].duplicate():
 		if not project["worked"].has(completed_day):
 			continue
-		project["progress"] = int(project["progress"]) + 1
 		var definition: Dictionary = project_def(String(project["id"]))
-		if int(project["progress"]) >= int(definition["days"]):
+		var target := maxi(1,int(definition["days"])-int(project["gu"]["flat"]))
+		project["progress"] = mini(target,int(project["progress"])+int(project["gu"]["speed"]))
+		if int(project["progress"]) >= target:
 			var bench_uid := int(project["bench_uid"])
 			state["projects"].erase(project)
 			state["completed"].append(String(project["id"]))
 			world._report_event({"category": "growth", "facility_uid": bench_uid, "kind": "研究完成",
 				"count": 1, "items": {}, "note": "%s已解锁，全农场共享" % String(definition["name"])})
+
+func cancel(bench_uid: int) -> Dictionary:
+	var checked: Dictionary = world._can_act(0)
+	if not checked["ok"]: return checked
+	var project := active_project(bench_uid)
+	if project.is_empty(): return _error("没有在研项目")
+	if _worked_today(project): return _error("今日研究工作已登记，日结后才能取消")
+	state["projects"].erase(project)
+	return world._finish(0,{"ok":true})
 
 ## Demolishing an idle bench drops its day marker; knowledge is farm-wide.
 func forget_bench(bench_uid: int) -> void:
@@ -214,7 +235,7 @@ static func normalize(value, day: int, world: Dictionary, catalog) -> Dictionary
 	var seen_benches := {}
 	var seen_days := {}
 	for project in value["projects"]:
-		if not project is Dictionary or not Scalars.exact(project, ["id", "bench_uid", "progress", "start_day", "paused", "worked"]):
+		if not project is Dictionary or not Scalars.exact(project, ["id", "bench_uid", "progress", "start_day", "paused", "worked", "gu"]):
 			return Scalars.fail("在研项目字段非法")
 		var ident := String(project["id"])
 		if not research.has(ident) or completed.has(ident) or seen_projects.has(ident):
@@ -227,11 +248,16 @@ static func normalize(value, day: int, world: Dictionary, catalog) -> Dictionary
 			return Scalars.fail("一台研究台只能承担一个项目")
 		seen_benches[bench] = true
 		var definition: Dictionary = research[ident]
+		var gu = project["gu"]
+		if not Scalars.exact(gu,["instance_id","flat","speed","materials"]) or not gu["instance_id"] is String or not Scalars.whole(gu["flat"],0,1) or not Scalars.whole(gu["speed"],1,2) or not Scalars.whole(gu["materials"],100,150): return Scalars.fail("研究蛊修饰非法")
+		if gu["instance_id"].is_empty() and (int(gu["flat"]) != 0 or int(gu["speed"]) != 1 or int(gu["materials"]) != 100): return Scalars.fail("无蛊研究不能携带修饰")
+		var target := maxi(1,int(definition["days"])-int(gu["flat"]))
+		if not Scalars.whole(project["progress"],0,target-1): return Scalars.fail("研究进度非法")
 		if not Scalars.whole(project["start_day"], 0, day) or not project["paused"] is bool:
 			return Scalars.fail("在研项目日期或暂停非法")
-		var worked: Array = project["worked"]
-		if not worked is Array or worked.size() > int(definition["days"]):
+		if not project["worked"] is Array or project["worked"].size() > int(definition["days"]):
 			return Scalars.fail("在研项目有效日数量非法")
+		var worked: Array = project["worked"]
 		var previous := int(project["start_day"]) - 1
 		var packed_worked := []
 		for stamp in worked:
@@ -241,8 +267,9 @@ static func normalize(value, day: int, world: Dictionary, catalog) -> Dictionary
 			packed_worked.append(int(stamp))
 		# Progress equals settled receipts; at most today's receipt may still be
 		# unsettled (mid-day checkpoints are normalized through the same path).
-		var unsettled := packed_worked.size() - int(project["progress"])
-		if (unsettled != 0 and unsettled != 1) or (unsettled == 1 and int(packed_worked[-1]) != day):
+		var settled_count := packed_worked.size()
+		if not packed_worked.is_empty() and int(packed_worked[-1]) == day: settled_count -= 1
+		if int(project["progress"]) != settled_count * int(gu["speed"]):
 			return Scalars.fail("在研项目进度与收据不符")
 		if int(project["progress"]) > int(definition["days"]):
 			return Scalars.fail("在研项目进度越界")
@@ -250,7 +277,7 @@ static func normalize(value, day: int, world: Dictionary, catalog) -> Dictionary
 			if not completed.has(String(prerequisite)):
 				return Scalars.fail("在研项目前置未完成")
 		out["projects"].append({"id": ident, "bench_uid": bench, "progress": int(project["progress"]),
-			"start_day": int(project["start_day"]), "paused": bool(project["paused"]), "worked": packed_worked})
+			"start_day": int(project["start_day"]), "paused": bool(project["paused"]), "worked": packed_worked,"gu":{"instance_id":gu["instance_id"],"flat":int(gu["flat"]),"speed":int(gu["speed"]),"materials":int(gu["materials"])}})
 	var markers := {}
 	for row in value["bench_days"]:
 		if not row is Dictionary or not Scalars.exact(row, ["uid", "day"]):

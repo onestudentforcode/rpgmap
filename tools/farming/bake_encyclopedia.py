@@ -611,6 +611,47 @@ def _relation_row(p, io_row, direction):
     }
 
 
+GU = {r['id']: r for r in SRC.get('logistics', {}).get('definitions', [])}
+for gid, row in GU.items():
+    hosts = [f for f in FAC.values() if f.get('gu_slot') == row['slot'] and f.get('kind','facility') in row['host_kinds']]
+    effect = {'production': '独立生产', 'light': '环境光照', 'growth_speed': '范围生产速度',
+              'research_flat': '固定研究工作量减免', 'research_speed': '研究速度倍率'}[row['effect']]
+    fields = [field('rank','转数',f'{row["rank"]}转原型；实例支持一至五转，升转由上游负责'),
+        field('obtain','获取','每档一次试用配给；饭袋草2只，其他各1只；尚未连接上游获取与成长'),
+        field('deploy','部署','独立占用1格陆地，不需开垦/农田' if row['deployment']=='independent' else '入驻兼容设施：'+'、'.join(f['name'] for f in hosts)),
+        field('effect','能力',{
+            'production':'自身进行生产，条件与产物见下方',
+            'light':f'范围外扩{row["range"]}格，提供光照{row["value"]}，同格光照取最大',
+            'growth_speed':f'范围外扩{row["range"]}格，生物生产速度×{row["value"]/100:g}；同类取最强',
+            'research_flat':f'研究工作量固定减少{row["value"]}，至少保留1',
+            'research_speed':f'每个有效研究日推进{row["value"]/100:g}工作量'}[row['effect']]),
+        field('fee','维护',f'启用时{row["fee"]}元石/游戏日；闲置仍收费，休眠/未部署免维护'),
+        field('food','特殊食料',quantities_text(row['food'])+'（每个成功付费服务日；与元石原子扣除）'),
+        field('timing','时点','部署/撤回各1AP；启用次日生效；停用立即取消后续效果，已付不退；运行/待收任务锁定实例')]
+    if row.get('production'):
+        p = row['production']
+        fields += [field('production','生产',f'{p["days"]}有效日；启动投入{quantities_text(p["inputs"])}；收取{quantities_text(p["outputs"])}，1AP'),
+            field('environment','环境',f'光照≥{p["min_light"]}、水分≥{p["min_water"]}，不足暂停保留进度；每推进日扣水分{p["water_use"]}，不扣肥力；清水浇水或田间站可补水')]
+    if row['effect']=='research_speed': fields.append(field('materials','研究样本',f'基础样本逐项×{row.get("material_percent",100)/100:g}向上取整；一次性启动费不变'))
+    if row['effect']=='light': fields.append(field('fuel','灯光模式','入驻补光灯后替代精炼油供能；休眠不自动回退燃油；自然光/灯/蛊取最大值，喜阴作物可能降效'))
+    add_entity('gu:'+gid,'gu',gid,row['name'],'logistics',row['tags'],effect,fields,['rule:logistics'])
+    pid = proc('proc:gu-maintenance:'+gid,'gu_maintenance',row['name']+'·每日维护',
+        [io('currency:primeval_stone',row['fee'],'每只·每日','开日')] + [io('resource:'+k,v,'每只·每日','开日') for k,v in row['food'].items()],
+        [], species='gu:'+gid, conditions=['已部署且启用；元石与食料同时足额；同服务日只结算一次'],effects=['激活当日能力'], category_hint='logistics')
+    for k in row['food']: consumes(k,pid)
+    if row.get('production'):
+        p=row['production']
+        pid=proc('proc:gu-produce:'+gid,'gu_production',row['name']+'·生产收取',
+            [io('resource:'+k,v,'每批','启动') for k,v in p['inputs'].items()],
+            [io('resource:'+k,v,'每批','完成后收取') for k,v in p['outputs'].items()],ap=1,species='gu:'+gid,
+            duration=f'{p["days"]}有效生产日（可受催生加速）',conditions=['光照/水分达标、已付当日维护；完成待收不继续耗水'],category_hint='logistics')
+        for k in p['inputs']: consumes(k,pid)
+        for k in p['outputs']: produces(k,pid)
+        pid=proc('proc:gu-water:'+gid,'gu_water',row['name']+'·浇水',
+            [io('resource:clean_water',ENV['irrigate_units'],'每次','手动补水')],[],ap=1,species='gu:'+gid,
+            effects=[f'占地水分+{ENV["irrigate_gain"]}，上限100，不改变肥力'],category_hint='logistics')
+        consumes('clean_water',pid)
+
 # All entities exist now; resolve display names that were built during process
 # construction before the resource entities were registered.
 for _p in processes:
@@ -713,6 +754,14 @@ for _e in entities:
     elif kind == 'facility':
         for target in FAC[sid].get('species', []):
             links.append(('接纳物种', f'species:{target}'))
+        for gid, row in GU.items():
+            if FAC[sid].get('gu_slot') == row['slot'] and FAC[sid].get('kind','facility') in row['host_kinds']: links.append(('可入驻后勤蛊','gu:'+gid))
+    elif kind == 'gu':
+        row = GU[sid]
+        for fid,f in FAC.items():
+            if f.get('gu_slot') == row['slot'] and f.get('kind','facility') in row['host_kinds']: links.append(('兼容设施','facility:'+fid))
+        for rid in row['food']: links.append(('特殊食料','resource:'+rid))
+        for rid in row.get('production',{}).get('outputs',{}): links.append(('产物','resource:'+rid))
     elif kind == 'recipe':
         links.append(('执行设施', f'facility:{RECIPES[sid]["facility"]}'))
     elif kind == 'research':
@@ -850,6 +899,7 @@ output = {
         'resources': len(RES), 'crops': len(CROPS), 'sources': len(SOURCES), 'facilities': len(FAC),
         'recipes': len(RECIPES), 'livestock': len(LIVESTOCK), 'diets': len(diet_ids), 'research': len(RESEARCH),
         'parcels': len(EXP['parcels']), 'living_mappings': len(LIVING_MAP),
+        'logistics': len(GU),
     },
     'categories': CURATED['categories'],
     'display': DISPLAY,

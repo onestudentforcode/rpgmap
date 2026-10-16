@@ -54,9 +54,9 @@ func tilled_count(world) -> int:
 func _namespace() -> void:
 	var world := P8World.new(temp_store())
 	check(world.data_source.load_data()["product"] == "farm_demo_p8", "P8 product identity")
-	check(world._items.size() == 63 and world.facility_defs.size() == 15, "63 resources and 15 facilities registered")
-	check(world.recipe_defs.size() == 40 and world.crop_defs.size() == 7, "40 recipes and 7 crops registered")
-	check(P8Snapshot.fresh()["schema"] == 17, "schema 17 parcel snapshots")
+	check(world._items.size() == 65 and world.facility_defs.size() == 15, "65 resources and 15 facilities registered")
+	check(world.recipe_defs.size() == 41 and world.crop_defs.size() == 7, "41 recipes and 7 crops registered")
+	check(P8Snapshot.fresh()["schema"] == 18, "schema 18 logistics snapshots")
 	check(not P8Snapshot.normalize(V2Snapshot.fresh())["ok"], "V2 snapshots rejected by the P8 codec")
 	check(not V2Snapshot.normalize(P8Snapshot.fresh())["ok"], "P8 snapshots rejected by the V2 codec")
 	check(world.start_new(1)["ok"], "start a P8 slot")

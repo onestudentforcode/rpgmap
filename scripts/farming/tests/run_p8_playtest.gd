@@ -124,13 +124,13 @@ func archive_day(world, day: int) -> void:
 		fees += int(worker["fee"])
 		successes += int(worker["success"])
 	check(fees == successes and fees == int(bucket["labour_spend"]), active_route + " day %d wages match real work" % day)
-	check(world.primeval_stones == int(world.config["initial_primeval_stones"]) + Journal.income(totals) - Journal.expense(totals), active_route + " day %d cash balances" % day)
+	check(world.primeval_stones == int(world.config["initial_primeval_stones"]) + Journal.income(totals) - Journal.expense(totals) + Journal.income(world.journal["pending"]) - Journal.expense(world.journal["pending"]), active_route + " day %d cash balances including next-day opening" % day)
 	daily_count += 1
 	daily.store_line(JSON.stringify({"day": day, "cash": world.primeval_stones, "journal": bucket,
 		"ledger": world.ledger.day_view(day - 1), "workers": world.workforce.state["report"],
 		"research": world.research.to_save(), "facilities": world.to_snapshot()["world"]["facilities"],
 		"husbandry": world.husbandry.to_save(), "devices": world.devices.to_save(), "report": world.reports.to_save(),
-		"opening": world.ledger.day_view(-1), "crops": world.to_snapshot()["world"]["crops"], "operations": world.operations.to_save(), "land": world.land.to_save()}))
+		"opening": world.ledger.day_view(-1), "opening_cash":world.journal["pending"].duplicate(true), "crops": world.to_snapshot()["world"]["crops"], "operations": world.operations.to_save(), "land": world.land.to_save()}))
 	if day == 45:
 		frozen_recap = world.reports.state["recap"].duplicate(true)
 		write_json(active_route + "-recap45.json", frozen_recap)
@@ -170,6 +170,7 @@ func _initialize() -> void:
 	DirAccess.make_dir_recursive_absolute(ProjectSettings.globalize_path(audit_root))
 	var manifest := {}
 	for name in ["content/farming/p8/production.json", "content/farming/baked/p8/production.json",
+			"scripts/farming/p8/p10_logistics.gd", "scripts/farming/p8/p10_ui.gd",
 			"content/farming/p8/expansion.json", "content/farming/baked/p8/expansion.json", "scripts/farming/p8/p8_land.gd", "scripts/farming/p8/p8_data.gd", "scripts/farming/core/grid/land_grid.gd", "scripts/farming/v1/v1_world_state.gd",
 			"content/farming/baked/maps/farm_02.json", "scripts/farming/tests/run_p8_playtest.gd",
 			"scripts/farming/p8/p8_flowers.gd", "scripts/farming/p8/p8_world.gd",

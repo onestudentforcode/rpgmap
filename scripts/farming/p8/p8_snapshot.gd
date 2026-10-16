@@ -15,7 +15,8 @@ const P8Research := preload("res://scripts/farming/p8/p8_research.gd")
 const P8Flowers := preload("res://scripts/farming/p8/p8_flowers.gd")
 const P8Devices := preload("res://scripts/farming/p8/p8_devices.gd")
 const Land := preload("res://scripts/farming/p8/p8_land.gd")
-const SCHEMA := 17
+const Logistics := preload("res://scripts/farming/p8/p10_logistics.gd")
+const SCHEMA := 18
 
 static func fresh() -> Dictionary:
 	var snapshot: Dictionary = Common.fresh(Data, SCHEMA)
@@ -33,6 +34,7 @@ static func fresh() -> Dictionary:
 	snapshot["world"]["research"] = {"projects": [], "completed": [], "bench_days": []}
 	snapshot["world"]["flowers"] = {"shares": [], "pollinated": []}
 	snapshot["world"]["devices"] = {"devices": [], "active_day": -1, "active_lamps": []}
+	snapshot["world"]["logistics"] = Logistics.fresh()
 	var workers := []
 	for worker in snapshot["workforce"]["workers"]:
 		worker["farm_duty"] = {"enabled": false, "priority": "normal"}
@@ -44,6 +46,15 @@ static func fail(reason: String) -> Dictionary:
 	return Common.fail(reason)
 
 static func normalize(value) -> Dictionary:
+	# Only the immediately preceding P8 save has a lossless upgrade: existing
+	# jobs were unmodified, so append inert logistics and the neutral gu plan.
+	if value is Dictionary and value.get("schema") == 17 and value.get("world") is Dictionary and not value["world"].has("logistics"):
+		value = value.duplicate(true)
+		value["schema"] = SCHEMA
+		value["world"]["logistics"] = Logistics.fresh()
+		if value["world"].get("research") is Dictionary and value["world"]["research"].get("projects") is Array:
+			for project in value["world"]["research"]["projects"]:
+				if project is Dictionary and not project.has("gu"): project["gu"] = {"instance_id":"","flat":0,"speed":1,"materials":100}
 	if not value is Dictionary or value.get("product") != Data.load_data()["product"] or not Scalars.whole(value.get("schema"), SCHEMA, SCHEMA):
 		return fail("不支持的P8快照版本，请重新开档")
 	# Strip the derived sections, validate the shared body, then validate the
@@ -59,6 +70,7 @@ static func normalize(value) -> Dictionary:
 	var raw_research = world_section.get("research", null) if world_section is Dictionary else null
 	var raw_flowers = world_section.get("flowers", null) if world_section is Dictionary else null
 	var raw_devices = world_section.get("devices", null) if world_section is Dictionary else null
+	var raw_logistics = world_section.get("logistics",null)
 	if body.has("ledger"):
 		body.erase("ledger")
 	if body.has("reports"):
@@ -67,6 +79,7 @@ static func normalize(value) -> Dictionary:
 		body.erase("preferences")
 	if world_section is Dictionary:
 		world_section.erase("land")
+		world_section.erase("logistics")
 		if world_section.has("husbandry"):
 			world_section.erase("husbandry")
 		if world_section.has("p8"):
@@ -137,6 +150,21 @@ static func normalize(value) -> Dictionary:
 	checked["snapshot"]["world"]["research"] = research["research"]
 	checked["snapshot"]["world"]["flowers"] = flower_sources["flowers"]
 	checked["snapshot"]["world"]["devices"] = device_state["devices"]
+	var logistics := Logistics.normalize(raw_logistics,day,checked["snapshot"],Data)
+	if not logistics["ok"]: return logistics
+	checked["snapshot"]["world"]["logistics"] = logistics["logistics"]
+	# A locked research plan must still point at its one original host instance.
+	for project in research["research"]["projects"]:
+		var id := String(project["gu"]["instance_id"])
+		if id.is_empty(): continue
+		var found := false
+		for row in logistics["logistics"]["instances"]:
+			if row["instance_id"] == id and int(row["host_uid"]) == int(project["bench_uid"]):
+				for d in Data.load_data()["logistics"]["definitions"]:
+					if d["id"] != row["definition_id"]: continue
+					var expected := {"instance_id":id,"flat":int(d["value"]) if d["effect"] == "research_flat" else 0,"speed":int(d["value"])/100 if d["effect"] == "research_speed" else 1,"materials":int(d.get("material_percent",100))}
+					found = project["gu"] == expected
+		if not found: return fail("研究方案与锁定蛊实例不符")
 	checked["snapshot"]["ledger"] = ledger["ledger"]
 	checked["snapshot"]["reports"] = reports["reports"]
 	checked["snapshot"]["preferences"] = {"watched": watched}

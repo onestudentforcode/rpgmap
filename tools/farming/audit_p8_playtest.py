@@ -12,8 +12,10 @@ EXPENSE = ("purchase_spend", "construction_spend", "labour_spend")
 ADVANCED = {"dew_soup", "fire_paste", "earth_pill", "gold_food"}
 IRON = {"iron_ore": 3, "crushed_ore": 2, "ore_concentrate": 6, "iron_ingot": 6,
         "mineral_feed": 2, "steel_wool": 2, "gold_food": 6}
-LEGITIMATE_OUT = {"养殖投喂", "净化启动", "加工投料", "市场出售", "建设材料", "播种投料", "施肥", "水场换水", "浇水", "特殊投料", "研究样本", "菌毯培养", "蜂群饲喂", "订单交付", "设备维护", "设备燃油"}
-LEGITIMATE_IN = {"市场采购", "资源采集", "采收收获", "采花收获", "加工收取", "养殖收取", "水场换水"}
+LOGISTICS_REASONS = {"后勤蛊产物收取", "后勤蛊特殊食料", "后勤蛊生产投料", "后勤蛊补水"}
+LEGITIMATE_OUT = {"养殖投喂", "净化启动", "加工投料", "市场出售", "建设材料", "播种投料", "施肥", "水场换水", "浇水", "特殊投料", "研究样本", "菌毯培养", "蜂群饲喂", "订单交付", "设备维护", "设备燃油", "后勤蛊特殊食料", "后勤蛊生产投料"}
+LEGITIMATE_IN = {"市场采购", "资源采集", "采收收获", "采花收获", "加工收取", "养殖收取", "水场换水", "后勤蛊产物收取"}
+LEGITIMATE_OUT.add("后勤蛊补水")
 
 def read_json(path: Path):
     return json.loads(path.read_text(encoding="utf-8"))
@@ -56,11 +58,14 @@ def reconcile(directory: Path, require_complete: bool = True) -> dict:
     species = {r["id"]: r for r in catalog["livestock"]}
     facilities = {r["id"]: r for r in catalog["facilities"]}
     projects = {r["id"] for r in catalog["research"]}
-    required = {r["id"] for r in catalog["recipes"] if r.get("research")}
+    # A no-gu control route intentionally cannot run logistics-only inputs.
+    # P10's dedicated auditor separately requires and checks this branch.
+    required = {r["id"] for r in catalog["recipes"] if r.get("research") and not r.get("optional_logistics")}
     routes = summary["routes"]
     if require_complete: assert set(routes) == {"A", "B"}, "complete audit requires two independent routes"
     result = {"settings": summary["settings"], "mode": "complete" if require_complete else "diagnostic", "routes": {}}
     all_claims, all_consumers = set(), set()
+    has_logistics = any((directory / f"{route}-logistics.jsonl").exists() for route in routes)
     for route in sorted(routes):
         days = read_lines(directory / f"{route}-days.jsonl")
         assert [r["day"] for r in days] == list(range(1, horizon + 2)), (route, "missing day")
@@ -69,6 +74,9 @@ def reconcile(directory: Path, require_complete: bool = True) -> dict:
         delivered, processed = Counter(), Counter()
         shared_days, auto_steps, inflows, outflows = [], Counter(), {}, {}
         for row in days:
+            has_logistics |= any(reason in LOGISTICS_REASONS
+                for book in (row['ledger'], row['opening'])
+                for key in ('inflows', 'outflows') for reasons in book[key].values() for reason in reasons)
             day, ledger = row["day"] - 1, row["ledger"]
             assert ledger["day"] == day
             if inventory is not None: assert Counter(ledger["opening"]) == inventory, "stock continuity"
@@ -78,7 +86,8 @@ def reconcile(directory: Path, require_complete: bool = True) -> dict:
             balance(opening)  # opening device costs belong to the next day's book
             journal = row["journal"]
             cash += sum(journal[k] for k in INCOME) - sum(journal[k] for k in EXPENSE)
-            assert cash == row["cash"], (route, day, "cash balance")
+            opening_cash = row.get('opening_cash', {})
+            assert cash + sum(opening_cash.get(k, 0) for k in INCOME) - sum(opening_cash.get(k, 0) for k in EXPENSE) == row["cash"], (route, day, "cash balance including next-day opening")
             roster = row["workers"]["workers"]
             assert row["workers"]["day"] == day
             assert journal["labour_spend"] == sum(w["fee"] for w in roster) == sum(w["success"] for w in roster)
@@ -112,6 +121,11 @@ def reconcile(directory: Path, require_complete: bool = True) -> dict:
         assert not any("行动点不足" in reason for reason in failures), "overdrawn player AP"
         receipts = read_lines(directory / f"{route}-receipts.jsonl")
         assert [r["sequence"] for r in receipts] == list(range(1, len(receipts) + 1)), "receipt sequence gap"
+        gu_path = directory / f"{route}-logistics.jsonl"
+        gu_days = {r['day']: r['logistics'] for r in read_lines(gu_path)} if gu_path.exists() else {}
+        gu_defs = {r['id']: r for r in catalog.get('logistics', {}).get('definitions', [])}
+        paid_gu = {(r['day'], r['instance_id']) for r in receipts
+                   if r['kind'] == 'logistics' and r['stage'] == 'maintenance'}
         starts, claims, consumed = {}, Counter(), {}
         # A last-AP action can export its start after the automatic settlement.
         for r in receipts:
@@ -122,6 +136,7 @@ def reconcile(directory: Path, require_complete: bool = True) -> dict:
         spent, issued = defaultdict(Counter), defaultdict(Counter)
         flower_use, flower_users, pollinated, device_use = Counter(), Counter(), set(), Counter()
         water_changes, lamp_days, lit_draws, automatic_starts, claimed_keys = set(), set(), 0, 0, set()
+        gu_lit_draws = 0
         def coverage(day, uid, margin):
             facility = next(f for f in days[day]["facilities"] if f["uid"] == uid)
             x, y = facility["origin"]
@@ -130,6 +145,16 @@ def reconcile(directory: Path, require_complete: bool = True) -> dict:
         def natural_light(cell):
             light = config["light"]
             return next((region["level"] for region in light["regions"] if inside(cell, region["rect"])), light["default"])
+        def gu_lit(day, origin, level):
+            for instance in gu_days.get(day, {}).get('instances', []):
+                definition = gu_defs[instance['definition_id']]
+                if (definition['effect'] == 'light' and instance['enabled']
+                        and instance['effective_day'] <= day and instance['paid_day'] == day
+                        and (day, instance['instance_id']) in paid_gu and instance['host_uid'] > 0
+                        and level <= definition['value']
+                        and inside(origin, coverage(day, instance['host_uid'], definition['range']))):
+                    return True
+            return False
         for r in receipts:
             day, kind = r["day"], r["kind"]
             stage = "purchase" if kind == "expansion" else r["stage"]
@@ -198,7 +223,10 @@ def reconcile(directory: Path, require_complete: bool = True) -> dict:
                     assert r["consumer"] != "player" and r["crop"] == "oilseed_flower"
                     pollinated.add(r["uid"])
                 if env["light"] > natural_light(r["origin"]) and r["consumer"] != "player":
-                    assert any(d == day and inside(r["origin"], coverage(day, uid, catalog["devices"]["lamp"]["range"])) for d, uid in lamp_days), "lit flower without paid lamp"
+                    oil_lit = any(d == day and inside(r["origin"], coverage(day, uid, catalog["devices"]["lamp"]["range"])) for d, uid in lamp_days)
+                    from_gu = gu_lit(day, r['origin'], env['light'])
+                    assert oil_lit or from_gu, "lit flower without paid lamp or gu"
+                    gu_lit_draws += int(from_gu and not oil_lit)
                     lit_draws += 1
             elif kind == "harvest":
                 expected = dict(crops[r["crop"]]["outputs"])
@@ -276,18 +304,24 @@ def reconcile(directory: Path, require_complete: bool = True) -> dict:
             assert not consumers, (route, "products without a later real consumer", consumers)
             assert shared_days and automatic_starts and auto_steps["加工收取"], "missing shared work or automatic processing"
             assert flower_users["player"] and flower_users["hive"] and pollinated and lit_draws, "missing flower or lamp ecology"
-            assert all(device_use[k] for k in ("lamp", "irrigate", "fertilize")) and water_changes, "missing device or water cycle"
+            assert (device_use['lamp'] or gu_lit_draws) and all(device_use[k] for k in ("irrigate", "fertilize")) and water_changes, "missing device or water cycle"
         result["routes"][route] = {"day": horizon, "cash": days[horizon-1]["cash"], "wages": wages,
             "day90": {"cash": days[89]["cash"], "research": len(days[89]["research"]["completed"])},
             "research": len(projects), "recipe_claims": dict(claims), "consumers": consumed,
             "unclaimed": gaps, "unconsumed": consumers, "shared_work_days": shared_days, "automatic_starts": automatic_starts,
             "device_actions": dict(device_use), "flower_draws": dict(flower_users), "lit_flower_draws": lit_draws,
+            "gu_lit_flower_draws": gu_lit_draws,
             "water_changes": len(water_changes), "failed_actions": dict(failures),
             "land": {"purchased": sorted(bought), "price": sum(land_prices.values()), "crop_days": land_plantings, "west_cycles_started": west_maintenance}}
         all_claims.update(claims); all_consumers.update(consumed)
     result["unverified_recipe_claims"] = sorted(required-all_claims)
     result["unverified_recipe_consumers"] = sorted(required-all_consumers)
     if require_complete: assert routes["A"]["research_order"] != routes["B"]["research_order"], "identical routes"
+    if has_logistics:
+        # Recognising a new flow reason is insufficient: reconcile every gu
+        # receipt against the same books before granting the ordinary audit.
+        from audit_p10_playtest import audit as audit_logistics
+        result['logistics'] = audit_logistics(directory, require_complete)
     result["auditor_sha256"] = hashlib.sha256(Path(__file__).read_bytes()).hexdigest()
     result["evidence_sha256"] = {p.name: hashlib.sha256(p.read_bytes()).hexdigest() for p in sorted(directory.glob("*"))
         if p.is_file() and p.name not in {"audit.json", "audit-failure.json"}}

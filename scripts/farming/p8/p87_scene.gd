@@ -12,7 +12,7 @@ var _camera_view_bounds := Rect2()
 
 func _init() -> void:
 	super()
-	product_title = "灵田 Demo P8.7 · 生态经营"
+	product_title = "灵田 Demo P10 · 后勤协同"
 	if OS.get_cmdline_user_args().has("--p87-smoke"):
 		store = P8Store.new("user://p87_probe_slots_%d" % OS.get_process_id())
 		settings = Settings.new("user://p87_probe_settings_%d.cfg" % OS.get_process_id(),0.1)
@@ -88,6 +88,12 @@ func collect_entities() -> Array[Dictionary]:
 		if projection.enabled:
 			body_scale = (64.0/float(projection.config["blender_units_per_tile"]))*float(projection.config["resource_camera_ortho_width"])/float(data["draw_size"][0])
 		result.append({"kind":"source","id":0,"ident":ident,"data":item,"rect":rect,"root":rect.get_center(),"visual":visual,"body_scale":body_scale})
+	for row in world.logistics.state["instances"]:
+		if row["origin"].is_empty(): continue
+		var rect := projection.footprint(row["origin"],[1,1])
+		var point := rect.get_center()
+		var visual := {"texture":Icons.get_icon("rice_bag_gu"),"root":point,"rect":Rect2(point-Vector2(28,48),Vector2(56,56))}
+		result.append({"kind":"gu","id":int(String(row["instance_id"]).trim_prefix("trial-")),"ident":row["definition_id"],"data":row,"rect":rect,"root":point,"visual":visual,"body_scale":1.0})
 	result.sort_custom(func(a: Dictionary,b: Dictionary) -> bool:
 		if a["root"].y != b["root"].y: return a["root"].y < b["root"].y
 		if a["root"].x != b["root"].x: return a["root"].x < b["root"].x
@@ -97,6 +103,7 @@ func collect_entities() -> Array[Dictionary]:
 
 func contact_visual(entity: Dictionary) -> Dictionary:
 	var point: Vector2 = entity["root"]
+	if entity["kind"] == "gu": return _trial_grounding._describe({"size":[38,10],"opacity":0.14},projection.ground_to_view(point))
 	var contact: Dictionary
 	if entity["kind"] == "crop":
 		if entity["visual"].is_empty(): return {}
@@ -127,6 +134,7 @@ func _draw_world_entities(target: Node2D, readable: float) -> void:
 			if entity["data"]["state"] == "mature": target.draw_circle(point,5*readable,UI.JADE)
 			elif entity["data"]["state"] == "regrowing": target.draw_arc(point,5*readable,0,TAU,16,UI.WATER,2*readable)
 		elif entity["kind"] == "facility" and entity["data"]["batch"].get("status") == "ready": target.draw_circle(point,6*readable,UI.WATER)
+		elif entity["kind"] == "gu" and entity["data"]["job"].get("ready",false): target.draw_circle(point,5*readable,UI.JADE)
 
 func _draw_facility_preview(target: Node2D, rect: Rect2) -> void:
 	var visual: Dictionary = facility_visuals.visual(build_tool,rect)
@@ -148,6 +156,7 @@ func draw_map(target: Node2D) -> void:
 	var font := theme.default_font
 	var readable := maxf(1.0,1.0/(camera.zoom.x*_ui_scale))
 	_draw_world_entities(target,readable)
+	logistics_ui.draw_overlay(target,true)
 	for entity in last_entities:
 		if entity["kind"] == "source" and world.workforce.state["sources"].has(entity["ident"]):
 			target.draw_circle(projection.ground_to_view(entity["rect"].position+Vector2(52,12)),5*readable,UI.JADE)

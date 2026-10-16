@@ -102,6 +102,9 @@ func run_opening(day: int) -> void:
 	var fuel: Dictionary = settings["lamp"]["fuel"]
 	for uid in _sorted_device_uids(LAMP_ID):
 		var device := _ensure(int(uid), LAMP_ID)
+		# An occupied light slot selects the gu mode even when dormant: there is
+		# no hidden fallback oil purchase, and gu light uses the common query.
+		if not world.logistics.in_host(int(uid)).is_empty(): continue
 		if not bool(device["enabled"]):
 			continue
 		var coverage := _coverage(int(uid))
@@ -110,6 +113,8 @@ func run_opening(day: int) -> void:
 			if coverage.has_point(Vector2i(int(crop["origin"][0]), int(crop["origin"][1]))):
 				has_crop = true
 				break
+		for gu in world.logistics.state["instances"]:
+			if not gu["origin"].is_empty() and coverage.has_point(Vector2i(int(gu["origin"][0]),int(gu["origin"][1]))): has_crop = true
 		if not has_crop:
 			continue
 		if not world.inventory.has(String(fuel["item"]), int(fuel["units"])):
@@ -137,7 +142,9 @@ func run_opening(day: int) -> void:
 			for y in range(coverage.position.y, coverage.end.y):
 				for x in range(coverage.position.x, coverage.end.x):
 					var cell := Vector2i(x, y)
-					if world.grid.state_at(cell) not in [1, 2]:
+					var gu_target: bool = not world.logistics.at(cell).is_empty()
+					if gu_target and item == "fertilize": continue
+					if world.grid.state_at(cell) not in [1, 2] and not gu_target:
 						continue
 					var index: int = world.grid.index_of(cell)
 					if int(world.environment[index][field]) >= int(device["threshold"]):
@@ -175,10 +182,12 @@ func station_overview(facility_uid: int) -> Dictionary:
 		for y in range(coverage.position.y, coverage.end.y):
 			for x in range(coverage.position.x, coverage.end.x):
 				var cell := Vector2i(x, y)
-				if world.grid.state_at(cell) not in [1, 2]:
+				var gu_target: bool = not world.logistics.at(cell).is_empty()
+				if world.grid.state_at(cell) not in [1, 2] and not gu_target:
 					continue
 				var index: int = world.grid.index_of(cell)
 				for item in ["irrigate", "fertilize"]:
+					if gu_target and item == "fertilize": continue
 					var field := 0 if item == "irrigate" else 1
 					if int(world.environment[index][field]) < int(device["threshold"]):
 						low[item] += 1

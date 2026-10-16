@@ -26,10 +26,10 @@ class P8FoundationTests(unittest.TestCase):
 
     def test_registry_counts(self):
         out=bake.compile_config(self.source)
-        self.assertEqual(len(out['resources']),63)
+        self.assertEqual(len(out['resources']),65)
         self.assertEqual(len(out['crops']),7)
         self.assertEqual(len(out['facilities']),15)
-        self.assertEqual(len(out['recipes']),40)
+        self.assertEqual(len(out['recipes']),41)
         self.assertEqual(len(out['livestock']),6)
         self.assertNotIn('species', self.source)
         self.assertEqual(len(out['research']),12)

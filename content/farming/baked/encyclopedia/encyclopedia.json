@@ -22,6 +22,13 @@
       "title": "建筑与设施"
     },
     {
+      "id": "logistics",
+      "kinds": [
+        "gu"
+      ],
+      "title": "后勤蛊与协同"
+    },
+    {
       "id": "items",
       "kinds": [
         "resource"
@@ -63,16 +70,17 @@
   "counts": {
     "crops": 7,
     "diets": 20,
-    "entities": 187,
+    "entities": 196,
     "facilities": 15,
     "livestock": 6,
     "living_mappings": 5,
+    "logistics": 5,
     "parcels": 6,
-    "processes": 242,
-    "recipes": 40,
+    "processes": 253,
+    "recipes": 41,
     "research": 12,
-    "resources": 63,
-    "rules": 14,
+    "resources": 65,
+    "rules": 15,
     "sources": 3
   },
   "display": {
@@ -1209,7 +1217,7 @@
         {
           "key": "recipes",
           "label": "支持配方",
-          "text": "谷粉研磨、草粉研磨、油籽榨油、油脂精炼、陆养料调配、水养料调配、蜂蜡精炼、矿质补料调配（一次一批次）"
+          "text": "谷粉研磨、草粉研磨、油籽榨油、油脂精炼、陆养料调配、水养料调配、蜂蜡精炼、矿质补料调配、稻米磨粉（一次一批次）"
         },
         {
           "key": "substitute",
@@ -1272,6 +1280,11 @@
       "id": "facility:field_service_station",
       "kind": "facility",
       "links": [
+        {
+          "entity": "gu:growth_gu",
+          "label": "可入驻后勤蛊",
+          "name": "催生蛊"
+        },
         {
           "entity": "research:field_maintenance",
           "label": "解锁研究",
@@ -1379,6 +1392,11 @@
       "id": "facility:growth_lamp",
       "kind": "facility",
       "links": [
+        {
+          "entity": "gu:bright_gu",
+          "label": "可入驻后勤蛊",
+          "name": "明光蛊"
+        },
         {
           "entity": "research:mineral_materials",
           "label": "解锁研究",
@@ -1607,7 +1625,18 @@
       "icon": "research_bench",
       "id": "facility:research_bench",
       "kind": "facility",
-      "links": [],
+      "links": [
+        {
+          "entity": "gu:wisdom_gu",
+          "label": "可入驻后勤蛊",
+          "name": "智道研究蛊"
+        },
+        {
+          "entity": "gu:time_gu",
+          "label": "可入驻后勤蛊",
+          "name": "宙道研究蛊"
+        }
+      ],
       "locks": null,
       "name": "研究台",
       "related_rules": [
@@ -2929,6 +2958,24 @@
           "species": null,
           "timing": "启动时",
           "type": "craft"
+        },
+        {
+          "ap": "1AP",
+          "basis": "每次",
+          "category_hint": "logistics",
+          "conditions": "",
+          "crop": null,
+          "detail": "饭袋草蛊·浇水：清水×1（每次）｜饭袋草蛊｜1AP",
+          "duration": "即时",
+          "facility": null,
+          "name": "饭袋草蛊·浇水",
+          "others": "",
+          "process": "proc:gu-water:rice_bag_gu",
+          "quantity": 1,
+          "research": null,
+          "species": "饭袋草蛊",
+          "timing": "手动补水",
+          "type": "gu_water"
         },
         {
           "ap": "1AP",
@@ -5456,6 +5503,24 @@
           "name": "加工·谷粉研磨",
           "others": "谷粒×2",
           "process": "proc:batch:mill_grain",
+          "quantity": 2,
+          "research": "农产初加工",
+          "species": null,
+          "timing": "收取时",
+          "type": "craft"
+        },
+        {
+          "ap": "启动1＋收取1",
+          "basis": "每批",
+          "category_hint": "production",
+          "conditions": "",
+          "crop": null,
+          "detail": "加工·稻米磨粉：谷粉×2（每批）｜农产加工台｜需研究「农产初加工」｜1自然日｜启动1＋收取1",
+          "duration": "1自然日",
+          "facility": "农产加工台",
+          "name": "加工·稻米磨粉",
+          "others": "稻米×3",
+          "process": "proc:batch:mill_rice",
           "quantity": 2,
           "research": "农产初加工",
           "species": null,
@@ -9843,6 +9908,123 @@
         {
           "key": "class",
           "label": "分类",
+          "text": "木行·固体·初级；标签：food、grain"
+        },
+        {
+          "key": "buy",
+          "label": "市集采购",
+          "text": "不可采购"
+        },
+        {
+          "key": "sell",
+          "label": "市集出售",
+          "text": "3元石/份（计入销售收入）"
+        },
+        {
+          "key": "supply",
+          "label": "五行供货",
+          "text": "可供货（木行）；供养值3：订单数量=ceil(需求/供养值)，回款=数量×卖价＋10%溢价"
+        }
+      ],
+      "icon": "rice",
+      "id": "resource:rice",
+      "kind": "resource",
+      "links": [],
+      "locks": null,
+      "name": "稻米",
+      "related_rules": [
+        "rule:market",
+        "rule:orders"
+      ],
+      "source_id": "rice",
+      "sources": [
+        {
+          "ap": "1AP",
+          "basis": "每批",
+          "category_hint": "logistics",
+          "conditions": "",
+          "crop": null,
+          "detail": "饭袋草蛊·生产收取：稻米×4（每批）｜饭袋草蛊｜3有效生产日（可受催生加速）｜1AP",
+          "duration": "3有效生产日（可受催生加速）",
+          "facility": null,
+          "name": "饭袋草蛊·生产收取",
+          "others": "",
+          "process": "proc:gu-produce:rice_bag_gu",
+          "quantity": 4,
+          "research": null,
+          "species": "饭袋草蛊",
+          "timing": "完成后收取",
+          "type": "gu_production"
+        }
+      ],
+      "summary": "木行固体；可供货（供养值3）",
+      "tags": [
+        "food",
+        "grain"
+      ],
+      "uses": [
+        {
+          "ap": "启动1＋收取1",
+          "basis": "每批",
+          "category_hint": "production",
+          "conditions": "",
+          "crop": null,
+          "detail": "加工·稻米磨粉：稻米×3（每批）｜农产加工台｜需研究「农产初加工」｜1自然日｜启动1＋收取1",
+          "duration": "1自然日",
+          "facility": "农产加工台",
+          "name": "加工·稻米磨粉",
+          "others": "谷粉×2",
+          "process": "proc:batch:mill_rice",
+          "quantity": 3,
+          "research": "农产初加工",
+          "species": null,
+          "timing": "启动时",
+          "type": "craft"
+        },
+        {
+          "ap": "0AP",
+          "basis": "每份",
+          "category_hint": "trade",
+          "conditions": "",
+          "crop": null,
+          "detail": "市集出售·稻米：稻米×按订单/库存（每份）",
+          "duration": "即时",
+          "facility": null,
+          "name": "市集出售·稻米",
+          "others": "元石×3",
+          "process": "proc:sell:rice",
+          "quantity": null,
+          "research": null,
+          "species": null,
+          "timing": "交易时",
+          "type": "market_sell"
+        },
+        {
+          "ap": "0AP",
+          "basis": "数量=ceil(订单需求/供养值)",
+          "category_hint": "trade",
+          "conditions": "",
+          "crop": null,
+          "detail": "五行供货·稻米：稻米×按订单/库存（数量=ceil(订单需求/供养值)）",
+          "duration": "即时",
+          "facility": null,
+          "name": "五行供货·稻米",
+          "others": "元石×按公式",
+          "process": "proc:supply:rice",
+          "quantity": null,
+          "research": null,
+          "species": null,
+          "timing": "交付时",
+          "type": "order_supply"
+        }
+      ]
+    },
+    {
+      "category": "items",
+      "fields": [
+        {
+          "key": "class",
+          "label": "分类",
           "text": "土行·固体·初级；标签：organic、processing"
         },
         {
@@ -10740,6 +10922,80 @@
         {
           "key": "class",
           "label": "分类",
+          "text": "水行·固体·加工品；标签：special_feed"
+        },
+        {
+          "key": "buy",
+          "label": "市集采购",
+          "text": "2元石/份"
+        },
+        {
+          "key": "sell",
+          "label": "市集出售",
+          "text": "不可出售"
+        }
+      ],
+      "icon": "time_feed",
+      "id": "resource:time_feed",
+      "kind": "resource",
+      "links": [],
+      "locks": null,
+      "name": "宙道食料",
+      "related_rules": [
+        "rule:market"
+      ],
+      "source_id": "time_feed",
+      "sources": [
+        {
+          "ap": "0AP",
+          "basis": "每份",
+          "category_hint": "trade",
+          "conditions": "",
+          "crop": null,
+          "detail": "市集采购·宙道食料：宙道食料×按订单/库存（每份）",
+          "duration": "即时",
+          "facility": null,
+          "name": "市集采购·宙道食料",
+          "others": "元石×2",
+          "process": "proc:buy:time_feed",
+          "quantity": null,
+          "research": null,
+          "species": null,
+          "timing": "交易时",
+          "type": "market_buy"
+        }
+      ],
+      "summary": "水行固体；生产材料",
+      "tags": [
+        "special_feed"
+      ],
+      "uses": [
+        {
+          "ap": "0AP",
+          "basis": "每只·每日",
+          "category_hint": "logistics",
+          "conditions": "",
+          "crop": null,
+          "detail": "宙道研究蛊·每日维护：宙道食料×1（每只·每日）｜宙道研究蛊",
+          "duration": "即时",
+          "facility": null,
+          "name": "宙道研究蛊·每日维护",
+          "others": "元石×2",
+          "process": "proc:gu-maintenance:time_gu",
+          "quantity": 1,
+          "research": null,
+          "species": "宙道研究蛊",
+          "timing": "开日",
+          "type": "gu_maintenance"
+        }
+      ]
+    },
+    {
+      "category": "items",
+      "fields": [
+        {
+          "key": "class",
+          "label": "分类",
           "text": "木行·固体·初级；标签：organic、processing"
         },
         {
@@ -11611,6 +11867,333 @@
           "timing": "交易时",
           "type": "market_sell"
         }
+      ]
+    },
+    {
+      "category": "logistics",
+      "fields": [
+        {
+          "key": "rank",
+          "label": "转数",
+          "text": "1转原型；实例支持一至五转，升转由上游负责"
+        },
+        {
+          "key": "obtain",
+          "label": "获取",
+          "text": "每档一次试用配给；饭袋草2只，其他各1只；尚未连接上游获取与成长"
+        },
+        {
+          "key": "deploy",
+          "label": "部署",
+          "text": "入驻兼容设施：补光灯"
+        },
+        {
+          "key": "effect",
+          "label": "能力",
+          "text": "范围外扩2格，提供光照80，同格光照取最大"
+        },
+        {
+          "key": "fee",
+          "label": "维护",
+          "text": "启用时1元石/游戏日；闲置仍收费，休眠/未部署免维护"
+        },
+        {
+          "key": "food",
+          "label": "特殊食料",
+          "text": "无（每个成功付费服务日；与元石原子扣除）"
+        },
+        {
+          "key": "timing",
+          "label": "时点",
+          "text": "部署/撤回各1AP；启用次日生效；停用立即取消后续效果，已付不退；运行/待收任务锁定实例"
+        },
+        {
+          "key": "fuel",
+          "label": "灯光模式",
+          "text": "入驻补光灯后替代精炼油供能；休眠不自动回退燃油；自然光/灯/蛊取最大值，喜阴作物可能降效"
+        }
+      ],
+      "icon": "bright_gu",
+      "id": "gu:bright_gu",
+      "kind": "gu",
+      "links": [
+        {
+          "entity": "facility:growth_lamp",
+          "label": "兼容设施",
+          "name": "补光灯"
+        }
+      ],
+      "locks": null,
+      "name": "明光蛊",
+      "related_rules": [
+        "rule:logistics"
+      ],
+      "source_id": "bright_gu",
+      "summary": "环境光照",
+      "tags": [
+        "light_source"
+      ]
+    },
+    {
+      "category": "logistics",
+      "fields": [
+        {
+          "key": "rank",
+          "label": "转数",
+          "text": "1转原型；实例支持一至五转，升转由上游负责"
+        },
+        {
+          "key": "obtain",
+          "label": "获取",
+          "text": "每档一次试用配给；饭袋草2只，其他各1只；尚未连接上游获取与成长"
+        },
+        {
+          "key": "deploy",
+          "label": "部署",
+          "text": "入驻兼容设施：田间维护站"
+        },
+        {
+          "key": "effect",
+          "label": "能力",
+          "text": "范围外扩2格，生物生产速度×1.2；同类取最强"
+        },
+        {
+          "key": "fee",
+          "label": "维护",
+          "text": "启用时1元石/游戏日；闲置仍收费，休眠/未部署免维护"
+        },
+        {
+          "key": "food",
+          "label": "特殊食料",
+          "text": "无（每个成功付费服务日；与元石原子扣除）"
+        },
+        {
+          "key": "timing",
+          "label": "时点",
+          "text": "部署/撤回各1AP；启用次日生效；停用立即取消后续效果，已付不退；运行/待收任务锁定实例"
+        }
+      ],
+      "icon": "growth_gu",
+      "id": "gu:growth_gu",
+      "kind": "gu",
+      "links": [
+        {
+          "entity": "facility:field_service_station",
+          "label": "兼容设施",
+          "name": "田间维护站"
+        }
+      ],
+      "locks": null,
+      "name": "催生蛊",
+      "related_rules": [
+        "rule:logistics"
+      ],
+      "source_id": "growth_gu",
+      "summary": "范围生产速度",
+      "tags": [
+        "growth_assist"
+      ]
+    },
+    {
+      "category": "logistics",
+      "fields": [
+        {
+          "key": "rank",
+          "label": "转数",
+          "text": "1转原型；实例支持一至五转，升转由上游负责"
+        },
+        {
+          "key": "obtain",
+          "label": "获取",
+          "text": "每档一次试用配给；饭袋草2只，其他各1只；尚未连接上游获取与成长"
+        },
+        {
+          "key": "deploy",
+          "label": "部署",
+          "text": "独立占用1格陆地，不需开垦/农田"
+        },
+        {
+          "key": "effect",
+          "label": "能力",
+          "text": "自身进行生产，条件与产物见下方"
+        },
+        {
+          "key": "fee",
+          "label": "维护",
+          "text": "启用时1元石/游戏日；闲置仍收费，休眠/未部署免维护"
+        },
+        {
+          "key": "food",
+          "label": "特殊食料",
+          "text": "无（每个成功付费服务日；与元石原子扣除）"
+        },
+        {
+          "key": "timing",
+          "label": "时点",
+          "text": "部署/撤回各1AP；启用次日生效；停用立即取消后续效果，已付不退；运行/待收任务锁定实例"
+        },
+        {
+          "key": "production",
+          "label": "生产",
+          "text": "3有效日；启动投入无；收取稻米×4，1AP"
+        },
+        {
+          "key": "environment",
+          "label": "环境",
+          "text": "光照≥60、水分≥30，不足暂停保留进度；每推进日扣水分8，不扣肥力；清水浇水或田间站可补水"
+        }
+      ],
+      "icon": "rice_bag_gu",
+      "id": "gu:rice_bag_gu",
+      "kind": "gu",
+      "links": [
+        {
+          "entity": "resource:rice",
+          "label": "产物",
+          "name": "稻米"
+        }
+      ],
+      "locks": null,
+      "name": "饭袋草蛊",
+      "related_rules": [
+        "rule:logistics"
+      ],
+      "source_id": "rice_bag_gu",
+      "summary": "独立生产",
+      "tags": [
+        "rice_production"
+      ]
+    },
+    {
+      "category": "logistics",
+      "fields": [
+        {
+          "key": "rank",
+          "label": "转数",
+          "text": "1转原型；实例支持一至五转，升转由上游负责"
+        },
+        {
+          "key": "obtain",
+          "label": "获取",
+          "text": "每档一次试用配给；饭袋草2只，其他各1只；尚未连接上游获取与成长"
+        },
+        {
+          "key": "deploy",
+          "label": "部署",
+          "text": "入驻兼容设施：研究台"
+        },
+        {
+          "key": "effect",
+          "label": "能力",
+          "text": "每个有效研究日推进2工作量"
+        },
+        {
+          "key": "fee",
+          "label": "维护",
+          "text": "启用时2元石/游戏日；闲置仍收费，休眠/未部署免维护"
+        },
+        {
+          "key": "food",
+          "label": "特殊食料",
+          "text": "宙道食料×1（每个成功付费服务日；与元石原子扣除）"
+        },
+        {
+          "key": "timing",
+          "label": "时点",
+          "text": "部署/撤回各1AP；启用次日生效；停用立即取消后续效果，已付不退；运行/待收任务锁定实例"
+        },
+        {
+          "key": "materials",
+          "label": "研究样本",
+          "text": "基础样本逐项×1.5向上取整；一次性启动费不变"
+        }
+      ],
+      "icon": "time_gu",
+      "id": "gu:time_gu",
+      "kind": "gu",
+      "links": [
+        {
+          "entity": "facility:research_bench",
+          "label": "兼容设施",
+          "name": "研究台"
+        },
+        {
+          "entity": "resource:time_feed",
+          "label": "特殊食料",
+          "name": "宙道食料"
+        }
+      ],
+      "locks": null,
+      "name": "宙道研究蛊",
+      "related_rules": [
+        "rule:logistics"
+      ],
+      "source_id": "time_gu",
+      "summary": "研究速度倍率",
+      "tags": [
+        "research_assist",
+        "research_speed_multiplier"
+      ]
+    },
+    {
+      "category": "logistics",
+      "fields": [
+        {
+          "key": "rank",
+          "label": "转数",
+          "text": "1转原型；实例支持一至五转，升转由上游负责"
+        },
+        {
+          "key": "obtain",
+          "label": "获取",
+          "text": "每档一次试用配给；饭袋草2只，其他各1只；尚未连接上游获取与成长"
+        },
+        {
+          "key": "deploy",
+          "label": "部署",
+          "text": "入驻兼容设施：研究台"
+        },
+        {
+          "key": "effect",
+          "label": "能力",
+          "text": "研究工作量固定减少1，至少保留1"
+        },
+        {
+          "key": "fee",
+          "label": "维护",
+          "text": "启用时1元石/游戏日；闲置仍收费，休眠/未部署免维护"
+        },
+        {
+          "key": "food",
+          "label": "特殊食料",
+          "text": "无（每个成功付费服务日；与元石原子扣除）"
+        },
+        {
+          "key": "timing",
+          "label": "时点",
+          "text": "部署/撤回各1AP；启用次日生效；停用立即取消后续效果，已付不退；运行/待收任务锁定实例"
+        }
+      ],
+      "icon": "wisdom_gu",
+      "id": "gu:wisdom_gu",
+      "kind": "gu",
+      "links": [
+        {
+          "entity": "facility:research_bench",
+          "label": "兼容设施",
+          "name": "研究台"
+        }
+      ],
+      "locks": null,
+      "name": "智道研究蛊",
+      "related_rules": [
+        "rule:logistics"
+      ],
+      "source_id": "wisdom_gu",
+      "summary": "固定研究工作量减免",
+      "tags": [
+        "research_assist",
+        "research_time_flat"
       ]
     },
     {
@@ -13920,6 +14503,62 @@
         {
           "key": "inputs",
           "label": "投入",
+          "text": "稻米×3（启动时一次性扣除）"
+        },
+        {
+          "key": "outputs",
+          "label": "产出",
+          "text": "谷粉×2（收取时入仓；完工≠入仓）"
+        },
+        {
+          "key": "duration",
+          "label": "批时",
+          "text": "1自然日（日结推进，无需每日点击）"
+        },
+        {
+          "key": "ap",
+          "label": "AP",
+          "text": "启动1＋收取1"
+        }
+      ],
+      "icon": "farm_processor",
+      "id": "recipe:mill_rice",
+      "kind": "recipe",
+      "links": [
+        {
+          "entity": "facility:farm_processor",
+          "label": "执行设施",
+          "name": "农产加工台"
+        },
+        {
+          "entity": "research:farm_preparation",
+          "label": "解锁研究",
+          "name": "农产初加工"
+        }
+      ],
+      "locks": {
+        "research": "research:farm_preparation",
+        "research_name": "农产初加工"
+      },
+      "name": "稻米磨粉",
+      "related_rules": [
+        "rule:auto_production"
+      ],
+      "source_id": "mill_rice",
+      "summary": "农产加工台；谷粉×2；1日",
+      "tags": []
+    },
+    {
+      "category": "recipes",
+      "fields": [
+        {
+          "key": "facility",
+          "label": "执行设施",
+          "text": "农产加工台（须已建成；一次一批次；可由负责人按持续生产策略自动启动）"
+        },
+        {
+          "key": "inputs",
+          "label": "投入",
           "text": "碎铁矿×2＋草粉×2＋谷粉×1（启动时一次性扣除）"
         },
         {
@@ -15040,7 +15679,7 @@
         {
           "key": "unlocks",
           "label": "解锁内容",
-          "text": "设施·农产加工台、配方·谷粉研磨、配方·草粉研磨、配方·油籽榨油、配方·油饼堆肥"
+          "text": "设施·农产加工台、配方·谷粉研磨、配方·草粉研磨、配方·油籽榨油、配方·油饼堆肥、配方·稻米磨粉"
         }
       ],
       "icon": "research_bench",
@@ -15071,6 +15710,11 @@
           "entity": "recipe:compost_oil_cake",
           "label": "解锁配方",
           "name": "油饼堆肥"
+        },
+        {
+          "entity": "recipe:mill_rice",
+          "label": "解锁配方",
+          "name": "稻米磨粉"
         }
       ],
       "locks": null,
@@ -15079,7 +15723,7 @@
         "rule:research"
       ],
       "source_id": "farm_preparation",
-      "summary": "第1层研究；6元石＋2有效日；解锁5项",
+      "summary": "第1层研究；6元石＋2有效日；解锁6项",
       "tags": []
     },
     {
@@ -15529,7 +16173,7 @@
         {
           "key": "statements",
           "label": "规则说明",
-          "text": "1. 每日进度增量 = max(1, floor(水效×肥效×光效/10000))，单位“点”；首季目标=标称天数×100，留株再生目标=再生天数×100\n2. 水效：占地平均水分≥30→100，否则50%；肥效：平均肥力≥30→100，否则75%；光效：|平均有效光照−偏好|≤20→100，否则50%\n3. 全适宜=100点/日（即标称天数）；仅缺水或仅光照偏离=50点/日（2倍时长）；仅低肥=75点/日（4/3倍）；缺水+低肥=37点/日；三短板=18点/日\n4. 多格作物按占地格平均判速；每格每日各扣该作物的水分与肥力（成熟待收期间照扣）\n5. 环境不足只降速，不会死亡；生长不暂停（下限1点/日）"
+          "text": "1. 每日进度增量 = max(1, floor(水效×肥效×光效/10000×催生倍率))，单位“点”；无催生倍率为1；首季目标=标称天数×100，留株再生目标=再生天数×100\n2. 水效：占地平均水分≥30→100，否则50%；肥效：平均肥力≥30→100，否则75%；光效：|平均有效光照−偏好|≤20→100，否则50%\n3. 全适宜=100点/日（即标称天数）；仅缺水或仅光照偏离=50点/日（2倍时长）；仅低肥=75点/日（4/3倍）；缺水+低肥=37点/日；三短板=18点/日\n4. 多格作物按占地格平均判速；每格每日各扣该作物的水分与肥力（成熟待收期间照扣）\n5. 环境不足只降速，不会死亡；生长不暂停（下限1点/日）"
         },
         {
           "key": "refs",
@@ -15544,7 +16188,7 @@
       "name": "作物生长速率公式",
       "related_rules": [],
       "source_id": "rule:crop_growth",
-      "summary": "每日进度增量 = max(1, floor(水效×肥效×光效/10000))，单…",
+      "summary": "每日进度增量 = max(1, floor(水效×肥效×光效/10000×催生倍…",
       "tags": []
     },
     {
@@ -15553,7 +16197,7 @@
         {
           "key": "statements",
           "label": "规则说明",
-          "text": "1. AP耗尽或点“结束当天”进入日结；顺序：统一调度器（设施收取→必要换水→整体维护→研究→自动投料→农务）→ 养殖结算（水体衰减/暂停→成长与周期推进）→ 研究结算（收据推进）→ 花源份额过期 → 作物生长与水肥扣减 → 资源点配额重置 → 批次完工 → 新订单 → 台账/日志 → 次日开日装置（灯→田间站）→ 日存档\n2. 日存档失败回滚到当日操作前快照；重试只重写候选快照，不重复劳动或收费\n3. 日结推进的各种“有效日”：研究=有收据的日子；养殖=当日有基础服务；作物=环境速率（下限1/日）"
+          "text": "1. AP耗尽或点“结束当天”进入日结；顺序：统一调度器（设施收取→必要换水→整体维护→研究→自动投料→农务）→ 养殖结算（水体衰减/暂停→成长与周期推进）→ 后勤蛊独立生产（按当日资格）→ 研究结算（收据工作量推进）→ 花源份额过期 → 作物生长与水肥扣减 → 资源点配额重置 → 批次完工 → 新订单 → 台账/日志 → 次日开日（蛊维护→灯→田间站）→ 日存档\n2. 日存档失败回滚到当日操作前快照；重试只重写候选快照，不重复劳动或收费\n3. 日结推进的各种“有效日”：研究=有收据的日子；养殖=当日有基础服务；作物=环境速率（下限1/日）"
         },
         {
           "key": "refs",
@@ -15577,7 +16221,7 @@
         {
           "key": "statements",
           "label": "规则说明",
-          "text": "1. 水分/肥力为地格环境值（0-100）：浇水耗清水×1回复+30；施肥耗腐殖土×1回复+30；≥100不可再提升\n2. 自然光照：默认80，左下阴影区30（rect [0,9,8,5]）适合喜阴菌菇\n3. 有效光照=补光灯生效时max(自然光, 80)；生长、花源资格与界面显示共用此值\n4. 环境值与库存物品严格分离：扣水分≠耗清水物品"
+          "text": "1. 水分/肥力为地格环境值（0-100）：浇水耗清水×1回复+30；施肥耗腐殖土×1回复+30；≥100不可再提升\n2. 自然光照：默认80，左下阴影区30（rect [0,9,8,5]）适合喜阴菌菇\n3. 有效光照=max(自然光、当日有效油灯光照、当日有效明光蛊光照)；生长、花源资格与界面显示共用此值\n4. 环境值与库存物品严格分离：扣水分≠耗清水物品"
         },
         {
           "key": "refs",
@@ -15689,6 +16333,30 @@
       "related_rules": [],
       "source_id": "rule:living_mapping",
       "summary": "living=true的配方（菌毯净水、营养液回收、破碎石材、破碎矿石、生物选矿…",
+      "tags": []
+    },
+    {
+      "category": "rules",
+      "fields": [
+        {
+          "key": "statements",
+          "label": "规则说明",
+          "text": "1. 后勤蛊与战斗蛊分开；获取、炼制和升转归上游。独立Demo每档可领取一次六只试用实例，未部署不产生效果也不收费。\n2. 同实例只占一处，同种不同实例可以并行；研究台只有一个辅助槽。部署/撤回各1AP；次日启用，休眠立即停止未来效果，已付维护不退。\n3. 开日按稳定实例顺序检查元石与特殊食料，两者同时足额才原子扣费；闲置启用仍收费；元石不足自动休眠，玩家可申请次日恢复。读档与保存重试不重复扣费。\n4. 饭袋草需光照≥60、水分≥30；每推进日扣水分8，不扣肥力、不需农田；3有效日收稻米4、无秸秆。受阻保留在制工作量，待收权益不等于库存。\n5. 明光入驻补光灯替代燃油模式；有效光照取自然光、油灯及蛊光最大值。催生覆盖普通作物与独立生产蛊，同类速度取最强，不递归增强效果源。\n6. 智道减少研究工作量1（至少1）；宙道每张工作收据推进2工作量、样本逐项×1.5向上取整。每天仍最多一次玩家/雇工研究工作；任务锁定入驻实例和启动方案。\n7. 运行中的任务与待收产物锁定实例；取消在制任务不退投入，待收产物须收取。已登记当日研究工作后不能休眠/取消，避免已付工作失效。"
+        },
+        {
+          "key": "refs",
+          "label": "实现依据",
+          "text": "scripts/farming/p8/p10_logistics.gd::run_opening；scripts/farming/p8/p8_research.gd::settle"
+        }
+      ],
+      "icon": "help",
+      "id": "rule:logistics",
+      "kind": "rule",
+      "locks": null,
+      "name": "后勤蛊部署、维护与生产协同",
+      "related_rules": [],
+      "source_id": "rule:logistics",
+      "summary": "后勤蛊与战斗蛊分开；获取、炼制和升转归上游。独立Demo每档可领取一次六只试用实…",
       "tags": []
     },
     {
@@ -15815,11 +16483,11 @@
   "generated_inputs": [
     {
       "path": "content/farming/p8/production.json",
-      "sha256": "a7a404820e8f39926833bf49bc7956b76c4929a67d08c02f92fcd704dd54ed48"
+      "sha256": "7950e5badc7dc03eea061429eafb257dd8521450aa1edd4b90d5c8bbcaa70363"
     },
     {
       "path": "content/farming/baked/p8/production.json",
-      "sha256": "8d8a4a89f36079b403aa9e1f0bb6304dea9c244507387c8db4dd7d07ebddf01a"
+      "sha256": "def1cfefca758cf014e134e8ddf6cec261f8b0a4a18aeeb0f8bc64e9d2881e24"
     },
     {
       "path": "content/farming/p8/expansion.json",
@@ -15831,11 +16499,11 @@
     },
     {
       "path": "content/farming/encyclopedia/encyclopedia.json",
-      "sha256": "f1e1abbc7c5ab77973cddd454e79f1b8f2b7fd39fcc86f6b0d0f80985c2869ee"
+      "sha256": "ca51b3e009accf16e912c69bb8fc0988a853a9e2ba8764bafc1d6e029a5189ab"
     },
     {
       "path": "scripts/farming/v1/v1_scene.gd",
-      "sha256": "9f6f8dbcc416ed2b5a069a5c59bca7869d9461795d26bc02b900ae3c276784a4"
+      "sha256": "18e195d32dc59c3b6a4b976298a3ea1cf709ea203caf546b584c0f31aaf3ebcd"
     }
   ],
   "processes": [
@@ -17072,6 +17740,47 @@
           "basis": "每批",
           "entity": "resource:grass_meal",
           "name": "草粉",
+          "quantity": 2,
+          "timing": "收取时"
+        }
+      ],
+      "primeval_stones": 0,
+      "research": "research:farm_preparation",
+      "research_name": "农产初加工",
+      "species": null,
+      "species_name": null,
+      "type": "craft",
+      "worker_fee": 0
+    },
+    {
+      "ap": 2,
+      "ap_detail": "启动1＋收取1",
+      "category_hint": "production",
+      "conditions": [
+        "设施空闲一次一批；可由负责人按持续生产策略在日结自动启动（保留量只挡自动）"
+      ],
+      "crop": null,
+      "crop_name": null,
+      "duration": "1自然日",
+      "effects": [],
+      "facility": "facility:farm_processor",
+      "facility_name": "农产加工台",
+      "id": "proc:batch:mill_rice",
+      "inputs": [
+        {
+          "basis": "每批",
+          "entity": "resource:rice",
+          "name": "稻米",
+          "quantity": 3,
+          "timing": "启动时"
+        }
+      ],
+      "name": "加工·稻米磨粉",
+      "outputs": [
+        {
+          "basis": "每批",
+          "entity": "resource:grain_meal",
+          "name": "谷粉",
           "quantity": 2,
           "timing": "收取时"
         }
@@ -19255,6 +19964,45 @@
       "effects": [],
       "facility": null,
       "facility_name": null,
+      "id": "proc:buy:time_feed",
+      "inputs": [
+        {
+          "basis": "每份",
+          "entity": "currency:primeval_stone",
+          "name": "元石",
+          "quantity": 2,
+          "timing": "交易时"
+        }
+      ],
+      "name": "市集采购·宙道食料",
+      "outputs": [
+        {
+          "basis": "每份",
+          "entity": "resource:time_feed",
+          "name": "宙道食料",
+          "quantity": null,
+          "timing": "交易时"
+        }
+      ],
+      "primeval_stones": 0,
+      "research": null,
+      "research_name": null,
+      "species": null,
+      "species_name": null,
+      "type": "market_buy",
+      "worker_fee": 0
+    },
+    {
+      "ap": 0,
+      "ap_detail": "0AP",
+      "category_hint": "trade",
+      "conditions": [],
+      "crop": null,
+      "crop_name": null,
+      "duration": "即时",
+      "effects": [],
+      "facility": null,
+      "facility_name": null,
       "id": "proc:buy:twig",
       "inputs": [
         {
@@ -20752,6 +21500,254 @@
       "species": null,
       "species_name": null,
       "type": "field_care",
+      "worker_fee": 0
+    },
+    {
+      "ap": 0,
+      "ap_detail": "0AP",
+      "category_hint": "logistics",
+      "conditions": [
+        "已部署且启用；元石与食料同时足额；同服务日只结算一次"
+      ],
+      "crop": null,
+      "crop_name": null,
+      "duration": "即时",
+      "effects": [
+        "激活当日能力"
+      ],
+      "facility": null,
+      "facility_name": null,
+      "id": "proc:gu-maintenance:bright_gu",
+      "inputs": [
+        {
+          "basis": "每只·每日",
+          "entity": "currency:primeval_stone",
+          "name": "元石",
+          "quantity": 1,
+          "timing": "开日"
+        }
+      ],
+      "name": "明光蛊·每日维护",
+      "outputs": [],
+      "primeval_stones": 0,
+      "research": null,
+      "research_name": null,
+      "species": "gu:bright_gu",
+      "species_name": "明光蛊",
+      "type": "gu_maintenance",
+      "worker_fee": 0
+    },
+    {
+      "ap": 0,
+      "ap_detail": "0AP",
+      "category_hint": "logistics",
+      "conditions": [
+        "已部署且启用；元石与食料同时足额；同服务日只结算一次"
+      ],
+      "crop": null,
+      "crop_name": null,
+      "duration": "即时",
+      "effects": [
+        "激活当日能力"
+      ],
+      "facility": null,
+      "facility_name": null,
+      "id": "proc:gu-maintenance:growth_gu",
+      "inputs": [
+        {
+          "basis": "每只·每日",
+          "entity": "currency:primeval_stone",
+          "name": "元石",
+          "quantity": 1,
+          "timing": "开日"
+        }
+      ],
+      "name": "催生蛊·每日维护",
+      "outputs": [],
+      "primeval_stones": 0,
+      "research": null,
+      "research_name": null,
+      "species": "gu:growth_gu",
+      "species_name": "催生蛊",
+      "type": "gu_maintenance",
+      "worker_fee": 0
+    },
+    {
+      "ap": 0,
+      "ap_detail": "0AP",
+      "category_hint": "logistics",
+      "conditions": [
+        "已部署且启用；元石与食料同时足额；同服务日只结算一次"
+      ],
+      "crop": null,
+      "crop_name": null,
+      "duration": "即时",
+      "effects": [
+        "激活当日能力"
+      ],
+      "facility": null,
+      "facility_name": null,
+      "id": "proc:gu-maintenance:rice_bag_gu",
+      "inputs": [
+        {
+          "basis": "每只·每日",
+          "entity": "currency:primeval_stone",
+          "name": "元石",
+          "quantity": 1,
+          "timing": "开日"
+        }
+      ],
+      "name": "饭袋草蛊·每日维护",
+      "outputs": [],
+      "primeval_stones": 0,
+      "research": null,
+      "research_name": null,
+      "species": "gu:rice_bag_gu",
+      "species_name": "饭袋草蛊",
+      "type": "gu_maintenance",
+      "worker_fee": 0
+    },
+    {
+      "ap": 0,
+      "ap_detail": "0AP",
+      "category_hint": "logistics",
+      "conditions": [
+        "已部署且启用；元石与食料同时足额；同服务日只结算一次"
+      ],
+      "crop": null,
+      "crop_name": null,
+      "duration": "即时",
+      "effects": [
+        "激活当日能力"
+      ],
+      "facility": null,
+      "facility_name": null,
+      "id": "proc:gu-maintenance:time_gu",
+      "inputs": [
+        {
+          "basis": "每只·每日",
+          "entity": "currency:primeval_stone",
+          "name": "元石",
+          "quantity": 2,
+          "timing": "开日"
+        },
+        {
+          "basis": "每只·每日",
+          "entity": "resource:time_feed",
+          "name": "宙道食料",
+          "quantity": 1,
+          "timing": "开日"
+        }
+      ],
+      "name": "宙道研究蛊·每日维护",
+      "outputs": [],
+      "primeval_stones": 0,
+      "research": null,
+      "research_name": null,
+      "species": "gu:time_gu",
+      "species_name": "宙道研究蛊",
+      "type": "gu_maintenance",
+      "worker_fee": 0
+    },
+    {
+      "ap": 0,
+      "ap_detail": "0AP",
+      "category_hint": "logistics",
+      "conditions": [
+        "已部署且启用；元石与食料同时足额；同服务日只结算一次"
+      ],
+      "crop": null,
+      "crop_name": null,
+      "duration": "即时",
+      "effects": [
+        "激活当日能力"
+      ],
+      "facility": null,
+      "facility_name": null,
+      "id": "proc:gu-maintenance:wisdom_gu",
+      "inputs": [
+        {
+          "basis": "每只·每日",
+          "entity": "currency:primeval_stone",
+          "name": "元石",
+          "quantity": 1,
+          "timing": "开日"
+        }
+      ],
+      "name": "智道研究蛊·每日维护",
+      "outputs": [],
+      "primeval_stones": 0,
+      "research": null,
+      "research_name": null,
+      "species": "gu:wisdom_gu",
+      "species_name": "智道研究蛊",
+      "type": "gu_maintenance",
+      "worker_fee": 0
+    },
+    {
+      "ap": 1,
+      "ap_detail": "1AP",
+      "category_hint": "logistics",
+      "conditions": [
+        "光照/水分达标、已付当日维护；完成待收不继续耗水"
+      ],
+      "crop": null,
+      "crop_name": null,
+      "duration": "3有效生产日（可受催生加速）",
+      "effects": [],
+      "facility": null,
+      "facility_name": null,
+      "id": "proc:gu-produce:rice_bag_gu",
+      "inputs": [],
+      "name": "饭袋草蛊·生产收取",
+      "outputs": [
+        {
+          "basis": "每批",
+          "entity": "resource:rice",
+          "name": "稻米",
+          "quantity": 4,
+          "timing": "完成后收取"
+        }
+      ],
+      "primeval_stones": 0,
+      "research": null,
+      "research_name": null,
+      "species": "gu:rice_bag_gu",
+      "species_name": "饭袋草蛊",
+      "type": "gu_production",
+      "worker_fee": 0
+    },
+    {
+      "ap": 1,
+      "ap_detail": "1AP",
+      "category_hint": "logistics",
+      "conditions": [],
+      "crop": null,
+      "crop_name": null,
+      "duration": "即时",
+      "effects": [
+        "占地水分+30，上限100，不改变肥力"
+      ],
+      "facility": null,
+      "facility_name": null,
+      "id": "proc:gu-water:rice_bag_gu",
+      "inputs": [
+        {
+          "basis": "每次",
+          "entity": "resource:clean_water",
+          "name": "清水",
+          "quantity": 1,
+          "timing": "手动补水"
+        }
+      ],
+      "name": "饭袋草蛊·浇水",
+      "outputs": [],
+      "primeval_stones": 0,
+      "research": null,
+      "research_name": null,
+      "species": "gu:rice_bag_gu",
+      "species_name": "饭袋草蛊",
+      "type": "gu_water",
       "worker_fee": 0
     },
     {
@@ -24781,6 +25777,47 @@
       "effects": [],
       "facility": null,
       "facility_name": null,
+      "id": "proc:sell:rice",
+      "inputs": [
+        {
+          "basis": "每份",
+          "entity": "resource:rice",
+          "name": "稻米",
+          "quantity": null,
+          "timing": "交易时"
+        }
+      ],
+      "name": "市集出售·稻米",
+      "outputs": [
+        {
+          "basis": "每份",
+          "entity": "currency:primeval_stone",
+          "name": "元石",
+          "quantity": 3,
+          "timing": "交易时"
+        }
+      ],
+      "primeval_stones": 0,
+      "research": null,
+      "research_name": null,
+      "species": null,
+      "species_name": null,
+      "type": "market_sell",
+      "worker_fee": 0
+    },
+    {
+      "ap": 0,
+      "ap_detail": "0AP",
+      "category_hint": "trade",
+      "conditions": [
+        "计入销售收入"
+      ],
+      "crop": null,
+      "crop_name": null,
+      "duration": "即时",
+      "effects": [],
+      "facility": null,
+      "facility_name": null,
       "id": "proc:sell:sheep_manure",
       "inputs": [
         {
@@ -25848,6 +26885,47 @@
         }
       ],
       "name": "五行供货·松脂",
+      "outputs": [
+        {
+          "basis": "回款=数量×卖价＋10%溢价(向下取整)",
+          "entity": "currency:primeval_stone",
+          "name": "元石",
+          "quantity": null,
+          "timing": "交付时"
+        }
+      ],
+      "primeval_stones": 0,
+      "research": null,
+      "research_name": null,
+      "species": null,
+      "species_name": null,
+      "type": "order_supply",
+      "worker_fee": 0
+    },
+    {
+      "ap": 0,
+      "ap_detail": "0AP",
+      "category_hint": "trade",
+      "conditions": [
+        "物品元素须等于订单路径；每日3单；需求=12×转数；转数由累计营业收入解锁"
+      ],
+      "crop": null,
+      "crop_name": null,
+      "duration": "即时",
+      "effects": [],
+      "facility": null,
+      "facility_name": null,
+      "id": "proc:supply:rice",
+      "inputs": [
+        {
+          "basis": "数量=ceil(订单需求/供养值)",
+          "entity": "resource:rice",
+          "name": "稻米",
+          "quantity": null,
+          "timing": "交付时"
+        }
+      ],
+      "name": "五行供货·稻米",
       "outputs": [
         {
           "basis": "回款=数量×卖价＋10%溢价(向下取整)",
