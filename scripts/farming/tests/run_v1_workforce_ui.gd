@@ -125,6 +125,16 @@ func _run() -> void:
 	click("继续经营")
 	click("结束当天")
 	check(ui.world.clock.total_days == 46 and ui.world.journal["terms"] == frozen,"continue beyond45 through real day button with recap intact")
+	for cell in [Vector2i(8,8),Vector2i(9,8),Vector2i(8,9),Vector2i(9,9)]:
+		ui.world.till(cell)
+	var planted: Dictionary = ui.world.plant(Vector2i(8,8),"fast_fir")
+	check(planted["ok"] and int(ui.world.crop_defs["fast_fir"]["footprint"][0]) == 2,"test plants a 2x2 footprint crop (reason: %s)" % String(planted.get("reason","")))
+	ui.selected = Vector2i(9,9)
+	check(ui._selection_rect() == Rect2(Vector2(8,8)*64.0,Vector2(128,128)),"clicking any covered cell outlines the whole 2x2 footprint")
+	ui.selected = Vector2i(8,8)
+	check(ui._selection_rect() == Rect2(Vector2(8,8)*64.0,Vector2(128,128)),"anchor cell outlines the same 2x2 footprint")
+	ui.selected = Vector2i(15,15)
+	check(ui._selection_rect() == Rect2(Vector2(15,15)*64.0,Vector2(64,64)),"empty cell keeps the single-cell highlight")
 	for slot in [1,2,3]:
 		if ui.store.occupied(slot): ui.store.delete_slot(slot,true)
 	ui.queue_free()

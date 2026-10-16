@@ -690,6 +690,17 @@ func _rect(a: Vector2i,b: Vector2i) -> Rect2i:
 	var right := Vector2i(mini(world.grid.origin_x+world.grid.width-1,maxi(a.x,b.x)),mini(world.grid.height-1,maxi(a.y,b.y)))
 	return Rect2i(left,right-left+Vector2i.ONE)
 
+## The selection highlight follows the clicked crop's full footprint, so 2x2
+## plants (fast fir, resin tree) outline all occupied cells, not just the
+## clicked one.
+func _selection_rect() -> Rect2:
+	var cell_rect := Rect2(Vector2(selected)*64.0,Vector2(64,64))
+	if not world.grid.in_bounds(selected.x,selected.y): return cell_rect
+	var crop: Dictionary = world.instance_at(selected)
+	if crop.is_empty(): return cell_rect
+	var shape: Array = world.crop_defs[crop["crop_id"]]["footprint"]
+	return Rect2(Vector2(float(crop["origin"][0]),float(crop["origin"][1]))*64.0,Vector2(float(shape[0]),float(shape[1]))*64.0)
+
 func _board_input(event: InputEvent) -> void:
 	if not _started or shade.visible or is_instance_valid(confirmation) or _text_focus(): return
 	if event is InputEventMouseButton:
@@ -1498,7 +1509,7 @@ func draw_map(target: Node2D) -> void:
 	for plan in world.workforce.state["seed_plans"]:
 		var position := Vector2(float(plan["cell"][0]),float(plan["cell"][1]))*64.0
 		target.draw_circle(position+Vector2(52,12),4*readable,UI.JADE)
-	if world.grid.in_bounds(selected.x,selected.y): target.draw_rect(Rect2(Vector2(selected)*64.0,Vector2(64,64)),UI.JADE,false,2*readable)
+	if world.grid.in_bounds(selected.x,selected.y): target.draw_rect(_selection_rect(),UI.JADE,false,2*readable)
 	if not build_tool.is_empty() and world.grid.in_bounds(_hover.x,_hover.y):
 		var definition: Dictionary = world.facility_defs[build_tool]
 		var valid: bool = world.can_build_facility(_hover,build_tool)["ok"]
