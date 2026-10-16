@@ -1083,7 +1083,16 @@ func _show_worker_duties(worker: Dictionary) -> void:
 			_show_workers())
 	var actions := HBoxContainer.new()
 	sidebar.add_child(actions)
-	_icon(actions,"area","框选追加负责区域",func(): _close_page(); expanded = true; _layout(); _select_tool("area"))
+	# Assigning an area only matters in delegation mode; leaving manual mode on
+	# would silently downgrade the tool back to inspect and hide the area button.
+	_icon(actions,"area","框选追加负责区域",func():
+		_close_page()
+		expanded = true
+		if manual_mode:
+			_set_manual(false)
+		else:
+			_layout()
+		_select_tool("area"))
 	_icon(actions,"cancel","清空负责区域",func(): _result(world.workforce.configure(worker["id"],worker["budget"],worker["paused"],worker["priorities"],[])); _show_workers())
 	_icon(actions,"clear","解雇（免费）",func(): _result(world.workforce.dismiss(worker["id"])); selected_worker = 0; _show_workers())
 	_label(sidebar,"资源点单独指派；区域之外不找农务目标。物品直接进出共享仓库。")
