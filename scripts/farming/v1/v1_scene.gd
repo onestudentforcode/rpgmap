@@ -1149,6 +1149,7 @@ func _daily_summary(day: int, saved: bool) -> void:
 		"help": _show_help()
 		"history": _show_history()
 		"recap": _show_recap(-1)
+	_context_refresh()
 	for child in digest_body.get_children():
 		digest_body.remove_child(child)
 		child.queue_free()
@@ -1318,6 +1319,7 @@ func _show_market() -> void:
 	var card := _card(sidebar)
 	sidebar.move_child(card.get_parent(),categories.get_index()+1)
 	_heading(card,item["name"])
+	_market_extra(card,market_item)
 	_label(card,"持有%d · 单价 买%d / 卖%d元石 · 可购%d / 可售%d" % [world.inventory.count(market_item),item["buy_price"],item["sell_price"],int(world.primeval_stones/maxi(1,item["buy_price"])) if item["buy_price"] > 0 else 0,world.inventory.count(market_item) if item["sell_price"] > 0 else 0])
 	var market_lock := _market_lock_text(market_item)
 	if not market_lock.is_empty():
@@ -1343,6 +1345,14 @@ func _show_market() -> void:
 ## Derived products can block purchases (e.g. research-gated seeds); default: open.
 func _market_lock_text(_item_id: String) -> String:
 	return ""
+
+## Derived products may append entry links to the selected market card.
+func _market_extra(_card: Node, _item_id: String) -> void:
+	pass
+
+## Derived products refresh their own reading contexts after a day roll.
+func _context_refresh() -> void:
+	pass
 
 func _update_trade() -> void:
 	var item: Dictionary = world._items[market_item]

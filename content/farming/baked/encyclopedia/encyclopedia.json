@@ -158,6 +158,13 @@
       "icon": "fast_fir",
       "id": "crop:fast_fir",
       "kind": "crop",
+      "links": [
+        {
+          "entity": "resource:fast_fir_seed",
+          "label": "种子",
+          "name": "速生杉苗"
+        }
+      ],
       "locks": null,
       "name": "速生杉",
       "related_rules": [
@@ -216,6 +223,13 @@
       "icon": "golden_wheat",
       "id": "crop:golden_wheat",
       "kind": "crop",
+      "links": [
+        {
+          "entity": "resource:golden_wheat_seed",
+          "label": "种子",
+          "name": "金穗麦种子"
+        }
+      ],
       "locks": null,
       "name": "金穗麦",
       "related_rules": [
@@ -289,6 +303,18 @@
       "icon": "honeybell_bush",
       "id": "crop:honeybell_bush",
       "kind": "crop",
+      "links": [
+        {
+          "entity": "resource:honeybell_seed",
+          "label": "种子",
+          "name": "蜜铃苗"
+        },
+        {
+          "entity": "research:flower_cultivation",
+          "label": "解锁研究",
+          "name": "花源栽培"
+        }
+      ],
       "locks": {
         "research": "research:flower_cultivation",
         "research_name": "花源栽培"
@@ -355,6 +381,18 @@
       "icon": "oilseed_flower",
       "id": "crop:oilseed_flower",
       "kind": "crop",
+      "links": [
+        {
+          "entity": "resource:oilseed_flower_seed",
+          "label": "种子",
+          "name": "油籽花种子"
+        },
+        {
+          "entity": "research:flower_cultivation",
+          "label": "解锁研究",
+          "name": "花源栽培"
+        }
+      ],
       "locks": {
         "research": "research:flower_cultivation",
         "research_name": "花源栽培"
@@ -416,6 +454,13 @@
       "icon": "pasture_grass",
       "id": "crop:pasture_grass",
       "kind": "crop",
+      "links": [
+        {
+          "entity": "resource:grass_seed",
+          "label": "种子",
+          "name": "草籽"
+        }
+      ],
       "locks": null,
       "name": "青牧草",
       "related_rules": [
@@ -484,6 +529,13 @@
       "icon": "resin_tree",
       "id": "crop:resin_tree",
       "kind": "crop",
+      "links": [
+        {
+          "entity": "resource:resin_tree_seed",
+          "label": "种子",
+          "name": "松脂树苗"
+        }
+      ],
       "locks": null,
       "name": "松脂树",
       "related_rules": [
@@ -547,6 +599,13 @@
       "icon": "wood_decay_mushroom",
       "id": "crop:wood_decay_mushroom",
       "kind": "crop",
+      "links": [
+        {
+          "entity": "resource:wood_decay_spawn",
+          "label": "种子",
+          "name": "木腐菇菌种"
+        }
+      ],
       "locks": null,
       "name": "木腐菇",
       "related_rules": [
@@ -577,9 +636,10 @@
           "text": "默认80；左下阴影区30（rect [0, 9, 8, 5]）适合喜阴菌菇"
         }
       ],
-      "icon": "farm_02",
+      "icon": "fit",
       "id": "map:farm_02",
       "kind": "map",
+      "links": [],
       "locks": null,
       "name": "灵田·水库",
       "related_rules": [
@@ -614,9 +674,10 @@
           "text": "东侧近田"
         }
       ],
-      "icon": "east_far",
+      "icon": "area",
       "id": "parcel:east_far",
       "kind": "parcel",
+      "links": [],
       "locks": null,
       "name": "东侧远田",
       "related_rules": [
@@ -650,9 +711,10 @@
           "text": "东侧近田、东侧远田"
         }
       ],
-      "icon": "east_lower",
+      "icon": "area",
       "id": "parcel:east_lower",
       "kind": "parcel",
+      "links": [],
       "locks": null,
       "name": "东侧下田",
       "related_rules": [
@@ -686,9 +748,10 @@
           "text": "无"
         }
       ],
-      "icon": "east_near",
+      "icon": "area",
       "id": "parcel:east_near",
       "kind": "parcel",
+      "links": [],
       "locks": null,
       "name": "东侧近田",
       "related_rules": [
@@ -722,9 +785,10 @@
           "text": "东侧近岸水库"
         }
       ],
-      "icon": "east_water_far",
+      "icon": "area",
       "id": "parcel:east_water_far",
       "kind": "parcel",
+      "links": [],
       "locks": null,
       "name": "东侧远岸水库",
       "related_rules": [
@@ -758,9 +822,10 @@
           "text": "无"
         }
       ],
-      "icon": "east_water_near",
+      "icon": "area",
       "id": "parcel:east_water_near",
       "kind": "parcel",
+      "links": [],
       "locks": null,
       "name": "东侧近岸水库",
       "related_rules": [
@@ -794,9 +859,10 @@
           "text": "无"
         }
       ],
-      "icon": "west_water",
+      "icon": "area",
       "id": "parcel:west_water",
       "kind": "parcel",
+      "links": [],
       "locks": null,
       "name": "西侧水库",
       "related_rules": [
@@ -830,9 +896,10 @@
           "text": "可指派1名雇工日结执行（成功1次1元石；需农务兼任启用）"
         }
       ],
-      "icon": "ore_source",
+      "icon": "iron_ore",
       "id": "source:ore_source",
       "kind": "source",
+      "links": [],
       "locks": null,
       "name": "采矿点",
       "related_rules": [
@@ -866,9 +933,10 @@
           "text": "可指派1名雇工日结执行（成功1次1元石；需农务兼任启用）"
         }
       ],
-      "icon": "spring_source",
+      "icon": "clean_water",
       "id": "source:spring_source",
       "kind": "source",
+      "links": [],
       "locks": null,
       "name": "泉水点",
       "related_rules": [
@@ -902,9 +970,10 @@
           "text": "可指派1名雇工日结执行（成功1次1元石；需农务兼任启用）"
         }
       ],
-      "icon": "stone_source",
+      "icon": "raw_stone",
       "id": "source:stone_source",
       "kind": "source",
+      "links": [],
       "locks": null,
       "name": "采石点",
       "related_rules": [
@@ -951,6 +1020,7 @@
       "icon": "algae_tank",
       "id": "facility:algae_tank",
       "kind": "facility",
+      "links": [],
       "locks": null,
       "name": "藻类培养槽",
       "related_rules": [
@@ -997,6 +1067,18 @@
       "icon": "bee_hive",
       "id": "facility:bee_hive",
       "kind": "facility",
+      "links": [
+        {
+          "entity": "species:bell_bee",
+          "label": "接纳物种",
+          "name": "蜜盏蜂"
+        },
+        {
+          "entity": "research:beekeeping",
+          "label": "解锁研究",
+          "name": "蜂群协作"
+        }
+      ],
       "locks": {
         "research": "research:beekeeping",
         "research_name": "蜂群协作"
@@ -1044,6 +1126,7 @@
       "icon": "char_kiln",
       "id": "facility:char_kiln",
       "kind": "facility",
+      "links": [],
       "locks": null,
       "name": "炭化炉",
       "related_rules": [
@@ -1090,6 +1173,7 @@
       "icon": "compost_bin",
       "id": "facility:compost_bin",
       "kind": "facility",
+      "links": [],
       "locks": null,
       "name": "堆肥箱",
       "related_rules": [
@@ -1136,6 +1220,13 @@
       "icon": "farm_processor",
       "id": "facility:farm_processor",
       "kind": "facility",
+      "links": [
+        {
+          "entity": "research:farm_preparation",
+          "label": "解锁研究",
+          "name": "农产初加工"
+        }
+      ],
       "locks": {
         "research": "research:farm_preparation",
         "research_name": "农产初加工"
@@ -1180,6 +1271,13 @@
       "icon": "field_service_station",
       "id": "facility:field_service_station",
       "kind": "facility",
+      "links": [
+        {
+          "entity": "research:field_maintenance",
+          "label": "解锁研究",
+          "name": "田间自动维护"
+        }
+      ],
       "locks": {
         "research": "research:field_maintenance",
         "research_name": "田间自动维护"
@@ -1232,6 +1330,13 @@
       "icon": "fish_pond",
       "id": "facility:fish_pond",
       "kind": "facility",
+      "links": [
+        {
+          "entity": "species:filter_algae_carp",
+          "label": "接纳物种",
+          "name": "滤藻鲤"
+        }
+      ],
       "locks": null,
       "name": "水场",
       "related_rules": [
@@ -1273,6 +1378,13 @@
       "icon": "growth_lamp",
       "id": "facility:growth_lamp",
       "kind": "facility",
+      "links": [
+        {
+          "entity": "research:mineral_materials",
+          "label": "解锁研究",
+          "name": "矿质材料工艺"
+        }
+      ],
       "locks": {
         "research": "research:mineral_materials",
         "research_name": "矿质材料工艺"
@@ -1320,6 +1432,13 @@
       "icon": "kitchen",
       "id": "facility:kitchen",
       "kind": "facility",
+      "links": [
+        {
+          "entity": "research:basic_spirit_cooking",
+          "label": "解锁研究",
+          "name": "灵食初制"
+        }
+      ],
       "locks": {
         "research": "research:basic_spirit_cooking",
         "research_name": "灵食初制"
@@ -1374,6 +1493,13 @@
       "icon": "pen",
       "id": "facility:pen",
       "kind": "facility",
+      "links": [
+        {
+          "entity": "species:steel_sheep",
+          "label": "接纳物种",
+          "name": "钢绵羊"
+        }
+      ],
       "locks": null,
       "name": "圈舍",
       "related_rules": [
@@ -1425,6 +1551,18 @@
       "icon": "purifying_bed",
       "id": "facility:purifying_bed",
       "kind": "facility",
+      "links": [
+        {
+          "entity": "species:purifying_mat",
+          "label": "接纳物种",
+          "name": "净水菌毯"
+        },
+        {
+          "entity": "research:biofiltration",
+          "label": "解锁研究",
+          "name": "菌毯净化"
+        }
+      ],
       "locks": {
         "research": "research:biofiltration",
         "research_name": "菌毯净化"
@@ -1469,6 +1607,7 @@
       "icon": "research_bench",
       "id": "facility:research_bench",
       "kind": "facility",
+      "links": [],
       "locks": null,
       "name": "研究台",
       "related_rules": [
@@ -1520,6 +1659,23 @@
       "icon": "rock_workyard",
       "id": "facility:rock_workyard",
       "kind": "facility",
+      "links": [
+        {
+          "entity": "species:rock_mole",
+          "label": "接纳物种",
+          "name": "啮岩鼹"
+        },
+        {
+          "entity": "species:rock_belly_beast",
+          "label": "接纳物种",
+          "name": "岩腹兽"
+        },
+        {
+          "entity": "research:rock_handling",
+          "label": "解锁研究",
+          "name": "岩料破碎"
+        }
+      ],
       "locks": {
         "research": "research:rock_handling",
         "research_name": "岩料破碎"
@@ -1569,6 +1725,7 @@
       "icon": "smelter",
       "id": "facility:smelter",
       "kind": "facility",
+      "links": [],
       "locks": null,
       "name": "小型冶炼炉",
       "related_rules": [
@@ -1615,6 +1772,7 @@
       "icon": "woodshop",
       "id": "facility:woodshop",
       "kind": "facility",
+      "links": [],
       "locks": null,
       "name": "木工台",
       "related_rules": [
@@ -1673,9 +1831,21 @@
           "text": "蜂群使用油籽花份额后，该株本周期待收+1油籽；多箱/多次不叠加"
         }
       ],
-      "icon": "bell_bee",
+      "icon": "bee_hive",
       "id": "species:bell_bee",
       "kind": "species",
+      "links": [
+        {
+          "entity": "facility:bee_hive",
+          "label": "适配设施",
+          "name": "蜂箱"
+        },
+        {
+          "entity": "research:beekeeping",
+          "label": "解锁研究",
+          "name": "蜂群协作"
+        }
+      ],
       "locks": {
         "research": "research:beekeeping",
         "research_name": "蜂群协作"
@@ -1734,9 +1904,16 @@
           "text": "水场水体日降5；≤30全场暂停成长与周期，维护水体或换水恢复"
         }
       ],
-      "icon": "filter_algae_carp",
+      "icon": "fish_pond",
       "id": "species:filter_algae_carp",
       "kind": "species",
+      "links": [
+        {
+          "entity": "facility:fish_pond",
+          "label": "适配设施",
+          "name": "水场"
+        }
+      ],
       "locks": null,
       "name": "滤藻鲤",
       "related_rules": [
@@ -1787,9 +1964,21 @@
           "text": "仅幼体每日耗培养清水×1；在制成体靠盖章服务日推进、不再耗基础料；空闲成体启动批次时一次付清处理投入"
         }
       ],
-      "icon": "purifying_mat",
+      "icon": "purifying_bed",
       "id": "species:purifying_mat",
       "kind": "species",
+      "links": [
+        {
+          "entity": "facility:purifying_bed",
+          "label": "适配设施",
+          "name": "净水菌床"
+        },
+        {
+          "entity": "research:biofiltration",
+          "label": "解锁研究",
+          "name": "菌毯净化"
+        }
+      ],
       "locks": {
         "research": "research:biofiltration",
         "research_name": "菌毯净化"
@@ -1843,9 +2032,21 @@
           "text": "保留个体（回到空闲成体）"
         }
       ],
-      "icon": "rock_belly_beast",
+      "icon": "rock_workyard",
       "id": "species:rock_belly_beast",
       "kind": "species",
+      "links": [
+        {
+          "entity": "facility:rock_workyard",
+          "label": "适配设施",
+          "name": "岩兽工作场"
+        },
+        {
+          "entity": "research:ore_concentration",
+          "label": "解锁研究",
+          "name": "生物选矿"
+        }
+      ],
       "locks": {
         "research": "research:ore_concentration",
         "research_name": "生物选矿"
@@ -1899,9 +2100,21 @@
           "text": "保留个体（回到空闲成体）"
         }
       ],
-      "icon": "rock_mole",
+      "icon": "rock_workyard",
       "id": "species:rock_mole",
       "kind": "species",
+      "links": [
+        {
+          "entity": "facility:rock_workyard",
+          "label": "适配设施",
+          "name": "岩兽工作场"
+        },
+        {
+          "entity": "research:rock_handling",
+          "label": "解锁研究",
+          "name": "岩料破碎"
+        }
+      ],
       "locks": {
         "research": "research:rock_handling",
         "research_name": "岩料破碎"
@@ -1955,9 +2168,16 @@
           "text": "保留个体（回到空闲成体）"
         }
       ],
-      "icon": "steel_sheep",
+      "icon": "pen",
       "id": "species:steel_sheep",
       "kind": "species",
+      "links": [
+        {
+          "entity": "facility:pen",
+          "label": "适配设施",
+          "name": "圈舍"
+        }
+      ],
       "locks": null,
       "name": "钢绵羊",
       "related_rules": [
@@ -1991,6 +2211,7 @@
       "icon": "algae_feed",
       "id": "resource:algae_feed",
       "kind": "resource",
+      "links": [],
       "locks": null,
       "name": "藻料",
       "related_rules": [
@@ -2100,6 +2321,7 @@
       "icon": "beeswax",
       "id": "resource:beeswax",
       "kind": "resource",
+      "links": [],
       "locks": null,
       "name": "蜂蜡",
       "related_rules": [
@@ -2215,6 +2437,7 @@
       "icon": "charcoal",
       "id": "resource:charcoal",
       "kind": "resource",
+      "links": [],
       "locks": null,
       "name": "木炭",
       "related_rules": [
@@ -2511,6 +2734,7 @@
       "icon": "clean_water",
       "id": "resource:clean_water",
       "kind": "resource",
+      "links": [],
       "locks": null,
       "name": "清水",
       "related_rules": [
@@ -3000,6 +3224,7 @@
       "icon": "composite_stone_panel",
       "id": "resource:composite_stone_panel",
       "kind": "resource",
+      "links": [],
       "locks": null,
       "name": "复合石板",
       "related_rules": [
@@ -3307,6 +3532,7 @@
       "icon": "crude_oil",
       "id": "resource:crude_oil",
       "kind": "resource",
+      "links": [],
       "locks": null,
       "name": "粗植物油",
       "related_rules": [
@@ -3416,6 +3642,7 @@
       "icon": "crushed_ore",
       "id": "resource:crushed_ore",
       "kind": "resource",
+      "links": [],
       "locks": null,
       "name": "碎铁矿",
       "related_rules": [
@@ -3579,6 +3806,7 @@
       "icon": "dense_algae",
       "id": "resource:dense_algae",
       "kind": "resource",
+      "links": [],
       "locks": null,
       "name": "高密度藻料",
       "related_rules": [
@@ -3716,6 +3944,7 @@
       "icon": "dew_soup",
       "id": "resource:dew_soup",
       "kind": "resource",
+      "links": [],
       "locks": null,
       "name": "藻露羹",
       "related_rules": [
@@ -3818,6 +4047,7 @@
       "icon": "earth_pill",
       "id": "resource:earth_pill",
       "kind": "resource",
+      "links": [],
       "locks": null,
       "name": "腐土菌丸",
       "related_rules": [
@@ -3910,6 +4140,7 @@
       "icon": "fast_fir_seed",
       "id": "resource:fast_fir_seed",
       "kind": "resource",
+      "links": [],
       "locks": null,
       "name": "速生杉苗",
       "related_rules": [
@@ -4002,6 +4233,7 @@
       "icon": "filter_media",
       "id": "resource:filter_media",
       "kind": "resource",
+      "links": [],
       "locks": null,
       "name": "炭砂滤料",
       "related_rules": [
@@ -4121,6 +4353,7 @@
       "icon": "fire_paste",
       "id": "resource:fire_paste",
       "kind": "resource",
+      "links": [],
       "locks": null,
       "name": "蜜油火膏",
       "related_rules": [
@@ -4213,6 +4446,7 @@
       "icon": "fish_manure",
       "id": "resource:fish_manure",
       "kind": "resource",
+      "links": [],
       "locks": null,
       "name": "鱼粪",
       "related_rules": [
@@ -4310,6 +4544,7 @@
       "icon": "fish_meat",
       "id": "resource:fish_meat",
       "kind": "resource",
+      "links": [],
       "locks": null,
       "name": "鱼肉",
       "related_rules": [
@@ -4449,6 +4684,7 @@
       "icon": "fish_spirit_meal",
       "id": "resource:fish_spirit_meal",
       "kind": "resource",
+      "links": [],
       "locks": null,
       "name": "菌鱼灵膳",
       "related_rules": [
@@ -4541,6 +4777,7 @@
       "icon": "flower_petal",
       "id": "resource:flower_petal",
       "kind": "resource",
+      "links": [],
       "locks": null,
       "name": "花瓣",
       "related_rules": [
@@ -4632,6 +4869,7 @@
       "icon": "fodder_grass",
       "id": "resource:fodder_grass",
       "kind": "resource",
+      "links": [],
       "locks": null,
       "name": "牧草",
       "related_rules": [
@@ -4824,6 +5062,7 @@
       "icon": "gold_food",
       "id": "resource:gold_food",
       "kind": "resource",
+      "links": [],
       "locks": null,
       "name": "蜜炼金食",
       "related_rules": [
@@ -4916,6 +5155,7 @@
       "icon": "golden_wheat_seed",
       "id": "resource:golden_wheat_seed",
       "kind": "resource",
+      "links": [],
       "locks": null,
       "name": "金穗麦种子",
       "related_rules": [
@@ -5013,6 +5253,7 @@
       "icon": "grain",
       "id": "resource:grain",
       "kind": "resource",
+      "links": [],
       "locks": null,
       "name": "谷粒",
       "related_rules": [
@@ -5195,6 +5436,7 @@
       "icon": "grain_meal",
       "id": "resource:grain_meal",
       "kind": "resource",
+      "links": [],
       "locks": null,
       "name": "谷粉",
       "related_rules": [
@@ -5377,6 +5619,7 @@
       "icon": "grass_meal",
       "id": "resource:grass_meal",
       "kind": "resource",
+      "links": [],
       "locks": null,
       "name": "草粉",
       "related_rules": [
@@ -5504,6 +5747,7 @@
       "icon": "grass_seed",
       "id": "resource:grass_seed",
       "kind": "resource",
+      "links": [],
       "locks": null,
       "name": "草籽",
       "related_rules": [
@@ -5578,6 +5822,7 @@
       "icon": "gravel",
       "id": "resource:gravel",
       "kind": "resource",
+      "links": [],
       "locks": null,
       "name": "砂砾",
       "related_rules": [
@@ -5747,6 +5992,7 @@
       "icon": "honey",
       "id": "resource:honey",
       "kind": "resource",
+      "links": [],
       "locks": null,
       "name": "蜂蜜",
       "related_rules": [
@@ -5922,6 +6168,7 @@
       "icon": "honey_cake",
       "id": "resource:honey_cake",
       "kind": "resource",
+      "links": [],
       "locks": null,
       "name": "蜜谷灵饼",
       "related_rules": [
@@ -6014,6 +6261,13 @@
       "icon": "honeybell_seed",
       "id": "resource:honeybell_seed",
       "kind": "resource",
+      "links": [
+        {
+          "entity": "research:flower_cultivation",
+          "label": "解锁研究",
+          "name": "花源栽培"
+        }
+      ],
       "locks": {
         "research": "research:flower_cultivation",
         "research_name": "花源栽培"
@@ -6096,6 +6350,7 @@
       "icon": "humus",
       "id": "resource:humus",
       "kind": "resource",
+      "links": [],
       "locks": null,
       "name": "腐殖土",
       "related_rules": [
@@ -6446,6 +6701,7 @@
       "icon": "iron_ingot",
       "id": "resource:iron_ingot",
       "kind": "resource",
+      "links": [],
       "locks": null,
       "name": "铁锭",
       "related_rules": [
@@ -6665,6 +6921,7 @@
       "icon": "iron_ore",
       "id": "resource:iron_ore",
       "kind": "resource",
+      "links": [],
       "locks": null,
       "name": "含铁矿石",
       "related_rules": [
@@ -6846,6 +7103,7 @@
       "icon": "land_feed",
       "id": "resource:land_feed",
       "kind": "resource",
+      "links": [],
       "locks": null,
       "name": "复合陆养料",
       "related_rules": [
@@ -6973,6 +7231,7 @@
       "icon": "mineral_feed",
       "id": "resource:mineral_feed",
       "kind": "resource",
+      "links": [],
       "locks": null,
       "name": "矿质补料",
       "related_rules": [
@@ -7069,6 +7328,7 @@
       "icon": "mushroom",
       "id": "resource:mushroom",
       "kind": "resource",
+      "links": [],
       "locks": null,
       "name": "木腐菇",
       "related_rules": [
@@ -7256,6 +7516,7 @@
       "icon": "nectar",
       "id": "resource:nectar",
       "kind": "resource",
+      "links": [],
       "locks": null,
       "name": "花蜜",
       "related_rules": [
@@ -7384,6 +7645,7 @@
       "icon": "nutrient_liquid",
       "id": "resource:nutrient_liquid",
       "kind": "resource",
+      "links": [],
       "locks": null,
       "name": "营养液",
       "related_rules": [
@@ -7493,6 +7755,7 @@
       "icon": "oil_cake",
       "id": "resource:oil_cake",
       "kind": "resource",
+      "links": [],
       "locks": null,
       "name": "油饼",
       "related_rules": [
@@ -7621,6 +7884,7 @@
       "icon": "oilseed",
       "id": "resource:oilseed",
       "kind": "resource",
+      "links": [],
       "locks": null,
       "name": "油籽",
       "related_rules": [
@@ -7748,6 +8012,13 @@
       "icon": "oilseed_flower_seed",
       "id": "resource:oilseed_flower_seed",
       "kind": "resource",
+      "links": [
+        {
+          "entity": "research:flower_cultivation",
+          "label": "解锁研究",
+          "name": "花源栽培"
+        }
+      ],
       "locks": {
         "research": "research:flower_cultivation",
         "research_name": "花源栽培"
@@ -7825,6 +8096,7 @@
       "icon": "ore_concentrate",
       "id": "resource:ore_concentrate",
       "kind": "resource",
+      "links": [],
       "locks": null,
       "name": "富集矿砂",
       "related_rules": [
@@ -7952,6 +8224,7 @@
       "icon": "pollen",
       "id": "resource:pollen",
       "kind": "resource",
+      "links": [],
       "locks": null,
       "name": "花粉",
       "related_rules": [
@@ -8071,6 +8344,13 @@
       "icon": "purifying_mat_culture",
       "id": "resource:purifying_mat_culture",
       "kind": "resource",
+      "links": [
+        {
+          "entity": "research:biofiltration",
+          "label": "解锁研究",
+          "name": "菌毯净化"
+        }
+      ],
       "locks": {
         "research": "research:biofiltration",
         "research_name": "菌毯净化"
@@ -8109,6 +8389,7 @@
       "icon": "raw_stone",
       "id": "resource:raw_stone",
       "kind": "resource",
+      "links": [],
       "locks": null,
       "name": "普通岩石",
       "related_rules": [
@@ -8470,6 +8751,7 @@
       "icon": "raw_wood",
       "id": "resource:raw_wood",
       "kind": "resource",
+      "links": [],
       "locks": null,
       "name": "原木",
       "related_rules": [
@@ -8796,6 +9078,7 @@
       "icon": "reclaimed_fill",
       "id": "resource:reclaimed_fill",
       "kind": "resource",
+      "links": [],
       "locks": null,
       "name": "再生填料",
       "related_rules": [
@@ -9090,6 +9373,7 @@
       "icon": "refined_oil",
       "id": "resource:refined_oil",
       "kind": "resource",
+      "links": [],
       "locks": null,
       "name": "精炼油",
       "related_rules": [
@@ -9255,6 +9539,7 @@
       "icon": "refined_wax",
       "id": "resource:refined_wax",
       "kind": "resource",
+      "links": [],
       "locks": null,
       "name": "精炼蜡",
       "related_rules": [
@@ -9351,6 +9636,7 @@
       "icon": "resin",
       "id": "resource:resin",
       "kind": "resource",
+      "links": [],
       "locks": null,
       "name": "松脂",
       "related_rules": [
@@ -9480,6 +9766,7 @@
       "icon": "resin_tree_seed",
       "id": "resource:resin_tree_seed",
       "kind": "resource",
+      "links": [],
       "locks": null,
       "name": "松脂树苗",
       "related_rules": [
@@ -9572,6 +9859,7 @@
       "icon": "sheep_manure",
       "id": "resource:sheep_manure",
       "kind": "resource",
+      "links": [],
       "locks": null,
       "name": "羊粪肥",
       "related_rules": [
@@ -9664,6 +9952,7 @@
       "icon": "slag",
       "id": "resource:slag",
       "kind": "resource",
+      "links": [],
       "locks": null,
       "name": "炉渣",
       "related_rules": [
@@ -9738,6 +10027,7 @@
       "icon": "sludge",
       "id": "resource:sludge",
       "kind": "resource",
+      "links": [],
       "locks": null,
       "name": "污泥",
       "related_rules": [
@@ -9884,6 +10174,7 @@
       "icon": "spent_filter",
       "id": "resource:spent_filter",
       "kind": "resource",
+      "links": [],
       "locks": null,
       "name": "废滤炭",
       "related_rules": [
@@ -9967,6 +10258,7 @@
       "icon": "steel_wool",
       "id": "resource:steel_wool",
       "kind": "resource",
+      "links": [],
       "locks": null,
       "name": "钢绒",
       "related_rules": [
@@ -10060,6 +10352,7 @@
       "icon": "stone_powder",
       "id": "resource:stone_powder",
       "kind": "resource",
+      "links": [],
       "locks": null,
       "name": "石粉",
       "related_rules": [
@@ -10205,6 +10498,7 @@
       "icon": "straw",
       "id": "resource:straw",
       "kind": "resource",
+      "links": [],
       "locks": null,
       "name": "秸秆",
       "related_rules": [
@@ -10369,6 +10663,7 @@
       "icon": "tailings",
       "id": "resource:tailings",
       "kind": "resource",
+      "links": [],
       "locks": null,
       "name": "尾砂",
       "related_rules": [
@@ -10461,6 +10756,7 @@
       "icon": "twig",
       "id": "resource:twig",
       "kind": "resource",
+      "links": [],
       "locks": null,
       "name": "枝条",
       "related_rules": [
@@ -10643,6 +10939,7 @@
       "icon": "wastewater",
       "id": "resource:wastewater",
       "kind": "resource",
+      "links": [],
       "locks": null,
       "name": "污水",
       "related_rules": [
@@ -10788,6 +11085,7 @@
       "icon": "water_feed",
       "id": "resource:water_feed",
       "kind": "resource",
+      "links": [],
       "locks": null,
       "name": "复合水养料",
       "related_rules": [
@@ -10879,6 +11177,7 @@
       "icon": "wood_chip",
       "id": "resource:wood_chip",
       "kind": "resource",
+      "links": [],
       "locks": null,
       "name": "木屑",
       "related_rules": [
@@ -11079,6 +11378,7 @@
       "icon": "wood_decay_spawn",
       "id": "resource:wood_decay_spawn",
       "kind": "resource",
+      "links": [],
       "locks": null,
       "name": "木腐菇菌种",
       "related_rules": [
@@ -11171,6 +11471,7 @@
       "icon": "wood_plank",
       "id": "resource:wood_plank",
       "kind": "resource",
+      "links": [],
       "locks": null,
       "name": "木板",
       "related_rules": [
@@ -11336,9 +11637,16 @@
           "text": "额外消耗1份当日花源份额（非库存物品）"
         }
       ],
-      "icon": "bell_bee/base_diets/flower_share",
+      "icon": "bee_hive",
       "id": "diet:bell_bee/base_diets/flower_share",
       "kind": "diet",
+      "links": [
+        {
+          "entity": "species:bell_bee",
+          "label": "所属物种",
+          "name": "蜜盏蜂"
+        }
+      ],
       "locks": null,
       "name": "蜜盏蜂·花源份额＋清水",
       "related_rules": [
@@ -11374,9 +11682,16 @@
           "text": "额外消耗1份当日花源份额（非库存物品）"
         }
       ],
-      "icon": "bell_bee/special_diets/honey_cycle",
+      "icon": "bee_hive",
       "id": "diet:bell_bee/special_diets/honey_cycle",
       "kind": "diet",
+      "links": [
+        {
+          "entity": "species:bell_bee",
+          "label": "所属物种",
+          "name": "蜜盏蜂"
+        }
+      ],
       "locks": null,
       "name": "蜜盏蜂·酿蜜周期",
       "related_rules": [
@@ -11407,9 +11722,16 @@
           "text": "藻料×1/单位/日"
         }
       ],
-      "icon": "filter_algae_carp/base_diets/algae_meal",
+      "icon": "fish_pond",
       "id": "diet:filter_algae_carp/base_diets/algae_meal",
       "kind": "diet",
+      "links": [
+        {
+          "entity": "species:filter_algae_carp",
+          "label": "所属物种",
+          "name": "滤藻鲤"
+        }
+      ],
       "locks": null,
       "name": "滤藻鲤·藻料餐",
       "related_rules": [
@@ -11440,9 +11762,21 @@
           "text": "高密度藻料×1/单位/日"
         }
       ],
-      "icon": "filter_algae_carp/base_diets/dense_meal",
+      "icon": "fish_pond",
       "id": "diet:filter_algae_carp/base_diets/dense_meal",
       "kind": "diet",
+      "links": [
+        {
+          "entity": "species:filter_algae_carp",
+          "label": "所属物种",
+          "name": "滤藻鲤"
+        },
+        {
+          "entity": "research:water_recirculation",
+          "label": "解锁研究",
+          "name": "水与藻料回流"
+        }
+      ],
       "locks": {
         "research": "research:water_recirculation",
         "research_name": "水与藻料回流"
@@ -11476,9 +11810,21 @@
           "text": "复合水养料×1/单位/日"
         }
       ],
-      "icon": "filter_algae_carp/base_diets/water_meal",
+      "icon": "fish_pond",
       "id": "diet:filter_algae_carp/base_diets/water_meal",
       "kind": "diet",
+      "links": [
+        {
+          "entity": "species:filter_algae_carp",
+          "label": "所属物种",
+          "name": "滤藻鲤"
+        },
+        {
+          "entity": "research:advanced_feed_oil_wax",
+          "label": "解锁研究",
+          "name": "饲料与蜡油精制"
+        }
+      ],
       "locks": {
         "research": "research:advanced_feed_oil_wax",
         "research_name": "饲料与蜡油精制"
@@ -11512,9 +11858,16 @@
           "text": "谷粒×1/单位/轮"
         }
       ],
-      "icon": "filter_algae_carp/special_diets/grain_fatten",
+      "icon": "fish_pond",
       "id": "diet:filter_algae_carp/special_diets/grain_fatten",
       "kind": "diet",
+      "links": [
+        {
+          "entity": "species:filter_algae_carp",
+          "label": "所属物种",
+          "name": "滤藻鲤"
+        }
+      ],
       "locks": null,
       "name": "滤藻鲤·谷粒育肥",
       "related_rules": [
@@ -11550,9 +11903,16 @@
           "text": "仅幼体"
         }
       ],
-      "icon": "purifying_mat/base_diets/culture_water",
+      "icon": "purifying_bed",
       "id": "diet:purifying_mat/base_diets/culture_water",
       "kind": "diet",
+      "links": [
+        {
+          "entity": "species:purifying_mat",
+          "label": "所属物种",
+          "name": "净水菌毯"
+        }
+      ],
       "locks": null,
       "name": "净水菌毯·培养清水",
       "related_rules": [
@@ -11588,9 +11948,16 @@
           "text": "清水×2＋污泥×1/轮/单位"
         }
       ],
-      "icon": "purifying_mat/special_diets/bio_purify",
+      "icon": "purifying_bed",
       "id": "diet:purifying_mat/special_diets/bio_purify",
       "kind": "diet",
+      "links": [
+        {
+          "entity": "species:purifying_mat",
+          "label": "所属物种",
+          "name": "净水菌毯"
+        }
+      ],
       "locks": null,
       "name": "净水菌毯·菌毯净水运行",
       "related_rules": [
@@ -11626,9 +11993,16 @@
           "text": "营养液×2＋清水×1＋污泥×1/轮/单位"
         }
       ],
-      "icon": "purifying_mat/special_diets/recover_nutrients",
+      "icon": "purifying_bed",
       "id": "diet:purifying_mat/special_diets/recover_nutrients",
       "kind": "diet",
+      "links": [
+        {
+          "entity": "species:purifying_mat",
+          "label": "所属物种",
+          "name": "净水菌毯"
+        }
+      ],
       "locks": null,
       "name": "净水菌毯·营养液回收运行",
       "related_rules": [
@@ -11659,9 +12033,16 @@
           "text": "牧草×1＋清水×1/单位/日"
         }
       ],
-      "icon": "rock_belly_beast/base_diets/grass_water_meal",
+      "icon": "rock_workyard",
       "id": "diet:rock_belly_beast/base_diets/grass_water_meal",
       "kind": "diet",
+      "links": [
+        {
+          "entity": "species:rock_belly_beast",
+          "label": "所属物种",
+          "name": "岩腹兽"
+        }
+      ],
       "locks": null,
       "name": "岩腹兽·牧草清水餐",
       "related_rules": [
@@ -11692,9 +12073,21 @@
           "text": "复合陆养料×1＋清水×1/单位/日"
         }
       ],
-      "icon": "rock_belly_beast/base_diets/land_meal",
+      "icon": "rock_workyard",
       "id": "diet:rock_belly_beast/base_diets/land_meal",
       "kind": "diet",
+      "links": [
+        {
+          "entity": "species:rock_belly_beast",
+          "label": "所属物种",
+          "name": "岩腹兽"
+        },
+        {
+          "entity": "research:advanced_feed_oil_wax",
+          "label": "解锁研究",
+          "name": "饲料与蜡油精制"
+        }
+      ],
       "locks": {
         "research": "research:advanced_feed_oil_wax",
         "research_name": "饲料与蜡油精制"
@@ -11733,9 +12126,16 @@
           "text": "富集矿砂×2＋尾砂×1/轮/单位"
         }
       ],
-      "icon": "rock_belly_beast/special_diets/concentrate_ore",
+      "icon": "rock_workyard",
       "id": "diet:rock_belly_beast/special_diets/concentrate_ore",
       "kind": "diet",
+      "links": [
+        {
+          "entity": "species:rock_belly_beast",
+          "label": "所属物种",
+          "name": "岩腹兽"
+        }
+      ],
       "locks": null,
       "name": "岩腹兽·生物选矿轮",
       "related_rules": [
@@ -11766,9 +12166,16 @@
           "text": "木腐菇×1＋清水×1/单位/日"
         }
       ],
-      "icon": "rock_mole/base_diets/fungus_meal",
+      "icon": "rock_workyard",
       "id": "diet:rock_mole/base_diets/fungus_meal",
       "kind": "diet",
+      "links": [
+        {
+          "entity": "species:rock_mole",
+          "label": "所属物种",
+          "name": "啮岩鼹"
+        }
+      ],
       "locks": null,
       "name": "啮岩鼹·菌菇清水餐",
       "related_rules": [
@@ -11804,9 +12211,16 @@
           "text": "碎铁矿×3/轮/单位"
         }
       ],
-      "icon": "rock_mole/special_diets/break_ore",
+      "icon": "rock_workyard",
       "id": "diet:rock_mole/special_diets/break_ore",
       "kind": "diet",
+      "links": [
+        {
+          "entity": "species:rock_mole",
+          "label": "所属物种",
+          "name": "啮岩鼹"
+        }
+      ],
       "locks": null,
       "name": "啮岩鼹·破碎矿石轮",
       "related_rules": [
@@ -11842,9 +12256,16 @@
           "text": "砂砾×2＋石粉×1/轮/单位"
         }
       ],
-      "icon": "rock_mole/special_diets/break_stone",
+      "icon": "rock_workyard",
       "id": "diet:rock_mole/special_diets/break_stone",
       "kind": "diet",
+      "links": [
+        {
+          "entity": "species:rock_mole",
+          "label": "所属物种",
+          "name": "啮岩鼹"
+        }
+      ],
       "locks": null,
       "name": "啮岩鼹·破碎石材轮",
       "related_rules": [
@@ -11875,9 +12296,16 @@
           "text": "谷粒×1＋清水×1/单位/日"
         }
       ],
-      "icon": "steel_sheep/base_diets/grain_meal",
+      "icon": "pen",
       "id": "diet:steel_sheep/base_diets/grain_meal",
       "kind": "diet",
+      "links": [
+        {
+          "entity": "species:steel_sheep",
+          "label": "所属物种",
+          "name": "钢绵羊"
+        }
+      ],
       "locks": null,
       "name": "钢绵羊·谷粒餐",
       "related_rules": [
@@ -11908,9 +12336,16 @@
           "text": "牧草×1＋清水×1/单位/日"
         }
       ],
-      "icon": "steel_sheep/base_diets/grass_meal",
+      "icon": "pen",
       "id": "diet:steel_sheep/base_diets/grass_meal",
       "kind": "diet",
+      "links": [
+        {
+          "entity": "species:steel_sheep",
+          "label": "所属物种",
+          "name": "钢绵羊"
+        }
+      ],
       "locks": null,
       "name": "钢绵羊·牧草餐",
       "related_rules": [
@@ -11941,9 +12376,21 @@
           "text": "复合陆养料×1＋清水×1/单位/日"
         }
       ],
-      "icon": "steel_sheep/base_diets/land_meal",
+      "icon": "pen",
       "id": "diet:steel_sheep/base_diets/land_meal",
       "kind": "diet",
+      "links": [
+        {
+          "entity": "species:steel_sheep",
+          "label": "所属物种",
+          "name": "钢绵羊"
+        },
+        {
+          "entity": "research:advanced_feed_oil_wax",
+          "label": "解锁研究",
+          "name": "饲料与蜡油精制"
+        }
+      ],
       "locks": {
         "research": "research:advanced_feed_oil_wax",
         "research_name": "饲料与蜡油精制"
@@ -11977,9 +12424,16 @@
           "text": "含铁矿石×1/单位/轮"
         }
       ],
-      "icon": "steel_sheep/special_diets/iron_supplement",
+      "icon": "pen",
       "id": "diet:steel_sheep/special_diets/iron_supplement",
       "kind": "diet",
+      "links": [
+        {
+          "entity": "species:steel_sheep",
+          "label": "所属物种",
+          "name": "钢绵羊"
+        }
+      ],
       "locks": null,
       "name": "钢绵羊·含铁补料",
       "related_rules": [
@@ -12010,9 +12464,21 @@
           "text": "矿质补料×1/单位/轮"
         }
       ],
-      "icon": "steel_sheep/special_diets/mineral_supplement",
+      "icon": "pen",
       "id": "diet:steel_sheep/special_diets/mineral_supplement",
       "kind": "diet",
+      "links": [
+        {
+          "entity": "species:steel_sheep",
+          "label": "所属物种",
+          "name": "钢绵羊"
+        },
+        {
+          "entity": "research:mineral_materials",
+          "label": "解锁研究",
+          "name": "矿质材料工艺"
+        }
+      ],
       "locks": {
         "research": "research:mineral_materials",
         "research_name": "矿质材料工艺"
@@ -12056,9 +12522,21 @@
           "text": "启动1＋收取1"
         }
       ],
-      "icon": "algae_dew_soup",
+      "icon": "kitchen",
       "id": "recipe:algae_dew_soup",
       "kind": "recipe",
+      "links": [
+        {
+          "entity": "facility:kitchen",
+          "label": "执行设施",
+          "name": "厨房"
+        },
+        {
+          "entity": "research:composite_spirit_food",
+          "label": "解锁研究",
+          "name": "复合灵食"
+        }
+      ],
       "locks": {
         "research": "research:composite_spirit_food",
         "research_name": "复合灵食"
@@ -12100,9 +12578,21 @@
           "text": "启动1＋收取1"
         }
       ],
-      "icon": "assemble_stone_panel",
+      "icon": "woodshop",
       "id": "recipe:assemble_stone_panel",
       "kind": "recipe",
+      "links": [
+        {
+          "entity": "facility:woodshop",
+          "label": "执行设施",
+          "name": "木工台"
+        },
+        {
+          "entity": "research:mineral_materials",
+          "label": "解锁研究",
+          "name": "矿质材料工艺"
+        }
+      ],
       "locks": {
         "research": "research:mineral_materials",
         "research_name": "矿质材料工艺"
@@ -12149,9 +12639,21 @@
           "text": "活体工艺：由净水菌毯的特殊食谱执行（整体维护/自动计划），本条目与该食谱同源，勿重复计数"
         }
       ],
-      "icon": "bio_purify",
+      "icon": "purifying_bed",
       "id": "recipe:bio_purify",
       "kind": "recipe",
+      "links": [
+        {
+          "entity": "facility:purifying_bed",
+          "label": "执行设施",
+          "name": "净水菌床"
+        },
+        {
+          "entity": "research:biofiltration",
+          "label": "解锁研究",
+          "name": "菌毯净化"
+        }
+      ],
       "locks": {
         "research": "research:biofiltration",
         "research_name": "菌毯净化"
@@ -12194,9 +12696,21 @@
           "text": "启动1＋收取1"
         }
       ],
-      "icon": "blend_land_feed",
+      "icon": "farm_processor",
       "id": "recipe:blend_land_feed",
       "kind": "recipe",
+      "links": [
+        {
+          "entity": "facility:farm_processor",
+          "label": "执行设施",
+          "name": "农产加工台"
+        },
+        {
+          "entity": "research:advanced_feed_oil_wax",
+          "label": "解锁研究",
+          "name": "饲料与蜡油精制"
+        }
+      ],
       "locks": {
         "research": "research:advanced_feed_oil_wax",
         "research_name": "饲料与蜡油精制"
@@ -12238,9 +12752,21 @@
           "text": "启动1＋收取1"
         }
       ],
-      "icon": "blend_water_feed",
+      "icon": "farm_processor",
       "id": "recipe:blend_water_feed",
       "kind": "recipe",
+      "links": [
+        {
+          "entity": "facility:farm_processor",
+          "label": "执行设施",
+          "name": "农产加工台"
+        },
+        {
+          "entity": "research:advanced_feed_oil_wax",
+          "label": "解锁研究",
+          "name": "饲料与蜡油精制"
+        }
+      ],
       "locks": {
         "research": "research:advanced_feed_oil_wax",
         "research_name": "饲料与蜡油精制"
@@ -12287,9 +12813,21 @@
           "text": "活体工艺：由啮岩鼹的特殊食谱执行（整体维护/自动计划），本条目与该食谱同源，勿重复计数"
         }
       ],
-      "icon": "break_ore",
+      "icon": "rock_workyard",
       "id": "recipe:break_ore",
       "kind": "recipe",
+      "links": [
+        {
+          "entity": "facility:rock_workyard",
+          "label": "执行设施",
+          "name": "岩兽工作场"
+        },
+        {
+          "entity": "research:rock_handling",
+          "label": "解锁研究",
+          "name": "岩料破碎"
+        }
+      ],
       "locks": {
         "research": "research:rock_handling",
         "research_name": "岩料破碎"
@@ -12337,9 +12875,21 @@
           "text": "活体工艺：由啮岩鼹的特殊食谱执行（整体维护/自动计划），本条目与该食谱同源，勿重复计数"
         }
       ],
-      "icon": "break_stone",
+      "icon": "rock_workyard",
       "id": "recipe:break_stone",
       "kind": "recipe",
+      "links": [
+        {
+          "entity": "facility:rock_workyard",
+          "label": "执行设施",
+          "name": "岩兽工作场"
+        },
+        {
+          "entity": "research:rock_handling",
+          "label": "解锁研究",
+          "name": "岩料破碎"
+        }
+      ],
       "locks": {
         "research": "research:rock_handling",
         "research_name": "岩料破碎"
@@ -12382,9 +12932,16 @@
           "text": "启动1＋收取1"
         }
       ],
-      "icon": "char_twigs",
+      "icon": "char_kiln",
       "id": "recipe:char_twigs",
       "kind": "recipe",
+      "links": [
+        {
+          "entity": "facility:char_kiln",
+          "label": "执行设施",
+          "name": "炭化炉"
+        }
+      ],
       "locks": null,
       "name": "枝条炭化",
       "related_rules": [
@@ -12423,9 +12980,16 @@
           "text": "启动1＋收取1"
         }
       ],
-      "icon": "compost_chips",
+      "icon": "compost_bin",
       "id": "recipe:compost_chips",
       "kind": "recipe",
+      "links": [
+        {
+          "entity": "facility:compost_bin",
+          "label": "执行设施",
+          "name": "堆肥箱"
+        }
+      ],
       "locks": null,
       "name": "木屑堆肥",
       "related_rules": [
@@ -12464,9 +13028,16 @@
           "text": "启动1＋收取1"
         }
       ],
-      "icon": "compost_fish_manure",
+      "icon": "compost_bin",
       "id": "recipe:compost_fish_manure",
       "kind": "recipe",
+      "links": [
+        {
+          "entity": "facility:compost_bin",
+          "label": "执行设施",
+          "name": "堆肥箱"
+        }
+      ],
       "locks": null,
       "name": "鱼粪堆肥",
       "related_rules": [
@@ -12505,9 +13076,16 @@
           "text": "启动1＋收取1"
         }
       ],
-      "icon": "compost_grass",
+      "icon": "compost_bin",
       "id": "recipe:compost_grass",
       "kind": "recipe",
+      "links": [
+        {
+          "entity": "facility:compost_bin",
+          "label": "执行设施",
+          "name": "堆肥箱"
+        }
+      ],
       "locks": null,
       "name": "牧草堆肥",
       "related_rules": [
@@ -12546,9 +13124,21 @@
           "text": "启动1＋收取1"
         }
       ],
-      "icon": "compost_oil_cake",
+      "icon": "compost_bin",
       "id": "recipe:compost_oil_cake",
       "kind": "recipe",
+      "links": [
+        {
+          "entity": "facility:compost_bin",
+          "label": "执行设施",
+          "name": "堆肥箱"
+        },
+        {
+          "entity": "research:farm_preparation",
+          "label": "解锁研究",
+          "name": "农产初加工"
+        }
+      ],
       "locks": {
         "research": "research:farm_preparation",
         "research_name": "农产初加工"
@@ -12590,9 +13180,16 @@
           "text": "启动1＋收取1"
         }
       ],
-      "icon": "compost_sheep_manure",
+      "icon": "compost_bin",
       "id": "recipe:compost_sheep_manure",
       "kind": "recipe",
+      "links": [
+        {
+          "entity": "facility:compost_bin",
+          "label": "执行设施",
+          "name": "堆肥箱"
+        }
+      ],
       "locks": null,
       "name": "羊粪堆肥",
       "related_rules": [
@@ -12631,9 +13228,21 @@
           "text": "启动1＋收取1"
         }
       ],
-      "icon": "compost_sludge",
+      "icon": "compost_bin",
       "id": "recipe:compost_sludge",
       "kind": "recipe",
+      "links": [
+        {
+          "entity": "facility:compost_bin",
+          "label": "执行设施",
+          "name": "堆肥箱"
+        },
+        {
+          "entity": "research:biofiltration",
+          "label": "解锁研究",
+          "name": "菌毯净化"
+        }
+      ],
       "locks": {
         "research": "research:biofiltration",
         "research_name": "菌毯净化"
@@ -12675,9 +13284,21 @@
           "text": "启动1＋收取1"
         }
       ],
-      "icon": "compost_spent_filter",
+      "icon": "compost_bin",
       "id": "recipe:compost_spent_filter",
       "kind": "recipe",
+      "links": [
+        {
+          "entity": "facility:compost_bin",
+          "label": "执行设施",
+          "name": "堆肥箱"
+        },
+        {
+          "entity": "research:advanced_feed_oil_wax",
+          "label": "解锁研究",
+          "name": "饲料与蜡油精制"
+        }
+      ],
       "locks": {
         "research": "research:advanced_feed_oil_wax",
         "research_name": "饲料与蜡油精制"
@@ -12719,9 +13340,16 @@
           "text": "启动1＋收取1"
         }
       ],
-      "icon": "compost_straw",
+      "icon": "compost_bin",
       "id": "recipe:compost_straw",
       "kind": "recipe",
+      "links": [
+        {
+          "entity": "facility:compost_bin",
+          "label": "执行设施",
+          "name": "堆肥箱"
+        }
+      ],
       "locks": null,
       "name": "秸秆堆肥",
       "related_rules": [
@@ -12760,9 +13388,16 @@
           "text": "启动1＋收取1"
         }
       ],
-      "icon": "compost_twigs",
+      "icon": "compost_bin",
       "id": "recipe:compost_twigs",
       "kind": "recipe",
+      "links": [
+        {
+          "entity": "facility:compost_bin",
+          "label": "执行设施",
+          "name": "堆肥箱"
+        }
+      ],
       "locks": null,
       "name": "枝条堆肥",
       "related_rules": [
@@ -12806,9 +13441,21 @@
           "text": "活体工艺：由岩腹兽的特殊食谱执行（整体维护/自动计划），本条目与该食谱同源，勿重复计数"
         }
       ],
-      "icon": "concentrate_ore",
+      "icon": "rock_workyard",
       "id": "recipe:concentrate_ore",
       "kind": "recipe",
+      "links": [
+        {
+          "entity": "facility:rock_workyard",
+          "label": "执行设施",
+          "name": "岩兽工作场"
+        },
+        {
+          "entity": "research:ore_concentration",
+          "label": "解锁研究",
+          "name": "生物选矿"
+        }
+      ],
       "locks": {
         "research": "research:ore_concentration",
         "research_name": "生物选矿"
@@ -12851,9 +13498,16 @@
           "text": "启动1＋收取1"
         }
       ],
-      "icon": "culture_algae",
+      "icon": "algae_tank",
       "id": "recipe:culture_algae",
       "kind": "recipe",
+      "links": [
+        {
+          "entity": "facility:algae_tank",
+          "label": "执行设施",
+          "name": "藻类培养槽"
+        }
+      ],
       "locks": null,
       "name": "藻料培养",
       "related_rules": [
@@ -12892,9 +13546,21 @@
           "text": "启动1＋收取1"
         }
       ],
-      "icon": "dense_algae_culture",
+      "icon": "algae_tank",
       "id": "recipe:dense_algae_culture",
       "kind": "recipe",
+      "links": [
+        {
+          "entity": "facility:algae_tank",
+          "label": "执行设施",
+          "name": "藻类培养槽"
+        },
+        {
+          "entity": "research:water_recirculation",
+          "label": "解锁研究",
+          "name": "水与藻料回流"
+        }
+      ],
       "locks": {
         "research": "research:water_recirculation",
         "research_name": "水与藻料回流"
@@ -12936,9 +13602,21 @@
           "text": "启动1＋收取1"
         }
       ],
-      "icon": "fungus_fish_meal",
+      "icon": "kitchen",
       "id": "recipe:fungus_fish_meal",
       "kind": "recipe",
+      "links": [
+        {
+          "entity": "facility:kitchen",
+          "label": "执行设施",
+          "name": "厨房"
+        },
+        {
+          "entity": "research:basic_spirit_cooking",
+          "label": "解锁研究",
+          "name": "灵食初制"
+        }
+      ],
       "locks": {
         "research": "research:basic_spirit_cooking",
         "research_name": "灵食初制"
@@ -12980,9 +13658,21 @@
           "text": "启动1＋收取1"
         }
       ],
-      "icon": "honey_grain_cake",
+      "icon": "kitchen",
       "id": "recipe:honey_grain_cake",
       "kind": "recipe",
+      "links": [
+        {
+          "entity": "facility:kitchen",
+          "label": "执行设施",
+          "name": "厨房"
+        },
+        {
+          "entity": "research:basic_spirit_cooking",
+          "label": "解锁研究",
+          "name": "灵食初制"
+        }
+      ],
       "locks": {
         "research": "research:basic_spirit_cooking",
         "research_name": "灵食初制"
@@ -13024,9 +13714,21 @@
           "text": "启动1＋收取1"
         }
       ],
-      "icon": "honey_mineral_food",
+      "icon": "kitchen",
       "id": "recipe:honey_mineral_food",
       "kind": "recipe",
+      "links": [
+        {
+          "entity": "facility:kitchen",
+          "label": "执行设施",
+          "name": "厨房"
+        },
+        {
+          "entity": "research:composite_spirit_food",
+          "label": "解锁研究",
+          "name": "复合灵食"
+        }
+      ],
       "locks": {
         "research": "research:composite_spirit_food",
         "research_name": "复合灵食"
@@ -13068,9 +13770,21 @@
           "text": "启动1＋收取1"
         }
       ],
-      "icon": "make_filter_media",
+      "icon": "woodshop",
       "id": "recipe:make_filter_media",
       "kind": "recipe",
+      "links": [
+        {
+          "entity": "facility:woodshop",
+          "label": "执行设施",
+          "name": "木工台"
+        },
+        {
+          "entity": "research:water_recirculation",
+          "label": "解锁研究",
+          "name": "水与藻料回流"
+        }
+      ],
       "locks": {
         "research": "research:water_recirculation",
         "research_name": "水与藻料回流"
@@ -13112,9 +13826,21 @@
           "text": "启动1＋收取1"
         }
       ],
-      "icon": "mill_grain",
+      "icon": "farm_processor",
       "id": "recipe:mill_grain",
       "kind": "recipe",
+      "links": [
+        {
+          "entity": "facility:farm_processor",
+          "label": "执行设施",
+          "name": "农产加工台"
+        },
+        {
+          "entity": "research:farm_preparation",
+          "label": "解锁研究",
+          "name": "农产初加工"
+        }
+      ],
       "locks": {
         "research": "research:farm_preparation",
         "research_name": "农产初加工"
@@ -13156,9 +13882,21 @@
           "text": "启动1＋收取1"
         }
       ],
-      "icon": "mill_grass",
+      "icon": "farm_processor",
       "id": "recipe:mill_grass",
       "kind": "recipe",
+      "links": [
+        {
+          "entity": "facility:farm_processor",
+          "label": "执行设施",
+          "name": "农产加工台"
+        },
+        {
+          "entity": "research:farm_preparation",
+          "label": "解锁研究",
+          "name": "农产初加工"
+        }
+      ],
       "locks": {
         "research": "research:farm_preparation",
         "research_name": "农产初加工"
@@ -13203,6 +13941,18 @@
       "icon": "mineral_feed",
       "id": "recipe:mineral_feed",
       "kind": "recipe",
+      "links": [
+        {
+          "entity": "facility:farm_processor",
+          "label": "执行设施",
+          "name": "农产加工台"
+        },
+        {
+          "entity": "research:mineral_materials",
+          "label": "解锁研究",
+          "name": "矿质材料工艺"
+        }
+      ],
       "locks": {
         "research": "research:mineral_materials",
         "research_name": "矿质材料工艺"
@@ -13244,9 +13994,21 @@
           "text": "启动1＋收取1"
         }
       ],
-      "icon": "oil_honey_paste",
+      "icon": "kitchen",
       "id": "recipe:oil_honey_paste",
       "kind": "recipe",
+      "links": [
+        {
+          "entity": "facility:kitchen",
+          "label": "执行设施",
+          "name": "厨房"
+        },
+        {
+          "entity": "research:composite_spirit_food",
+          "label": "解锁研究",
+          "name": "复合灵食"
+        }
+      ],
       "locks": {
         "research": "research:composite_spirit_food",
         "research_name": "复合灵食"
@@ -13288,9 +14050,21 @@
           "text": "启动1＋收取1"
         }
       ],
-      "icon": "press_oilseed",
+      "icon": "farm_processor",
       "id": "recipe:press_oilseed",
       "kind": "recipe",
+      "links": [
+        {
+          "entity": "facility:farm_processor",
+          "label": "执行设施",
+          "name": "农产加工台"
+        },
+        {
+          "entity": "research:farm_preparation",
+          "label": "解锁研究",
+          "name": "农产初加工"
+        }
+      ],
       "locks": {
         "research": "research:farm_preparation",
         "research_name": "农产初加工"
@@ -13332,9 +14106,21 @@
           "text": "启动1＋收取1"
         }
       ],
-      "icon": "recover_fill",
+      "icon": "woodshop",
       "id": "recipe:recover_fill",
       "kind": "recipe",
+      "links": [
+        {
+          "entity": "facility:woodshop",
+          "label": "执行设施",
+          "name": "木工台"
+        },
+        {
+          "entity": "research:mineral_materials",
+          "label": "解锁研究",
+          "name": "矿质材料工艺"
+        }
+      ],
       "locks": {
         "research": "research:mineral_materials",
         "research_name": "矿质材料工艺"
@@ -13381,9 +14167,21 @@
           "text": "活体工艺：由净水菌毯的特殊食谱执行（整体维护/自动计划），本条目与该食谱同源，勿重复计数"
         }
       ],
-      "icon": "recover_nutrients",
+      "icon": "purifying_bed",
       "id": "recipe:recover_nutrients",
       "kind": "recipe",
+      "links": [
+        {
+          "entity": "facility:purifying_bed",
+          "label": "执行设施",
+          "name": "净水菌床"
+        },
+        {
+          "entity": "research:water_recirculation",
+          "label": "解锁研究",
+          "name": "水与藻料回流"
+        }
+      ],
       "locks": {
         "research": "research:water_recirculation",
         "research_name": "水与藻料回流"
@@ -13426,9 +14224,21 @@
           "text": "启动1＋收取1"
         }
       ],
-      "icon": "refine_oil",
+      "icon": "farm_processor",
       "id": "recipe:refine_oil",
       "kind": "recipe",
+      "links": [
+        {
+          "entity": "facility:farm_processor",
+          "label": "执行设施",
+          "name": "农产加工台"
+        },
+        {
+          "entity": "research:advanced_feed_oil_wax",
+          "label": "解锁研究",
+          "name": "饲料与蜡油精制"
+        }
+      ],
       "locks": {
         "research": "research:advanced_feed_oil_wax",
         "research_name": "饲料与蜡油精制"
@@ -13470,9 +14280,21 @@
           "text": "启动1＋收取1"
         }
       ],
-      "icon": "refine_wax",
+      "icon": "farm_processor",
       "id": "recipe:refine_wax",
       "kind": "recipe",
+      "links": [
+        {
+          "entity": "facility:farm_processor",
+          "label": "执行设施",
+          "name": "农产加工台"
+        },
+        {
+          "entity": "research:advanced_feed_oil_wax",
+          "label": "解锁研究",
+          "name": "饲料与蜡油精制"
+        }
+      ],
       "locks": {
         "research": "research:advanced_feed_oil_wax",
         "research_name": "饲料与蜡油精制"
@@ -13514,9 +14336,16 @@
           "text": "启动1＋收取1"
         }
       ],
-      "icon": "saw_planks",
+      "icon": "woodshop",
       "id": "recipe:saw_planks",
       "kind": "recipe",
+      "links": [
+        {
+          "entity": "facility:woodshop",
+          "label": "执行设施",
+          "name": "木工台"
+        }
+      ],
       "locks": null,
       "name": "锯切木板",
       "related_rules": [
@@ -13555,9 +14384,16 @@
           "text": "启动1＋收取1"
         }
       ],
-      "icon": "shred_twigs",
+      "icon": "woodshop",
       "id": "recipe:shred_twigs",
       "kind": "recipe",
+      "links": [
+        {
+          "entity": "facility:woodshop",
+          "label": "执行设施",
+          "name": "木工台"
+        }
+      ],
       "locks": null,
       "name": "枝条粉碎",
       "related_rules": [
@@ -13596,9 +14432,16 @@
           "text": "启动1＋收取1"
         }
       ],
-      "icon": "shred_wood",
+      "icon": "woodshop",
       "id": "recipe:shred_wood",
       "kind": "recipe",
+      "links": [
+        {
+          "entity": "facility:woodshop",
+          "label": "执行设施",
+          "name": "木工台"
+        }
+      ],
       "locks": null,
       "name": "原木粉碎",
       "related_rules": [
@@ -13637,9 +14480,16 @@
           "text": "启动1＋收取1"
         }
       ],
-      "icon": "smelt_charcoal",
+      "icon": "smelter",
       "id": "recipe:smelt_charcoal",
       "kind": "recipe",
+      "links": [
+        {
+          "entity": "facility:smelter",
+          "label": "执行设施",
+          "name": "小型冶炼炉"
+        }
+      ],
       "locks": null,
       "name": "木炭冶炼",
       "related_rules": [
@@ -13678,9 +14528,21 @@
           "text": "启动1＋收取1"
         }
       ],
-      "icon": "smelt_concentrate",
+      "icon": "smelter",
       "id": "recipe:smelt_concentrate",
       "kind": "recipe",
+      "links": [
+        {
+          "entity": "facility:smelter",
+          "label": "执行设施",
+          "name": "小型冶炼炉"
+        },
+        {
+          "entity": "research:mineral_materials",
+          "label": "解锁研究",
+          "name": "矿质材料工艺"
+        }
+      ],
       "locks": {
         "research": "research:mineral_materials",
         "research_name": "矿质材料工艺"
@@ -13722,9 +14584,16 @@
           "text": "启动1＋收取1"
         }
       ],
-      "icon": "smelt_resin",
+      "icon": "smelter",
       "id": "recipe:smelt_resin",
       "kind": "recipe",
+      "links": [
+        {
+          "entity": "facility:smelter",
+          "label": "执行设施",
+          "name": "小型冶炼炉"
+        }
+      ],
       "locks": null,
       "name": "松脂冶炼",
       "related_rules": [
@@ -13763,9 +14632,21 @@
           "text": "启动1＋收取1"
         }
       ],
-      "icon": "soil_spirit_pill",
+      "icon": "kitchen",
       "id": "recipe:soil_spirit_pill",
       "kind": "recipe",
+      "links": [
+        {
+          "entity": "facility:kitchen",
+          "label": "执行设施",
+          "name": "厨房"
+        },
+        {
+          "entity": "research:composite_spirit_food",
+          "label": "解锁研究",
+          "name": "复合灵食"
+        }
+      ],
       "locks": {
         "research": "research:composite_spirit_food",
         "research_name": "复合灵食"
@@ -13812,9 +14693,51 @@
           "text": "配方·油脂精炼、配方·陆养料调配、配方·水养料调配、配方·蜂蜡精炼、配方·废滤炭堆肥、食谱·land_meal、食谱·water_meal"
         }
       ],
-      "icon": "advanced_feed_oil_wax",
+      "icon": "research_bench",
       "id": "research:advanced_feed_oil_wax",
       "kind": "research",
+      "links": [
+        {
+          "entity": "recipe:refine_oil",
+          "label": "解锁配方",
+          "name": "油脂精炼"
+        },
+        {
+          "entity": "recipe:blend_land_feed",
+          "label": "解锁配方",
+          "name": "陆养料调配"
+        },
+        {
+          "entity": "recipe:blend_water_feed",
+          "label": "解锁配方",
+          "name": "水养料调配"
+        },
+        {
+          "entity": "recipe:refine_wax",
+          "label": "解锁配方",
+          "name": "蜂蜡精炼"
+        },
+        {
+          "entity": "recipe:compost_spent_filter",
+          "label": "解锁配方",
+          "name": "废滤炭堆肥"
+        },
+        {
+          "entity": "diet:steel_sheep/base_diets/land_meal",
+          "label": "解锁食谱",
+          "name": "钢绵羊·陆养复合餐"
+        },
+        {
+          "entity": "diet:rock_belly_beast/base_diets/land_meal",
+          "label": "解锁食谱",
+          "name": "岩腹兽·陆养复合餐"
+        },
+        {
+          "entity": "diet:filter_algae_carp/base_diets/water_meal",
+          "label": "解锁食谱",
+          "name": "滤藻鲤·水养复合餐"
+        }
+      ],
       "locks": null,
       "name": "饲料与蜡油精制",
       "related_rules": [
@@ -13858,9 +14781,26 @@
           "text": "设施·厨房、配方·蜜谷灵饼烘焙、配方·菌鱼灵膳烹制"
         }
       ],
-      "icon": "basic_spirit_cooking",
+      "icon": "research_bench",
       "id": "research:basic_spirit_cooking",
       "kind": "research",
+      "links": [
+        {
+          "entity": "facility:kitchen",
+          "label": "解锁设施",
+          "name": "厨房"
+        },
+        {
+          "entity": "recipe:honey_grain_cake",
+          "label": "解锁配方",
+          "name": "蜜谷灵饼烘焙"
+        },
+        {
+          "entity": "recipe:fungus_fish_meal",
+          "label": "解锁配方",
+          "name": "菌鱼灵膳烹制"
+        }
+      ],
       "locks": null,
       "name": "灵食初制",
       "related_rules": [
@@ -13904,9 +14844,21 @@
           "text": "设施·蜂箱、物种·蜜盏蜂"
         }
       ],
-      "icon": "beekeeping",
+      "icon": "research_bench",
       "id": "research:beekeeping",
       "kind": "research",
+      "links": [
+        {
+          "entity": "facility:bee_hive",
+          "label": "解锁设施",
+          "name": "蜂箱"
+        },
+        {
+          "entity": "species:bell_bee",
+          "label": "解锁物种",
+          "name": "蜜盏蜂"
+        }
+      ],
       "locks": null,
       "name": "蜂群协作",
       "related_rules": [
@@ -13950,9 +14902,36 @@
           "text": "采购·净水菌毯培养单位、设施·净水菌床、配方·菌毯净水、配方·污泥堆肥、物种·净水菌毯"
         }
       ],
-      "icon": "biofiltration",
+      "icon": "research_bench",
       "id": "research:biofiltration",
       "kind": "research",
+      "links": [
+        {
+          "entity": "resource:purifying_mat_culture",
+          "label": "解锁采购",
+          "name": "净水菌毯培养单位"
+        },
+        {
+          "entity": "facility:purifying_bed",
+          "label": "解锁设施",
+          "name": "净水菌床"
+        },
+        {
+          "entity": "recipe:bio_purify",
+          "label": "解锁配方",
+          "name": "菌毯净水"
+        },
+        {
+          "entity": "recipe:compost_sludge",
+          "label": "解锁配方",
+          "name": "污泥堆肥"
+        },
+        {
+          "entity": "species:purifying_mat",
+          "label": "解锁物种",
+          "name": "净水菌毯"
+        }
+      ],
       "locks": null,
       "name": "菌毯净化",
       "related_rules": [
@@ -13996,9 +14975,31 @@
           "text": "配方·藻露羹熬制、配方·蜜油火膏熬制、配方·腐土菌丸炼制、配方·蜜炼金食炼制"
         }
       ],
-      "icon": "composite_spirit_food",
+      "icon": "research_bench",
       "id": "research:composite_spirit_food",
       "kind": "research",
+      "links": [
+        {
+          "entity": "recipe:algae_dew_soup",
+          "label": "解锁配方",
+          "name": "藻露羹熬制"
+        },
+        {
+          "entity": "recipe:oil_honey_paste",
+          "label": "解锁配方",
+          "name": "蜜油火膏熬制"
+        },
+        {
+          "entity": "recipe:soil_spirit_pill",
+          "label": "解锁配方",
+          "name": "腐土菌丸炼制"
+        },
+        {
+          "entity": "recipe:honey_mineral_food",
+          "label": "解锁配方",
+          "name": "蜜炼金食炼制"
+        }
+      ],
       "locks": null,
       "name": "复合灵食",
       "related_rules": [
@@ -14042,9 +15043,36 @@
           "text": "设施·农产加工台、配方·谷粉研磨、配方·草粉研磨、配方·油籽榨油、配方·油饼堆肥"
         }
       ],
-      "icon": "farm_preparation",
+      "icon": "research_bench",
       "id": "research:farm_preparation",
       "kind": "research",
+      "links": [
+        {
+          "entity": "facility:farm_processor",
+          "label": "解锁设施",
+          "name": "农产加工台"
+        },
+        {
+          "entity": "recipe:mill_grain",
+          "label": "解锁配方",
+          "name": "谷粉研磨"
+        },
+        {
+          "entity": "recipe:mill_grass",
+          "label": "解锁配方",
+          "name": "草粉研磨"
+        },
+        {
+          "entity": "recipe:press_oilseed",
+          "label": "解锁配方",
+          "name": "油籽榨油"
+        },
+        {
+          "entity": "recipe:compost_oil_cake",
+          "label": "解锁配方",
+          "name": "油饼堆肥"
+        }
+      ],
       "locks": null,
       "name": "农产初加工",
       "related_rules": [
@@ -14088,9 +15116,16 @@
           "text": "设施·田间维护站"
         }
       ],
-      "icon": "field_maintenance",
+      "icon": "research_bench",
       "id": "research:field_maintenance",
       "kind": "research",
+      "links": [
+        {
+          "entity": "facility:field_service_station",
+          "label": "解锁设施",
+          "name": "田间维护站"
+        }
+      ],
       "locks": null,
       "name": "田间自动维护",
       "related_rules": [
@@ -14134,9 +15169,31 @@
           "text": "采购·蜜铃苗、采购·油籽花种子、种植·蜜铃灌木、种植·油籽花"
         }
       ],
-      "icon": "flower_cultivation",
+      "icon": "research_bench",
       "id": "research:flower_cultivation",
       "kind": "research",
+      "links": [
+        {
+          "entity": "resource:honeybell_seed",
+          "label": "解锁采购",
+          "name": "蜜铃苗"
+        },
+        {
+          "entity": "resource:oilseed_flower_seed",
+          "label": "解锁采购",
+          "name": "油籽花种子"
+        },
+        {
+          "entity": "crop:honeybell_bush",
+          "label": "解锁种植",
+          "name": "蜜铃灌木"
+        },
+        {
+          "entity": "crop:oilseed_flower",
+          "label": "解锁种植",
+          "name": "油籽花"
+        }
+      ],
       "locks": null,
       "name": "花源栽培",
       "related_rules": [
@@ -14180,9 +15237,41 @@
           "text": "设施·补光灯、配方·矿质补料调配、配方·富集矿冶炼、配方·复合石板组装、配方·再生填料回收、食谱·mineral_supplement"
         }
       ],
-      "icon": "mineral_materials",
+      "icon": "research_bench",
       "id": "research:mineral_materials",
       "kind": "research",
+      "links": [
+        {
+          "entity": "facility:growth_lamp",
+          "label": "解锁设施",
+          "name": "补光灯"
+        },
+        {
+          "entity": "recipe:mineral_feed",
+          "label": "解锁配方",
+          "name": "矿质补料调配"
+        },
+        {
+          "entity": "recipe:smelt_concentrate",
+          "label": "解锁配方",
+          "name": "富集矿冶炼"
+        },
+        {
+          "entity": "recipe:assemble_stone_panel",
+          "label": "解锁配方",
+          "name": "复合石板组装"
+        },
+        {
+          "entity": "recipe:recover_fill",
+          "label": "解锁配方",
+          "name": "再生填料回收"
+        },
+        {
+          "entity": "diet:steel_sheep/special_diets/mineral_supplement",
+          "label": "解锁食谱",
+          "name": "钢绵羊·矿质补料餐"
+        }
+      ],
       "locks": null,
       "name": "矿质材料工艺",
       "related_rules": [
@@ -14226,9 +15315,21 @@
           "text": "配方·生物选矿、物种·岩腹兽"
         }
       ],
-      "icon": "ore_concentration",
+      "icon": "research_bench",
       "id": "research:ore_concentration",
       "kind": "research",
+      "links": [
+        {
+          "entity": "recipe:concentrate_ore",
+          "label": "解锁配方",
+          "name": "生物选矿"
+        },
+        {
+          "entity": "species:rock_belly_beast",
+          "label": "解锁物种",
+          "name": "岩腹兽"
+        }
+      ],
       "locks": null,
       "name": "生物选矿",
       "related_rules": [
@@ -14272,9 +15373,31 @@
           "text": "设施·岩兽工作场、配方·破碎石材、配方·破碎矿石、物种·啮岩鼹"
         }
       ],
-      "icon": "rock_handling",
+      "icon": "research_bench",
       "id": "research:rock_handling",
       "kind": "research",
+      "links": [
+        {
+          "entity": "facility:rock_workyard",
+          "label": "解锁设施",
+          "name": "岩兽工作场"
+        },
+        {
+          "entity": "recipe:break_stone",
+          "label": "解锁配方",
+          "name": "破碎石材"
+        },
+        {
+          "entity": "recipe:break_ore",
+          "label": "解锁配方",
+          "name": "破碎矿石"
+        },
+        {
+          "entity": "species:rock_mole",
+          "label": "解锁物种",
+          "name": "啮岩鼹"
+        }
+      ],
       "locks": null,
       "name": "岩料破碎",
       "related_rules": [
@@ -14318,9 +15441,31 @@
           "text": "配方·炭砂滤料制作、配方·营养液回收、配方·高密度藻培养、食谱·dense_meal"
         }
       ],
-      "icon": "water_recirculation",
+      "icon": "research_bench",
       "id": "research:water_recirculation",
       "kind": "research",
+      "links": [
+        {
+          "entity": "recipe:make_filter_media",
+          "label": "解锁配方",
+          "name": "炭砂滤料制作"
+        },
+        {
+          "entity": "recipe:recover_nutrients",
+          "label": "解锁配方",
+          "name": "营养液回收"
+        },
+        {
+          "entity": "recipe:dense_algae_culture",
+          "label": "解锁配方",
+          "name": "高密度藻培养"
+        },
+        {
+          "entity": "diet:filter_algae_carp/base_diets/dense_meal",
+          "label": "解锁食谱",
+          "name": "滤藻鲤·高密度藻餐"
+        }
+      ],
       "locks": null,
       "name": "水与藻料回流",
       "related_rules": [
@@ -14344,7 +15489,7 @@
           "text": "scripts/farming/p8/p8_operations.gd::set_production；scripts/farming/p8/p8_operations.gd::habitat_plan"
         }
       ],
-      "icon": "rule:auto_production",
+      "icon": "help",
       "id": "rule:auto_production",
       "kind": "rule",
       "locks": null,
@@ -14368,7 +15513,7 @@
           "text": "scripts/farming/p8/p8_world.gd::_substituted_materials；scripts/farming/p8/p8_scene.gd::_show_build"
         }
       ],
-      "icon": "rule:build_substitute",
+      "icon": "help",
       "id": "rule:build_substitute",
       "kind": "rule",
       "locks": null,
@@ -14392,7 +15537,7 @@
           "text": "scripts/farming/v1/v1_world.gd::_on_day_changed"
         }
       ],
-      "icon": "rule:crop_growth",
+      "icon": "help",
       "id": "rule:crop_growth",
       "kind": "rule",
       "locks": null,
@@ -14416,7 +15561,7 @@
           "text": "scripts/farming/v1/v1_world.gd::_on_day_changed；scripts/farming/p8/p8_world.gd::_settle_workforce；scripts/farming/p8/p8_world.gd::_settle_husbandry"
         }
       ],
-      "icon": "rule:day_settle",
+      "icon": "help",
       "id": "rule:day_settle",
       "kind": "rule",
       "locks": null,
@@ -14440,7 +15585,7 @@
           "text": "scripts/farming/v1/v1_world.gd::_improve；scripts/farming/p8/p8_world.gd::_light_at"
         }
       ],
-      "icon": "rule:environment",
+      "icon": "help",
       "id": "rule:environment",
       "kind": "rule",
       "locks": null,
@@ -14464,7 +15609,7 @@
           "text": "scripts/farming/p8/p8_land.gd::buy"
         }
       ],
-      "icon": "rule:expansion",
+      "icon": "help",
       "id": "rule:expansion",
       "kind": "rule",
       "locks": null,
@@ -14488,7 +15633,7 @@
           "text": "scripts/farming/p8/p8_flowers.gd::eligible；scripts/farming/p8/p8_flowers.gd::consume"
         }
       ],
-      "icon": "rule:flower_share",
+      "icon": "help",
       "id": "rule:flower_share",
       "kind": "rule",
       "locks": null,
@@ -14512,7 +15657,7 @@
           "text": "scripts/farming/v2/v2_husbandry.gd::maintain；scripts/farming/v2/v2_husbandry.gd::settle"
         }
       ],
-      "icon": "rule:husbandry_service",
+      "icon": "help",
       "id": "rule:husbandry_service",
       "kind": "rule",
       "locks": null,
@@ -14536,7 +15681,7 @@
           "text": "scripts/farming/p8/p8_operations.gd::living_recipe；scripts/farming/p8/p8_husbandry.gd::maintain"
         }
       ],
-      "icon": "rule:living_mapping",
+      "icon": "help",
       "id": "rule:living_mapping",
       "kind": "rule",
       "locks": null,
@@ -14560,7 +15705,7 @@
           "text": "scripts/farming/v1/v1_world.gd::_trade；scripts/farming/p8/p8_world.gd::buy"
         }
       ],
-      "icon": "rule:market",
+      "icon": "help",
       "id": "rule:market",
       "kind": "rule",
       "locks": null,
@@ -14584,7 +15729,7 @@
           "text": "scripts/farming/v1/v1_orders.gd::generate；scripts/farming/v1/v1_data.gd::demand_quote"
         }
       ],
-      "icon": "rule:orders",
+      "icon": "help",
       "id": "rule:orders",
       "kind": "rule",
       "locks": null,
@@ -14608,7 +15753,7 @@
           "text": "scripts/farming/p8/p8_research.gd::start；scripts/farming/p8/p8_research.gd::settle"
         }
       ],
-      "icon": "rule:research",
+      "icon": "help",
       "id": "rule:research",
       "kind": "rule",
       "locks": null,
@@ -14632,7 +15777,7 @@
           "text": "scripts/farming/p8/p8_world.gd::_commit_day；scripts/farming/p8/p8_snapshot.gd::SCHEMA"
         }
       ],
-      "icon": "rule:save",
+      "icon": "help",
       "id": "rule:save",
       "kind": "rule",
       "locks": null,
@@ -14656,7 +15801,7 @@
           "text": "scripts/farming/p8/p8_operations.gd::settle；scripts/farming/p8/p8_operations.gd::_candidates"
         }
       ],
-      "icon": "rule:worker_scheduler",
+      "icon": "help",
       "id": "rule:worker_scheduler",
       "kind": "rule",
       "locks": null,
@@ -14690,7 +15835,7 @@
     },
     {
       "path": "scripts/farming/v1/v1_scene.gd",
-      "sha256": "3968ba8b2d6fe418c810cf03468584e442ca87314db0e5bd73986805045f458c"
+      "sha256": "9f6f8dbcc416ed2b5a069a5c59bca7869d9461795d26bc02b900ae3c276784a4"
     }
   ],
   "processes": [

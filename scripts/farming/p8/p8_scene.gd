@@ -12,6 +12,8 @@ const TerrainSoften := preload("res://assets/farming/shaders/p8_terrain_soften.g
 const TrialGrounding := preload("res://scripts/farming/p8/p8_grounding.gd")
 const ProductionEnvironment := preload("res://scripts/farming/p8/p8_environment_visuals.gd")
 const P8Style := preload("res://scripts/farming/p8/p8_ui_style.gd")
+const Encyclopedia := preload("res://scripts/farming/p8/p8_encyclopedia.gd")
+var encyclopedia := Encyclopedia.new(self)
 var production_visuals := true
 var _facility_thumbnails: Dictionary = {}
 var visual_trial_profile := "baseline"
@@ -347,6 +349,10 @@ func _water_action_text(quote: Dictionary) -> String:
 		return "换水：%s" % String(quote["reason"])
 	return "换水：%s → 水体+%d、污水+%d（每场每日一次，1AP）" % [_materials(quote["inputs"]), int(quote["gain"]), int(quote.get("wastewater", 0))]
 
+## Market item card: jump into the encyclopedia entry for this item.
+func _market_extra(card: Node, item_id: String) -> void:
+	_encyclopedia_link(card,"resource:" + String(item_id))
+
 ## Research-gated seeds/cultures stay visible but explicitly non-purchasable.
 func _market_lock_text(item_id: String) -> String:
 	if not world._items.has(item_id):
@@ -371,6 +377,7 @@ func _show_build() -> void:
 		card.add_child(row)
 		_picture(row,ident,56)
 		_heading(row,definition["name"])
+		_encyclopedia_link(row,"facility:" + String(ident))
 		_label(card,"占地%d×%d · %d元石 · 1AP" % [definition["footprint"][0],definition["footprint"][1],definition["cash"]])
 		_label(card,"材料："+_materials(definition["materials"]))
 		if not locked.is_empty():
@@ -411,6 +418,7 @@ func _show_facility(facility: Dictionary) -> void:
 	var batch: Dictionary = facility["batch"]
 	_picture(sidebar,facility["facility_id"],64)
 	_heading(sidebar,definition["name"])
+	_encyclopedia_link(sidebar,"facility:" + String(facility["facility_id"]))
 	if not batch.is_empty():
 		_heading(sidebar,"待收取" if batch["status"] == "ready" else "加工中")
 		_label(sidebar,RECIPES[batch["recipe_id"]])
@@ -448,10 +456,35 @@ func _substituted_preview(facility_id: String) -> Dictionary:
 	var swap: Dictionary = world._substituted_materials(facility_id)
 	return swap if not swap.is_empty() else world.facility_defs[facility_id]["materials"]
 
-## P8 owns its handbook: legacy V2 caretaker/manual-only guidance is inapplicable.
+## P8 owns its handbook: the unified reading entry keeps the tutorial chapters
+## and adds the encyclopedia tab. Reading either tab never touches gameplay.
+var _help_mode := "guide"
+
+func _encyclopedia_link(parent: Node, entity_id: String) -> Button:
+	if not encyclopedia.has(entity_id):
+		return null
+	var button := _icon(parent,"locate","百科：%s" % encyclopedia.name_of(entity_id),func(): encyclopedia.open(entity_id))
+	button.set_meta("encyclopedia_link",entity_id)
+	return button
+
+func _context_refresh() -> void:
+	if _context == "encyclopedia":
+		encyclopedia.refresh()
+
 func _show_help() -> void:
 	_context = "help"
-	_page("新手手册 · P8生态经营")
+	_page("手册 · 新手引导与百科")
+	var tabs := HBoxContainer.new()
+	sidebar.add_child(tabs)
+	var guide_tab := _button(tabs,"新手引导",func(): _help_mode = "guide"; _show_help())
+	guide_tab.toggle_mode = true
+	guide_tab.button_pressed = _help_mode == "guide"
+	var wiki_tab := _button(tabs,"百科目录",func(): _help_mode = "encyclopedia"; _show_help())
+	wiki_tab.toggle_mode = true
+	wiki_tab.button_pressed = _help_mode == "encyclopedia"
+	if _help_mode == "encyclopedia":
+		encyclopedia.render_into(sidebar)
+		return
 	_label(sidebar,"新档%d元石 · 每天%dAP · 首次45日回顾，之后自由经营。A/B是参考路线，不是限时目标。" % [int(world.config["initial_primeval_stones"]), int(world.config["ap_per_day"])])
 	var selector := OptionButton.new()
 	selector.size_flags_horizontal = Control.SIZE_EXPAND_FILL
@@ -778,6 +811,7 @@ func _show_research_bench(facility: Dictionary) -> void:
 	else:
 		var def: Dictionary = world.research.project_def(String(active["id"]))
 		_heading(sidebar,"%s · %d/%d有效日" % [def["name"], int(active["progress"]), int(def["days"])])
+		_encyclopedia_link(sidebar,"research:" + String(active["id"]))
 		_bar(sidebar,"研究进度",int(active["progress"]),int(def["days"]))
 		_label(sidebar,"样本与启动费已支付；每天一次研究工作：手动1AP，或由负责人日结执行（1元石）。")
 		var work_quote: Dictionary = world.research.work_quote(uid)
@@ -809,6 +843,7 @@ func _show_research() -> void:
 			var status := _project_status(String(project_id))
 			var card := _card(sidebar)
 			_heading(card,"%s · %s" % [def["name"], RESEARCH_STATUS[status]])
+			_encyclopedia_link(card,"research:" + String(project_id))
 			if status == "active":
 				var active: Dictionary = world.research.project_of(String(project_id))
 				_label(card,"进度%d/%d有效日（研究台#%d%s）" % [int(active["progress"]), int(def["days"]), int(active["bench_uid"]), "，已暂停" if bool(active["paused"]) else ""])
@@ -839,6 +874,7 @@ func _show_research() -> void:
 # --- P8.d flower sources -----------------------------------------------------
 
 func _crop_extra(crop: Dictionary) -> void:
+	_encyclopedia_link(sidebar,"crop:" + String(crop["crop_id"]))
 	if not world.flowers.is_flower_crop(String(crop["crop_id"])):
 		return
 	var uid := int(crop["uid"])
@@ -861,6 +897,7 @@ func _crop_extra(crop: Dictionary) -> void:
 		_label(sidebar,"蜂群利用本株份额可为本周期的油籽收获+1（多次/多箱不叠加）。")
 
 func _habitat_extra(habitat: Dictionary) -> void:
+	_encyclopedia_link(sidebar,"species:" + String(habitat["species_id"]))
 	_production_section(world.facilities[int(habitat["facility_uid"])], false)
 	if String(world.facility_defs[String(world.facilities[int(habitat["facility_uid"])]["facility_id"])].get("id", "")) == "rock_workyard" or world.facility_defs[String(world.facilities[int(habitat["facility_uid"])]["facility_id"])].get("species", []).size() > 1:
 		if habitat["individuals"].is_empty():

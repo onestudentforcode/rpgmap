@@ -616,6 +616,43 @@ for _p in processes:
     for _row in _p['inputs'] + _p['outputs']:
         _row['name'] = entity_name(_row['entity'])
 
+# --- icon resolution: prefer the entity's own SVG, fall back by kind ---------
+ICON_ROOT = ROOT / 'assets/farming/ui'
+ELEMENT_ICON = {'wood': 'wood', 'fire': 'fire', 'earth': 'earth', 'water': 'water', 'gold': 'gold'}
+
+
+def icon_id_for(e):
+    kind, sid = e['kind'], e['source_id']
+    if kind == 'resource':
+        candidates = [sid, ELEMENT_ICON[RES[sid]['element']]]
+    elif kind == 'crop':
+        candidates = [sid, 'plant']
+    elif kind == 'facility':
+        candidates = [sid, 'build']
+    elif kind == 'species':
+        candidates = [sid, LIVESTOCK[sid]['facility'], 'workers']
+    elif kind == 'diet':
+        owner = sid.split('/')[0]
+        candidates = [sid, owner, LIVESTOCK[owner]['facility'], 'fodder_grass']
+    elif kind == 'recipe':
+        candidates = [sid, RECIPES[sid]['facility'], 'build']
+    elif kind == 'research':
+        candidates = [sid, 'research_bench']
+    elif kind == 'source':
+        candidates = [SOURCES[sid]['item'], 'claim']
+    elif kind == 'parcel':
+        candidates = [sid, 'area']
+    elif kind == 'map':
+        candidates = ['fit']
+    else:
+        candidates = [sid, 'help']
+    for candidate in candidates:
+        if (ICON_ROOT / (candidate + '.svg')).is_file():
+            return candidate
+    return 'inspect'
+
+
+
 TERMINAL_NOTE = DISPLAY['terminal_products_note']
 for rid, row in RES.items():
     b = BAK_RES[rid]
@@ -649,6 +686,48 @@ for rid, row in RES.items():
                extra={'sources': src_rows, 'uses': use_rows})
 
 
+# --- structured cross-entry links (pre-resolved for the reading UI) ---------
+UNLOCK_ENTITY = {
+    'purchases': lambda t: f'resource:{t}',
+    'crops': lambda t: f'crop:{t}',
+    'facilities': lambda t: f'facility:{t}',
+    'recipes': lambda t: f'recipe:{t}',
+    'species': lambda t: f'species:{t}',
+}
+
+
+def diet_entities_of(diet_id):
+    return [e['id'] for e in entities if e['kind'] == 'diet' and e['source_id'].endswith('/' + diet_id)]
+
+
+for _e in entities:
+    links = []
+    kind, sid = _e['kind'], _e['source_id']
+    if kind == 'crop':
+        links.append(('种子', f'resource:{CROPS[sid]["seed"]}'))
+    elif kind == 'species':
+        links.append(('适配设施', f'facility:{LIVESTOCK[sid]["facility"]}'))
+    elif kind == 'diet':
+        links.append(('所属物种', f'species:{sid.split("/")[0]}'))
+    elif kind == 'facility':
+        for target in FAC[sid].get('species', []):
+            links.append(('接纳物种', f'species:{target}'))
+    elif kind == 'recipe':
+        links.append(('执行设施', f'facility:{RECIPES[sid]["facility"]}'))
+    elif kind == 'research':
+        row = RESEARCH[sid]
+        for section, label in UNLOCK_LABEL.items():
+            for target in row['unlocks'][section]:
+                if section == 'diets':
+                    for diet_eid in diet_entities_of(target):
+                        links.append(('解锁食谱', diet_eid))
+                else:
+                    links.append(('解锁' + label, UNLOCK_ENTITY[section](target)))
+    if _e.get('locks'):
+        links.append(('解锁研究', _e['locks']['research']))
+    _e['links'] = [{'label': label, 'entity': eid, 'name': entity_name(eid)}
+                   for label, eid in links if eid in ENT or eid == 'currency:primeval_stone']
+
 # rules entities
 for rule in CURATED['rules']:
     add_entity(rule['id'], 'rule', rule['id'], rule['name'], 'rules', [],
@@ -656,6 +735,10 @@ for rule in CURATED['rules']:
                [field('statements', '规则说明', '\n'.join(f'{i + 1}. {s}' for i, s in enumerate(rule['statements']))),
                 field('refs', '实现依据', '；'.join(f'{r["path"]}::{r["symbol"]}' for r in rule['refs']))],
                [])
+
+# Icon resolution runs once every entity (rules included) exists.
+for _e in entities:
+    _e['icon'] = icon_id_for(_e)
 
 # =============================================================================
 # validation
@@ -706,6 +789,10 @@ for e in entities:
         check(rid in ENT, f'dangling rule ref {e["id"]}->{rid}')
     if e.get('locks'):
         check(e['locks']['research'] in ENT, f'dangling lock ref {e["id"]}')
+    for link in e.get('links', []):
+        check(link['entity'] in ENT, f'dangling link ref {e["id"]}->{link["entity"]}')
+        check(bool(link['name']), f'link without name {e["id"]}->{link["entity"]}')
+    check(bool(e.get('icon')), f'entity without icon {e["id"]}')
 
 # reverse index two-way
 for e in entities:

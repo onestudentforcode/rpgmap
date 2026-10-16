@@ -76,6 +76,7 @@ func _run() -> void:
         Invoke-GodotCheck 'release' @('res://scenes/farming/farm_p8.tscn','--','--p8-smoke') 'P8 RELEASE SMOKE OK'
     }
     Invoke-GodotCheck 'handbook' @('--script','res://scripts/farming/tests/run_p8_handbook.gd') 'P8 HANDBOOK UI OK'
+    Invoke-GodotCheck 'encyclopedia' @('--script','res://scripts/farming/tests/run_p9_encyclopedia.gd') 'P9 ENCYCLOPEDIA OK'
     Invoke-GodotCheck 'handbook-doc' @('--script','res://tools/farming/export_p8_handbook.gd','--','--check') 'P8 HANDBOOK DOC OK'
     Invoke-GodotCheck 'expansion' @('--script','res://scripts/farming/tests/run_p8_expansion.gd') 'P8 EXPANSION OK'
     if ($IncludePlaytest) {
