@@ -1,0 +1,1449 @@
+{
+  "phase": 10,
+  "date": "2026-10-16",
+  "status": "development_complete",
+  "scope": "Five logistics prototypes, six one-time trial instances; source rules §13 of the Phase 10 document.",
+  "schema": {
+    "current": 18,
+    "reads_previous": 17
+  },
+  "content": {
+    "resources": 65,
+    "recipes": 41,
+    "gu_definitions": 5,
+    "trial_instances": 6,
+    "encyclopedia_entities": 196,
+    "encyclopedia_processes": 253,
+    "encyclopedia_rules": 15,
+    "handbook_chapters": 12
+  },
+  "checks": {
+    "full_regression": {
+      "path": ".art-work/p10-full-regression.log",
+      "sha256": "1ad7e4425c1789be89f81130a96ec9b4105f0c72c8d13ea6ec0f7f8b4181409c",
+      "marker": "FARMING TEST SUITE OK"
+    },
+    "python": {
+      "path": ".art-work/p10-python-release.log",
+      "sha256": "231ef5e2959d62df4adde6918f26ac8dda2a6f54d023b10e55080716e1d42ee5",
+      "marker": "Ran 99 tests"
+    },
+    "model": {
+      "path": ".art-work/p10-tests/model.log",
+      "sha256": "920208ef7c92027342b693113cb6ae55b13e1cff5bdfcade54345bbd2b0fa877",
+      "marker": "PHASE10 TEST OK (181)"
+    },
+    "ui": {
+      "path": ".art-work/p10-tests/ui.log",
+      "sha256": "80e2a52a917323f7b024e00efeff698f3e7cf7e2f904095fd7f3c79469c11fe1",
+      "marker": "PHASE10 UI OK (21)"
+    },
+    "handbook": {
+      "path": ".art-work/p10-tests/handbook.log",
+      "sha256": "2749a0caa31657d1e683f834c02205c37a750b8ce1c8efd1fac14fdb762edf59",
+      "marker": "P8 HANDBOOK DOC OK: 12 chapters"
+    },
+    "encyclopedia": {
+      "path": ".art-work/p10-tests/encyclopedia.log",
+      "sha256": "4c9412032c57ecb501c0dae2943b13ecb8b469e09b54f5e07bf69d6f5b186087",
+      "marker": "P8 ENCYCLOPEDIA DOC OK: 196 entities / 15 rules"
+    },
+    "integrated_p10": {
+      "path": ".art-work/p10-release-audited-suite.log",
+      "sha256": "d057c42d2cf913a3545352d2cb13e403517eb8b9e8a2b85908ebdd1e998c89e9",
+      "marker": "P10 DEVELOPMENT SUITE OK"
+    },
+    "gpu_ui": {
+      "path": ".art-work/p10-gpu-release.stdout.log",
+      "sha256": "86cd90335861dedd4fa7b684736ec9d41d6aa5b91e5d08d8a8e30492e4850130",
+      "marker": "PHASE10 UI OK (21)"
+    }
+  },
+  "business": {
+    "control120": {
+      "settings": {
+        "days": 120,
+        "expansion": false,
+        "initial_currency": 90
+      },
+      "mode": "complete",
+      "routes": {
+        "A": {
+          "day": 120,
+          "cash": 2080,
+          "wages": 1048,
+          "day90": {
+            "cash": 1090,
+            "research": 12
+          },
+          "research": 12,
+          "recipe_claims": {
+            "compost_straw": 30,
+            "culture_algae": 24,
+            "shred_wood": 29,
+            "saw_planks": 10,
+            "char_twigs": 28,
+            "grain_fatten": 27,
+            "smelt_charcoal": 4,
+            "mill_grain": 14,
+            "bio_purify": 14,
+            "iron_supplement": 20,
+            "press_oilseed": 14,
+            "compost_oil_cake": 1,
+            "compost_sludge": 5,
+            "honey_cycle": 50,
+            "break_stone": 13,
+            "refine_oil": 13,
+            "mill_grass": 13,
+            "blend_land_feed": 8,
+            "refine_wax": 1,
+            "blend_water_feed": 10,
+            "honey_grain_cake": 2,
+            "break_ore": 33,
+            "make_filter_media": 5,
+            "compost_spent_filter": 1,
+            "fungus_fish_meal": 2,
+            "recover_nutrients": 6,
+            "dense_algae_culture": 6,
+            "concentrate_ore": 12,
+            "assemble_stone_panel": 3,
+            "smelt_concentrate": 14,
+            "recover_fill": 4,
+            "algae_dew_soup": 2,
+            "mineral_feed": 2,
+            "oil_honey_paste": 1,
+            "honey_mineral_food": 2,
+            "mineral_supplement": 4,
+            "soil_spirit_pill": 2
+          },
+          "consumers": {
+            "compost_straw": {
+              "humus": 8
+            },
+            "culture_algae": {
+              "algae_feed": 8
+            },
+            "shred_wood": {
+              "wood_chip": 9
+            },
+            "saw_planks": {
+              "wood_chip": 14,
+              "wood_plank": 16
+            },
+            "char_twigs": {
+              "charcoal": 16
+            },
+            "smelt_charcoal": {
+              "iron_ingot": 47
+            },
+            "mill_grain": {
+              "grain_meal": 30
+            },
+            "bio_purify": {
+              "clean_water": 24,
+              "sludge": 27
+            },
+            "press_oilseed": {
+              "crude_oil": 30,
+              "oil_cake": 38
+            },
+            "compost_oil_cake": {
+              "humus": 27
+            },
+            "compost_sludge": {
+              "humus": 30
+            },
+            "honey_cycle": {
+              "beeswax": 38,
+              "honey": 34
+            },
+            "break_stone": {
+              "gravel": 42,
+              "stone_powder": 55
+            },
+            "refine_oil": {
+              "refined_oil": 45,
+              "spent_filter": 43
+            },
+            "mill_grass": {
+              "grass_meal": 38
+            },
+            "blend_land_feed": {
+              "land_feed": 40
+            },
+            "refine_wax": {
+              "refined_wax": 73
+            },
+            "blend_water_feed": {
+              "water_feed": 42
+            },
+            "honey_grain_cake": {
+              "honey_cake": 42
+            },
+            "break_ore": {
+              "crushed_ore": 52
+            },
+            "make_filter_media": {
+              "filter_media": 45
+            },
+            "compost_spent_filter": {
+              "humus": 48
+            },
+            "fungus_fish_meal": {
+              "fish_spirit_meal": 47
+            },
+            "recover_nutrients": {
+              "clean_water": 48,
+              "nutrient_liquid": 49,
+              "sludge": 63
+            },
+            "dense_algae_culture": {
+              "dense_algae": 55
+            },
+            "concentrate_ore": {
+              "ore_concentrate": 55,
+              "tailings": 67
+            },
+            "assemble_stone_panel": {
+              "composite_stone_panel": 65
+            },
+            "smelt_concentrate": {
+              "iron_ingot": 65,
+              "slag": 67
+            },
+            "recover_fill": {
+              "reclaimed_fill": 70
+            },
+            "algae_dew_soup": {
+              "dew_soup": 71
+            },
+            "mineral_feed": {
+              "mineral_feed": 78
+            },
+            "oil_honey_paste": {
+              "fire_paste": 77
+            },
+            "honey_mineral_food": {
+              "gold_food": 80
+            },
+            "soil_spirit_pill": {
+              "earth_pill": 97
+            }
+          },
+          "unclaimed": [],
+          "unconsumed": [],
+          "shared_work_days": [
+            51,
+            52,
+            53,
+            54,
+            55,
+            56,
+            57,
+            58,
+            59,
+            60,
+            61,
+            62,
+            63,
+            64,
+            65,
+            66,
+            67,
+            68,
+            69,
+            70,
+            71,
+            72,
+            73,
+            74,
+            75,
+            76,
+            77,
+            78,
+            80,
+            81,
+            82,
+            83,
+            84,
+            85,
+            86,
+            87,
+            88,
+            89,
+            90,
+            91,
+            92,
+            94,
+            95,
+            96,
+            97,
+            98,
+            99,
+            100,
+            101,
+            102,
+            103,
+            104,
+            105,
+            106,
+            107,
+            108,
+            109,
+            110,
+            111,
+            112,
+            113,
+            114,
+            115,
+            116,
+            117,
+            118,
+            119,
+            120
+          ],
+          "automatic_starts": 175,
+          "device_actions": {
+            "fertilize": 40,
+            "irrigate": 64,
+            "lamp": 17
+          },
+          "flower_draws": {
+            "player": 80,
+            "hive": 164
+          },
+          "lit_flower_draws": 11,
+          "gu_lit_flower_draws": 0,
+          "water_changes": 43,
+          "failed_actions": {
+            "加工投入不足：油饼": 2,
+            "加工投入不足：木炭": 2,
+            "加工投入不足：谷粉": 1
+          },
+          "land": {
+            "purchased": [],
+            "price": 0,
+            "crop_days": 0,
+            "west_cycles_started": 0
+          }
+        },
+        "B": {
+          "day": 120,
+          "cash": 2060,
+          "wages": 1098,
+          "day90": {
+            "cash": 1111,
+            "research": 12
+          },
+          "research": 12,
+          "recipe_claims": {
+            "compost_straw": 29,
+            "culture_algae": 22,
+            "shred_wood": 30,
+            "saw_planks": 10,
+            "char_twigs": 28,
+            "grain_fatten": 26,
+            "smelt_charcoal": 4,
+            "mill_grain": 15,
+            "iron_supplement": 22,
+            "bio_purify": 9,
+            "press_oilseed": 14,
+            "compost_oil_cake": 1,
+            "honey_cycle": 53,
+            "compost_sludge": 5,
+            "refine_oil": 13,
+            "mill_grass": 14,
+            "break_stone": 16,
+            "blend_land_feed": 10,
+            "refine_wax": 1,
+            "blend_water_feed": 9,
+            "fungus_fish_meal": 2,
+            "break_ore": 33,
+            "honey_grain_cake": 2,
+            "make_filter_media": 8,
+            "compost_spent_filter": 1,
+            "recover_nutrients": 12,
+            "dense_algae_culture": 10,
+            "concentrate_ore": 12,
+            "assemble_stone_panel": 3,
+            "smelt_concentrate": 14,
+            "mineral_feed": 2,
+            "recover_fill": 2,
+            "algae_dew_soup": 2,
+            "mineral_supplement": 4,
+            "oil_honey_paste": 1,
+            "honey_mineral_food": 2,
+            "soil_spirit_pill": 2
+          },
+          "consumers": {
+            "compost_straw": {
+              "humus": 8
+            },
+            "culture_algae": {
+              "algae_feed": 8
+            },
+            "shred_wood": {
+              "wood_chip": 9
+            },
+            "saw_planks": {
+              "wood_chip": 14,
+              "wood_plank": 16
+            },
+            "char_twigs": {
+              "charcoal": 16
+            },
+            "smelt_charcoal": {
+              "iron_ingot": 46
+            },
+            "mill_grain": {
+              "grain_meal": 29
+            },
+            "bio_purify": {
+              "clean_water": 25,
+              "sludge": 27
+            },
+            "press_oilseed": {
+              "crude_oil": 29,
+              "oil_cake": 35
+            },
+            "compost_oil_cake": {
+              "humus": 27
+            },
+            "honey_cycle": {
+              "beeswax": 29,
+              "honey": 33
+            },
+            "compost_sludge": {
+              "humus": 30
+            },
+            "refine_oil": {
+              "refined_oil": 37,
+              "spent_filter": 41
+            },
+            "mill_grass": {
+              "grass_meal": 35
+            },
+            "break_stone": {
+              "gravel": 40,
+              "stone_powder": 53
+            },
+            "blend_land_feed": {
+              "land_feed": 40
+            },
+            "refine_wax": {
+              "refined_wax": 71
+            },
+            "blend_water_feed": {
+              "water_feed": 39
+            },
+            "fungus_fish_meal": {
+              "fish_spirit_meal": 39
+            },
+            "break_ore": {
+              "crushed_ore": 50
+            },
+            "honey_grain_cake": {
+              "honey_cake": 41
+            },
+            "make_filter_media": {
+              "filter_media": 42
+            },
+            "compost_spent_filter": {
+              "humus": 44
+            },
+            "recover_nutrients": {
+              "clean_water": 45,
+              "nutrient_liquid": 45,
+              "sludge": 64
+            },
+            "dense_algae_culture": {
+              "dense_algae": 58
+            },
+            "concentrate_ore": {
+              "ore_concentrate": 53,
+              "tailings": 65
+            },
+            "assemble_stone_panel": {
+              "composite_stone_panel": 63
+            },
+            "smelt_concentrate": {
+              "iron_ingot": 63,
+              "slag": 65
+            },
+            "mineral_feed": {
+              "mineral_feed": 68
+            },
+            "recover_fill": {
+              "reclaimed_fill": 68
+            },
+            "algae_dew_soup": {
+              "dew_soup": 69
+            },
+            "oil_honey_paste": {
+              "fire_paste": 75
+            },
+            "honey_mineral_food": {
+              "gold_food": 78
+            },
+            "soil_spirit_pill": {
+              "earth_pill": 84
+            }
+          },
+          "unclaimed": [],
+          "unconsumed": [],
+          "shared_work_days": [
+            51,
+            52,
+            53,
+            54,
+            55,
+            56,
+            57,
+            58,
+            59,
+            60,
+            61,
+            62,
+            63,
+            64,
+            65,
+            66,
+            67,
+            69,
+            70,
+            71,
+            72,
+            73,
+            74,
+            75,
+            76,
+            77,
+            78,
+            79,
+            80,
+            81,
+            82,
+            83,
+            84,
+            85,
+            86,
+            87,
+            88,
+            89,
+            90,
+            91,
+            92,
+            93,
+            94,
+            95,
+            96,
+            97,
+            98,
+            99,
+            100,
+            101,
+            102,
+            103,
+            104,
+            105,
+            106,
+            107,
+            108,
+            109,
+            110,
+            111,
+            112,
+            113,
+            114,
+            115,
+            116,
+            117,
+            118,
+            119,
+            120
+          ],
+          "automatic_starts": 180,
+          "device_actions": {
+            "fertilize": 40,
+            "irrigate": 68,
+            "lamp": 19
+          },
+          "flower_draws": {
+            "player": 85,
+            "hive": 171
+          },
+          "lit_flower_draws": 18,
+          "gu_lit_flower_draws": 0,
+          "water_changes": 43,
+          "failed_actions": {
+            "元石不足或库存越界": 2,
+            "加工投入不足：油饼": 1,
+            "加工投入不足：废滤炭": 1,
+            "加工投入不足：营养液": 2
+          },
+          "land": {
+            "purchased": [],
+            "price": 0,
+            "crop_days": 0,
+            "west_cycles_started": 0
+          }
+        }
+      },
+      "unverified_recipe_claims": [],
+      "unverified_recipe_consumers": [],
+      "auditor_sha256": "f0f389ea5d393194d03c4ac8d5823b067756056ca06cbbc162c96dd6d80de32d",
+      "evidence_sha256": {
+        "A-actions.jsonl": "dc82ed0c9315b51fef0020655c9256e4e1fb5101c471269afb497791b4fa89c6",
+        "A-day120.json": "dc277b3f4c9debade648e4d75dc0648f09ad3e6ac14b04e37b754dcba78c661c",
+        "A-day121.json": "e61f30004951b08bed05a71f5bd9b9817194ad3b41b72d9dcf1419e783aaca89",
+        "A-days.jsonl": "8ecd2ca0628d86e2cfe59de74119238aa284388e57622dd8f78c9fb0eec722d3",
+        "A-recap45.json": "c823981232853d57ffe0ebc6c8929167464e73241d49b2270e490557ea2299dc",
+        "A-receipts.jsonl": "81d1af74541f9ef8b333f8c8b468d8e9e5df95d094cef0e6735edec893598caa",
+        "A-run-summary.json": "fd69cba0f4822d19ba6477e671f3a8f24910c03f484a3d320426c565839f8ae2",
+        "B-actions.jsonl": "4db8f8e71104c6f4a353ba61ba637d8b9e3a90153e16504d15b154f86c3d2e75",
+        "B-day120.json": "002fb09cf4153d249512e6c125a2eb717754011405dc13a4c55b4e749e3d889e",
+        "B-day121.json": "8f3d32ae733df73bf7d85ee933643fb102717327b9084601d1e5a68df9b433ed",
+        "B-days.jsonl": "ad551e8ad0fdab552d083c1a878f1b41909252e17ed90b34c3637e3804912d54",
+        "B-recap45.json": "f1be2727a5069fc94e6b8ea7a2a51e809cb9a4bd4873a475ac76865091412c72",
+        "B-receipts.jsonl": "bab00e095e0726519367dea6571ec78a824815ecbad7745158bb7bdf45b9464e",
+        "B-run-summary.json": "84170debebbeba2ea7e8987e74e1a80cfa5d292098e239b71b887d4cf2c28b51",
+        "manifest.json": "a3b6c81d8623f2e02522e5df8d2377717f11740db04695dc4021ff88a9f0867f",
+        "summary.json": "535519a6060c6085491d92d8b693324df325b69601a6fdcbbe29fab1bc5368b8"
+      }
+    },
+    "logistics120": {
+      "settings": {
+        "days": 120,
+        "expansion": false,
+        "initial_currency": 90
+      },
+      "mode": "complete",
+      "routes": {
+        "A": {
+          "day": 120,
+          "cash": 2092,
+          "wages": 1061,
+          "day90": {
+            "cash": 988,
+            "research": 12
+          },
+          "research": 12,
+          "recipe_claims": {
+            "compost_straw": 31,
+            "shred_wood": 27,
+            "culture_algae": 23,
+            "saw_planks": 10,
+            "char_twigs": 28,
+            "smelt_charcoal": 4,
+            "grain_fatten": 27,
+            "mill_grain": 15,
+            "press_oilseed": 15,
+            "mill_rice": 1,
+            "compost_oil_cake": 1,
+            "iron_supplement": 19,
+            "bio_purify": 10,
+            "honey_cycle": 57,
+            "compost_sludge": 5,
+            "mill_grass": 14,
+            "refine_oil": 10,
+            "blend_land_feed": 9,
+            "refine_wax": 1,
+            "fungus_fish_meal": 2,
+            "blend_water_feed": 9,
+            "honey_grain_cake": 2,
+            "break_stone": 16,
+            "compost_spent_filter": 1,
+            "make_filter_media": 8,
+            "break_ore": 32,
+            "recover_nutrients": 12,
+            "dense_algae_culture": 10,
+            "concentrate_ore": 11,
+            "mineral_feed": 3,
+            "assemble_stone_panel": 3,
+            "smelt_concentrate": 12,
+            "mineral_supplement": 5,
+            "recover_fill": 3,
+            "algae_dew_soup": 2,
+            "oil_honey_paste": 1,
+            "honey_mineral_food": 2,
+            "soil_spirit_pill": 2
+          },
+          "consumers": {
+            "compost_straw": {
+              "humus": 8
+            },
+            "shred_wood": {
+              "wood_chip": 10
+            },
+            "culture_algae": {
+              "algae_feed": 10
+            },
+            "saw_planks": {
+              "wood_chip": 14,
+              "wood_plank": 14
+            },
+            "char_twigs": {
+              "charcoal": 14
+            },
+            "smelt_charcoal": {
+              "iron_ingot": 48
+            },
+            "mill_grain": {
+              "grain_meal": 26
+            },
+            "press_oilseed": {
+              "crude_oil": 26,
+              "oil_cake": 32
+            },
+            "mill_rice": {
+              "grain_meal": 26
+            },
+            "compost_oil_cake": {
+              "humus": 26
+            },
+            "bio_purify": {
+              "clean_water": 27,
+              "sludge": 28
+            },
+            "honey_cycle": {
+              "beeswax": 33,
+              "honey": 30
+            },
+            "compost_sludge": {
+              "humus": 33
+            },
+            "mill_grass": {
+              "grass_meal": 32
+            },
+            "refine_oil": {
+              "refined_oil": 34,
+              "spent_filter": 40
+            },
+            "blend_land_feed": {
+              "land_feed": 43
+            },
+            "refine_wax": {
+              "refined_wax": 74
+            },
+            "fungus_fish_meal": {
+              "fish_spirit_meal": 36
+            },
+            "blend_water_feed": {
+              "water_feed": 37
+            },
+            "honey_grain_cake": {
+              "honey_cake": 40
+            },
+            "break_stone": {
+              "gravel": 44,
+              "stone_powder": 60
+            },
+            "compost_spent_filter": {
+              "humus": 43
+            },
+            "make_filter_media": {
+              "filter_media": 46
+            },
+            "break_ore": {
+              "crushed_ore": 57
+            },
+            "recover_nutrients": {
+              "clean_water": 49,
+              "nutrient_liquid": 49,
+              "sludge": 84
+            },
+            "dense_algae_culture": {
+              "dense_algae": 55
+            },
+            "concentrate_ore": {
+              "ore_concentrate": 60,
+              "tailings": 71
+            },
+            "mineral_feed": {
+              "mineral_feed": 68
+            },
+            "assemble_stone_panel": {
+              "composite_stone_panel": 69
+            },
+            "smelt_concentrate": {
+              "iron_ingot": 69,
+              "slag": 71
+            },
+            "recover_fill": {
+              "reclaimed_fill": 74
+            },
+            "algae_dew_soup": {
+              "dew_soup": 74
+            },
+            "oil_honey_paste": {
+              "fire_paste": 78
+            },
+            "honey_mineral_food": {
+              "gold_food": 81
+            },
+            "soil_spirit_pill": {
+              "earth_pill": 88
+            }
+          },
+          "unclaimed": [],
+          "unconsumed": [],
+          "shared_work_days": [
+            51,
+            52,
+            53,
+            54,
+            55,
+            56,
+            57,
+            58,
+            59,
+            60,
+            62,
+            63,
+            64,
+            65,
+            66,
+            67,
+            68,
+            69,
+            70,
+            71,
+            72,
+            74,
+            75,
+            76,
+            77,
+            78,
+            79,
+            80,
+            81,
+            82,
+            84,
+            85,
+            86,
+            87,
+            88,
+            89,
+            90,
+            92,
+            94,
+            95,
+            96,
+            97,
+            98,
+            99,
+            100,
+            101,
+            102,
+            103,
+            104,
+            105,
+            106,
+            107,
+            108,
+            109,
+            110,
+            112,
+            113,
+            114,
+            115,
+            116,
+            117,
+            118,
+            119,
+            120
+          ],
+          "automatic_starts": 175,
+          "device_actions": {
+            "fertilize": 38,
+            "irrigate": 96
+          },
+          "flower_draws": {
+            "player": 108,
+            "hive": 183
+          },
+          "lit_flower_draws": 30,
+          "gu_lit_flower_draws": 30,
+          "water_changes": 46,
+          "failed_actions": {
+            "加工投入不足：油饼": 2,
+            "加工投入不足：藻料": 1,
+            "加工投入不足：谷粉": 3,
+            "加工投入不足：营养液": 2
+          },
+          "land": {
+            "purchased": [],
+            "price": 0,
+            "crop_days": 0,
+            "west_cycles_started": 0
+          }
+        },
+        "B": {
+          "day": 120,
+          "cash": 2133,
+          "wages": 1103,
+          "day90": {
+            "cash": 1020,
+            "research": 12
+          },
+          "research": 12,
+          "recipe_claims": {
+            "compost_straw": 31,
+            "shred_wood": 28,
+            "culture_algae": 24,
+            "saw_planks": 10,
+            "char_twigs": 25,
+            "smelt_charcoal": 4,
+            "grain_fatten": 27,
+            "bio_purify": 9,
+            "iron_supplement": 18,
+            "compost_sludge": 4,
+            "mill_grain": 15,
+            "honey_cycle": 57,
+            "press_oilseed": 13,
+            "mill_rice": 1,
+            "compost_oil_cake": 1,
+            "break_stone": 16,
+            "mill_grass": 14,
+            "refine_oil": 9,
+            "blend_land_feed": 9,
+            "make_filter_media": 7,
+            "fungus_fish_meal": 2,
+            "break_ore": 33,
+            "blend_water_feed": 10,
+            "refine_wax": 1,
+            "recover_nutrients": 11,
+            "dense_algae_culture": 9,
+            "honey_grain_cake": 2,
+            "concentrate_ore": 12,
+            "compost_spent_filter": 1,
+            "assemble_stone_panel": 3,
+            "mineral_feed": 2,
+            "smelt_concentrate": 14,
+            "recover_fill": 1,
+            "algae_dew_soup": 2,
+            "mineral_supplement": 4,
+            "oil_honey_paste": 1,
+            "honey_mineral_food": 2,
+            "soil_spirit_pill": 2
+          },
+          "consumers": {
+            "compost_straw": {
+              "humus": 8
+            },
+            "shred_wood": {
+              "wood_chip": 10
+            },
+            "culture_algae": {
+              "algae_feed": 10
+            },
+            "saw_planks": {
+              "wood_chip": 14,
+              "wood_plank": 14
+            },
+            "char_twigs": {
+              "charcoal": 14
+            },
+            "smelt_charcoal": {
+              "iron_ingot": 45
+            },
+            "bio_purify": {
+              "clean_water": 25,
+              "sludge": 26
+            },
+            "compost_sludge": {
+              "humus": 32
+            },
+            "mill_grain": {
+              "grain_meal": 33
+            },
+            "honey_cycle": {
+              "beeswax": 33,
+              "honey": 34
+            },
+            "press_oilseed": {
+              "crude_oil": 33,
+              "oil_cake": 38
+            },
+            "mill_rice": {
+              "grain_meal": 36
+            },
+            "compost_oil_cake": {
+              "humus": 35
+            },
+            "break_stone": {
+              "gravel": 38,
+              "stone_powder": 56
+            },
+            "mill_grass": {
+              "grass_meal": 38
+            },
+            "refine_oil": {
+              "refined_oil": 55,
+              "spent_filter": 54
+            },
+            "blend_land_feed": {
+              "land_feed": 40
+            },
+            "make_filter_media": {
+              "filter_media": 40
+            },
+            "fungus_fish_meal": {
+              "fish_spirit_meal": 41
+            },
+            "break_ore": {
+              "crushed_ore": 53
+            },
+            "blend_water_feed": {
+              "water_feed": 43
+            },
+            "refine_wax": {
+              "refined_wax": 72
+            },
+            "recover_nutrients": {
+              "clean_water": 43,
+              "nutrient_liquid": 43,
+              "sludge": 66
+            },
+            "dense_algae_culture": {
+              "dense_algae": 49
+            },
+            "honey_grain_cake": {
+              "honey_cake": 47
+            },
+            "concentrate_ore": {
+              "ore_concentrate": 56,
+              "tailings": 67
+            },
+            "compost_spent_filter": {
+              "humus": 58
+            },
+            "assemble_stone_panel": {
+              "composite_stone_panel": 65
+            },
+            "mineral_feed": {
+              "mineral_feed": 68
+            },
+            "smelt_concentrate": {
+              "iron_ingot": 65,
+              "slag": 67
+            },
+            "recover_fill": {
+              "reclaimed_fill": 70
+            },
+            "algae_dew_soup": {
+              "dew_soup": 70
+            },
+            "oil_honey_paste": {
+              "fire_paste": 76
+            },
+            "honey_mineral_food": {
+              "gold_food": 79
+            },
+            "soil_spirit_pill": {
+              "earth_pill": 87
+            }
+          },
+          "unclaimed": [],
+          "unconsumed": [],
+          "shared_work_days": [
+            51,
+            52,
+            53,
+            54,
+            55,
+            56,
+            57,
+            58,
+            59,
+            60,
+            61,
+            62,
+            63,
+            64,
+            65,
+            66,
+            67,
+            68,
+            70,
+            71,
+            73,
+            74,
+            75,
+            76,
+            77,
+            78,
+            79,
+            80,
+            81,
+            82,
+            83,
+            84,
+            85,
+            86,
+            87,
+            88,
+            89,
+            90,
+            91,
+            92,
+            93,
+            94,
+            95,
+            97,
+            98,
+            100,
+            101,
+            102,
+            103,
+            104,
+            106,
+            107,
+            108,
+            109,
+            110,
+            111,
+            112,
+            113,
+            114,
+            115,
+            116,
+            117,
+            118,
+            119,
+            120
+          ],
+          "automatic_starts": 178,
+          "device_actions": {
+            "irrigate": 99,
+            "fertilize": 40
+          },
+          "flower_draws": {
+            "player": 122,
+            "hive": 183
+          },
+          "lit_flower_draws": 33,
+          "gu_lit_flower_draws": 33,
+          "water_changes": 42,
+          "failed_actions": {
+            "缺少种植投入：清水": 4,
+            "加工投入不足：谷粉": 4
+          },
+          "land": {
+            "purchased": [],
+            "price": 0,
+            "crop_days": 0,
+            "west_cycles_started": 0
+          }
+        }
+      },
+      "unverified_recipe_claims": [],
+      "unverified_recipe_consumers": [],
+      "logistics": {
+        "A": {
+          "days": 120,
+          "maintenance": 445,
+          "closed_maintenance": 441,
+          "current_opening_maintenance": 4,
+          "rice_claimed": 208,
+          "cash": 2092,
+          "gu": {
+            "claims": 52,
+            "growth_days": 74,
+            "lit_days": 53,
+            "maintenance": 449,
+            "rice": 208,
+            "time_projects": 1,
+            "wisdom_projects": 11
+          }
+        },
+        "B": {
+          "days": 120,
+          "maintenance": 452,
+          "closed_maintenance": 448,
+          "current_opening_maintenance": 4,
+          "rice_claimed": 224,
+          "cash": 2133,
+          "gu": {
+            "claims": 56,
+            "growth_days": 77,
+            "lit_days": 57,
+            "maintenance": 456,
+            "rice": 224,
+            "time_projects": 4,
+            "wisdom_projects": 8
+          }
+        }
+      },
+      "auditor_sha256": "f0f389ea5d393194d03c4ac8d5823b067756056ca06cbbc162c96dd6d80de32d",
+      "evidence_sha256": {
+        "A-actions.jsonl": "fd4aa4e9e3d9c7b0334a03458d78cf12a0431f1c02a3c29e838068fbfd911d76",
+        "A-day120.json": "1fecb4ff8d24ec6988b5f2d00fa6b1b50fc00dba42b84135a1afad748246a3be",
+        "A-day121.json": "3f7631dffbd3d86b12d3bbd5d174a5555786c1eb9ced125da6e0bdd12ca947e0",
+        "A-days.jsonl": "fc99fc68bfa1b16d74ba53416fb9e735e6ed07e98641503d8da4f20384f962c9",
+        "A-logistics-summary.json": "76e01c100e85d7d7a29b22eb27d52c0bfb228bb23d74cab0c3c2cc6607f2316c",
+        "A-logistics.jsonl": "3615e7882b4563950ef6fe007c239d482c9cc0d2a3ea8b63f104057f5ffd96ea",
+        "A-recap45.json": "a3cb2b4848be4aef743c3ccfc9329af07bf39e36125d28928a97e24b464597a5",
+        "A-receipts.jsonl": "c5664d83323579eacdee8270f5dc2e20def97f92df1fbcce0d28ee372439c4e3",
+        "A-run-summary.json": "126bd744b1622b9e26eea50ce8afa6eb0d20050b01148c9cc186661f4c3179b4",
+        "B-actions.jsonl": "928cf56eea6fbfe8c76ed790ff3896ad3d0bbd14d7b604c7d9ec04c13b15e78b",
+        "B-day120.json": "6852c033166e7399cbcab4e843e14fccb5844cc701c41326dae17bbfadc22dec",
+        "B-day121.json": "db336b9a406027df7c21843bf1f8051b642ba8b0d1372982ad3d49c8ddb29b45",
+        "B-days.jsonl": "8f15da7a88358fc5542e3af5dc8236ed731c4ddf189a8a3a2f9d30d2138b92b9",
+        "B-logistics-summary.json": "388f77e6a60e564c49647bc1efa15d539591b514c23169a157af11a2395e6f7e",
+        "B-logistics.jsonl": "ec4af8b6bd4845d74520dad6b857430591fb1c1abcd18fa218b27e3b9717bd9c",
+        "B-recap45.json": "e01db33ca75e714650233ebfdb1d6d2303ef9dfb36e183fa35ef0079455d52ff",
+        "B-receipts.jsonl": "1f0f8bf6283daa27ab5ab883057eb558c663d97e3196359193cc6a5b1d5ad781",
+        "B-run-summary.json": "86fa5969c286eb24926f1e644265ed5c47fdce10d29cf95fe0673f313014527b",
+        "logistics-audit.json": "12788871d571690513166d209bea39c0e20e1bc6fff428aac72e22366b06c6cb",
+        "manifest.json": "a3b6c81d8623f2e02522e5df8d2377717f11740db04695dc4021ff88a9f0867f",
+        "summary.json": "dcfeee3d22fa42e63d1e32a76fcc81269a0bb8b4a1aec6ded05220247e879034"
+      }
+    }
+  },
+  "logistics": {
+    "A": {
+      "days": 120,
+      "maintenance": 445,
+      "closed_maintenance": 441,
+      "current_opening_maintenance": 4,
+      "rice_claimed": 208,
+      "cash": 2092,
+      "gu": {
+        "claims": 52,
+        "growth_days": 74,
+        "lit_days": 53,
+        "maintenance": 449,
+        "rice": 208,
+        "time_projects": 1,
+        "wisdom_projects": 11
+      }
+    },
+    "B": {
+      "days": 120,
+      "maintenance": 452,
+      "closed_maintenance": 448,
+      "current_opening_maintenance": 4,
+      "rice_claimed": 224,
+      "cash": 2133,
+      "gu": {
+        "claims": 56,
+        "growth_days": 77,
+        "lit_days": 57,
+        "maintenance": 456,
+        "rice": 224,
+        "time_projects": 4,
+        "wisdom_projects": 8
+      }
+    }
+  },
+  "negative_probes": {
+    "control-negative": {
+      "cash": {
+        "rejected": true,
+        "reason": "('A', 0, 'cash balance including next-day opening')"
+      },
+      "stock": {
+        "rejected": true,
+        "reason": "('inventory balance', 0)"
+      },
+      "wages": {
+        "rejected": true,
+        "reason": ""
+      },
+      "claim_duplicate": {
+        "rejected": true,
+        "reason": "missing or duplicate claim"
+      },
+      "flower_overdraft": {
+        "rejected": true,
+        "reason": "flower share overdraft"
+      },
+      "water_duplicate": {
+        "rejected": true,
+        "reason": "duplicate water change"
+      },
+      "reserve": {
+        "rejected": true,
+        "reason": "automatic reserve violation"
+      },
+      "missing_recipe": {
+        "rejected": true,
+        "reason": "('A', 'unclaimed recipes', ['honey_mineral_food'])"
+      },
+      "device_gain": {
+        "rejected": true,
+        "reason": ""
+      },
+      "false_consumer": {
+        "rejected": true,
+        "reason": "('unrecognised flow', 'gold_food', {'开发丢弃': 1})"
+      }
+    },
+    "logistics-negative": {
+      "duplicate_maintenance": {
+        "rejected": true,
+        "reason": "duplicate maintenance"
+      },
+      "fee_drift": {
+        "rejected": true,
+        "reason": "maintenance cost drift"
+      },
+      "missing_food": {
+        "rejected": true,
+        "reason": "maintenance cost drift"
+      },
+      "unpaid_work": {
+        "rejected": true,
+        "reason": "work without maintenance"
+      },
+      "duplicate_work": {
+        "rejected": true,
+        "reason": "duplicate daily production work"
+      },
+      "premature_claim": {
+        "rejected": true,
+        "reason": "claim without finished work"
+      },
+      "duplicate_claim": {
+        "rejected": true,
+        "reason": "claim without finished work"
+      },
+      "extra_rice": {
+        "rejected": true,
+        "reason": "rice claims missing from warehouse or duplicated"
+      },
+      "food_outflow": {
+        "rejected": true,
+        "reason": "special food warehouse outflow mismatch"
+      },
+      "opening_fee_date": {
+        "rejected": true,
+        "reason": "opening fee misdated or missing"
+      },
+      "summary_rice": {
+        "rejected": true,
+        "reason": "gu output summary mismatch"
+      },
+      "source_drift": {
+        "rejected": true,
+        "reason": "('source changed', 'scripts/farming/p8/p10_logistics.gd')"
+      }
+    }
+  },
+  "runtime_manifest": {
+    "content/farming/baked/maps/farm_02.json": "e339076b592f24f060a0c0620494ea231df3cb68dff114bc775f03300de4837e",
+    "content/farming/baked/p8/expansion.json": "65c274ce6e62021345e6cf93c6bdfe1bd1f8d0b57ddd8968a064c28222d35076",
+    "content/farming/baked/p8/production.json": "def1cfefca758cf014e134e8ddf6cec261f8b0a4a18aeeb0f8bc64e9d2881e24",
+    "content/farming/p8/expansion.json": "4ef4c760b53b2d6a103e7a97524fae3431d8470a6e0a1a4529d84d3077fc3b76",
+    "content/farming/p8/production.json": "7950e5badc7dc03eea061429eafb257dd8521450aa1edd4b90d5c8bbcaa70363",
+    "scripts/farming/core/grid/land_grid.gd": "e24c80851df8452158f52cfd0e147d79c26be9d3064c3bb0ca3910fbf8bdc762",
+    "scripts/farming/p8/p10_logistics.gd": "01032ac58b9df71c9ebc21006eeb06d73c2d789de2ead1076aeba47449ab9f47",
+    "scripts/farming/p8/p10_ui.gd": "7259040af9afaa9d3302259a82323b8b207c0cd5f0313bab784543809b15da44",
+    "scripts/farming/p8/p8_data.gd": "b22c0cf3550c6b24b676c9cdfcf4418a395748ede8374b1b60bbad15b5ace6b7",
+    "scripts/farming/p8/p8_devices.gd": "af5cdbc496d96e6c1d8d17a7afd6f59589d2970f255f084f6753b1086c8b5738",
+    "scripts/farming/p8/p8_flowers.gd": "534e3fe0a28a2e8efd5911304ffff0e81651ff83c1bcc57523bac3a44af2a62c",
+    "scripts/farming/p8/p8_husbandry.gd": "2b491602ceadc762849dfbd3af726ab5916079f24d11f9c11eb1f0a576a0a7ae",
+    "scripts/farming/p8/p8_land.gd": "b8256fae73f308ad906375920ab7d332fb49c9932ab6b7b0ed8d553c88036873",
+    "scripts/farming/p8/p8_operations.gd": "0d14214da65fd23cb89de0b73336374935bfbd1e1442a42465eb072f5cbf58dd",
+    "scripts/farming/p8/p8_research.gd": "8215ee994ab2938481e3e29d9ce20358732af602490388f2153d373db6ee11aa",
+    "scripts/farming/p8/p8_scene.gd": "613f7e7efc5f25a2f2a5235658a837d91f09838b28bf189f700974500fabb282",
+    "scripts/farming/p8/p8_snapshot.gd": "c9c13392a401344e50de8c3d80f31e6b5d033808e3e161ad7874c099ed4245d7",
+    "scripts/farming/p8/p8_workforce.gd": "2a7bac85fc99d3016862b379bf71e21e67b6b90166065b744c1de73a18e5efd6",
+    "scripts/farming/p8/p8_world.gd": "8e18580eaa3041ee78ca83661b0c5631743abd17cd43b84ce74fd0f6b8b4d07b",
+    "scripts/farming/tests/run_p8_playtest.gd": "0b05b878438a2965fd06a9eb8e27d34dfa2b651f093d7baec7bd26326bb6aa40",
+    "scripts/farming/v1/v1_world.gd": "5f97be978bbceed04472edbc6dd8c2a5bfb866862b2161095a6229aabba40cbe",
+    "scripts/farming/v1/v1_world_state.gd": "774e5873f4036738ef4c71407485df06b918dd07e47c70b6a313318a5856e38c",
+    "scripts/farming/v2/v2_husbandry.gd": "7641039529798a22f183fe36c8784b6fc823cbcaaafdb47d8dab527f61b7a024",
+    "scripts/farming/v2/v2_resource_ledger.gd": "4dec130b159e404f390526c4126d9dabb05e8772c1d7bf8c0292c60cb9340578"
+  },
+  "screenshots": [
+    {
+      "path": ".shots/p10-release/01-manager.png",
+      "size": [
+        2560,
+        1368
+      ],
+      "sha256": "164ff4ea1d5b58548ee73c12e86e0b962f543813236e52e6b135c26bf4e0e79e"
+    },
+    {
+      "path": ".shots/p10-release/02-ready-map.png",
+      "size": [
+        2560,
+        1368
+      ],
+      "sha256": "e9fd6a70d7e6d9a3d8639f67376f21bd5ac2d29896edf24535be5c032eb1abe4"
+    },
+    {
+      "path": ".shots/p10-release/03-encyclopedia.png",
+      "size": [
+        2560,
+        1368
+      ],
+      "sha256": "120be55dcab4e0817bc169a42b8fe4295da5e039fc2e79b3e372f1a0a96b3f45"
+    },
+    {
+      "path": ".shots/p10-release/04-manager-1920.png",
+      "size": [
+        1920,
+        1080
+      ],
+      "sha256": "ce10818d32bbeca11db24ac4bff7cc4dc3d9194e078f8ea32ef9e5b2507885f3"
+    },
+    {
+      "path": ".shots/p10-release/04-manager-960.png",
+      "size": [
+        960,
+        540
+      ],
+      "sha256": "f9c35c40bb1da094ca0002b77269ae1ca93361f551114501810d5743762905ec"
+    },
+    {
+      "path": ".shots/p10-release/05-host-options.png",
+      "size": [
+        2560,
+        1440
+      ],
+      "sha256": "7b56c8a71ac60a216f1b1609d453866cdce461445e5a91e681f6a67e18e087c5"
+    },
+    {
+      "path": ".shots/p10-release/06-light-range.png",
+      "size": [
+        2560,
+        1440
+      ],
+      "sha256": "627a4755e48ddd6e187c01da3712b67014308e2c26a061d898a814b86d7a9b21"
+    }
+  ],
+  "user_design_sha256": "4ffe318f8b74b0fe0057f2c06564c0eddf2d8a10dcbeb44bf200f09b0c272cd5",
+  "provenance": [
+    "Four separate normal-source 120-day processes completed with no gameplay failures; 918 control and 926 logistics route checks.",
+    "Original raw A/B books retained unchanged in .art-work/p10-tests/*120-parts; assembly verifies matching manifests/settings and distinct research histories.",
+    "The first wrapper failed retrieving a process exit code after successful route completion. The handle is now retained; actual Godot exit-0 and exit-1 collection was verified. -AuditExisting rechecked original logs/books without rerunning or rewriting the routes.",
+    "The old auditor was extended for paid gu lighting and exact reason-indexed gu inventory entries; both ordinary audits and the independent gu audit then passed.",
+    "Full legacy suite passed before the final null-field/old-placement defensive fixes; final 181 model and 21 headless/GPU UI checks verify those fixes.",
+    "Maintenance shown at day120 includes opening120; closed_maintenance excludes that next-day opening. The extra continuation day is separately present in raw gu summary totals."
+  ],
+  "environment_note": "Only the exact Windows root-certificate-store warning is exempted. Legacy user:// test stores required an authorised full-suite run; P10 checks use workspace stores.",
+  "review": {
+    "gpu_images_inspected_by_agent": [
+      "01-manager",
+      "04-manager-960",
+      "06-light-range"
+    ],
+    "user_subjective_playtest": "not claimed"
+  },
+  "deferred": [
+    "Real upstream acquisition/capture/refinement/rank growth",
+    "Condensation P1 and full high-rank catalogue",
+    "Final replacement art",
+    "New Windows distribution package (existing development-stage waiver)"
+  ],
+  "reproduce": [
+    "test.bat",
+    "test-p10.bat",
+    "test-p10.bat -SkipPlaytest",
+    "test-p10.bat -AuditExisting",
+    "python tools/farming/record_p10_validation.py"
+  ]
+}

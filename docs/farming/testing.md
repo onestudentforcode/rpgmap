@@ -1,5 +1,9 @@
 # 当前农场测试与历史入口
 
+> **2026-10-16 P10接入：** 默认入口继续沿用P8.7投影，新增后勤蛊玩法与schema18（兼容读取schema17）。`test-p10.bat`检查源契约、模型/界面、手册/百科及有/无蛊各双120日回放和严格审计；`-SkipPlaytest`可只跑快速专项。P10模型与界面检查已并入`test-p8.bat`及完整`test.bat`。当前执行证据见[Phase 10](phase-10-后勤蛊虫与生产协同.md#14-执行与验收记录)。下面的schema17/旧数量描述历史阶段证据。
+
+> **P10最终结果：** 181项模型、21项界面（含真实Vulkan窗口）、99项Python工具、12章手册/196实体百科同源检查、完整`test.bat`通过。四条独立120日回放完成，两组`complete`严格审计通过，后勤12类/普通10类篡改拒绝通过；[机器可读记录](phase10-validation.json)保存源清单和证据SHA256。首轮外层退出码收集误报已修复并验证Godot退出0/1；最终以`-AuditExisting`重审未改动的原始回放。只豁免精确的Windows根证书读取环境警告。
+
 > **2026-10-15 当前P8.7：** 默认`farm_p8.tscn`加载`p87_scene.gd`，保留schema17和原玩法。完整`test.bat`通过；最终89项投影、146项生产视觉、324项GUI信号交互专项通过，阴影补充后的60帧和独立包91/91/93项重新验证。运行`review_p87_trial.ps1 -ChecksOnly`复查专项，`review_p87_full.ps1`生成正式三窗口/缩放/侧栏矩阵，`qc_p87_visuals.py`检查资源及显式冻结的投影基准，`build_p87_demo.ps1`构建隔离包；[证据](art/p87-final-validation.json)。
 
 > **P8.6历史基线：** 95项生产视觉及原48图/42帧证据保留；`qc_p86_visuals.py`、`review_p86_full.ps1`和固定原shell的`build_p86_demo.ps1`用于该历史批次。P8.5轮廓等价QC只适用于历史升分辨率批次，不用于有意修形或P8.7根点/投影调整。
@@ -12,6 +16,9 @@
 .\play.bat                        # P8生态经营、新手手册、独立三槽
 .\play.bat --selftest             # P8源码隔离冒烟（20项）
 .\test-p8.bat                      # P8编译/配数/模型/手册/源码检查
+.\test-p10.bat                     # P10专项与有/无蛊各双120日对照、严格审计
+.\test-p10.bat -SkipPlaytest       # P10快速模型/界面/同源文档检查
+.\test-p10.bat -AuditExisting     # 核验已有四路日志/源清单并重审原始账簿
 .\test.bat                        # 资产、工具及V0/V1/V2/P8完整回归
 .\play.bat v2                     # 历史V2及其独立档案
 .\play.bat v1                     # 历史V1及其独立档案

@@ -1,5 +1,7 @@
 # handoff — 跨机器开发交接
 
+> **P10开发交付完成（2026-10-16）：** 五类后勤蛊、六只一次性试用实例、部署/维护/稻米生产、明光/催生、研究辅助、管理页、百科及12章手册已接入。默认P8入口/P8.7投影，schema18兼容读取schema17。最终181项模型、21项界面及GPU检查、99项Python工具、完整`test.bat`、有/无蛊各双120日严格审计及12＋10类篡改拒绝通过；见[Phase 10](docs/farming/phase-10-后勤蛊虫与生产协同.md#14-执行与验收记录)与[验收证据](docs/farming/phase10-validation.json)。运行`play.bat`后打开“后勤蛊”，见[操作说明](docs/farming/demo-p10-操作说明.md)。`test-p10.bat`重跑专项和经营；`-SkipPlaytest`快速检查，`-AuditExisting`重审原始证据。真实上游、凝露P1、正式美术与新Windows包后置，未代签用户主观试玩。下面P9/P8.7数量、schema17及“下一步方向”属于历史记录。
+
 > **P9已完成（2026-10-16）：** [游戏内百科全书](docs/farming/phase-09-游戏内百科全书.md)全部交付：P9.a调查（[audit交付](docs/farming/encyclopedia/audit/report.md)五件套，复核50项0问题）；P9.b内容层（curated源`content/farming/encyclopedia/encyclopedia.json`＋编译器`tools/farming/bake_encyclopedia.py`→`content/farming/baked/encyclopedia/encyclopedia.json`，格式版本1；187实体/242过程/14规则；`--check`过期检查接入test-p8）；P9.c游戏内阅读（`scripts/farming/p8/p8_encyclopedia.gd`缺氧风格双栏阅读器，接入统一手册双页签与各面板查询按钮）；P9.d同源导出[百科全书](docs/farming/demo-p8-百科全书.md)＋8项核验单测（工具单测共89项）；试玩反馈修复（长文AUTOWRAP_ARBITRARY换行约30字/行、隐藏"实现依据"refs，专项44项）；P9.e用户验收通过，**Windows打包按用户要求豁免（开发阶段不打包；正式打包时需在打包配置中显式包含`content/farming/baked/encyclopedia/`数据）**，分辨率抽查与完整`test.bat`全绿。默认P8.7/schema17保持，未改任何玩法数值。下一步方向待用户确定。
 
 > **上一阶段P8.6基线：** [场景美术统一与可读性整改](docs/farming/phase-08.6-场景美术统一与可读性整改.md)已在用户样板接受后完成B～E。当时默认P8启用全量接地、7植物幼苗整改、3资源点、平滑地形/全方向水岸和设施缩略图；保留35°/矩形地格、schema17及经营规则。`test.bat`、42张正式GPU截图、独立包86/86/87项检查通过；[最终证据](docs/farming/art/p86-final-validation.json)，产物`dist/LingTianDemoP86-Windows-x64.zip`。用户样板接受与代理全场复核分别记录。
