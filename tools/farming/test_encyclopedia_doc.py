@@ -107,7 +107,7 @@ class EncyclopediaManual(unittest.TestCase):
             self.assertNotIn(stale, MANUAL, 'manual leaks stale wording: %s' % stale)
 
     def test_no_unresolved_placeholders(self):
-        for bad in ('TODO', 'FIXME', 'None', '按订单/库存×None'):
+        for bad in ('TODO', 'FIXME', 'None', '按订单/库存×None', '实现依据'):
             self.assertNotIn(bad, MANUAL, 'manual contains placeholder %r' % bad)
 
     def _section_of(self, entity_id):

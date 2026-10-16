@@ -311,7 +311,7 @@ func render_detail() -> void:
 		chip.add_child(chip_text)
 		title_row.add_child(chip)
 		if not unlocked:
-			var gate := UI.label("需研究「%s」；静态内容仍可阅读，阅读不解锁玩法。" % String(entity["locks"]["research_name"]), true)
+			var gate := _wrapped("需研究「%s」；静态内容仍可阅读，阅读不解锁玩法。" % String(entity["locks"]["research_name"]))
 			title_column.add_child(gate)
 	elif not shell._started:
 		title_column.add_child(UI.label("未开档：仅展示静态内容。", true))
@@ -328,12 +328,13 @@ func render_detail() -> void:
 	identity.clip_text = true
 	detail_box.add_child(identity)
 	if not String(entity.get("summary", "")).is_empty():
-		var summary := UI.label(String(entity["summary"]), true)
-		detail_box.add_child(summary)
-	# fields card
+		detail_box.add_child(_wrapped(String(entity["summary"])))
+	# fields card; the internal refs trace stays out of the player-facing reader.
 	if not entity.get("fields", []).is_empty():
 		var card := _card(detail_box, "条目数据")
 		for field in entity["fields"]:
+			if String(field["key"]) == "refs":
+				continue
 			var row := HBoxContainer.new()
 			row.add_theme_constant_override("separation", 8)
 			card.add_child(row)
@@ -341,7 +342,7 @@ func render_detail() -> void:
 			key.custom_minimum_size = Vector2(104, 0)
 			key.size_flags_vertical = Control.SIZE_SHRINK_BEGIN
 			row.add_child(key)
-			var value := UI.label(String(field["text"]))
+			var value := _wrapped(String(field["text"]))
 			value.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 			row.add_child(value)
 	# sources / uses for resources
@@ -409,10 +410,9 @@ func _render_relation(parent: Node, row: Dictionary) -> void:
 	var column := VBoxContainer.new()
 	column.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	line.add_child(column)
-	var main := UI.label(String(row["detail"]))
-	column.add_child(main)
+	column.add_child(_wrapped(String(row["detail"])))
 	if not String(row.get("others", "")).is_empty():
-		column.add_child(UI.label("同批：" + String(row["others"]), true))
+		column.add_child(_wrapped("同批：" + String(row["others"]), true))
 
 func _jump_target_of(process_id: String) -> String:
 	var process: Dictionary = processes.get(process_id, {})
@@ -440,6 +440,16 @@ func _card(parent: Node, title_text: String) -> VBoxContainer:
 	title.add_theme_font_size_override("font_size", 17)
 	body.add_child(title)
 	return body
+
+## Long CJK text has no space boundaries, so word-smart wrapping leaves single
+## statements running past the panel and clipped. Arbitrary wrapping breaks
+## between any two characters — roughly one line per 30-ish characters at the
+## default width, and it keeps working at every UI scale.
+func _wrapped(text: String, muted: bool = false) -> Label:
+	var label := UI.label(text, muted)
+	label.autowrap_mode = TextServer.AUTOWRAP_ARBITRARY
+	label.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	return label
 
 func _kind_label(kind: String) -> String:
 	return {"resource": "物品", "crop": "作物", "species": "物种", "diet": "食谱", "facility": "设施",

@@ -116,7 +116,14 @@ func _run() -> void:
 	seed_link.pressed.emit()
 	check(wiki.current_id == "resource:golden_wheat_seed", "seed link jumps")
 	wiki.open("rule:crop_growth")
-	check(text_of(wiki.detail_box).contains("每日进度增量"), "rule entry shows the growth formula")
+	var rule_text := text_of(wiki.detail_box)
+	check(rule_text.contains("每日进度增量"), "rule entry shows the growth formula")
+	check(not rule_text.contains("实现依据") and not rule_text.contains(".gd::"), "rule detail hides internal refs")
+	var statement_label: Label = null
+	for node in nodes(wiki.detail_box):
+		if node is Label and node.text.contains("每日进度增量"):
+			statement_label = node
+	check(statement_label != null and statement_label.autowrap_mode == TextServer.AUTOWRAP_ARBITRARY, "long statements wrap arbitrarily")
 
 	# --- rule browsing --------------------------------------------------------
 	category_button("rules").pressed.emit()

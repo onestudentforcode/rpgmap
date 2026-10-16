@@ -3686,20 +3686,10 @@
 3. 目标按“单位批”推进：缺口=目标−有效库存，启动单位数=ceil(缺口/单位产出)；活体整单位启动可略超目标
 4. 保留量只挡自动投料与活体自动启动；手动操作、交易、建造、研究、基础照料、装置耗料不受限
 
-**实现依据**
-
-- `scripts/farming/p8/p8_operations.gd::set_production`
-- `scripts/farming/p8/p8_operations.gd::habitat_plan`
-
 ### 建材替代 `rule:build_substitute`
 
 1. 建造材料的普通岩石部分可整体替换：复合石板1:1 或 再生填料2:1；非石料部分不可替换
 2. 替代在营建界面选择，替换校验与建造共用流程
-
-**实现依据**
-
-- `scripts/farming/p8/p8_world.gd::_substituted_materials`
-- `scripts/farming/p8/p8_scene.gd::_show_build`
 
 ### 作物生长速率公式 `rule:crop_growth`
 
@@ -3709,21 +3699,11 @@
 4. 多格作物按占地格平均判速；每格每日各扣该作物的水分与肥力（成熟待收期间照扣）
 5. 环境不足只降速，不会死亡；生长不暂停（下限1点/日）
 
-**实现依据**
-
-- `scripts/farming/v1/v1_world.gd::_on_day_changed`
-
 ### 日结顺序与自动推进 `rule:day_settle`
 
 1. AP耗尽或点“结束当天”进入日结；顺序：统一调度器（设施收取→必要换水→整体维护→研究→自动投料→农务）→ 养殖结算（水体衰减/暂停→成长与周期推进）→ 研究结算（收据推进）→ 花源份额过期 → 作物生长与水肥扣减 → 资源点配额重置 → 批次完工 → 新订单 → 台账/日志 → 次日开日装置（灯→田间站）→ 日存档
 2. 日存档失败回滚到当日操作前快照；重试只重写候选快照，不重复劳动或收费
 3. 日结推进的各种“有效日”：研究=有收据的日子；养殖=当日有基础服务；作物=环境速率（下限1/日）
-
-**实现依据**
-
-- `scripts/farming/v1/v1_world.gd::_on_day_changed`
-- `scripts/farming/p8/p8_world.gd::_settle_workforce`
-- `scripts/farming/p8/p8_world.gd::_settle_husbandry`
 
 ### 环境值与有效光照 `rule:environment`
 
@@ -3732,11 +3712,6 @@
 3. 有效光照=补光灯生效时max(自然光, 80)；生长、花源资格与界面显示共用此值
 4. 环境值与库存物品严格分离：扣水分≠耗清水物品
 
-**实现依据**
-
-- `scripts/farming/v1/v1_world.gd::_improve`
-- `scripts/farming/p8/p8_world.gd::_light_at`
-
 ### 购地与连续地图 `rule:expansion`
 
 1. 连续坐标系：基础区20×22始终可用；扩地后外接32×22（含负列号）；未购地块不可开垦/建造/标记/选种
@@ -3744,21 +3719,12 @@
 3. 水场2×2占地须全部为已购水面；跨购买边界建造允许但占地须全已购
 4. 购地0AP；重复购买不扣款；泉水日产量不随扩水增加；各水场水体独立
 
-**实现依据**
-
-- `scripts/farming/p8/p8_land.gd::buy`
-
 ### 花源份额 `rule:flower_share`
 
 1. 每株花作物每日1份额，当日首次合格时初始化；日结清空未用份额
 2. 份额内容物=花蜜2+花粉1；手采1AP取得实物；蜂群饲喂消耗份额但不产出该内容物
 3. 合格条件：蜜铃灌木=成熟期；油籽花=生长进度300~499；每格水≥30、肥≥30、光照与偏好差≤20
 4. 蜂箱覆盖=占地外扩2格；手采与蜂群共享份额；蜂群用油籽花份额→该株本周期授粉（收获+1油籽，不叠加）
-
-**实现依据**
-
-- `scripts/farming/p8/p8_flowers.gd::eligible`
-- `scripts/farming/p8/p8_flowers.gd::consume`
 
 ### 养殖服务与周期口径 `rule:husbandry_service`
 
@@ -3768,32 +3734,17 @@
 4. 默认食谱无需研究即可选；带研究门槛的食谱须解锁；切换特殊食谱会停用自动策略但不改写在制周期
 5. 满容量参考为4单位；成本表中的“养殖参考轮”按4单位汇总，不是单只消耗
 
-**实现依据**
-
-- `scripts/farming/v2/v2_husbandry.gd::maintain`
-- `scripts/farming/v2/v2_husbandry.gd::settle`
-
 ### 活体配方的双重注册 `rule:living_mapping`
 
 1. living=true的配方（菌毯净水、营养液回收、破碎石材、破碎矿石、生物选矿）与对应物种特殊食谱是同一执行过程
 2. 实际执行走物种特殊食谱（整体维护/自动计划）；配方注册面用于设施面板、研究解锁校验与自动策略选择
 3. 查阅来源/用途时不重复计算两条注册
 
-**实现依据**
-
-- `scripts/farming/p8/p8_operations.gd::living_recipe`
-- `scripts/farming/p8/p8_husbandry.gd::maintain`
-
 ### 市集交易 `rule:market`
 
 1. 固定价格：买价>0才可买、卖价>0才可卖；交易0AP；卖出计入销售收入
 2. 买入校验“买价×100>卖价×110”防套利；买价≥卖价
 3. 研究门槛：带研究要求的物品完成研究前在市集显示锁定（可见不可买）
-
-**实现依据**
-
-- `scripts/farming/v1/v1_world.gd::_trade`
-- `scripts/farming/p8/p8_world.gd::buy`
 
 ### 五行供货与转数 `rule:orders`
 
@@ -3802,11 +3753,6 @@
 3. 交付：物品须可供货+元素=订单路径+供养值>0；数量=ceil(需求/供养值)；回款=数量×卖价+溢价（=基数×10%向下取整）；0AP；未完成不罚款
 4. 供养值=烘焙派生的定价参考（标准成本向上取整、最低1），不是生产成本
 
-**实现依据**
-
-- `scripts/farming/v1/v1_orders.gd::generate`
-- `scripts/farming/v1/v1_data.gd::demand_quote`
-
 ### 研究系统 `rule:research`
 
 1. 启动：一次性样本+费用（0AP）；前置须完成；每台一项目；全场未完成过
@@ -3814,21 +3760,11 @@
 3. 完成：知识全农场共享，解锁采购/种植/设施/配方/物种/食谱；解锁表与实体自身研究门槛双向核对一致
 4. 暂停保留进度与投入，不退款；在研研究台不能拆除
 
-**实现依据**
-
-- `scripts/farming/p8/p8_research.gd::start`
-- `scripts/farming/p8/p8_research.gd::settle`
-
 ### 存档与经济 `rule:save`
 
 1. 三槽日存档（user://farm_demo_p8_slots）；存档schema17；日结事务提交，失败可重试/放弃当天
 2. 初始90元石、每天24AP、15日一时节；开局物资金穗麦种8、速生杉苗2、松脂树苗1、木腐菇菌种4
 3. 收入=出售+订单；支出=采购+建设（设施/土地/幼体/研究费）+人工
-
-**实现依据**
-
-- `scripts/farming/p8/p8_world.gd::_commit_day`
-- `scripts/farming/p8/p8_snapshot.gd::SCHEMA`
 
 ### 雇工与统一调度器 `rule:worker_scheduler`
 
@@ -3837,10 +3773,5 @@
 3. 农务兼任默认关闭；开启后8类工作按个人偏好(0~5)与标记优先级执行；浇水施肥仅当环境低于30
 4. 设施负责人步序：待收收取→水体≤60时换水→整体维护（按自动计划过滤个体）
 5. 无负责人/未启用/额度或预算不足时设施任务积压并显示等待天数
-
-**实现依据**
-
-- `scripts/farming/p8/p8_operations.gd::settle`
-- `scripts/farming/p8/p8_operations.gd::_candidates`
 
 

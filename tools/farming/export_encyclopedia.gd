@@ -61,18 +61,13 @@ func cell(text: String) -> String:
 	return text.replace("|", "／").replace("\n", "；")
 
 ## Rules keep their statements verbatim (the pipes are content, not table
-## syntax) and skip the truncated UI summary.
+## syntax) and skip the truncated UI summary; the internal refs stay in the
+## curated source, never in the player-facing document.
 func render_rule(entity: Dictionary) -> String:
 	var out := ""
 	for field in entity.get("fields", []):
 		if String(field["key"]) == "statements":
 			out += "%s\n\n" % String(field["text"])
-		elif String(field["key"]) == "refs":
-			out += "**实现依据**\n\n"
-			for reference in String(field["text"]).split("；"):
-				if not reference.is_empty():
-					out += "- `%s`\n" % reference
-			out += "\n"
 	return out
 
 func render(data: Dictionary) -> String:
