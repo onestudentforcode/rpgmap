@@ -592,7 +592,8 @@ proc('proc:worker_farm', 'worker_farm', '雇工农务（委托日结）', [], []
 # resource entities + resolved source/use rows
 # =============================================================================
 def _relation_row(p, io_row, direction):
-    others = [f'{o["name"]}×{o["quantity"]}' for o in (p['inputs'] + p['outputs']) if o['entity'] != io_row['entity']]
+    others = [(f'{o["name"]}×{o["quantity"]}' if o['quantity'] is not None else f'{o["name"]}×按公式')
+                for o in (p['inputs'] + p['outputs']) if o['entity'] != io_row['entity']]
     return {
         'process': p['id'], 'name': p['name'], 'type': p['type'], 'category_hint': p['category_hint'],
         'quantity': io_row['quantity'], 'basis': io_row['basis'], 'timing': io_row['timing'],
