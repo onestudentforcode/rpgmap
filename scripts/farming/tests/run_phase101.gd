@@ -37,6 +37,10 @@ func _initialize() -> void:
 	_resolution_order()
 	_fixed_precision()
 	_facing_flow()
+	_growth_table()
+	_regrow_and_mature()
+	_flower_window()
+	_zero_fertility_and_replant()
 	_upgrade()
 	_rejections()
 	_transaction()
@@ -233,6 +237,126 @@ func _facing_flow() -> void:
 	check(w.logistics.service_zone(w.logistics.instance("trial-004"),2)==Rect2i(3,6,3,3),"opening promotes the committed facing")
 	check(w.logistics.growth_percent(Rect2i(Vector2i(6,5),Vector2i.ONE),["plant_grow"],2)==100,"turned-away crop loses the boost")
 	check(Codec.normalize(w.to_snapshot())["ok"],"facing state serializes")
+
+## P10.1.c acceptance: full-cycle growth table, regrow/mature semantics, the
+## oilseed share window under acceleration, zero-fertility targets and the
+## replant remainder defense.
+func _growth_table() -> void:
+	# §5.1: ideal-environment days at 150% are ceil(target/150). Each crop grows
+	# in its own world at (6,4) inside the east zone of the host at (4,4).
+	var specs := [
+		["pasture_grass", 3, 2, "grass_seed"],
+		["golden_wheat", 4, 3, ""],
+		["oilseed_flower", 5, 4, "oilseed_flower_seed"],
+		["honeybell_bush", 6, 4, "honeybell_seed"],
+		["fast_fir", 8, 6, ""],
+	]
+	for spec in specs:
+		var w := World.new()
+		w.logistics.provision()
+		var uids := scaffold(w,[Vector2i(4,4)])
+		w.logistics.deploy("trial-004",Vector2i(-1,-1),uids[0])
+		if not String(spec[3]).is_empty(): w.grant_scaffold({String(spec[3]):1})
+		# Service already active before planting: the §5.1 table assumes
+		# continuous coverage from the first settle.
+		w.end_day()
+		w.till(Vector2i(6,4))
+		if String(spec[0]) == "fast_fir":
+			for cell in [Vector2i(7,4),Vector2i(6,5),Vector2i(7,5)]: w.till(cell)
+		check(w.plant(Vector2i(6,4),String(spec[0]))["ok"],String(spec[0])+" planted in the service zone")
+		var day := 0
+		while day < int(spec[2]) + 2 and String(w.instance_at(Vector2i(6,4))["state"]) != "mature":
+			w.end_day()
+			day += 1
+		check(day == int(spec[2]),"%s matures in %d ideal days at 150%% (was %d)" % [spec[0],spec[2],spec[1]])
+
+func _regrow_and_mature() -> void:
+	var w := World.new()
+	w.logistics.provision()
+	var uids := scaffold(w,[Vector2i(4,4)])
+	w.logistics.deploy("trial-004",Vector2i(-1,-1),uids[0])
+	w.end_day()
+	for cell in [Vector2i(6,4),Vector2i(7,4),Vector2i(6,5),Vector2i(7,5)]: w.till(cell)
+	check(w.plant(Vector2i(6,4),"resin_tree")["ok"],"resin tree planted")
+	for i in range(6): w.end_day()
+	var tree: Dictionary = w.instance_at(Vector2i(6,4))
+	check(String(tree["state"])=="mature","resin matures in six boosted days")
+	check(w.harvest(Vector2i(6,4),"harvest")["ok"],"tap harvest works")
+	tree = w.instance_at(Vector2i(6,4))
+	check(String(tree["state"])=="regrowing" and int(tree["harvest_count"])==1,"tap keeps the plant regrowing")
+	var water := int(w.environment[w.grid.index_of(Vector2i(6,4))][0])
+	w.end_day()
+	check(int(w.environment[w.grid.index_of(Vector2i(6,4))][0])==water-3,"regrowing plant still pays full water use")
+	check(String(w.instance_at(Vector2i(6,4))["state"])=="regrowing","regrow target is three boosted days: one done")
+	w.end_day()
+	check(String(w.instance_at(Vector2i(6,4))["state"])=="mature","resin regrows in two boosted days")
+	# Mature-and-waiting crops never advance or double-produce, but keep paying.
+	var progress := int(w.instance_at(Vector2i(6,4))["progress"])
+	w.end_day()
+	w.end_day()
+	check(int(w.instance_at(Vector2i(6,4))["progress"])==progress,"mature crop stops advancing")
+	check(int(w.environment[w.grid.index_of(Vector2i(6,4))][0])<water-9,"mature crop keeps consuming water")
+
+func _flower_window() -> void:
+	# The oilseed share window [300,500) stays reachable at 150%: progress lands
+	# on 300 and 450 before maturity; no share is invented outside the window.
+	var w := World.new()
+	w.logistics.provision()
+	var uids := scaffold(w,[Vector2i(4,4)])
+	w.logistics.deploy("trial-004",Vector2i(-1,-1),uids[0])
+	w.grant_scaffold({"oilseed_flower_seed":1})
+	w.end_day()
+	w.till(Vector2i(6,4))
+	check(w.plant(Vector2i(6,4),"oilseed_flower")["ok"],"oilseed planted")
+	w.end_day()
+	check(not w.pick_flower(Vector2i(6,4))["ok"],"progress 150 is outside the share window")
+	w.end_day()
+	var picked: Dictionary = w.pick_flower(Vector2i(6,4))
+	check(picked["ok"] and int(picked["items"]["nectar"])==2 and int(picked["items"]["pollen"])==1,"progress 300 yields the real share")
+	check(not w.pick_flower(Vector2i(6,4))["ok"],"share capacity is still one per day")
+	w.end_day()
+	check(w.pick_flower(Vector2i(6,4))["ok"],"progress 450 still inside the window")
+	w.end_day()
+	check(String(w.instance_at(Vector2i(6,4))["state"])=="mature","oilseed mature after four boosted days")
+	check(not w.pick_flower(Vector2i(6,4))["ok"],"mature plant has no share")
+
+func _zero_fertility_and_replant() -> void:
+	# Zero-fertility targets never gain a deduction or a remainder from fert gu.
+	var w := World.new()
+	w.logistics.provision()
+	var uids := scaffold(w,[Vector2i(4,4)])
+	w.logistics.deploy("trial-010",Vector2i(-1,-1),uids[0])
+	w.grant_scaffold({"wood_chip":6})
+	w.end_day()
+	w.till(Vector2i(6,4))
+	check(w.plant(Vector2i(6,4),"wood_decay_mushroom")["ok"],"mushroom planted under fert coverage")
+	var fert := int(w.environment[w.grid.index_of(Vector2i(6,4))][1])
+	var water := int(w.environment[w.grid.index_of(Vector2i(6,4))][0])
+	w.end_day()
+	w.end_day()
+	var index := w.grid.index_of(Vector2i(6,4))
+	check(int(w.environment[index][1])==fert,"no fertility use means no saving and no change")
+	check(not w.logistics.agri_to_save()["remainders"]["fertility"].has("6,4"),"no remainder invented for a zero-use target")
+	check(int(w.environment[index][0])==water-4,"water still deducts without a water gu")
+	# Clearing and replanting never washes the carried remainder.
+	var w2 := World.new()
+	w2.logistics.provision()
+	var uids2 := scaffold(w2,[Vector2i(4,4)])
+	w2.logistics.deploy("trial-008",Vector2i(-1,-1),uids2[0])
+	w2.grant_scaffold({"grass_seed":2})
+	w2.end_day()
+	w2.till(Vector2i(6,4))
+	check(w2.plant(Vector2i(6,4),"pasture_grass")["ok"],"pasture planted under water coverage")
+	w2.environment[w2.grid.index_of(Vector2i(6,4))][0] = 100
+	var cell_index := w2.grid.index_of(Vector2i(6,4))
+	w2.end_day()
+	check(int(w2.environment[cell_index][0])==100-1,"3 water at 50% keeps 1.5: first day deducts 1")
+	check(int(w2.logistics.agri_to_save()["remainders"]["water"]["6,4"])==50,"half a point carried")
+	check(w2.clear_crop(Vector2i(6,4))["ok"],"clear the crop mid-growth")
+	check(int(w2.logistics.agri_to_save()["remainders"]["water"]["6,4"])==50,"clearing keeps the ground remainder")
+	check(w2.plant(Vector2i(6,4),"pasture_grass")["ok"],"replant the same cell")
+	w2.end_day()
+	check(int(w2.environment[cell_index][0])==100-1-2,"carried remainder lands as a whole point after replant")
 
 func _upgrade() -> void:
 	# A real schema18-shaped save: six provisioned instances, growth deployed and

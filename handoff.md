@@ -1,6 +1,6 @@
 # handoff — 跨机器开发交接
 
-> **P10.1.b覆盖与效果决议已实现（2026-10-17）：** 按§12.1冻结落地：`configure_phase101.py`安装三蛊/槽名`agriculture_assist`/11只配给/作物`plant_grow`；`p10_logistics.gd`重写（冻结四向3×3几何、完整占地`resolve()`、tag分组最高转决议、百分之一余量消耗、1AP朝向次日生效）；`v1_world.gd`新增扣耗接缝（V1/V2不变）；schema19含`agri_supplement`+`world.agriculture`（facings/remainders/legacy_until），17→18→19严格升级、旧档补发5只、12类篡改拒绝与最后1AP转向回滚。验证：`run_phase101.gd`122项、P10模型/UI 181+21项、Python 103项、百科199实体/16规则与12章手册同源重生成、`test_p10.ps1 -SkipPlaytest`全绿。**当前游戏schema19；下一入口P10.1.c专属验收（3/5/6/8日全程、留株/开花、重种洗余量防御）。**
+> **P10.1.b/c/d已实现并专项通过（2026-10-17）：** 覆盖与效果决议（冻结四向3×3、完整占地`resolve()`、tag分组最高转、余量消耗、1AP朝向）、生产消耗验收（连续服务口径2/3/4/4/6日成熟、留株再生、油籽花窗口仍两日可采、零耗肥、多格累计）与保存验收（11只配给、17→18→19严格升级、legacy当日120%旧口径、重种不洗余量、最后1AP回滚）全部落地；`run_phase101.gd` 168项、P10模型/UI 181+21项、Python 103项、P8全套、V0/V1/V2回归绿。**当前游戏schema19；下一入口P10.1.e界面与知识（四向预览、部分覆盖解释、宿主面板朝向）。**
 
 > **P10.1.a配数冻结（2026-10-17）：** [农业区与辅助蛊](docs/farming/phase-10.1-农业区与辅助蛊.md)§12.1已冻结：复用田间维护站（槽名`agriculture_assist`）、四向3×3九格、默认东向+转向1AP次日生效、催生150%（`growth_gu` id/费率不变）、新`water_gu`/`fert_gu`保留50%、三蛊维护1元石/日无食料、`plant_grow`资格8ID、11只配给（前六只与P10一致）与旧档补发五只（`agri_supplement`）、schema19（`facings`/`remainders`/`legacy_until`，旧档当日旧口径保留）。
 
