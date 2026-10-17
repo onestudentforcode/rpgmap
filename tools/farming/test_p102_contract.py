@@ -1,6 +1,7 @@
 """P10.2 source/knowledge contracts. Model and transaction tests run in Godot."""
 import copy
 import json
+import re
 import unittest
 from pathlib import Path
 
@@ -20,6 +21,7 @@ class RoomContract(unittest.TestCase):
             lambda d:d['rooms'].update(seed_percent=100),
             lambda d:d['rooms']['floor'].update(refund=True),
             lambda d:d['rooms']['floor'].update(place_ap=0),
+            lambda d:d['rooms']['floor'].update(place_ap=True),
             lambda d:d['rooms']['primary']['golden_wheat'].update(harvest='straw'),
             lambda d:d['rooms']['primary']['rice_bag_gu'].update(claim='rice_bag_gu'),
             lambda d:d['rooms']['primary'].pop('resin_tree'),
@@ -31,6 +33,11 @@ class RoomContract(unittest.TestCase):
             d=copy.deepcopy(SOURCE)
             mutation(d)
             with self.subTest(mutation=mutation),self.assertRaises(ValueError): validate(d)
+
+    def test_missing_room_section_cannot_bake_a_broken_runtime(self):
+        from bake_p8 import compile_config
+        source=copy.deepcopy(SOURCE);source.pop('rooms')
+        with self.assertRaises(ValueError): compile_config(source)
 
     def test_seed_reverse_sources(self):
         entities={e['id']:e for e in WIKI['entities']}
@@ -65,6 +72,18 @@ class RoomContract(unittest.TestCase):
         self.assertIn('5×5',text)
         self.assertNotIn('宿主2×2',text)
         self.assertIn('rule:rooms',rules)
+
+    def test_business_module_geometry_and_no_injection(self):
+        from audit_p102_playtest import MODULE_CELLS,MODULE_HOSTS,zone
+        script=(ROOT/'scripts/farming/tests/run_p102_playtest.gd').read_text(encoding='utf-8')
+        section=re.search(r'const ROOM_CELLS := \[(.*?)\]',script,re.S).group(1)
+        fields={tuple(map(int,m)) for m in re.findall(r'Vector2i\((\d+),(\d+)\)',section)}
+        hosts=re.findall(r'"cell":Vector2i\((\d+),(\d+)\),"facing":"(\w+)"',script)
+        self.assertEqual(fields,MODULE_CELLS)
+        self.assertEqual({(int(x),int(y)) for x,y,_ in hosts},MODULE_HOSTS)
+        for x,y,facing in hosts: self.assertTrue(fields<=zone((int(x),int(y)),facing))
+        for forbidden in ('grant_scaffold(', 'CropFixture', 'randi_range(', 'seed('): self.assertNotIn(forbidden,script)
+        self.assertNotRegex(script,r'world\.(primeval_stones|clock\.ap)\s*[+\-]?=(?!=)')
 
 
 if __name__=='__main__': unittest.main()

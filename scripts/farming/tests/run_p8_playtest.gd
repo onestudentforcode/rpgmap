@@ -797,7 +797,9 @@ func _run_route(route: String) -> void:
 			"field_maintenance", "mineral_materials", "composite_spirit_food"]:
 		check(world.research.is_completed(project), route + " research " + project)
 	check(world.inventory.count("honey") > 0 or world.inventory.count("honey_cake") > 0, route + " honey economy ran")
-	check(world.inventory.count("sludge") > 0 or world.inventory.count("humus") >= 2, route + " purification loop ran")
+	# Closing stock may be zero after legitimate farming and compost reuse.
+	# Successful production receipts prove the loop ran; purchased humus does not.
+	check(int(claimed.get("bio_purify", 0)) > 0 and int(claimed.get("compost_sludge", 0)) > 0, route + " purification and sludge reuse produced real batches")
 	check(world.inventory.count("gravel") > 0 or world.inventory.count("ore_concentrate") > 0 or world.inventory.count("crushed_ore") > 0, route + " rock economy ran")
 	var supplied_elements := {}
 	var delivered: Dictionary = totals["delivered_items"]

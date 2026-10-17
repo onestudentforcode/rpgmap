@@ -1,6 +1,7 @@
 extends SceneTree
 const Scene := preload("res://scenes/farming/farm_p87.tscn")
 const Store := preload("res://scripts/farming/p8/p8_slot_store.gd")
+const CropFixture := preload("res://scripts/farming/tests/p8_crop_fixture.gd")
 var shell
 var checks:=0
 var failures:=[]
@@ -118,6 +119,24 @@ func run() -> void:
 	for child in nodes(shell.sidebar):
 		if child is Label: text+=child.text
 	check(text.contains("农业收获") and text.contains("未领取权益不计入"),"report distinguishes actual stock from pending rights")
+	# Visual-only setup: inspect adjacent single-cell hosts, paving, roots,
+	# shadows and a real 2x2 plant. Not a normal-economy business fixture.
+	shell.world.primeval_stones+=100
+	shell.world._cash("sales_revenue",100)
+	for cell in [Vector2i(3,3),Vector2i(4,3),Vector2i(3,4),Vector2i(4,4)]:
+		check(shell.world.rooms.set_floor(cell,"ordinary")["ok"],"dense sample ordinary paving "+str(cell))
+	for cell in [Vector2i(3,3),Vector2i(4,3)]:
+		check(shell.world.build_facility(cell,"field_service_station")["ok"],"adjacent single-cell hosts build "+str(cell))
+	check(shell.world.plant(Vector2i(6,3),"fast_fir")["ok"],"2x2 crop beside single-cell stations")
+	CropFixture.progress(shell.world,int(shell.world.instance_at(Vector2i(6,3))["uid"]),800)
+	await resize_window(Vector2i(1920,1080))
+	shell._select_tool("inspect");shell._locate(Vector2i(6,4))
+	shell.camera.zoom=Vector2(2,2);shell.camera.force_update_scroll()
+	await process_frame
+	for cell in [Vector2i(3,3),Vector2i(4,3)]:
+		click(cell)
+		check(shell.selected==cell and not shell.world.facility_at(cell).is_empty(),"adjacent station projected pickup is distinct "+str(cell))
+	await capture("05-dense-stations-paving-tree")
 	shell.rooms_ui.choose_floor("ordinary")
 	shell._new(2,false)
 	check(shell.rooms_ui.floor_tool.is_empty(),"new slot clears old floor mode")

@@ -474,10 +474,9 @@ def audit_layout(source):
 
 
 def compile_config(source, map_data=None):
-    if 'rooms' in source:
+    try:
         from validate_rooms import validate as validate_rooms
         validate_rooms(source)
-    try:
         if 'logistics' in source:
             from validate_logistics import validate
             validate(source)

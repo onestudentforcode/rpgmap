@@ -146,6 +146,8 @@ static func round_state(target: int, round_index: int = 0) -> Dictionary:
 
 func plant_started(row: Dictionary) -> void:
 	state["plants"][str(row["uid"])] = round_state(int(world.crop_defs[row["crop_id"]]["days"])*100)
+	world.record_operation({"kind":"room","stage":"plant","day":world.clock.total_days,
+		"identity":"crop:"+str(row["uid"]),"crop":row.duplicate(true),"target":int(world.crop_defs[row["crop_id"]]["days"])*100})
 
 static func draw(seed_value: int, identity: String, round_index: int, channel: String) -> int:
 	# Fixed millionth draw; SHA256 is stable across platforms and reloads.
@@ -217,6 +219,7 @@ func clear_crop(row: Dictionary) -> Dictionary:
 	var id := str(row["uid"])
 	var result := {}
 	if row["state"] == "mature": result = rewards("crop:"+id,state["plants"][id],row["crop_id"],"clear",{},String(world.crop_defs[row["crop_id"]]["seed"]))
+	world.record_operation({"kind":"room","stage":"clear","day":world.clock.total_days,"identity":"crop:"+id})
 	state["plants"].erase(id)
 	return result
 

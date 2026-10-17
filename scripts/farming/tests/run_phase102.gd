@@ -23,6 +23,10 @@ func run() -> void:
 		var bad: Dictionary=w.to_snapshot();bad["schema"]=old
 		check(not Codec.normalize(bad)["ok"],"old schema rejected "+str(old))
 	var cash_before: int=w.inventory.count("raw_wood")
+	var ground_index: int=w.grid.index_of(Vector2i(3,3))
+	w.logistics.consume_environment(Vector2i(3,3),ground_index,0,3,50)
+	w.logistics.consume_environment(Vector2i(3,3),ground_index,1,1,50)
+	var ground_before: Array=w.environment[ground_index].duplicate()
 	check(w.rooms.set_floor(Vector2i(3,3),"ordinary")["ok"],"ordinary floor placed")
 	check(w.inventory.count("raw_wood")==cash_before-1,"floor costs real wood")
 	check(not w.till(Vector2i(3,3))["ok"],"ordinary floor prevents implicit till")
@@ -30,6 +34,8 @@ func run() -> void:
 	check(w.rooms.farmland(Vector2i(3,3)),"single shared till state")
 	check(w.rooms.set_floor(Vector2i(3,3),"natural")["ok"],"farmland can be removed")
 	check(w.inventory.count("raw_wood")==cash_before-1,"no floor refund")
+	check(w.environment[ground_index]==ground_before,"pave, convert and remove preserve real water and fertility")
+	check(w.logistics.agri["remainders"]["water"]["3,3"]==50 and w.logistics.agri["remainders"]["fertility"]["3,3"]==50,"paving never clears fractional resource use")
 	w.logistics.provision()
 	for spec in [[5,4,"east","trial-004"],[9,4,"west","trial-008"],[7,2,"south","trial-010"]]:
 		var cell:=Vector2i(spec[0],spec[1])
@@ -84,6 +90,8 @@ func run() -> void:
 	_transaction()
 	_pollination_transaction()
 	_invalid_rooms()
+	_old_disk_slots()
+	_large_irregular_room()
 	print("P102 MODEL %s (%d)" % ["OK" if failures.is_empty() else "FAIL",checks])
 	quit(0 if failures.is_empty() else 1)
 
@@ -175,10 +183,16 @@ func _regrow_and_clear() -> void:
 	var id:=str(crop["uid"])
 	check(crop["state"]=="mature","resin reaches first maturity")
 	var first: Dictionary=w.rooms.state["plants"][id].duplicate(true)
+	var mature_snapshot: Dictionary=w.to_snapshot()
 	var a: Dictionary=w.harvest(Vector2i(6,3))
 	check(a["ok"] and a["room_rewards"]["material"].get("resin",0)==1,"full resin round yields fixed extra primary")
 	check(w.rooms.state["plants"][id]["round"]==1 and w.rooms.state["plants"][id]["seed_claimed"],"tap advances round and consumes first seed chance")
 	check(Codec.normalize(w.to_snapshot())["ok"],"regrowing snapshot preserves first seed proof")
+	var alternative=fixture()
+	check(alternative.apply_snapshot(mature_snapshot)["ok"],"same frozen maturity restores for alternate legal harvest mode")
+	var felled: Dictionary=alternative.harvest(Vector2i(6,3),"fell")
+	check(felled["room_rewards"]["seed"]==a["room_rewards"]["seed"],"tap versus fell cannot reroll frozen first seed")
+	check(not felled["room_rewards"]["material"].has("twig") and not alternative.rooms.state["plants"].has(id),"mature felling only boosts registered wood and retires its rights")
 	for i in range(2): w.end_day()
 	var second: Dictionary=w.rooms.state["plants"][id]
 	check(second["growth"]==300 and second["material_work"]==300,"regrowth tracks its own target and qualification")
@@ -346,3 +360,50 @@ func _invalid_rooms() -> void:
 			"gu_orphan": rooms["gu_rounds"]["absent"]=Rooms.round_state(300)
 		check(not Codec.normalize(bad)["ok"],"reject room state corruption "+kind)
 	check(Codec.normalize(before)["ok"],"corruption probes leave pristine room fixture valid")
+
+func _old_disk_slots() -> void:
+	var directory:="res://.art-work/p102-model/old-slots-%d" % Time.get_ticks_usec()
+	DirAccess.make_dir_recursive_absolute(ProjectSettings.globalize_path(directory))
+	var store=Store.new(directory)
+	var w=World.new(store)
+	var before: Dictionary=w.to_snapshot()
+	for schema in [17,18,19]:
+		var old: Dictionary=before.duplicate(true);old["schema"]=schema
+		var text:=JSON.stringify(old)
+		var envelope:=JSON.stringify({"schema":1,"slot_id":1,"saved_at":0,"snapshot_json":text,"checksum":text.sha256_text()})
+		for suffix in ["",".bak"]:
+			var f:=FileAccess.open(store.slot_path(1)+suffix,FileAccess.WRITE)
+			f.store_string(envelope);f.close()
+		var result: Dictionary=w.open_game(1)
+		check(not result["ok"] and String(result["reason"]).contains("重新开档"),"old disk slot explicitly requests new game "+str(schema))
+		check(w.to_snapshot()==before and store.active_slot()==0,"rejected old disk slot leaves world and session untouched "+str(schema))
+		check(FileAccess.get_file_as_string(store.slot_path(1))==envelope and FileAccess.get_file_as_string(store.slot_path(1)+".bak")==envelope,"old primary and backup preserved byte-for-byte "+str(schema))
+		check(not store.create_slot(1,before)["ok"],"old slot cannot be overwritten without explicit confirmation "+str(schema))
+
+func _large_irregular_room() -> void:
+	var w=fixture();w.logistics.provision()
+	# Two adjacent service modules form one irregular 16-cell field. The two
+	# inner hosts are holes, not bridges; each 2x2 crop still has whole sources.
+	for spec in [[5,4,"east","trial-004"],[12,4,"west","trial-007"],[7,2,"south","trial-008"],[10,2,"south","trial-009"],[9,4,"west","trial-010"],[8,4,"east","trial-011"]]:
+		var c:=Vector2i(spec[0],spec[1]);var built: Dictionary=w.build_facility(c,"field_service_station",spec[2])
+		check(built["ok"],"irregular module host builds "+str(c))
+		if not built["ok"]: return
+		var uid: int=w.facility_at(c)["uid"]
+		w.devices.configure_station(uid,false,false,30);w.logistics.deploy(spec[3],Vector2i(-1,-1),uid)
+	for y in range(3,6):
+		for x in range(6,12):
+			var c:=Vector2i(x,y)
+			if not w.facility_at(c).is_empty(): continue
+			check(w.till(c)["ok"],"irregular field tile "+str(c))
+	w.end_day()
+	var regions: Array=w.rooms.regions(w.clock.total_days)
+	check(regions.size()==1 and regions[0]["cells"].size()==16 and regions[0]["level"]==2,"multiple modules support one irregular field larger than 3x3")
+	for rect in [Rect2i(6,3,2,2),Rect2i(10,3,2,2)]:
+		var q: Dictionary=w.rooms.qualification(rect,["plant_grow"],w.clock.total_days)
+		check(q["seed"] and q["material"],"each large crop has a complete source per channel "+str(rect))
+	check(w.plant(Vector2i(6,3),"fast_fir")["ok"] and w.plant(Vector2i(10,3),"resin_tree")["ok"],"two real multi-cell plants fit around internal hosts")
+	w.end_day()
+	for crop in w.crops.values():
+		var data: Dictionary=w.rooms.state["plants"][str(crop["uid"])]
+		check(data["growth"]==150 and data["seed_work"]==150 and data["material_work"]==150,"irregular full-room growth qualifies real work")
+	check(Codec.normalize(w.to_snapshot())["ok"],"irregular multi-module room saves strictly")

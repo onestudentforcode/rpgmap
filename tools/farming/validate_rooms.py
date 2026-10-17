@@ -1,5 +1,5 @@
 """Reject drift between P10.2 data and the implemented room contract."""
-from bake_v1 import require, registry
+from bake_v1 import require, registry, integer
 
 PRIMARY={
     'golden_wheat':{'harvest':'grain'},'fast_fir':{'fell':'raw_wood'},
@@ -9,12 +9,15 @@ PRIMARY={
     'rice_bag_gu':{'claim':'rice'}}
 
 def validate(source):
+    require(isinstance(source.get('rooms'),dict),'P10.2 room contract is required by the runtime')
     c=source['rooms']; facilities=registry(source['facilities'],'facilities')
     require(set(c)=={'version','seed_percent','material_percent','floor','primary','requirements'},'unknown room fields')
     require(facilities['field_service_station']['footprint']==[1,1],'P102 station must occupy one cell')
     require(c['version']==1 and c['seed_percent']==25 and c['material_percent']==25,'unknown room reward contract')
+    require(type(c['version']) is int,'room version must be an integer')
     require(c['requirements']=={'seed':['plant_growth_speed','plant_water_saving'],'material':['plant_growth_speed','plant_fertility_saving']},'invalid room requirements')
     require(c['floor']=={'inputs':{'raw_wood':1},'place_ap':1,'remove_ap':1,'refund':False},'invalid floor cost')
+    require(all(integer(n,1,1) for n in [c['floor']['place_ap'],c['floor']['remove_ap'],c['floor']['inputs']['raw_wood']]),'floor costs must be integers, not booleans')
     crops=registry(source['crops'],'crops')
     require(set(c['primary'])==set(crops)|{'rice_bag_gu'},'primary registry incomplete')
     require(c['primary']==PRIMARY,'main product registry drift; byproducts must not receive bonuses')

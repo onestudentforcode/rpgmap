@@ -3,6 +3,7 @@ extends SceneTree
 const World := preload("res://scripts/farming/p8/p8_world.gd")
 const Store := preload("res://scripts/farming/p8/p8_slot_store.gd")
 const Snapshot := preload("res://scripts/farming/p8/p8_snapshot.gd")
+const CropFixture := preload("res://scripts/farming/tests/p8_crop_fixture.gd")
 var checks := 0
 var failures: Array[String] = []
 
@@ -130,7 +131,7 @@ func _bees_and_manual_override() -> void:
 		world.plant(cell, "honeybell_bush")
 	for crop in world.crops.values():
 		crop["state"] = "mature"
-		crop["progress"] = 600
+		CropFixture.progress(world,int(crop["uid"]),600)
 	owner(world, [hive])
 	check(world.operations.set_production(hive, true, "honey_cycle", "honey", 1)["ok"], "zero-input honey recipe accepted")
 	world.flowers.hive_coverage(hive)

@@ -26,13 +26,20 @@ def read_lines(path: Path):
 def inside(cell, rect):
     return rect[0] <= cell[0] < rect[0]+rect[2] and rect[1] <= cell[1] < rect[1]+rect[3]
 
-def balance(ledger: dict) -> Counter:
+def balance(ledger: dict, room_proof: dict | None = None) -> Counter:
     stock = Counter(ledger["opening"])
     for key, sign in (("inflows", 1), ("outflows", -1)):
+        room_reasons={'育种奖励','丰产奖励'} if sign>0 else {'铺设材料'}
+        allowed=(LEGITIMATE_IN if sign>0 else LEGITIMATE_OUT) | (room_reasons if room_proof is not None else set())
         for item, reasons in ledger[key].items():
-            assert reasons.keys() <= (LEGITIMATE_IN if sign > 0 else LEGITIMATE_OUT), ("unrecognised flow", item, reasons)
+            assert reasons.keys() <= allowed, ("unrecognised flow", item, reasons)
             assert all(type(qty) in (int, float) and qty > 0 and qty == int(qty) for qty in reasons.values())
             stock[item] += sign * sum(reasons.values())
+        if room_proof is not None:
+            for reason in room_reasons:
+                actual=Counter({item:reasons[reason] for item,reasons in ledger[key].items() if reason in reasons})
+                expected=Counter(room_proof.get(key,{}).get(reason,{}))
+                assert actual==expected,('unreceipted or missing room stock flow',ledger['day'],reason,actual,expected)
     assert all(qty >= 0 for qty in stock.values()), "negative inventory"
     assert stock == Counter(ledger["closing"]), ("inventory balance", ledger["day"])
     return stock
@@ -50,6 +57,8 @@ def reconcile(directory: Path, require_complete: bool = True) -> dict:
     expansion = read_json(ROOT / "content/farming/baked/p8/expansion.json")
     parcels = {p['id']: p for p in expansion['parcels']}
     horizon, initial = summary["settings"]["days"], summary["settings"]["initial_currency"]
+    assert type(horizon) in (int,float) and horizon==int(horizon), "fractional business horizon"
+    horizon=int(horizon)
     assert 90 <= horizon <= 180 and 60 <= initial <= 120, "relaxation exceeds agreed bounds"
     assert config["ap_per_day"] == 24 and config["initial_primeval_stones"] == initial
     items = {r["id"]: r for r in catalog["resources"]}
@@ -63,6 +72,10 @@ def reconcile(directory: Path, require_complete: bool = True) -> dict:
     required = {r["id"] for r in catalog["recipes"] if r.get("research") and not r.get("optional_logistics")}
     routes = summary["routes"]
     if require_complete: assert set(routes) == {"A", "B"}, "complete audit requires two independent routes"
+    room_audits=None
+    if any((directory/f'{route}-rooms.jsonl').exists() for route in routes):
+        from audit_p102_playtest import audit as audit_rooms
+        room_audits=audit_rooms(directory,require_complete)
     result = {"settings": summary["settings"], "mode": "complete" if require_complete else "diagnostic", "routes": {}}
     all_claims, all_consumers = set(), set()
     has_logistics = any((directory / f"{route}-logistics.jsonl").exists() for route in routes)
@@ -80,10 +93,11 @@ def reconcile(directory: Path, require_complete: bool = True) -> dict:
             day, ledger = row["day"] - 1, row["ledger"]
             assert ledger["day"] == day
             if inventory is not None: assert Counter(ledger["opening"]) == inventory, "stock continuity"
-            inventory = balance(ledger)
+            room_proof=room_audits[route]['proofs'].get(day,{}) if room_audits is not None else None
+            inventory = balance(ledger,room_proof)
             opening = row["opening"]
             assert opening["day"] == day + 1 and Counter(opening["opening"]) == inventory
-            balance(opening)  # opening device costs belong to the next day's book
+            balance(opening,{} if room_audits is not None else None)  # opening never claims room yields or lays floors
             journal = row["journal"]
             cash += sum(journal[k] for k in INCOME) - sum(journal[k] for k in EXPENSE)
             opening_cash = row.get('opening_cash', {})
@@ -322,6 +336,9 @@ def reconcile(directory: Path, require_complete: bool = True) -> dict:
         # receipt against the same books before granting the ordinary audit.
         from audit_p10_playtest import audit as audit_logistics
         result['logistics'] = audit_logistics(directory, require_complete)
+    if room_audits is not None:
+        result['rooms']={r:{k:v for k,v in data.items() if k!='proofs'} for r,data in room_audits.items()}
+        result['room_auditor_sha256']=hashlib.sha256((ROOT/'tools/farming/audit_p102_playtest.py').read_bytes()).hexdigest()
     result["auditor_sha256"] = hashlib.sha256(Path(__file__).read_bytes()).hexdigest()
     result["evidence_sha256"] = {p.name: hashlib.sha256(p.read_bytes()).hexdigest() for p in sorted(directory.glob("*"))
         if p.is_file() and p.name not in {"audit.json", "audit-failure.json"}}
