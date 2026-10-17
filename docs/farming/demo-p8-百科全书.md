@@ -9,12 +9,12 @@
 - **作物与种植（7）**：[速生杉](#速生杉-cropfast_fir)、[金穗麦](#金穗麦-cropgolden_wheat)、[蜜铃灌木](#蜜铃灌木-crophoneybell_bush)、[油籽花](#油籽花-cropoilseed_flower)、[青牧草](#青牧草-croppasture_grass)、[松脂树](#松脂树-cropresin_tree)、[木腐菇](#木腐菇-cropwood_decay_mushroom)
 - **养殖与培养（6）**：[蜜盏蜂](#蜜盏蜂-speciesbell_bee)、[滤藻鲤](#滤藻鲤-speciesfilter_algae_carp)、[净水菌毯](#净水菌毯-speciespurifying_mat)、[岩腹兽](#岩腹兽-speciesrock_belly_beast)、[啮岩鼹](#啮岩鼹-speciesrock_mole)、[钢绵羊](#钢绵羊-speciessteel_sheep)
 - **建筑与设施（15）**：[藻类培养槽](#藻类培养槽-facilityalgae_tank)、[蜂箱](#蜂箱-facilitybee_hive)、[炭化炉](#炭化炉-facilitychar_kiln)、[堆肥箱](#堆肥箱-facilitycompost_bin)、[农产加工台](#农产加工台-facilityfarm_processor)、[田间维护站](#田间维护站-facilityfield_service_station)、[水场](#水场-facilityfish_pond)、[补光灯](#补光灯-facilitygrowth_lamp)、[厨房](#厨房-facilitykitchen)、[圈舍](#圈舍-facilitypen)、[净水菌床](#净水菌床-facilitypurifying_bed)、[研究台](#研究台-facilityresearch_bench)、[岩兽工作场](#岩兽工作场-facilityrock_workyard)、[小型冶炼炉](#小型冶炼炉-facilitysmelter)、[木工台](#木工台-facilitywoodshop)
-- **后勤蛊与协同（5）**：[明光蛊](#明光蛊-gubright_gu)、[催生蛊](#催生蛊-gugrowth_gu)、[饭袋草蛊](#饭袋草蛊-gurice_bag_gu)、[宙道研究蛊](#宙道研究蛊-gutime_gu)、[智道研究蛊](#智道研究蛊-guwisdom_gu)
+- **后勤蛊与协同（7）**：[明光蛊](#明光蛊-gubright_gu)、[节肥蛊](#节肥蛊-gufert_gu)、[催生蛊](#催生蛊-gugrowth_gu)、[饭袋草蛊](#饭袋草蛊-gurice_bag_gu)、[宙道研究蛊](#宙道研究蛊-gutime_gu)、[锁水蛊](#锁水蛊-guwater_gu)、[智道研究蛊](#智道研究蛊-guwisdom_gu)
 - **材料与物品（65）**：[藻料](#藻料-resourcealgae_feed)、[蜂蜡](#蜂蜡-resourcebeeswax)、[木炭](#木炭-resourcecharcoal)、[清水](#清水-resourceclean_water)、[复合石板](#复合石板-resourcecomposite_stone_panel)、[粗植物油](#粗植物油-resourcecrude_oil)、[碎铁矿](#碎铁矿-resourcecrushed_ore)、[高密度藻料](#高密度藻料-resourcedense_algae)、[藻露羹](#藻露羹-resourcedew_soup)、[腐土菌丸](#腐土菌丸-resourceearth_pill)、[速生杉苗](#速生杉苗-resourcefast_fir_seed)、[炭砂滤料](#炭砂滤料-resourcefilter_media)、[蜜油火膏](#蜜油火膏-resourcefire_paste)、[鱼粪](#鱼粪-resourcefish_manure)、[鱼肉](#鱼肉-resourcefish_meat)、[菌鱼灵膳](#菌鱼灵膳-resourcefish_spirit_meal)、[花瓣](#花瓣-resourceflower_petal)、[牧草](#牧草-resourcefodder_grass)、[蜜炼金食](#蜜炼金食-resourcegold_food)、[金穗麦种子](#金穗麦种子-resourcegolden_wheat_seed)、[谷粒](#谷粒-resourcegrain)、[谷粉](#谷粉-resourcegrain_meal)、[草粉](#草粉-resourcegrass_meal)、[草籽](#草籽-resourcegrass_seed)、[砂砾](#砂砾-resourcegravel)、[蜂蜜](#蜂蜜-resourcehoney)、[蜜谷灵饼](#蜜谷灵饼-resourcehoney_cake)、[蜜铃苗](#蜜铃苗-resourcehoneybell_seed)、[腐殖土](#腐殖土-resourcehumus)、[铁锭](#铁锭-resourceiron_ingot)、[含铁矿石](#含铁矿石-resourceiron_ore)、[复合陆养料](#复合陆养料-resourceland_feed)、[矿质补料](#矿质补料-resourcemineral_feed)、[木腐菇](#木腐菇-resourcemushroom)、[花蜜](#花蜜-resourcenectar)、[营养液](#营养液-resourcenutrient_liquid)、[油饼](#油饼-resourceoil_cake)、[油籽](#油籽-resourceoilseed)、[油籽花种子](#油籽花种子-resourceoilseed_flower_seed)、[富集矿砂](#富集矿砂-resourceore_concentrate)、[花粉](#花粉-resourcepollen)、[净水菌毯培养单位](#净水菌毯培养单位-resourcepurifying_mat_culture)、[普通岩石](#普通岩石-resourceraw_stone)、[原木](#原木-resourceraw_wood)、[再生填料](#再生填料-resourcereclaimed_fill)、[精炼油](#精炼油-resourcerefined_oil)、[精炼蜡](#精炼蜡-resourcerefined_wax)、[松脂](#松脂-resourceresin)、[松脂树苗](#松脂树苗-resourceresin_tree_seed)、[稻米](#稻米-resourcerice)、[羊粪肥](#羊粪肥-resourcesheep_manure)、[炉渣](#炉渣-resourceslag)、[污泥](#污泥-resourcesludge)、[废滤炭](#废滤炭-resourcespent_filter)、[钢绒](#钢绒-resourcesteel_wool)、[石粉](#石粉-resourcestone_powder)、[秸秆](#秸秆-resourcestraw)、[尾砂](#尾砂-resourcetailings)、[宙道食料](#宙道食料-resourcetime_feed)、[枝条](#枝条-resourcetwig)、[污水](#污水-resourcewastewater)、[复合水养料](#复合水养料-resourcewater_feed)、[木屑](#木屑-resourcewood_chip)、[木腐菇菌种](#木腐菇菌种-resourcewood_decay_spawn)、[木板](#木板-resourcewood_plank)
 - **配方与食谱（61）**：[蜜盏蜂·花源份额＋清水](#蜜盏蜂花源份额清水-dietbell_beebase_dietsflower_share)、[蜜盏蜂·酿蜜周期](#蜜盏蜂酿蜜周期-dietbell_beespecial_dietshoney_cycle)、[滤藻鲤·藻料餐](#滤藻鲤藻料餐-dietfilter_algae_carpbase_dietsalgae_meal)、[滤藻鲤·高密度藻餐](#滤藻鲤高密度藻餐-dietfilter_algae_carpbase_dietsdense_meal)、[滤藻鲤·水养复合餐](#滤藻鲤水养复合餐-dietfilter_algae_carpbase_dietswater_meal)、[滤藻鲤·谷粒育肥](#滤藻鲤谷粒育肥-dietfilter_algae_carpspecial_dietsgrain_fatten)、[净水菌毯·培养清水](#净水菌毯培养清水-dietpurifying_matbase_dietsculture_water)、[净水菌毯·菌毯净水运行](#净水菌毯菌毯净水运行-dietpurifying_matspecial_dietsbio_purify)、[净水菌毯·营养液回收运行](#净水菌毯营养液回收运行-dietpurifying_matspecial_dietsrecover_nutrients)、[岩腹兽·牧草清水餐](#岩腹兽牧草清水餐-dietrock_belly_beastbase_dietsgrass_water_meal)、[岩腹兽·陆养复合餐](#岩腹兽陆养复合餐-dietrock_belly_beastbase_dietsland_meal)、[岩腹兽·生物选矿轮](#岩腹兽生物选矿轮-dietrock_belly_beastspecial_dietsconcentrate_ore)、[啮岩鼹·菌菇清水餐](#啮岩鼹菌菇清水餐-dietrock_molebase_dietsfungus_meal)、[啮岩鼹·破碎矿石轮](#啮岩鼹破碎矿石轮-dietrock_molespecial_dietsbreak_ore)、[啮岩鼹·破碎石材轮](#啮岩鼹破碎石材轮-dietrock_molespecial_dietsbreak_stone)、[钢绵羊·谷粒餐](#钢绵羊谷粒餐-dietsteel_sheepbase_dietsgrain_meal)、[钢绵羊·牧草餐](#钢绵羊牧草餐-dietsteel_sheepbase_dietsgrass_meal)、[钢绵羊·陆养复合餐](#钢绵羊陆养复合餐-dietsteel_sheepbase_dietsland_meal)、[钢绵羊·含铁补料](#钢绵羊含铁补料-dietsteel_sheepspecial_dietsiron_supplement)、[钢绵羊·矿质补料餐](#钢绵羊矿质补料餐-dietsteel_sheepspecial_dietsmineral_supplement)、[藻露羹熬制](#藻露羹熬制-recipealgae_dew_soup)、[复合石板组装](#复合石板组装-recipeassemble_stone_panel)、[菌毯净水](#菌毯净水-recipebio_purify)、[陆养料调配](#陆养料调配-recipeblend_land_feed)、[水养料调配](#水养料调配-recipeblend_water_feed)、[破碎矿石](#破碎矿石-recipebreak_ore)、[破碎石材](#破碎石材-recipebreak_stone)、[枝条炭化](#枝条炭化-recipechar_twigs)、[木屑堆肥](#木屑堆肥-recipecompost_chips)、[鱼粪堆肥](#鱼粪堆肥-recipecompost_fish_manure)、[牧草堆肥](#牧草堆肥-recipecompost_grass)、[油饼堆肥](#油饼堆肥-recipecompost_oil_cake)、[羊粪堆肥](#羊粪堆肥-recipecompost_sheep_manure)、[污泥堆肥](#污泥堆肥-recipecompost_sludge)、[废滤炭堆肥](#废滤炭堆肥-recipecompost_spent_filter)、[秸秆堆肥](#秸秆堆肥-recipecompost_straw)、[枝条堆肥](#枝条堆肥-recipecompost_twigs)、[生物选矿](#生物选矿-recipeconcentrate_ore)、[藻料培养](#藻料培养-recipeculture_algae)、[高密度藻培养](#高密度藻培养-recipedense_algae_culture)、[菌鱼灵膳烹制](#菌鱼灵膳烹制-recipefungus_fish_meal)、[蜜谷灵饼烘焙](#蜜谷灵饼烘焙-recipehoney_grain_cake)、[蜜炼金食炼制](#蜜炼金食炼制-recipehoney_mineral_food)、[炭砂滤料制作](#炭砂滤料制作-recipemake_filter_media)、[谷粉研磨](#谷粉研磨-recipemill_grain)、[草粉研磨](#草粉研磨-recipemill_grass)、[稻米磨粉](#稻米磨粉-recipemill_rice)、[矿质补料调配](#矿质补料调配-recipemineral_feed)、[蜜油火膏熬制](#蜜油火膏熬制-recipeoil_honey_paste)、[油籽榨油](#油籽榨油-recipepress_oilseed)、[再生填料回收](#再生填料回收-reciperecover_fill)、[营养液回收](#营养液回收-reciperecover_nutrients)、[油脂精炼](#油脂精炼-reciperefine_oil)、[蜂蜡精炼](#蜂蜡精炼-reciperefine_wax)、[锯切木板](#锯切木板-recipesaw_planks)、[枝条粉碎](#枝条粉碎-recipeshred_twigs)、[原木粉碎](#原木粉碎-recipeshred_wood)、[木炭冶炼](#木炭冶炼-recipesmelt_charcoal)、[富集矿冶炼](#富集矿冶炼-recipesmelt_concentrate)、[松脂冶炼](#松脂冶炼-recipesmelt_resin)、[腐土菌丸炼制](#腐土菌丸炼制-recipesoil_spirit_pill)
 - **研究与科技（12）**：[饲料与蜡油精制](#饲料与蜡油精制-researchadvanced_feed_oil_wax)、[灵食初制](#灵食初制-researchbasic_spirit_cooking)、[蜂群协作](#蜂群协作-researchbeekeeping)、[菌毯净化](#菌毯净化-researchbiofiltration)、[复合灵食](#复合灵食-researchcomposite_spirit_food)、[农产初加工](#农产初加工-researchfarm_preparation)、[田间自动维护](#田间自动维护-researchfield_maintenance)、[花源栽培](#花源栽培-researchflower_cultivation)、[矿质材料工艺](#矿质材料工艺-researchmineral_materials)、[生物选矿](#生物选矿-researchore_concentration)、[岩料破碎](#岩料破碎-researchrock_handling)、[水与藻料回流](#水与藻料回流-researchwater_recirculation)
 - **资源点与环境（10）**：[灵田·水库](#灵田水库-mapfarm_02)、[东侧远田](#东侧远田-parceleast_far)、[东侧下田](#东侧下田-parceleast_lower)、[东侧近田](#东侧近田-parceleast_near)、[东侧远岸水库](#东侧远岸水库-parceleast_water_far)、[东侧近岸水库](#东侧近岸水库-parceleast_water_near)、[西侧水库](#西侧水库-parcelwest_water)、[采矿点](#采矿点-sourceore_source)、[泉水点](#泉水点-sourcespring_source)、[采石点](#采石点-sourcestone_source)
-- **基础玩法（15）**：[持续生产与保留量](#持续生产与保留量-ruleauto_production)、[建材替代](#建材替代-rulebuild_substitute)、[作物生长速率公式](#作物生长速率公式-rulecrop_growth)、[日结顺序与自动推进](#日结顺序与自动推进-ruleday_settle)、[环境值与有效光照](#环境值与有效光照-ruleenvironment)、[购地与连续地图](#购地与连续地图-ruleexpansion)、[花源份额](#花源份额-ruleflower_share)、[养殖服务与周期口径](#养殖服务与周期口径-rulehusbandry_service)、[活体配方的双重注册](#活体配方的双重注册-ruleliving_mapping)、[后勤蛊部署、维护与生产协同](#后勤蛊部署维护与生产协同-rulelogistics)、[市集交易](#市集交易-rulemarket)、[五行供货与转数](#五行供货与转数-ruleorders)、[研究系统](#研究系统-ruleresearch)、[存档与经济](#存档与经济-rulesave)、[雇工与统一调度器](#雇工与统一调度器-ruleworker_scheduler)
+- **基础玩法（16）**：[农业辅助蛊：定向服务区与效果决议](#农业辅助蛊定向服务区与效果决议-ruleagriculture)、[持续生产与保留量](#持续生产与保留量-ruleauto_production)、[建材替代](#建材替代-rulebuild_substitute)、[作物生长速率公式](#作物生长速率公式-rulecrop_growth)、[日结顺序与自动推进](#日结顺序与自动推进-ruleday_settle)、[环境值与有效光照](#环境值与有效光照-ruleenvironment)、[购地与连续地图](#购地与连续地图-ruleexpansion)、[花源份额](#花源份额-ruleflower_share)、[养殖服务与周期口径](#养殖服务与周期口径-rulehusbandry_service)、[活体配方的双重注册](#活体配方的双重注册-ruleliving_mapping)、[后勤蛊部署、维护与生产协同](#后勤蛊部署维护与生产协同-rulelogistics)、[市集交易](#市集交易-rulemarket)、[五行供货与转数](#五行供货与转数-ruleorders)、[研究系统](#研究系统-ruleresearch)、[存档与经济](#存档与经济-rulesave)、[雇工与统一调度器](#雇工与统一调度器-ruleworker_scheduler)
 
 ---
 
@@ -384,7 +384,7 @@
 | 拆除 | 1AP；需设施空闲；不返还材料与元石 |
 | 持续生产策略 | 不适用（装置不使用持续生产策略） |
 
-关联条目：可入驻后勤蛊：[催生蛊](#催生蛊-gugrowth_gu)；解锁研究：[田间自动维护](#田间自动维护-researchfield_maintenance)
+关联条目：可入驻后勤蛊：[催生蛊](#催生蛊-gugrowth_gu)；可入驻后勤蛊：[锁水蛊](#锁水蛊-guwater_gu)；可入驻后勤蛊：[节肥蛊](#节肥蛊-gufert_gu)；解锁研究：[田间自动维护](#田间自动维护-researchfield_maintenance)
 
 ### 水场 `facility:fish_pond`
 
@@ -544,7 +544,7 @@
 相关规则：[建材替代](#建材替代-rulebuild_substitute)
 
 
-## 后勤蛊与协同（5）
+## 后勤蛊与协同（7）
 
 ### 明光蛊 `gu:bright_gu`
 
@@ -553,7 +553,7 @@
 | 字段 | 内容 |
 |---|---|
 | 转数 | 1转原型；实例支持一至五转，升转由上游负责 |
-| 获取 | 每档一次试用配给；饭袋草2只，其他各1只；尚未连接上游获取与成长 |
+| 获取 | 每档一次试用配给共11只：饭袋草/催生/锁水/节肥各2只，明光/智道研究/宙道研究各1只；尚未连接上游获取与成长 |
 | 部署 | 入驻兼容设施：补光灯 |
 | 能力 | 范围外扩2格，提供光照80，同格光照取最大 |
 | 维护 | 启用时1元石/游戏日；闲置仍收费，休眠/未部署免维护 |
@@ -565,16 +565,34 @@
 
 相关规则：[后勤蛊部署、维护与生产协同](#后勤蛊部署维护与生产协同-rulelogistics)
 
-### 催生蛊 `gu:growth_gu`
+### 节肥蛊 `gu:fert_gu`
 
-范围生产速度
+定向肥力减耗
 
 | 字段 | 内容 |
 |---|---|
 | 转数 | 1转原型；实例支持一至五转，升转由上游负责 |
-| 获取 | 每档一次试用配给；饭袋草2只，其他各1只；尚未连接上游获取与成长 |
+| 获取 | 每档一次试用配给共11只：饭袋草/催生/锁水/节肥各2只，明光/智道研究/宙道研究各1只；尚未连接上游获取与成长 |
 | 部署 | 入驻兼容设施：田间维护站 |
-| 能力 | 范围外扩2格，生物生产速度×1.2；同类取最强 |
+| 能力 | 宿主四向3×3服务区，完整覆盖目标的肥力扣耗保留50%（每格百分之一余量跨日累计） |
+| 维护 | 启用时1元石/游戏日；闲置仍收费，休眠/未部署免维护 |
+| 特殊食料 | 无（每个成功付费服务日；与元石原子扣除） |
+| 时点 | 部署/撤回各1AP；启用次日生效；停用立即取消后续效果，已付不退；运行/待收任务锁定实例 |
+
+关联条目：兼容设施：[田间维护站](#田间维护站-facilityfield_service_station)
+
+相关规则：[后勤蛊部署、维护与生产协同](#后勤蛊部署维护与生产协同-rulelogistics)
+
+### 催生蛊 `gu:growth_gu`
+
+定向生长速度
+
+| 字段 | 内容 |
+|---|---|
+| 转数 | 1转原型；实例支持一至五转，升转由上游负责 |
+| 获取 | 每档一次试用配给共11只：饭袋草/催生/锁水/节肥各2只，明光/智道研究/宙道研究各1只；尚未连接上游获取与成长 |
+| 部署 | 入驻兼容设施：田间维护站 |
+| 能力 | 宿主四向3×3服务区，完整覆盖的植物目标生产速度×1.5；同tag最高转优先 |
 | 维护 | 启用时1元石/游戏日；闲置仍收费，休眠/未部署免维护 |
 | 特殊食料 | 无（每个成功付费服务日；与元石原子扣除） |
 | 时点 | 部署/撤回各1AP；启用次日生效；停用立即取消后续效果，已付不退；运行/待收任务锁定实例 |
@@ -590,7 +608,7 @@
 | 字段 | 内容 |
 |---|---|
 | 转数 | 1转原型；实例支持一至五转，升转由上游负责 |
-| 获取 | 每档一次试用配给；饭袋草2只，其他各1只；尚未连接上游获取与成长 |
+| 获取 | 每档一次试用配给共11只：饭袋草/催生/锁水/节肥各2只，明光/智道研究/宙道研究各1只；尚未连接上游获取与成长 |
 | 部署 | 独立占用1格陆地，不需开垦/农田 |
 | 能力 | 自身进行生产，条件与产物见下方 |
 | 维护 | 启用时1元石/游戏日；闲置仍收费，休眠/未部署免维护 |
@@ -610,7 +628,7 @@
 | 字段 | 内容 |
 |---|---|
 | 转数 | 1转原型；实例支持一至五转，升转由上游负责 |
-| 获取 | 每档一次试用配给；饭袋草2只，其他各1只；尚未连接上游获取与成长 |
+| 获取 | 每档一次试用配给共11只：饭袋草/催生/锁水/节肥各2只，明光/智道研究/宙道研究各1只；尚未连接上游获取与成长 |
 | 部署 | 入驻兼容设施：研究台 |
 | 能力 | 每个有效研究日推进2工作量 |
 | 维护 | 启用时2元石/游戏日；闲置仍收费，休眠/未部署免维护 |
@@ -622,6 +640,24 @@
 
 相关规则：[后勤蛊部署、维护与生产协同](#后勤蛊部署维护与生产协同-rulelogistics)
 
+### 锁水蛊 `gu:water_gu`
+
+定向水分减耗
+
+| 字段 | 内容 |
+|---|---|
+| 转数 | 1转原型；实例支持一至五转，升转由上游负责 |
+| 获取 | 每档一次试用配给共11只：饭袋草/催生/锁水/节肥各2只，明光/智道研究/宙道研究各1只；尚未连接上游获取与成长 |
+| 部署 | 入驻兼容设施：田间维护站 |
+| 能力 | 宿主四向3×3服务区，完整覆盖目标的水分扣耗保留50%（每格百分之一余量跨日累计） |
+| 维护 | 启用时1元石/游戏日；闲置仍收费，休眠/未部署免维护 |
+| 特殊食料 | 无（每个成功付费服务日；与元石原子扣除） |
+| 时点 | 部署/撤回各1AP；启用次日生效；停用立即取消后续效果，已付不退；运行/待收任务锁定实例 |
+
+关联条目：兼容设施：[田间维护站](#田间维护站-facilityfield_service_station)
+
+相关规则：[后勤蛊部署、维护与生产协同](#后勤蛊部署维护与生产协同-rulelogistics)
+
 ### 智道研究蛊 `gu:wisdom_gu`
 
 固定研究工作量减免
@@ -629,7 +665,7 @@
 | 字段 | 内容 |
 |---|---|
 | 转数 | 1转原型；实例支持一至五转，升转由上游负责 |
-| 获取 | 每档一次试用配给；饭袋草2只，其他各1只；尚未连接上游获取与成长 |
+| 获取 | 每档一次试用配给共11只：饭袋草/催生/锁水/节肥各2只，明光/智道研究/宙道研究各1只；尚未连接上游获取与成长 |
 | 部署 | 入驻兼容设施：研究台 |
 | 能力 | 研究工作量固定减少1，至少保留1 |
 | 维护 | 启用时1元石/游戏日；闲置仍收费，休眠/未部署免维护 |
@@ -3848,7 +3884,17 @@
 相关规则：[日结顺序与自动推进](#日结顺序与自动推进-ruleday_settle)
 
 
-## 基础玩法（15）
+## 基础玩法（16）
+
+### 农业辅助蛊：定向服务区与效果决议 `rule:agriculture`
+
+1. 催生、锁水、节肥三种农业辅助蛊共用田间维护站的单一蛊槽（兼容标签agriculture_assist）；每座维护站同时只能入驻一只，建筑自身补水/施肥是独立来源，不因蛊停摆而停止。
+2. 服务区为宿主四向可转的3×3矩形，按宿主2×2占地与朝向唯一计算；出图自动裁剪到地图内，不授予地权或种植能力。提交转向1AP、次日开日生效；当日已付维护不退，同日不能轮转复用。
+3. 作物全部占地格都在单个有效服务区内才获得效果，不拼接多来源局部覆盖；承载即9格种植面积（1×1计1格、2×2计4格），空格无预占收益。
+4. 效果按tag互斥分组（plant_growth_speed/plant_water_saving/plant_fertility_saving）：同tag只采用最高转有效来源，同转比实际收益（催生倍率高者强、水肥保留比例低者强），平局以稳定实例ID；异类效果共同生效且不互相增强。
+5. 催生只提高当日生长点推进（首轮×1.5），不改成熟目标、不按视觉阶段减天；待收对象不再推进。锁水/节肥分别按保留比例减少目标环境水/肥扣耗（首轮各保留50%），以每格百分之一余量跨日累计，不产生实物、不返还物品、不抬高环境值。
+6. 饭袋草蛊属于植物目标但无肥力消耗，节肥对其无效。余量归属地格：收获、重种、取消、换蛊、休眠、转向、拆建与读档都不清除。
+7. 未采用的启用来源只要满足扣费条件仍支付维护；缺元石或食料时不授予当日运行资格，普通生产回退基础效率，环境不足的原降效规则保留。
 
 ### 持续生产与保留量 `rule:auto_production`
 
@@ -3913,11 +3959,11 @@
 
 ### 后勤蛊部署、维护与生产协同 `rule:logistics`
 
-1. 后勤蛊与战斗蛊分开；获取、炼制和升转归上游。独立Demo每档可领取一次六只试用实例，未部署不产生效果也不收费。
+1. 后勤蛊与战斗蛊分开；获取、炼制和升转归上游。独立Demo每档可领取一次11只试用实例（饭袋草/催生/锁水/节肥各2只，明光/智道研究/宙道研究各1只），未部署不产生效果也不收费。
 2. 同实例只占一处，同种不同实例可以并行；研究台只有一个辅助槽。部署/撤回各1AP；次日启用，休眠立即停止未来效果，已付维护不退。
 3. 开日按稳定实例顺序检查元石与特殊食料，两者同时足额才原子扣费；闲置启用仍收费；元石不足自动休眠，玩家可申请次日恢复。读档与保存重试不重复扣费。
 4. 饭袋草需光照≥60、水分≥30；每推进日扣水分8，不扣肥力、不需农田；3有效日收稻米4、无秸秆。受阻保留在制工作量，待收权益不等于库存。
-5. 明光入驻补光灯替代燃油模式；有效光照取自然光、油灯及蛊光最大值。催生覆盖普通作物与独立生产蛊，同类速度取最强，不递归增强效果源。
+5. 明光入驻补光灯替代燃油模式；有效光照取自然光、油灯及蛊光最大值。催生、锁水、节肥共用田间维护站单一蛊槽，按农业辅助规则决议（见农业辅助蛊条目），不递归增强效果源。
 6. 智道减少研究工作量1（至少1）；宙道每张工作收据推进2工作量、样本逐项×1.5向上取整。每天仍最多一次玩家/雇工研究工作；任务锁定入驻实例和启动方案。
 7. 运行中的任务与待收产物锁定实例；取消在制任务不退投入，待收产物须收取。已登记当日研究工作后不能休眠/取消，避免已付工作失效。
 

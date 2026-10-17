@@ -27,6 +27,7 @@ try {
     }
     Check-Game 'model' @('--script','res://scripts/farming/tests/run_phase10.gd') 'PHASE10 TEST OK'
     Check-Game 'ui' @('--script','res://scripts/farming/tests/run_phase10_ui.gd') 'PHASE10 UI OK'
+    Check-Game 'phase101' @('--script','res://scripts/farming/tests/run_phase101.gd') 'PHASE101 TEST OK'
     Check-Game 'handbook' @('--script','res://tools/farming/export_p8_handbook.gd','--','--check') 'P8 HANDBOOK DOC OK'
     Check-Game 'encyclopedia' @('--script','res://tools/farming/export_encyclopedia.gd','--','--check') 'P8 ENCYCLOPEDIA DOC OK'
     if (-not $SkipPlaytest) {

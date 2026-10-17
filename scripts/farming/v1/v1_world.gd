@@ -592,10 +592,13 @@ func _on_day_changed(day: int) -> void:
 			if row["progress"] == target:
 				row["state"] = "mature"
 				_count("matured",row["crop_id"])
+		# Deduction is a seam: products may cut each cell's use by a retention
+		# percent and carry fractional hundredths across days (P10.1 §5.3).
+		var retention: Dictionary = _crop_resource_retention(row, day-1)
 		for cell in cells:
 			var index: int = grid.index_of(cell)
-			environment[index][0] = maxi(0, int(environment[index][0]) - int(definition["water_use"]))
-			environment[index][1] = maxi(0, int(environment[index][1]) - int(definition["fertility_use"]))
+			_consume_environment(cell, index, 0, int(definition["water_use"]), int(retention["water"]))
+			_consume_environment(cell, index, 1, int(definition["fertility_use"]), int(retention["fertility"]))
 	_source_day = day
 	for ident in _source_used:
 		_source_used[ident] = 0
@@ -618,6 +621,16 @@ func _on_day_changed(day: int) -> void:
 ## Day D+1 opening device step, executed inside the settlement transaction.
 func _crop_growth_percent(_crop: Dictionary, _day: int) -> int:
 	return 100
+
+## Retention of the crop's original water/fertility deduction for the settled
+## service day, in percent; 100 keeps the classic integer deduction.
+func _crop_resource_retention(_row: Dictionary, _day: int) -> Dictionary:
+	return {"water": 100, "fertility": 100}
+
+## Per-cell environment deduction seam. The base product subtracts the integer
+## use directly; P8 routes it through the fixed-hundredths accumulator.
+func _consume_environment(_cell: Vector2i, index: int, field: int, use: int, _retention: int) -> void:
+	environment[index][field] = maxi(0, int(environment[index][field]) - use)
 
 func _opening_devices(_day: int) -> void:
 	pass

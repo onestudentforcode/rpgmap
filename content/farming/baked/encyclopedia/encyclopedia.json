@@ -70,17 +70,17 @@
   "counts": {
     "crops": 7,
     "diets": 20,
-    "entities": 196,
+    "entities": 199,
     "facilities": 15,
     "livestock": 6,
     "living_mappings": 5,
-    "logistics": 5,
+    "logistics": 7,
     "parcels": 6,
-    "processes": 253,
+    "processes": 255,
     "recipes": 41,
     "research": 12,
     "resources": 65,
-    "rules": 15,
+    "rules": 16,
     "sources": 3
   },
   "display": {
@@ -1284,6 +1284,16 @@
           "entity": "gu:growth_gu",
           "label": "可入驻后勤蛊",
           "name": "催生蛊"
+        },
+        {
+          "entity": "gu:water_gu",
+          "label": "可入驻后勤蛊",
+          "name": "锁水蛊"
+        },
+        {
+          "entity": "gu:fert_gu",
+          "label": "可入驻后勤蛊",
+          "name": "节肥蛊"
         },
         {
           "entity": "research:field_maintenance",
@@ -11880,7 +11890,7 @@
         {
           "key": "obtain",
           "label": "获取",
-          "text": "每档一次试用配给；饭袋草2只，其他各1只；尚未连接上游获取与成长"
+          "text": "每档一次试用配给共11只：饭袋草/催生/锁水/节肥各2只，明光/智道研究/宙道研究各1只；尚未连接上游获取与成长"
         },
         {
           "key": "deploy",
@@ -11945,7 +11955,7 @@
         {
           "key": "obtain",
           "label": "获取",
-          "text": "每档一次试用配给；饭袋草2只，其他各1只；尚未连接上游获取与成长"
+          "text": "每档一次试用配给共11只：饭袋草/催生/锁水/节肥各2只，明光/智道研究/宙道研究各1只；尚未连接上游获取与成长"
         },
         {
           "key": "deploy",
@@ -11955,7 +11965,68 @@
         {
           "key": "effect",
           "label": "能力",
-          "text": "范围外扩2格，生物生产速度×1.2；同类取最强"
+          "text": "宿主四向3×3服务区，完整覆盖目标的肥力扣耗保留50%（每格百分之一余量跨日累计）"
+        },
+        {
+          "key": "fee",
+          "label": "维护",
+          "text": "启用时1元石/游戏日；闲置仍收费，休眠/未部署免维护"
+        },
+        {
+          "key": "food",
+          "label": "特殊食料",
+          "text": "无（每个成功付费服务日；与元石原子扣除）"
+        },
+        {
+          "key": "timing",
+          "label": "时点",
+          "text": "部署/撤回各1AP；启用次日生效；停用立即取消后续效果，已付不退；运行/待收任务锁定实例"
+        }
+      ],
+      "icon": "fert_gu",
+      "id": "gu:fert_gu",
+      "kind": "gu",
+      "links": [
+        {
+          "entity": "facility:field_service_station",
+          "label": "兼容设施",
+          "name": "田间维护站"
+        }
+      ],
+      "locks": null,
+      "name": "节肥蛊",
+      "related_rules": [
+        "rule:logistics"
+      ],
+      "source_id": "fert_gu",
+      "summary": "定向肥力减耗",
+      "tags": [
+        "agriculture_assist",
+        "plant_fertility_saving"
+      ]
+    },
+    {
+      "category": "logistics",
+      "fields": [
+        {
+          "key": "rank",
+          "label": "转数",
+          "text": "1转原型；实例支持一至五转，升转由上游负责"
+        },
+        {
+          "key": "obtain",
+          "label": "获取",
+          "text": "每档一次试用配给共11只：饭袋草/催生/锁水/节肥各2只，明光/智道研究/宙道研究各1只；尚未连接上游获取与成长"
+        },
+        {
+          "key": "deploy",
+          "label": "部署",
+          "text": "入驻兼容设施：田间维护站"
+        },
+        {
+          "key": "effect",
+          "label": "能力",
+          "text": "宿主四向3×3服务区，完整覆盖的植物目标生产速度×1.5；同tag最高转优先"
         },
         {
           "key": "fee",
@@ -11989,9 +12060,10 @@
         "rule:logistics"
       ],
       "source_id": "growth_gu",
-      "summary": "范围生产速度",
+      "summary": "定向生长速度",
       "tags": [
-        "growth_assist"
+        "agriculture_assist",
+        "plant_growth_speed"
       ]
     },
     {
@@ -12005,7 +12077,7 @@
         {
           "key": "obtain",
           "label": "获取",
-          "text": "每档一次试用配给；饭袋草2只，其他各1只；尚未连接上游获取与成长"
+          "text": "每档一次试用配给共11只：饭袋草/催生/锁水/节肥各2只，明光/智道研究/宙道研究各1只；尚未连接上游获取与成长"
         },
         {
           "key": "deploy",
@@ -12075,7 +12147,7 @@
         {
           "key": "obtain",
           "label": "获取",
-          "text": "每档一次试用配给；饭袋草2只，其他各1只；尚未连接上游获取与成长"
+          "text": "每档一次试用配给共11只：饭袋草/催生/锁水/节肥各2只，明光/智道研究/宙道研究各1只；尚未连接上游获取与成长"
         },
         {
           "key": "deploy",
@@ -12146,7 +12218,68 @@
         {
           "key": "obtain",
           "label": "获取",
-          "text": "每档一次试用配给；饭袋草2只，其他各1只；尚未连接上游获取与成长"
+          "text": "每档一次试用配给共11只：饭袋草/催生/锁水/节肥各2只，明光/智道研究/宙道研究各1只；尚未连接上游获取与成长"
+        },
+        {
+          "key": "deploy",
+          "label": "部署",
+          "text": "入驻兼容设施：田间维护站"
+        },
+        {
+          "key": "effect",
+          "label": "能力",
+          "text": "宿主四向3×3服务区，完整覆盖目标的水分扣耗保留50%（每格百分之一余量跨日累计）"
+        },
+        {
+          "key": "fee",
+          "label": "维护",
+          "text": "启用时1元石/游戏日；闲置仍收费，休眠/未部署免维护"
+        },
+        {
+          "key": "food",
+          "label": "特殊食料",
+          "text": "无（每个成功付费服务日；与元石原子扣除）"
+        },
+        {
+          "key": "timing",
+          "label": "时点",
+          "text": "部署/撤回各1AP；启用次日生效；停用立即取消后续效果，已付不退；运行/待收任务锁定实例"
+        }
+      ],
+      "icon": "water_gu",
+      "id": "gu:water_gu",
+      "kind": "gu",
+      "links": [
+        {
+          "entity": "facility:field_service_station",
+          "label": "兼容设施",
+          "name": "田间维护站"
+        }
+      ],
+      "locks": null,
+      "name": "锁水蛊",
+      "related_rules": [
+        "rule:logistics"
+      ],
+      "source_id": "water_gu",
+      "summary": "定向水分减耗",
+      "tags": [
+        "agriculture_assist",
+        "plant_water_saving"
+      ]
+    },
+    {
+      "category": "logistics",
+      "fields": [
+        {
+          "key": "rank",
+          "label": "转数",
+          "text": "1转原型；实例支持一至五转，升转由上游负责"
+        },
+        {
+          "key": "obtain",
+          "label": "获取",
+          "text": "每档一次试用配给共11只：饭袋草/催生/锁水/节肥各2只，明光/智道研究/宙道研究各1只；尚未连接上游获取与成长"
         },
         {
           "key": "deploy",
@@ -16125,6 +16258,30 @@
         {
           "key": "statements",
           "label": "规则说明",
+          "text": "1. 催生、锁水、节肥三种农业辅助蛊共用田间维护站的单一蛊槽（兼容标签agriculture_assist）；每座维护站同时只能入驻一只，建筑自身补水/施肥是独立来源，不因蛊停摆而停止。\n2. 服务区为宿主四向可转的3×3矩形，按宿主2×2占地与朝向唯一计算；出图自动裁剪到地图内，不授予地权或种植能力。提交转向1AP、次日开日生效；当日已付维护不退，同日不能轮转复用。\n3. 作物全部占地格都在单个有效服务区内才获得效果，不拼接多来源局部覆盖；承载即9格种植面积（1×1计1格、2×2计4格），空格无预占收益。\n4. 效果按tag互斥分组（plant_growth_speed/plant_water_saving/plant_fertility_saving）：同tag只采用最高转有效来源，同转比实际收益（催生倍率高者强、水肥保留比例低者强），平局以稳定实例ID；异类效果共同生效且不互相增强。\n5. 催生只提高当日生长点推进（首轮×1.5），不改成熟目标、不按视觉阶段减天；待收对象不再推进。锁水/节肥分别按保留比例减少目标环境水/肥扣耗（首轮各保留50%），以每格百分之一余量跨日累计，不产生实物、不返还物品、不抬高环境值。\n6. 饭袋草蛊属于植物目标但无肥力消耗，节肥对其无效。余量归属地格：收获、重种、取消、换蛊、休眠、转向、拆建与读档都不清除。\n7. 未采用的启用来源只要满足扣费条件仍支付维护；缺元石或食料时不授予当日运行资格，普通生产回退基础效率，环境不足的原降效规则保留。"
+        },
+        {
+          "key": "refs",
+          "label": "实现依据",
+          "text": "scripts/farming/p8/p10_logistics.gd::resolve；scripts/farming/p8/p10_logistics.gd::consume_environment"
+        }
+      ],
+      "icon": "help",
+      "id": "rule:agriculture",
+      "kind": "rule",
+      "locks": null,
+      "name": "农业辅助蛊：定向服务区与效果决议",
+      "related_rules": [],
+      "source_id": "rule:agriculture",
+      "summary": "催生、锁水、节肥三种农业辅助蛊共用田间维护站的单一蛊槽（兼容标签agricult…",
+      "tags": []
+    },
+    {
+      "category": "rules",
+      "fields": [
+        {
+          "key": "statements",
+          "label": "规则说明",
           "text": "1. 策略=配方+目标产物+目标数量（0AP保存，不立即投料）；养殖设施策略同步设置特殊食谱；装置与研究台不能用策略\n2. 有效库存=仓库+全部在制/待收批次产物+待收活体产物（与可用库存区分；在制不能拿去出售）\n3. 目标按“单位批”推进：缺口=目标−有效库存，启动单位数=ceil(缺口/单位产出)；活体整单位启动可略超目标\n4. 保留量只挡自动投料与活体自动启动；手动操作、交易、建造、研究、基础照料、装置耗料不受限"
         },
         {
@@ -16341,7 +16498,7 @@
         {
           "key": "statements",
           "label": "规则说明",
-          "text": "1. 后勤蛊与战斗蛊分开；获取、炼制和升转归上游。独立Demo每档可领取一次六只试用实例，未部署不产生效果也不收费。\n2. 同实例只占一处，同种不同实例可以并行；研究台只有一个辅助槽。部署/撤回各1AP；次日启用，休眠立即停止未来效果，已付维护不退。\n3. 开日按稳定实例顺序检查元石与特殊食料，两者同时足额才原子扣费；闲置启用仍收费；元石不足自动休眠，玩家可申请次日恢复。读档与保存重试不重复扣费。\n4. 饭袋草需光照≥60、水分≥30；每推进日扣水分8，不扣肥力、不需农田；3有效日收稻米4、无秸秆。受阻保留在制工作量，待收权益不等于库存。\n5. 明光入驻补光灯替代燃油模式；有效光照取自然光、油灯及蛊光最大值。催生覆盖普通作物与独立生产蛊，同类速度取最强，不递归增强效果源。\n6. 智道减少研究工作量1（至少1）；宙道每张工作收据推进2工作量、样本逐项×1.5向上取整。每天仍最多一次玩家/雇工研究工作；任务锁定入驻实例和启动方案。\n7. 运行中的任务与待收产物锁定实例；取消在制任务不退投入，待收产物须收取。已登记当日研究工作后不能休眠/取消，避免已付工作失效。"
+          "text": "1. 后勤蛊与战斗蛊分开；获取、炼制和升转归上游。独立Demo每档可领取一次11只试用实例（饭袋草/催生/锁水/节肥各2只，明光/智道研究/宙道研究各1只），未部署不产生效果也不收费。\n2. 同实例只占一处，同种不同实例可以并行；研究台只有一个辅助槽。部署/撤回各1AP；次日启用，休眠立即停止未来效果，已付维护不退。\n3. 开日按稳定实例顺序检查元石与特殊食料，两者同时足额才原子扣费；闲置启用仍收费；元石不足自动休眠，玩家可申请次日恢复。读档与保存重试不重复扣费。\n4. 饭袋草需光照≥60、水分≥30；每推进日扣水分8，不扣肥力、不需农田；3有效日收稻米4、无秸秆。受阻保留在制工作量，待收权益不等于库存。\n5. 明光入驻补光灯替代燃油模式；有效光照取自然光、油灯及蛊光最大值。催生、锁水、节肥共用田间维护站单一蛊槽，按农业辅助规则决议（见农业辅助蛊条目），不递归增强效果源。\n6. 智道减少研究工作量1（至少1）；宙道每张工作收据推进2工作量、样本逐项×1.5向上取整。每天仍最多一次玩家/雇工研究工作；任务锁定入驻实例和启动方案。\n7. 运行中的任务与待收产物锁定实例；取消在制任务不退投入，待收产物须收取。已登记当日研究工作后不能休眠/取消，避免已付工作失效。"
         },
         {
           "key": "refs",
@@ -16356,7 +16513,7 @@
       "name": "后勤蛊部署、维护与生产协同",
       "related_rules": [],
       "source_id": "rule:logistics",
-      "summary": "后勤蛊与战斗蛊分开；获取、炼制和升转归上游。独立Demo每档可领取一次六只试用实…",
+      "summary": "后勤蛊与战斗蛊分开；获取、炼制和升转归上游。独立Demo每档可领取一次11只试用…",
       "tags": []
     },
     {
@@ -16483,11 +16640,11 @@
   "generated_inputs": [
     {
       "path": "content/farming/p8/production.json",
-      "sha256": "7950e5badc7dc03eea061429eafb257dd8521450aa1edd4b90d5c8bbcaa70363"
+      "sha256": "ffe9e1577f766db237d887c98c6fa8ad5118b854337a1b27ac9e37d78bb662b0"
     },
     {
       "path": "content/farming/baked/p8/production.json",
-      "sha256": "def1cfefca758cf014e134e8ddf6cec261f8b0a4a18aeeb0f8bc64e9d2881e24"
+      "sha256": "900b1aa46cc050b22d42893364e4ec6948f4ffd30da7bc449154b9aff1da9cda"
     },
     {
       "path": "content/farming/p8/expansion.json",
@@ -16499,7 +16656,7 @@
     },
     {
       "path": "content/farming/encyclopedia/encyclopedia.json",
-      "sha256": "ca51b3e009accf16e912c69bb8fc0988a853a9e2ba8764bafc1d6e029a5189ab"
+      "sha256": "6f935c22663cf9b5ff98d6ed0ce5b2219b4fb9424032205c74c60030699dd582"
     },
     {
       "path": "scripts/farming/v1/v1_scene.gd",
@@ -21552,6 +21709,41 @@
       ],
       "facility": null,
       "facility_name": null,
+      "id": "proc:gu-maintenance:fert_gu",
+      "inputs": [
+        {
+          "basis": "每只·每日",
+          "entity": "currency:primeval_stone",
+          "name": "元石",
+          "quantity": 1,
+          "timing": "开日"
+        }
+      ],
+      "name": "节肥蛊·每日维护",
+      "outputs": [],
+      "primeval_stones": 0,
+      "research": null,
+      "research_name": null,
+      "species": "gu:fert_gu",
+      "species_name": "节肥蛊",
+      "type": "gu_maintenance",
+      "worker_fee": 0
+    },
+    {
+      "ap": 0,
+      "ap_detail": "0AP",
+      "category_hint": "logistics",
+      "conditions": [
+        "已部署且启用；元石与食料同时足额；同服务日只结算一次"
+      ],
+      "crop": null,
+      "crop_name": null,
+      "duration": "即时",
+      "effects": [
+        "激活当日能力"
+      ],
+      "facility": null,
+      "facility_name": null,
       "id": "proc:gu-maintenance:growth_gu",
       "inputs": [
         {
@@ -21646,6 +21838,41 @@
       "research_name": null,
       "species": "gu:time_gu",
       "species_name": "宙道研究蛊",
+      "type": "gu_maintenance",
+      "worker_fee": 0
+    },
+    {
+      "ap": 0,
+      "ap_detail": "0AP",
+      "category_hint": "logistics",
+      "conditions": [
+        "已部署且启用；元石与食料同时足额；同服务日只结算一次"
+      ],
+      "crop": null,
+      "crop_name": null,
+      "duration": "即时",
+      "effects": [
+        "激活当日能力"
+      ],
+      "facility": null,
+      "facility_name": null,
+      "id": "proc:gu-maintenance:water_gu",
+      "inputs": [
+        {
+          "basis": "每只·每日",
+          "entity": "currency:primeval_stone",
+          "name": "元石",
+          "quantity": 1,
+          "timing": "开日"
+        }
+      ],
+      "name": "锁水蛊·每日维护",
+      "outputs": [],
+      "primeval_stones": 0,
+      "research": null,
+      "research_name": null,
+      "species": "gu:water_gu",
+      "species_name": "锁水蛊",
       "type": "gu_maintenance",
       "worker_fee": 0
     },

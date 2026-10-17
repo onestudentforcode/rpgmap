@@ -14,7 +14,7 @@ func open() -> void:
 	var gu = manager()
 	if not gu.state["provisioned"]:
 		shell._heading(shell.sidebar,"首批后勤蛊试用配给")
-		shell._label(shell.sidebar,"领取两只饭袋草蛊及明光、催生、智道研究、宙道研究蛊各一只。每档一次，0AP；获取与成长尚未连接上游。")
+		shell._label(shell.sidebar,"领取11只试用蛊：饭袋草/催生/锁水/节肥各两只，明光、智道研究、宙道研究各一只。每档一次，0AP；获取与成长尚未连接上游。")
 		shell._icon(shell.sidebar,"claim","领取试用蛊虫",func(): shell._result(manager().provision()); open())
 		return
 	var fees := 0
@@ -43,7 +43,9 @@ func card(row: Dictionary, parent: Node) -> void:
 	shell._label(parent,"维护%d元石/日；特殊食料：%s" % [int(d["fee"]),items_text(d["food"])])
 	var descriptions := {"production":"光照≥60、水分≥30；每有效日扣水分8，3有效日收稻米4，不产秸秆、不消耗肥力。",
 		"light":"范围外扩2格，提供光照80，与自然光/油灯取最大。入驻后替代该灯燃油模式；喜阴作物可能降效。",
-		"growth_speed":"范围外扩2格，普通作物与饭袋草生产速度×1.2；同类只取最强，不增强其他蛊效果。",
+		"growth_speed":"宿主四向3×3服务区（可转向，1AP次日生效），完整覆盖的植物目标生长×1.5；同tag最高转优先，不叠加。",
+		"water_saving":"宿主四向3×3服务区，完整覆盖目标的水分扣耗保留50%（每格百分之一余量跨日累计）；不产水、不返还物品。",
+		"fertility_saving":"宿主四向3×3服务区，完整覆盖目标的肥力扣耗保留50%（每格百分之一余量跨日累计）；无肥耗目标不生效。",
 		"research_flat":"研究台工作量固定−1，最低1；样本不变；每天仍需玩家或负责人工作。",
 		"research_speed":"研究速度×2，逐项样本×1.5向上取整；每天仍需一次研究工作与特殊食料。"}
 	shell._label(parent,descriptions[d["effect"]])
@@ -104,10 +106,15 @@ func card(row: Dictionary, parent: Node) -> void:
 func effect_details(parent: Node, cell: Vector2i) -> void:
 	var gu = manager()
 	var day: int = shell.world.clock.total_days
-	var best: int = gu.growth_percent(cell,day)
-	shell._label(parent,"当前生产速度×%.2f；同类范围效果取最强。" % (float(best)/100.0))
-	for entry in gu.effects_at(cell,"growth_speed",day,["biological_production"]):
-		shell._label(parent,"%s ×%.2f · %s" % [entry["name"],float(entry["value"])/100.0,"采用" if int(entry["value"])==best else "较弱，同类未叠加（仍付维护）"])
+	var d: Dictionary = gu.definition(gu.instance(focused) if not focused.is_empty() else {})
+	var tags: Array = d.get("target_tags", ["plant_grow"]) if not d.is_empty() else ["plant_grow"]
+	var outcome: Dictionary = gu.resolve(Rect2i(cell, Vector2i.ONE), tags, day)
+	var best: int = int(outcome["groups"].get("plant_growth_speed", {}).get("value", 100))
+	shell._label(parent,"当前生产速度×%.2f；同tag最高转优先，不叠加。" % (float(best)/100.0))
+	for entry in outcome["groups"].get("plant_growth_speed", {}).get("candidates", []):
+		shell._label(parent,"%s ×%.2f · %s" % [entry["name"],float(entry["value"])/100.0,"采用" if entry["adopted"] else entry["reason"]])
+	for entry in outcome["rejected"]:
+		shell._label(parent,"%s：%s" % [entry["name"],entry["reason"]])
 	for entry in gu.effects_at(cell,"light",day): shell._label(parent,"光照来源：%s，强度%d（与自然/油灯取最大）" % [entry["name"],int(entry["value"])])
 
 func host_section(uid: int) -> void:
@@ -139,12 +146,12 @@ func draw_overlay(target: Node2D, projected: bool = false) -> void:
 			target.draw_rect(host_rect,Color(0.36,0.64,0.45,0.25) if allowed else Color(0.8,0.3,0.25,0.25))
 			target.draw_rect(host_rect,Color("599d81") if allowed else Color("bd6554"),false,2)
 	if row.is_empty() or not gu.deployed(row): return
-	var area: Rect2i = gu.coverage(row)
+	var d: Dictionary = gu.definition(row)
+	var area: Rect2i = gu.service_zone(row, shell.world.clock.total_days) if gu.EFFECT_TAG.has(String(d["effect"])) else gu.coverage(row)
 	var rect := Rect2(Vector2(area.position)*64,Vector2(area.size)*64)
 	if projected: rect = shell.projection.ground_rect(rect)
 	target.draw_rect(rect,Color(0.35,0.65,0.55,0.12))
 	target.draw_rect(rect,Color(0.35,0.65,0.55,0.7),false,2)
-	var d: Dictionary = gu.definition(row)
 	var targets := []
 	for crop in shell.world.crops.values(): targets.append({"origin":crop["origin"],"eligible":true})
 	for other in gu.state["instances"]:
@@ -155,6 +162,6 @@ func draw_overlay(target: Node2D, projected: bool = false) -> void:
 		if not area.has_point(cell): continue
 		var point := Vector2(cell)*64+Vector2(32,32)
 		if projected: point = shell.projection.ground_to_view(point)
-		var eligible: bool = target_row["eligible"] and d["effect"] in ["light","growth_speed"]
+		var eligible: bool = target_row["eligible"] and (d["effect"] == "light" or gu.EFFECT_TAG.has(String(d["effect"])))
 		var effective: bool = eligible and gu.active(row,shell.world.clock.total_days)
 		target.draw_arc(point,18,0,TAU,24,Color("599d81") if effective else (Color("d8b96a") if eligible else Color("a6aaa2")),2)

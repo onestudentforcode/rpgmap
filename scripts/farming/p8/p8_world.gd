@@ -106,6 +106,7 @@ func _facility_removed(uid: int) -> void:
 	super(uid)
 	operations.forget_facility(uid)
 	devices.forget(uid)
+	logistics.forget_facility(uid)
 
 func to_snapshot() -> Dictionary:
 	var snapshot := super.to_snapshot()
@@ -115,6 +116,7 @@ func to_snapshot() -> Dictionary:
 	snapshot["world"]["flowers"] = flowers.to_save()
 	snapshot["world"]["devices"] = devices.to_save()
 	snapshot["world"]["logistics"] = logistics.to_save()
+	snapshot["world"]["agriculture"] = logistics.agri_to_save()
 	return snapshot
 
 func apply_snapshot(value) -> Dictionary:
@@ -136,6 +138,8 @@ func _snapshot_applied(snapshot: Dictionary) -> void:
 		devices.apply_save(snapshot["world"]["devices"])
 	if snapshot["world"].has("logistics"):
 		logistics.apply_save(snapshot["world"]["logistics"])
+	if snapshot["world"].has("agriculture"):
+		logistics.apply_agri_save(snapshot["world"]["agriculture"])
 
 ## Pollination bonus: one extra oilseed per pollinated cycle at harvest.
 func _harvest_bonus(instance: Dictionary) -> Dictionary:
@@ -239,10 +243,19 @@ func can_build_facility(cell: Vector2i, facility_id: String) -> Dictionary:
 		return _with_substituted(facility_id, func(): return super.can_build_facility(cell, facility_id))
 	return super(cell, facility_id)
 
-func build_facility(cell: Vector2i, facility_id: String) -> Dictionary:
+func build_facility(cell: Vector2i, facility_id: String, facing: String = "east") -> Dictionary:
+	# The optional facing only applies to the agriculture host and takes effect
+	# immediately: nothing can be active in a slot on its build day.
+	if facility_id == "field_service_station" and not facing in ["east", "south", "west", "north"]:
+		return _error("朝向非法")
 	if not build_substitute.is_empty() and facility_defs[facility_id]["materials"].has("raw_stone"):
 		return _with_substituted(facility_id, func(): return super.build_facility(cell, facility_id))
-	return super(cell, facility_id)
+	var known := facilities.keys().duplicate()
+	var result: Dictionary = super(cell, facility_id)
+	if result["ok"] and facility_id == "field_service_station":
+		for uid in facilities.keys():
+			if not known.has(uid): logistics.attach_facing(int(uid), facing)
+	return result
 
 func plant(cell: Vector2i, crop_id: String) -> Dictionary:
 	if crop_defs.has(crop_id):
@@ -331,7 +344,20 @@ func _light_at(cell: Vector2i) -> int:
 	return natural
 
 func _crop_growth_percent(crop: Dictionary, day: int) -> int:
-	return logistics.growth_percent(Vector2i(int(crop["origin"][0]),int(crop["origin"][1])),day)
+	# The agriculture gu resolve against the crop's full footprint and its
+	# qualification tags, never against a single anchor cell.
+	return logistics.growth_percent(_crop_rect(crop), crop_defs[crop["crop_id"]].get("target_tags", []), day)
+
+func _crop_resource_retention(row: Dictionary, day: int) -> Dictionary:
+	return logistics.retention_percent(_crop_rect(row), crop_defs[row["crop_id"]].get("target_tags", []), day)
+
+func _consume_environment(cell: Vector2i, index: int, field: int, use: int, retention: int) -> void:
+	logistics.consume_environment(cell, index, field, use, retention)
+
+func _crop_rect(crop: Dictionary) -> Rect2i:
+	var def: Dictionary = crop_defs[crop["crop_id"]]
+	return Rect2i(Vector2i(int(crop["origin"][0]), int(crop["origin"][1])),
+		Vector2i(int(def["footprint"][0]), int(def["footprint"][1])))
 
 func irrigate(cell: Vector2i) -> Dictionary:
 	if logistics.at(cell).is_empty(): return super(cell)

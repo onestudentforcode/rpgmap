@@ -1913,6 +1913,9 @@
         "straw": 2
       },
       "seed": "golden_wheat_seed",
+      "target_tags": [
+        "plant_grow"
+      ],
       "water_use": 4
     },
     {
@@ -1931,6 +1934,9 @@
         "twig": 4
       },
       "seed": "fast_fir_seed",
+      "target_tags": [
+        "plant_grow"
+      ],
       "water_use": 3
     },
     {
@@ -1953,6 +1959,9 @@
         "resin": 4
       },
       "seed": "resin_tree_seed",
+      "target_tags": [
+        "plant_grow"
+      ],
       "water_use": 3
     },
     {
@@ -1974,6 +1983,9 @@
         "mushroom": 3
       },
       "seed": "wood_decay_spawn",
+      "target_tags": [
+        "plant_grow"
+      ],
       "water_use": 2
     },
     {
@@ -1992,6 +2004,9 @@
         "fodder_grass": 3
       },
       "seed": "grass_seed",
+      "target_tags": [
+        "plant_grow"
+      ],
       "water_use": 3
     },
     {
@@ -2017,6 +2032,9 @@
       },
       "research": "flower_cultivation",
       "seed": "honeybell_seed",
+      "target_tags": [
+        "plant_grow"
+      ],
       "water_use": 3
     },
     {
@@ -2038,6 +2056,9 @@
       },
       "research": "flower_cultivation",
       "seed": "oilseed_flower_seed",
+      "target_tags": [
+        "plant_grow"
+      ],
       "water_use": 4
     }
   ],
@@ -2283,7 +2304,7 @@
         2,
         2
       ],
-      "gu_slot": "growth_assist",
+      "gu_slot": "agriculture_assist",
       "id": "field_service_station",
       "materials": {
         "iron_ingot": 1,
@@ -2755,7 +2776,8 @@
         ],
         "target_tags": [
           "biological_production",
-          "logistics_gu"
+          "logistics_gu",
+          "plant_grow"
         ],
         "value": 100
       },
@@ -2792,18 +2814,67 @@
         ],
         "id": "growth_gu",
         "name": "催生蛊",
-        "range": 2,
+        "range": 3,
         "rank": 1,
         "role": "logistics",
-        "scope": "AREA",
-        "slot": "growth_assist",
+        "scope": "DIRECTED_AREA",
+        "slot": "agriculture_assist",
         "tags": [
-          "growth_assist"
+          "agriculture_assist",
+          "plant_growth_speed"
         ],
         "target_tags": [
-          "biological_production"
+          "plant_grow"
         ],
-        "value": 120
+        "value": 150
+      },
+      {
+        "deployment": "host",
+        "effect": "water_saving",
+        "fee": 1,
+        "food": {},
+        "host_kinds": [
+          "facility"
+        ],
+        "id": "water_gu",
+        "name": "锁水蛊",
+        "range": 3,
+        "rank": 1,
+        "role": "logistics",
+        "scope": "DIRECTED_AREA",
+        "slot": "agriculture_assist",
+        "tags": [
+          "agriculture_assist",
+          "plant_water_saving"
+        ],
+        "target_tags": [
+          "plant_grow"
+        ],
+        "value": 50
+      },
+      {
+        "deployment": "host",
+        "effect": "fertility_saving",
+        "fee": 1,
+        "food": {},
+        "host_kinds": [
+          "facility"
+        ],
+        "id": "fert_gu",
+        "name": "节肥蛊",
+        "range": 3,
+        "rank": 1,
+        "role": "logistics",
+        "scope": "DIRECTED_AREA",
+        "slot": "agriculture_assist",
+        "tags": [
+          "agriculture_assist",
+          "plant_fertility_saving"
+        ],
+        "target_tags": [
+          "plant_grow"
+        ],
+        "value": 50
       },
       {
         "deployment": "host",
@@ -2864,9 +2935,15 @@
       "bright_gu",
       "growth_gu",
       "wisdom_gu",
-      "time_gu"
+      "time_gu",
+      "growth_gu",
+      "water_gu",
+      "water_gu",
+      "fert_gu",
+      "fert_gu"
     ],
     "range_metric": "rect_expand_anchor",
+    "rotate_ap": 1,
     "version": 1
   },
   "orders": {

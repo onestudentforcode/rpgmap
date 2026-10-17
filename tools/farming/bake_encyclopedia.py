@@ -614,15 +614,18 @@ def _relation_row(p, io_row, direction):
 GU = {r['id']: r for r in SRC.get('logistics', {}).get('definitions', [])}
 for gid, row in GU.items():
     hosts = [f for f in FAC.values() if f.get('gu_slot') == row['slot'] and f.get('kind','facility') in row['host_kinds']]
-    effect = {'production': '独立生产', 'light': '环境光照', 'growth_speed': '范围生产速度',
+    effect = {'production': '独立生产', 'light': '环境光照', 'growth_speed': '定向生长速度',
+              'water_saving': '定向水分减耗', 'fertility_saving': '定向肥力减耗',
               'research_flat': '固定研究工作量减免', 'research_speed': '研究速度倍率'}[row['effect']]
     fields = [field('rank','转数',f'{row["rank"]}转原型；实例支持一至五转，升转由上游负责'),
-        field('obtain','获取','每档一次试用配给；饭袋草2只，其他各1只；尚未连接上游获取与成长'),
+        field('obtain','获取','每档一次试用配给共11只：饭袋草/催生/锁水/节肥各2只，明光/智道研究/宙道研究各1只；尚未连接上游获取与成长'),
         field('deploy','部署','独立占用1格陆地，不需开垦/农田' if row['deployment']=='independent' else '入驻兼容设施：'+'、'.join(f['name'] for f in hosts)),
         field('effect','能力',{
             'production':'自身进行生产，条件与产物见下方',
             'light':f'范围外扩{row["range"]}格，提供光照{row["value"]}，同格光照取最大',
-            'growth_speed':f'范围外扩{row["range"]}格，生物生产速度×{row["value"]/100:g}；同类取最强',
+            'growth_speed':f'宿主四向3×3服务区，完整覆盖的植物目标生产速度×{row["value"]/100:g}；同tag最高转优先',
+            'water_saving':f'宿主四向3×3服务区，完整覆盖目标的水分扣耗保留{row["value"]}%（每格百分之一余量跨日累计）',
+            'fertility_saving':f'宿主四向3×3服务区，完整覆盖目标的肥力扣耗保留{row["value"]}%（每格百分之一余量跨日累计）',
             'research_flat':f'研究工作量固定减少{row["value"]}，至少保留1',
             'research_speed':f'每个有效研究日推进{row["value"]/100:g}工作量'}[row['effect']]),
         field('fee','维护',f'启用时{row["fee"]}元石/游戏日；闲置仍收费，休眠/未部署免维护'),

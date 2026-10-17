@@ -2034,7 +2034,10 @@
       },
       "water_use": 4,
       "fertility_use": 2,
-      "light": 80
+      "light": 80,
+      "target_tags": [
+        "plant_grow"
+      ]
     },
     {
       "id": "fast_fir",
@@ -2052,7 +2055,10 @@
       },
       "water_use": 3,
       "fertility_use": 1,
-      "light": 80
+      "light": 80,
+      "target_tags": [
+        "plant_grow"
+      ]
     },
     {
       "id": "resin_tree",
@@ -2074,7 +2080,10 @@
       },
       "water_use": 3,
       "fertility_use": 1,
-      "light": 80
+      "light": 80,
+      "target_tags": [
+        "plant_grow"
+      ]
     },
     {
       "id": "wood_decay_mushroom",
@@ -2095,7 +2104,10 @@
       },
       "water_use": 2,
       "fertility_use": 0,
-      "light": 30
+      "light": 30,
+      "target_tags": [
+        "plant_grow"
+      ]
     },
     {
       "id": "pasture_grass",
@@ -2113,7 +2125,10 @@
       },
       "water_use": 3,
       "fertility_use": 1,
-      "light": 80
+      "light": 80,
+      "target_tags": [
+        "plant_grow"
+      ]
     },
     {
       "id": "honeybell_bush",
@@ -2138,7 +2153,10 @@
       "fertility_use": 1,
       "light": 80,
       "flower_days": 1,
-      "research": "flower_cultivation"
+      "research": "flower_cultivation",
+      "target_tags": [
+        "plant_grow"
+      ]
     },
     {
       "id": "oilseed_flower",
@@ -2159,7 +2177,10 @@
       "fertility_use": 2,
       "light": 80,
       "flower_days": 2,
-      "research": "flower_cultivation"
+      "research": "flower_cultivation",
+      "target_tags": [
+        "plant_grow"
+      ]
     }
   ],
   "sources": [
@@ -2419,7 +2440,7 @@
         "iron_ingot": 1
       },
       "research": "field_maintenance",
-      "gu_slot": "growth_assist"
+      "gu_slot": "agriculture_assist"
     },
     {
       "id": "growth_lamp",
@@ -3828,7 +3849,12 @@
       "bright_gu",
       "growth_gu",
       "wisdom_gu",
-      "time_gu"
+      "time_gu",
+      "growth_gu",
+      "water_gu",
+      "water_gu",
+      "fert_gu",
+      "fert_gu"
     ],
     "definitions": [
       {
@@ -3842,7 +3868,8 @@
         ],
         "target_tags": [
           "biological_production",
-          "logistics_gu"
+          "logistics_gu",
+          "plant_grow"
         ],
         "fee": 1,
         "food": {},
@@ -3897,21 +3924,70 @@
         "rank": 1,
         "deployment": "host",
         "tags": [
-          "growth_assist"
+          "agriculture_assist",
+          "plant_growth_speed"
         ],
         "target_tags": [
-          "biological_production"
+          "plant_grow"
         ],
         "fee": 1,
         "food": {},
         "host_kinds": [
           "facility"
         ],
-        "slot": "growth_assist",
-        "scope": "AREA",
+        "slot": "agriculture_assist",
+        "scope": "DIRECTED_AREA",
         "effect": "growth_speed",
-        "range": 2,
-        "value": 120
+        "range": 3,
+        "value": 150
+      },
+      {
+        "id": "water_gu",
+        "name": "锁水蛊",
+        "role": "logistics",
+        "rank": 1,
+        "deployment": "host",
+        "tags": [
+          "agriculture_assist",
+          "plant_water_saving"
+        ],
+        "target_tags": [
+          "plant_grow"
+        ],
+        "fee": 1,
+        "food": {},
+        "host_kinds": [
+          "facility"
+        ],
+        "slot": "agriculture_assist",
+        "scope": "DIRECTED_AREA",
+        "effect": "water_saving",
+        "range": 3,
+        "value": 50
+      },
+      {
+        "id": "fert_gu",
+        "name": "节肥蛊",
+        "role": "logistics",
+        "rank": 1,
+        "deployment": "host",
+        "tags": [
+          "agriculture_assist",
+          "plant_fertility_saving"
+        ],
+        "target_tags": [
+          "plant_grow"
+        ],
+        "fee": 1,
+        "food": {},
+        "host_kinds": [
+          "facility"
+        ],
+        "slot": "agriculture_assist",
+        "scope": "DIRECTED_AREA",
+        "effect": "fertility_saving",
+        "range": 3,
+        "value": 50
       },
       {
         "id": "wisdom_gu",
@@ -3964,6 +4040,7 @@
         "value": 200,
         "material_percent": 150
       }
-    ]
+    ],
+    "rotate_ap": 1
   }
 }
