@@ -1,6 +1,19 @@
 # 当前农场测试与历史入口
 
-> **2026-10-17 P10.2开发检查：** 当前schema20，不兼容早期P8档。`test-p10-2.bat`运行源编译/百科过期检查、Python工具、农业房间模型/UI、既有后勤及农业回归、知识阅读与同源导出检查；每个Godot进程检查退出码和日志，60秒超时停止并报告，仅豁免精确的Windows根证书读取环境警告。`test-p8.bat -WorkspaceStores`已纳入房间专项，使用工作区隔离槽。当前开发专项不等同完整阶段通过；经营对照/独立审计与最终结果见[P10.2§14](phase-10.2-地板与农业房间.md#14-实施定稿与进度2026-10-17)。下方P10/schema18及P8.7/schema17为历史记录。
+> **2026-10-18 P10.2检查完成：** 当前schema20，不兼容早期P8档。`test-p10-2.bat`默认运行快速检查，再运行普通/育种/丰产/复合各独立A/B的120日经营门禁、完整产业与房间审计、16类篡改拒绝；`-SkipPlaytest`只做源/百科、Python、模型/UI、既有后勤/农业和知识检查；`-AuditExisting`只复核已有终态回放，不重跑游戏。默认证据目录`.art-work/p102-playtest/business-v5/`，可用`-EvidenceRoot`指定新目录。已有运行进程或中断账本会明确报错，须先检查，不覆盖原始证据。只豁免精确的Windows根证书读取环境警告，其他Godot错误均失败。模型209/UI30/GPU37、Python129、完整P8与历史V1/V2、八条120日经营、四组完整审计、16类篡改拒绝及`-AuditExisting`全部通过；见[P10.2§14](phase-10.2-地板与农业房间.md)、[成本回报](phase102-business.md)与[机器记录](phase102-validation.json)。下方旧schema及旧阶段经营脚本按历史记录阅读。
+
+P10.2复核命令：
+
+```powershell
+.\test-p10-2.bat -SkipPlaytest
+.\test-p8.bat -WorkspaceStores
+powershell -NoProfile -ExecutionPolicy Bypass -File tools/farming/test_p102_historical.ps1
+.\test-p10-2.bat -AuditExisting -EvidenceRoot .art-work/p102-playtest/business-v5
+python tools/farming/report_p102_business.py .art-work/p102-playtest/business-v5
+python tools/farming/record_p102_validation.py .art-work/p102-playtest/business-v5
+```
+
+历史回归执行原V1/V2断言，仅把测试存储路径替换到工作区；V1默认存档命名空间断言保持。新增测试夹具只用于旧视觉场景的成熟状态，不用于生长奖励或正常经营证明。快速Godot检查每项60秒；经营进程每条15分钟，默认4条并行（独立脚本可设`-Parallel 1…8`，本批使用8条），超时只终止本脚本登记的进程树。P10/P10.1旧长回放操作器用于原历史证据；当前农业区经营请使用P10.2入口。终态快照成本累计到clock120，续跑开日121单独留证；不把续日费用混进对照表。
 
 > **2026-10-16 P10接入：** 默认入口继续沿用P8.7投影，新增后勤蛊玩法与schema18（兼容读取schema17）。`test-p10.bat`检查源契约、模型/界面、手册/百科及有/无蛊各双120日回放和严格审计；`-SkipPlaytest`可只跑快速专项。P10模型与界面检查已并入`test-p8.bat`及完整`test.bat`。当前执行证据见[Phase 10](phase-10-后勤蛊虫与生产协同.md#14-执行与验收记录)。下面的schema17/旧数量描述历史阶段证据。
 
