@@ -16,6 +16,8 @@ const Encyclopedia := preload("res://scripts/farming/p8/p8_encyclopedia.gd")
 var encyclopedia := Encyclopedia.new(self)
 const LogisticsUI := preload("res://scripts/farming/p8/p10_ui.gd")
 var logistics_ui := LogisticsUI.new(self)
+## Chosen orientation for the next agriculture-station placement.
+var build_facing := "east"
 var production_visuals := true
 var _facility_thumbnails: Dictionary = {}
 var visual_trial_profile := "baseline"
@@ -263,6 +265,19 @@ func _board_input(event: InputEvent) -> void:
 				overlay.queue_redraw()
 				return
 			_map_pan = false
+		# Station placement carries the chosen facing; every other build keeps
+		# the shared base path unchanged.
+		if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT and not event.pressed \
+				and build_tool == "field_service_station" and _drag:
+			_drag = false
+			_drag_end = _cell(event.position)
+			selected = _drag_end
+			# The P8 world takes the orientation; the base class signature stays 2-arg.
+			var p8w: Variant = world
+			_result(p8w.build_facility(selected,build_tool,build_facing))
+			_show_cell()
+			overlay.queue_redraw()
+			return
 	else:
 		_map_pan = false
 	super(event)
@@ -347,6 +362,15 @@ func _draw_facility_preview(target: Node2D, rect: Rect2) -> void:
 
 func draw_map(target: Node2D) -> void:
 	super(target)
+	# Build preview for the agriculture station: the directed service zone that
+	# the placement will lock in, clipped to the map like the runtime zone.
+	if build_tool == "field_service_station" and _started and world.grid.in_bounds(_hover.x,_hover.y):
+		var def: Dictionary = world.facility_defs[build_tool]
+		var zone: Rect2i = world.logistics.directed_zone(_hover, def["footprint"], build_facing).intersection(world.grid.bounds())
+		if zone.size.x > 0 and zone.size.y > 0:
+			var zone_rect := Rect2(Vector2(zone.position)*64,Vector2(zone.size)*64)
+			target.draw_rect(zone_rect,Color("e8d9a0",0.18))
+			target.draw_rect(zone_rect,Color("e8d9a0"),false,2)
 	var font := theme.default_font
 	var readable := maxf(1.0, 1.0/(camera.zoom.x*_ui_scale))
 	for id in world.land.parcels:
@@ -418,11 +442,24 @@ func _show_build() -> void:
 				choice.selected = 0
 				choice.item_selected.connect(func(index): world.build_substitute = String(choice.get_item_metadata(index)); _show_build())
 				card.add_child(choice)
+			if ident == "field_service_station":
+				var facing_row := HBoxContainer.new()
+				card.add_child(facing_row)
+				_label(facing_row,"朝向")
+				var facing_choice := OptionButton.new()
+				for dir in ["east","south","west","north"]:
+					facing_choice.add_item(logistics_ui.FACING_NAMES[dir]+"向")
+					facing_choice.set_item_metadata(facing_choice.item_count-1, dir)
+				facing_choice.selected = ["east","south","west","north"].find(build_facing)
+				facing_choice.item_selected.connect(func(index): build_facing = String(facing_choice.get_item_metadata(index)))
+				facing_row.add_child(facing_choice)
+				_label(card,"蛊服务区在朝向侧3×3，建造时选定；之后转向1AP、次日开日生效。")
 			_icon(card,"build","放置 "+definition["name"],func():
 				_close_page()
 				_select_tool("inspect")
 				build_tool = ident
-				notice.text = "放置%s · 占地%d×%d，%d元石+%s · 右键取消" % [definition["name"],definition["footprint"][0],definition["footprint"][1],definition["cash"],_materials(definition["materials"])])
+				notice.text = "放置%s · 占地%d×%d，%d元石+%s%s · 右键取消" % [definition["name"],definition["footprint"][0],definition["footprint"][1],definition["cash"],_materials(definition["materials"]),
+					(" · 服务区%s向3×3" % logistics_ui.FACING_NAMES[build_facing]) if ident == "field_service_station" else ""])
 
 ## Non-habitat panels: research benches explain the pending system, recipe cards
 ## carry an explicit lock line and stay unstartable while gated.
@@ -915,7 +952,7 @@ func _show_research() -> void:
 # --- P8.d flower sources -----------------------------------------------------
 
 func _crop_extra(crop: Dictionary) -> void:
-	logistics_ui.effect_details(sidebar,Vector2i(int(crop["origin"][0]),int(crop["origin"][1])))
+	logistics_ui.crop_agriculture(sidebar, crop)
 	_encyclopedia_link(sidebar,"crop:" + String(crop["crop_id"]))
 	if not world.flowers.is_flower_crop(String(crop["crop_id"])):
 		return

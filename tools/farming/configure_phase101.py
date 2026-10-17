@@ -50,6 +50,7 @@ path.write_text(json.dumps(data, ensure_ascii=False, indent=2) + '\n', encoding=
 icons = ROOT / 'assets/farming/ui'
 shapes = {
     'water_gu': '<path d="M32 4Q50 24 50 36Q50 52 32 52Q14 52 14 36Q14 24 32 4Z" fill="#9fc6d9"/><path d="M22 40Q22 48 32 48Q42 48 42 40" fill="none"/><circle cx="26" cy="36" r="2" fill="#e8f2f7"/><circle cx="36" cy="32" r="2" fill="#e8f2f7"/><path d="M32 52v6M24 58h16" fill="none"/>',
+    'rotate': '<path d="M50 15a20 20 0 1 0 9 15" fill="none"/><path d="M49 7l7 9-11 3Z" fill="#e7d49a"/><circle cx="32" cy="34" r="3" fill="#456953"/>',
     'fert_gu': '<path d="M20 22Q32 12 44 22L46 34Q46 50 32 54Q18 50 18 34Z" fill="#c9b489"/><path d="M20 22Q32 30 44 22M18 34Q32 40 46 34" fill="none"/><circle cx="27" cy="42" r="2" fill="#7c6a4a"/><circle cx="36" cy="44" r="2" fill="#7c6a4a"/><circle cx="32" cy="38" r="2" fill="#7c6a4a"/><path d="M32 10v-4M26 8l2 4M38 8l-2 4" fill="none"/>',
 }
 for ident, shape in shapes.items():
