@@ -1,5 +1,7 @@
 # handoff — 跨机器开发交接
 
+> **P10.1设计草案（2026-10-17）：** 下一实施入口为[农业区与辅助蛊](docs/farming/phase-10.1-农业区与辅助蛊.md)。用户确认普通农业、三蛊共用单槽宿主、定向光环与完整占地、面积承载、异类组合/同tag最高转优先、固定可重复模块；催生采用生长点倍率，以150%为配数起点。草案补充跨日水肥余量、四向几何、缺供、可玩配给、旧档与事务/UI/经营验收，宿主复用/减耗比例/费用尚属建议或试算。房间满配收益、饥饿死亡、升转与其他产业后置。本次只写文档，P10.1代码与验收未开始，默认入口及schema18保持；P10旧证据不可改哈希冒充新版本。
+
 > **P10开发交付完成（2026-10-16）：** 五类后勤蛊、六只一次性试用实例、部署/维护/稻米生产、明光/催生、研究辅助、管理页、百科及12章手册已接入。默认P8入口/P8.7投影，schema18兼容读取schema17。最终181项模型、21项界面及GPU检查、99项Python工具、完整`test.bat`、有/无蛊各双120日严格审计及12＋10类篡改拒绝通过；见[Phase 10](docs/farming/phase-10-后勤蛊虫与生产协同.md#14-执行与验收记录)与[验收证据](docs/farming/phase10-validation.json)。运行`play.bat`后打开“后勤蛊”，见[操作说明](docs/farming/demo-p10-操作说明.md)。`test-p10.bat`重跑专项和经营；`-SkipPlaytest`快速检查，`-AuditExisting`重审原始证据。真实上游、凝露P1、正式美术与新Windows包后置，未代签用户主观试玩。下面P9/P8.7数量、schema17及“下一步方向”属于历史记录。
 
 > **P9已完成（2026-10-16）：** [游戏内百科全书](docs/farming/phase-09-游戏内百科全书.md)全部交付：P9.a调查（[audit交付](docs/farming/encyclopedia/audit/report.md)五件套，复核50项0问题）；P9.b内容层（curated源`content/farming/encyclopedia/encyclopedia.json`＋编译器`tools/farming/bake_encyclopedia.py`→`content/farming/baked/encyclopedia/encyclopedia.json`，格式版本1；187实体/242过程/14规则；`--check`过期检查接入test-p8）；P9.c游戏内阅读（`scripts/farming/p8/p8_encyclopedia.gd`缺氧风格双栏阅读器，接入统一手册双页签与各面板查询按钮）；P9.d同源导出[百科全书](docs/farming/demo-p8-百科全书.md)＋8项核验单测（工具单测共89项）；试玩反馈修复（长文AUTOWRAP_ARBITRARY换行约30字/行、隐藏"实现依据"refs，专项44项）；P9.e用户验收通过，**Windows打包按用户要求豁免（开发阶段不打包；正式打包时需在打包配置中显式包含`content/farming/baked/encyclopedia/`数据）**，分辨率抽查与完整`test.bat`全绿。默认P8.7/schema17保持，未改任何玩法数值。下一步方向待用户确定。
