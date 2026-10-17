@@ -16,7 +16,8 @@ const P8Flowers := preload("res://scripts/farming/p8/p8_flowers.gd")
 const P8Devices := preload("res://scripts/farming/p8/p8_devices.gd")
 const Land := preload("res://scripts/farming/p8/p8_land.gd")
 const Logistics := preload("res://scripts/farming/p8/p10_logistics.gd")
-const SCHEMA := 19
+const Rooms := preload("res://scripts/farming/p8/p102_rooms.gd")
+const SCHEMA := 20
 
 static func fresh() -> Dictionary:
 	var snapshot: Dictionary = Common.fresh(Data, SCHEMA)
@@ -36,6 +37,8 @@ static func fresh() -> Dictionary:
 	snapshot["world"]["devices"] = {"devices": [], "active_day": -1, "active_lamps": []}
 	snapshot["world"]["logistics"] = Logistics.fresh()
 	snapshot["world"]["agriculture"] = Logistics.fresh_agriculture()
+	snapshot["world"]["rooms"] = Rooms.fresh()
+	snapshot["world"]["rooms"]["random_seed"] = randi_range(1,2147483647)
 	var workers := []
 	for worker in snapshot["workforce"]["workers"]:
 		worker["farm_duty"] = {"enabled": false, "priority": "normal"}
@@ -47,23 +50,7 @@ static func fail(reason: String) -> Dictionary:
 	return Common.fail(reason)
 
 static func normalize(value) -> Dictionary:
-	# Lossless upgrades only from the immediately preceding schema: 17 adds the
-	# inert logistics and agriculture sections; 18 appends the five P10.1
-	# supplement instances once and pins the legacy switch day. Forged older
-	# shapes (agriculture on 18, unknown keys) never upgrade silently.
-	var upgrading_18 := false
-	if value is Dictionary and value.get("schema") == 17 and value.get("world") is Dictionary and not value["world"].has("logistics"):
-		value = value.duplicate(true)
-		value["schema"] = SCHEMA
-		value["world"]["logistics"] = Logistics.fresh()
-		value["world"]["agriculture"] = Logistics.fresh_agriculture()
-		if value["world"].get("research") is Dictionary and value["world"].get("research").get("projects") is Array:
-			for project in value["world"]["research"]["projects"]:
-				if project is Dictionary and not project.has("gu"): project["gu"] = {"instance_id":"","flat":0,"speed":1,"materials":100}
-	elif value is Dictionary and value.get("schema") == 18 and value.get("world") is Dictionary and not value["world"].has("agriculture"):
-		value = value.duplicate(true)
-		value["schema"] = SCHEMA
-		upgrading_18 = true
+	# P10.2 deliberately starts a fresh schema: no old-save migration.
 	if not value is Dictionary or value.get("product") != Data.load_data()["product"] or not Scalars.whole(value.get("schema"), SCHEMA, SCHEMA):
 		return fail("不支持的P8快照版本，请重新开档")
 	# Strip the derived sections, validate the shared body, then validate the
@@ -81,6 +68,7 @@ static func normalize(value) -> Dictionary:
 	var raw_devices = world_section.get("devices", null) if world_section is Dictionary else null
 	var raw_logistics = world_section.get("logistics",null)
 	var raw_agriculture = world_section.get("agriculture",null)
+	var raw_rooms = world_section.get("rooms",null)
 	if body.has("ledger"):
 		body.erase("ledger")
 	if body.has("reports"):
@@ -91,6 +79,7 @@ static func normalize(value) -> Dictionary:
 		world_section.erase("land")
 		world_section.erase("logistics")
 		world_section.erase("agriculture")
+		world_section.erase("rooms")
 		if world_section.has("husbandry"):
 			world_section.erase("husbandry")
 		if world_section.has("p8"):
@@ -163,19 +152,16 @@ static func normalize(value) -> Dictionary:
 	checked["snapshot"]["world"]["devices"] = device_state["devices"]
 	var logistics_value = raw_logistics
 	var agriculture_value = raw_agriculture
-	if upgrading_18:
-		# Strict 18-shape first, then the one-time supplement and the legacy
-		# switch day; the converted result is fully re-validated below.
-		var upgraded := Logistics.upgrade18(raw_logistics, Data)
-		if not upgraded["ok"]: return upgraded
-		logistics_value = upgraded["logistics"]
-		agriculture_value = Logistics.converted_agriculture(day)
+	if not agriculture_value is Dictionary or agriculture_value.get("legacy_until")!=-1: return fail("新版本不接受旧农业切换状态")
 	var logistics := Logistics.normalize(logistics_value,day,checked["snapshot"],Data)
 	if not logistics["ok"]: return logistics
 	checked["snapshot"]["world"]["logistics"] = logistics["logistics"]
 	var agriculture := Logistics.normalize_agriculture(agriculture_value, day, int(logistics["logistics"]["active_day"]), checked["snapshot"]["world"], Data)
 	if not agriculture["ok"]: return agriculture
 	checked["snapshot"]["world"]["agriculture"] = agriculture["agriculture"]
+	var rooms := Rooms.normalize(raw_rooms,checked["snapshot"],Data)
+	if not rooms["ok"]: return rooms
+	checked["snapshot"]["world"]["rooms"] = rooms["rooms"]
 	# A locked research plan must still point at its one original host instance.
 	for project in research["research"]["projects"]:
 		var id := String(project["gu"]["instance_id"])

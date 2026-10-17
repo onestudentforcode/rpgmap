@@ -2431,8 +2431,8 @@
       "id": "field_service_station",
       "name": "田间维护站",
       "footprint": [
-        2,
-        2
+        1,
+        1
       ],
       "cash": 18,
       "materials": {
@@ -4042,5 +4042,56 @@
       }
     ],
     "rotate_ap": 1
+  },
+  "rooms": {
+    "version": 1,
+    "seed_percent": 25,
+    "material_percent": 25,
+    "floor": {
+      "inputs": {
+        "raw_wood": 1
+      },
+      "place_ap": 1,
+      "remove_ap": 1,
+      "refund": false
+    },
+    "primary": {
+      "golden_wheat": {
+        "harvest": "grain"
+      },
+      "fast_fir": {
+        "fell": "raw_wood"
+      },
+      "resin_tree": {
+        "harvest": "resin",
+        "fell": "raw_wood"
+      },
+      "wood_decay_mushroom": {
+        "harvest": "mushroom"
+      },
+      "pasture_grass": {
+        "harvest": "fodder_grass"
+      },
+      "honeybell_bush": {
+        "harvest": "nectar",
+        "fell": "twig"
+      },
+      "oilseed_flower": {
+        "harvest": "oilseed"
+      },
+      "rice_bag_gu": {
+        "claim": "rice"
+      }
+    },
+    "requirements": {
+      "seed": [
+        "plant_growth_speed",
+        "plant_water_saving"
+      ],
+      "material": [
+        "plant_growth_speed",
+        "plant_fertility_saving"
+      ]
+    }
   }
 }

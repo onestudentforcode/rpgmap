@@ -824,8 +824,8 @@
     },
     "field_service_station": {
       "footprint": [
-        2,
-        2
+        1,
+        1
       ],
       "canvas_px": [
         512,
@@ -841,7 +841,7 @@
         204.8000030517578,
         204.8000030517578
       ],
-      "scale_multiplier": 1.0,
+      "scale_multiplier": 0.5,
       "ground_placement": "footprint_center",
       "source_blend_sha256": "1d4df830816bc0fa525f8b34c15cb57dd6c3bf19243cd7746fc67b6e2c0284a9",
       "source_png": "facilities/field_service_station/field_service_station_body_128.png",
@@ -875,12 +875,12 @@
       },
       "shadow": {
         "size": [
-          111,
-          43
+          55.5,
+          21.5
         ],
         "offset": [
           0,
-          6
+          3
         ],
         "opacity": 0.2
       }

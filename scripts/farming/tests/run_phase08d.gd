@@ -1,4 +1,5 @@
 extends SceneTree
+const CropFixture := preload("res://scripts/farming/tests/p8_crop_fixture.gd")
 ## P8.d checks: flower shares and eligibility windows, hand picks, the bee
 ## lifecycle through real maintenance, share competition and pollination, plus
 ## a no-injection route from a fresh farm to real T01/T02/T03 research samples.
@@ -75,7 +76,7 @@ func _shares_and_windows() -> void:
 	for row in world.crops.values():
 		uid = int(row["uid"])
 	check(not world.flowers.share_available(uid), "immature honeybell holds no share")
-	world.crops[uid]["progress"] = 600
+	CropFixture.progress(world,uid,600)
 	world.crops[uid]["state"] = "mature"
 	check(world.flowers.share_available(uid), "mature honeybell offers its share")
 	# Mid-day dryness suspends the unused remainder; recovery unseals it.
@@ -93,13 +94,13 @@ func _shares_and_windows() -> void:
 	for row in world.crops.values():
 		if String(row["crop_id"]) == "oilseed_flower":
 			oil = int(row["uid"])
-	world.crops[oil]["progress"] = 299
+	CropFixture.progress(world,oil,299)
 	check(not world.flowers.share_available(oil), "below the flowering window: no share")
-	world.crops[oil]["progress"] = 300
+	CropFixture.progress(world,oil,300)
 	check(world.flowers.share_available(oil), "window start offers a share")
-	world.crops[oil]["progress"] = 499
+	CropFixture.progress(world,oil,499)
 	check(world.flowers.share_available(oil), "window end still flowers")
-	world.crops[oil]["progress"] = 500
+	CropFixture.progress(world,oil,500)
 	world.crops[oil]["state"] = "mature"
 	check(not world.flowers.share_available(oil), "mature oilseed stops flowering")
 	# Unused shares expire with the day.
@@ -119,7 +120,7 @@ func _hand_picks() -> void:
 	var uid := 0
 	for row in world.crops.values():
 		uid = int(row["uid"])
-	world.crops[uid]["progress"] = 600
+	CropFixture.progress(world,uid,600)
 	world.crops[uid]["state"] = "mature"
 	var ap_before := world.clock.ap
 	var picked: Dictionary = world.pick_flower(Vector2i(1, 1))
@@ -150,7 +151,7 @@ func _bee_lifecycle() -> void:
 	world.plant(Vector2i(9, 1), "honeybell_bush")
 	world.plant(Vector2i(10, 1), "honeybell_bush")
 	for row in world.crops.values():
-		row["progress"] = 600
+		CropFixture.progress(world,int(row["uid"]),600)
 		row["state"] = "mature"
 	check(world.husbandry.purchase(hive, 2)["ok"], "buy two colonies")
 	# Water alone cannot feed: with the shares drained by hand the quote fails.
@@ -211,7 +212,7 @@ func owned_bees(plant_count: int = 2, store = null) -> Dictionary:
 		world.till(Vector2i(x, 1))
 		world.plant(Vector2i(x, 1), "honeybell_bush")
 	for crop in world.crops.values():
-		crop["progress"] = 600
+		CropFixture.progress(world,int(crop["uid"]),600)
 		crop["state"] = "mature"
 	check(world.husbandry.purchase(hive, 2)["ok"], "owned bees purchase")
 	var hired: Dictionary = world.workforce.hire("蜂场负责人")
@@ -293,7 +294,7 @@ func _competition_and_pollination() -> void:
 		world.till(cell)
 		world.plant(cell, "honeybell_bush")
 	for row in world.crops.values():
-		row["progress"] = 600
+		CropFixture.progress(world,int(row["uid"]),600)
 		row["state"] = "mature"
 	world.husbandry.purchase(hive, 2)
 	# Hand-pick one share: the hive can only feed from what remains.
@@ -310,7 +311,7 @@ func _competition_and_pollination() -> void:
 	var oil := 0
 	for row in world.crops.values():
 		if String(row["crop_id"]) == "oilseed_flower": oil = int(row["uid"])
-	world.crops[oil]["progress"] = 350
+	CropFixture.progress(world,oil,350)
 	# Drain one honeybell share so the draw order reaches the oilseed share
 	# (stable uid order) while both colonies still get a full ration.
 	world.pick_flower(Vector2i(9, 1))
@@ -318,7 +319,7 @@ func _competition_and_pollination() -> void:
 	var pollinated_run: Dictionary = world.husbandry.maintain(hive)
 	check(pollinated_run["ok"], "hive consumes the oilseed share")
 	check(world.flowers.pollinated(oil), "real hive use marks pollination")
-	world.crops[oil]["progress"] = 500
+	CropFixture.progress(world,oil,500)
 	world.crops[oil]["state"] = "mature"
 	var harvested: Dictionary = world.harvest(Vector2i(9, 2), "harvest")
 	check(harvested["ok"], "oilseed harvest runs")
@@ -330,7 +331,7 @@ func _competition_and_pollination() -> void:
 	check(world.plant(Vector2i(9, 2), "oilseed_flower")["ok"], "replant the next independent oilseed cycle")
 	var next_crop: Dictionary = world.instance_at(Vector2i(9, 2))
 	world.crops[int(next_crop["uid"])]["state"] = "mature"
-	world.crops[int(next_crop["uid"])]["progress"] = world.crop_defs["oilseed_flower"]["days"] * 100
+	CropFixture.progress(world,int(next_crop["uid"]),world.crop_defs["oilseed_flower"]["days"] * 100)
 	var plain: Dictionary = world.harvest(Vector2i(9, 2), "harvest")
 	check(plain["ok"] and int(plain["items"]["oilseed"]) == 4, "the following unpollinated harvest pays the base yield")
 
@@ -460,7 +461,7 @@ func _snapshot_contracts() -> void:
 	var uid := 0
 	for row in world.crops.values():
 		uid = int(row["uid"])
-	world.crops[uid]["progress"] = 600
+	CropFixture.progress(world,uid,600)
 	world.crops[uid]["state"] = "mature"
 	world.pick_flower(Vector2i(1, 1))
 	# Snapshot before the settle: the used share row exists for tamper probes.

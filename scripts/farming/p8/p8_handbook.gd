@@ -1,6 +1,6 @@
 extends RefCounted
 ## One source for the in-game handbook and the exported player document.
-const CHAPTERS := [
+const BASE_CHAPTERS := [
 	{"id": "start", "title": "从零开始：第一片田与第一项研究", "cards": [
 		{"title": "先选一个新档", "steps": [
 			"新游戏选择一个存档槽。P8从90元石、每天24AP开始，已有麦种、杉种、松脂树种和菌种；额外种子与生产投入在市集购买。",
@@ -182,19 +182,34 @@ const CHAPTERS := [
 	]},
 	{"id": "logistics", "title": "后勤蛊：部署、维护与协同", "cards": [
 		{"title": "领取并部署第一只饭袋草蛊", "steps": [
-			"顶栏悬停找到“后勤蛊”，每个存档可领取一次试用配给：饭袋草两只，明光、催生、智道研究、宙道研究各一只。这里管理后勤用途，获取与成长尚未连接上游。",
+			"顶栏悬停找到“后勤蛊”，每档可领取一次11只试用配给：饭袋草、催生、锁水、节肥各两只，明光、智道研究、宙道研究各一只。获取与成长尚未连接上游。",
 			"选择饭袋草的地图部署，点击空闲陆地；不需开垦或农田，成功消耗1AP，次日开始维护与生产。需要光照至少60、水分至少30；可用清水浇水或由田间维护站补水。",
 			"每有效生产日耗水分8，基础3有效日后待收稻米4，不耗肥料、不产秸秆。收取1AP后才入仓，可出售、木行供货，或研究农产初加工后在加工台磨粉。"]},
 		{"title": "入驻设施与费用", "steps": [
-			"明光入驻补光灯，以蛊维护替代该灯精炼油模式；催生入驻田间维护站，范围内普通作物与饭袋草速度×1.2；两者范围均为设施占地向外扩2格。",
+			"明光入驻补光灯，以蛊维护替代该灯精炼油模式，范围按灯占地外扩2格。三种农业蛊共用田间维护站单槽，各自能力与定向范围见农业辅助章节。",
 			"智道/宙道研究蛊入驻研究台唯一辅助槽。智道工作量减1，宙道速度×2并使样本逐项×1.5向上取整；每天仍需一次手动或负责人研究工作。",
-			"饭袋草、明光、催生、智道启用时各1元石/日；宙道2元石及宙道食料1份/日，食料可在市集2元石采购。元石与食料一起检查，缺任一种不扣两者；闲置启用仍收费。"]},
+			"饭袋草、明光、催生、锁水、节肥、智道启用时各1元石/日；宙道2元石及宙道食料1份/日，食料可在市集2元石采购。元石与食料一起检查，缺任一种不扣两者；闲置启用仍收费。"]},
 		{"title": "停产时先查原因", "steps": [
 			"缺水、缺光、食料不足、尚未到生效日会在后勤页列出。元石不足自动休眠，补足资金后申请次日恢复；手动休眠不收费，已付当日费用不退。",
 			"同实例只能放一处，不同实例可并行；同类范围增益只取最强，光照取最大，增益不增强其他增益源。喜阴作物被照得太亮可能降效。",
 			"运行或待收任务锁定实例；先完成收取，或取消在制任务后再撤回。取消不退投入。已登记当日研究工作不能再休眠/取消，以免丢失已经付出的工作。详细条件与产消关系可点百科查询。"]}
 	]}
 ]
+
+# Agricultural rules are shared verbatim with the encyclopedia's compiled source.
+static var CHAPTERS: Array = _chapters()
+
+static func _chapters() -> Array:
+	var result := BASE_CHAPTERS.duplicate(true)
+	var data: Dictionary = JSON.parse_string(FileAccess.get_file_as_string("res://content/farming/baked/encyclopedia/encyclopedia.json"))
+	for id in ["rule:agriculture","rule:rooms"]:
+		for entity in data["entities"]:
+			if entity["id"] != id: continue
+			var cards := []
+			for field in entity["fields"]:
+				if field["key"]=="statements": cards.append({"title":"规则与操作","steps":String(field["text"]).split("\n")})
+			result.append({"id":id.trim_prefix("rule:"),"title":entity["name"],"cards":cards})
+	return result
 
 static func chapter(id: String) -> Dictionary:
 	for entry in CHAPTERS:

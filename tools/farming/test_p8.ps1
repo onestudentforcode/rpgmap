@@ -81,6 +81,8 @@ func _run() -> void:
     Invoke-GodotCheck 'phase10-ui' @('--script','res://scripts/farming/tests/run_phase10_ui.gd') 'PHASE10 UI OK'
     Invoke-GodotCheck 'phase101' @('--script','res://scripts/farming/tests/run_phase101.gd') 'PHASE101 TEST OK'
     Invoke-GodotCheck 'phase101-ui' @('--script','res://scripts/farming/tests/run_phase101_ui.gd') 'PHASE101 UI OK'
+    Invoke-GodotCheck 'phase102' @('--script','res://scripts/farming/tests/run_phase102.gd') 'P102 MODEL OK'
+    Invoke-GodotCheck 'phase102-ui' @('--script','res://scripts/farming/tests/run_phase102_ui.gd') 'P102 UI OK'
     Invoke-GodotCheck 'handbook-doc' @('--script','res://tools/farming/export_p8_handbook.gd','--','--check') 'P8 HANDBOOK DOC OK'
     Invoke-GodotCheck 'encyclopedia-doc' @('--script','res://tools/farming/export_encyclopedia.gd','--','--check') 'P8 ENCYCLOPEDIA DOC OK'
     Invoke-GodotCheck 'expansion' @('--script','res://scripts/farming/tests/run_p8_expansion.gd') 'P8 EXPANSION OK'

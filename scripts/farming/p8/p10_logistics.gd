@@ -190,18 +190,18 @@ func set_facing(uid: int, facing: String) -> Dictionary:
 		"uid": uid, "facing": facing, "effective_day": world.clock.total_days+1})
 	return world._finish(int(config.get("rotate_ap", 1)), {"ok": true})
 
-## The frozen first-round table for a 2x2 host and a 3x3 zone (phase doc §3.2).
-## Even host plus odd zone offsets are fixed here; nothing else may re-center.
+## P10.2 replaces the host with one cell. Keep a gapless 3x3 region immediately
+## in front, centered on the facing axis; the host cell is never in its own zone.
 static func directed_zone(origin: Vector2i, shape: Array, facing: String) -> Rect2i:
 	var x := origin.x
 	var y := origin.y
 	var w := int(shape[0])
 	var h := int(shape[1])
 	match facing:
-		"east": return Rect2i(x + w, y, ZONE, ZONE)
+		"east": return Rect2i(x + w, y - 1, ZONE, ZONE)
 		"south": return Rect2i(x - 1, y + h, ZONE, ZONE)
 		"west": return Rect2i(x - ZONE, y - 1, ZONE, ZONE)
-	return Rect2i(x, y - ZONE, ZONE, ZONE)
+	return Rect2i(x - 1, y - ZONE, ZONE, ZONE)
 
 func service_zone(row: Dictionary, day: int) -> Rect2i:
 	if int(row["host_uid"]) <= 0 or not world.facilities.has(int(row["host_uid"])): return Rect2i()
@@ -422,8 +422,10 @@ func settle(day: int) -> void:
 		if job["ready"]: continue
 		var cell := Vector2i(int(row["origin"][0]), int(row["origin"][1]))
 		var target := Rect2i(cell, Vector2i.ONE)
+		var old_progress := int(job["progress"])
 		job["progress"] = mini(int(job["target"]), int(job["progress"]) + growth_percent(target, d["target_tags"], day))
 		job["ready"] = job["progress"] == job["target"]
+		world.rooms.gu_grew(row,int(job["progress"])-old_progress,day)
 		var index: int = world.grid.index_of(cell)
 		var retention := int(retention_percent(target, d["target_tags"], day)["water"])
 		consume_environment(cell, index, 0, int(p["water_use"]), retention)
@@ -437,15 +439,20 @@ func claim(id: String) -> Dictionary:
 	var outputs: Dictionary = row["job"]["outputs"].duplicate()
 	for item in outputs: world.inventory.add(item,int(outputs[item]))
 	world._record_flow(outputs,{},"后勤蛊产物收取")
+	var extra: Dictionary = world.rooms.claim_gu(row,outputs)
+	var combined := outputs.duplicate()
+	for channel in extra.values():
+		for item in channel: combined[item] = int(combined.get(item,0))+int(channel[item])
 	row["job"] = {}
 	world.record_operation({"kind":"logistics", "stage":"claim", "day":world.clock.total_days,"instance_id":id,"outputs":outputs})
-	return world._finish(int(config["claim_ap"]),{"ok":true,"items":outputs})
+	return world._finish(int(config["claim_ap"]),{"ok":true,"items":combined,"base_items":outputs,"room_rewards":extra})
 
 func cancel_job(id: String) -> Dictionary:
 	var checked: Dictionary = world._can_act(0)
 	if not checked["ok"]: return checked
 	var row := instance(id)
 	if row.is_empty() or row["job"].is_empty() or row["job"].get("ready",false): return world._error("没有可取消的在制任务；待收产物请先收取")
+	world.rooms.cancel_gu(id)
 	row["job"] = {}
 	return world._finish(0,{"ok":true})
 

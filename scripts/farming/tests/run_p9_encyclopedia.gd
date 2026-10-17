@@ -55,7 +55,7 @@ func _run() -> void:
 	root.add_child(shell)
 	await process_frame
 	wiki = shell.encyclopedia
-	check(not shell._started and wiki.data["counts"]["entities"] == 199, "baked encyclopedia loads with 199 entities")
+	check(not shell._started and wiki.data["counts"]["entities"] == 200, "baked encyclopedia loads with 200 entities")
 
 	# --- static reading before any game -------------------------------------
 	var static_before: Dictionary = shell.world.to_snapshot().duplicate(true)
@@ -66,7 +66,7 @@ func _run() -> void:
 		if node is Button and node.has_meta("encyclopedia_category"): category_buttons += 1
 	check(category_buttons == 9, "all nine categories listed")
 	check(category_button("crops") != null and category_button("crops").text.contains("7"), "crops category shows registry count")
-	check(category_button("rules").text.contains("16"), "rules category shows curated count")
+	check(category_button("rules").text.contains("17"), "rules category shows curated count")
 	check(not list_ids().is_empty(), "index list renders entries for the default category")
 	# search by Chinese name, ascii id and tag
 	for probe in [["秸秆", "resource:straw"], ["golden_wheat", "crop:golden_wheat"], ["organic", "resource:straw"]]:
@@ -127,7 +127,7 @@ func _run() -> void:
 
 	# --- rule browsing --------------------------------------------------------
 	category_button("rules").pressed.emit()
-	check("rule:crop_growth" in list_ids() and list_ids().size() == 16, "rules category lists all curated rules")
+	check("rule:crop_growth" in list_ids() and "rule:rooms" in list_ids() and list_ids().size() == 17, "rules category lists all curated rules")
 	check(shell.world.to_snapshot() == static_before, "reading before a game changes no world state")
 
 	# --- with a running game --------------------------------------------------

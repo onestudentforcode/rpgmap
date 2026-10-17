@@ -212,9 +212,13 @@ for cid, row in CROPS.items():
         fields.append(field('flower', '花期/花源', '成熟期间每日可产1份额' if cid == 'honeybell_bush' else f'生长进度{window[0]}~{window[1] - 1}期间为花期（{row["flower_days"]}日），每日期1份额'))
     if mode == 'culture_each_cycle':
         fields.append(field('culture', '培养水润床', '播种投入中的清水每份+30水分直接润床，不另算浇水'))
+    if SRC.get('rooms'):
+        primary=SRC['rooms']['primary'][cid]
+        fields.append(field('room_primary','丰产主产物','；'.join(('砍伐' if m=='fell' else '采收')+'：'+rname(item) for m,item in primary.items())+'。仅本轮合格生长贡献参与25%增产，副产物不增加'))
+        fields.append(field('room_seed','育种回流',f'首次成熟仅判定一次；完整合格25%概率得{rname(seed)}×1，随首次成熟收取/成熟清理领取，留株不重抽'))
     summary = f'{MODE_NAMES[mode].split("，")[0]}；首熟{row["days"]}日；{quantities_text(row["outputs"])}'
     add_entity(f'crop:{cid}', 'crop', cid, CROP_NAMES[cid], 'crops', [], summary, fields,
-               ['rule:crop_growth', 'rule:environment', 'rule:day_settle'], lock_of(row.get('research')))
+               ['rule:crop_growth', 'rule:environment', 'rule:day_settle']+(['rule:rooms'] if SRC.get('rooms') else []), lock_of(row.get('research')))
 
 for sid, row in LIVESTOCK.items():
     unit = row.get('unit', UNIT_DEFAULT[sid])
@@ -654,6 +658,29 @@ for gid, row in GU.items():
             [io('resource:clean_water',ENV['irrigate_units'],'每次','手动补水')],[],ap=1,species='gu:'+gid,
             effects=[f'占地水分+{ENV["irrigate_gain"]}，上限100，不改变肥力'],category_hint='logistics')
         consumes('clean_water',pid)
+
+# Room rewards are separate conditional sources, never folded into base yield.
+if SRC.get('rooms'):
+    rooms=SRC['rooms']
+    pid=proc('proc:floor:ordinary','floor','铺设普通地板',
+        [io('resource:'+k,v,'每格','铺设') for k,v in rooms['floor']['inputs'].items()],[],
+        ap=rooms['floor']['place_ap'],conditions=['已购合法空闲陆地；普通地板分隔耕地，拆除不返料'],category_hint='construction')
+    for k in rooms['floor']['inputs']: consumes(k,pid)
+    for cid,row in CROPS.items():
+        seed=row['seed']
+        pid=proc('proc:room-seed:'+cid,'room_seed','育种奖励·'+CROP_NAMES[cid],[],
+            [io('resource:'+seed,1,'每株首次成熟；成功时','首次成熟收取或成熟清理',conditions=f'{rooms["seed_percent"]}%×首次育种合格生长比例；每株仅判定一次')],
+            crop='crop:'+cid,ap_detail='随首次成熟收取，不另耗AP',
+            conditions=['育种田或复合农业区；逐株各必需效果单源完整覆盖；成熟已冻结结果'],category_hint='production')
+        produces(seed,pid)
+    for ident,modes in rooms['primary'].items():
+        for mode,item in modes.items():
+            name=CROP_NAMES.get(ident,GU.get(ident,{}).get('name',ident))
+            pid=proc(f'proc:room-material:{ident}:{mode}','room_material','丰产奖励·'+name+('·砍伐' if mode=='fell' else '·收取'),[],
+                [io('resource:'+item,None,'每轮额外份数','合法成熟主产物收取',conditions=f'基础主产物量×{rooms["material_percent"]}%×本轮合格生长比例，整数必得、小数概率再得1份')],
+                crop='crop:'+ident if ident in CROPS else None,species='gu:'+ident if ident in GU else None,
+                ap_detail='随本轮收取，不另耗AP',conditions=['丰产田或复合农业区；只增主产物；成熟冻结，单轮只领取一次'],category_hint='production')
+            produces(item,pid)
 
 # All entities exist now; resolve display names that were built during process
 # construction before the resource entities were registered.

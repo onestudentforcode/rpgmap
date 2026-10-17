@@ -70,17 +70,17 @@
   "counts": {
     "crops": 7,
     "diets": 20,
-    "entities": 199,
+    "entities": 200,
     "facilities": 15,
     "livestock": 6,
     "living_mappings": 5,
     "logistics": 7,
     "parcels": 6,
-    "processes": 255,
+    "processes": 273,
     "recipes": 41,
     "research": 12,
     "resources": 65,
-    "rules": 16,
+    "rules": 17,
     "sources": 3
   },
   "display": {
@@ -161,6 +161,16 @@
           "key": "outputs",
           "label": "收获产物",
           "text": "原木×4＋枝条×4，1AP"
+        },
+        {
+          "key": "room_primary",
+          "label": "丰产主产物",
+          "text": "砍伐：原木。仅本轮合格生长贡献参与25%增产，副产物不增加"
+        },
+        {
+          "key": "room_seed",
+          "label": "育种回流",
+          "text": "首次成熟仅判定一次；完整合格25%概率得速生杉苗×1，随首次成熟收取/成熟清理领取，留株不重抽"
         }
       ],
       "icon": "fast_fir",
@@ -178,7 +188,8 @@
       "related_rules": [
         "rule:crop_growth",
         "rule:day_settle",
-        "rule:environment"
+        "rule:environment",
+        "rule:rooms"
       ],
       "source_id": "fast_fir",
       "summary": "仅可砍伐取材；首熟8日；原木×4＋枝条×4",
@@ -226,6 +237,16 @@
           "key": "outputs",
           "label": "收获产物",
           "text": "谷粒×3＋秸秆×2，1AP"
+        },
+        {
+          "key": "room_primary",
+          "label": "丰产主产物",
+          "text": "采收：谷粒。仅本轮合格生长贡献参与25%增产，副产物不增加"
+        },
+        {
+          "key": "room_seed",
+          "label": "育种回流",
+          "text": "首次成熟仅判定一次；完整合格25%概率得金穗麦种子×1，随首次成熟收取/成熟清理领取，留株不重抽"
         }
       ],
       "icon": "golden_wheat",
@@ -243,7 +264,8 @@
       "related_rules": [
         "rule:crop_growth",
         "rule:day_settle",
-        "rule:environment"
+        "rule:environment",
+        "rule:rooms"
       ],
       "source_id": "golden_wheat",
       "summary": "收获后植株移除；首熟4日；谷粒×3＋秸秆×2",
@@ -306,6 +328,16 @@
           "key": "flower",
           "label": "花期/花源",
           "text": "成熟期间每日可产1份额"
+        },
+        {
+          "key": "room_primary",
+          "label": "丰产主产物",
+          "text": "采收：花蜜；砍伐：枝条。仅本轮合格生长贡献参与25%增产，副产物不增加"
+        },
+        {
+          "key": "room_seed",
+          "label": "育种回流",
+          "text": "首次成熟仅判定一次；完整合格25%概率得蜜铃苗×1，随首次成熟收取/成熟清理领取，留株不重抽"
         }
       ],
       "icon": "honeybell_bush",
@@ -331,7 +363,8 @@
       "related_rules": [
         "rule:crop_growth",
         "rule:day_settle",
-        "rule:environment"
+        "rule:environment",
+        "rule:rooms"
       ],
       "source_id": "honeybell_bush",
       "summary": "可留株采收（按再生周期）或砍伐移除；首熟6日；花蜜×2＋花粉×1",
@@ -384,6 +417,16 @@
           "key": "flower",
           "label": "花期/花源",
           "text": "生长进度300~499期间为花期（2日），每日期1份额"
+        },
+        {
+          "key": "room_primary",
+          "label": "丰产主产物",
+          "text": "采收：油籽。仅本轮合格生长贡献参与25%增产，副产物不增加"
+        },
+        {
+          "key": "room_seed",
+          "label": "育种回流",
+          "text": "首次成熟仅判定一次；完整合格25%概率得油籽花种子×1，随首次成熟收取/成熟清理领取，留株不重抽"
         }
       ],
       "icon": "oilseed_flower",
@@ -409,7 +452,8 @@
       "related_rules": [
         "rule:crop_growth",
         "rule:day_settle",
-        "rule:environment"
+        "rule:environment",
+        "rule:rooms"
       ],
       "source_id": "oilseed_flower",
       "summary": "收获后植株移除；首熟5日；油籽×4＋花瓣×1",
@@ -457,6 +501,16 @@
           "key": "outputs",
           "label": "收获产物",
           "text": "牧草×3，1AP"
+        },
+        {
+          "key": "room_primary",
+          "label": "丰产主产物",
+          "text": "采收：牧草。仅本轮合格生长贡献参与25%增产，副产物不增加"
+        },
+        {
+          "key": "room_seed",
+          "label": "育种回流",
+          "text": "首次成熟仅判定一次；完整合格25%概率得草籽×1，随首次成熟收取/成熟清理领取，留株不重抽"
         }
       ],
       "icon": "pasture_grass",
@@ -474,7 +528,8 @@
       "related_rules": [
         "rule:crop_growth",
         "rule:day_settle",
-        "rule:environment"
+        "rule:environment",
+        "rule:rooms"
       ],
       "source_id": "pasture_grass",
       "summary": "收获后植株移除；首熟3日；牧草×3",
@@ -532,6 +587,16 @@
           "key": "cycle",
           "label": "采后再生",
           "text": "留株采收后3日恢复可采"
+        },
+        {
+          "key": "room_primary",
+          "label": "丰产主产物",
+          "text": "采收：松脂；砍伐：原木。仅本轮合格生长贡献参与25%增产，副产物不增加"
+        },
+        {
+          "key": "room_seed",
+          "label": "育种回流",
+          "text": "首次成熟仅判定一次；完整合格25%概率得松脂树苗×1，随首次成熟收取/成熟清理领取，留株不重抽"
         }
       ],
       "icon": "resin_tree",
@@ -549,7 +614,8 @@
       "related_rules": [
         "rule:crop_growth",
         "rule:day_settle",
-        "rule:environment"
+        "rule:environment",
+        "rule:rooms"
       ],
       "source_id": "resin_tree",
       "summary": "可留株采收（按再生周期）或砍伐移除；首熟8日；松脂×4",
@@ -602,6 +668,16 @@
           "key": "culture",
           "label": "培养水润床",
           "text": "播种投入中的清水每份+30水分直接润床，不另算浇水"
+        },
+        {
+          "key": "room_primary",
+          "label": "丰产主产物",
+          "text": "采收：木腐菇。仅本轮合格生长贡献参与25%增产，副产物不增加"
+        },
+        {
+          "key": "room_seed",
+          "label": "育种回流",
+          "text": "首次成熟仅判定一次；完整合格25%概率得木腐菇菌种×1，随首次成熟收取/成熟清理领取，留株不重抽"
         }
       ],
       "icon": "wood_decay_mushroom",
@@ -619,7 +695,8 @@
       "related_rules": [
         "rule:crop_growth",
         "rule:day_settle",
-        "rule:environment"
+        "rule:environment",
+        "rule:rooms"
       ],
       "source_id": "wood_decay_mushroom",
       "summary": "每轮培养：收获后移除；首熟4日；木腐菇×3＋腐殖土×1",
@@ -1258,7 +1335,7 @@
         {
           "key": "footprint",
           "label": "占地/地形",
-          "text": "2×2格；地形：陆地"
+          "text": "1×1格；地形：陆地"
         },
         {
           "key": "type",
@@ -4240,6 +4317,24 @@
           "species": null,
           "timing": "新档创建",
           "type": "initial_grant"
+        },
+        {
+          "ap": "随首次成熟收取，不另耗AP",
+          "basis": "每株首次成熟；成功时",
+          "category_hint": "production",
+          "conditions": "25%×首次育种合格生长比例；每株仅判定一次",
+          "crop": "速生杉",
+          "detail": "育种奖励·速生杉：速生杉苗×1（每株首次成熟；成功时）",
+          "duration": "即时",
+          "facility": null,
+          "name": "育种奖励·速生杉",
+          "others": "",
+          "process": "proc:room-seed:fast_fir",
+          "quantity": 1,
+          "research": null,
+          "species": null,
+          "timing": "首次成熟收取或成熟清理",
+          "type": "room_seed"
         }
       ],
       "summary": "木行固体；生产材料",
@@ -4969,6 +5064,24 @@
           "species": null,
           "timing": "收获时",
           "type": "harvest"
+        },
+        {
+          "ap": "随本轮收取，不另耗AP",
+          "basis": "每轮额外份数",
+          "category_hint": "production",
+          "conditions": "基础主产物量×25%×本轮合格生长比例，整数必得、小数概率再得1份",
+          "crop": "青牧草",
+          "detail": "丰产奖励·青牧草·收取：牧草×按订单/库存（每轮额外份数）",
+          "duration": "即时",
+          "facility": null,
+          "name": "丰产奖励·青牧草·收取",
+          "others": "",
+          "process": "proc:room-material:pasture_grass:harvest",
+          "quantity": null,
+          "research": null,
+          "species": null,
+          "timing": "合法成熟主产物收取",
+          "type": "room_material"
         }
       ],
       "summary": "木行固体；生产材料",
@@ -5255,6 +5368,24 @@
           "species": null,
           "timing": "新档创建",
           "type": "initial_grant"
+        },
+        {
+          "ap": "随首次成熟收取，不另耗AP",
+          "basis": "每株首次成熟；成功时",
+          "category_hint": "production",
+          "conditions": "25%×首次育种合格生长比例；每株仅判定一次",
+          "crop": "金穗麦",
+          "detail": "育种奖励·金穗麦：金穗麦种子×1（每株首次成熟；成功时）",
+          "duration": "即时",
+          "facility": null,
+          "name": "育种奖励·金穗麦",
+          "others": "",
+          "process": "proc:room-seed:golden_wheat",
+          "quantity": 1,
+          "research": null,
+          "species": null,
+          "timing": "首次成熟收取或成熟清理",
+          "type": "room_seed"
         }
       ],
       "summary": "木行固体；生产材料",
@@ -5354,6 +5485,24 @@
           "species": null,
           "timing": "收获时",
           "type": "harvest"
+        },
+        {
+          "ap": "随本轮收取，不另耗AP",
+          "basis": "每轮额外份数",
+          "category_hint": "production",
+          "conditions": "基础主产物量×25%×本轮合格生长比例，整数必得、小数概率再得1份",
+          "crop": "金穗麦",
+          "detail": "丰产奖励·金穗麦·收取：谷粒×按订单/库存（每轮额外份数）",
+          "duration": "即时",
+          "facility": null,
+          "name": "丰产奖励·金穗麦·收取",
+          "others": "",
+          "process": "proc:room-material:golden_wheat:harvest",
+          "quantity": null,
+          "research": null,
+          "species": null,
+          "timing": "合法成熟主产物收取",
+          "type": "room_material"
         }
       ],
       "summary": "木行固体；可供货（供养值4）",
@@ -5847,6 +5996,24 @@
           "species": null,
           "timing": "交易时",
           "type": "market_buy"
+        },
+        {
+          "ap": "随首次成熟收取，不另耗AP",
+          "basis": "每株首次成熟；成功时",
+          "category_hint": "production",
+          "conditions": "25%×首次育种合格生长比例；每株仅判定一次",
+          "crop": "青牧草",
+          "detail": "育种奖励·青牧草：草籽×1（每株首次成熟；成功时）",
+          "duration": "即时",
+          "facility": null,
+          "name": "育种奖励·青牧草",
+          "others": "",
+          "process": "proc:room-seed:pasture_grass",
+          "quantity": 1,
+          "research": null,
+          "species": null,
+          "timing": "首次成熟收取或成熟清理",
+          "type": "room_seed"
         }
       ],
       "summary": "木行固体；生产材料",
@@ -6370,6 +6537,24 @@
           "species": null,
           "timing": "交易时",
           "type": "market_buy"
+        },
+        {
+          "ap": "随首次成熟收取，不另耗AP",
+          "basis": "每株首次成熟；成功时",
+          "category_hint": "production",
+          "conditions": "25%×首次育种合格生长比例；每株仅判定一次",
+          "crop": "蜜铃灌木",
+          "detail": "育种奖励·蜜铃灌木：蜜铃苗×1（每株首次成熟；成功时）",
+          "duration": "即时",
+          "facility": null,
+          "name": "育种奖励·蜜铃灌木",
+          "others": "",
+          "process": "proc:room-seed:honeybell_bush",
+          "quantity": 1,
+          "research": null,
+          "species": null,
+          "timing": "首次成熟收取或成熟清理",
+          "type": "room_seed"
         }
       ],
       "summary": "木行固体；生产材料",
@@ -7429,6 +7614,24 @@
           "species": null,
           "timing": "收获时",
           "type": "harvest"
+        },
+        {
+          "ap": "随本轮收取，不另耗AP",
+          "basis": "每轮额外份数",
+          "category_hint": "production",
+          "conditions": "基础主产物量×25%×本轮合格生长比例，整数必得、小数概率再得1份",
+          "crop": "木腐菇",
+          "detail": "丰产奖励·木腐菇·收取：木腐菇×按订单/库存（每轮额外份数）",
+          "duration": "即时",
+          "facility": null,
+          "name": "丰产奖励·木腐菇·收取",
+          "others": "",
+          "process": "proc:room-material:wood_decay_mushroom:harvest",
+          "quantity": null,
+          "research": null,
+          "species": null,
+          "timing": "合法成熟主产物收取",
+          "type": "room_material"
         }
       ],
       "summary": "木行固体；可供货（供养值5）",
@@ -7635,6 +7838,24 @@
           "species": null,
           "timing": "采集时",
           "type": "flower_pick"
+        },
+        {
+          "ap": "随本轮收取，不另耗AP",
+          "basis": "每轮额外份数",
+          "category_hint": "production",
+          "conditions": "基础主产物量×25%×本轮合格生长比例，整数必得、小数概率再得1份",
+          "crop": "蜜铃灌木",
+          "detail": "丰产奖励·蜜铃灌木·收取：花蜜×按订单/库存（每轮额外份数）",
+          "duration": "即时",
+          "facility": null,
+          "name": "丰产奖励·蜜铃灌木·收取",
+          "others": "",
+          "process": "proc:room-material:honeybell_bush:harvest",
+          "quantity": null,
+          "research": null,
+          "species": null,
+          "timing": "合法成熟主产物收取",
+          "type": "room_material"
         }
       ],
       "summary": "水行液体；可供货（供养值8）",
@@ -8002,6 +8223,24 @@
           "species": null,
           "timing": "收获时",
           "type": "harvest"
+        },
+        {
+          "ap": "随本轮收取，不另耗AP",
+          "basis": "每轮额外份数",
+          "category_hint": "production",
+          "conditions": "基础主产物量×25%×本轮合格生长比例，整数必得、小数概率再得1份",
+          "crop": "油籽花",
+          "detail": "丰产奖励·油籽花·收取：油籽×按订单/库存（每轮额外份数）",
+          "duration": "即时",
+          "facility": null,
+          "name": "丰产奖励·油籽花·收取",
+          "others": "",
+          "process": "proc:room-material:oilseed_flower:harvest",
+          "quantity": null,
+          "research": null,
+          "species": null,
+          "timing": "合法成熟主产物收取",
+          "type": "room_material"
         }
       ],
       "summary": "木行固体；生产材料",
@@ -8121,6 +8360,24 @@
           "species": null,
           "timing": "交易时",
           "type": "market_buy"
+        },
+        {
+          "ap": "随首次成熟收取，不另耗AP",
+          "basis": "每株首次成熟；成功时",
+          "category_hint": "production",
+          "conditions": "25%×首次育种合格生长比例；每株仅判定一次",
+          "crop": "油籽花",
+          "detail": "育种奖励·油籽花：油籽花种子×1（每株首次成熟；成功时）",
+          "duration": "即时",
+          "facility": null,
+          "name": "育种奖励·油籽花",
+          "others": "",
+          "process": "proc:room-seed:oilseed_flower",
+          "quantity": 1,
+          "research": null,
+          "species": null,
+          "timing": "首次成熟收取或成熟清理",
+          "type": "room_seed"
         }
       ],
       "summary": "木行固体；生产材料",
@@ -8887,6 +9144,42 @@
           "species": null,
           "timing": "砍伐时",
           "type": "harvest"
+        },
+        {
+          "ap": "随本轮收取，不另耗AP",
+          "basis": "每轮额外份数",
+          "category_hint": "production",
+          "conditions": "基础主产物量×25%×本轮合格生长比例，整数必得、小数概率再得1份",
+          "crop": "速生杉",
+          "detail": "丰产奖励·速生杉·砍伐：原木×按订单/库存（每轮额外份数）",
+          "duration": "即时",
+          "facility": null,
+          "name": "丰产奖励·速生杉·砍伐",
+          "others": "",
+          "process": "proc:room-material:fast_fir:fell",
+          "quantity": null,
+          "research": null,
+          "species": null,
+          "timing": "合法成熟主产物收取",
+          "type": "room_material"
+        },
+        {
+          "ap": "随本轮收取，不另耗AP",
+          "basis": "每轮额外份数",
+          "category_hint": "production",
+          "conditions": "基础主产物量×25%×本轮合格生长比例，整数必得、小数概率再得1份",
+          "crop": "松脂树",
+          "detail": "丰产奖励·松脂树·砍伐：原木×按订单/库存（每轮额外份数）",
+          "duration": "即时",
+          "facility": null,
+          "name": "丰产奖励·松脂树·砍伐",
+          "others": "",
+          "process": "proc:room-material:resin_tree:fell",
+          "quantity": null,
+          "research": null,
+          "species": null,
+          "timing": "合法成熟主产物收取",
+          "type": "room_material"
         }
       ],
       "summary": "木行固体；生产材料",
@@ -9110,6 +9403,24 @@
           "species": null,
           "timing": "建造时",
           "type": "build"
+        },
+        {
+          "ap": "1AP",
+          "basis": "每格",
+          "category_hint": "construction",
+          "conditions": "",
+          "crop": null,
+          "detail": "铺设普通地板：原木×1（每格）｜1AP",
+          "duration": "即时",
+          "facility": null,
+          "name": "铺设普通地板",
+          "others": "",
+          "process": "proc:floor:ordinary",
+          "quantity": 1,
+          "research": null,
+          "species": null,
+          "timing": "铺设",
+          "type": "floor"
         },
         {
           "ap": "0AP",
@@ -9737,6 +10048,24 @@
           "species": null,
           "timing": "收获时",
           "type": "harvest"
+        },
+        {
+          "ap": "随本轮收取，不另耗AP",
+          "basis": "每轮额外份数",
+          "category_hint": "production",
+          "conditions": "基础主产物量×25%×本轮合格生长比例，整数必得、小数概率再得1份",
+          "crop": "松脂树",
+          "detail": "丰产奖励·松脂树·收取：松脂×按订单/库存（每轮额外份数）",
+          "duration": "即时",
+          "facility": null,
+          "name": "丰产奖励·松脂树·收取",
+          "others": "",
+          "process": "proc:room-material:resin_tree:harvest",
+          "quantity": null,
+          "research": null,
+          "species": null,
+          "timing": "合法成熟主产物收取",
+          "type": "room_material"
         }
       ],
       "summary": "火行固体；可供货（供养值8）",
@@ -9884,6 +10213,24 @@
           "species": null,
           "timing": "新档创建",
           "type": "initial_grant"
+        },
+        {
+          "ap": "随首次成熟收取，不另耗AP",
+          "basis": "每株首次成熟；成功时",
+          "category_hint": "production",
+          "conditions": "25%×首次育种合格生长比例；每株仅判定一次",
+          "crop": "松脂树",
+          "detail": "育种奖励·松脂树：松脂树苗×1（每株首次成熟；成功时）",
+          "duration": "即时",
+          "facility": null,
+          "name": "育种奖励·松脂树",
+          "others": "",
+          "process": "proc:room-seed:resin_tree",
+          "quantity": 1,
+          "research": null,
+          "species": null,
+          "timing": "首次成熟收取或成熟清理",
+          "type": "room_seed"
         }
       ],
       "summary": "木行固体；生产材料",
@@ -9965,6 +10312,24 @@
           "species": "饭袋草蛊",
           "timing": "完成后收取",
           "type": "gu_production"
+        },
+        {
+          "ap": "随本轮收取，不另耗AP",
+          "basis": "每轮额外份数",
+          "category_hint": "production",
+          "conditions": "基础主产物量×25%×本轮合格生长比例，整数必得、小数概率再得1份",
+          "crop": null,
+          "detail": "丰产奖励·饭袋草蛊·收取：稻米×按订单/库存（每轮额外份数）｜饭袋草蛊",
+          "duration": "即时",
+          "facility": null,
+          "name": "丰产奖励·饭袋草蛊·收取",
+          "others": "",
+          "process": "proc:room-material:rice_bag_gu:claim",
+          "quantity": null,
+          "research": null,
+          "species": "饭袋草蛊",
+          "timing": "合法成熟主产物收取",
+          "type": "room_material"
         }
       ],
       "summary": "木行固体；可供货（供养值3）",
@@ -11101,6 +11466,24 @@
           "species": null,
           "timing": "砍伐时",
           "type": "harvest"
+        },
+        {
+          "ap": "随本轮收取，不另耗AP",
+          "basis": "每轮额外份数",
+          "category_hint": "production",
+          "conditions": "基础主产物量×25%×本轮合格生长比例，整数必得、小数概率再得1份",
+          "crop": "蜜铃灌木",
+          "detail": "丰产奖励·蜜铃灌木·砍伐：枝条×按订单/库存（每轮额外份数）",
+          "duration": "即时",
+          "facility": null,
+          "name": "丰产奖励·蜜铃灌木·砍伐",
+          "others": "",
+          "process": "proc:room-material:honeybell_bush:fell",
+          "quantity": null,
+          "research": null,
+          "species": null,
+          "timing": "合法成熟主产物收取",
+          "type": "room_material"
         }
       ],
       "summary": "木行固体；生产材料",
@@ -11687,6 +12070,24 @@
           "species": null,
           "timing": "新档创建",
           "type": "initial_grant"
+        },
+        {
+          "ap": "随首次成熟收取，不另耗AP",
+          "basis": "每株首次成熟；成功时",
+          "category_hint": "production",
+          "conditions": "25%×首次育种合格生长比例；每株仅判定一次",
+          "crop": "木腐菇",
+          "detail": "育种奖励·木腐菇：木腐菇菌种×1（每株首次成熟；成功时）",
+          "duration": "即时",
+          "facility": null,
+          "name": "育种奖励·木腐菇",
+          "others": "",
+          "process": "proc:room-seed:wood_decay_mushroom",
+          "quantity": 1,
+          "research": null,
+          "species": null,
+          "timing": "首次成熟收取或成熟清理",
+          "type": "room_seed"
         }
       ],
       "summary": "木行固体；生产材料",
@@ -16258,7 +16659,7 @@
         {
           "key": "statements",
           "label": "规则说明",
-          "text": "1. 催生、锁水、节肥三种农业辅助蛊共用田间维护站的单一蛊槽（兼容标签agriculture_assist）；每座维护站同时只能入驻一只，建筑自身补水/施肥是独立来源，不因蛊停摆而停止。\n2. 服务区为宿主四向可转的3×3矩形，按宿主2×2占地与朝向唯一计算；出图自动裁剪到地图内，不授予地权或种植能力。提交转向1AP、次日开日生效；当日已付维护不退，同日不能轮转复用。\n3. 作物全部占地格都在单个有效服务区内才获得效果，不拼接多来源局部覆盖；承载即9格种植面积（1×1计1格、2×2计4格），空格无预占收益。\n4. 效果按tag互斥分组（plant_growth_speed/plant_water_saving/plant_fertility_saving）：同tag只采用最高转有效来源，同转比实际收益（催生倍率高者强、水肥保留比例低者强），平局以稳定实例ID；异类效果共同生效且不互相增强。\n5. 催生只提高当日生长点推进（首轮×1.5），不改成熟目标、不按视觉阶段减天；待收对象不再推进。锁水/节肥分别按保留比例减少目标环境水/肥扣耗（首轮各保留50%），以每格百分之一余量跨日累计，不产生实物、不返还物品、不抬高环境值。\n6. 饭袋草蛊属于植物目标但无肥力消耗，节肥对其无效。余量归属地格：收获、重种、取消、换蛊、休眠、转向、拆建与读档都不清除。\n7. 未采用的启用来源只要满足扣费条件仍支付维护；缺元石或食料时不授予当日运行资格，普通生产回退基础效率，环境不足的原降效规则保留。"
+          "text": "1. 催生、锁水、节肥三种农业辅助蛊共用田间维护站的单一蛊槽（兼容标签agriculture_assist）；每座维护站同时只能入驻一只，建筑自身补水/施肥是独立来源，不因蛊停摆而停止。\n2. 田间维护站占1×1，普通补水/施肥范围由占地外扩2格为5×5；蛊服务区独立按朝向计算3×3。右为+x、下为+y，东/南/西/北服务区左上相对宿主分别为(1,-1)/(-1,1)/(-3,-1)/(-1,-3)。出图裁剪但不授予地权；转向1AP、次日开日生效，当日已付不退，不能轮转复用。\n3. 作物全部占地格都在单个有效服务区内才获得效果，不拼接多来源局部覆盖；承载即9格种植面积（1×1计1格、2×2计4格），空格无预占收益。\n4. 效果按tag互斥分组（plant_growth_speed/plant_water_saving/plant_fertility_saving）：同tag只采用最高转有效来源，同转比实际收益（催生倍率高者强、水肥保留比例低者强），平局以稳定实例ID；异类效果共同生效且不互相增强。\n5. 催生只提高当日生长点推进（首轮×1.5），不改成熟目标、不按视觉阶段减天；待收对象不再推进。锁水/节肥分别按保留比例减少目标环境水/肥扣耗（首轮各保留50%），以每格百分之一余量跨日累计，不产生实物、不返还物品、不抬高环境值。\n6. 饭袋草蛊属于植物目标但无肥力消耗，节肥对其无效。余量归属地格：收获、重种、取消、换蛊、休眠、转向、拆建与读档都不清除。\n7. 未采用的启用来源只要满足扣费条件仍支付维护；缺元石或食料时不授予当日运行资格，普通生产回退基础效率，环境不足的原降效规则保留。"
         },
         {
           "key": "refs",
@@ -16594,6 +16995,30 @@
         {
           "key": "statements",
           "label": "规则说明",
+          "text": "1. 耕地按上下左右连通形成田块，空耕地参加，斜角不连；普通地板、自然地面与设施隔开田块。不要求墙、门、屋顶或中心建筑。\n2. 普通地板每格原木1、铺设/改铺/拆除每次1AP，不返材料；耕地沿用开垦1AP，不得覆盖作物、资源点或宿主。地权与自然地形仍限制铺设；换铺面不清空水肥与扣耗余量。\n3. 全区催生＋锁水为一级育种田，全区催生＋节肥为一级丰产田，三类齐全为二级复合农业区，同时打开两个奖励通道，不另叠倍。每类可由多站覆盖不同地格，但2×2植物仍需每类各有单源完整覆盖。\n4. 每轮只累计真实推进的生长点，最后一天按剩余目标封顶；育种与丰产分别累计合格点。中途补齐、缺供、拆分、扩田与降级只影响未来贡献，成熟空等不增加资格。\n5. 完整合格时首次成熟产同种种子1份的概率为25%；实际概率＝25%×首次合格生长点/首次总生长点。成熟时固定结果，随首次成熟收获、砍伐或成熟清理领取，不另耗AP；失败也用掉机会，留株再生不重抽。\n6. 每轮额外主产物期望＝本次基础主产物数量×25%×本轮丰产合格点/总生长点；整数必得，小数作为再得1份概率。只增登记主产物，不增副产物、花源份额或蛊本体；饭袋草在合格耕地可增稻米，不产种子。\n7. 成熟冻结贡献与随机依据，种子和材料分开判定；查阅、换向、读档、保存失败与重试不重抽或重复发放。基础收成、育种奖励、丰产奖励分别记账，未领取权益不是库存。\n8. 当前P8使用schema20，早期P8开发档需新开档，不迁移、不删除旧文件。硬质地板的漏斗、管道与传动后续另案。"
+        },
+        {
+          "key": "refs",
+          "label": "实现依据",
+          "text": "scripts/farming/p8/p102_rooms.gd::advance；scripts/farming/p8/p102_rooms.gd::rewards"
+        }
+      ],
+      "icon": "help",
+      "id": "rule:rooms",
+      "kind": "rule",
+      "locks": null,
+      "name": "露天农业区：地板、育种与丰产",
+      "related_rules": [],
+      "source_id": "rule:rooms",
+      "summary": "耕地按上下左右连通形成田块，空耕地参加，斜角不连；普通地板、自然地面与设施隔开田…",
+      "tags": []
+    },
+    {
+      "category": "rules",
+      "fields": [
+        {
+          "key": "statements",
+          "label": "规则说明",
           "text": "1. 三槽日存档（user://farm_demo_p8_slots）；存档schema17；日结事务提交，失败可重试/放弃当天\n2. 初始90元石、每天24AP、15日一时节；开局物资金穗麦种8、速生杉苗2、松脂树苗1、木腐菇菌种4\n3. 收入=出售+订单；支出=采购+建设（设施/土地/幼体/研究费）+人工"
         },
         {
@@ -16640,11 +17065,11 @@
   "generated_inputs": [
     {
       "path": "content/farming/p8/production.json",
-      "sha256": "ffe9e1577f766db237d887c98c6fa8ad5118b854337a1b27ac9e37d78bb662b0"
+      "sha256": "dbe1f18b68d1aec9f428bb9894f074b48043bfcf1f741b0e800ed40564c5d9c7"
     },
     {
       "path": "content/farming/baked/p8/production.json",
-      "sha256": "900b1aa46cc050b22d42893364e4ec6948f4ffd30da7bc449154b9aff1da9cda"
+      "sha256": "6351b3ed3e30bce5658d95058b0441823622d2401efe6eddc947e87aef2c54ff"
     },
     {
       "path": "content/farming/p8/expansion.json",
@@ -16656,7 +17081,7 @@
     },
     {
       "path": "content/farming/encyclopedia/encyclopedia.json",
-      "sha256": "6f935c22663cf9b5ff98d6ed0ce5b2219b4fb9424032205c74c60030699dd582"
+      "sha256": "1a7188f8bd0812ee77d55da2526c460e0c6e62dab2471eb175e00f6ab7edce5d"
     },
     {
       "path": "scripts/farming/v1/v1_scene.gd",
@@ -21660,6 +22085,39 @@
       "worker_fee": 0
     },
     {
+      "ap": 1,
+      "ap_detail": "1AP",
+      "category_hint": "construction",
+      "conditions": [
+        "已购合法空闲陆地；普通地板分隔耕地，拆除不返料"
+      ],
+      "crop": null,
+      "crop_name": null,
+      "duration": "即时",
+      "effects": [],
+      "facility": null,
+      "facility_name": null,
+      "id": "proc:floor:ordinary",
+      "inputs": [
+        {
+          "basis": "每格",
+          "entity": "resource:raw_wood",
+          "name": "原木",
+          "quantity": 1,
+          "timing": "铺设"
+        }
+      ],
+      "name": "铺设普通地板",
+      "outputs": [],
+      "primeval_stones": 0,
+      "research": null,
+      "research_name": null,
+      "species": null,
+      "species_name": null,
+      "type": "floor",
+      "worker_fee": 0
+    },
+    {
       "ap": 0,
       "ap_detail": "0AP",
       "category_hint": "logistics",
@@ -24267,6 +24725,584 @@
       "species": null,
       "species_name": null,
       "type": "research_work",
+      "worker_fee": 0
+    },
+    {
+      "ap": 0,
+      "ap_detail": "随本轮收取，不另耗AP",
+      "category_hint": "production",
+      "conditions": [
+        "丰产田或复合农业区；只增主产物；成熟冻结，单轮只领取一次"
+      ],
+      "crop": "crop:fast_fir",
+      "crop_name": "速生杉",
+      "duration": "即时",
+      "effects": [],
+      "facility": null,
+      "facility_name": null,
+      "id": "proc:room-material:fast_fir:fell",
+      "inputs": [],
+      "name": "丰产奖励·速生杉·砍伐",
+      "outputs": [
+        {
+          "basis": "每轮额外份数",
+          "conditions": "基础主产物量×25%×本轮合格生长比例，整数必得、小数概率再得1份",
+          "entity": "resource:raw_wood",
+          "name": "原木",
+          "quantity": null,
+          "timing": "合法成熟主产物收取"
+        }
+      ],
+      "primeval_stones": 0,
+      "research": null,
+      "research_name": null,
+      "species": null,
+      "species_name": null,
+      "type": "room_material",
+      "worker_fee": 0
+    },
+    {
+      "ap": 0,
+      "ap_detail": "随本轮收取，不另耗AP",
+      "category_hint": "production",
+      "conditions": [
+        "丰产田或复合农业区；只增主产物；成熟冻结，单轮只领取一次"
+      ],
+      "crop": "crop:golden_wheat",
+      "crop_name": "金穗麦",
+      "duration": "即时",
+      "effects": [],
+      "facility": null,
+      "facility_name": null,
+      "id": "proc:room-material:golden_wheat:harvest",
+      "inputs": [],
+      "name": "丰产奖励·金穗麦·收取",
+      "outputs": [
+        {
+          "basis": "每轮额外份数",
+          "conditions": "基础主产物量×25%×本轮合格生长比例，整数必得、小数概率再得1份",
+          "entity": "resource:grain",
+          "name": "谷粒",
+          "quantity": null,
+          "timing": "合法成熟主产物收取"
+        }
+      ],
+      "primeval_stones": 0,
+      "research": null,
+      "research_name": null,
+      "species": null,
+      "species_name": null,
+      "type": "room_material",
+      "worker_fee": 0
+    },
+    {
+      "ap": 0,
+      "ap_detail": "随本轮收取，不另耗AP",
+      "category_hint": "production",
+      "conditions": [
+        "丰产田或复合农业区；只增主产物；成熟冻结，单轮只领取一次"
+      ],
+      "crop": "crop:honeybell_bush",
+      "crop_name": "蜜铃灌木",
+      "duration": "即时",
+      "effects": [],
+      "facility": null,
+      "facility_name": null,
+      "id": "proc:room-material:honeybell_bush:fell",
+      "inputs": [],
+      "name": "丰产奖励·蜜铃灌木·砍伐",
+      "outputs": [
+        {
+          "basis": "每轮额外份数",
+          "conditions": "基础主产物量×25%×本轮合格生长比例，整数必得、小数概率再得1份",
+          "entity": "resource:twig",
+          "name": "枝条",
+          "quantity": null,
+          "timing": "合法成熟主产物收取"
+        }
+      ],
+      "primeval_stones": 0,
+      "research": null,
+      "research_name": null,
+      "species": null,
+      "species_name": null,
+      "type": "room_material",
+      "worker_fee": 0
+    },
+    {
+      "ap": 0,
+      "ap_detail": "随本轮收取，不另耗AP",
+      "category_hint": "production",
+      "conditions": [
+        "丰产田或复合农业区；只增主产物；成熟冻结，单轮只领取一次"
+      ],
+      "crop": "crop:honeybell_bush",
+      "crop_name": "蜜铃灌木",
+      "duration": "即时",
+      "effects": [],
+      "facility": null,
+      "facility_name": null,
+      "id": "proc:room-material:honeybell_bush:harvest",
+      "inputs": [],
+      "name": "丰产奖励·蜜铃灌木·收取",
+      "outputs": [
+        {
+          "basis": "每轮额外份数",
+          "conditions": "基础主产物量×25%×本轮合格生长比例，整数必得、小数概率再得1份",
+          "entity": "resource:nectar",
+          "name": "花蜜",
+          "quantity": null,
+          "timing": "合法成熟主产物收取"
+        }
+      ],
+      "primeval_stones": 0,
+      "research": null,
+      "research_name": null,
+      "species": null,
+      "species_name": null,
+      "type": "room_material",
+      "worker_fee": 0
+    },
+    {
+      "ap": 0,
+      "ap_detail": "随本轮收取，不另耗AP",
+      "category_hint": "production",
+      "conditions": [
+        "丰产田或复合农业区；只增主产物；成熟冻结，单轮只领取一次"
+      ],
+      "crop": "crop:oilseed_flower",
+      "crop_name": "油籽花",
+      "duration": "即时",
+      "effects": [],
+      "facility": null,
+      "facility_name": null,
+      "id": "proc:room-material:oilseed_flower:harvest",
+      "inputs": [],
+      "name": "丰产奖励·油籽花·收取",
+      "outputs": [
+        {
+          "basis": "每轮额外份数",
+          "conditions": "基础主产物量×25%×本轮合格生长比例，整数必得、小数概率再得1份",
+          "entity": "resource:oilseed",
+          "name": "油籽",
+          "quantity": null,
+          "timing": "合法成熟主产物收取"
+        }
+      ],
+      "primeval_stones": 0,
+      "research": null,
+      "research_name": null,
+      "species": null,
+      "species_name": null,
+      "type": "room_material",
+      "worker_fee": 0
+    },
+    {
+      "ap": 0,
+      "ap_detail": "随本轮收取，不另耗AP",
+      "category_hint": "production",
+      "conditions": [
+        "丰产田或复合农业区；只增主产物；成熟冻结，单轮只领取一次"
+      ],
+      "crop": "crop:pasture_grass",
+      "crop_name": "青牧草",
+      "duration": "即时",
+      "effects": [],
+      "facility": null,
+      "facility_name": null,
+      "id": "proc:room-material:pasture_grass:harvest",
+      "inputs": [],
+      "name": "丰产奖励·青牧草·收取",
+      "outputs": [
+        {
+          "basis": "每轮额外份数",
+          "conditions": "基础主产物量×25%×本轮合格生长比例，整数必得、小数概率再得1份",
+          "entity": "resource:fodder_grass",
+          "name": "牧草",
+          "quantity": null,
+          "timing": "合法成熟主产物收取"
+        }
+      ],
+      "primeval_stones": 0,
+      "research": null,
+      "research_name": null,
+      "species": null,
+      "species_name": null,
+      "type": "room_material",
+      "worker_fee": 0
+    },
+    {
+      "ap": 0,
+      "ap_detail": "随本轮收取，不另耗AP",
+      "category_hint": "production",
+      "conditions": [
+        "丰产田或复合农业区；只增主产物；成熟冻结，单轮只领取一次"
+      ],
+      "crop": "crop:resin_tree",
+      "crop_name": "松脂树",
+      "duration": "即时",
+      "effects": [],
+      "facility": null,
+      "facility_name": null,
+      "id": "proc:room-material:resin_tree:fell",
+      "inputs": [],
+      "name": "丰产奖励·松脂树·砍伐",
+      "outputs": [
+        {
+          "basis": "每轮额外份数",
+          "conditions": "基础主产物量×25%×本轮合格生长比例，整数必得、小数概率再得1份",
+          "entity": "resource:raw_wood",
+          "name": "原木",
+          "quantity": null,
+          "timing": "合法成熟主产物收取"
+        }
+      ],
+      "primeval_stones": 0,
+      "research": null,
+      "research_name": null,
+      "species": null,
+      "species_name": null,
+      "type": "room_material",
+      "worker_fee": 0
+    },
+    {
+      "ap": 0,
+      "ap_detail": "随本轮收取，不另耗AP",
+      "category_hint": "production",
+      "conditions": [
+        "丰产田或复合农业区；只增主产物；成熟冻结，单轮只领取一次"
+      ],
+      "crop": "crop:resin_tree",
+      "crop_name": "松脂树",
+      "duration": "即时",
+      "effects": [],
+      "facility": null,
+      "facility_name": null,
+      "id": "proc:room-material:resin_tree:harvest",
+      "inputs": [],
+      "name": "丰产奖励·松脂树·收取",
+      "outputs": [
+        {
+          "basis": "每轮额外份数",
+          "conditions": "基础主产物量×25%×本轮合格生长比例，整数必得、小数概率再得1份",
+          "entity": "resource:resin",
+          "name": "松脂",
+          "quantity": null,
+          "timing": "合法成熟主产物收取"
+        }
+      ],
+      "primeval_stones": 0,
+      "research": null,
+      "research_name": null,
+      "species": null,
+      "species_name": null,
+      "type": "room_material",
+      "worker_fee": 0
+    },
+    {
+      "ap": 0,
+      "ap_detail": "随本轮收取，不另耗AP",
+      "category_hint": "production",
+      "conditions": [
+        "丰产田或复合农业区；只增主产物；成熟冻结，单轮只领取一次"
+      ],
+      "crop": null,
+      "crop_name": null,
+      "duration": "即时",
+      "effects": [],
+      "facility": null,
+      "facility_name": null,
+      "id": "proc:room-material:rice_bag_gu:claim",
+      "inputs": [],
+      "name": "丰产奖励·饭袋草蛊·收取",
+      "outputs": [
+        {
+          "basis": "每轮额外份数",
+          "conditions": "基础主产物量×25%×本轮合格生长比例，整数必得、小数概率再得1份",
+          "entity": "resource:rice",
+          "name": "稻米",
+          "quantity": null,
+          "timing": "合法成熟主产物收取"
+        }
+      ],
+      "primeval_stones": 0,
+      "research": null,
+      "research_name": null,
+      "species": "gu:rice_bag_gu",
+      "species_name": "饭袋草蛊",
+      "type": "room_material",
+      "worker_fee": 0
+    },
+    {
+      "ap": 0,
+      "ap_detail": "随本轮收取，不另耗AP",
+      "category_hint": "production",
+      "conditions": [
+        "丰产田或复合农业区；只增主产物；成熟冻结，单轮只领取一次"
+      ],
+      "crop": "crop:wood_decay_mushroom",
+      "crop_name": "木腐菇",
+      "duration": "即时",
+      "effects": [],
+      "facility": null,
+      "facility_name": null,
+      "id": "proc:room-material:wood_decay_mushroom:harvest",
+      "inputs": [],
+      "name": "丰产奖励·木腐菇·收取",
+      "outputs": [
+        {
+          "basis": "每轮额外份数",
+          "conditions": "基础主产物量×25%×本轮合格生长比例，整数必得、小数概率再得1份",
+          "entity": "resource:mushroom",
+          "name": "木腐菇",
+          "quantity": null,
+          "timing": "合法成熟主产物收取"
+        }
+      ],
+      "primeval_stones": 0,
+      "research": null,
+      "research_name": null,
+      "species": null,
+      "species_name": null,
+      "type": "room_material",
+      "worker_fee": 0
+    },
+    {
+      "ap": 0,
+      "ap_detail": "随首次成熟收取，不另耗AP",
+      "category_hint": "production",
+      "conditions": [
+        "育种田或复合农业区；逐株各必需效果单源完整覆盖；成熟已冻结结果"
+      ],
+      "crop": "crop:fast_fir",
+      "crop_name": "速生杉",
+      "duration": "即时",
+      "effects": [],
+      "facility": null,
+      "facility_name": null,
+      "id": "proc:room-seed:fast_fir",
+      "inputs": [],
+      "name": "育种奖励·速生杉",
+      "outputs": [
+        {
+          "basis": "每株首次成熟；成功时",
+          "conditions": "25%×首次育种合格生长比例；每株仅判定一次",
+          "entity": "resource:fast_fir_seed",
+          "name": "速生杉苗",
+          "quantity": 1,
+          "timing": "首次成熟收取或成熟清理"
+        }
+      ],
+      "primeval_stones": 0,
+      "research": null,
+      "research_name": null,
+      "species": null,
+      "species_name": null,
+      "type": "room_seed",
+      "worker_fee": 0
+    },
+    {
+      "ap": 0,
+      "ap_detail": "随首次成熟收取，不另耗AP",
+      "category_hint": "production",
+      "conditions": [
+        "育种田或复合农业区；逐株各必需效果单源完整覆盖；成熟已冻结结果"
+      ],
+      "crop": "crop:golden_wheat",
+      "crop_name": "金穗麦",
+      "duration": "即时",
+      "effects": [],
+      "facility": null,
+      "facility_name": null,
+      "id": "proc:room-seed:golden_wheat",
+      "inputs": [],
+      "name": "育种奖励·金穗麦",
+      "outputs": [
+        {
+          "basis": "每株首次成熟；成功时",
+          "conditions": "25%×首次育种合格生长比例；每株仅判定一次",
+          "entity": "resource:golden_wheat_seed",
+          "name": "金穗麦种子",
+          "quantity": 1,
+          "timing": "首次成熟收取或成熟清理"
+        }
+      ],
+      "primeval_stones": 0,
+      "research": null,
+      "research_name": null,
+      "species": null,
+      "species_name": null,
+      "type": "room_seed",
+      "worker_fee": 0
+    },
+    {
+      "ap": 0,
+      "ap_detail": "随首次成熟收取，不另耗AP",
+      "category_hint": "production",
+      "conditions": [
+        "育种田或复合农业区；逐株各必需效果单源完整覆盖；成熟已冻结结果"
+      ],
+      "crop": "crop:honeybell_bush",
+      "crop_name": "蜜铃灌木",
+      "duration": "即时",
+      "effects": [],
+      "facility": null,
+      "facility_name": null,
+      "id": "proc:room-seed:honeybell_bush",
+      "inputs": [],
+      "name": "育种奖励·蜜铃灌木",
+      "outputs": [
+        {
+          "basis": "每株首次成熟；成功时",
+          "conditions": "25%×首次育种合格生长比例；每株仅判定一次",
+          "entity": "resource:honeybell_seed",
+          "name": "蜜铃苗",
+          "quantity": 1,
+          "timing": "首次成熟收取或成熟清理"
+        }
+      ],
+      "primeval_stones": 0,
+      "research": null,
+      "research_name": null,
+      "species": null,
+      "species_name": null,
+      "type": "room_seed",
+      "worker_fee": 0
+    },
+    {
+      "ap": 0,
+      "ap_detail": "随首次成熟收取，不另耗AP",
+      "category_hint": "production",
+      "conditions": [
+        "育种田或复合农业区；逐株各必需效果单源完整覆盖；成熟已冻结结果"
+      ],
+      "crop": "crop:oilseed_flower",
+      "crop_name": "油籽花",
+      "duration": "即时",
+      "effects": [],
+      "facility": null,
+      "facility_name": null,
+      "id": "proc:room-seed:oilseed_flower",
+      "inputs": [],
+      "name": "育种奖励·油籽花",
+      "outputs": [
+        {
+          "basis": "每株首次成熟；成功时",
+          "conditions": "25%×首次育种合格生长比例；每株仅判定一次",
+          "entity": "resource:oilseed_flower_seed",
+          "name": "油籽花种子",
+          "quantity": 1,
+          "timing": "首次成熟收取或成熟清理"
+        }
+      ],
+      "primeval_stones": 0,
+      "research": null,
+      "research_name": null,
+      "species": null,
+      "species_name": null,
+      "type": "room_seed",
+      "worker_fee": 0
+    },
+    {
+      "ap": 0,
+      "ap_detail": "随首次成熟收取，不另耗AP",
+      "category_hint": "production",
+      "conditions": [
+        "育种田或复合农业区；逐株各必需效果单源完整覆盖；成熟已冻结结果"
+      ],
+      "crop": "crop:pasture_grass",
+      "crop_name": "青牧草",
+      "duration": "即时",
+      "effects": [],
+      "facility": null,
+      "facility_name": null,
+      "id": "proc:room-seed:pasture_grass",
+      "inputs": [],
+      "name": "育种奖励·青牧草",
+      "outputs": [
+        {
+          "basis": "每株首次成熟；成功时",
+          "conditions": "25%×首次育种合格生长比例；每株仅判定一次",
+          "entity": "resource:grass_seed",
+          "name": "草籽",
+          "quantity": 1,
+          "timing": "首次成熟收取或成熟清理"
+        }
+      ],
+      "primeval_stones": 0,
+      "research": null,
+      "research_name": null,
+      "species": null,
+      "species_name": null,
+      "type": "room_seed",
+      "worker_fee": 0
+    },
+    {
+      "ap": 0,
+      "ap_detail": "随首次成熟收取，不另耗AP",
+      "category_hint": "production",
+      "conditions": [
+        "育种田或复合农业区；逐株各必需效果单源完整覆盖；成熟已冻结结果"
+      ],
+      "crop": "crop:resin_tree",
+      "crop_name": "松脂树",
+      "duration": "即时",
+      "effects": [],
+      "facility": null,
+      "facility_name": null,
+      "id": "proc:room-seed:resin_tree",
+      "inputs": [],
+      "name": "育种奖励·松脂树",
+      "outputs": [
+        {
+          "basis": "每株首次成熟；成功时",
+          "conditions": "25%×首次育种合格生长比例；每株仅判定一次",
+          "entity": "resource:resin_tree_seed",
+          "name": "松脂树苗",
+          "quantity": 1,
+          "timing": "首次成熟收取或成熟清理"
+        }
+      ],
+      "primeval_stones": 0,
+      "research": null,
+      "research_name": null,
+      "species": null,
+      "species_name": null,
+      "type": "room_seed",
+      "worker_fee": 0
+    },
+    {
+      "ap": 0,
+      "ap_detail": "随首次成熟收取，不另耗AP",
+      "category_hint": "production",
+      "conditions": [
+        "育种田或复合农业区；逐株各必需效果单源完整覆盖；成熟已冻结结果"
+      ],
+      "crop": "crop:wood_decay_mushroom",
+      "crop_name": "木腐菇",
+      "duration": "即时",
+      "effects": [],
+      "facility": null,
+      "facility_name": null,
+      "id": "proc:room-seed:wood_decay_mushroom",
+      "inputs": [],
+      "name": "育种奖励·木腐菇",
+      "outputs": [
+        {
+          "basis": "每株首次成熟；成功时",
+          "conditions": "25%×首次育种合格生长比例；每株仅判定一次",
+          "entity": "resource:wood_decay_spawn",
+          "name": "木腐菇菌种",
+          "quantity": 1,
+          "timing": "首次成熟收取或成熟清理"
+        }
+      ],
+      "primeval_stones": 0,
+      "research": null,
+      "research_name": null,
+      "species": null,
+      "species_name": null,
+      "type": "room_seed",
       "worker_fee": 0
     },
     {

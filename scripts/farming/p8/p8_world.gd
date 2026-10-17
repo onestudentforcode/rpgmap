@@ -11,6 +11,7 @@ const P8Flowers := preload("res://scripts/farming/p8/p8_flowers.gd")
 const P8Land := preload("res://scripts/farming/p8/p8_land.gd")
 const P8Devices := preload("res://scripts/farming/p8/p8_devices.gd")
 const Logistics := preload("res://scripts/farming/p8/p10_logistics.gd")
+const Rooms := preload("res://scripts/farming/p8/p102_rooms.gd")
 ## Observational receipts for external business audits; never grants resources or
 ## replays work. Day-save failures are still governed by the transaction below.
 signal operation_recorded(entry: Dictionary)
@@ -32,6 +33,7 @@ var flowers
 var devices
 var land
 var logistics
+var rooms
 
 func _init(slot_store = null) -> void:
 	land = P8Land.new(self)
@@ -40,6 +42,7 @@ func _init(slot_store = null) -> void:
 	flowers = P8Flowers.new(self, P8Data.load_data()["flowers"])
 	devices = P8Devices.new(self, P8Data.load_data()["devices"])
 	logistics = Logistics.new(self, P8Data.load_data()["logistics"])
+	rooms = Rooms.new(self,P8Data.load_data()["rooms"])
 	super(slot_store)
 
 func _catalog():
@@ -65,6 +68,7 @@ func _settle_workforce(completed_day: int) -> void:
 ## reports archive, so unlock events land on the completed day; unused flower
 ## shares expire with the completed day.
 func _settle_husbandry(completed_day: int) -> void:
+	rooms.begin_settle(completed_day)
 	husbandry.settle(completed_day)
 	logistics.settle(completed_day)
 	research.settle(completed_day)
@@ -117,6 +121,7 @@ func to_snapshot() -> Dictionary:
 	snapshot["world"]["devices"] = devices.to_save()
 	snapshot["world"]["logistics"] = logistics.to_save()
 	snapshot["world"]["agriculture"] = logistics.agri_to_save()
+	snapshot["world"]["rooms"] = rooms.to_save()
 	return snapshot
 
 func apply_snapshot(value) -> Dictionary:
@@ -140,6 +145,7 @@ func _snapshot_applied(snapshot: Dictionary) -> void:
 		logistics.apply_save(snapshot["world"]["logistics"])
 	if snapshot["world"].has("agriculture"):
 		logistics.apply_agri_save(snapshot["world"]["agriculture"])
+	rooms.apply_save(snapshot["world"]["rooms"])
 
 ## Pollination bonus: one extra oilseed per pollinated cycle at harvest.
 func _harvest_bonus(instance: Dictionary) -> Dictionary:
@@ -157,14 +163,7 @@ func harvest(cell: Vector2i, mode: String = "harvest") -> Dictionary:
 	var result: Dictionary = super(cell, mode)
 	if result["ok"] and daily_save_error.is_empty():
 		record_operation({"kind": "harvest", "stage": mode, "day": day, "uid": crop["uid"],
-			"crop": crop["crop_id"], "origin": crop["origin"], "pollinated": was_pollinated, "outputs": result["items"]})
-	return result
-
-func clear_crop(cell: Vector2i) -> Dictionary:
-	var crop := instance_at(cell)
-	var result: Dictionary = super(cell)
-	if result["ok"] and not crop.is_empty():
-		flowers.forget_crop(int(crop["uid"]))
+			"crop": crop["crop_id"], "origin": crop["origin"], "pollinated": was_pollinated, "outputs": result["base_items"]})
 	return result
 
 ## Hand pick: one AP draws the plant's remaining share into real stock.
@@ -229,6 +228,7 @@ func _with_substituted(facility_id: String, action: Callable) -> Dictionary:
 	return result
 
 func can_build_facility(cell: Vector2i, facility_id: String) -> Dictionary:
+	if facility_id=="field_service_station" and grid.state_at(cell)==Grid.State.TILLED: return _error("请先把维护站脚下耕地改为普通地板或还原，避免桥接田块")
 	if facility_defs.has(facility_id):
 		var shape: Array = facility_defs[facility_id]["footprint"]
 		for dy in range(int(shape[1])):
@@ -244,6 +244,7 @@ func can_build_facility(cell: Vector2i, facility_id: String) -> Dictionary:
 	return super(cell, facility_id)
 
 func build_facility(cell: Vector2i, facility_id: String, facing: String = "east") -> Dictionary:
+	if facility_id=="field_service_station" and grid.state_at(cell)==Grid.State.TILLED: return _error("请先把维护站脚下耕地改为普通地板或还原")
 	# The optional facing only applies to the agriculture host and takes effect
 	# immediately: nothing can be active in a slot on its build day.
 	if facility_id == "field_service_station" and not facing in ["east", "south", "west", "north"]:
@@ -358,6 +359,26 @@ func _crop_rect(crop: Dictionary) -> Rect2i:
 	var def: Dictionary = crop_defs[crop["crop_id"]]
 	return Rect2i(Vector2i(int(crop["origin"][0]), int(crop["origin"][1])),
 		Vector2i(int(def["footprint"][0]), int(def["footprint"][1])))
+
+func till(cell: Vector2i) -> Dictionary:
+	if rooms.state["floors"].has(Rooms.key(cell)): return _error("请使用地板工具将普通地板改为耕地")
+	return super(cell)
+
+func action_quote(cell: Vector2i, kind: String) -> Dictionary:
+	if kind=="till" and rooms.state["floors"].has(Rooms.key(cell)): return _error("普通地板不能直接开垦")
+	return super(cell,kind)
+
+func _crop_planted(row: Dictionary) -> void: rooms.plant_started(row)
+
+func _crop_grew(row: Dictionary, delta: int, day: int) -> void: rooms.crop_grew(row,delta,day)
+
+func _crop_clearing(row: Dictionary) -> Dictionary:
+	# Cleanup belongs to the removal/seed candidate, before _finish can roll back.
+	flowers.forget_crop(int(row["uid"]))
+	return rooms.clear_crop(row)
+
+func _crop_room_rewards(row: Dictionary, mode: String, base: Dictionary, removed: bool) -> Dictionary:
+	return rooms.claim_crop(row,mode,base,removed)
 
 func irrigate(cell: Vector2i) -> Dictionary:
 	if logistics.at(cell).is_empty(): return super(cell)

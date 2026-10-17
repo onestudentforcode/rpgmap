@@ -14,7 +14,7 @@ func check(ok: bool, label: String) -> void:
 func _initialize() -> void:
 	var w := World.new()
 	print("fresh ",Codec.normalize(w.to_snapshot())) if not Codec.normalize(w.to_snapshot())["ok"] else print("fresh valid")
-	check(Codec.normalize(w.to_snapshot())["ok"],"fresh schema18 valid")
+	check(Codec.normalize(w.to_snapshot())["ok"],"fresh current-schema valid")
 	check(w.logistics.provision()["ok"],"claim trial provision")
 	check(not w.logistics.provision()["ok"],"cannot claim twice")
 	check(w.logistics.state["instances"].size()==11,"eleven instances from seven prototypes")
@@ -44,11 +44,11 @@ func _initialize() -> void:
 	var damaged := w.to_snapshot()
 	damaged["world"]["logistics"]["instances"][1]["instance_id"] = "trial-001"
 	check(not Codec.normalize(damaged)["ok"],"duplicate identity rejected")
-	# Original schema17 save upgrades without removing inventory or old projects.
+	# P10.2 explicitly rejects early development saves; it does not migrate them.
 	var old := World.new().to_snapshot()
 	old["schema"]=17
 	old["world"].erase("logistics")
-	check(Codec.normalize(old)["ok"],"schema17 upgrades without deleting old files")
+	check(not Codec.normalize(old)["ok"],"schema17 rejected without deleting old files")
 	_research()
 	_long_research()
 	_environment()
@@ -167,7 +167,7 @@ func _growth() -> void:
 	check(w.build_facility(Vector2i(4,4),"field_service_station")["ok"],"growth host built")
 	var uid := int(w.facilities.keys()[0])
 	check(w.logistics.deploy("trial-004",Vector2i(-1,-1),uid)["ok"],"growth host compatibility")
-	# The east service zone of the 2x2 host at (4,4) is x6..8,y4..6 (P10.1 §3.2).
+	# The 1x1 host's east service zone is x5..7,y3..5 (P10.2 §3.3).
 	w.logistics.deploy("trial-001",Vector2i(6,4))
 	w.till(Vector2i(7,5))
 	w.plant(Vector2i(7,5),"golden_wheat")

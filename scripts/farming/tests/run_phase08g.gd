@@ -121,6 +121,8 @@ func _station_services() -> void:
 	world.end_day()
 	check(wb - world.inventory.count("clean_water") <= 6, "daily throughput capped at 6 per item")
 	# Overlap: a second station never re-serves the same cell/item the same day.
+	world.grant_scaffold({"raw_wood":1})
+	check(world.rooms.set_floor(Vector2i(4,1),"ordinary")["ok"],"explicitly replace farmland before station construction")
 	var overlap_built: Dictionary = world.build_facility(Vector2i(4, 1), "field_service_station")
 	check(overlap_built["ok"], "build the overlapping station (" + String(overlap_built.get("reason", "")) + ")")
 	var second := uid_of(world, "field_service_station", 1)

@@ -1,7 +1,7 @@
 extends SceneTree
 ## Phase 10.1 model contracts: directed service zones, whole-footprint
 ## coverage, per-tag resolution, fixed-hundredths savings, host facings, the
-## schema19 upgrade and the last-AP transaction around a facing commit.
+## current schema rejection of old saves and last-AP facing transactions.
 const World := preload("res://scripts/farming/p8/p8_world.gd")
 const Store := preload("res://scripts/farming/p8/p8_slot_store.gd")
 const Codec := preload("res://scripts/farming/p8/p8_snapshot.gd")
@@ -48,12 +48,12 @@ func _initialize() -> void:
 	quit(0 if failures.is_empty() else 1)
 
 func _geometry() -> void:
-	# The frozen §3.2 table for a 2x2 host at (5,5).
-	var host := [2,2]
-	check(Logistics.directed_zone(Vector2i(5,5),host,"east") == Rect2i(7,5,3,3),"east zone matches frozen table")
-	check(Logistics.directed_zone(Vector2i(5,5),host,"south") == Rect2i(4,7,3,3),"south zone matches frozen table")
+	# P10.2 replaces the old host with one cell; test the new rotational table.
+	var host := [1,1]
+	check(Logistics.directed_zone(Vector2i(5,5),host,"east") == Rect2i(6,4,3,3),"east zone matches frozen table")
+	check(Logistics.directed_zone(Vector2i(5,5),host,"south") == Rect2i(4,6,3,3),"south zone matches frozen table")
 	check(Logistics.directed_zone(Vector2i(5,5),host,"west") == Rect2i(2,4,3,3),"west zone matches frozen table")
-	check(Logistics.directed_zone(Vector2i(5,5),host,"north") == Rect2i(5,2,3,3),"north zone matches frozen table")
+	check(Logistics.directed_zone(Vector2i(5,5),host,"north") == Rect2i(4,2,3,3),"north zone matches frozen table")
 	# Zones clip at the map edge without moving the host or granting land: the
 	# map spans x -4..27, y 0..21, so a north-facing host at (5,1) keeps only
 	# the bottom row of its zone.
@@ -62,17 +62,17 @@ func _geometry() -> void:
 	var uids := scaffold(w,[Vector2i(5,1)],["north"])
 	check(w.logistics.deploy("trial-004",Vector2i(-1,-1),uids[0])["ok"],"north-edge station hosts growth gu")
 	w.end_day()
-	check(w.logistics.service_zone(w.logistics.instance("trial-004"),1) == Rect2i(5,0,3,1),"north zone clips to the map edge")
+	check(w.logistics.service_zone(w.logistics.instance("trial-004"),1) == Rect2i(4,0,3,1),"north zone clips to the map edge")
 	w.grant_scaffold({"grass_seed":2})
-	w.till(Vector2i(7,0))
-	check(w.plant(Vector2i(7,0),"pasture_grass")["ok"],"clipped zone serves existing farmland only")
+	w.till(Vector2i(6,0))
+	check(w.plant(Vector2i(6,0),"pasture_grass")["ok"],"clipped zone serves existing farmland only")
 	check(Codec.normalize(w.to_snapshot())["ok"],"edge geometry snapshot valid")
 
 func _single_slot_and_combination() -> void:
 	var w := World.new()
 	w.logistics.provision()
-	# Three stations around (6,6): (4,4)+E, (7,3)+S, (4,7)+N all cover it.
-	var uids := scaffold(w,[Vector2i(4,4),Vector2i(7,3),Vector2i(4,7)],["east","south","north"])
+	# Three 1x1 hosts around a real tillable target at (6,5).
+	var uids := scaffold(w,[Vector2i(4,4),Vector2i(7,3),Vector2i(7,7)],["east","south","north"])
 	check(w.logistics.deploy("trial-004",Vector2i(-1,-1),uids[0])["ok"],"growth gu admitted to the shared agriculture slot")
 	check(not w.logistics.deploy("trial-008",Vector2i(-1,-1),uids[0])["ok"],"one slot rejects a second agriculture gu")
 	check(not w.logistics.deploy("trial-007",Vector2i(-1,-1),uids[0])["ok"],"slot stays occupied for the same effect too")
@@ -81,16 +81,15 @@ func _single_slot_and_combination() -> void:
 	check(w.logistics.deploy("trial-009",Vector2i(-1,-1),uids[2])["ok"],"another instance can use a free slot")
 	w.logistics.withdraw("trial-009")
 	check(w.logistics.deploy("trial-010",Vector2i(-1,-1),uids[2])["ok"],"fert gu admitted on the third host")
-	w.till(Vector2i(6,6))
-	w.plant(Vector2i(6,6),"golden_wheat")
+	check(w.till(Vector2i(6,5))["ok"] and w.plant(Vector2i(6,5),"golden_wheat")["ok"],"combination target is an actual plant")
 	w.end_day()
-	var outcome: Dictionary = w.logistics.resolve(Rect2i(Vector2i(6,6),Vector2i.ONE),["plant_grow"],1)
+	var outcome: Dictionary = w.logistics.resolve(Rect2i(Vector2i(6,5),Vector2i.ONE),["plant_grow"],1)
 	check(int(outcome["groups"]["plant_growth_speed"]["value"])==150,"growth group adopted in combination")
 	check(int(outcome["groups"]["plant_water_saving"]["value"])==50,"water group adopted in combination")
 	check(int(outcome["groups"]["plant_fertility_saving"]["value"])==50,"fertility group adopted in combination")
 	check(int(outcome["groups"]["plant_growth_speed"]["candidates"].size())==1,"one growth candidate per host slot")
 	# Non-qualified targets (facilities, animals) carry no plant_grow tag.
-	var facility_outcome: Dictionary = w.logistics.resolve(Rect2i(Vector2i(6,6),Vector2i.ONE),[],1)
+	var facility_outcome: Dictionary = w.logistics.resolve(Rect2i(Vector2i(6,5),Vector2i.ONE),[],1)
 	check(facility_outcome["groups"].is_empty(),"unqualified target gains no group")
 	var mismatches := 0
 	for entry in facility_outcome["rejected"]:
@@ -103,7 +102,7 @@ func _coverage_rules() -> void:
 	w.logistics.provision()
 	# Station A east zone covers the left half of a 2x2 fast fir at (10,10);
 	# station B south zone covers the right half; neither may serve it.
-	var uids := scaffold(w,[Vector2i(6,9),Vector2i(12,7)],["east","south"])
+	var uids := scaffold(w,[Vector2i(7,10),Vector2i(12,9)],["east","south"])
 	check(w.logistics.deploy("trial-004",Vector2i(-1,-1),uids[0])["ok"],"half-covering source A deployed")
 	check(w.logistics.deploy("trial-007",Vector2i(-1,-1),uids[1])["ok"],"half-covering source B deployed")
 	for cell in [Vector2i(10,10),Vector2i(11,10),Vector2i(10,11),Vector2i(11,11)]:
@@ -121,11 +120,11 @@ func _coverage_rules() -> void:
 	w2.logistics.provision()
 	var uids2 := scaffold(w2,[Vector2i(4,4)])
 	w2.logistics.deploy("trial-004",Vector2i(-1,-1),uids2[0])
-	for cell in [Vector2i(8,4),Vector2i(9,4),Vector2i(8,5),Vector2i(9,5)]:
+	for cell in [Vector2i(7,4),Vector2i(8,4),Vector2i(7,5),Vector2i(8,5)]:
 		w2.till(cell)
-	check(w2.plant(Vector2i(8,4),"fast_fir")["ok"],"anchor-only crop planted beside the east zone")
+	check(w2.plant(Vector2i(7,4),"fast_fir")["ok"],"anchor-only crop planted beside the east zone")
 	w2.end_day()
-	check(w2.logistics.growth_percent(Rect2i(Vector2i(8,4),Vector2i(2,2)),["plant_grow"],1)==100,"anchor hit without full footprint grants nothing")
+	check(w2.logistics.growth_percent(Rect2i(Vector2i(7,4),Vector2i(2,2)),["plant_grow"],1)==100,"anchor hit without full footprint grants nothing")
 
 func _resolution_order() -> void:
 	var w := World.new()
@@ -174,7 +173,7 @@ func _fixed_precision() -> void:
 	w.logistics.provision()
 	var captured := []
 	w.operation_recorded.connect(func(entry): captured.append(entry))
-	var uids := scaffold(w,[Vector2i(4,4),Vector2i(5,7)],["east","north"])
+	var uids := scaffold(w,[Vector2i(4,4),Vector2i(6,7)],["east","north"])
 	check(w.logistics.deploy("trial-008",Vector2i(-1,-1),uids[0])["ok"],"water gu on the first host")
 	check(w.logistics.deploy("trial-010",Vector2i(-1,-1),uids[1])["ok"],"fert gu on the north-facing second host")
 	for cell in [Vector2i(6,4),Vector2i(7,4),Vector2i(6,5),Vector2i(7,5)]:
@@ -225,16 +224,16 @@ func _facing_flow() -> void:
 	w.plant(Vector2i(6,5),"golden_wheat")
 	w.end_day()
 	var row: Dictionary = w.logistics.instance("trial-004")
-	check(w.logistics.service_zone(row,1)==Rect2i(6,4,3,3),"default facing is east")
+	check(w.logistics.service_zone(row,1)==Rect2i(5,3,3,3),"default facing is east")
 	var ap := w.clock.ap
 	check(w.logistics.set_facing(uids[0],"south")["ok"],"facing commit costs 1 AP")
 	check(w.clock.ap==ap-1,"facing commit spent the AP")
-	check(w.logistics.service_zone(row,1)==Rect2i(6,4,3,3),"committed facing does not move today's locked zone")
+	check(w.logistics.service_zone(row,1)==Rect2i(5,3,3,3),"committed facing does not move today's locked zone")
 	check(w.logistics.next_facing_of(uids[0])=="south","committed facing waits for the next opening")
 	check(w.logistics.facing_of(uids[0])=="east","active facing stays east for the whole service day")
 	check(not w.logistics.set_facing(uids[0],"south")["ok"],"same facing is rejected without spending AP")
 	w.end_day()
-	check(w.logistics.service_zone(w.logistics.instance("trial-004"),2)==Rect2i(3,6,3,3),"opening promotes the committed facing")
+	check(w.logistics.service_zone(w.logistics.instance("trial-004"),2)==Rect2i(3,5,3,3),"opening promotes the committed facing")
 	check(w.logistics.growth_percent(Rect2i(Vector2i(6,5),Vector2i.ONE),["plant_grow"],2)==100,"turned-away crop loses the boost")
 	check(Codec.normalize(w.to_snapshot())["ok"],"facing state serializes")
 
@@ -359,60 +358,15 @@ func _zero_fertility_and_replant() -> void:
 	check(int(w2.environment[cell_index][0])==100-1-2,"carried remainder lands as a whole point after replant")
 
 func _upgrade() -> void:
-	# A real schema18-shaped save: six provisioned instances, growth deployed and
-	# paid for today, no agriculture section.
+	# Replaced by the explicit P10.2 no-migration contract.
 	var w := World.new()
-	w.logistics.provision()
-	var uids := scaffold(w,[Vector2i(4,4)])
-	w.logistics.deploy("trial-004",Vector2i(-1,-1),uids[0])
-	w.till(Vector2i(3,4))
-	w.plant(Vector2i(3,4),"golden_wheat")
-	w.end_day()
-	var snap := w.to_snapshot()
-	snap["schema"] = 18
-	snap["world"]["logistics"].erase("agri_supplement")
-	snap["world"]["logistics"]["instances"] = snap["world"]["logistics"]["instances"].slice(0,6)
-	snap["world"].erase("agriculture")
-	var up := World.new()
-	var result := up.apply_snapshot(snap)
-	check(result["ok"],"schema18 upgrades losslessly")
-	if not result["ok"]: print(result)
-	check(up.logistics.state["instances"].size()==11,"upgrade supplements the five P10.1 instances once")
-	check(bool(up.logistics.state["agri_supplement"]),"upgrade marks the supplement")
-	for index in range(6,11):
-		var r: Dictionary = up.logistics.state["instances"][index]
-		check(not r["enabled"] and int(r["host_uid"])==0 and r["origin"].is_empty(),"supplement instance %d arrives undeployed" % (index+1))
-	check(int(up.logistics.agri["legacy_until"])==1,"legacy switch day is the conversion day")
-	# The already-paid day keeps the old contract: range-2 host expansion at 120%.
-	check(up.logistics.growth_percent(Rect2i(Vector2i(3,4),Vector2i.ONE),["plant_grow"],1)==120,"legacy day keeps 120% and the old zone")
-	var wheat_before := int(up.instance_at(Vector2i(3,4))["progress"])
-	up.end_day()
-	check(int(up.instance_at(Vector2i(3,4))["progress"])-wheat_before==120,"legacy-day settle actually advances at 120%")
-	# After the switch the same crop sits outside the east zone and grows at the
-	# natural rate; a cell inside the new zone would read 150% from day 2 on.
-	check(up.logistics.growth_percent(Rect2i(Vector2i(3,4),Vector2i.ONE),["plant_grow"],2)==100,"outside the new zone the future day has no boost")
-	check(up.logistics.growth_percent(Rect2i(Vector2i(6,4),Vector2i.ONE),["plant_grow"],2)==150,"inside the new east zone the future day is 150%")
-	up.end_day()
-	check(int(up.instance_at(Vector2i(3,4))["progress"])-wheat_before==220,"post-switch day advances at the natural rate only")
-	check(not up.logistics.provision()["ok"],"upgraded save cannot reclaim the provision")
-	# An unprovisioned 18 save provisions eleven directly.
-	var fresh18 := World.new().to_snapshot()
-	fresh18["schema"] = 18
-	fresh18["world"]["logistics"].erase("agri_supplement")
-	fresh18["world"].erase("agriculture")
-	var up2 := World.new()
-	check(up2.apply_snapshot(fresh18)["ok"],"unprovisioned schema18 upgrades")
-	check(bool(up2.logistics.state["agri_supplement"]) and up2.logistics.state["instances"].is_empty(),"unprovisioned upgrade holds no instances")
-	check(up2.logistics.provision()["ok"] and up2.logistics.state["instances"].size()==11,"later provision grants all eleven")
-	check(int(up2.logistics.agri["legacy_until"])==0,"legacy marker is inert without a deployed growth gu")
-	# A schema17 save upgrades through both hops.
-	var old17 := World.new().to_snapshot()
-	old17["schema"] = 17
-	old17["world"].erase("logistics")
-	old17["world"].erase("agriculture")
-	var up3 := World.new()
-	check(up3.apply_snapshot(old17)["ok"],"schema17 upgrades through both hops")
-	check(up3.logistics.provision()["ok"] and up3.logistics.state["instances"].size()==11,"schema17 route also provisions eleven")
+	var before := w.to_snapshot()
+	for schema in [17,18,19]:
+		var old := before.duplicate(true)
+		old["schema"] = schema
+		check(not w.apply_snapshot(old)["ok"],"old schema requires new game: "+str(schema))
+		check(w.to_snapshot()==before,"rejected old save does not mutate the current world")
+	check(w.apply_snapshot(before)["ok"],"current schema roundtrip still accepted")
 
 func _rejections() -> void:
 	var w := World.new()

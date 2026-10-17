@@ -2301,8 +2301,8 @@
     {
       "cash": 18,
       "footprint": [
-        2,
-        2
+        1,
+        1
       ],
       "gu_slot": "agriculture_assist",
       "id": "field_service_station",
@@ -2375,11 +2375,11 @@
   "layout_audit": {
     "flower_cells": 12,
     "land_total": 280,
-    "land_used": 59,
+    "land_used": 56,
     "placements": {
       "algae_tank": [
-        0,
-        2
+        18,
+        0
       ],
       "bee_hive": [
         0,
@@ -2390,48 +2390,48 @@
         0
       ],
       "compost_bin": [
-        1,
-        2
+        19,
+        0
       ],
       "farm_processor": [
         4,
         0
       ],
       "field_service_station": [
-        6,
-        0
+        18,
+        1
       ],
       "fish_pond": "water",
       "growth_lamp": [
-        2,
-        2
+        19,
+        1
       ],
       "kitchen": [
-        8,
+        6,
         0
       ],
       "pen": [
-        10,
+        8,
         0
       ],
       "purifying_bed": [
-        12,
+        10,
         0
       ],
       "research_bench": [
-        3,
+        0,
         2
       ],
       "rock_workyard": [
-        14,
+        12,
         0
       ],
       "smelter": [
-        16,
+        14,
         0
       ],
       "woodshop": [
-        18,
+        16,
         0
       ]
     },
@@ -6556,6 +6556,57 @@
       ]
     }
   ],
+  "rooms": {
+    "floor": {
+      "inputs": {
+        "raw_wood": 1
+      },
+      "place_ap": 1,
+      "refund": false,
+      "remove_ap": 1
+    },
+    "material_percent": 25,
+    "primary": {
+      "fast_fir": {
+        "fell": "raw_wood"
+      },
+      "golden_wheat": {
+        "harvest": "grain"
+      },
+      "honeybell_bush": {
+        "fell": "twig",
+        "harvest": "nectar"
+      },
+      "oilseed_flower": {
+        "harvest": "oilseed"
+      },
+      "pasture_grass": {
+        "harvest": "fodder_grass"
+      },
+      "resin_tree": {
+        "fell": "raw_wood",
+        "harvest": "resin"
+      },
+      "rice_bag_gu": {
+        "claim": "rice"
+      },
+      "wood_decay_mushroom": {
+        "harvest": "mushroom"
+      }
+    },
+    "requirements": {
+      "material": [
+        "plant_growth_speed",
+        "plant_fertility_saving"
+      ],
+      "seed": [
+        "plant_growth_speed",
+        "plant_water_saving"
+      ]
+    },
+    "seed_percent": 25,
+    "version": 1
+  },
   "schema": 1,
   "sources": [
     {
