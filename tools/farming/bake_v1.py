@@ -45,13 +45,13 @@ def fraction(value):
 def pack(value):
     return {'numerator': value.numerator, 'denominator': value.denominator}
 
-def compile_config(source, product='farm_demo_v1', providers=None, map_data=None):
+def compile_config(source, product='farm_demo_v1', providers=None, map_data=None, extra_consumers=None):
     try:
-        return _compile(source, product, providers or {}, map_data)
+        return _compile(source, product, providers or {}, map_data, extra_consumers or {})
     except (KeyError, TypeError, AttributeError, ZeroDivisionError, OverflowError) as exc:
         raise ValueError(f'invalid V1 field: {exc}') from exc
 
-def _compile(source, product='farm_demo_v1', providers=None, map_data=None):
+def _compile(source, product='farm_demo_v1', providers=None, map_data=None, extra_consumers=None):
     providers = providers or {}
     require(isinstance(source, dict) and integer(source.get('schema'), 1, 1) and source.get('product') == product, 'schema/product required')
     out = copy.deepcopy(source)
@@ -148,11 +148,18 @@ def _compile(source, product='farm_demo_v1', providers=None, map_data=None):
         for iid in recipe['inputs']: consumers[iid].append(ident)
         for iid in recipe['outputs']: known_sources[iid].append(ident)
     for ident, producer in providers.items():
-        require(producer['facility'] in facilities, f'{ident}: missing facility')
+        require(producer.get('independent') is True or producer['facility'] in facilities, f'{ident}: missing facility')
         quantities(producer['inputs'], resources, ident)
         quantities(producer['outputs'], resources, ident)
         for iid in producer['inputs']: consumers[iid].append(ident)
         for iid in producer['outputs']: known_sources[iid].append(ident)
+    # Derived products may register consumers the producer graph cannot express
+    # (optional diets, research samples, construction substitutes); the base call
+    # keeps this empty so V1/V2 behaviour is unchanged.
+    for iid, labels in (extra_consumers or {}).items():
+        require(iid in resources, f'extra consumer references unknown item: {iid}')
+        require(isinstance(labels, list) and labels and all(isinstance(t, str) and t for t in labels), f'extra consumer labels invalid: {iid}')
+        consumers[iid].extend(labels)
     # A canonical cost basis must describe a real production batch, not a parallel
     # independently edited recipe with a different yield or processing duration.
     for ident, model in models.items():
@@ -186,7 +193,7 @@ def _compile(source, product='farm_demo_v1', providers=None, map_data=None):
         for recipe in recipes.values():
             if recipe['facility'] in built and set(recipe['inputs']) <= reachable: reachable.update(recipe['outputs'])
         for producer in providers.values():
-            if producer['facility'] in built and set(producer['inputs']) <= reachable: reachable.update(producer['outputs'])
+            if (producer.get('independent') is True or producer['facility'] in built) and set(producer['inputs']) <= reachable: reachable.update(producer['outputs'])
         if before == (len(reachable), len(built)): break
     require(reachable == set(resources) and built == set(facilities), 'unreachable resource/facility construction dependency')
     for iid in resources: require(known_sources[iid] and consumers[iid], f'{iid}: orphan source/consumer')

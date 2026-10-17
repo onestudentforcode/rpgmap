@@ -1,0 +1,413 @@
+{
+  "visual_revision": "p86",
+  "sample_user_accepted": true,
+  "juveniles": [
+    {
+      "id": "golden_wheat",
+      "state": "stage_0",
+      "sha256": "32a4950471afe0999b7b98492a5f7b70dbd98d8a65530df8dee20437d2d958cc",
+      "size": [
+        256,
+        256
+      ],
+      "alpha_bbox": [
+        106,
+        194,
+        129,
+        238
+      ],
+      "continuous_alpha": true
+    },
+    {
+      "id": "golden_wheat",
+      "state": "stage_1",
+      "sha256": "912b59c931f19de4a0b79743e5a6d41447f3b3269d5b75c68bf36864af0fc76b",
+      "size": [
+        256,
+        256
+      ],
+      "alpha_bbox": [
+        108,
+        188,
+        148,
+        240
+      ],
+      "continuous_alpha": true
+    },
+    {
+      "id": "fast_fir",
+      "state": "stage_0",
+      "sha256": "a22432559ca57d1b6cffada5011353dd46af8b6e19bff48b3ed6b4ad54e6416f",
+      "size": [
+        512,
+        768
+      ],
+      "alpha_bbox": [
+        244,
+        613,
+        266,
+        674
+      ],
+      "continuous_alpha": true
+    },
+    {
+      "id": "fast_fir",
+      "state": "stage_1",
+      "sha256": "e7c39340ca53823c9c66b0a8381474aaa34a252694de409c52f83bb2b424999e",
+      "size": [
+        512,
+        768
+      ],
+      "alpha_bbox": [
+        190,
+        540,
+        317,
+        680
+      ],
+      "continuous_alpha": true
+    },
+    {
+      "id": "resin_tree",
+      "state": "stage_0",
+      "sha256": "2ae9a6f7aa44bc3cfd31b949e0863952a0abf5e7b735d74c7b561cfc98168d10",
+      "size": [
+        512,
+        768
+      ],
+      "alpha_bbox": [
+        236,
+        665,
+        268,
+        711
+      ],
+      "continuous_alpha": true
+    },
+    {
+      "id": "resin_tree",
+      "state": "stage_1",
+      "sha256": "5a0b4b5d6a1672046997761af35d9138833f2c40735f9fee86cede8a2b7120f6",
+      "size": [
+        512,
+        768
+      ],
+      "alpha_bbox": [
+        187,
+        567,
+        291,
+        720
+      ],
+      "continuous_alpha": true
+    },
+    {
+      "id": "wood_decay_mushroom",
+      "state": "stage_0",
+      "sha256": "c5a786b72650bae098191b26469ec953482b3766f8446a197711593128f6f24d",
+      "size": [
+        256,
+        256
+      ],
+      "alpha_bbox": [
+        101,
+        216,
+        155,
+        245
+      ],
+      "continuous_alpha": true
+    },
+    {
+      "id": "wood_decay_mushroom",
+      "state": "stage_1",
+      "sha256": "8825110d652788cc759d9bbcd4e7c465081348177b2516186197a011ea95a4f0",
+      "size": [
+        256,
+        256
+      ],
+      "alpha_bbox": [
+        107,
+        200,
+        147,
+        237
+      ],
+      "continuous_alpha": true
+    },
+    {
+      "id": "pasture_grass",
+      "state": "stage_0",
+      "sha256": "1baf30fa503548eedbccabecac0262f0189d90d0180ce6a429a88505ac30cea0",
+      "size": [
+        256,
+        256
+      ],
+      "alpha_bbox": [
+        105,
+        165,
+        132,
+        208
+      ],
+      "continuous_alpha": true
+    },
+    {
+      "id": "pasture_grass",
+      "state": "stage_1",
+      "sha256": "a9fc93075cb95cb2e3c6fef9afa020dd00ae45e824bf8c481e76d9abfa3a0aa9",
+      "size": [
+        256,
+        256
+      ],
+      "alpha_bbox": [
+        103,
+        153,
+        152,
+        212
+      ],
+      "continuous_alpha": true
+    },
+    {
+      "id": "honeybell_bush",
+      "state": "stage_0",
+      "sha256": "9806c8154b516b6b7972eaf1bb79b65b1a7671448a7f25abb0fcb7b6f91f845e",
+      "size": [
+        256,
+        256
+      ],
+      "alpha_bbox": [
+        107,
+        207,
+        146,
+        236
+      ],
+      "continuous_alpha": true
+    },
+    {
+      "id": "honeybell_bush",
+      "state": "stage_1",
+      "sha256": "cfab4834a5f70e4e0ed9ca77849b64b11a7622aed008e1d52f166fb2ca010b45",
+      "size": [
+        256,
+        256
+      ],
+      "alpha_bbox": [
+        97,
+        186,
+        148,
+        238
+      ],
+      "continuous_alpha": true
+    },
+    {
+      "id": "oilseed_flower",
+      "state": "stage_0",
+      "sha256": "45ed2ddf0ef3b0f10687801b18b2480f4b73e25c9b2716baa6242dc463c192f0",
+      "size": [
+        256,
+        256
+      ],
+      "alpha_bbox": [
+        108,
+        207,
+        144,
+        238
+      ],
+      "continuous_alpha": true
+    },
+    {
+      "id": "oilseed_flower",
+      "state": "stage_1",
+      "sha256": "1a3dc91443fa27d1048615caea417e89e37db8b97e5a4404ddfbbf5ee7820e70",
+      "size": [
+        256,
+        256
+      ],
+      "alpha_bbox": [
+        101,
+        180,
+        150,
+        238
+      ],
+      "continuous_alpha": true
+    }
+  ],
+  "resources": {
+    "stone_source": {
+      "path": "res://assets/farming/p86/stone_source.png",
+      "sha256": "d14518fd9dca1e363f3264d3774739dd8a1f1ded2d9aaed8d1318502de8fbc54",
+      "canvas_px": [
+        256,
+        256
+      ],
+      "anchor_uv": [
+        0.4999997615814209,
+        0.6445568203926086
+      ],
+      "draw_size": [
+        83.2,
+        83.2
+      ],
+      "shadow": {
+        "size": [
+          48,
+          18
+        ],
+        "offset": [
+          0,
+          4
+        ],
+        "opacity": 0.21
+      },
+      "provenance": {
+        "schema_version": 1,
+        "purpose": "P8.6 optional representative scene stone_source only",
+        "generator": "tools/farming/render_p86_stone_trial.py",
+        "generator_sha256": "1e4aafad0d0b7bc79cc6286491404c6272929269f8066856799c87bd0d5b3235",
+        "blender_version": "5.2.1 LTS",
+        "generated_from": "procedural Blender geometry; no external source read or write",
+        "volatile_png_metadata_removed": true,
+        "camera_type": "ORTHO",
+        "elevation_degrees": 35,
+        "ortho_width": 3.4,
+        "canvas_px": [
+          256,
+          256
+        ],
+        "draw_size": [
+          83.2,
+          83.2
+        ],
+        "anchor_uv": [
+          0.4999997615814209,
+          0.6445568203926086
+        ],
+        "samples": 96,
+        "camera_matrix_world": [
+          [
+            -1.0,
+            -1.4526915492751868e-07,
+            8.261329753622704e-08,
+            0.0
+          ],
+          [
+            1.5099580252808664e-07,
+            -0.5735762715339661,
+            0.8191521763801575,
+            8.191520690917969
+          ],
+          [
+            -7.16125185817873e-08,
+            0.8191521763801575,
+            0.5735762715339661,
+            6.335764408111572
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "light": "upper left, broad area light",
+        "ground_or_shadow_baked": false,
+        "sha256": "d14518fd9dca1e363f3264d3774739dd8a1f1ded2d9aaed8d1318502de8fbc54"
+      }
+    },
+    "ore_source": {
+      "path": "res://assets/farming/p86/ore_source.png",
+      "sha256": "18bcb34761656ee16187e98e39461945be8c3fda8b9e7898ed769fbf34ee0921",
+      "canvas_px": [
+        256,
+        256
+      ],
+      "anchor_uv": [
+        0.4999997615814209,
+        0.6445568203926086
+      ],
+      "draw_size": [
+        83.2,
+        83.2
+      ],
+      "shadow": {
+        "size": [
+          48,
+          18
+        ],
+        "offset": [
+          0,
+          4
+        ],
+        "opacity": 0.21
+      },
+      "provenance": {
+        "id": "ore_source",
+        "path": "res://assets/farming/p86/ore_source.png",
+        "canvas_px": [
+          256,
+          256
+        ],
+        "anchor_uv": [
+          0.4999997615814209,
+          0.6445568203926086
+        ],
+        "draw_size": [
+          83.2,
+          83.2
+        ],
+        "sha256": "18bcb34761656ee16187e98e39461945be8c3fda8b9e7898ed769fbf34ee0921",
+        "camera_type": "ORTHO",
+        "elevation_degrees": 35,
+        "samples": 96,
+        "generator": "tools/farming/render_p86_resources.py",
+        "generator_sha256": "455e9b79c530b73e4f7087b063502d8d8f2c530ac887c725f0be1c8495133b5c"
+      }
+    },
+    "spring_source": {
+      "path": "res://assets/farming/p86/spring_source.png",
+      "sha256": "c2a68b8592e991f9d84004a54471e1f216864d1d1da714a35a9235f7213dbd68",
+      "canvas_px": [
+        256,
+        256
+      ],
+      "anchor_uv": [
+        0.4999997615814209,
+        0.6445568203926086
+      ],
+      "draw_size": [
+        83.2,
+        83.2
+      ],
+      "shadow": {
+        "size": [
+          49,
+          23
+        ],
+        "offset": [
+          0,
+          3
+        ],
+        "opacity": 0.17
+      },
+      "provenance": {
+        "id": "spring_source",
+        "path": "res://assets/farming/p86/spring_source.png",
+        "canvas_px": [
+          256,
+          256
+        ],
+        "anchor_uv": [
+          0.4999997615814209,
+          0.6445568203926086
+        ],
+        "draw_size": [
+          83.2,
+          83.2
+        ],
+        "sha256": "c2a68b8592e991f9d84004a54471e1f216864d1d1da714a35a9235f7213dbd68",
+        "camera_type": "ORTHO",
+        "elevation_degrees": 35,
+        "samples": 96,
+        "generator": "tools/farming/render_p86_resources.py",
+        "generator_sha256": "455e9b79c530b73e4f7087b063502d8d8f2c530ac887c725f0be1c8495133b5c"
+      }
+    }
+  },
+  "canvas_and_roots_preserved": true,
+  "mature_and_flowering_pngs_retained": true
+}

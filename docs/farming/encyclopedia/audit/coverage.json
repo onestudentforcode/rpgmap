@@ -1,0 +1,1942 @@
+{
+  "generated": "2026-10-16",
+  "registries": {
+    "resources": {
+      "count": 63,
+      "ids": [
+        "algae_feed",
+        "beeswax",
+        "charcoal",
+        "clean_water",
+        "composite_stone_panel",
+        "crude_oil",
+        "crushed_ore",
+        "dense_algae",
+        "dew_soup",
+        "earth_pill",
+        "fast_fir_seed",
+        "filter_media",
+        "fire_paste",
+        "fish_manure",
+        "fish_meat",
+        "fish_spirit_meal",
+        "flower_petal",
+        "fodder_grass",
+        "gold_food",
+        "golden_wheat_seed",
+        "grain",
+        "grain_meal",
+        "grass_meal",
+        "grass_seed",
+        "gravel",
+        "honey",
+        "honey_cake",
+        "honeybell_seed",
+        "humus",
+        "iron_ingot",
+        "iron_ore",
+        "land_feed",
+        "mineral_feed",
+        "mushroom",
+        "nectar",
+        "nutrient_liquid",
+        "oil_cake",
+        "oilseed",
+        "oilseed_flower_seed",
+        "ore_concentrate",
+        "pollen",
+        "purifying_mat_culture",
+        "raw_stone",
+        "raw_wood",
+        "reclaimed_fill",
+        "refined_oil",
+        "refined_wax",
+        "resin",
+        "resin_tree_seed",
+        "sheep_manure",
+        "slag",
+        "sludge",
+        "spent_filter",
+        "steel_wool",
+        "stone_powder",
+        "straw",
+        "tailings",
+        "twig",
+        "wastewater",
+        "water_feed",
+        "wood_chip",
+        "wood_decay_spawn",
+        "wood_plank"
+      ]
+    },
+    "crops": {
+      "count": 7,
+      "ids": [
+        "fast_fir",
+        "golden_wheat",
+        "honeybell_bush",
+        "oilseed_flower",
+        "pasture_grass",
+        "resin_tree",
+        "wood_decay_mushroom"
+      ]
+    },
+    "sources": {
+      "count": 3,
+      "ids": [
+        "ore_source",
+        "spring_source",
+        "stone_source"
+      ]
+    },
+    "facilities": {
+      "count": 15,
+      "ids": [
+        "algae_tank",
+        "bee_hive",
+        "char_kiln",
+        "compost_bin",
+        "farm_processor",
+        "field_service_station",
+        "fish_pond",
+        "growth_lamp",
+        "kitchen",
+        "pen",
+        "purifying_bed",
+        "research_bench",
+        "rock_workyard",
+        "smelter",
+        "woodshop"
+      ]
+    },
+    "recipes": {
+      "count": 40,
+      "ids": [
+        "algae_dew_soup",
+        "assemble_stone_panel",
+        "bio_purify",
+        "blend_land_feed",
+        "blend_water_feed",
+        "break_ore",
+        "break_stone",
+        "char_twigs",
+        "compost_chips",
+        "compost_fish_manure",
+        "compost_grass",
+        "compost_oil_cake",
+        "compost_sheep_manure",
+        "compost_sludge",
+        "compost_spent_filter",
+        "compost_straw",
+        "compost_twigs",
+        "concentrate_ore",
+        "culture_algae",
+        "dense_algae_culture",
+        "fungus_fish_meal",
+        "honey_grain_cake",
+        "honey_mineral_food",
+        "make_filter_media",
+        "mill_grain",
+        "mill_grass",
+        "mineral_feed",
+        "oil_honey_paste",
+        "press_oilseed",
+        "recover_fill",
+        "recover_nutrients",
+        "refine_oil",
+        "refine_wax",
+        "saw_planks",
+        "shred_twigs",
+        "shred_wood",
+        "smelt_charcoal",
+        "smelt_concentrate",
+        "smelt_resin",
+        "soil_spirit_pill"
+      ]
+    },
+    "livestock": {
+      "count": 6,
+      "ids": [
+        "bell_bee",
+        "filter_algae_carp",
+        "purifying_mat",
+        "rock_belly_beast",
+        "rock_mole",
+        "steel_sheep"
+      ]
+    },
+    "research": {
+      "count": 12,
+      "ids": [
+        "advanced_feed_oil_wax",
+        "basic_spirit_cooking",
+        "beekeeping",
+        "biofiltration",
+        "composite_spirit_food",
+        "farm_preparation",
+        "field_maintenance",
+        "flower_cultivation",
+        "mineral_materials",
+        "ore_concentration",
+        "rock_handling",
+        "water_recirculation"
+      ]
+    },
+    "diets": {
+      "count": 20,
+      "ids": [
+        "bell_bee/base_diets/flower_share",
+        "bell_bee/special_diets/honey_cycle",
+        "filter_algae_carp/base_diets/algae_meal",
+        "filter_algae_carp/base_diets/dense_meal",
+        "filter_algae_carp/base_diets/water_meal",
+        "filter_algae_carp/special_diets/grain_fatten",
+        "purifying_mat/base_diets/culture_water",
+        "purifying_mat/special_diets/bio_purify",
+        "purifying_mat/special_diets/recover_nutrients",
+        "rock_belly_beast/base_diets/grass_water_meal",
+        "rock_belly_beast/base_diets/land_meal",
+        "rock_belly_beast/special_diets/concentrate_ore",
+        "rock_mole/base_diets/fungus_meal",
+        "rock_mole/special_diets/break_ore",
+        "rock_mole/special_diets/break_stone",
+        "steel_sheep/base_diets/grain_meal",
+        "steel_sheep/base_diets/grass_meal",
+        "steel_sheep/base_diets/land_meal",
+        "steel_sheep/special_diets/iron_supplement",
+        "steel_sheep/special_diets/mineral_supplement"
+      ]
+    },
+    "parcels": {
+      "count": 6,
+      "ids": [
+        "east_far",
+        "east_lower",
+        "east_near",
+        "east_water_far",
+        "east_water_near",
+        "west_water"
+      ]
+    },
+    "cost_models": {
+      "count": 44,
+      "ids": [
+        "algae",
+        "algae_dew_soup",
+        "assemble_stone_panel",
+        "bee_round",
+        "bio_purify",
+        "blend_land_feed",
+        "blend_water_feed",
+        "break_ore",
+        "break_stone",
+        "char",
+        "compost",
+        "concentrate_ore",
+        "dense_algae_culture",
+        "fir",
+        "fish",
+        "fungus_fish_meal",
+        "honey_grain_cake",
+        "honey_mineral_food",
+        "honeybell",
+        "make_filter_media",
+        "mill_grain",
+        "mill_grass",
+        "mineral_feed",
+        "mushroom",
+        "oil_honey_paste",
+        "oilseed_round",
+        "ore",
+        "pasture",
+        "press_oilseed",
+        "recover_fill",
+        "recover_nutrients",
+        "refine_oil",
+        "refine_wax",
+        "resin",
+        "saw",
+        "shred",
+        "smelt",
+        "smelt_concentrate",
+        "soil_spirit_pill",
+        "stone",
+        "water",
+        "water_change",
+        "wheat",
+        "wool"
+      ]
+    }
+  },
+  "surveyed": {
+    "entities": 173,
+    "processes": 242,
+    "rules": 14,
+    "diet_entities": 20,
+    "living_recipe_mappings": 5,
+    "unresolved_fields": 0
+  },
+  "per_id_coverage": {
+    "resources/golden_wheat_seed": {
+      "entity": "resource:golden_wheat_seed",
+      "covered": true,
+      "fields": {
+        "fields_total": 10,
+        "unresolved": []
+      }
+    },
+    "resources/fast_fir_seed": {
+      "entity": "resource:fast_fir_seed",
+      "covered": true,
+      "fields": {
+        "fields_total": 10,
+        "unresolved": []
+      }
+    },
+    "resources/resin_tree_seed": {
+      "entity": "resource:resin_tree_seed",
+      "covered": true,
+      "fields": {
+        "fields_total": 10,
+        "unresolved": []
+      }
+    },
+    "resources/wood_decay_spawn": {
+      "entity": "resource:wood_decay_spawn",
+      "covered": true,
+      "fields": {
+        "fields_total": 10,
+        "unresolved": []
+      }
+    },
+    "resources/grain": {
+      "entity": "resource:grain",
+      "covered": true,
+      "fields": {
+        "fields_total": 11,
+        "unresolved": []
+      }
+    },
+    "resources/straw": {
+      "entity": "resource:straw",
+      "covered": true,
+      "fields": {
+        "fields_total": 10,
+        "unresolved": []
+      }
+    },
+    "resources/raw_wood": {
+      "entity": "resource:raw_wood",
+      "covered": true,
+      "fields": {
+        "fields_total": 10,
+        "unresolved": []
+      }
+    },
+    "resources/twig": {
+      "entity": "resource:twig",
+      "covered": true,
+      "fields": {
+        "fields_total": 10,
+        "unresolved": []
+      }
+    },
+    "resources/resin": {
+      "entity": "resource:resin",
+      "covered": true,
+      "fields": {
+        "fields_total": 11,
+        "unresolved": []
+      }
+    },
+    "resources/mushroom": {
+      "entity": "resource:mushroom",
+      "covered": true,
+      "fields": {
+        "fields_total": 11,
+        "unresolved": []
+      }
+    },
+    "resources/humus": {
+      "entity": "resource:humus",
+      "covered": true,
+      "fields": {
+        "fields_total": 11,
+        "unresolved": []
+      }
+    },
+    "resources/raw_stone": {
+      "entity": "resource:raw_stone",
+      "covered": true,
+      "fields": {
+        "fields_total": 10,
+        "unresolved": []
+      }
+    },
+    "resources/iron_ore": {
+      "entity": "resource:iron_ore",
+      "covered": true,
+      "fields": {
+        "fields_total": 10,
+        "unresolved": []
+      }
+    },
+    "resources/clean_water": {
+      "entity": "resource:clean_water",
+      "covered": true,
+      "fields": {
+        "fields_total": 11,
+        "unresolved": []
+      }
+    },
+    "resources/wood_chip": {
+      "entity": "resource:wood_chip",
+      "covered": true,
+      "fields": {
+        "fields_total": 10,
+        "unresolved": []
+      }
+    },
+    "resources/wood_plank": {
+      "entity": "resource:wood_plank",
+      "covered": true,
+      "fields": {
+        "fields_total": 10,
+        "unresolved": []
+      }
+    },
+    "resources/charcoal": {
+      "entity": "resource:charcoal",
+      "covered": true,
+      "fields": {
+        "fields_total": 11,
+        "unresolved": []
+      }
+    },
+    "resources/iron_ingot": {
+      "entity": "resource:iron_ingot",
+      "covered": true,
+      "fields": {
+        "fields_total": 11,
+        "unresolved": []
+      }
+    },
+    "resources/grass_seed": {
+      "entity": "resource:grass_seed",
+      "covered": true,
+      "fields": {
+        "fields_total": 10,
+        "unresolved": []
+      }
+    },
+    "resources/fodder_grass": {
+      "entity": "resource:fodder_grass",
+      "covered": true,
+      "fields": {
+        "fields_total": 10,
+        "unresolved": []
+      }
+    },
+    "resources/steel_wool": {
+      "entity": "resource:steel_wool",
+      "covered": true,
+      "fields": {
+        "fields_total": 11,
+        "unresolved": []
+      }
+    },
+    "resources/sheep_manure": {
+      "entity": "resource:sheep_manure",
+      "covered": true,
+      "fields": {
+        "fields_total": 10,
+        "unresolved": []
+      }
+    },
+    "resources/algae_feed": {
+      "entity": "resource:algae_feed",
+      "covered": true,
+      "fields": {
+        "fields_total": 10,
+        "unresolved": []
+      }
+    },
+    "resources/fish_meat": {
+      "entity": "resource:fish_meat",
+      "covered": true,
+      "fields": {
+        "fields_total": 11,
+        "unresolved": []
+      }
+    },
+    "resources/fish_manure": {
+      "entity": "resource:fish_manure",
+      "covered": true,
+      "fields": {
+        "fields_total": 10,
+        "unresolved": []
+      }
+    },
+    "resources/honeybell_seed": {
+      "entity": "resource:honeybell_seed",
+      "covered": true,
+      "fields": {
+        "fields_total": 11,
+        "unresolved": []
+      }
+    },
+    "resources/oilseed_flower_seed": {
+      "entity": "resource:oilseed_flower_seed",
+      "covered": true,
+      "fields": {
+        "fields_total": 11,
+        "unresolved": []
+      }
+    },
+    "resources/purifying_mat_culture": {
+      "entity": "resource:purifying_mat_culture",
+      "covered": true,
+      "fields": {
+        "fields_total": 12,
+        "unresolved": []
+      }
+    },
+    "resources/nectar": {
+      "entity": "resource:nectar",
+      "covered": true,
+      "fields": {
+        "fields_total": 11,
+        "unresolved": []
+      }
+    },
+    "resources/pollen": {
+      "entity": "resource:pollen",
+      "covered": true,
+      "fields": {
+        "fields_total": 10,
+        "unresolved": []
+      }
+    },
+    "resources/honey": {
+      "entity": "resource:honey",
+      "covered": true,
+      "fields": {
+        "fields_total": 11,
+        "unresolved": []
+      }
+    },
+    "resources/beeswax": {
+      "entity": "resource:beeswax",
+      "covered": true,
+      "fields": {
+        "fields_total": 10,
+        "unresolved": []
+      }
+    },
+    "resources/oilseed": {
+      "entity": "resource:oilseed",
+      "covered": true,
+      "fields": {
+        "fields_total": 10,
+        "unresolved": []
+      }
+    },
+    "resources/flower_petal": {
+      "entity": "resource:flower_petal",
+      "covered": true,
+      "fields": {
+        "fields_total": 10,
+        "unresolved": []
+      }
+    },
+    "resources/grain_meal": {
+      "entity": "resource:grain_meal",
+      "covered": true,
+      "fields": {
+        "fields_total": 10,
+        "unresolved": []
+      }
+    },
+    "resources/grass_meal": {
+      "entity": "resource:grass_meal",
+      "covered": true,
+      "fields": {
+        "fields_total": 10,
+        "unresolved": []
+      }
+    },
+    "resources/crude_oil": {
+      "entity": "resource:crude_oil",
+      "covered": true,
+      "fields": {
+        "fields_total": 10,
+        "unresolved": []
+      }
+    },
+    "resources/oil_cake": {
+      "entity": "resource:oil_cake",
+      "covered": true,
+      "fields": {
+        "fields_total": 10,
+        "unresolved": []
+      }
+    },
+    "resources/refined_oil": {
+      "entity": "resource:refined_oil",
+      "covered": true,
+      "fields": {
+        "fields_total": 11,
+        "unresolved": []
+      }
+    },
+    "resources/spent_filter": {
+      "entity": "resource:spent_filter",
+      "covered": true,
+      "fields": {
+        "fields_total": 10,
+        "unresolved": []
+      }
+    },
+    "resources/land_feed": {
+      "entity": "resource:land_feed",
+      "covered": true,
+      "fields": {
+        "fields_total": 10,
+        "unresolved": []
+      }
+    },
+    "resources/water_feed": {
+      "entity": "resource:water_feed",
+      "covered": true,
+      "fields": {
+        "fields_total": 10,
+        "unresolved": []
+      }
+    },
+    "resources/refined_wax": {
+      "entity": "resource:refined_wax",
+      "covered": true,
+      "fields": {
+        "fields_total": 10,
+        "unresolved": []
+      }
+    },
+    "resources/mineral_feed": {
+      "entity": "resource:mineral_feed",
+      "covered": true,
+      "fields": {
+        "fields_total": 10,
+        "unresolved": []
+      }
+    },
+    "resources/filter_media": {
+      "entity": "resource:filter_media",
+      "covered": true,
+      "fields": {
+        "fields_total": 10,
+        "unresolved": []
+      }
+    },
+    "resources/wastewater": {
+      "entity": "resource:wastewater",
+      "covered": true,
+      "fields": {
+        "fields_total": 10,
+        "unresolved": []
+      }
+    },
+    "resources/sludge": {
+      "entity": "resource:sludge",
+      "covered": true,
+      "fields": {
+        "fields_total": 10,
+        "unresolved": []
+      }
+    },
+    "resources/nutrient_liquid": {
+      "entity": "resource:nutrient_liquid",
+      "covered": true,
+      "fields": {
+        "fields_total": 10,
+        "unresolved": []
+      }
+    },
+    "resources/dense_algae": {
+      "entity": "resource:dense_algae",
+      "covered": true,
+      "fields": {
+        "fields_total": 10,
+        "unresolved": []
+      }
+    },
+    "resources/gravel": {
+      "entity": "resource:gravel",
+      "covered": true,
+      "fields": {
+        "fields_total": 10,
+        "unresolved": []
+      }
+    },
+    "resources/stone_powder": {
+      "entity": "resource:stone_powder",
+      "covered": true,
+      "fields": {
+        "fields_total": 10,
+        "unresolved": []
+      }
+    },
+    "resources/crushed_ore": {
+      "entity": "resource:crushed_ore",
+      "covered": true,
+      "fields": {
+        "fields_total": 10,
+        "unresolved": []
+      }
+    },
+    "resources/ore_concentrate": {
+      "entity": "resource:ore_concentrate",
+      "covered": true,
+      "fields": {
+        "fields_total": 10,
+        "unresolved": []
+      }
+    },
+    "resources/tailings": {
+      "entity": "resource:tailings",
+      "covered": true,
+      "fields": {
+        "fields_total": 10,
+        "unresolved": []
+      }
+    },
+    "resources/slag": {
+      "entity": "resource:slag",
+      "covered": true,
+      "fields": {
+        "fields_total": 10,
+        "unresolved": []
+      }
+    },
+    "resources/composite_stone_panel": {
+      "entity": "resource:composite_stone_panel",
+      "covered": true,
+      "fields": {
+        "fields_total": 10,
+        "unresolved": []
+      }
+    },
+    "resources/reclaimed_fill": {
+      "entity": "resource:reclaimed_fill",
+      "covered": true,
+      "fields": {
+        "fields_total": 10,
+        "unresolved": []
+      }
+    },
+    "resources/honey_cake": {
+      "entity": "resource:honey_cake",
+      "covered": true,
+      "fields": {
+        "fields_total": 11,
+        "unresolved": []
+      }
+    },
+    "resources/fish_spirit_meal": {
+      "entity": "resource:fish_spirit_meal",
+      "covered": true,
+      "fields": {
+        "fields_total": 11,
+        "unresolved": []
+      }
+    },
+    "resources/dew_soup": {
+      "entity": "resource:dew_soup",
+      "covered": true,
+      "fields": {
+        "fields_total": 11,
+        "unresolved": []
+      }
+    },
+    "resources/fire_paste": {
+      "entity": "resource:fire_paste",
+      "covered": true,
+      "fields": {
+        "fields_total": 11,
+        "unresolved": []
+      }
+    },
+    "resources/earth_pill": {
+      "entity": "resource:earth_pill",
+      "covered": true,
+      "fields": {
+        "fields_total": 11,
+        "unresolved": []
+      }
+    },
+    "resources/gold_food": {
+      "entity": "resource:gold_food",
+      "covered": true,
+      "fields": {
+        "fields_total": 11,
+        "unresolved": []
+      }
+    },
+    "crops/golden_wheat": {
+      "entity": "crop:golden_wheat",
+      "covered": true,
+      "fields": {
+        "fields_total": 10,
+        "unresolved": []
+      }
+    },
+    "crops/fast_fir": {
+      "entity": "crop:fast_fir",
+      "covered": true,
+      "fields": {
+        "fields_total": 10,
+        "unresolved": []
+      }
+    },
+    "crops/resin_tree": {
+      "entity": "crop:resin_tree",
+      "covered": true,
+      "fields": {
+        "fields_total": 12,
+        "unresolved": []
+      }
+    },
+    "crops/wood_decay_mushroom": {
+      "entity": "crop:wood_decay_mushroom",
+      "covered": true,
+      "fields": {
+        "fields_total": 11,
+        "unresolved": []
+      }
+    },
+    "crops/pasture_grass": {
+      "entity": "crop:pasture_grass",
+      "covered": true,
+      "fields": {
+        "fields_total": 10,
+        "unresolved": []
+      }
+    },
+    "crops/honeybell_bush": {
+      "entity": "crop:honeybell_bush",
+      "covered": true,
+      "fields": {
+        "fields_total": 14,
+        "unresolved": []
+      }
+    },
+    "crops/oilseed_flower": {
+      "entity": "crop:oilseed_flower",
+      "covered": true,
+      "fields": {
+        "fields_total": 12,
+        "unresolved": []
+      }
+    },
+    "sources/stone_source": {
+      "entity": "source:stone_source",
+      "covered": true,
+      "fields": {
+        "fields_total": 4,
+        "unresolved": []
+      }
+    },
+    "sources/ore_source": {
+      "entity": "source:ore_source",
+      "covered": true,
+      "fields": {
+        "fields_total": 4,
+        "unresolved": []
+      }
+    },
+    "sources/spring_source": {
+      "entity": "source:spring_source",
+      "covered": true,
+      "fields": {
+        "fields_total": 4,
+        "unresolved": []
+      }
+    },
+    "facilities/woodshop": {
+      "entity": "facility:woodshop",
+      "covered": true,
+      "fields": {
+        "fields_total": 7,
+        "unresolved": []
+      }
+    },
+    "facilities/char_kiln": {
+      "entity": "facility:char_kiln",
+      "covered": true,
+      "fields": {
+        "fields_total": 7,
+        "unresolved": []
+      }
+    },
+    "facilities/compost_bin": {
+      "entity": "facility:compost_bin",
+      "covered": true,
+      "fields": {
+        "fields_total": 7,
+        "unresolved": []
+      }
+    },
+    "facilities/smelter": {
+      "entity": "facility:smelter",
+      "covered": true,
+      "fields": {
+        "fields_total": 7,
+        "unresolved": []
+      }
+    },
+    "facilities/pen": {
+      "entity": "facility:pen",
+      "covered": true,
+      "fields": {
+        "fields_total": 8,
+        "unresolved": []
+      }
+    },
+    "facilities/fish_pond": {
+      "entity": "facility:fish_pond",
+      "covered": true,
+      "fields": {
+        "fields_total": 8,
+        "unresolved": []
+      }
+    },
+    "facilities/algae_tank": {
+      "entity": "facility:algae_tank",
+      "covered": true,
+      "fields": {
+        "fields_total": 7,
+        "unresolved": []
+      }
+    },
+    "facilities/research_bench": {
+      "entity": "facility:research_bench",
+      "covered": true,
+      "fields": {
+        "fields_total": 6,
+        "unresolved": []
+      }
+    },
+    "facilities/bee_hive": {
+      "entity": "facility:bee_hive",
+      "covered": true,
+      "fields": {
+        "fields_total": 9,
+        "unresolved": []
+      }
+    },
+    "facilities/farm_processor": {
+      "entity": "facility:farm_processor",
+      "covered": true,
+      "fields": {
+        "fields_total": 8,
+        "unresolved": []
+      }
+    },
+    "facilities/purifying_bed": {
+      "entity": "facility:purifying_bed",
+      "covered": true,
+      "fields": {
+        "fields_total": 9,
+        "unresolved": []
+      }
+    },
+    "facilities/rock_workyard": {
+      "entity": "facility:rock_workyard",
+      "covered": true,
+      "fields": {
+        "fields_total": 9,
+        "unresolved": []
+      }
+    },
+    "facilities/kitchen": {
+      "entity": "facility:kitchen",
+      "covered": true,
+      "fields": {
+        "fields_total": 8,
+        "unresolved": []
+      }
+    },
+    "facilities/field_service_station": {
+      "entity": "facility:field_service_station",
+      "covered": true,
+      "fields": {
+        "fields_total": 8,
+        "unresolved": []
+      }
+    },
+    "facilities/growth_lamp": {
+      "entity": "facility:growth_lamp",
+      "covered": true,
+      "fields": {
+        "fields_total": 8,
+        "unresolved": []
+      }
+    },
+    "recipes/saw_planks": {
+      "entity": "recipe:saw_planks",
+      "covered": true,
+      "fields": {
+        "fields_total": 5,
+        "unresolved": []
+      }
+    },
+    "recipes/shred_wood": {
+      "entity": "recipe:shred_wood",
+      "covered": true,
+      "fields": {
+        "fields_total": 5,
+        "unresolved": []
+      }
+    },
+    "recipes/shred_twigs": {
+      "entity": "recipe:shred_twigs",
+      "covered": true,
+      "fields": {
+        "fields_total": 5,
+        "unresolved": []
+      }
+    },
+    "recipes/char_twigs": {
+      "entity": "recipe:char_twigs",
+      "covered": true,
+      "fields": {
+        "fields_total": 5,
+        "unresolved": []
+      }
+    },
+    "recipes/compost_straw": {
+      "entity": "recipe:compost_straw",
+      "covered": true,
+      "fields": {
+        "fields_total": 5,
+        "unresolved": []
+      }
+    },
+    "recipes/compost_twigs": {
+      "entity": "recipe:compost_twigs",
+      "covered": true,
+      "fields": {
+        "fields_total": 5,
+        "unresolved": []
+      }
+    },
+    "recipes/compost_chips": {
+      "entity": "recipe:compost_chips",
+      "covered": true,
+      "fields": {
+        "fields_total": 5,
+        "unresolved": []
+      }
+    },
+    "recipes/smelt_charcoal": {
+      "entity": "recipe:smelt_charcoal",
+      "covered": true,
+      "fields": {
+        "fields_total": 5,
+        "unresolved": []
+      }
+    },
+    "recipes/smelt_resin": {
+      "entity": "recipe:smelt_resin",
+      "covered": true,
+      "fields": {
+        "fields_total": 5,
+        "unresolved": []
+      }
+    },
+    "recipes/culture_algae": {
+      "entity": "recipe:culture_algae",
+      "covered": true,
+      "fields": {
+        "fields_total": 5,
+        "unresolved": []
+      }
+    },
+    "recipes/compost_sheep_manure": {
+      "entity": "recipe:compost_sheep_manure",
+      "covered": true,
+      "fields": {
+        "fields_total": 5,
+        "unresolved": []
+      }
+    },
+    "recipes/compost_fish_manure": {
+      "entity": "recipe:compost_fish_manure",
+      "covered": true,
+      "fields": {
+        "fields_total": 5,
+        "unresolved": []
+      }
+    },
+    "recipes/compost_grass": {
+      "entity": "recipe:compost_grass",
+      "covered": true,
+      "fields": {
+        "fields_total": 5,
+        "unresolved": []
+      }
+    },
+    "recipes/mill_grain": {
+      "entity": "recipe:mill_grain",
+      "covered": true,
+      "fields": {
+        "fields_total": 6,
+        "unresolved": []
+      }
+    },
+    "recipes/mill_grass": {
+      "entity": "recipe:mill_grass",
+      "covered": true,
+      "fields": {
+        "fields_total": 6,
+        "unresolved": []
+      }
+    },
+    "recipes/press_oilseed": {
+      "entity": "recipe:press_oilseed",
+      "covered": true,
+      "fields": {
+        "fields_total": 6,
+        "unresolved": []
+      }
+    },
+    "recipes/refine_oil": {
+      "entity": "recipe:refine_oil",
+      "covered": true,
+      "fields": {
+        "fields_total": 6,
+        "unresolved": []
+      }
+    },
+    "recipes/blend_land_feed": {
+      "entity": "recipe:blend_land_feed",
+      "covered": true,
+      "fields": {
+        "fields_total": 6,
+        "unresolved": []
+      }
+    },
+    "recipes/blend_water_feed": {
+      "entity": "recipe:blend_water_feed",
+      "covered": true,
+      "fields": {
+        "fields_total": 6,
+        "unresolved": []
+      }
+    },
+    "recipes/refine_wax": {
+      "entity": "recipe:refine_wax",
+      "covered": true,
+      "fields": {
+        "fields_total": 6,
+        "unresolved": []
+      }
+    },
+    "recipes/mineral_feed": {
+      "entity": "resource:mineral_feed",
+      "covered": true,
+      "fields": {
+        "fields_total": 10,
+        "unresolved": []
+      }
+    },
+    "recipes/make_filter_media": {
+      "entity": "recipe:make_filter_media",
+      "covered": true,
+      "fields": {
+        "fields_total": 6,
+        "unresolved": []
+      }
+    },
+    "recipes/bio_purify": {
+      "entity": "recipe:bio_purify",
+      "covered": true,
+      "fields": {
+        "fields_total": 7,
+        "unresolved": []
+      }
+    },
+    "recipes/recover_nutrients": {
+      "entity": "recipe:recover_nutrients",
+      "covered": true,
+      "fields": {
+        "fields_total": 7,
+        "unresolved": []
+      }
+    },
+    "recipes/dense_algae_culture": {
+      "entity": "recipe:dense_algae_culture",
+      "covered": true,
+      "fields": {
+        "fields_total": 6,
+        "unresolved": []
+      }
+    },
+    "recipes/break_stone": {
+      "entity": "recipe:break_stone",
+      "covered": true,
+      "fields": {
+        "fields_total": 7,
+        "unresolved": []
+      }
+    },
+    "recipes/break_ore": {
+      "entity": "recipe:break_ore",
+      "covered": true,
+      "fields": {
+        "fields_total": 7,
+        "unresolved": []
+      }
+    },
+    "recipes/concentrate_ore": {
+      "entity": "recipe:concentrate_ore",
+      "covered": true,
+      "fields": {
+        "fields_total": 7,
+        "unresolved": []
+      }
+    },
+    "recipes/smelt_concentrate": {
+      "entity": "recipe:smelt_concentrate",
+      "covered": true,
+      "fields": {
+        "fields_total": 6,
+        "unresolved": []
+      }
+    },
+    "recipes/assemble_stone_panel": {
+      "entity": "recipe:assemble_stone_panel",
+      "covered": true,
+      "fields": {
+        "fields_total": 6,
+        "unresolved": []
+      }
+    },
+    "recipes/recover_fill": {
+      "entity": "recipe:recover_fill",
+      "covered": true,
+      "fields": {
+        "fields_total": 6,
+        "unresolved": []
+      }
+    },
+    "recipes/honey_grain_cake": {
+      "entity": "recipe:honey_grain_cake",
+      "covered": true,
+      "fields": {
+        "fields_total": 6,
+        "unresolved": []
+      }
+    },
+    "recipes/fungus_fish_meal": {
+      "entity": "recipe:fungus_fish_meal",
+      "covered": true,
+      "fields": {
+        "fields_total": 6,
+        "unresolved": []
+      }
+    },
+    "recipes/algae_dew_soup": {
+      "entity": "recipe:algae_dew_soup",
+      "covered": true,
+      "fields": {
+        "fields_total": 6,
+        "unresolved": []
+      }
+    },
+    "recipes/oil_honey_paste": {
+      "entity": "recipe:oil_honey_paste",
+      "covered": true,
+      "fields": {
+        "fields_total": 6,
+        "unresolved": []
+      }
+    },
+    "recipes/soil_spirit_pill": {
+      "entity": "recipe:soil_spirit_pill",
+      "covered": true,
+      "fields": {
+        "fields_total": 6,
+        "unresolved": []
+      }
+    },
+    "recipes/honey_mineral_food": {
+      "entity": "recipe:honey_mineral_food",
+      "covered": true,
+      "fields": {
+        "fields_total": 6,
+        "unresolved": []
+      }
+    },
+    "recipes/compost_oil_cake": {
+      "entity": "recipe:compost_oil_cake",
+      "covered": true,
+      "fields": {
+        "fields_total": 6,
+        "unresolved": []
+      }
+    },
+    "recipes/compost_sludge": {
+      "entity": "recipe:compost_sludge",
+      "covered": true,
+      "fields": {
+        "fields_total": 6,
+        "unresolved": []
+      }
+    },
+    "recipes/compost_spent_filter": {
+      "entity": "recipe:compost_spent_filter",
+      "covered": true,
+      "fields": {
+        "fields_total": 6,
+        "unresolved": []
+      }
+    },
+    "livestock/steel_sheep": {
+      "entity": "species:steel_sheep",
+      "covered": true,
+      "fields": {
+        "fields_total": 8,
+        "unresolved": []
+      }
+    },
+    "livestock/filter_algae_carp": {
+      "entity": "species:filter_algae_carp",
+      "covered": true,
+      "fields": {
+        "fields_total": 9,
+        "unresolved": []
+      }
+    },
+    "livestock/bell_bee": {
+      "entity": "species:bell_bee",
+      "covered": true,
+      "fields": {
+        "fields_total": 10,
+        "unresolved": []
+      }
+    },
+    "livestock/purifying_mat": {
+      "entity": "species:purifying_mat",
+      "covered": true,
+      "fields": {
+        "fields_total": 9,
+        "unresolved": []
+      }
+    },
+    "livestock/rock_mole": {
+      "entity": "species:rock_mole",
+      "covered": true,
+      "fields": {
+        "fields_total": 8,
+        "unresolved": []
+      }
+    },
+    "livestock/rock_belly_beast": {
+      "entity": "species:rock_belly_beast",
+      "covered": true,
+      "fields": {
+        "fields_total": 8,
+        "unresolved": []
+      }
+    },
+    "research/flower_cultivation": {
+      "entity": "research:flower_cultivation",
+      "covered": true,
+      "fields": {
+        "fields_total": 6,
+        "unresolved": []
+      }
+    },
+    "research/beekeeping": {
+      "entity": "research:beekeeping",
+      "covered": true,
+      "fields": {
+        "fields_total": 6,
+        "unresolved": []
+      }
+    },
+    "research/farm_preparation": {
+      "entity": "research:farm_preparation",
+      "covered": true,
+      "fields": {
+        "fields_total": 6,
+        "unresolved": []
+      }
+    },
+    "research/biofiltration": {
+      "entity": "research:biofiltration",
+      "covered": true,
+      "fields": {
+        "fields_total": 6,
+        "unresolved": []
+      }
+    },
+    "research/rock_handling": {
+      "entity": "research:rock_handling",
+      "covered": true,
+      "fields": {
+        "fields_total": 6,
+        "unresolved": []
+      }
+    },
+    "research/advanced_feed_oil_wax": {
+      "entity": "research:advanced_feed_oil_wax",
+      "covered": true,
+      "fields": {
+        "fields_total": 6,
+        "unresolved": []
+      }
+    },
+    "research/ore_concentration": {
+      "entity": "research:ore_concentration",
+      "covered": true,
+      "fields": {
+        "fields_total": 6,
+        "unresolved": []
+      }
+    },
+    "research/water_recirculation": {
+      "entity": "research:water_recirculation",
+      "covered": true,
+      "fields": {
+        "fields_total": 6,
+        "unresolved": []
+      }
+    },
+    "research/basic_spirit_cooking": {
+      "entity": "research:basic_spirit_cooking",
+      "covered": true,
+      "fields": {
+        "fields_total": 6,
+        "unresolved": []
+      }
+    },
+    "research/field_maintenance": {
+      "entity": "research:field_maintenance",
+      "covered": true,
+      "fields": {
+        "fields_total": 6,
+        "unresolved": []
+      }
+    },
+    "research/mineral_materials": {
+      "entity": "research:mineral_materials",
+      "covered": true,
+      "fields": {
+        "fields_total": 6,
+        "unresolved": []
+      }
+    },
+    "research/composite_spirit_food": {
+      "entity": "research:composite_spirit_food",
+      "covered": true,
+      "fields": {
+        "fields_total": 6,
+        "unresolved": []
+      }
+    },
+    "livestock/steel_sheep/base_diets/grass_meal": {
+      "entity": "diet:steel_sheep/base_diets/grass_meal",
+      "covered": true,
+      "fields": {
+        "fields_total": 3,
+        "unresolved": []
+      }
+    },
+    "livestock/steel_sheep/base_diets/grain_meal": {
+      "entity": "diet:steel_sheep/base_diets/grain_meal",
+      "covered": true,
+      "fields": {
+        "fields_total": 3,
+        "unresolved": []
+      }
+    },
+    "livestock/steel_sheep/base_diets/land_meal": {
+      "entity": "diet:steel_sheep/base_diets/land_meal",
+      "covered": true,
+      "fields": {
+        "fields_total": 4,
+        "unresolved": []
+      }
+    },
+    "livestock/steel_sheep/special_diets/iron_supplement": {
+      "entity": "diet:steel_sheep/special_diets/iron_supplement",
+      "covered": true,
+      "fields": {
+        "fields_total": 3,
+        "unresolved": []
+      }
+    },
+    "livestock/steel_sheep/special_diets/mineral_supplement": {
+      "entity": "diet:steel_sheep/special_diets/mineral_supplement",
+      "covered": true,
+      "fields": {
+        "fields_total": 4,
+        "unresolved": []
+      }
+    },
+    "livestock/filter_algae_carp/base_diets/algae_meal": {
+      "entity": "diet:filter_algae_carp/base_diets/algae_meal",
+      "covered": true,
+      "fields": {
+        "fields_total": 3,
+        "unresolved": []
+      }
+    },
+    "livestock/filter_algae_carp/base_diets/water_meal": {
+      "entity": "diet:filter_algae_carp/base_diets/water_meal",
+      "covered": true,
+      "fields": {
+        "fields_total": 4,
+        "unresolved": []
+      }
+    },
+    "livestock/filter_algae_carp/base_diets/dense_meal": {
+      "entity": "diet:filter_algae_carp/base_diets/dense_meal",
+      "covered": true,
+      "fields": {
+        "fields_total": 4,
+        "unresolved": []
+      }
+    },
+    "livestock/filter_algae_carp/special_diets/grain_fatten": {
+      "entity": "diet:filter_algae_carp/special_diets/grain_fatten",
+      "covered": true,
+      "fields": {
+        "fields_total": 3,
+        "unresolved": []
+      }
+    },
+    "livestock/bell_bee/base_diets/flower_share": {
+      "entity": "diet:bell_bee/base_diets/flower_share",
+      "covered": true,
+      "fields": {
+        "fields_total": 4,
+        "unresolved": []
+      }
+    },
+    "livestock/bell_bee/special_diets/honey_cycle": {
+      "entity": "diet:bell_bee/special_diets/honey_cycle",
+      "covered": true,
+      "fields": {
+        "fields_total": 3,
+        "unresolved": []
+      }
+    },
+    "livestock/purifying_mat/base_diets/culture_water": {
+      "entity": "diet:purifying_mat/base_diets/culture_water",
+      "covered": true,
+      "fields": {
+        "fields_total": 4,
+        "unresolved": []
+      }
+    },
+    "livestock/purifying_mat/special_diets/bio_purify": {
+      "entity": "diet:purifying_mat/special_diets/bio_purify",
+      "covered": true,
+      "fields": {
+        "fields_total": 4,
+        "unresolved": []
+      }
+    },
+    "livestock/purifying_mat/special_diets/recover_nutrients": {
+      "entity": "diet:purifying_mat/special_diets/recover_nutrients",
+      "covered": true,
+      "fields": {
+        "fields_total": 4,
+        "unresolved": []
+      }
+    },
+    "livestock/rock_mole/base_diets/fungus_meal": {
+      "entity": "diet:rock_mole/base_diets/fungus_meal",
+      "covered": true,
+      "fields": {
+        "fields_total": 3,
+        "unresolved": []
+      }
+    },
+    "livestock/rock_mole/special_diets/break_stone": {
+      "entity": "diet:rock_mole/special_diets/break_stone",
+      "covered": true,
+      "fields": {
+        "fields_total": 4,
+        "unresolved": []
+      }
+    },
+    "livestock/rock_mole/special_diets/break_ore": {
+      "entity": "diet:rock_mole/special_diets/break_ore",
+      "covered": true,
+      "fields": {
+        "fields_total": 4,
+        "unresolved": []
+      }
+    },
+    "livestock/rock_belly_beast/base_diets/grass_water_meal": {
+      "entity": "diet:rock_belly_beast/base_diets/grass_water_meal",
+      "covered": true,
+      "fields": {
+        "fields_total": 3,
+        "unresolved": []
+      }
+    },
+    "livestock/rock_belly_beast/base_diets/land_meal": {
+      "entity": "diet:rock_belly_beast/base_diets/land_meal",
+      "covered": true,
+      "fields": {
+        "fields_total": 4,
+        "unresolved": []
+      }
+    },
+    "livestock/rock_belly_beast/special_diets/concentrate_ore": {
+      "entity": "diet:rock_belly_beast/special_diets/concentrate_ore",
+      "covered": true,
+      "fields": {
+        "fields_total": 4,
+        "unresolved": []
+      }
+    },
+    "parcels/east_near": {
+      "entity": "parcel:east_near",
+      "covered": true
+    },
+    "parcels/east_far": {
+      "entity": "parcel:east_far",
+      "covered": true
+    },
+    "parcels/east_lower": {
+      "entity": "parcel:east_lower",
+      "covered": true
+    },
+    "parcels/west_water": {
+      "entity": "parcel:west_water",
+      "covered": true
+    },
+    "parcels/east_water_near": {
+      "entity": "parcel:east_water_near",
+      "covered": true
+    },
+    "parcels/east_water_far": {
+      "entity": "parcel:east_water_far",
+      "covered": true
+    }
+  },
+  "uncovered_registry_ids": [],
+  "recipe_io_vs_reverse_index_mismatches": [],
+  "baked_consumers_crosscheck": [
+    {
+      "item": "wastewater",
+      "baked_only_categories": [
+        "water_change"
+      ]
+    }
+  ],
+  "baked_attribution_differences": [
+    {
+      "item": "clean_water",
+      "direction": "source",
+      "baked_category": "maintain",
+      "explanation": "baked按provider成本参考轮（满容量4单位×成长+周期汇总投入产出）登记来源；运行时归属收取proc:claim"
+    },
+    {
+      "item": "honeybell_seed",
+      "direction": "use",
+      "baked_category": "maintain",
+      "explanation": "baked将蜂箱参考轮的建场种子(4株蜜铃)记为bell_bee_provider消费；运行时实际消耗在播种proc:plant:honeybell_bush"
+    },
+    {
+      "item": "oilseed_flower_seed",
+      "direction": "use",
+      "baked_category": "maintain",
+      "explanation": "baked将油籽花参考轮种子记为oilseed_flower_provider消费；运行时实际消耗在播种"
+    },
+    {
+      "item": "purifying_mat_culture",
+      "direction": "use",
+      "baked_category": "maintain",
+      "explanation": "baked将species:purifying_mat记为消费者（购买代理）；运行时购菌毯扣元石不耗该资源"
+    },
+    {
+      "item": "nectar",
+      "direction": "source",
+      "baked_category": "maintain",
+      "explanation": "baked把花源份额产物记为蜜铃/油籽花provider产出；运行时唯一入仓路径是手采proc:pick_flower"
+    },
+    {
+      "item": "pollen",
+      "direction": "source",
+      "baked_category": "maintain",
+      "explanation": "同上（份额内容物）"
+    },
+    {
+      "item": "honey",
+      "direction": "source",
+      "baked_category": "maintain",
+      "explanation": "baked按provider成本参考轮（满容量4单位×成长+周期汇总投入产出）登记来源；运行时归属收取proc:claim"
+    },
+    {
+      "item": "beeswax",
+      "direction": "source",
+      "baked_category": "maintain",
+      "explanation": "baked按provider成本参考轮（满容量4单位×成长+周期汇总投入产出）登记来源；运行时归属收取proc:claim"
+    },
+    {
+      "item": "oilseed",
+      "direction": "source",
+      "baked_category": "maintain",
+      "explanation": "baked把油籽花收获记为provider产出；运行时归属proc:harvest:oilseed_flower"
+    },
+    {
+      "item": "flower_petal",
+      "direction": "source",
+      "baked_category": "maintain",
+      "explanation": "同上"
+    },
+    {
+      "item": "wastewater",
+      "direction": "source",
+      "baked_category": "maintain",
+      "explanation": "baked把换水参考轮记为water_change_provider（按供应商轮映射为maintain类）；运行时归属proc:water_change"
+    },
+    {
+      "item": "sludge",
+      "direction": "source",
+      "baked_category": "maintain",
+      "explanation": "baked按provider成本参考轮（满容量4单位×成长+周期汇总投入产出）登记来源；运行时归属收取proc:claim"
+    },
+    {
+      "item": "nutrient_liquid",
+      "direction": "source",
+      "baked_category": "maintain",
+      "explanation": "baked按provider成本参考轮（满容量4单位×成长+周期汇总投入产出）登记来源；运行时归属收取proc:claim"
+    },
+    {
+      "item": "gravel",
+      "direction": "source",
+      "baked_category": "maintain",
+      "explanation": "baked按provider成本参考轮（满容量4单位×成长+周期汇总投入产出）登记来源；运行时归属收取proc:claim"
+    },
+    {
+      "item": "stone_powder",
+      "direction": "source",
+      "baked_category": "maintain",
+      "explanation": "baked按provider成本参考轮（满容量4单位×成长+周期汇总投入产出）登记来源；运行时归属收取proc:claim"
+    },
+    {
+      "item": "crushed_ore",
+      "direction": "source",
+      "baked_category": "maintain",
+      "explanation": "baked按provider成本参考轮（满容量4单位×成长+周期汇总投入产出）登记来源；运行时归属收取proc:claim"
+    },
+    {
+      "item": "ore_concentrate",
+      "direction": "source",
+      "baked_category": "maintain",
+      "explanation": "baked按provider成本参考轮（满容量4单位×成长+周期汇总投入产出）登记来源；运行时归属收取proc:claim"
+    },
+    {
+      "item": "tailings",
+      "direction": "source",
+      "baked_category": "maintain",
+      "explanation": "baked按provider成本参考轮（满容量4单位×成长+周期汇总投入产出）登记来源；运行时归属收取proc:claim"
+    }
+  ],
+  "no_productive_use": [
+    {
+      "item": "steel_wool",
+      "terminal_only": true,
+      "classification": "仅终端出售/供货（合理终点）",
+      "note": "市集可售但无生产性用途"
+    },
+    {
+      "item": "purifying_mat_culture",
+      "terminal_only": false,
+      "classification": "无任何用途",
+      "note": "调查未发现用途"
+    },
+    {
+      "item": "honey_cake",
+      "terminal_only": true,
+      "classification": "仅终端出售/供货（合理终点）",
+      "note": "市集可售但无生产性用途"
+    },
+    {
+      "item": "fish_spirit_meal",
+      "terminal_only": true,
+      "classification": "仅终端出售/供货（合理终点）",
+      "note": "市集可售但无生产性用途"
+    },
+    {
+      "item": "dew_soup",
+      "terminal_only": true,
+      "classification": "仅终端出售/供货（合理终点）",
+      "note": "市集可售但无生产性用途"
+    },
+    {
+      "item": "fire_paste",
+      "terminal_only": true,
+      "classification": "仅终端出售/供货（合理终点）",
+      "note": "市集可售但无生产性用途"
+    },
+    {
+      "item": "earth_pill",
+      "terminal_only": true,
+      "classification": "仅终端出售/供货（合理终点）",
+      "note": "市集可售但无生产性用途"
+    },
+    {
+      "item": "gold_food",
+      "terminal_only": true,
+      "classification": "仅终端出售/供货（合理终点）",
+      "note": "市集可售但无生产性用途"
+    }
+  ],
+  "no_source": [
+    {
+      "item": "purifying_mat_culture",
+      "classification": "无来源过程"
+    }
+  ],
+  "dangling_references": [],
+  "duplicate_ids": [],
+  "runtime_entry_checks": [
+    {
+      "file": "scripts/farming/v1/v1_world.gd",
+      "function": "plant/harvest/irrigate/fertilize/collect/build_facility/start_batch/claim_batch/_trade/deliver_order",
+      "processes": [
+        "proc:plant:*",
+        "proc:harvest:*",
+        "proc:irrigate",
+        "proc:fertilize",
+        "proc:collect:*",
+        "proc:build:*",
+        "proc:batch:*",
+        "proc:buy:*",
+        "proc:sell:*",
+        "proc:supply:*"
+      ]
+    },
+    {
+      "file": "scripts/farming/p8/p8_world.gd",
+      "function": "pick_flower/_harvest_bonus/buy(菌种拦截)/can_build_facility(替代)/start_batch(研究门控)",
+      "processes": [
+        "proc:pick_flower",
+        "proc:harvest:oilseed_flower",
+        "proc:build:*"
+      ]
+    },
+    {
+      "file": "scripts/farming/v2/v2_husbandry.gd",
+      "function": "purchase/maintain/claim/maintain_water/cull/settle",
+      "processes": [
+        "proc:buy_juvenile:*",
+        "proc:maintain:*",
+        "proc:claim:*",
+        "proc:cull:*"
+      ]
+    },
+    {
+      "file": "scripts/farming/p8/p8_husbandry.gd",
+      "function": "quote_water/maintain_water(真实换水)/_bee_maintain/_mat_maintain/set_yard_species",
+      "processes": [
+        "proc:water_change",
+        "proc:maintain:bell_bee",
+        "proc:maintain:purifying_mat"
+      ]
+    },
+    {
+      "file": "scripts/farming/p8/p8_operations.gd",
+      "function": "set_production/set_reserve/habitat_plan/settle(统一调度器)",
+      "processes": [
+        "rule:auto_production",
+        "rule:worker_scheduler"
+      ]
+    },
+    {
+      "file": "scripts/farming/p8/p8_research.gd",
+      "function": "start/work/settle",
+      "processes": [
+        "proc:research_start:*",
+        "proc:research_work:*"
+      ]
+    },
+    {
+      "file": "scripts/farming/p8/p8_flowers.gd",
+      "function": "eligible/consume/hive_candidates",
+      "processes": [
+        "proc:pick_flower",
+        "proc:hive_share"
+      ]
+    },
+    {
+      "file": "scripts/farming/p8/p8_devices.gd",
+      "function": "run_opening(灯/田间站)",
+      "processes": [
+        "proc:lamp_fuel",
+        "proc:station:irrigate",
+        "proc:station:fertilize"
+      ]
+    },
+    {
+      "file": "scripts/farming/p8/p8_land.gd",
+      "function": "quote/buy",
+      "processes": [
+        "proc:land:*"
+      ]
+    },
+    {
+      "file": "scripts/farming/v1/v1_workforce.gd + scripts/farming/p8/p8_workforce.gd",
+      "function": "hire/mark/set_seed/settle/_execute",
+      "processes": [
+        "proc:worker_farm",
+        "rule:worker_scheduler"
+      ]
+    },
+    {
+      "file": "scripts/farming/v1/v1_orders.gd + scripts/farming/v1/v1_data.gd",
+      "function": "generate/demand_quote",
+      "processes": [
+        "proc:supply:*",
+        "rule:orders"
+      ]
+    },
+    {
+      "file": "scripts/farming/p8/p8_scene.gd + scripts/farming/v2/v2_scene.gd + scripts/farming/v1/v1_scene.gd",
+      "function": "_show_build/_show_facility/_show_research/_show_device/_show_land/_show_market/_show_orders/_show_help/_show_cell",
+      "processes": [
+        "UI可达性：全部过程有顶栏/地图/面板入口"
+      ]
+    }
+  ],
+  "exclusions": [
+    {
+      "scope": "V0/V1/V2独立入口数据",
+      "reason": "P8数据链独立（baked/p8）；历史版本仅在被P8继承调用的代码层作为依据，已核对继承实现本身"
+    },
+    {
+      "scope": "cost_models作为生产路径",
+      "reason": "bake_p8.py自述为静态成本参考；仅编译standard_cost/supply_value，不注册为玩家过程"
+    },
+    {
+      "scope": "未运行游戏",
+      "reason": "本次为静态调查；运行时行为以P8.h/P8.7回归证据为旁证，未复跑GUI/长线经营"
+    },
+    {
+      "scope": "P8.7显示层",
+      "reason": "p87_scene.gd仅投影/相机/阴影，无玩法数据流，未建模为过程"
+    }
+  ],
+  "cycles": {
+    "production_network": "回流链存在环（清水→污水→净化→清水等），按过程建模，不做树展开",
+    "research_prerequisites": "DAG无环（bake拓扑校验）"
+  }
+}

@@ -97,6 +97,12 @@ def inspect(root=ROOT, target="all"):
             warnings.extend(w)
         results.append({"path": entry["path"], "errors": errors, "warnings": warnings})
     if target in ("all", "crops"):
+        from import_p8_plants import inspect_installed
+        p8_results = inspect_installed(Path(root))
+        results.extend(p8_results)
+        expected_crops.update(r["path"] for r in p8_results if r["path"].endswith('.png'))
+        from import_p8_facilities import inspect_installed as inspect_facilities
+        results.extend(inspect_facilities(Path(root)))
         for path in (Path(root) / "assets/farming/crops").glob("*/stage_*.png"):
             rel = path.relative_to(root).as_posix()
             if path.parent.name != "_placeholder" and rel not in expected_crops:

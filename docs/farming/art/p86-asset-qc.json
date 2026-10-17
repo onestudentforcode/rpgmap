@@ -1,0 +1,797 @@
+{
+  "visual_revision": "p86",
+  "png_count": 48,
+  "checks": [
+    {
+      "id": "golden_wheat",
+      "state": "stage_0",
+      "sha256": "32a4950471afe0999b7b98492a5f7b70dbd98d8a65530df8dee20437d2d958cc",
+      "size": [
+        256,
+        256
+      ],
+      "alpha_bbox": [
+        106,
+        194,
+        129,
+        238
+      ],
+      "continuous_alpha": true
+    },
+    {
+      "id": "golden_wheat",
+      "state": "stage_1",
+      "sha256": "912b59c931f19de4a0b79743e5a6d41447f3b3269d5b75c68bf36864af0fc76b",
+      "size": [
+        256,
+        256
+      ],
+      "alpha_bbox": [
+        108,
+        188,
+        148,
+        240
+      ],
+      "continuous_alpha": true
+    },
+    {
+      "id": "golden_wheat",
+      "state": "stage_2",
+      "sha256": "7eb5ce7bed1b14cdee9a3d1aba1f55f98aa8b378373718cba6b5d81a7eb968de",
+      "size": [
+        256,
+        256
+      ],
+      "alpha_bbox": [
+        92,
+        120,
+        168,
+        241
+      ],
+      "continuous_alpha": true
+    },
+    {
+      "id": "golden_wheat",
+      "state": "stage_3",
+      "sha256": "021a1e5ac73a9b27482eace4116c2ce2df6ebf6721e85e13910531155a9007ca",
+      "size": [
+        256,
+        256
+      ],
+      "alpha_bbox": [
+        20,
+        46,
+        235,
+        242
+      ],
+      "continuous_alpha": true
+    },
+    {
+      "id": "fast_fir",
+      "state": "stage_0",
+      "sha256": "a22432559ca57d1b6cffada5011353dd46af8b6e19bff48b3ed6b4ad54e6416f",
+      "size": [
+        512,
+        768
+      ],
+      "alpha_bbox": [
+        244,
+        613,
+        266,
+        674
+      ],
+      "continuous_alpha": true
+    },
+    {
+      "id": "fast_fir",
+      "state": "stage_1",
+      "sha256": "e7c39340ca53823c9c66b0a8381474aaa34a252694de409c52f83bb2b424999e",
+      "size": [
+        512,
+        768
+      ],
+      "alpha_bbox": [
+        190,
+        540,
+        317,
+        680
+      ],
+      "continuous_alpha": true
+    },
+    {
+      "id": "fast_fir",
+      "state": "stage_2",
+      "sha256": "4da57817a8bfd54b9561db1aa7cb97d93157c6926500bcb714f15b42f2af6d5f",
+      "size": [
+        512,
+        768
+      ],
+      "alpha_bbox": [
+        119,
+        363,
+        379,
+        710
+      ],
+      "continuous_alpha": true
+    },
+    {
+      "id": "fast_fir",
+      "state": "stage_3",
+      "sha256": "c6f6942719306cabeef23f9bf0768356f3ba647964ca0b2350b936e56aafbd54",
+      "size": [
+        512,
+        768
+      ],
+      "alpha_bbox": [
+        22,
+        168,
+        457,
+        747
+      ],
+      "continuous_alpha": true
+    },
+    {
+      "id": "resin_tree",
+      "state": "stage_0",
+      "sha256": "2ae9a6f7aa44bc3cfd31b949e0863952a0abf5e7b735d74c7b561cfc98168d10",
+      "size": [
+        512,
+        768
+      ],
+      "alpha_bbox": [
+        236,
+        665,
+        268,
+        711
+      ],
+      "continuous_alpha": true
+    },
+    {
+      "id": "resin_tree",
+      "state": "stage_1",
+      "sha256": "5a0b4b5d6a1672046997761af35d9138833f2c40735f9fee86cede8a2b7120f6",
+      "size": [
+        512,
+        768
+      ],
+      "alpha_bbox": [
+        187,
+        567,
+        291,
+        720
+      ],
+      "continuous_alpha": true
+    },
+    {
+      "id": "resin_tree",
+      "state": "stage_2",
+      "sha256": "f972f3212f002534b99525d6bcf364518aa129b9a0aa69b76058120248d4be94",
+      "size": [
+        512,
+        768
+      ],
+      "alpha_bbox": [
+        110,
+        401,
+        413,
+        732
+      ],
+      "continuous_alpha": true
+    },
+    {
+      "id": "resin_tree",
+      "state": "stage_3",
+      "sha256": "ba2de3209ac8f97c06dde0564abf082ac20d79720f99c260d25647f2a365bf12",
+      "size": [
+        512,
+        768
+      ],
+      "alpha_bbox": [
+        29,
+        260,
+        487,
+        751
+      ],
+      "continuous_alpha": true
+    },
+    {
+      "id": "wood_decay_mushroom",
+      "state": "stage_0",
+      "sha256": "c5a786b72650bae098191b26469ec953482b3766f8446a197711593128f6f24d",
+      "size": [
+        256,
+        256
+      ],
+      "alpha_bbox": [
+        101,
+        216,
+        155,
+        245
+      ],
+      "continuous_alpha": true
+    },
+    {
+      "id": "wood_decay_mushroom",
+      "state": "stage_1",
+      "sha256": "8825110d652788cc759d9bbcd4e7c465081348177b2516186197a011ea95a4f0",
+      "size": [
+        256,
+        256
+      ],
+      "alpha_bbox": [
+        107,
+        200,
+        147,
+        237
+      ],
+      "continuous_alpha": true
+    },
+    {
+      "id": "wood_decay_mushroom",
+      "state": "stage_2",
+      "sha256": "03c002a4836a3f5ad740a2693ef13eaaa23a178a0c2d92a0982bc126cbd1346c",
+      "size": [
+        256,
+        256
+      ],
+      "alpha_bbox": [
+        70,
+        150,
+        195,
+        240
+      ],
+      "continuous_alpha": true
+    },
+    {
+      "id": "wood_decay_mushroom",
+      "state": "stage_3",
+      "sha256": "abf80c2085374a000b29e1c08abe811a99e881f78264aadaadfe66f6fadab916",
+      "size": [
+        256,
+        256
+      ],
+      "alpha_bbox": [
+        37,
+        106,
+        231,
+        247
+      ],
+      "continuous_alpha": true
+    },
+    {
+      "id": "pasture_grass",
+      "state": "stage_0",
+      "sha256": "1baf30fa503548eedbccabecac0262f0189d90d0180ce6a429a88505ac30cea0",
+      "size": [
+        256,
+        256
+      ],
+      "alpha_bbox": [
+        105,
+        165,
+        132,
+        208
+      ],
+      "continuous_alpha": true
+    },
+    {
+      "id": "pasture_grass",
+      "state": "stage_1",
+      "sha256": "a9fc93075cb95cb2e3c6fef9afa020dd00ae45e824bf8c481e76d9abfa3a0aa9",
+      "size": [
+        256,
+        256
+      ],
+      "alpha_bbox": [
+        103,
+        153,
+        152,
+        212
+      ],
+      "continuous_alpha": true
+    },
+    {
+      "id": "pasture_grass",
+      "state": "stage_2",
+      "sha256": "38237e61d1ba5f0363a6e5336d7f13670abfe61f24eb91feddf8a88095bf9bf1",
+      "size": [
+        256,
+        256
+      ],
+      "alpha_bbox": [
+        83,
+        108,
+        172,
+        216
+      ],
+      "continuous_alpha": true
+    },
+    {
+      "id": "pasture_grass",
+      "state": "stage_3",
+      "sha256": "396f68e9713646bde6d0eacd663fd96131ed0f6cab41ebd29a5466322d6c0c88",
+      "size": [
+        256,
+        256
+      ],
+      "alpha_bbox": [
+        55,
+        60,
+        199,
+        220
+      ],
+      "continuous_alpha": true
+    },
+    {
+      "id": "honeybell_bush",
+      "state": "stage_0",
+      "sha256": "9806c8154b516b6b7972eaf1bb79b65b1a7671448a7f25abb0fcb7b6f91f845e",
+      "size": [
+        256,
+        256
+      ],
+      "alpha_bbox": [
+        107,
+        207,
+        146,
+        236
+      ],
+      "continuous_alpha": true
+    },
+    {
+      "id": "honeybell_bush",
+      "state": "stage_1",
+      "sha256": "cfab4834a5f70e4e0ed9ca77849b64b11a7622aed008e1d52f166fb2ca010b45",
+      "size": [
+        256,
+        256
+      ],
+      "alpha_bbox": [
+        97,
+        186,
+        148,
+        238
+      ],
+      "continuous_alpha": true
+    },
+    {
+      "id": "honeybell_bush",
+      "state": "stage_2",
+      "sha256": "739a93108ce7ec4dfe40c98c8d5cc5c0c85b5e6aa7de4770dd6be917a8f50657",
+      "size": [
+        256,
+        256
+      ],
+      "alpha_bbox": [
+        69,
+        132,
+        184,
+        239
+      ],
+      "continuous_alpha": true
+    },
+    {
+      "id": "honeybell_bush",
+      "state": "stage_3",
+      "sha256": "aa0250f9ced0430c2b1200f035efcef2d480a22d35a54e0976e074f94cb28948",
+      "size": [
+        256,
+        256
+      ],
+      "alpha_bbox": [
+        31,
+        64,
+        217,
+        241
+      ],
+      "continuous_alpha": true
+    },
+    {
+      "id": "oilseed_flower",
+      "state": "stage_0",
+      "sha256": "45ed2ddf0ef3b0f10687801b18b2480f4b73e25c9b2716baa6242dc463c192f0",
+      "size": [
+        256,
+        256
+      ],
+      "alpha_bbox": [
+        108,
+        207,
+        144,
+        238
+      ],
+      "continuous_alpha": true
+    },
+    {
+      "id": "oilseed_flower",
+      "state": "stage_1",
+      "sha256": "1a3dc91443fa27d1048615caea417e89e37db8b97e5a4404ddfbbf5ee7820e70",
+      "size": [
+        256,
+        256
+      ],
+      "alpha_bbox": [
+        101,
+        180,
+        150,
+        238
+      ],
+      "continuous_alpha": true
+    },
+    {
+      "id": "oilseed_flower",
+      "state": "stage_2",
+      "sha256": "e5498ec1357838940228df1ba0179cbfd51c992c8be58d71bfa5bce6e698da15",
+      "size": [
+        256,
+        256
+      ],
+      "alpha_bbox": [
+        78,
+        115,
+        170,
+        238
+      ],
+      "continuous_alpha": true
+    },
+    {
+      "id": "oilseed_flower",
+      "state": "stage_3",
+      "sha256": "9b85d1f5835684d528a73a6e040ee30d1647d03dcccb340029e499463fa372cd",
+      "size": [
+        256,
+        256
+      ],
+      "alpha_bbox": [
+        47,
+        34,
+        219,
+        239
+      ],
+      "continuous_alpha": true
+    },
+    {
+      "id": "oilseed_flower",
+      "state": "flowering",
+      "sha256": "f254d9af2f45494c92b477c979ffddb6f5403615b098cab4ce987cb6e636d589",
+      "size": [
+        256,
+        256
+      ],
+      "alpha_bbox": [
+        47,
+        24,
+        219,
+        239
+      ],
+      "continuous_alpha": true
+    },
+    {
+      "id": "woodshop",
+      "state": "body",
+      "sha256": "ce33fb0d0634a31797d1298e5301f8d182f56f81215eaa7ef78ac9615528b82a",
+      "size": [
+        512,
+        512
+      ],
+      "alpha_bbox": [
+        128,
+        169,
+        397,
+        366
+      ],
+      "continuous_alpha": true
+    },
+    {
+      "id": "char_kiln",
+      "state": "body",
+      "sha256": "ddc1456abc55057fc8075792d444dc3bc5e7f7e0e53eef63fcd91f7cc940206e",
+      "size": [
+        512,
+        512
+      ],
+      "alpha_bbox": [
+        126,
+        129,
+        373,
+        391
+      ],
+      "continuous_alpha": true
+    },
+    {
+      "id": "compost_bin",
+      "state": "body",
+      "sha256": "eaf6e2f77c09b6f59e57947500cf94bc152098a83f31f6abaac943d1c1e7bb12",
+      "size": [
+        256,
+        256
+      ],
+      "alpha_bbox": [
+        49,
+        82,
+        188,
+        211
+      ],
+      "continuous_alpha": true
+    },
+    {
+      "id": "smelter",
+      "state": "body",
+      "sha256": "db36d286e2414ff70fddd38816c29a85df075efd0277c7e8bc515297c8f3bfb6",
+      "size": [
+        512,
+        512
+      ],
+      "alpha_bbox": [
+        74,
+        157,
+        413,
+        395
+      ],
+      "continuous_alpha": true
+    },
+    {
+      "id": "pen",
+      "state": "body",
+      "sha256": "7b75e141f3cad21e1902704f4bfc45625b76048329e792d294d614241e309414",
+      "size": [
+        512,
+        512
+      ],
+      "alpha_bbox": [
+        113,
+        142,
+        398,
+        411
+      ],
+      "continuous_alpha": true
+    },
+    {
+      "id": "fish_pond",
+      "state": "body",
+      "sha256": "a3b2e9d366756a45e86dc6d603ab67d4a10e474a6434517b452228d2677ea7c0",
+      "size": [
+        512,
+        512
+      ],
+      "alpha_bbox": [
+        106,
+        216,
+        401,
+        405
+      ],
+      "continuous_alpha": true
+    },
+    {
+      "id": "algae_tank",
+      "state": "body",
+      "sha256": "caddd7c1110ec5028e871986dc980c77782f45847e169ba3ae799f371bb1bf01",
+      "size": [
+        256,
+        256
+      ],
+      "alpha_bbox": [
+        86,
+        73,
+        170,
+        202
+      ],
+      "continuous_alpha": true
+    },
+    {
+      "id": "research_bench",
+      "state": "body",
+      "sha256": "a9ef4bef20277a88d0c0dd55dcdaf52de2c1fe4247f26d9a66be8c33c994ad9c",
+      "size": [
+        256,
+        256
+      ],
+      "alpha_bbox": [
+        66,
+        26,
+        216,
+        212
+      ],
+      "continuous_alpha": true
+    },
+    {
+      "id": "bee_hive",
+      "state": "body",
+      "sha256": "c4b958ea10ea201f5dcdac4e45e44d819b561f09c6291c13f3b81493fdae9725",
+      "size": [
+        512,
+        512
+      ],
+      "alpha_bbox": [
+        177,
+        159,
+        331,
+        372
+      ],
+      "continuous_alpha": true
+    },
+    {
+      "id": "farm_processor",
+      "state": "body",
+      "sha256": "8fadfaab4e44416f55b3d709ba0dfdb6ffcfb335c92d9f12a697ea37a2253053",
+      "size": [
+        512,
+        512
+      ],
+      "alpha_bbox": [
+        99,
+        155,
+        394,
+        400
+      ],
+      "continuous_alpha": true
+    },
+    {
+      "id": "purifying_bed",
+      "state": "body",
+      "sha256": "06a594de0813407113b1e93d097e72eff6e4480667eae004396ee41bf6c152c2",
+      "size": [
+        512,
+        512
+      ],
+      "alpha_bbox": [
+        147,
+        192,
+        373,
+        421
+      ],
+      "continuous_alpha": true
+    },
+    {
+      "id": "rock_workyard",
+      "state": "body",
+      "sha256": "1d5ec098dc3afa1f91f4cc2f1bd6d7d6280d434330416015966fcb229193ad95",
+      "size": [
+        512,
+        512
+      ],
+      "alpha_bbox": [
+        106,
+        154,
+        406,
+        411
+      ],
+      "continuous_alpha": true
+    },
+    {
+      "id": "kitchen",
+      "state": "body",
+      "sha256": "143a8522cc87883a081e82124d48e684da6dc8afffbb7dddd9cc74a7ff7c5880",
+      "size": [
+        512,
+        512
+      ],
+      "alpha_bbox": [
+        95,
+        130,
+        404,
+        366
+      ],
+      "continuous_alpha": true
+    },
+    {
+      "id": "field_service_station",
+      "state": "body",
+      "sha256": "7e6deb5a716b51811536cc79eec6ab47c6462fc5f0d2579723ddd085d36acf42",
+      "size": [
+        512,
+        512
+      ],
+      "alpha_bbox": [
+        160,
+        123,
+        397,
+        375
+      ],
+      "continuous_alpha": true
+    },
+    {
+      "id": "growth_lamp",
+      "state": "body",
+      "sha256": "05cd9104361fe3bd879e0cccbfa021a3943c0eda837054cbed18398992690ac7",
+      "size": [
+        256,
+        256
+      ],
+      "alpha_bbox": [
+        93,
+        24,
+        163,
+        202
+      ],
+      "continuous_alpha": true
+    },
+    {
+      "id": "stone_source",
+      "state": "resource",
+      "sha256": "d14518fd9dca1e363f3264d3774739dd8a1f1ded2d9aaed8d1318502de8fbc54",
+      "size": [
+        256,
+        256
+      ],
+      "alpha_bbox": [
+        62,
+        87,
+        200,
+        190
+      ],
+      "continuous_alpha": true
+    },
+    {
+      "id": "ore_source",
+      "state": "resource",
+      "sha256": "18bcb34761656ee16187e98e39461945be8c3fda8b9e7898ed769fbf34ee0921",
+      "size": [
+        256,
+        256
+      ],
+      "alpha_bbox": [
+        71,
+        109,
+        185,
+        183
+      ],
+      "continuous_alpha": true
+    },
+    {
+      "id": "spring_source",
+      "state": "resource",
+      "sha256": "c2a68b8592e991f9d84004a54471e1f216864d1d1da714a35a9235f7213dbd68",
+      "size": [
+        256,
+        256
+      ],
+      "alpha_bbox": [
+        63,
+        126,
+        190,
+        189
+      ],
+      "continuous_alpha": true
+    },
+    {
+      "id": "transition",
+      "state": "atlas",
+      "sha256": "caa8b92dbc1130aa84d638f16b526748c9acc1e413f9199a8fd238771dd719cc",
+      "size": [
+        1024,
+        1024
+      ]
+    }
+  ],
+  "viewports": [
+    {
+      "viewport": [
+        2560,
+        1440
+      ],
+      "frames": 14,
+      "gpu_log": "passed"
+    },
+    {
+      "viewport": [
+        1920,
+        1080
+      ],
+      "frames": 14,
+      "gpu_log": "passed"
+    },
+    {
+      "viewport": [
+        960,
+        540
+      ],
+      "frames": 14,
+      "gpu_log": "passed"
+    }
+  ],
+  "gpu_frames": 42,
+  "sample_user_accepted": true,
+  "final_all_scene_user_review": "not separately claimed",
+  "metrics_policy": "per-asset integrity and viewport checks; no universal colorfulness threshold"
+}

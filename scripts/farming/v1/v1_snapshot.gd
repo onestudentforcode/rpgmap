@@ -18,7 +18,7 @@ static func fresh(catalog = Data, schema: int = SCHEMA) -> Dictionary:
 static func fail(reason: String) -> Dictionary:
 	return {"ok": false, "reason": reason}
 
-static func normalize(value, catalog = Data, schema: int = SCHEMA, allow_legacy: bool = true) -> Dictionary:
+static func normalize(value, catalog = Data, schema: int = SCHEMA, allow_legacy: bool = true, workforce_codec = Workforce) -> Dictionary:
 	if not value is Dictionary or value.get("product") != catalog.load_data()["product"] or not Scalars.whole(value.get("schema"), 1 if allow_legacy else schema, schema):
 		return fail("快照版本不匹配，请用对应版本重新开档")
 	for key in value:
@@ -73,7 +73,7 @@ static func normalize(value, catalog = Data, schema: int = SCHEMA, allow_legacy:
 	var checked := Scalars.normalize(world, int(clock["total_days"]), catalog)
 	if not checked["ok"]:
 		return checked
-	var workforce_checked := Workforce.normalize(Workforce.fresh(int(clock["total_days"])) if int(value["schema"]) < 5 else value.get("workforce"),int(clock["total_days"]), catalog)
+	var workforce_checked := workforce_codec.normalize(Workforce.fresh(int(clock["total_days"])) if int(value["schema"]) < 5 else value.get("workforce"),int(clock["total_days"]), catalog)
 	if not workforce_checked["ok"]:
 		return workforce_checked
 	var journal_checked := Journal.normalize(Journal.fresh(int(clock["total_days"]),int(economy["primeval_stones"])) if int(value["schema"]) < 6 else value.get("journal"),int(clock["total_days"]), catalog)

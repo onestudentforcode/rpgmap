@@ -1,0 +1,51 @@
+{
+  "date": "2026-10-15",
+  "phase": "P8.6.A",
+  "status": "user_accepted_before_full_rollout",
+  "user_visual_accepted": true,
+  "user_confirmation": "效果验收通过，继续完成",
+  "default_profile": "baseline",
+  "production_assets_replaced": false,
+  "save_schema": 17,
+  "seedling_trial": {
+    "pngs": 6,
+    "species": ["golden_wheat", "pasture_grass", "resin_tree"],
+    "states": ["stage_0", "stage_1"],
+    "a2_rerenders": ["golden_wheat/stage_0", "pasture_grass/stage_0"],
+    "qc": ".art-work/p86-runtime/seedling-qc.json",
+    "original_blend_and_runtime_png_hashes_unchanged": true
+  },
+  "checks": {
+    "render_tool_unit_tests": 5,
+    "grounding_and_atomic_switch": 25,
+    "environment_lifecycle": 40,
+    "p85_visual_lifecycle": 209,
+    "v1_interface": 79,
+    "v2_resource_hook": 16,
+    "asset_qc": {"checked": 64, "failed": 0},
+    "p8_bake_check": "passed",
+    "compatibility_report": ".art-work/p86-legacy-stores/compatibility-report.json"
+  },
+  "gpu": {
+    "frames": 72,
+    "profiles": ["baseline", "grounding", "integrated"],
+    "viewports": [[2560,1440], [1920,1080], [960,540]],
+    "zoom_levels": [0.1,1.0,3.0],
+    "actual_png_dimensions_checked": true,
+    "gameplay_snapshot_unchanged_by_visual_switches": true,
+    "summary": ".art-work/p86-trial/review-summary.json",
+    "comparisons": [
+      ".art-work/p86-trial/scene-comparison.png",
+      ".art-work/p86-trial/detail-comparison.png",
+      ".art-work/p86-trial/grayscale-comparison.png",
+      ".art-work/p86-trial/alpha-backgrounds.png"
+    ]
+  },
+  "remaining_at_trial_time": [
+    "User acceptance of concrete A sample before batch promotion",
+    "B full plant and facility rollout",
+    "C all shore directions/corners and ore/spring resource scenery",
+    "D P8-only UI coordination",
+    "E final full regression and independent Windows package"
+  ]
+}

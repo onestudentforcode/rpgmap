@@ -1,0 +1,44 @@
+{
+  "date": "2026-10-14",
+  "runtime_revision": "9a60fe2810a09cb0f9ebba0f81183e9d09feaf31",
+  "release_source_dirty": false,
+  "user_selected_ground": "B",
+  "terrain_surface_detail": 1.0,
+  "assets": {
+    "plants": 7,
+    "plant_pngs": 29,
+    "facility_bodies": 15,
+    "pngs": 44,
+    "png_bytes": 3803203,
+    "decoded_rgba_bytes": 30670848,
+    "installed_sha256_check": "passed"
+  },
+  "visual_matrix": "visual-matrix.json",
+  "full_suite": {
+    "command": "test.bat",
+    "exit_code": 0,
+    "log": ".art-work/p85-final-regression.log",
+    "log_sha256": "b11d5e026b0ef24f02af01bc73dbbda77d655cd1363c16272093360609a9bff0",
+    "completion_marker": "FARMING TEST SUITE OK",
+    "visual_lifecycle_checks": 209,
+    "asset_qc_checked": 75,
+    "asset_qc_failed": 0
+  },
+  "package": {
+    "path": "dist/LingTianDemoP85-Windows-x64.zip",
+    "bytes": 42512746,
+    "sha256": "3b8f28f1f11e361f66456c05f60929e385f01a702d194bf51740b96b38f629a1",
+    "headless_checks": 65,
+    "unpacked_headless_checks": 65,
+    "unpacked_gpu_checks": 66,
+    "logs": ".art-work/p85-release-logs/",
+    "gpu_frame": ".art-work/p85-release-logs/packaged-render.png"
+  },
+  "deferred": [
+    "facility found/fx layers",
+    "resource-point models",
+    "resin-tree and honeybell post-harvest body variants",
+    "full terrain transition redraw",
+    "real-time 3D"
+  ]
+}

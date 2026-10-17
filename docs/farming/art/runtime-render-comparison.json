@@ -1,0 +1,273 @@
+{
+  "method": "original small renders vs 4x Blender renders; normalized alpha bbox/coverage and weighted RGB",
+  "thresholds": {
+    "bbox_delta_uv": 0.035,
+    "coverage_delta": 0.015
+  },
+  "checks": [
+    {
+      "path": "assets/farming/crops/golden_wheat/stage_0.png",
+      "bbox_delta_uv": 0.015625,
+      "coverage_delta": 1.1907839307598051e-05,
+      "color_mean_delta": 2.905882352941177
+    },
+    {
+      "path": "assets/farming/crops/golden_wheat/stage_1.png",
+      "bbox_delta_uv": 0.015625,
+      "coverage_delta": 4.547717524509137e-06,
+      "color_mean_delta": 1.1416665520608404
+    },
+    {
+      "path": "assets/farming/crops/golden_wheat/stage_2.png",
+      "bbox_delta_uv": 0.015625,
+      "coverage_delta": 5.25381050857851e-05,
+      "color_mean_delta": 2.886091303388966
+    },
+    {
+      "path": "assets/farming/crops/golden_wheat/stage_3.png",
+      "bbox_delta_uv": 0.015625,
+      "coverage_delta": 1.4361213235281056e-06,
+      "color_mean_delta": 4.293534384820205
+    },
+    {
+      "path": "assets/farming/crops/fast_fir/stage_0.png",
+      "bbox_delta_uv": 0.0078125,
+      "coverage_delta": 3.201353783700996e-06,
+      "color_mean_delta": 5.239803625377647
+    },
+    {
+      "path": "assets/farming/crops/fast_fir/stage_1.png",
+      "bbox_delta_uv": 0.005859375,
+      "coverage_delta": 1.0012957005717943e-05,
+      "color_mean_delta": 2.664430909003272
+    },
+    {
+      "path": "assets/farming/crops/fast_fir/stage_2.png",
+      "bbox_delta_uv": 0.005859375,
+      "coverage_delta": 2.6229160283899877e-05,
+      "color_mean_delta": 4.582784895523588
+    },
+    {
+      "path": "assets/farming/crops/fast_fir/stage_3.png",
+      "bbox_delta_uv": 0.00390625,
+      "coverage_delta": 1.0671179278970433e-05,
+      "color_mean_delta": 4.3182887302261435
+    },
+    {
+      "path": "assets/farming/crops/resin_tree/stage_0.png",
+      "bbox_delta_uv": 0.0078125,
+      "coverage_delta": 2.1641550500407607e-06,
+      "color_mean_delta": 3.665712581991656
+    },
+    {
+      "path": "assets/farming/crops/resin_tree/stage_1.png",
+      "bbox_delta_uv": 0.0078125,
+      "coverage_delta": 3.4905726613645993e-07,
+      "color_mean_delta": 5.000419369416093
+    },
+    {
+      "path": "assets/farming/crops/resin_tree/stage_2.png",
+      "bbox_delta_uv": 0.005859375,
+      "coverage_delta": 1.6086553436475692e-05,
+      "color_mean_delta": 3.394773055873202
+    },
+    {
+      "path": "assets/farming/crops/resin_tree/stage_3.png",
+      "bbox_delta_uv": 0.00651041666666663,
+      "coverage_delta": 1.2506223192404464e-05,
+      "color_mean_delta": 3.417237394646378
+    },
+    {
+      "path": "assets/farming/crops/wood_decay_mushroom/stage_0.png",
+      "bbox_delta_uv": 0.015625,
+      "coverage_delta": 5.804323682597964e-06,
+      "color_mean_delta": 7.968944099378888
+    },
+    {
+      "path": "assets/farming/crops/wood_decay_mushroom/stage_1.png",
+      "bbox_delta_uv": 0.015625,
+      "coverage_delta": 5.086263020833044e-06,
+      "color_mean_delta": 2.2655186962713003
+    },
+    {
+      "path": "assets/farming/crops/wood_decay_mushroom/stage_2.png",
+      "bbox_delta_uv": 0.01953125,
+      "coverage_delta": 1.1907839307601087e-05,
+      "color_mean_delta": 2.7822051177977443
+    },
+    {
+      "path": "assets/farming/crops/wood_decay_mushroom/stage_3.png",
+      "bbox_delta_uv": 0.01953125,
+      "coverage_delta": 2.3636163449747283e-05,
+      "color_mean_delta": 0.6377393127983311
+    },
+    {
+      "path": "assets/farming/crops/pasture_grass/stage_0.png",
+      "bbox_delta_uv": 0.01171875,
+      "coverage_delta": 7.360121783088263e-06,
+      "color_mean_delta": 2.6458333333333286
+    },
+    {
+      "path": "assets/farming/crops/pasture_grass/stage_1.png",
+      "bbox_delta_uv": 0.015625,
+      "coverage_delta": 4.44000842524505e-05,
+      "color_mean_delta": 0.8801021374612645
+    },
+    {
+      "path": "assets/farming/crops/pasture_grass/stage_2.png",
+      "bbox_delta_uv": 0.015625,
+      "coverage_delta": 4.6733781403185404e-05,
+      "color_mean_delta": 2.570672139038777
+    },
+    {
+      "path": "assets/farming/crops/pasture_grass/stage_3.png",
+      "bbox_delta_uv": 0.015625,
+      "coverage_delta": 3.153483072917962e-05,
+      "color_mean_delta": 2.761617187144907
+    },
+    {
+      "path": "assets/farming/crops/honeybell_bush/stage_0.png",
+      "bbox_delta_uv": 0.015625,
+      "coverage_delta": 0.0,
+      "color_mean_delta": 1.4123790117167516
+    },
+    {
+      "path": "assets/farming/crops/honeybell_bush/stage_1.png",
+      "bbox_delta_uv": 0.01953125,
+      "coverage_delta": 5.864162071078302e-06,
+      "color_mean_delta": 3.5389974166207168
+    },
+    {
+      "path": "assets/farming/crops/honeybell_bush/stage_2.png",
+      "bbox_delta_uv": 0.015625,
+      "coverage_delta": 2.710678998162075e-05,
+      "color_mean_delta": 3.1926142551493086
+    },
+    {
+      "path": "assets/farming/crops/honeybell_bush/stage_3.png",
+      "bbox_delta_uv": 0.015625,
+      "coverage_delta": 1.3403799019595652e-05,
+      "color_mean_delta": 2.915233527463755
+    },
+    {
+      "path": "assets/farming/crops/oilseed_flower/stage_0.png",
+      "bbox_delta_uv": 0.015625,
+      "coverage_delta": 5.205939797794153e-06,
+      "color_mean_delta": 1.4067796610169552
+    },
+    {
+      "path": "assets/farming/crops/oilseed_flower/stage_1.png",
+      "bbox_delta_uv": 0.015625,
+      "coverage_delta": 2.0285213694852706e-05,
+      "color_mean_delta": 3.398966613672485
+    },
+    {
+      "path": "assets/farming/crops/oilseed_flower/stage_2.png",
+      "bbox_delta_uv": 0.0234375,
+      "coverage_delta": 4.2245902267156604e-05,
+      "color_mean_delta": 1.5365770698523278
+    },
+    {
+      "path": "assets/farming/crops/oilseed_flower/stage_3.png",
+      "bbox_delta_uv": 0.01953125,
+      "coverage_delta": 1.7233455882365023e-05,
+      "color_mean_delta": 5.020187663648429
+    },
+    {
+      "path": "assets/farming/crops/oilseed_flower/flowering.png",
+      "bbox_delta_uv": 0.01953125,
+      "coverage_delta": 0.00011506922104778661,
+      "color_mean_delta": 2.4434837286035105
+    },
+    {
+      "path": "assets/farming/facilities/woodshop/body.png",
+      "bbox_delta_uv": 0.0078125,
+      "coverage_delta": 1.944747625613752e-05,
+      "color_mean_delta": 1.1911746809599748
+    },
+    {
+      "path": "assets/farming/facilities/char_kiln/body.png",
+      "bbox_delta_uv": 0.005859375,
+      "coverage_delta": 2.190085018381749e-05,
+      "color_mean_delta": 0.7085189296626027
+    },
+    {
+      "path": "assets/farming/facilities/compost_bin/body.png",
+      "bbox_delta_uv": 0.015625,
+      "coverage_delta": 3.5304649203260485e-06,
+      "color_mean_delta": 1.5533749807275683
+    },
+    {
+      "path": "assets/farming/facilities/smelter/body.png",
+      "bbox_delta_uv": 0.009765625,
+      "coverage_delta": 2.4997486787692313e-05,
+      "color_mean_delta": 1.5158472134558991
+    },
+    {
+      "path": "assets/farming/facilities/pen/body.png",
+      "bbox_delta_uv": 0.01171875,
+      "coverage_delta": 0.0001500597187117092,
+      "color_mean_delta": 4.9562409062219785
+    },
+    {
+      "path": "assets/farming/facilities/fish_pond/body.png",
+      "bbox_delta_uv": 0.0078125,
+      "coverage_delta": 4.039091222429736e-06,
+      "color_mean_delta": 1.742152219630185
+    },
+    {
+      "path": "assets/farming/facilities/algae_tank/body.png",
+      "bbox_delta_uv": 0.0234375,
+      "coverage_delta": 1.4241536458334259e-05,
+      "color_mean_delta": 3.399541287893925
+    },
+    {
+      "path": "assets/farming/facilities/research_bench/body.png",
+      "bbox_delta_uv": 0.0234375,
+      "coverage_delta": 5.5589862898289266e-05,
+      "color_mean_delta": 1.5229614318213152
+    },
+    {
+      "path": "assets/farming/facilities/bee_hive/body.png",
+      "bbox_delta_uv": 0.009765625,
+      "coverage_delta": 1.1444091796875e-05,
+      "color_mean_delta": 2.881680046989757
+    },
+    {
+      "path": "assets/farming/facilities/farm_processor/body.png",
+      "bbox_delta_uv": 0.0078125,
+      "coverage_delta": 2.2559072457101204e-05,
+      "color_mean_delta": 1.4871193442606199
+    },
+    {
+      "path": "assets/farming/facilities/purifying_bed/body.png",
+      "bbox_delta_uv": 0.0078125,
+      "coverage_delta": 3.081677006744332e-06,
+      "color_mean_delta": 1.9648110761471003
+    },
+    {
+      "path": "assets/farming/facilities/rock_workyard/body.png",
+      "bbox_delta_uv": 0.009765625,
+      "coverage_delta": 1.7607445810363664e-05,
+      "color_mean_delta": 1.2623168564793303
+    },
+    {
+      "path": "assets/farming/facilities/kitchen/body.png",
+      "bbox_delta_uv": 0.0078125,
+      "coverage_delta": 1.1728324142160074e-05,
+      "color_mean_delta": 1.3045753436032328
+    },
+    {
+      "path": "assets/farming/facilities/field_service_station/body.png",
+      "bbox_delta_uv": 0.0078125,
+      "coverage_delta": 2.1930769378064596e-05,
+      "color_mean_delta": 3.9416343749158784
+    },
+    {
+      "path": "assets/farming/facilities/growth_lamp/body.png",
+      "bbox_delta_uv": 0.01953125,
+      "coverage_delta": 1.083074831494113e-05,
+      "color_mean_delta": 3.103324734698859
+    }
+  ]
+}

@@ -1,0 +1,84 @@
+{
+  "fixture": "synthetic stage panels plus real till/plant/build dense fixture; isolated slots; not natural progression",
+  "profiles": [
+    {
+      "viewport": [
+        2560,
+        1440
+      ],
+      "screenshots": [
+        "all-facilities.png",
+        "all-plants.png",
+        "build-preview-0.png",
+        "build-preview-14.png",
+        "dense-0.1.png",
+        "dense-1.0.png",
+        "dense-3.0.png",
+        "dense-pan.png",
+        "negative-land.png",
+        "pilot.png"
+      ],
+      "zoom_levels": [
+        0.1,
+        1.0,
+        3.0
+      ],
+      "middle_pan_verified_by_fixture": true,
+      "gpu_log": "passed"
+    },
+    {
+      "viewport": [
+        1920,
+        1080
+      ],
+      "screenshots": [
+        "all-facilities.png",
+        "all-plants.png",
+        "build-preview-0.png",
+        "build-preview-14.png",
+        "dense-0.1.png",
+        "dense-1.0.png",
+        "dense-3.0.png",
+        "dense-pan.png",
+        "negative-land.png",
+        "pilot.png"
+      ],
+      "zoom_levels": [
+        0.1,
+        1.0,
+        3.0
+      ],
+      "middle_pan_verified_by_fixture": true,
+      "gpu_log": "passed"
+    },
+    {
+      "viewport": [
+        960,
+        540
+      ],
+      "screenshots": [
+        "all-facilities.png",
+        "all-plants.png",
+        "build-preview-0.png",
+        "build-preview-14.png",
+        "dense-0.1.png",
+        "dense-1.0.png",
+        "dense-3.0.png",
+        "dense-pan.png",
+        "negative-land.png",
+        "pilot.png"
+      ],
+      "zoom_levels": [
+        0.1,
+        1.0,
+        3.0
+      ],
+      "middle_pan_verified_by_fixture": true,
+      "gpu_log": "passed"
+    }
+  ],
+  "terrain_candidate": "B",
+  "terrain_surface_detail": 1.0,
+  "user_selected_candidate": "B",
+  "screenshot_base": ".art-work/p85-final-visual"
+}

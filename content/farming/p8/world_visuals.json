@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "terrain_detail_strength": 0.0,
+  "terrain_surface_detail": 1.0,
+  "terrain_surface_kinds": {
+    "grass": 0,
+    "dirt": 1,
+    "stone": 2,
+    "tilled": 3,
+    "water": 4
+  },
+  "terrain_tones": {
+    "grass": "94ad7f",
+    "dirt": "b0987a",
+    "stone": "a9af9e",
+    "tilled": "8c795f",
+    "water": "8fb7ae"
+  },
+  "visual_revision": "p86",
+  "production_visuals": true
+}

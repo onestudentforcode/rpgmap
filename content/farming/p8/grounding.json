@@ -1,0 +1,558 @@
+{
+  "schema_version": 1,
+  "purpose": "P8.6 production contacts, seven plants and fifteen facilities",
+  "land_color": "4a4938",
+  "water_color": "507d78",
+  "plants": {
+    "golden_wheat": {
+      "stages": {
+        "stage_0": {
+          "size": [
+            13,
+            5
+          ],
+          "offset": [
+            0,
+            -1
+          ],
+          "opacity": 0.13
+        },
+        "stage_1": {
+          "size": [
+            21,
+            7
+          ],
+          "offset": [
+            0,
+            -1
+          ],
+          "opacity": 0.16
+        },
+        "stage_2": {
+          "size": [
+            35,
+            11
+          ],
+          "offset": [
+            0,
+            -1
+          ],
+          "opacity": 0.18
+        },
+        "stage_3": {
+          "size": [
+            43,
+            14
+          ],
+          "offset": [
+            0,
+            -1
+          ],
+          "opacity": 0.2
+        }
+      }
+    },
+    "pasture_grass": {
+      "stages": {
+        "stage_0": {
+          "size": [
+            12,
+            4
+          ],
+          "offset": [
+            0,
+            -1
+          ],
+          "opacity": 0.13
+        },
+        "stage_1": {
+          "size": [
+            20,
+            7
+          ],
+          "offset": [
+            0,
+            -1
+          ],
+          "opacity": 0.16
+        },
+        "stage_2": {
+          "size": [
+            32,
+            10
+          ],
+          "offset": [
+            0,
+            -1
+          ],
+          "opacity": 0.18
+        },
+        "stage_3": {
+          "size": [
+            39,
+            13
+          ],
+          "offset": [
+            0,
+            -1
+          ],
+          "opacity": 0.2
+        }
+      }
+    },
+    "fast_fir": {
+      "stages": {
+        "stage_0": {
+          "size": [
+            13,
+            5
+          ],
+          "offset": [
+            0,
+            0
+          ],
+          "opacity": 0.13
+        },
+        "stage_1": {
+          "size": [
+            22,
+            8
+          ],
+          "offset": [
+            0,
+            0
+          ],
+          "opacity": 0.16
+        },
+        "stage_2": {
+          "size": [
+            40,
+            14
+          ],
+          "offset": [
+            0,
+            0
+          ],
+          "opacity": 0.2
+        },
+        "stage_3": {
+          "size": [
+            59,
+            20
+          ],
+          "offset": [
+            0,
+            0
+          ],
+          "opacity": 0.23
+        }
+      }
+    },
+    "resin_tree": {
+      "stages": {
+        "stage_0": {
+          "size": [
+            14,
+            5
+          ],
+          "offset": [
+            0,
+            0
+          ],
+          "opacity": 0.13
+        },
+        "stage_1": {
+          "size": [
+            23,
+            8
+          ],
+          "offset": [
+            0,
+            0
+          ],
+          "opacity": 0.16
+        },
+        "stage_2": {
+          "size": [
+            40,
+            14
+          ],
+          "offset": [
+            0,
+            0
+          ],
+          "opacity": 0.2
+        },
+        "stage_3": {
+          "size": [
+            54,
+            19
+          ],
+          "offset": [
+            0,
+            0
+          ],
+          "opacity": 0.23
+        }
+      }
+    },
+    "wood_decay_mushroom": {
+      "stages": {
+        "stage_0": {
+          "size": [
+            12,
+            4
+          ],
+          "offset": [
+            0,
+            -1
+          ],
+          "opacity": 0.12
+        },
+        "stage_1": {
+          "size": [
+            21,
+            7
+          ],
+          "offset": [
+            0,
+            -1
+          ],
+          "opacity": 0.15
+        },
+        "stage_2": {
+          "size": [
+            33,
+            11
+          ],
+          "offset": [
+            0,
+            -1
+          ],
+          "opacity": 0.17
+        },
+        "stage_3": {
+          "size": [
+            45,
+            14
+          ],
+          "offset": [
+            0,
+            -1
+          ],
+          "opacity": 0.2
+        }
+      }
+    },
+    "honeybell_bush": {
+      "stages": {
+        "stage_0": {
+          "size": [
+            12,
+            4
+          ],
+          "offset": [
+            0,
+            -1
+          ],
+          "opacity": 0.12
+        },
+        "stage_1": {
+          "size": [
+            22,
+            7
+          ],
+          "offset": [
+            0,
+            -1
+          ],
+          "opacity": 0.16
+        },
+        "stage_2": {
+          "size": [
+            35,
+            11
+          ],
+          "offset": [
+            0,
+            -1
+          ],
+          "opacity": 0.18
+        },
+        "stage_3": {
+          "size": [
+            45,
+            15
+          ],
+          "offset": [
+            0,
+            -1
+          ],
+          "opacity": 0.21
+        }
+      }
+    },
+    "oilseed_flower": {
+      "stages": {
+        "stage_0": {
+          "size": [
+            12,
+            4
+          ],
+          "offset": [
+            0,
+            -1
+          ],
+          "opacity": 0.12
+        },
+        "stage_1": {
+          "size": [
+            20,
+            7
+          ],
+          "offset": [
+            0,
+            -1
+          ],
+          "opacity": 0.15
+        },
+        "stage_2": {
+          "size": [
+            31,
+            10
+          ],
+          "offset": [
+            0,
+            -1
+          ],
+          "opacity": 0.17
+        },
+        "flowering": {
+          "size": [
+            37,
+            12
+          ],
+          "offset": [
+            0,
+            -1
+          ],
+          "opacity": 0.19
+        },
+        "stage_3": {
+          "size": [
+            39,
+            13
+          ],
+          "offset": [
+            0,
+            -1
+          ],
+          "opacity": 0.2
+        }
+      }
+    }
+  },
+  "facilities": {
+    "woodshop": {
+      "size": [
+        114,
+        43
+      ],
+      "offset": [
+        0,
+        8
+      ],
+      "opacity": 0.22
+    },
+    "char_kiln": {
+      "size": [
+        111,
+        48
+      ],
+      "offset": [
+        0,
+        6
+      ],
+      "opacity": 0.22
+    },
+    "compost_bin": {
+      "size": [
+        50,
+        20
+      ],
+      "offset": [
+        0,
+        4
+      ],
+      "opacity": 0.2
+    },
+    "smelter": {
+      "size": [
+        108,
+        42
+      ],
+      "offset": [
+        0,
+        7
+      ],
+      "opacity": 0.23
+    },
+    "pen": {
+      "size": [
+        117,
+        49
+      ],
+      "offset": [
+        0,
+        4
+      ],
+      "opacity": 0.16
+    },
+    "fish_pond": {
+      "kind": "water",
+      "size": [
+        124,
+        84
+      ],
+      "offset": [
+        0,
+        2
+      ],
+      "opacity": 0.2
+    },
+    "algae_tank": {
+      "size": [
+        47,
+        20
+      ],
+      "offset": [
+        0,
+        5
+      ],
+      "opacity": 0.19
+    },
+    "research_bench": {
+      "size": [
+        52,
+        21
+      ],
+      "offset": [
+        0,
+        4
+      ],
+      "opacity": 0.2
+    },
+    "bee_hive": {
+      "size": [
+        105,
+        42
+      ],
+      "offset": [
+        0,
+        6
+      ],
+      "opacity": 0.2
+    },
+    "farm_processor": {
+      "size": [
+        110,
+        43
+      ],
+      "offset": [
+        0,
+        6
+      ],
+      "opacity": 0.22
+    },
+    "purifying_bed": {
+      "size": [
+        111,
+        44
+      ],
+      "offset": [
+        0,
+        4
+      ],
+      "opacity": 0.17
+    },
+    "rock_workyard": {
+      "size": [
+        112,
+        45
+      ],
+      "offset": [
+        0,
+        5
+      ],
+      "opacity": 0.21
+    },
+    "kitchen": {
+      "size": [
+        111,
+        44
+      ],
+      "offset": [
+        0,
+        6
+      ],
+      "opacity": 0.21
+    },
+    "field_service_station": {
+      "size": [
+        111,
+        43
+      ],
+      "offset": [
+        0,
+        6
+      ],
+      "opacity": 0.2
+    },
+    "growth_lamp": {
+      "size": [
+        42,
+        17
+      ],
+      "offset": [
+        0,
+        3
+      ],
+      "opacity": 0.19
+    }
+  },
+  "sources": {
+    "stone_source": {
+      "size": [
+        48,
+        18
+      ],
+      "offset": [
+        0,
+        4
+      ],
+      "opacity": 0.21
+    },
+    "ore_source": {
+      "size": [
+        48,
+        18
+      ],
+      "offset": [
+        0,
+        4
+      ],
+      "opacity": 0.21
+    },
+    "spring_source": {
+      "size": [
+        49,
+        23
+      ],
+      "offset": [
+        0,
+        3
+      ],
+      "opacity": 0.17
+    }
+  }
+}

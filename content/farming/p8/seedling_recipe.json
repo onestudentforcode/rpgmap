@@ -1,0 +1,19 @@
+{
+  "schema_version": 1,
+  "recipe_version": 2,
+  "name": "P8.6 A2 seedling leaf-fan trial; fixed 35 degree rig and original root",
+  "plants": {
+    "golden_wheat": {
+      "stage_0": {"height_scale": 2.4, "leaf_width_scale": 2.17, "leaf_thickness_scale": 1.5, "stem_radius_scale": 1.6, "leaf_fan_xy_scale": 4.0},
+      "stage_1": {"height_scale": 1.1, "leaf_width_scale": 1.6, "leaf_thickness_scale": 1.25, "stem_radius_scale": 1.25}
+    },
+    "pasture_grass": {
+      "stage_0": {"height_scale": 2.35, "leaf_width_scale": 2.25, "leaf_thickness_scale": 1.5, "stem_radius_scale": 1.5, "leaf_fan_xy_scale": 4.0},
+      "stage_1": {"height_scale": 1.1, "leaf_width_scale": 1.55, "leaf_thickness_scale": 1.25, "stem_radius_scale": 1.25}
+    },
+    "resin_tree": {
+      "stage_0": {"height_scale": 1.25, "needle_width_scale": 1.65, "stem_radius_scale": 1.15},
+      "stage_1": {"height_scale": 1.05, "needle_width_scale": 1.5, "stem_radius_scale": 1.1}
+    }
+  }
+}

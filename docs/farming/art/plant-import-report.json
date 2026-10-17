@@ -1,0 +1,529 @@
+{
+  "source_repository": "blender_assest",
+  "source_commit": "1122705",
+  "files_checked": 29,
+  "checks": [
+    {
+      "id": "golden_wheat",
+      "state": "stage_0",
+      "source": "plants/golden_wheat/stage_0_64.png",
+      "path": "assets/farming/crops/golden_wheat/stage_0.png",
+      "sha256": "12ada52a498a5d3b41fa37883ba795e6e2ef52d62314aa9c55534e823612fe03",
+      "size": [
+        64,
+        64
+      ],
+      "alpha_bbox": [
+        29,
+        54,
+        33,
+        60
+      ],
+      "continuous_alpha": true
+    },
+    {
+      "id": "golden_wheat",
+      "state": "stage_1",
+      "source": "plants/golden_wheat/stage_1_64.png",
+      "path": "assets/farming/crops/golden_wheat/stage_1.png",
+      "sha256": "4e7fc805068d4aee952337532d194ec525b7e8812ccb0bd0e54843a8a20d3b79",
+      "size": [
+        64,
+        64
+      ],
+      "alpha_bbox": [
+        26,
+        47,
+        38,
+        61
+      ],
+      "continuous_alpha": true
+    },
+    {
+      "id": "golden_wheat",
+      "state": "stage_2",
+      "source": "plants/golden_wheat/stage_2_64.png",
+      "path": "assets/farming/crops/golden_wheat/stage_2.png",
+      "sha256": "767d7bea7f43b120f30b794fe71cd1d403257e8084aa90b1f63ab2074aaedec5",
+      "size": [
+        64,
+        64
+      ],
+      "alpha_bbox": [
+        22,
+        30,
+        43,
+        61
+      ],
+      "continuous_alpha": true
+    },
+    {
+      "id": "golden_wheat",
+      "state": "stage_3",
+      "source": "plants/golden_wheat/stage_3_64.png",
+      "path": "assets/farming/crops/golden_wheat/stage_3.png",
+      "sha256": "1748078567f8a027a46bc143eba1f1c81fd8e887cd8e48c36c19234f80d07723",
+      "size": [
+        64,
+        64
+      ],
+      "alpha_bbox": [
+        4,
+        11,
+        59,
+        61
+      ],
+      "continuous_alpha": true
+    },
+    {
+      "id": "fast_fir",
+      "state": "stage_0",
+      "source": "plants/fast_fir/stage_0_128.png",
+      "path": "assets/farming/crops/fast_fir/stage_0.png",
+      "sha256": "c9131b40bad9f220dbad4f84186605d17991d446bab7584461d1e4beffa8e81d",
+      "size": [
+        128,
+        192
+      ],
+      "alpha_bbox": [
+        60,
+        158,
+        67,
+        169
+      ],
+      "continuous_alpha": true
+    },
+    {
+      "id": "fast_fir",
+      "state": "stage_1",
+      "source": "plants/fast_fir/stage_1_128.png",
+      "path": "assets/farming/crops/fast_fir/stage_1.png",
+      "sha256": "51b114e48a893ac89fdaaaa2b5251ad2ccf1cab123b44e97c04c0b2ff8ea297c",
+      "size": [
+        128,
+        192
+      ],
+      "alpha_bbox": [
+        47,
+        137,
+        80,
+        170
+      ],
+      "continuous_alpha": true
+    },
+    {
+      "id": "fast_fir",
+      "state": "stage_2",
+      "source": "plants/fast_fir/stage_2_128.png",
+      "path": "assets/farming/crops/fast_fir/stage_2.png",
+      "sha256": "90d9c48b46005c1ac1cd709f1b9100ede2919f1021d60c33a3991181d3c8ddfb",
+      "size": [
+        128,
+        192
+      ],
+      "alpha_bbox": [
+        29,
+        90,
+        95,
+        178
+      ],
+      "continuous_alpha": true
+    },
+    {
+      "id": "fast_fir",
+      "state": "stage_3",
+      "source": "plants/fast_fir/stage_3_128.png",
+      "path": "assets/farming/crops/fast_fir/stage_3.png",
+      "sha256": "8badebfc41fc8f60e8466238e1d6691dd93d601112d4189b96bdeedf9be51464",
+      "size": [
+        128,
+        192
+      ],
+      "alpha_bbox": [
+        5,
+        42,
+        114,
+        187
+      ],
+      "continuous_alpha": true
+    },
+    {
+      "id": "resin_tree",
+      "state": "stage_0",
+      "source": "松脂树_resin_tree_stage_0_128.png",
+      "path": "assets/farming/crops/resin_tree/stage_0.png",
+      "sha256": "de8d84ad1adffb4fd18e4cc6832bca9bc397478f4ad1d6a1221cff0246fda878",
+      "size": [
+        128,
+        192
+      ],
+      "alpha_bbox": [
+        58,
+        167,
+        68,
+        179
+      ],
+      "continuous_alpha": true
+    },
+    {
+      "id": "resin_tree",
+      "state": "stage_1",
+      "source": "松脂树_resin_tree_stage_1_128.png",
+      "path": "assets/farming/crops/resin_tree/stage_1.png",
+      "sha256": "759d3e4da078c6c5926ea2d2ad1a7c032cede5db6b25765411df1cc2623b3e37",
+      "size": [
+        128,
+        192
+      ],
+      "alpha_bbox": [
+        46,
+        143,
+        73,
+        181
+      ],
+      "continuous_alpha": true
+    },
+    {
+      "id": "resin_tree",
+      "state": "stage_2",
+      "source": "松脂树_resin_tree_stage_2_128.png",
+      "path": "assets/farming/crops/resin_tree/stage_2.png",
+      "sha256": "ff79323c0ad2e99f22f6357ef3e805a8db712b068bc1326d789c1a921f6f63ed",
+      "size": [
+        128,
+        192
+      ],
+      "alpha_bbox": [
+        27,
+        100,
+        104,
+        184
+      ],
+      "continuous_alpha": true
+    },
+    {
+      "id": "resin_tree",
+      "state": "stage_3",
+      "source": "松脂树_resin_tree_stage_3_128.png",
+      "path": "assets/farming/crops/resin_tree/stage_3.png",
+      "sha256": "8753915f2c38b963266fe5a54addb32bc9fbdd9c06aba6c72dff0fbc5125323c",
+      "size": [
+        128,
+        192
+      ],
+      "alpha_bbox": [
+        7,
+        65,
+        122,
+        189
+      ],
+      "continuous_alpha": true
+    },
+    {
+      "id": "wood_decay_mushroom",
+      "state": "stage_0",
+      "source": "plants/wood_decay_mushroom/stage_0_64.png",
+      "path": "assets/farming/crops/wood_decay_mushroom/stage_0.png",
+      "sha256": "d4b49e17fec959c0ce18116622bd23809b2852ecd6c358a0bf4a48a1bc8c6f97",
+      "size": [
+        64,
+        64
+      ],
+      "alpha_bbox": [
+        27,
+        55,
+        37,
+        61
+      ],
+      "continuous_alpha": true
+    },
+    {
+      "id": "wood_decay_mushroom",
+      "state": "stage_1",
+      "source": "plants/wood_decay_mushroom/stage_1_64.png",
+      "path": "assets/farming/crops/wood_decay_mushroom/stage_1.png",
+      "sha256": "26caa58d3882da6fe67e660173d2540e0c8054b3afe0c3f7b190f29acaabffa2",
+      "size": [
+        64,
+        64
+      ],
+      "alpha_bbox": [
+        27,
+        50,
+        37,
+        60
+      ],
+      "continuous_alpha": true
+    },
+    {
+      "id": "wood_decay_mushroom",
+      "state": "stage_2",
+      "source": "plants/wood_decay_mushroom/stage_2_64.png",
+      "path": "assets/farming/crops/wood_decay_mushroom/stage_2.png",
+      "sha256": "35765e4bcd8002b7cc6d0f2fd1585a56dc95be90533058531d43822c7a178797",
+      "size": [
+        64,
+        64
+      ],
+      "alpha_bbox": [
+        17,
+        37,
+        50,
+        61
+      ],
+      "continuous_alpha": true
+    },
+    {
+      "id": "wood_decay_mushroom",
+      "state": "stage_3",
+      "source": "plants/wood_decay_mushroom/stage_3_64.png",
+      "path": "assets/farming/crops/wood_decay_mushroom/stage_3.png",
+      "sha256": "35eb76c0cc0a9fb091bf64609e32a85f3b1b6c1b8471336677a4c4355ab03cd1",
+      "size": [
+        64,
+        64
+      ],
+      "alpha_bbox": [
+        8,
+        26,
+        58,
+        62
+      ],
+      "continuous_alpha": true
+    },
+    {
+      "id": "pasture_grass",
+      "state": "stage_0",
+      "source": "plants/pasture_grass/stage_0_64.png",
+      "path": "assets/farming/crops/pasture_grass/stage_0.png",
+      "sha256": "fb5d3c885a9e650ff11eaba5e2b727fe392c3ae52406195ceab5014408fb486e",
+      "size": [
+        64,
+        64
+      ],
+      "alpha_bbox": [
+        30,
+        47,
+        33,
+        53
+      ],
+      "continuous_alpha": true
+    },
+    {
+      "id": "pasture_grass",
+      "state": "stage_1",
+      "source": "plants/pasture_grass/stage_1_64.png",
+      "path": "assets/farming/crops/pasture_grass/stage_1.png",
+      "sha256": "d707c596442aeda2cb108e74ac465397f5189d278a4069747f60794572ff249e",
+      "size": [
+        64,
+        64
+      ],
+      "alpha_bbox": [
+        25,
+        39,
+        39,
+        54
+      ],
+      "continuous_alpha": true
+    },
+    {
+      "id": "pasture_grass",
+      "state": "stage_2",
+      "source": "plants/pasture_grass/stage_2_64.png",
+      "path": "assets/farming/crops/pasture_grass/stage_2.png",
+      "sha256": "5d0801197f6ad82f689fc18a115e1d35ea4f6639eb6a19e354285edb51b12838",
+      "size": [
+        64,
+        64
+      ],
+      "alpha_bbox": [
+        20,
+        27,
+        44,
+        55
+      ],
+      "continuous_alpha": true
+    },
+    {
+      "id": "pasture_grass",
+      "state": "stage_3",
+      "source": "plants/pasture_grass/stage_3_64.png",
+      "path": "assets/farming/crops/pasture_grass/stage_3.png",
+      "sha256": "b0256e7bb62a8424bc6cfd552a6582ecc5d8c33fb2665dd24cc819b9b3d571cf",
+      "size": [
+        64,
+        64
+      ],
+      "alpha_bbox": [
+        13,
+        14,
+        50,
+        56
+      ],
+      "continuous_alpha": true
+    },
+    {
+      "id": "honeybell_bush",
+      "state": "stage_0",
+      "source": "plants/honeybell_bush/stage_0_64.png",
+      "path": "assets/farming/crops/honeybell_bush/stage_0.png",
+      "sha256": "91e722420052773f0063ee1cfe0ef598ccc1421cb8be7630686b1b583950b17c",
+      "size": [
+        64,
+        64
+      ],
+      "alpha_bbox": [
+        28,
+        54,
+        35,
+        60
+      ],
+      "continuous_alpha": true
+    },
+    {
+      "id": "honeybell_bush",
+      "state": "stage_1",
+      "source": "plants/honeybell_bush/stage_1_64.png",
+      "path": "assets/farming/crops/honeybell_bush/stage_1.png",
+      "sha256": "3c47d729f7351d9cdf1926e10a83ae269abe0c54090740d252b90504eb25e3aa",
+      "size": [
+        64,
+        64
+      ],
+      "alpha_bbox": [
+        24,
+        47,
+        38,
+        60
+      ],
+      "continuous_alpha": true
+    },
+    {
+      "id": "honeybell_bush",
+      "state": "stage_2",
+      "source": "plants/honeybell_bush/stage_2_64.png",
+      "path": "assets/farming/crops/honeybell_bush/stage_2.png",
+      "sha256": "994b68b29310f648ef809210b5b6df5f5c0de024a3498d8569f3bfa6cf101342",
+      "size": [
+        64,
+        64
+      ],
+      "alpha_bbox": [
+        17,
+        32,
+        47,
+        60
+      ],
+      "continuous_alpha": true
+    },
+    {
+      "id": "honeybell_bush",
+      "state": "stage_3",
+      "source": "plants/honeybell_bush/stage_3_64.png",
+      "path": "assets/farming/crops/honeybell_bush/stage_3.png",
+      "sha256": "e8dbc561cd15fbd33179f77fe9abc462a55cfa90c2745ff3bdb98aea33942ffa",
+      "size": [
+        64,
+        64
+      ],
+      "alpha_bbox": [
+        7,
+        15,
+        55,
+        61
+      ],
+      "continuous_alpha": true
+    },
+    {
+      "id": "oilseed_flower",
+      "state": "stage_0",
+      "source": "plants/oilseed_flower/stage_0_64.png",
+      "path": "assets/farming/crops/oilseed_flower/stage_0.png",
+      "sha256": "678ce56a05f5d31323d4e53dcaaea7675c43eca991e935c1c23dac48a39dabb3",
+      "size": [
+        64,
+        64
+      ],
+      "alpha_bbox": [
+        28,
+        54,
+        35,
+        60
+      ],
+      "continuous_alpha": true
+    },
+    {
+      "id": "oilseed_flower",
+      "state": "stage_1",
+      "source": "plants/oilseed_flower/stage_1_64.png",
+      "path": "assets/farming/crops/oilseed_flower/stage_1.png",
+      "sha256": "db6f5af05b52b83e7a3f46ba2fd693dc1fe316d850d0e7a65c40e14d21f0cf56",
+      "size": [
+        64,
+        64
+      ],
+      "alpha_bbox": [
+        25,
+        45,
+        38,
+        60
+      ],
+      "continuous_alpha": true
+    },
+    {
+      "id": "oilseed_flower",
+      "state": "stage_2",
+      "source": "plants/oilseed_flower/stage_2_64.png",
+      "path": "assets/farming/crops/oilseed_flower/stage_2.png",
+      "sha256": "f4080dd6ce166fe042a0aecadcd7b90beb17bfe2266a149374531ac49700de64",
+      "size": [
+        64,
+        64
+      ],
+      "alpha_bbox": [
+        19,
+        28,
+        44,
+        60
+      ],
+      "continuous_alpha": true
+    },
+    {
+      "id": "oilseed_flower",
+      "state": "stage_3",
+      "source": "plants/oilseed_flower/stage_3_64.png",
+      "path": "assets/farming/crops/oilseed_flower/stage_3.png",
+      "sha256": "41a84be224cfadda9a59f8348a747303e8f13d99f668a83b9f57ec525c046042",
+      "size": [
+        64,
+        64
+      ],
+      "alpha_bbox": [
+        11,
+        8,
+        55,
+        61
+      ],
+      "continuous_alpha": true
+    },
+    {
+      "id": "oilseed_flower",
+      "state": "flowering",
+      "source": "plants/oilseed_flower/flowering_64.png",
+      "path": "assets/farming/crops/oilseed_flower/flowering.png",
+      "sha256": "fce3f6a7cce80292f32de10b29cd0dd27ac810874ceee9203bef072d00f537a5",
+      "size": [
+        64,
+        64
+      ],
+      "alpha_bbox": [
+        11,
+        5,
+        55,
+        61
+      ],
+      "continuous_alpha": true
+    }
+  ]
+}

@@ -63,7 +63,7 @@ func _fit_map() -> void:
 	var bottom := _camera_bottom_margin()
 	var zoom := clampf(minf(board.size.x/extent.x,maxf(64,board.size.y-bottom)/extent.y)*0.94,minimum_map_zoom,3.0)
 	camera.zoom = Vector2.ONE*zoom
-	camera.position = extent*0.5+Vector2(0,bottom*0.5/zoom)
+	camera.position = Vector2(world.grid.origin_x*64,0)+extent*0.5+Vector2(0,bottom*0.5/zoom)
 
 func _camera_bottom_margin() -> float:
 	return 128.0 if tool_grid.columns == 10 else 176.0
@@ -321,6 +321,14 @@ func _worker_sources(worker_id: int) -> Array:
 			out.append(source)
 	return out
 
+## Derived products add habitat-specific panels (hive coverage etc.) here.
+func _habitat_extra(_habitat: Dictionary) -> void:
+	pass
+
+## Water panel line; derived products reword it when the action changes meaning.
+func _water_action_text(quote: Dictionary) -> String:
+	return "维护：%s → +40（1AP）· %s" % [_materials(quote["inputs"]) if quote["ok"] else "清水×2",String(quote["reason"]) if not quote["ok"] else "可执行"]
+
 func _show_habitat(facility: Dictionary) -> void:
 	var uid := int(facility["uid"])
 	var husbandry := hus()
@@ -349,6 +357,7 @@ func _show_habitat(facility: Dictionary) -> void:
 	_special_selector(habitat)
 	if not habitat["production_enabled"]:
 		_label(sidebar,"已停止启动新周期；已有周期仍按原投入继续，需要每日基础维护。")
+	_habitat_extra(habitat)
 	var quote := husbandry.quote_maintenance(uid)
 	if counts["total"] > 0:
 		var served := "今日已喂%d/%d" % [counts["fed_today"],counts["total"]]
@@ -387,7 +396,7 @@ func _show_habitat(facility: Dictionary) -> void:
 			var predicted := maxi(0,int(habitat["water"])-int(husbandry.settings["water"]["decay"]))
 			_label(sidebar,"日结后预计%d · %s" % [predicted,"还可支持%d次日结成长" % support if support > 0 else "已达暂停线，先维护水体再投喂"])
 			var water_quote := husbandry.quote_water(uid)
-			_label(sidebar,"维护：%s → +40（1AP）· %s" % [_materials(water_quote["inputs"]) if water_quote["ok"] else "清水×2",String(water_quote["reason"]) if not water_quote["ok"] else "可执行"])
+			_label(sidebar,_water_action_text(water_quote))
 			var water_button := _icon(sidebar,"clean_water","维护水体（1AP）",func(): _result(husbandry.maintain_water(uid)); _show_cell())
 			water_button.disabled = not water_quote["ok"]
 		else:

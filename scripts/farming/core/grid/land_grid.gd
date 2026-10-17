@@ -32,6 +32,8 @@ const DIRS: Array[Vector2i] = [
 ]
 const DIR_BITS: Array[int] = [1, 2, 4, 8, 16, 32, 64, 128]
 
+var origin_x := 0
+var cell_access: Callable
 var width := 0
 var height := 0
 var terrain: Array = []         # [y][x] -> terrain_id（静态，来自烘焙地图）
@@ -44,7 +46,8 @@ var _medium_ids: Array = ["soil"]
 
 
 func setup(w: int, h: int, terrain_grid: Array, tillable_map: Dictionary,
-		medium_ids: Array = ["soil"]) -> void:
+		medium_ids: Array = ["soil"], start_x: int = 0) -> void:
+	origin_x = start_x
 	width = w
 	height = h
 	terrain = terrain_grid
@@ -62,19 +65,30 @@ func setup(w: int, h: int, terrain_grid: Array, tillable_map: Dictionary,
 
 
 func in_bounds(x: int, y: int) -> bool:
-	return x >= 0 and y >= 0 and x < width and y < height
+	return bounds().has_point(Vector2i(x, y)) and (not cell_access.is_valid() or bool(cell_access.call(Vector2i(x, y))))
+
+func bounds() -> Rect2i:
+	return Rect2i(origin_x, 0, width, height)
+
+func index_of(cell: Vector2i) -> int:
+	return cell.y * width + cell.x - origin_x
+
+func refresh_access(cells: Array[Vector2i]) -> void:
+	for cell in cells:
+		if in_bounds(cell.x, cell.y): _state[cell.y][cell.x - origin_x] = default_state_at(cell)
+	_emit_around(cells)
 
 
 func terrain_at(cell: Vector2i) -> String:
-	return terrain[cell.y][cell.x]
+	return terrain[cell.y][cell.x - origin_x] if bounds().has_point(cell) else ""
 
 
 func state_at(cell: Vector2i) -> int:
-	return _state[cell.y][cell.x]
+	return _state[cell.y][cell.x - origin_x] if in_bounds(cell.x, cell.y) else State.UNAVAILABLE
 
 
 func default_state_at(cell: Vector2i) -> int:
-	return State.UNAVAILABLE if not _tillable.get(terrain_at(cell), false) else State.WILD
+	return State.UNAVAILABLE if not in_bounds(cell.x, cell.y) or not _tillable.get(terrain_at(cell), false) else State.WILD
 
 
 func is_terrain_tillable(cell: Vector2i) -> bool:
@@ -143,7 +157,7 @@ func till(cell: Vector2i) -> Dictionary:
 	var chk := can_till(cell)
 	if not chk["ok"]:
 		return chk
-	_state[cell.y][cell.x] = State.TILLED
+	_state[cell.y][cell.x - origin_x] = State.TILLED
 	_emit_around([cell])
 	cultivated.emit(cell)
 	return chk
@@ -154,7 +168,7 @@ func untill(cell: Vector2i) -> Dictionary:
 		return {"ok": false, "reason": "out_of_bounds"}
 	if state_at(cell) != State.TILLED:
 		return {"ok": false, "reason": "not_tilled:" + STATE_NAMES[state_at(cell)]}
-	_state[cell.y][cell.x] = State.WILD
+	_state[cell.y][cell.x - origin_x] = State.WILD
 	_media.erase(cell)
 	_emit_around([cell])
 	return {"ok": true, "reason": ""}
@@ -197,8 +211,8 @@ func reserve(origin: Vector2i, fw: int, fh: int, holder: String,
 	if not checked["ok"]: return checked
 	var cells: Array[Vector2i] = checked["cells"]
 	for c in cells:  # 后落：全部合法才整体生效
-		_prev[c] = _state[c.y][c.x]
-		_state[c.y][c.x] = target_state
+		_prev[c] = _state[c.y][c.x - origin_x]
+		_state[c.y][c.x - origin_x] = target_state
 	_holders[holder] = {"origin": origin, "fw": fw, "fh": fh, "cells": cells}
 	_emit_around(cells)
 	return {"ok": true, "reason": ""}
@@ -209,7 +223,7 @@ func release(holder: String) -> bool:
 		return false
 	var cells: Array[Vector2i] = _holders[holder]["cells"]
 	for c in cells:
-		_state[c.y][c.x] = _prev.get(c, State.WILD)
+		_state[c.y][c.x - origin_x] = _prev.get(c, State.WILD)
 		_prev.erase(c)
 	_holders.erase(holder)
 	_emit_around(cells)
@@ -232,8 +246,8 @@ func occupied_cells() -> Array[Vector2i]:
 func cells_with_state(s: int) -> Array[Vector2i]:
 	var out: Array[Vector2i] = []
 	for y in range(height):
-		for x in range(width):
-			if _state[y][x] == s:
+		for x in range(origin_x, origin_x + width):
+			if _state[y][x - origin_x] == s:
 				out.append(Vector2i(x, y))
 	return out
 
@@ -244,7 +258,7 @@ func to_save() -> Dictionary:
 	var name_of := func(st: int) -> String: return STATE_NAMES[st]
 	var cells := []
 	for y in range(height):
-		for x in range(width):
+		for x in range(origin_x, origin_x + width):
 			var cell := Vector2i(x, y)
 			var st := state_at(cell)
 			if st == default_state_at(cell):
@@ -275,7 +289,7 @@ func apply_save(data: Dictionary) -> bool:
 		if not in_bounds(cell.x, cell.y) or not by_name.has(e["s"]):
 			return false
 		var st: int = by_name[e["s"]]
-		_state[cell.y][cell.x] = st
+		_state[cell.y][cell.x - origin_x] = st
 		if st in [State.OCCUPIED, State.PLANTED]:
 			var fallback := "TILLED" if st == State.PLANTED else "WILD"
 			_prev[cell] = by_name.get(e.get("p", fallback), State.WILD)
@@ -306,8 +320,8 @@ func can_restore_medium(cell: Vector2i, medium: String) -> bool:
 ## 复位到「按地图默认」（首次进入 / 读档前）。
 func reset() -> void:
 	for y in range(height):
-		for x in range(width):
-			_state[y][x] = default_state_at(Vector2i(x, y))
+		for x in range(origin_x, origin_x + width):
+			_state[y][x - origin_x] = default_state_at(Vector2i(x, y))
 	_prev.clear()
 	_holders.clear()
 	_media.clear()

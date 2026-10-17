@@ -94,7 +94,7 @@ func _make_world(slot_store):
 	return World.new(slot_store)
 
 func _ready() -> void:
-	theme = UI.theme()
+	theme = _make_theme()
 	get_window().content_scale_mode = Window.CONTENT_SCALE_MODE_DISABLED
 	get_window().content_scale_size = Vector2i.ZERO
 	get_window().gui_embed_subwindows = true
@@ -166,6 +166,9 @@ func _clear(parent: Node) -> void:
 	for child in parent.get_children():
 		parent.remove_child(child)
 		child.queue_free()
+
+func _make_theme() -> Theme:
+	return UI.theme()
 
 func _card(parent: Node) -> VBoxContainer:
 	var panel := PanelContainer.new()
@@ -255,7 +258,7 @@ func _build() -> void:
 	terrain.build(root,world.grid,JSON.parse_string(FileAccess.get_file_as_string(terrain_path)))
 	world.grid.cells_changed.connect(terrain.update_cells)
 	camera = Camera2D.new()
-	camera.position = Vector2(world.grid.width,world.grid.height)*32.0
+	camera.position = Vector2(world.grid.origin_x*64,0)+Vector2(world.grid.width,world.grid.height)*32.0
 	camera.zoom = Vector2.ONE*float(settings.data["map_zoom"])
 	root.add_child(camera)
 	overlay = Overlay.new()
@@ -443,7 +446,7 @@ func _refresh_input() -> void:
 
 func _fit_map() -> void:
 	var extent := Vector2(world.grid.width,world.grid.height)*64.0
-	camera.position = extent*0.5
+	camera.position = Vector2(world.grid.origin_x*64,0)+extent*0.5
 	var zoom := minf(board.size.x/extent.x,board.size.y/extent.y)*0.94
 	camera.zoom = Vector2.ONE*clampf(zoom,0.25,3.0)
 
@@ -683,9 +686,20 @@ func _cell(position: Vector2) -> Vector2i:
 	return Vector2i(floori(point.x/64.0),floori(point.y/64.0))
 
 func _rect(a: Vector2i,b: Vector2i) -> Rect2i:
-	var left := Vector2i(maxi(0,mini(a.x,b.x)),maxi(0,mini(a.y,b.y)))
-	var right := Vector2i(mini(world.grid.width-1,maxi(a.x,b.x)),mini(world.grid.height-1,maxi(a.y,b.y)))
+	var left := Vector2i(maxi(world.grid.origin_x,mini(a.x,b.x)),maxi(0,mini(a.y,b.y)))
+	var right := Vector2i(mini(world.grid.origin_x+world.grid.width-1,maxi(a.x,b.x)),mini(world.grid.height-1,maxi(a.y,b.y)))
 	return Rect2i(left,right-left+Vector2i.ONE)
+
+## The selection highlight follows the clicked crop's full footprint, so 2x2
+## plants (fast fir, resin tree) outline all occupied cells, not just the
+## clicked one.
+func _selection_rect() -> Rect2:
+	var cell_rect := Rect2(Vector2(selected)*64.0,Vector2(64,64))
+	if not world.grid.in_bounds(selected.x,selected.y): return cell_rect
+	var crop: Dictionary = world.instance_at(selected)
+	if crop.is_empty(): return cell_rect
+	var shape: Array = world.crop_defs[crop["crop_id"]]["footprint"]
+	return Rect2(Vector2(float(crop["origin"][0]),float(crop["origin"][1]))*64.0,Vector2(float(shape[0]),float(shape[1]))*64.0)
 
 func _board_input(event: InputEvent) -> void:
 	if not _started or shade.visible or is_instance_valid(confirmation) or _text_focus(): return
@@ -791,7 +805,7 @@ func _mark(rect: Rect2i, kind: String, priority: int) -> void:
 func _show_cell() -> void:
 	_context = "cell"
 	shade.visible = false
-	_page("地格 (%d,%d)" % [selected.x,selected.y] if selected.x >= 0 else "一方灵田")
+	_page("地格 (%d,%d)" % [selected.x,selected.y] if world.grid.in_bounds(selected.x,selected.y) else "一方灵田")
 	if not world.grid.in_bounds(selected.x,selected.y):
 		_label(sidebar,"点击地格查看详情，展开农务工具框选待办。")
 		return
@@ -851,6 +865,7 @@ func _show_cell() -> void:
 		_label(sidebar,"偏好光照 %d" % definition["light"])
 		if absi(int(env["light"])-int(definition["light"])) > int(world.config["environment"]["light_tolerance"]):
 			_label(sidebar,"当前光照不合适，生长较慢。")
+		_crop_extra(crop)
 	_bar(sidebar,"水分",env["water"])
 	_bar(sidebar,"肥力",env["fertility"])
 	_label(sidebar,"固定光照 %d · 阴区更适合菌菇" % env["light"])
@@ -915,6 +930,10 @@ func _manual(kind: String) -> void:
 		"fertilize": result = world.fertilize(selected)
 	_result(result)
 	_show_cell()
+
+## Derived products render crop-specific panels (flower shares etc.) here.
+func _crop_extra(_crop: Dictionary) -> void:
+	pass
 
 func _show_facility(facility: Dictionary) -> void:
 	var uid := int(facility["uid"])
@@ -1067,7 +1086,7 @@ func _show_worker_duties(worker: Dictionary) -> void:
 		sidebar.add_child(line)
 		var label := _label(line,"区域%d · (%d,%d) %d×%d" % [index+1,area[0],area[1],area[2],area[3]])
 		label.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-		_icon(line,"locate","定位区域%d" % (index+1),func(): _close_page(); camera.position = Vector2(float(area[0])+float(area[2])*0.5,float(area[1])+float(area[3])*0.5)*64)
+		_icon(line,"locate","定位区域%d" % (index+1),_locate_area.bind(area))
 		_icon(line,"cancel","删除区域%d" % (index+1),func():
 			var areas: Array = worker["areas"].duplicate(true)
 			areas.remove_at(index)
@@ -1075,7 +1094,16 @@ func _show_worker_duties(worker: Dictionary) -> void:
 			_show_workers())
 	var actions := HBoxContainer.new()
 	sidebar.add_child(actions)
-	_icon(actions,"area","框选追加负责区域",func(): _close_page(); expanded = true; _layout(); _select_tool("area"))
+	# Assigning an area only matters in delegation mode; leaving manual mode on
+	# would silently downgrade the tool back to inspect and hide the area button.
+	_icon(actions,"area","框选追加负责区域",func():
+		_close_page()
+		expanded = true
+		if manual_mode:
+			_set_manual(false)
+		else:
+			_layout()
+		_select_tool("area"))
 	_icon(actions,"cancel","清空负责区域",func(): _result(world.workforce.configure(worker["id"],worker["budget"],worker["paused"],worker["priorities"],[])); _show_workers())
 	_icon(actions,"clear","解雇（免费）",func(): _result(world.workforce.dismiss(worker["id"])); selected_worker = 0; _show_workers())
 	_label(sidebar,"资源点单独指派；区域之外不找农务目标。物品直接进出共享仓库。")
@@ -1141,6 +1169,7 @@ func _daily_summary(day: int, saved: bool) -> void:
 		"help": _show_help()
 		"history": _show_history()
 		"recap": _show_recap(-1)
+	_context_refresh()
 	for child in digest_body.get_children():
 		digest_body.remove_child(child)
 		child.queue_free()
@@ -1220,6 +1249,10 @@ func _show_history() -> void:
 			for crop in world.crops.values():
 				if crop["crop_id"] == ident and crop["state"] == "mature":
 					_icon(card,"locate","定位现有成熟植物："+CROPS[ident],func(): _locate(Vector2i(int(crop["origin"][0]),int(crop["origin"][1]))))
+
+func _locate_area(area: Array) -> void:
+	_close_page()
+	camera.position = Vector2(float(area[0])+float(area[2])*0.5,float(area[1])+float(area[3])*0.5)*64
 
 func _locate(cell: Vector2i) -> void:
 	_close_page()
@@ -1306,7 +1339,11 @@ func _show_market() -> void:
 	var card := _card(sidebar)
 	sidebar.move_child(card.get_parent(),categories.get_index()+1)
 	_heading(card,item["name"])
+	_market_extra(card,market_item)
 	_label(card,"持有%d · 单价 买%d / 卖%d元石 · 可购%d / 可售%d" % [world.inventory.count(market_item),item["buy_price"],item["sell_price"],int(world.primeval_stones/maxi(1,item["buy_price"])) if item["buy_price"] > 0 else 0,world.inventory.count(market_item) if item["sell_price"] > 0 else 0])
+	var market_lock := _market_lock_text(market_item)
+	if not market_lock.is_empty():
+		_label(card,market_lock)
 	var row := HBoxContainer.new()
 	card.add_child(row)
 	_label(row,"数量")
@@ -1325,16 +1362,31 @@ func _show_market() -> void:
 	trade_spin.value_changed.connect(func(value): trade_quantity = int(value); _update_trade())
 	_update_trade()
 
+## Derived products can block purchases (e.g. research-gated seeds); default: open.
+func _market_lock_text(_item_id: String) -> String:
+	return ""
+
+## Derived products may append entry links to the selected market card.
+func _market_extra(_card: Node, _item_id: String) -> void:
+	pass
+
+## Derived products refresh their own reading contexts after a day roll.
+func _context_refresh() -> void:
+	pass
+
 func _update_trade() -> void:
 	var item: Dictionary = world._items[market_item]
 	var buy := int(item["buy_price"])*trade_quantity
 	var sell := int(item["sell_price"])*trade_quantity
+	var market_lock := _market_lock_text(market_item)
 	trade_total.text = "买入总价 %d / 卖出总价 %d 元石" % [buy,sell]
-	trade_buy.disabled = item["buy_price"] <= 0 or buy > world.primeval_stones
+	trade_buy.disabled = item["buy_price"] <= 0 or buy > world.primeval_stones or not market_lock.is_empty()
 	trade_sell.disabled = item["sell_price"] <= 0 or trade_quantity > world.inventory.count(market_item)
-	trade_buy.tooltip_text = "不可采购" if item["buy_price"] <= 0 else ("元石不足，需%d" % buy if buy > world.primeval_stones else "买入%d份 · %d元石" % [trade_quantity,buy])
+	trade_buy.tooltip_text = market_lock if not market_lock.is_empty() else ("不可采购" if item["buy_price"] <= 0 else ("元石不足，需%d" % buy if buy > world.primeval_stones else "买入%d份 · %d元石" % [trade_quantity,buy]))
 	trade_sell.tooltip_text = "不可出售" if item["sell_price"] <= 0 else ("库存不足，持有%d" % world.inventory.count(market_item) if trade_quantity > world.inventory.count(market_item) else "出售%d份 · %d元石" % [trade_quantity,sell])
-	if trade_buy.disabled and item["buy_price"] > 0: trade_total.text += " · 元石不足"
+	if not market_lock.is_empty():
+		trade_total.text += " · " + market_lock
+	elif trade_buy.disabled and item["buy_price"] > 0: trade_total.text += " · 元石不足"
 	if trade_sell.disabled and item["sell_price"] > 0: trade_total.text += " · 库存不足"
 
 func _trade(buying: bool) -> void:
@@ -1381,7 +1433,8 @@ func _process(delta: float) -> void:
 	var margin := _camera_bottom_margin()
 	var half := (Vector2(map_port.size)-Vector2(0,margin))*0.5/camera.zoom.x
 	var offset := margin*0.5/camera.zoom.x
-	camera.position.x = clampf(camera.position.x,minf(half.x,extent.x*0.5),maxf(extent.x*0.5,extent.x-half.x))
+	var start_x := world.grid.origin_x*64.0
+	camera.position.x = clampf(camera.position.x,start_x+minf(half.x,extent.x*0.5),start_x+maxf(extent.x*0.5,extent.x-half.x))
 	camera.position.y = clampf(camera.position.y-offset,minf(half.y,extent.y*0.5),maxf(extent.y*0.5,extent.y-half.y))+offset
 
 func _unhandled_key_input(event: InputEvent) -> void:
@@ -1408,9 +1461,7 @@ func _unhandled_key_input(event: InputEvent) -> void:
 		KEY_F: _fit_map()
 		KEY_R: _result(world.end_day())
 
-func draw_map(target: Node2D) -> void:
-	var font := theme.default_font
-	var readable := maxf(1.0,1.0/(camera.zoom.x*_ui_scale))
+func _draw_world_entities(target: Node2D, readable: float) -> void:
 	for crop in world.crops.values():
 		var shape: Array = world.crop_defs[crop["crop_id"]]["footprint"]
 		var rect := Rect2(Vector2(float(crop["origin"][0]),float(crop["origin"][1]))*64.0,Vector2(float(shape[0]),float(shape[1]))*64.0)
@@ -1423,12 +1474,23 @@ func draw_map(target: Node2D) -> void:
 		target.draw_rect(rect.grow(-5),Color("eee5d6"))
 		target.draw_texture_rect(Icons.get_icon(building["facility_id"]),rect.grow(-14),false)
 		if building["batch"].get("status") == "ready": target.draw_circle(rect.end-Vector2(10,10),6*readable,UI.WATER)
+
+func _draw_facility_preview(target: Node2D, rect: Rect2) -> void:
+	target.draw_texture_rect(Icons.get_icon(build_tool),rect.grow(-12),false,Color(1,1,1,0.65))
+
+func _draw_resource_points(target: Node2D, readable: float) -> void:
 	for ident in world.source_defs:
 		var definition: Dictionary = world.source_defs[ident]
 		var position := Vector2(float(definition["position"][0]),float(definition["position"][1]))*64.0
 		target.draw_rect(Rect2(position+Vector2(4,4),Vector2(56,56)),Color("deedf0"))
 		target.draw_texture_rect(Icons.get_icon(definition["item"]),Rect2(position+Vector2(8,8),Vector2(48,48)),false)
 		if world.workforce.state["sources"].has(ident): target.draw_circle(position+Vector2(52,12),5*readable,UI.JADE)
+
+func draw_map(target: Node2D) -> void:
+	var font := theme.default_font
+	var readable := maxf(1.0,1.0/(camera.zoom.x*_ui_scale))
+	_draw_world_entities(target, readable)
+	_draw_resource_points(target,readable)
 	for worker in world.workforce.state["workers"]:
 		if worker["id"] != selected_worker: continue
 		for area in worker["areas"]:
@@ -1447,14 +1509,14 @@ func draw_map(target: Node2D) -> void:
 	for plan in world.workforce.state["seed_plans"]:
 		var position := Vector2(float(plan["cell"][0]),float(plan["cell"][1]))*64.0
 		target.draw_circle(position+Vector2(52,12),4*readable,UI.JADE)
-	if selected.x >= 0: target.draw_rect(Rect2(Vector2(selected)*64.0,Vector2(64,64)),UI.JADE,false,2*readable)
+	if world.grid.in_bounds(selected.x,selected.y): target.draw_rect(_selection_rect(),UI.JADE,false,2*readable)
 	if not build_tool.is_empty() and world.grid.in_bounds(_hover.x,_hover.y):
 		var definition: Dictionary = world.facility_defs[build_tool]
 		var valid: bool = world.can_build_facility(_hover,build_tool)["ok"]
 		var rect := Rect2(Vector2(_hover)*64,Vector2(float(definition["footprint"][0]),float(definition["footprint"][1]))*64)
 		target.draw_rect(rect,Color(0.35,0.6,0.4,0.3) if valid else Color(0.7,0.25,0.2,0.3))
 		target.draw_rect(rect,UI.JADE if valid else UI.ERROR,false,3*readable)
-		target.draw_texture_rect(Icons.get_icon(build_tool),rect.grow(-12),false,Color(1,1,1,0.65))
+		_draw_facility_preview(target,rect)
 	if manual_mode and tool != "inspect" and build_tool.is_empty() and world.grid.in_bounds(_hover.x,_hover.y):
 		var valid: bool = world.action_quote(_hover,tool)["ok"]
 		target.draw_rect(Rect2(Vector2(_hover)*64,Vector2(64,64)),UI.JADE if valid else UI.ERROR,false,2*readable)

@@ -1,0 +1,818 @@
+{
+  "revision": "p87",
+  "png_count": 48,
+  "gpu_frames": 60,
+  "viewports": [
+    {
+      "viewport": [
+        2560,
+        1440
+      ],
+      "frames": [
+        {
+          "depth": 0.573576436351046,
+          "file": "pilot.png",
+          "side_open": true,
+          "size": [
+            2560,
+            1440
+          ],
+          "ui_scale_effective": 1.0,
+          "ui_scale_requested": 1.0,
+          "zoom": 1.29999995231628,
+          "sha256": "b14f88ef14c951e1db6c2b7719dfd4d41490a470ae37e80f2d1ca7f0dc02c2f7"
+        },
+        {
+          "depth": 0.573576436351046,
+          "file": "all-plants.png",
+          "side_open": true,
+          "size": [
+            2560,
+            1440
+          ],
+          "ui_scale_effective": 1.0,
+          "ui_scale_requested": 1.0,
+          "zoom": 0.899999976158142,
+          "sha256": "9261d7055bd78ed3a0e8ee1cfa8d847214ad1aa9f5c1d4d41675480a5c7658f4"
+        },
+        {
+          "depth": 0.573576436351046,
+          "file": "all-facilities.png",
+          "side_open": true,
+          "size": [
+            2560,
+            1440
+          ],
+          "ui_scale_effective": 1.0,
+          "ui_scale_requested": 1.0,
+          "zoom": 0.899999976158142,
+          "sha256": "e37e2b0b15981e7ee24cf8fc72b50646dcd6ed351ab4b154091e4d7c37daa5e6"
+        },
+        {
+          "depth": 0.573576436351046,
+          "file": "build-preview-0.png",
+          "side_open": true,
+          "size": [
+            2560,
+            1440
+          ],
+          "ui_scale_effective": 1.0,
+          "ui_scale_requested": 1.0,
+          "zoom": 0.899999976158142,
+          "sha256": "31b1f850efe32b8816d2b0c01641b293785a1af3db0e7b5ce90a87c247358f98"
+        },
+        {
+          "depth": 0.573576436351046,
+          "file": "build-preview-14.png",
+          "side_open": true,
+          "size": [
+            2560,
+            1440
+          ],
+          "ui_scale_effective": 1.0,
+          "ui_scale_requested": 1.0,
+          "zoom": 0.899999976158142,
+          "sha256": "d656a321c753fbfe13e574df161f6536939efaacc19e60034d047980507235fc"
+        },
+        {
+          "depth": 0.573576436351046,
+          "file": "negative-land.png",
+          "side_open": true,
+          "size": [
+            2560,
+            1440
+          ],
+          "ui_scale_effective": 1.0,
+          "ui_scale_requested": 1.0,
+          "zoom": 1.60000002384186,
+          "sha256": "4538c593e4683f2622bcb4d77492d2acfa570ee6c3d1f8aed773b5bd3999345c"
+        },
+        {
+          "depth": 0.573576436351046,
+          "file": "dense-0.1.png",
+          "side_open": true,
+          "size": [
+            2560,
+            1440
+          ],
+          "ui_scale_effective": 1.0,
+          "ui_scale_requested": 1.0,
+          "zoom": 0.100000001490116,
+          "sha256": "9b5ce55c3c1f51debae6e2846ea43faf103ab74c131fc600c6d120763feb6f90"
+        },
+        {
+          "depth": 0.573576436351046,
+          "file": "dense-1.0.png",
+          "side_open": true,
+          "size": [
+            2560,
+            1440
+          ],
+          "ui_scale_effective": 1.0,
+          "ui_scale_requested": 1.0,
+          "zoom": 1.0,
+          "sha256": "2e8e51112a412af009e81865723253d7a031814c990b379f144f73261fc2e50b"
+        },
+        {
+          "depth": 0.573576436351046,
+          "file": "dense-3.0.png",
+          "side_open": true,
+          "size": [
+            2560,
+            1440
+          ],
+          "ui_scale_effective": 1.0,
+          "ui_scale_requested": 1.0,
+          "zoom": 3.0,
+          "sha256": "8ad425d926871077958f8781efba3c6e41687c1c7e9dbe2de3c2b90571bd28c5"
+        },
+        {
+          "depth": 0.573576436351046,
+          "file": "dense-pan.png",
+          "side_open": true,
+          "size": [
+            2560,
+            1440
+          ],
+          "ui_scale_effective": 1.0,
+          "ui_scale_requested": 1.0,
+          "zoom": 3.0,
+          "sha256": "ac5e16eed989d09523d298d5c7fb71fd7536025eed4b289bf3af88893f7b78b0"
+        },
+        {
+          "depth": 0.573576436351046,
+          "file": "resources.png",
+          "side_open": true,
+          "size": [
+            2560,
+            1440
+          ],
+          "ui_scale_effective": 1.0,
+          "ui_scale_requested": 1.0,
+          "zoom": 2.0,
+          "sha256": "9ac33ed9438fe6c1463972375e83e130820876af9c30f72cb9eba842af00986b"
+        },
+        {
+          "depth": 0.573576436351046,
+          "file": "facility-catalog.png",
+          "side_open": true,
+          "size": [
+            2560,
+            1440
+          ],
+          "ui_scale_effective": 1.0,
+          "ui_scale_requested": 1.0,
+          "zoom": 2.0,
+          "sha256": "b9ea756f35419ccc30bec4c05f47703cbb7b972046ad81bb4d0a566b6591f561"
+        },
+        {
+          "depth": 0.573576436351046,
+          "file": "shore-topology-1.0.png",
+          "side_open": false,
+          "size": [
+            2560,
+            1440
+          ],
+          "ui_scale_effective": 1.0,
+          "ui_scale_requested": 1.0,
+          "zoom": 1.0,
+          "sha256": "7f03e30a84800306dced7734b0a12e75afdb2786dfcd71ac3cb806805b4d4d09"
+        },
+        {
+          "depth": 0.573576436351046,
+          "file": "shore-topology-3.0.png",
+          "side_open": false,
+          "size": [
+            2560,
+            1440
+          ],
+          "ui_scale_effective": 1.0,
+          "ui_scale_requested": 1.0,
+          "zoom": 3.0,
+          "sha256": "bb817e90e02fc6a62fa79b0f76c956b157e1d971ba0be0fa1fdd832c63a8904d"
+        },
+        {
+          "depth": 0.573576436351046,
+          "file": "ui-100-side-false.png",
+          "side_open": false,
+          "size": [
+            2560,
+            1440
+          ],
+          "ui_scale_effective": 1.0,
+          "ui_scale_requested": 1.0,
+          "zoom": 1.0,
+          "sha256": "420684b5dbf647602d853cf83ea0290c8f932bf2f23baf5899785dff39f5f346"
+        },
+        {
+          "depth": 0.573576436351046,
+          "file": "ui-100-side-true.png",
+          "side_open": true,
+          "size": [
+            2560,
+            1440
+          ],
+          "ui_scale_effective": 1.0,
+          "ui_scale_requested": 1.0,
+          "zoom": 1.0,
+          "sha256": "ffef779d0b55f654de6c35f39d5cc811340be995bed06e633dc5d30f1eb978c6"
+        },
+        {
+          "depth": 0.573576436351046,
+          "file": "ui-125-side-false.png",
+          "side_open": false,
+          "size": [
+            2560,
+            1440
+          ],
+          "ui_scale_effective": 1.25,
+          "ui_scale_requested": 1.25,
+          "zoom": 1.0,
+          "sha256": "31b18855b9622e98fe496e08539ea1cfa0cb62cb0de40bc6fd6c9a945343d69d"
+        },
+        {
+          "depth": 0.573576436351046,
+          "file": "ui-125-side-true.png",
+          "side_open": true,
+          "size": [
+            2560,
+            1440
+          ],
+          "ui_scale_effective": 1.25,
+          "ui_scale_requested": 1.25,
+          "zoom": 1.0,
+          "sha256": "daedc6416124c0a013a078853a9e0a51895dc0dd496039ed16b69a456fc17468"
+        },
+        {
+          "depth": 0.573576436351046,
+          "file": "ui-150-side-false.png",
+          "side_open": false,
+          "size": [
+            2560,
+            1440
+          ],
+          "ui_scale_effective": 1.5,
+          "ui_scale_requested": 1.5,
+          "zoom": 1.0,
+          "sha256": "8a55e08d4a653d000fc3cb879fb83d4fa56e79ec7189d1fbb3f4243f6ff46be0"
+        },
+        {
+          "depth": 0.573576436351046,
+          "file": "ui-150-side-true.png",
+          "side_open": true,
+          "size": [
+            2560,
+            1440
+          ],
+          "ui_scale_effective": 1.5,
+          "ui_scale_requested": 1.5,
+          "zoom": 1.0,
+          "sha256": "47539e3426f053d45909cb79a047227bf5a8010eb68ef13c2f3f9ab0f8a349d9"
+        }
+      ],
+      "gpu_log_sha256": "78e9c64d5fbcfa5311d1740110422561f4541a52fdd8061c4771ecab3d1dfab8"
+    },
+    {
+      "viewport": [
+        1920,
+        1080
+      ],
+      "frames": [
+        {
+          "depth": 0.573576436351046,
+          "file": "pilot.png",
+          "side_open": true,
+          "size": [
+            1920,
+            1080
+          ],
+          "ui_scale_effective": 1.0,
+          "ui_scale_requested": 1.0,
+          "zoom": 1.29999995231628,
+          "sha256": "ab60f8dbd3190f792dd476280761d0d8824c82e035b63a044b02a9e3d8b5ef22"
+        },
+        {
+          "depth": 0.573576436351046,
+          "file": "all-plants.png",
+          "side_open": true,
+          "size": [
+            1920,
+            1080
+          ],
+          "ui_scale_effective": 1.0,
+          "ui_scale_requested": 1.0,
+          "zoom": 0.899999976158142,
+          "sha256": "a0defdbd0cfa05b28dfe4f5eb45482462dbc353f55151a8134fc04d737020556"
+        },
+        {
+          "depth": 0.573576436351046,
+          "file": "all-facilities.png",
+          "side_open": true,
+          "size": [
+            1920,
+            1080
+          ],
+          "ui_scale_effective": 1.0,
+          "ui_scale_requested": 1.0,
+          "zoom": 0.899999976158142,
+          "sha256": "9923ee96b2977e4dd39c85a4e6ce11e9a92376f91371505d4339a3d246efbc82"
+        },
+        {
+          "depth": 0.573576436351046,
+          "file": "build-preview-0.png",
+          "side_open": true,
+          "size": [
+            1920,
+            1080
+          ],
+          "ui_scale_effective": 1.0,
+          "ui_scale_requested": 1.0,
+          "zoom": 0.899999976158142,
+          "sha256": "47e0bbca3efbd2d528bddf54fb66f2a6204a740965d55db5e0d4ae9886a5a230"
+        },
+        {
+          "depth": 0.573576436351046,
+          "file": "build-preview-14.png",
+          "side_open": true,
+          "size": [
+            1920,
+            1080
+          ],
+          "ui_scale_effective": 1.0,
+          "ui_scale_requested": 1.0,
+          "zoom": 0.899999976158142,
+          "sha256": "9ee38a84dd87deb9ff3d37d08a825caba4dd5466e60c4de7531bc04f9a186cae"
+        },
+        {
+          "depth": 0.573576436351046,
+          "file": "negative-land.png",
+          "side_open": true,
+          "size": [
+            1920,
+            1080
+          ],
+          "ui_scale_effective": 1.0,
+          "ui_scale_requested": 1.0,
+          "zoom": 1.60000002384186,
+          "sha256": "ebd24ff89a04d147abac446f962948ff5c248e4f331f11a54aed8296167f7579"
+        },
+        {
+          "depth": 0.573576436351046,
+          "file": "dense-0.1.png",
+          "side_open": true,
+          "size": [
+            1920,
+            1080
+          ],
+          "ui_scale_effective": 1.0,
+          "ui_scale_requested": 1.0,
+          "zoom": 0.100000001490116,
+          "sha256": "c6084a796353fd5f799b7cf391591c02ec355abe245580890d74996b014b872d"
+        },
+        {
+          "depth": 0.573576436351046,
+          "file": "dense-1.0.png",
+          "side_open": true,
+          "size": [
+            1920,
+            1080
+          ],
+          "ui_scale_effective": 1.0,
+          "ui_scale_requested": 1.0,
+          "zoom": 1.0,
+          "sha256": "5f95038a4b7453075f6c83250339f05969d7b33ecaaeeadfe953ffc8385d5a94"
+        },
+        {
+          "depth": 0.573576436351046,
+          "file": "dense-3.0.png",
+          "side_open": true,
+          "size": [
+            1920,
+            1080
+          ],
+          "ui_scale_effective": 1.0,
+          "ui_scale_requested": 1.0,
+          "zoom": 3.0,
+          "sha256": "72213fd14f3acf9a6b8e930c25350701af861e5ebef5cd796ac9a21c4e6b3b5e"
+        },
+        {
+          "depth": 0.573576436351046,
+          "file": "dense-pan.png",
+          "side_open": true,
+          "size": [
+            1920,
+            1080
+          ],
+          "ui_scale_effective": 1.0,
+          "ui_scale_requested": 1.0,
+          "zoom": 3.0,
+          "sha256": "bc846bf8d643de59b737551181f682362f3a1197a2f1c118ce4c026485421cf6"
+        },
+        {
+          "depth": 0.573576436351046,
+          "file": "resources.png",
+          "side_open": true,
+          "size": [
+            1920,
+            1080
+          ],
+          "ui_scale_effective": 1.0,
+          "ui_scale_requested": 1.0,
+          "zoom": 2.0,
+          "sha256": "44a4a92898952b4668bf23da8ba443f6d481642f785e8701c6daffc3541d3a7e"
+        },
+        {
+          "depth": 0.573576436351046,
+          "file": "facility-catalog.png",
+          "side_open": true,
+          "size": [
+            1920,
+            1080
+          ],
+          "ui_scale_effective": 1.0,
+          "ui_scale_requested": 1.0,
+          "zoom": 2.0,
+          "sha256": "784e3c8d02e260064c6f21547e0e78c53c8b0604380cf1da38140ad7a3971786"
+        },
+        {
+          "depth": 0.573576436351046,
+          "file": "shore-topology-1.0.png",
+          "side_open": false,
+          "size": [
+            1920,
+            1080
+          ],
+          "ui_scale_effective": 1.0,
+          "ui_scale_requested": 1.0,
+          "zoom": 1.0,
+          "sha256": "abf43338eadda3ab7c86d935d7373b7d7477b8d501f7ac7c339edf4246d1d088"
+        },
+        {
+          "depth": 0.573576436351046,
+          "file": "shore-topology-3.0.png",
+          "side_open": false,
+          "size": [
+            1920,
+            1080
+          ],
+          "ui_scale_effective": 1.0,
+          "ui_scale_requested": 1.0,
+          "zoom": 3.0,
+          "sha256": "0e22310279aa675b542530af5b8265ab470d95e43e66700d646e38bf1af1c44a"
+        },
+        {
+          "depth": 0.573576436351046,
+          "file": "ui-100-side-false.png",
+          "side_open": false,
+          "size": [
+            1920,
+            1080
+          ],
+          "ui_scale_effective": 1.0,
+          "ui_scale_requested": 1.0,
+          "zoom": 1.0,
+          "sha256": "fdc372e984252f9c4e4ce1cece3446b303112ac6f1b604d129720c7e7883f211"
+        },
+        {
+          "depth": 0.573576436351046,
+          "file": "ui-100-side-true.png",
+          "side_open": true,
+          "size": [
+            1920,
+            1080
+          ],
+          "ui_scale_effective": 1.0,
+          "ui_scale_requested": 1.0,
+          "zoom": 1.0,
+          "sha256": "6ea1f786e06f1fd21d65a914634c0443ccafdd3768d9753235801f9b1f706031"
+        },
+        {
+          "depth": 0.573576436351046,
+          "file": "ui-125-side-false.png",
+          "side_open": false,
+          "size": [
+            1920,
+            1080
+          ],
+          "ui_scale_effective": 1.25,
+          "ui_scale_requested": 1.25,
+          "zoom": 1.0,
+          "sha256": "80260d705cbc9c95c523fe36531e0f9e1c71111a18fefe3ee47366faf607d1c6"
+        },
+        {
+          "depth": 0.573576436351046,
+          "file": "ui-125-side-true.png",
+          "side_open": true,
+          "size": [
+            1920,
+            1080
+          ],
+          "ui_scale_effective": 1.25,
+          "ui_scale_requested": 1.25,
+          "zoom": 1.0,
+          "sha256": "fb03e9ac082b9c128ebc7344edd054990792b85a91acd14e47c511ed375dfff7"
+        },
+        {
+          "depth": 0.573576436351046,
+          "file": "ui-150-side-false.png",
+          "side_open": false,
+          "size": [
+            1920,
+            1080
+          ],
+          "ui_scale_effective": 1.5,
+          "ui_scale_requested": 1.5,
+          "zoom": 1.0,
+          "sha256": "29bf1a709a7b30e738ac484b193d1708d0d4ad806c40a9065886088751503e38"
+        },
+        {
+          "depth": 0.573576436351046,
+          "file": "ui-150-side-true.png",
+          "side_open": true,
+          "size": [
+            1920,
+            1080
+          ],
+          "ui_scale_effective": 1.5,
+          "ui_scale_requested": 1.5,
+          "zoom": 1.0,
+          "sha256": "de71c5542d0d17ea2d54949ff0489fd09eddb96c5487a2e494ec4cb2b40fcb00"
+        }
+      ],
+      "gpu_log_sha256": "78e9c64d5fbcfa5311d1740110422561f4541a52fdd8061c4771ecab3d1dfab8"
+    },
+    {
+      "viewport": [
+        960,
+        540
+      ],
+      "frames": [
+        {
+          "depth": 0.573576436351046,
+          "file": "pilot.png",
+          "side_open": true,
+          "size": [
+            960,
+            540
+          ],
+          "ui_scale_effective": 1.0,
+          "ui_scale_requested": 1.0,
+          "zoom": 1.29999995231628,
+          "sha256": "293a36ac78b79ce6a8ae118a1a20645e369dbefd6ba95b9a5511808e94bdc1f0"
+        },
+        {
+          "depth": 0.573576436351046,
+          "file": "all-plants.png",
+          "side_open": true,
+          "size": [
+            960,
+            540
+          ],
+          "ui_scale_effective": 1.0,
+          "ui_scale_requested": 1.0,
+          "zoom": 0.899999976158142,
+          "sha256": "02d91ccc474375591c222e31f2ae7821019430b43256169c043c8cb8cbd83f22"
+        },
+        {
+          "depth": 0.573576436351046,
+          "file": "all-facilities.png",
+          "side_open": true,
+          "size": [
+            960,
+            540
+          ],
+          "ui_scale_effective": 1.0,
+          "ui_scale_requested": 1.0,
+          "zoom": 0.899999976158142,
+          "sha256": "c1086913da1a5b1e5804a84306fbd3ca458410624446fd5e132bb14bf12a90a6"
+        },
+        {
+          "depth": 0.573576436351046,
+          "file": "build-preview-0.png",
+          "side_open": true,
+          "size": [
+            960,
+            540
+          ],
+          "ui_scale_effective": 1.0,
+          "ui_scale_requested": 1.0,
+          "zoom": 0.899999976158142,
+          "sha256": "37551e458ba8bcd03ba1844c823f17632d763f5085288767faf4cc2834c3225f"
+        },
+        {
+          "depth": 0.573576436351046,
+          "file": "build-preview-14.png",
+          "side_open": true,
+          "size": [
+            960,
+            540
+          ],
+          "ui_scale_effective": 1.0,
+          "ui_scale_requested": 1.0,
+          "zoom": 0.899999976158142,
+          "sha256": "c1086913da1a5b1e5804a84306fbd3ca458410624446fd5e132bb14bf12a90a6"
+        },
+        {
+          "depth": 0.573576436351046,
+          "file": "negative-land.png",
+          "side_open": true,
+          "size": [
+            960,
+            540
+          ],
+          "ui_scale_effective": 1.0,
+          "ui_scale_requested": 1.0,
+          "zoom": 1.60000002384186,
+          "sha256": "ef17c050cd4814147483f08f8b9d870296272dff5c210fceddce20efef459f8a"
+        },
+        {
+          "depth": 0.573576436351046,
+          "file": "dense-0.1.png",
+          "side_open": true,
+          "size": [
+            960,
+            540
+          ],
+          "ui_scale_effective": 1.0,
+          "ui_scale_requested": 1.0,
+          "zoom": 0.100000001490116,
+          "sha256": "965ad644d460e281c7312b5b765e4f8f91c126e942a7981c4d4d84024559cd4b"
+        },
+        {
+          "depth": 0.573576436351046,
+          "file": "dense-1.0.png",
+          "side_open": true,
+          "size": [
+            960,
+            540
+          ],
+          "ui_scale_effective": 1.0,
+          "ui_scale_requested": 1.0,
+          "zoom": 1.0,
+          "sha256": "100b64c222b17e9d2ff961730d6866e7962370e24a375e9716b1753bb1eab89a"
+        },
+        {
+          "depth": 0.573576436351046,
+          "file": "dense-3.0.png",
+          "side_open": true,
+          "size": [
+            960,
+            540
+          ],
+          "ui_scale_effective": 1.0,
+          "ui_scale_requested": 1.0,
+          "zoom": 3.0,
+          "sha256": "a86c4344bb166c2e21df9161189361b63f6e4ffb747e196d64da107669dba7bc"
+        },
+        {
+          "depth": 0.573576436351046,
+          "file": "dense-pan.png",
+          "side_open": true,
+          "size": [
+            960,
+            540
+          ],
+          "ui_scale_effective": 1.0,
+          "ui_scale_requested": 1.0,
+          "zoom": 3.0,
+          "sha256": "45d61be85f03fb2ab9a11a03e6a8512e590f9ed0e1bfbd171c3ae262c3d5d246"
+        },
+        {
+          "depth": 0.573576436351046,
+          "file": "resources.png",
+          "side_open": true,
+          "size": [
+            960,
+            540
+          ],
+          "ui_scale_effective": 1.0,
+          "ui_scale_requested": 1.0,
+          "zoom": 2.0,
+          "sha256": "432b179f23ccb9cb6e4db06a78978a2e5c8352e723ed3def5a4475190e912f3a"
+        },
+        {
+          "depth": 0.573576436351046,
+          "file": "facility-catalog.png",
+          "side_open": true,
+          "size": [
+            960,
+            540
+          ],
+          "ui_scale_effective": 1.0,
+          "ui_scale_requested": 1.0,
+          "zoom": 2.0,
+          "sha256": "7a6d68829f803ea16e65f8b8cf61f88c84ca28aae4e43cab3c31f3e14cddbc44"
+        },
+        {
+          "depth": 0.573576436351046,
+          "file": "shore-topology-1.0.png",
+          "side_open": false,
+          "size": [
+            960,
+            540
+          ],
+          "ui_scale_effective": 1.0,
+          "ui_scale_requested": 1.0,
+          "zoom": 1.0,
+          "sha256": "1b71b14be37b74ad492b7abaea19136b977817f38cf515e0716808e0b43bf22b"
+        },
+        {
+          "depth": 0.573576436351046,
+          "file": "shore-topology-3.0.png",
+          "side_open": false,
+          "size": [
+            960,
+            540
+          ],
+          "ui_scale_effective": 1.0,
+          "ui_scale_requested": 1.0,
+          "zoom": 3.0,
+          "sha256": "950ecefb1382f1277ecfbb0428d4fc23159e8cb550bdc805e6a52591bbc77910"
+        },
+        {
+          "depth": 0.573576436351046,
+          "file": "ui-100-side-false.png",
+          "side_open": false,
+          "size": [
+            960,
+            540
+          ],
+          "ui_scale_effective": 1.0,
+          "ui_scale_requested": 1.0,
+          "zoom": 1.0,
+          "sha256": "16daecbf7db1925e995f2ce9ff72f1095c751dce7ce213f40a92377eb200113a"
+        },
+        {
+          "depth": 0.573576436351046,
+          "file": "ui-100-side-true.png",
+          "side_open": true,
+          "size": [
+            960,
+            540
+          ],
+          "ui_scale_effective": 1.0,
+          "ui_scale_requested": 1.0,
+          "zoom": 1.0,
+          "sha256": "f053197dcdc27c59d87362ea3217fe0453e80aa37c5a945562926991358f50d9"
+        },
+        {
+          "depth": 0.573576436351046,
+          "file": "ui-125-side-false.png",
+          "side_open": false,
+          "size": [
+            960,
+            540
+          ],
+          "ui_scale_effective": 1.0,
+          "ui_scale_requested": 1.25,
+          "zoom": 1.0,
+          "sha256": "16daecbf7db1925e995f2ce9ff72f1095c751dce7ce213f40a92377eb200113a"
+        },
+        {
+          "depth": 0.573576436351046,
+          "file": "ui-125-side-true.png",
+          "side_open": true,
+          "size": [
+            960,
+            540
+          ],
+          "ui_scale_effective": 1.0,
+          "ui_scale_requested": 1.25,
+          "zoom": 1.0,
+          "sha256": "f053197dcdc27c59d87362ea3217fe0453e80aa37c5a945562926991358f50d9"
+        },
+        {
+          "depth": 0.573576436351046,
+          "file": "ui-150-side-false.png",
+          "side_open": false,
+          "size": [
+            960,
+            540
+          ],
+          "ui_scale_effective": 1.0,
+          "ui_scale_requested": 1.5,
+          "zoom": 1.0,
+          "sha256": "16daecbf7db1925e995f2ce9ff72f1095c751dce7ce213f40a92377eb200113a"
+        },
+        {
+          "depth": 0.573576436351046,
+          "file": "ui-150-side-true.png",
+          "side_open": true,
+          "size": [
+            960,
+            540
+          ],
+          "ui_scale_effective": 1.0,
+          "ui_scale_requested": 1.5,
+          "zoom": 1.0,
+          "sha256": "f053197dcdc27c59d87362ea3217fe0453e80aa37c5a945562926991358f50d9"
+        }
+      ],
+      "gpu_log_sha256": "78e9c64d5fbcfa5311d1740110422561f4541a52fdd8061c4771ecab3d1dfab8"
+    }
+  ],
+  "sample_user_accepted": true,
+  "final_user_acceptance": "recorded separately from technical QC",
+  "baseline": "p87-visual-baseline.json",
+  "baseline_sha256": "fb0ec4b316906d59bbdf7ff1a4b2b281bc333c0bd9aa32876004a79114f5fe27"
+}

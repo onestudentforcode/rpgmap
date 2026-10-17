@@ -1,0 +1,1338 @@
+{
+  "date": "2026-10-15",
+  "phase": "P8.7 A",
+  "status": "sample_user_accepted",
+  "sample_user_accepted": true,
+  "sample_confirmation": "接受35°样板，继续B～D",
+  "default_game": "P8.6 unchanged at A delivery",
+  "calibration": {
+    "path": "docs/farming/art/p87-camera-calibration.json",
+    "sha256": "8bac3a33cd4ab9cc53067eae989fbdcfdafc9e2a831665695ac4f03d995aeddf",
+    "body_renders": 44,
+    "resource_rigs": 3,
+    "unchanged_source_files": 41
+  },
+  "projection_tests": {
+    "path": ".art-work/p87-trial/projection-tests.engine.log",
+    "sha256": "3b83a05f6579f85ddb0437a7ac970ce8fd6ff62093ed265c72dafea06c49a0c6",
+    "os_certificate_diagnostic_present": false,
+    "checks": 89
+  },
+  "existing_visual_regressions": {
+    "p85-lifecycle": {
+      "path": ".art-work/p87-trial/p85-lifecycle.engine.log",
+      "sha256": "7ff47475c496f6bdc741b6b1ab0034ababdabfd8ba040a4dcd5c50010828abe3",
+      "os_certificate_diagnostic_present": false
+    },
+    "p86-production": {
+      "path": ".art-work/p87-trial/p86-production.engine.log",
+      "sha256": "48da0922870b85f7c1fff1d7faf88f20795afaab8e11fc6392c3b812afdc4ee7",
+      "os_certificate_diagnostic_present": false
+    }
+  },
+  "p86_png_hashes_verified": 48,
+  "gpu_frames": 66,
+  "viewports": [
+    {
+      "viewport": [
+        2560,
+        1440
+      ],
+      "frames": [
+        {
+          "camera": [
+            640.0,
+            570.0
+          ],
+          "depth": 1.0,
+          "file": "p86-scene-1.0.png",
+          "projection": "p86",
+          "size": [
+            2560,
+            1440
+          ],
+          "viewport": [
+            2560.0,
+            1440.0
+          ],
+          "zoom": 1.0,
+          "sha256": "95d0932e621bad42717868ccef0f50f95095a699f20563b5d4c9cf8299dc6a04"
+        },
+        {
+          "camera": [
+            620.0,
+            350.0
+          ],
+          "depth": 1.0,
+          "file": "p86-plants-1.0.png",
+          "projection": "p86",
+          "size": [
+            2560,
+            1440
+          ],
+          "viewport": [
+            2560.0,
+            1440.0
+          ],
+          "zoom": 1.0,
+          "sha256": "66d8a29f4d9981b3846b6a9b4f92f469154f690b17df496f326d6ba9b1fb23f7"
+        },
+        {
+          "camera": [
+            380.0,
+            240.0
+          ],
+          "depth": 1.0,
+          "file": "p86-seedlings-3.0.png",
+          "projection": "p86",
+          "size": [
+            2560,
+            1440
+          ],
+          "viewport": [
+            2560.0,
+            1440.0
+          ],
+          "zoom": 3.0,
+          "sha256": "8127c5831c628d406036dba45ac03671529736e116efdb181438dccf6d8e747a"
+        },
+        {
+          "camera": [
+            640.0,
+            910.0
+          ],
+          "depth": 1.0,
+          "file": "p86-shore-1.0.png",
+          "projection": "p86",
+          "size": [
+            2560,
+            1440
+          ],
+          "viewport": [
+            2560.0,
+            1440.0
+          ],
+          "zoom": 1.0,
+          "sha256": "38cd882636edeb00d35da46cf37a5622b915dcb4274d74896d037e4e9614397e"
+        },
+        {
+          "camera": [
+            470.0,
+            930.0
+          ],
+          "depth": 1.0,
+          "file": "p86-shore-3.0.png",
+          "projection": "p86",
+          "size": [
+            2560,
+            1440
+          ],
+          "viewport": [
+            2560.0,
+            1440.0
+          ],
+          "zoom": 3.0,
+          "sha256": "31b3482846f375260487a61fb4e29da203b54190d3d1181f8d30e5febf9974bd"
+        },
+        {
+          "camera": [
+            1056.0,
+            565.0
+          ],
+          "depth": 1.0,
+          "file": "p86-resources-3.0.png",
+          "projection": "p86",
+          "size": [
+            2560,
+            1440
+          ],
+          "viewport": [
+            2560.0,
+            1440.0
+          ],
+          "zoom": 3.0,
+          "sha256": "f153b25c2ff6097065d27344aac515f9066c9a0d21cef381a41fa64215d35cdc"
+        },
+        {
+          "camera": [
+            640.0,
+            700.0
+          ],
+          "depth": 1.0,
+          "file": "p86-overview-0.1.png",
+          "projection": "p86",
+          "size": [
+            2560,
+            1440
+          ],
+          "viewport": [
+            2560.0,
+            1440.0
+          ],
+          "zoom": 0.100000001490116,
+          "sha256": "888e2099c2cc4294c5076b6c9820616c051fcb009a7e03ee9e3ebca2fd4f3b4b"
+        },
+        {
+          "camera": [
+            768.0,
+            787.33154296875
+          ],
+          "depth": 1.0,
+          "file": "p86-fit-to-play.png",
+          "projection": "p86",
+          "size": [
+            2560,
+            1440
+          ],
+          "viewport": [
+            2560.0,
+            1440.0
+          ],
+          "zoom": 0.768016755580902,
+          "sha256": "972a0003eca610e89a8c239381fe04773d3e74edfdc3d51d2833186b73720eeb"
+        },
+        {
+          "camera": [
+            768.0,
+            787.33154296875
+          ],
+          "depth": 1.0,
+          "file": "p86-clean-fit-to-play.png",
+          "projection": "p86",
+          "size": [
+            2560,
+            1440
+          ],
+          "viewport": [
+            2560.0,
+            1440.0
+          ],
+          "zoom": 0.768016755580902,
+          "sha256": "b4ad54b4db9727444949ba89c466c3ae105f91fb46c7a43fc9914b411221596e"
+        },
+        {
+          "camera": [
+            420.0,
+            650.0
+          ],
+          "depth": 1.0,
+          "file": "p86-sidebar-1.0.png",
+          "projection": "p86",
+          "size": [
+            2560,
+            1440
+          ],
+          "viewport": [
+            2560.0,
+            1440.0
+          ],
+          "zoom": 1.0,
+          "sha256": "15c3e00ab67042faf8600ff1ed07d91e51fc12f98b181c3d14dd20ee63e19fcb"
+        },
+        {
+          "camera": [
+            1040.0,
+            700.0
+          ],
+          "depth": 1.0,
+          "file": "p86-build-preview.png",
+          "projection": "p86",
+          "size": [
+            2560,
+            1440
+          ],
+          "viewport": [
+            2560.0,
+            1440.0
+          ],
+          "zoom": 1.0,
+          "sha256": "fef5a04bbe20134964361d413977cf363669bee4454d9c488a5a1935735e48df"
+        },
+        {
+          "camera": [
+            640.0,
+            326.938568115234
+          ],
+          "depth": 0.573576436351046,
+          "file": "matched35-scene-1.0.png",
+          "projection": "matched35",
+          "size": [
+            2560,
+            1440
+          ],
+          "viewport": [
+            2560.0,
+            1440.0
+          ],
+          "zoom": 1.0,
+          "sha256": "67d8d0474b24801c1ae1382795c63b9ed9347b30ed5c982ed881c9076e0221c5"
+        },
+        {
+          "camera": [
+            620.0,
+            200.751754760742
+          ],
+          "depth": 0.573576436351046,
+          "file": "matched35-plants-1.0.png",
+          "projection": "matched35",
+          "size": [
+            2560,
+            1440
+          ],
+          "viewport": [
+            2560.0,
+            1440.0
+          ],
+          "zoom": 1.0,
+          "sha256": "5f6f10da36ae33dd2f8a7271f13fd5da06e144b65bd19515272870c8f01b09f1"
+        },
+        {
+          "camera": [
+            380.0,
+            137.658355712891
+          ],
+          "depth": 0.573576436351046,
+          "file": "matched35-seedlings-3.0.png",
+          "projection": "matched35",
+          "size": [
+            2560,
+            1440
+          ],
+          "viewport": [
+            2560.0,
+            1440.0
+          ],
+          "zoom": 3.0,
+          "sha256": "46cd76db77ea686185fe6a22e11b1dc1aa5d9de782328604af512b8c95df9088"
+        },
+        {
+          "camera": [
+            640.0,
+            521.95458984375
+          ],
+          "depth": 0.573576436351046,
+          "file": "matched35-shore-1.0.png",
+          "projection": "matched35",
+          "size": [
+            2560,
+            1440
+          ],
+          "viewport": [
+            2560.0,
+            1440.0
+          ],
+          "zoom": 1.0,
+          "sha256": "1733e2c3161c6fdcfb7dbe36225bdc875ef8667108d62cd3b98a7de0293f93bb"
+        },
+        {
+          "camera": [
+            470.0,
+            533.426086425781
+          ],
+          "depth": 0.573576436351046,
+          "file": "matched35-shore-3.0.png",
+          "projection": "matched35",
+          "size": [
+            2560,
+            1440
+          ],
+          "viewport": [
+            2560.0,
+            1440.0
+          ],
+          "zoom": 3.0,
+          "sha256": "75d9a76f543c59f066a138ac2cd2017d788b0a08c7d62037c67583a4433ae6ae"
+        },
+        {
+          "camera": [
+            1056.0,
+            324.070709228516
+          ],
+          "depth": 0.573576436351046,
+          "file": "matched35-resources-3.0.png",
+          "projection": "matched35",
+          "size": [
+            2560,
+            1440
+          ],
+          "viewport": [
+            2560.0,
+            1440.0
+          ],
+          "zoom": 3.0,
+          "sha256": "170708f82821a52a3923efd3789dc006e596fb574659ed72ed65c895634c747e"
+        },
+        {
+          "camera": [
+            640.0,
+            401.503509521484
+          ],
+          "depth": 0.573576436351046,
+          "file": "matched35-overview-0.1.png",
+          "projection": "matched35",
+          "size": [
+            2560,
+            1440
+          ],
+          "viewport": [
+            2560.0,
+            1440.0
+          ],
+          "zoom": 0.100000001490116,
+          "sha256": "b55707105ac257dea251317047f7b67cb8111555231d9160eaf16de41c3ed78d"
+        },
+        {
+          "camera": [
+            768.0,
+            459.957183837891
+          ],
+          "depth": 0.573576436351046,
+          "file": "matched35-fit-to-play.png",
+          "projection": "matched35",
+          "size": [
+            2560,
+            1440
+          ],
+          "viewport": [
+            2560.0,
+            1440.0
+          ],
+          "zoom": 1.13961386680603,
+          "sha256": "dae40f213e532614e687bcb8e5eee9ebeb72e0f5a4b429e0d87c3a2374f3e940"
+        },
+        {
+          "camera": [
+            768.0,
+            459.957183837891
+          ],
+          "depth": 0.573576436351046,
+          "file": "matched35-clean-fit-to-play.png",
+          "projection": "matched35",
+          "size": [
+            2560,
+            1440
+          ],
+          "viewport": [
+            2560.0,
+            1440.0
+          ],
+          "zoom": 1.13961386680603,
+          "sha256": "91e1ed640094ecbb23cea3d9ed594f8236746321cd456b406b822dc47733d7d9"
+        },
+        {
+          "camera": [
+            420.0,
+            372.82470703125
+          ],
+          "depth": 0.573576436351046,
+          "file": "matched35-sidebar-1.0.png",
+          "projection": "matched35",
+          "size": [
+            2560,
+            1440
+          ],
+          "viewport": [
+            2560.0,
+            1440.0
+          ],
+          "zoom": 1.0,
+          "sha256": "c8f8f4dc0e8add2e9793771585269f9801c2c0bd147b8f38e28d463df22b373a"
+        },
+        {
+          "camera": [
+            1040.0,
+            401.503509521484
+          ],
+          "depth": 0.573576436351046,
+          "file": "matched35-build-preview.png",
+          "projection": "matched35",
+          "size": [
+            2560,
+            1440
+          ],
+          "viewport": [
+            2560.0,
+            1440.0
+          ],
+          "zoom": 1.0,
+          "sha256": "0510cfad90769dee706ad84ead2b4dd21f6bd40455bdba4f93245d7600f6bb96"
+        }
+      ],
+      "world_snapshot_sha256": "d742c2d3026dee72e6a7224027c1edc42728fc779b56c004052134f4b746ea2b",
+      "gpu_log": {
+        "path": ".art-work/p87-trial/2560x1440.engine.log",
+        "sha256": "9542b47e8ec219251471f70b566d7bc1dba3c98626df1e89a9362802a724f2cc",
+        "os_certificate_diagnostic_present": false
+      }
+    },
+    {
+      "viewport": [
+        1920,
+        1080
+      ],
+      "frames": [
+        {
+          "camera": [
+            640.0,
+            570.0
+          ],
+          "depth": 1.0,
+          "file": "p86-scene-1.0.png",
+          "projection": "p86",
+          "size": [
+            1920,
+            1080
+          ],
+          "viewport": [
+            1920.0,
+            1080.0
+          ],
+          "zoom": 1.0,
+          "sha256": "12a452489c170f0894bb860ecae302a05bcfbf43a992a6b43570ad314e5e0ed5"
+        },
+        {
+          "camera": [
+            620.0,
+            350.0
+          ],
+          "depth": 1.0,
+          "file": "p86-plants-1.0.png",
+          "projection": "p86",
+          "size": [
+            1920,
+            1080
+          ],
+          "viewport": [
+            1920.0,
+            1080.0
+          ],
+          "zoom": 1.0,
+          "sha256": "ca1f736c9087c8c63ac1dea392415e1ac4f73ed171ea44e18899abbe413906d2"
+        },
+        {
+          "camera": [
+            380.0,
+            240.0
+          ],
+          "depth": 1.0,
+          "file": "p86-seedlings-3.0.png",
+          "projection": "p86",
+          "size": [
+            1920,
+            1080
+          ],
+          "viewport": [
+            1920.0,
+            1080.0
+          ],
+          "zoom": 3.0,
+          "sha256": "09454bb8e2ca82c9f56d916d07d2e6a77be3af13b01858323973c19c4c48e820"
+        },
+        {
+          "camera": [
+            640.0,
+            910.0
+          ],
+          "depth": 1.0,
+          "file": "p86-shore-1.0.png",
+          "projection": "p86",
+          "size": [
+            1920,
+            1080
+          ],
+          "viewport": [
+            1920.0,
+            1080.0
+          ],
+          "zoom": 1.0,
+          "sha256": "e50b8842e1a3a2e79a15fc555e38c0f4a82aef5cfb5e51a43f3d98ef686e9564"
+        },
+        {
+          "camera": [
+            470.0,
+            930.0
+          ],
+          "depth": 1.0,
+          "file": "p86-shore-3.0.png",
+          "projection": "p86",
+          "size": [
+            1920,
+            1080
+          ],
+          "viewport": [
+            1920.0,
+            1080.0
+          ],
+          "zoom": 3.0,
+          "sha256": "434ad93943da66e977d2733f5826e617b296ccbcc53e61ec7b5b27ee6c7c1f1d"
+        },
+        {
+          "camera": [
+            1056.0,
+            565.0
+          ],
+          "depth": 1.0,
+          "file": "p86-resources-3.0.png",
+          "projection": "p86",
+          "size": [
+            1920,
+            1080
+          ],
+          "viewport": [
+            1920.0,
+            1080.0
+          ],
+          "zoom": 3.0,
+          "sha256": "cdd94fed13e631104dc1cc4faaf20bfa2f19db09fd57e7f9e5f1e7d24260534e"
+        },
+        {
+          "camera": [
+            640.0,
+            700.0
+          ],
+          "depth": 1.0,
+          "file": "p86-overview-0.1.png",
+          "projection": "p86",
+          "size": [
+            1920,
+            1080
+          ],
+          "viewport": [
+            1920.0,
+            1080.0
+          ],
+          "zoom": 0.100000001490116,
+          "sha256": "4f56bf04f492db4c3645ac47eba22be956f46504f6ec4c107017e69f56157028"
+        },
+        {
+          "camera": [
+            768.0,
+            824.367736816406
+          ],
+          "depth": 1.0,
+          "file": "p86-fit-to-play.png",
+          "projection": "p86",
+          "size": [
+            1920,
+            1080
+          ],
+          "viewport": [
+            1920.0,
+            1080.0
+          ],
+          "zoom": 0.531703889369965,
+          "sha256": "933d169305f5bb2d6606763e99fbc9ccbaaafb70f6707f3461a00847fb4b4574"
+        },
+        {
+          "camera": [
+            768.0,
+            824.367736816406
+          ],
+          "depth": 1.0,
+          "file": "p86-clean-fit-to-play.png",
+          "projection": "p86",
+          "size": [
+            1920,
+            1080
+          ],
+          "viewport": [
+            1920.0,
+            1080.0
+          ],
+          "zoom": 0.531703889369965,
+          "sha256": "2c49c2fb1e89f69caa18c7198df71d4ec6481f37e5a807f148d5bdc5de4be9b2"
+        },
+        {
+          "camera": [
+            420.0,
+            650.0
+          ],
+          "depth": 1.0,
+          "file": "p86-sidebar-1.0.png",
+          "projection": "p86",
+          "size": [
+            1920,
+            1080
+          ],
+          "viewport": [
+            1920.0,
+            1080.0
+          ],
+          "zoom": 1.0,
+          "sha256": "3e1728f1bf96722193d4e381526ced1c5fecc5f93507ebb22bd1105f4c1547e3"
+        },
+        {
+          "camera": [
+            1040.0,
+            700.0
+          ],
+          "depth": 1.0,
+          "file": "p86-build-preview.png",
+          "projection": "p86",
+          "size": [
+            1920,
+            1080
+          ],
+          "viewport": [
+            1920.0,
+            1080.0
+          ],
+          "zoom": 1.0,
+          "sha256": "2dbece13d477fae4ff63cd1d1db20bbc83ff7531a1268bc69d5b25b9231b8bf1"
+        },
+        {
+          "camera": [
+            640.0,
+            326.938568115234
+          ],
+          "depth": 0.573576436351046,
+          "file": "matched35-scene-1.0.png",
+          "projection": "matched35",
+          "size": [
+            1920,
+            1080
+          ],
+          "viewport": [
+            1920.0,
+            1080.0
+          ],
+          "zoom": 1.0,
+          "sha256": "442f299e0e0fb7b6c4885197f733c57e326ed974b038846a0a11918a40aaf5be"
+        },
+        {
+          "camera": [
+            620.0,
+            200.751754760742
+          ],
+          "depth": 0.573576436351046,
+          "file": "matched35-plants-1.0.png",
+          "projection": "matched35",
+          "size": [
+            1920,
+            1080
+          ],
+          "viewport": [
+            1920.0,
+            1080.0
+          ],
+          "zoom": 1.0,
+          "sha256": "d57c03031f082f5fc9f0d45ee920de8f357676c3d87b3e7db9a6669bb15c99e3"
+        },
+        {
+          "camera": [
+            380.0,
+            137.658355712891
+          ],
+          "depth": 0.573576436351046,
+          "file": "matched35-seedlings-3.0.png",
+          "projection": "matched35",
+          "size": [
+            1920,
+            1080
+          ],
+          "viewport": [
+            1920.0,
+            1080.0
+          ],
+          "zoom": 3.0,
+          "sha256": "795308bd1e5b5951d081b7235032550212be288d4ff61ba8f30d4c11d1dc6ea4"
+        },
+        {
+          "camera": [
+            640.0,
+            521.95458984375
+          ],
+          "depth": 0.573576436351046,
+          "file": "matched35-shore-1.0.png",
+          "projection": "matched35",
+          "size": [
+            1920,
+            1080
+          ],
+          "viewport": [
+            1920.0,
+            1080.0
+          ],
+          "zoom": 1.0,
+          "sha256": "5852c29b0a19780b2572c99ebeca87d3d9e39b1ce818832bcfafd2879268ff43"
+        },
+        {
+          "camera": [
+            470.0,
+            533.426086425781
+          ],
+          "depth": 0.573576436351046,
+          "file": "matched35-shore-3.0.png",
+          "projection": "matched35",
+          "size": [
+            1920,
+            1080
+          ],
+          "viewport": [
+            1920.0,
+            1080.0
+          ],
+          "zoom": 3.0,
+          "sha256": "f5b84a28fe8ab734c3f82796b06b87ce5fe1f10e6e4d23989fa6fe60a07f34a4"
+        },
+        {
+          "camera": [
+            1056.0,
+            324.070709228516
+          ],
+          "depth": 0.573576436351046,
+          "file": "matched35-resources-3.0.png",
+          "projection": "matched35",
+          "size": [
+            1920,
+            1080
+          ],
+          "viewport": [
+            1920.0,
+            1080.0
+          ],
+          "zoom": 3.0,
+          "sha256": "14a64311118dc7be6f67cf435f177bd7f3fe566c00f3b70f83fc4ddf0bdacbd5"
+        },
+        {
+          "camera": [
+            640.0,
+            401.503509521484
+          ],
+          "depth": 0.573576436351046,
+          "file": "matched35-overview-0.1.png",
+          "projection": "matched35",
+          "size": [
+            1920,
+            1080
+          ],
+          "viewport": [
+            1920.0,
+            1080.0
+          ],
+          "zoom": 0.100000001490116,
+          "sha256": "cc6308ea1cb6802f4270c6f941bb7a96944ffb35e428ed98f74ae82707908ade"
+        },
+        {
+          "camera": [
+            768.0,
+            479.156982421875
+          ],
+          "depth": 0.573576436351046,
+          "file": "matched35-fit-to-play.png",
+          "projection": "matched35",
+          "size": [
+            1920,
+            1080
+          ],
+          "viewport": [
+            1920.0,
+            1080.0
+          ],
+          "zoom": 0.849266409873962,
+          "sha256": "d594306d36716823e7af053a03f0a703af1a589730cc2a53aea8b50853c0964e"
+        },
+        {
+          "camera": [
+            768.0,
+            479.156982421875
+          ],
+          "depth": 0.573576436351046,
+          "file": "matched35-clean-fit-to-play.png",
+          "projection": "matched35",
+          "size": [
+            1920,
+            1080
+          ],
+          "viewport": [
+            1920.0,
+            1080.0
+          ],
+          "zoom": 0.849266409873962,
+          "sha256": "6cf2f91c3686c65066932d6616453d74d620ffbaf766a708606e3ee09674b754"
+        },
+        {
+          "camera": [
+            420.0,
+            372.82470703125
+          ],
+          "depth": 0.573576436351046,
+          "file": "matched35-sidebar-1.0.png",
+          "projection": "matched35",
+          "size": [
+            1920,
+            1080
+          ],
+          "viewport": [
+            1920.0,
+            1080.0
+          ],
+          "zoom": 1.0,
+          "sha256": "cb2d48015044c3a5dd97412d3eae06b44474d87d812514c740ee6ab6fef6dfa9"
+        },
+        {
+          "camera": [
+            1040.0,
+            401.503509521484
+          ],
+          "depth": 0.573576436351046,
+          "file": "matched35-build-preview.png",
+          "projection": "matched35",
+          "size": [
+            1920,
+            1080
+          ],
+          "viewport": [
+            1920.0,
+            1080.0
+          ],
+          "zoom": 1.0,
+          "sha256": "a2a65cc393fbae4530ad28e07a37d50eef852f093ee18f3aa9fdefd83abcc397"
+        }
+      ],
+      "world_snapshot_sha256": "d742c2d3026dee72e6a7224027c1edc42728fc779b56c004052134f4b746ea2b",
+      "gpu_log": {
+        "path": ".art-work/p87-trial/1920x1080.engine.log",
+        "sha256": "9542b47e8ec219251471f70b566d7bc1dba3c98626df1e89a9362802a724f2cc",
+        "os_certificate_diagnostic_present": false
+      }
+    },
+    {
+      "viewport": [
+        960,
+        540
+      ],
+      "frames": [
+        {
+          "camera": [
+            640.0,
+            570.0
+          ],
+          "depth": 1.0,
+          "file": "p86-scene-1.0.png",
+          "projection": "p86",
+          "size": [
+            960,
+            540
+          ],
+          "viewport": [
+            960.0,
+            540.0
+          ],
+          "zoom": 1.0,
+          "sha256": "2e6353db348d89791b1495028be2dd97cdab3dfa1adc90f459ba9aef4bd3b201"
+        },
+        {
+          "camera": [
+            620.0,
+            350.0
+          ],
+          "depth": 1.0,
+          "file": "p86-plants-1.0.png",
+          "projection": "p86",
+          "size": [
+            960,
+            540
+          ],
+          "viewport": [
+            960.0,
+            540.0
+          ],
+          "zoom": 1.0,
+          "sha256": "a83d86869bd9df1caa234e74e6243b9278bb3c0ae58a874a8209856c7b6e5818"
+        },
+        {
+          "camera": [
+            380.0,
+            240.0
+          ],
+          "depth": 1.0,
+          "file": "p86-seedlings-3.0.png",
+          "projection": "p86",
+          "size": [
+            960,
+            540
+          ],
+          "viewport": [
+            960.0,
+            540.0
+          ],
+          "zoom": 3.0,
+          "sha256": "e6f2e994914389351a643ef28de235cb063014d54f99a342a7f2a84bd0016040"
+        },
+        {
+          "camera": [
+            640.0,
+            910.0
+          ],
+          "depth": 1.0,
+          "file": "p86-shore-1.0.png",
+          "projection": "p86",
+          "size": [
+            960,
+            540
+          ],
+          "viewport": [
+            960.0,
+            540.0
+          ],
+          "zoom": 1.0,
+          "sha256": "ebd14c20c4373c4d892be59cef2f866514b43345b9293b58ed3d66057fe4cb6c"
+        },
+        {
+          "camera": [
+            470.0,
+            930.0
+          ],
+          "depth": 1.0,
+          "file": "p86-shore-3.0.png",
+          "projection": "p86",
+          "size": [
+            960,
+            540
+          ],
+          "viewport": [
+            960.0,
+            540.0
+          ],
+          "zoom": 3.0,
+          "sha256": "4bd8782118f85933ce9e01a5f19c7308ec59b14435f24270dd53ea98dcab6e9d"
+        },
+        {
+          "camera": [
+            1056.0,
+            565.0
+          ],
+          "depth": 1.0,
+          "file": "p86-resources-3.0.png",
+          "projection": "p86",
+          "size": [
+            960,
+            540
+          ],
+          "viewport": [
+            960.0,
+            540.0
+          ],
+          "zoom": 3.0,
+          "sha256": "f08ec3a32d3106f3090fdd1a3a589af1f787f4f4a7b21209c44c9c72f5a693f7"
+        },
+        {
+          "camera": [
+            640.0,
+            700.0
+          ],
+          "depth": 1.0,
+          "file": "p86-overview-0.1.png",
+          "projection": "p86",
+          "size": [
+            960,
+            540
+          ],
+          "viewport": [
+            960.0,
+            540.0
+          ],
+          "zoom": 0.100000001490116,
+          "sha256": "7be84c9b53794cb820f063d1a86ed8c69d661bd6679973a20df2c838acd675ce"
+        },
+        {
+          "camera": [
+            768.0,
+            1065.10327148438
+          ],
+          "depth": 1.0,
+          "file": "p86-fit-to-play.png",
+          "projection": "p86",
+          "size": [
+            960,
+            540
+          ],
+          "viewport": [
+            960.0,
+            540.0
+          ],
+          "zoom": 0.177234634757042,
+          "sha256": "f5867c8d3588bcf01ad23731b72b40b0781ac9deed12abac94e613370c8749b6"
+        },
+        {
+          "camera": [
+            768.0,
+            1065.10327148438
+          ],
+          "depth": 1.0,
+          "file": "p86-clean-fit-to-play.png",
+          "projection": "p86",
+          "size": [
+            960,
+            540
+          ],
+          "viewport": [
+            960.0,
+            540.0
+          ],
+          "zoom": 0.177234634757042,
+          "sha256": "ac461b59a9629415fd139d693aeaf7c6efc70524e8b0f1b95e9a451a831fb7d7"
+        },
+        {
+          "camera": [
+            420.0,
+            650.0
+          ],
+          "depth": 1.0,
+          "file": "p86-sidebar-1.0.png",
+          "projection": "p86",
+          "size": [
+            960,
+            540
+          ],
+          "viewport": [
+            960.0,
+            540.0
+          ],
+          "zoom": 1.0,
+          "sha256": "819c0cd77e02be356cdfd935feb92877b3e0d2e53c3ce6ff1fbdc681c918fb63"
+        },
+        {
+          "camera": [
+            1040.0,
+            700.0
+          ],
+          "depth": 1.0,
+          "file": "p86-build-preview.png",
+          "projection": "p86",
+          "size": [
+            960,
+            540
+          ],
+          "viewport": [
+            960.0,
+            540.0
+          ],
+          "zoom": 1.0,
+          "sha256": "228fafec36ab9ee1465c9dfdb40aeb67800b1cd63d34abd7858e758a4e09f48f"
+        },
+        {
+          "camera": [
+            640.0,
+            326.938568115234
+          ],
+          "depth": 0.573576436351046,
+          "file": "matched35-scene-1.0.png",
+          "projection": "matched35",
+          "size": [
+            960,
+            540
+          ],
+          "viewport": [
+            960.0,
+            540.0
+          ],
+          "zoom": 1.0,
+          "sha256": "eb939ed2236c7bdb609c6166e60164fcec45601564ce2e942d0c79f22a98a037"
+        },
+        {
+          "camera": [
+            620.0,
+            200.751754760742
+          ],
+          "depth": 0.573576436351046,
+          "file": "matched35-plants-1.0.png",
+          "projection": "matched35",
+          "size": [
+            960,
+            540
+          ],
+          "viewport": [
+            960.0,
+            540.0
+          ],
+          "zoom": 1.0,
+          "sha256": "466678a44ba5b54ff1ddf3fb8b5951e68635d44464d05f59e7803189565452fb"
+        },
+        {
+          "camera": [
+            380.0,
+            137.658355712891
+          ],
+          "depth": 0.573576436351046,
+          "file": "matched35-seedlings-3.0.png",
+          "projection": "matched35",
+          "size": [
+            960,
+            540
+          ],
+          "viewport": [
+            960.0,
+            540.0
+          ],
+          "zoom": 3.0,
+          "sha256": "8c68c66620a7ec9029d454470c702532465194dd3f83e5c7712874b85b1fc775"
+        },
+        {
+          "camera": [
+            640.0,
+            521.95458984375
+          ],
+          "depth": 0.573576436351046,
+          "file": "matched35-shore-1.0.png",
+          "projection": "matched35",
+          "size": [
+            960,
+            540
+          ],
+          "viewport": [
+            960.0,
+            540.0
+          ],
+          "zoom": 1.0,
+          "sha256": "b53eea764b6b683af25ca9d9b8162fac1cf448e761fb94c48ecabb8166f70428"
+        },
+        {
+          "camera": [
+            470.0,
+            533.426086425781
+          ],
+          "depth": 0.573576436351046,
+          "file": "matched35-shore-3.0.png",
+          "projection": "matched35",
+          "size": [
+            960,
+            540
+          ],
+          "viewport": [
+            960.0,
+            540.0
+          ],
+          "zoom": 3.0,
+          "sha256": "25108d2cba93b4a31dd69133227dd8651f0f139be15d47150aff93b7340c3923"
+        },
+        {
+          "camera": [
+            1056.0,
+            324.070709228516
+          ],
+          "depth": 0.573576436351046,
+          "file": "matched35-resources-3.0.png",
+          "projection": "matched35",
+          "size": [
+            960,
+            540
+          ],
+          "viewport": [
+            960.0,
+            540.0
+          ],
+          "zoom": 3.0,
+          "sha256": "7c5921163a4661b8238f45089535478043f1f637559d4664222f472d2f6130c8"
+        },
+        {
+          "camera": [
+            640.0,
+            401.503509521484
+          ],
+          "depth": 0.573576436351046,
+          "file": "matched35-overview-0.1.png",
+          "projection": "matched35",
+          "size": [
+            960,
+            540
+          ],
+          "viewport": [
+            960.0,
+            540.0
+          ],
+          "zoom": 0.100000001490116,
+          "sha256": "d6a8815ad5c07444f0ddb5e316a2f1390b8cbe38347a15e623c2236119a9689c"
+        },
+        {
+          "camera": [
+            768.0,
+            613.498840332031
+          ],
+          "depth": 0.573576436351046,
+          "file": "matched35-fit-to-play.png",
+          "projection": "matched35",
+          "size": [
+            960,
+            540
+          ],
+          "viewport": [
+            960.0,
+            540.0
+          ],
+          "zoom": 0.305196404457092,
+          "sha256": "f0ee13ed06c7799ed3d2cb9c407d3a309f428a287373701f0df05ecb34c68589"
+        },
+        {
+          "camera": [
+            768.0,
+            613.498840332031
+          ],
+          "depth": 0.573576436351046,
+          "file": "matched35-clean-fit-to-play.png",
+          "projection": "matched35",
+          "size": [
+            960,
+            540
+          ],
+          "viewport": [
+            960.0,
+            540.0
+          ],
+          "zoom": 0.305196404457092,
+          "sha256": "49ac531a5d909c144632e1fabf340e15d9a5f6b3384bf3d0014e370cff4f167a"
+        },
+        {
+          "camera": [
+            420.0,
+            372.82470703125
+          ],
+          "depth": 0.573576436351046,
+          "file": "matched35-sidebar-1.0.png",
+          "projection": "matched35",
+          "size": [
+            960,
+            540
+          ],
+          "viewport": [
+            960.0,
+            540.0
+          ],
+          "zoom": 1.0,
+          "sha256": "b47ac5ad939baf7eb6893a2db1be8d87457faea8d710eaf628c85a91e84449be"
+        },
+        {
+          "camera": [
+            1040.0,
+            401.503509521484
+          ],
+          "depth": 0.573576436351046,
+          "file": "matched35-build-preview.png",
+          "projection": "matched35",
+          "size": [
+            960,
+            540
+          ],
+          "viewport": [
+            960.0,
+            540.0
+          ],
+          "zoom": 1.0,
+          "sha256": "edabac14916b0a0ca62b5a260306b40956f292443f5fbb77fbe729e2b21a231a"
+        }
+      ],
+      "world_snapshot_sha256": "d742c2d3026dee72e6a7224027c1edc42728fc779b56c004052134f4b746ea2b",
+      "gpu_log": {
+        "path": ".art-work/p87-trial/960x540.engine.log",
+        "sha256": "9542b47e8ec219251471f70b566d7bc1dba3c98626df1e89a9362802a724f2cc",
+        "os_certificate_diagnostic_present": false
+      }
+    }
+  ],
+  "remaining": [
+    "B production integration",
+    "C complete interaction/camera audit",
+    "D full regression and Windows delivery"
+  ]
+}

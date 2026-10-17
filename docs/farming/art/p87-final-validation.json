@@ -1,0 +1,200 @@
+{
+  "date": "2026-10-15",
+  "phase": "P8.7",
+  "status": "completed_default_switched_and_packaged",
+  "save_schema": 17,
+  "user_visual_acceptance": {
+    "sample_accepted": true,
+    "sample_quote": "接受35°样板，继续B～D",
+    "final_quote": "适当补充一些阴影，最终画面基本上接受",
+    "final_acceptance_kind": "qualified acceptance with a requested minor shadow refinement",
+    "requested_shadows_implemented": true,
+    "post_shadow_agent_gpu_review": true,
+    "separate_post_shadow_user_review_not_claimed": true
+  },
+  "projection": {
+    "elevation_degrees": 35,
+    "logical_cell": [
+      64,
+      64
+    ],
+    "view_cell": [
+      64,
+      36.70889192646695
+    ],
+    "body_pngs_resquashed": false,
+    "root_policy": "actual model origin at footprint center",
+    "default_scene_sha256": "de9221eead0bddb8f07f2a76dd24f769f6b542289fcebe8e7252e383b45fc884"
+  },
+  "artifacts": {
+    "asset_qc": "p87-asset-qc.json",
+    "visual_baseline": "p87-visual-baseline.json",
+    "camera_calibration": "p87-camera-calibration.json",
+    "pngs": 48,
+    "gpu_frames": 60,
+    "gpu_directory": ".art-work/p87-final-visual"
+  },
+  "full_suite": {
+    "path": ".art-work/p87-full-regression.log",
+    "sha256": "b888aa685008295833b2314208944cc1de26f4e7a699ba474fc8cfd94b6ede3b",
+    "completion_marker": "FARMING TEST SUITE OK",
+    "exit_code": 0,
+    "command": "test.bat",
+    "final_shadow_delta_verification": "146 production / 89 projection / 324 interactions, final 60 GPU frames and packaged probes rerun after requested shadows; full suite gameplay coverage retained"
+  },
+  "final_specialized_checks": {
+    "projection-tests": {
+      "path": ".art-work/p87-trial/projection-tests.engine.log",
+      "sha256": "3b83a05f6579f85ddb0437a7ac970ce8fd6ff62093ed265c72dafea06c49a0c6",
+      "completion_marker": "P87 PROJECTION OK: 89 checks"
+    },
+    "production-tests": {
+      "path": ".art-work/p87-trial/production-tests.engine.log",
+      "sha256": "d43d9f696cdfe9b5f1a0067e61d5cf5fc5e3458dcf962bdef5cac95c2012f6cc",
+      "completion_marker": "P87 PRODUCTION OK: 146 checks"
+    },
+    "interaction-tests": {
+      "path": ".art-work/p87-trial/interaction-tests.engine.log",
+      "sha256": "4b45f19ead9dfecf4ee7eef46aac994268bbe4c8fec0e948909eac8291b46d68",
+      "completion_marker": "P87 INTERACTIONS OK: 324 checks"
+    },
+    "v1-ui-compatibility": {
+      "path": ".art-work/p87-trial/v1-ui-compatibility.engine.log",
+      "sha256": "859cba7226c4823295cbab30267f83c7c636de38bbe619d331463412d3dcc5a4",
+      "completion_marker": "V1 PHASE65 UI TEST OK: 79 checks"
+    },
+    "p85-lifecycle": {
+      "path": ".art-work/p87-trial/p85-lifecycle.engine.log",
+      "sha256": "7ff47475c496f6bdc741b6b1ab0034ababdabfd8ba040a4dcd5c50010828abe3",
+      "completion_marker": "PHASE085 VISUALS OK: 209 checks"
+    },
+    "p86-production": {
+      "path": ".art-work/p87-trial/p86-production.engine.log",
+      "sha256": "48da0922870b85f7c1fff1d7faf88f20795afaab8e11fc6392c3b812afdc4ee7",
+      "completion_marker": "P86 PRODUCTION OK: 95 checks"
+    }
+  },
+  "default_entry": {
+    "path": ".art-work/p87-default-entry.log",
+    "sha256": "e88c00874279cfeb8afa50a74435fd1d0bca1a157f78fe04eae3e99b468ae757",
+    "completion_marker": "P8 RELEASE SMOKE OK (20 checks)"
+  },
+  "package": {
+    "path": "dist/LingTianDemoP87-Windows-x64.zip",
+    "bytes": 42740486,
+    "sha256": "1af1f566c3b2c7ef281a697d9d4bac68fdf4f5e5492fc9c6cc0411c00aeb167a",
+    "source_revision": "1eef1d98b9115b456cb1924ac40631b2092148cb",
+    "source_dirty": true,
+    "runtime_config_and_scene_hashes_matched": 70,
+    "verified_runtime_files": [
+      "assets/farming/shaders/p86_shore.gdshader",
+      "assets/farming/shaders/p86_shore_trial.gdshader",
+      "assets/farming/shaders/p86_surface_trial.gdshader",
+      "assets/farming/shaders/p87_shore.gdshader",
+      "assets/farming/shaders/p87_surface.gdshader",
+      "assets/farming/shaders/p8_terrain_soften.gdshader",
+      "content/farming/p8/p87_projection.json",
+      "content/farming/p8/p87_shadows.json",
+      "scenes/farming/farm_p8.tscn",
+      "scripts/farming/core/farm_data.gd",
+      "scripts/farming/core/clock/farm_clock.gd",
+      "scripts/farming/core/crops/crop_manager.gd",
+      "scripts/farming/core/crops/farm_batch.gd",
+      "scripts/farming/core/economy/farm_economy.gd",
+      "scripts/farming/core/economy/farm_records.gd",
+      "scripts/farming/core/economy/farm_tools.gd",
+      "scripts/farming/core/economy/farm_tutorial.gd",
+      "scripts/farming/core/grid/land_grid.gd",
+      "scripts/farming/core/inventory/farm_inventory.gd",
+      "scripts/farming/core/storage/farm_settings.gd",
+      "scripts/farming/core/storage/farm_slot_store.gd",
+      "scripts/farming/core/storage/farm_snapshot.gd",
+      "scripts/farming/p8/p86_environment_trial.gd",
+      "scripts/farming/p8/p87_grounding.gd",
+      "scripts/farming/p8/p87_projection.gd",
+      "scripts/farming/p8/p87_projection_trial.gd",
+      "scripts/farming/p8/p87_scene.gd",
+      "scripts/farming/p8/p8_data.gd",
+      "scripts/farming/p8/p8_devices.gd",
+      "scripts/farming/p8/p8_environment_visuals.gd",
+      "scripts/farming/p8/p8_facility_visuals.gd",
+      "scripts/farming/p8/p8_flowers.gd",
+      "scripts/farming/p8/p8_grounding.gd",
+      "scripts/farming/p8/p8_handbook.gd",
+      "scripts/farming/p8/p8_husbandry.gd",
+      "scripts/farming/p8/p8_land.gd",
+      "scripts/farming/p8/p8_operations.gd",
+      "scripts/farming/p8/p8_plant_visuals.gd",
+      "scripts/farming/p8/p8_research.gd",
+      "scripts/farming/p8/p8_scene.gd",
+      "scripts/farming/p8/p8_slot_store.gd",
+      "scripts/farming/p8/p8_snapshot.gd",
+      "scripts/farming/p8/p8_ui_style.gd",
+      "scripts/farming/p8/p8_workforce.gd",
+      "scripts/farming/p8/p8_world.gd",
+      "scripts/farming/rendering/farm_ui_style.gd",
+      "scripts/farming/rendering/terrain_renderer.gd",
+      "scripts/farming/v1/v1_data.gd",
+      "scripts/farming/v1/v1_journal.gd",
+      "scripts/farming/v1/v1_orders.gd",
+      "scripts/farming/v1/v1_scene.gd",
+      "scripts/farming/v1/v1_settings.gd",
+      "scripts/farming/v1/v1_slot_store.gd",
+      "scripts/farming/v1/v1_snapshot.gd",
+      "scripts/farming/v1/v1_ui_icons.gd",
+      "scripts/farming/v1/v1_ui_style.gd",
+      "scripts/farming/v1/v1_workforce.gd",
+      "scripts/farming/v1/v1_world.gd",
+      "scripts/farming/v1/v1_world_state.gd",
+      "scripts/farming/v2/v2_data.gd",
+      "scripts/farming/v2/v2_husbandry.gd",
+      "scripts/farming/v2/v2_reports.gd",
+      "scripts/farming/v2/v2_resource_ledger.gd",
+      "scripts/farming/v2/v2_scene.gd",
+      "scripts/farming/v2/v2_slot_store.gd",
+      "scripts/farming/v2/v2_snapshot.gd",
+      "scripts/farming/v2/v2_world.gd",
+      "scripts/farming/validation/p86_release_smoke.gd",
+      "scripts/farming/validation/p87_release_smoke.gd",
+      "scripts/farming/validation/p8_release_smoke.gd"
+    ],
+    "probes": {
+      "standalone": {
+        "path": ".art-work/p87-release-logs/standalone.log",
+        "sha256": "33f603f6d2ac2324f1a6940ee31ae67241b9974a22470a5eadd5405c4048adf0",
+        "completion_marker": "P87 RELEASE SMOKE OK: 91 checks",
+        "checks": 91
+      },
+      "unpacked": {
+        "path": ".art-work/p87-release-logs/unpacked.log",
+        "sha256": "33f603f6d2ac2324f1a6940ee31ae67241b9974a22470a5eadd5405c4048adf0",
+        "completion_marker": "P87 RELEASE SMOKE OK: 91 checks",
+        "checks": 91
+      },
+      "unpacked-gpu": {
+        "path": ".art-work/p87-release-logs/unpacked-gpu.log",
+        "sha256": "41195b35edd25566a4edf1ec8909a92531ebbc892f457572af00ba342d9539d8",
+        "completion_marker": "P87 RELEASE SMOKE OK: 93 checks",
+        "checks": 93
+      }
+    },
+    "gpu_frame_sha256": "daacd98d062326f25e759b0260cfd76c95b4ca58e6c7e4c2d0fb56e95849023b",
+    "gpu_viewport": [
+      1920,
+      1080
+    ]
+  },
+  "commits_before_final_delivery": [
+    "3ebc64e",
+    "75b735f",
+    "74c4565",
+    "1eef1d9"
+  ],
+  "deferred": [
+    "real-time 3D and free camera rotation",
+    "animal models",
+    "facility work effects",
+    "post-harvest shapes",
+    "gameplay expansion"
+  ]
+}

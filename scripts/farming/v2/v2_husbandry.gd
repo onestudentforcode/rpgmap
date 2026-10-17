@@ -40,6 +40,17 @@ func diet_inputs(species_id: String, diet_kind: String, diet_id: String) -> Dict
 			return diet["inputs"].duplicate()
 	return {}
 
+func diet_definition(species_id: String, diet_kind: String, diet_id: String) -> Dictionary:
+	for diet in species_defs[species_id][diet_kind]:
+		if String(diet["id"]) == diet_id:
+			return diet
+	return {}
+
+## Cycle products default to the species set; diets may carry their own.
+func diet_outputs(species_id: String, diet_kind: String, diet_id: String) -> Dictionary:
+	var definition := diet_definition(species_id, diet_kind, diet_id)
+	return definition.get("outputs", species_defs[species_id]["outputs"]).duplicate()
+
 func diet_name(species_id: String, diet_kind: String, diet_id: String) -> String:
 	var species: Dictionary = species_defs[species_id]
 	for diet in species[diet_kind]:
@@ -364,7 +375,7 @@ func maintain(facility_uid: int, operator: String = "player", service_day: int =
 			state["next_cycle_uid"] = cycle_uid + 1
 			individual["cycle"] = {"uid": cycle_uid, "diet_id": habitat["special_diet_id"],
 				"start_day": day, "inputs": diet_inputs(habitat["species_id"], "special_diets", habitat["special_diet_id"]),
-				"outputs": species["outputs"].duplicate(), "progress": 0,
+				"outputs": diet_outputs(habitat["species_id"], "special_diets", String(habitat["special_diet_id"])), "progress": 0,
 				"goal": int(species["cycle_days"]) * 100, "status": "running", "ready_day": -1}
 			started += 1
 		for ident in feed_special:
@@ -791,8 +802,11 @@ static func normalize(value, day: int, world: Dictionary, catalog, settings: Dic
 			return Scalars.fail("设施与物种不匹配")
 		var species: Dictionary = species_defs[habitat["species_id"]]
 		var base_ids := {}
+		var juvenile_only_base := false
 		for diet in species["base_diets"]:
 			base_ids[diet["id"]] = diet["inputs"]
+			if diet.get("juvenile_only", false):
+				juvenile_only_base = true
 		var special_ids := {}
 		for diet in species["special_diets"]:
 			special_ids[diet["id"]] = diet["inputs"]
@@ -829,7 +843,9 @@ static func normalize(value, day: int, world: Dictionary, catalog, settings: Dic
 					return Scalars.fail("未服务个体不能有服务记录")
 			else:
 				# Same-day history may legitimately differ from the current plan.
-				if not base_ids.has(service["diet_id"]) or service["inputs"] != base_ids[service["diet_id"]]:
+				# Species with a juvenile-only base diet keep adults on empty
+				# service inputs: their batches were paid in full at the start.
+				if not base_ids.has(service["diet_id"]) or (service["inputs"] != base_ids[service["diet_id"]] and not (service["inputs"].is_empty() and juvenile_only_base)):
 					return Scalars.fail("服务食谱或投入与记录不符")
 				if service["operator"] not in ["player", "worker"]:
 					return Scalars.fail("未知服务来源")
@@ -846,8 +862,13 @@ static func normalize(value, day: int, world: Dictionary, catalog, settings: Dic
 				seen_cycles[int(cycle["uid"])] = true
 				if not special_ids.has(cycle["diet_id"]) or cycle["inputs"] != special_ids[cycle["diet_id"]]:
 					return Scalars.fail("周期食谱或投入与冻结记录不符")
-				# Frozen outputs must stay exactly the configured species products.
-				if cycle["outputs"] != species["outputs"]:
+				# Frozen outputs must stay exactly the configured products: the
+				# species set, or a per-diet set when the diet carries one.
+				var expected_outputs: Dictionary = species["outputs"]
+				for diet in species["special_diets"]:
+					if String(diet["id"]) == String(cycle["diet_id"]) and diet.has("outputs"):
+						expected_outputs = diet["outputs"]
+				if cycle["outputs"] != expected_outputs:
 					return Scalars.fail("周期产物与物种配置不符")
 				if not Scalars.whole(cycle["goal"], cycle_goal, cycle_goal) or not Scalars.whole(cycle["progress"], 0, cycle_goal):
 					return Scalars.fail("周期目标或进度非法")
@@ -857,7 +878,8 @@ static func normalize(value, day: int, world: Dictionary, catalog, settings: Dic
 					if int(cycle["progress"]) > cycle_goal - 100 or int(cycle["ready_day"]) != -1:
 						return Scalars.fail("进行中周期进度或就绪日非法")
 				elif cycle["status"] == "ready":
-					if int(cycle["progress"]) != cycle_goal or not Scalars.whole(cycle["ready_day"], 0, day) or int(cycle["ready_day"]) <= int(cycle["start_day"]):
+					# One-day cycles legitimately finish on their start day.
+					if int(cycle["progress"]) != cycle_goal or not Scalars.whole(cycle["ready_day"], 0, day) or int(cycle["ready_day"]) < int(cycle["start_day"]):
 						return Scalars.fail("待收周期进度或就绪日非法")
 				else:
 					return Scalars.fail("周期状态非法")

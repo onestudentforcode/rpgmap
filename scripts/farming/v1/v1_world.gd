@@ -71,11 +71,11 @@ func _init(slot_store = null, catalog = Data, codec = Snapshot) -> void:
 	clock = Clock.new()
 	inventory = Inventory.new()
 	var map = data_source.load_map()
-	grid.setup(int(map["size"][0]), int(map["size"][1]), map["grid"], data_source.tillable_map())
+	grid.setup(int(map["size"][0]), int(map["size"][1]), map["grid"], data_source.tillable_map(), ["soil"], int(map.get("origin_x", 0)))
 	clock.setup({"time": {"ap_per_day": config["ap_per_day"], "days_per_term": config["days_per_term"]}})
 	clock.day_changed.connect(_on_day_changed)
 	for y in range(grid.height):
-		for x in range(grid.width):
+		for x in range(grid.origin_x, grid.origin_x + grid.width):
 			var level := int(config["light"]["default"])
 			for region in config["light"]["regions"]:
 				var rect: Array = region["rect"]
@@ -85,7 +85,7 @@ func _init(slot_store = null, catalog = Data, codec = Snapshot) -> void:
 	for ident in source_defs:
 		var position: Array = source_defs[ident]["position"]
 		_source_cells[Vector2i(int(position[0]), int(position[1]))] = ident
-	workforce = Workforce.new(self)
+	workforce = _make_workforce()
 	apply_snapshot(snapshot_type.fresh())
 
 func _error(reason: String) -> Dictionary:
@@ -112,6 +112,10 @@ func _facility_removed(_uid: int) -> void:
 
 func _settle_workforce(completed_day: int) -> void:
 	workforce.settle(completed_day)
+
+## Derived products swap the roster module; V1 keeps the shared workforce.
+func _make_workforce():
+	return Workforce.new(self)
 
 func _snapshot_applied(_snapshot: Dictionary) -> void:
 	pass
@@ -177,8 +181,12 @@ func retry_day_save() -> Dictionary:
 func environment_at(cell: Vector2i) -> Dictionary:
 	if not grid.in_bounds(cell.x, cell.y):
 		return {}
-	var index := cell.y * grid.width + cell.x
-	return {"water": environment[index][0], "fertility": environment[index][1], "light": _light[index]}
+	var index := grid.index_of(cell)
+	return {"water": environment[index][0], "fertility": environment[index][1], "light": _light_at(cell)}
+
+## Natural light; derived products override for lamps on the same query.
+func _light_at(cell: Vector2i) -> int:
+	return _light[grid.index_of(cell)]
 
 func source_at(cell: Vector2i) -> String:
 	return String(_source_cells.get(cell, ""))
@@ -234,7 +242,7 @@ func action_quote(cell: Vector2i, kind: String) -> Dictionary:
 		"irrigate", "fertilize":
 			if grid.state_at(cell) not in [Grid.State.TILLED,Grid.State.PLANTED]: return _error("只能改善已开垦的土地")
 			var field := 0 if kind == "irrigate" else 1
-			if environment[cell.y*grid.width+cell.x][field] >= 100: return _error("环境已满")
+			if environment[grid.index_of(cell)][field] >= 100: return _error("环境已满")
 			inputs["clean_water" if field == 0 else "humus"] = int(config["environment"]["irrigate_units" if field == 0 else "fertilize_units"])
 		_: return _error("请选择农务工具")
 	for iid in inputs:
@@ -265,7 +273,7 @@ func plant(cell: Vector2i, crop_id: String) -> Dictionary:
 	crops[uid] = {"uid": uid, "crop_id": crop_id, "origin": [cell.x, cell.y], "progress": 0, "state": "growing", "harvest_count": 0}
 	# Culture water also moistens the bed; it is not charged twice as irrigation.
 	if definition["mode"] == "culture_each_cycle":
-		var index := cell.y * grid.width + cell.x
+		var index := grid.index_of(cell)
 		environment[index][0] = mini(100, int(environment[index][0]) + int(inputs.get("clean_water", 0)) * int(config["environment"]["irrigate_gain"]))
 	_count("plantings",crop_id)
 	Journal.observe(journal,"plant")
@@ -282,7 +290,11 @@ func harvest(cell: Vector2i, mode: String = "harvest") -> Dictionary:
 	if mode not in ["harvest", "fell"] or (mode == "fell" and definition["mode"] not in ["tap_or_fell", "fell_replant"]):
 		return _error("采收方式不适用")
 	var uid := int(instance["uid"])
-	var outputs: Dictionary = definition["fell_outputs"] if mode == "fell" and definition["mode"] == "tap_or_fell" else definition["outputs"]
+	var outputs: Dictionary = (definition["fell_outputs"] if mode == "fell" and definition["mode"] == "tap_or_fell" else definition["outputs"]).duplicate()
+	# Derived products may add cycle-scoped bonuses (e.g. pollinated oilseed).
+	var bonus := _harvest_bonus(instance)
+	for ident in bonus:
+		outputs[ident] = int(outputs.get(ident, 0)) + int(bonus[ident])
 	for ident in outputs:
 		inventory.add(ident, int(outputs[ident]))
 	_record_flow(outputs, {}, "采收收获")
@@ -299,6 +311,10 @@ func harvest(cell: Vector2i, mode: String = "harvest") -> Dictionary:
 
 func irrigate(cell: Vector2i) -> Dictionary:
 	return _improve(cell, 0, "clean_water", "irrigate_units", "irrigate_gain")
+
+## Extra harvest outputs for derived products; the base harvest adds none.
+func _harvest_bonus(_instance: Dictionary) -> Dictionary:
+	return {}
 
 func clear_crop(cell: Vector2i) -> Dictionary:
 	var checked := _can_act()
@@ -322,7 +338,7 @@ func _improve(cell: Vector2i, field: int, item: String, units: String, gain: Str
 		return checked
 	if not grid.in_bounds(cell.x, cell.y) or grid.state_at(cell) not in [Grid.State.TILLED, Grid.State.PLANTED]:
 		return _error("只能改善已开垦的土地")
-	var index := cell.y * grid.width + cell.x
+	var index := grid.index_of(cell)
 	var amount := int(config["environment"][units])
 	if environment[index][field] >= 100 or not inventory.has(item, amount):
 		return _error("环境已满或缺少投入")
@@ -561,15 +577,15 @@ func _on_day_changed(day: int) -> void:
 		var fertility := 0
 		var light := 0
 		for cell in cells:
-			var index: int = cell.y * grid.width + cell.x
+			var index: int = grid.index_of(cell)
 			water += int(environment[index][0])
 			fertility += int(environment[index][1])
-			light += int(_light[index])
+			light += int(_light_at(cell))
 		var settings: Dictionary = config["environment"]
 		var water_rate := 100 if float(water) / cells.size() >= float(settings["optimal_water"]) else int(settings["low_water_efficiency"])
 		var fertility_rate := 100 if float(fertility) / cells.size() >= float(settings["optimal_fertility"]) else int(settings["low_fertility_efficiency"])
 		var light_rate := 100 if absf(float(light) / cells.size() - float(definition["light"])) <= float(settings["light_tolerance"]) else int(settings["low_light_efficiency"])
-		var growth := maxi(1, floori(float(water_rate * fertility_rate * light_rate) / 10000.0))
+		var growth := maxi(1, floori(float(water_rate * fertility_rate * light_rate) / 10000.0 * float(_crop_growth_percent(row,day-1))/100.0))
 		if row["state"] != "mature":
 			var target := int(definition["cycle_days"] if row["harvest_count"] > 0 else definition["days"]) * 100
 			row["progress"] = mini(target, int(row["progress"]) + growth)
@@ -577,7 +593,7 @@ func _on_day_changed(day: int) -> void:
 				row["state"] = "mature"
 				_count("matured",row["crop_id"])
 		for cell in cells:
-			var index: int = cell.y * grid.width + cell.x
+			var index: int = grid.index_of(cell)
 			environment[index][0] = maxi(0, int(environment[index][0]) - int(definition["water_use"]))
 			environment[index][1] = maxi(0, int(environment[index][1]) - int(definition["fertility_use"]))
 	_source_day = day
@@ -593,18 +609,33 @@ func _on_day_changed(day: int) -> void:
 	# internal reconciliation failure blocks the commit instead of bypassing it.
 	var ledger_error := _settle_ledger(day-1)
 	Journal.settle(journal,day,primeval_stones,inventory.to_save(),workforce.state["report"]["workers"])
+	# P8 runs the new day's opening devices only after day D is fully frozen, so
+	# a 45-day recap never mixes in day D+1 consumption. V1/V2 keep it inert.
+	_opening_devices(day)
+	_commit_day(day, ledger_error)
+	daily_settled.emit(day, _store != null and daily_save_error.is_empty())
+
+## Day D+1 opening device step, executed inside the settlement transaction.
+func _crop_growth_percent(_crop: Dictionary, _day: int) -> int:
+	return 100
+
+func _opening_devices(_day: int) -> void:
+	pass
+
+## Publish the settled day. The default products save the settled state directly;
+## P8 wraps this in a candidate transaction with full rollback on failure.
+func _commit_day(_day: int, ledger_error: String) -> void:
 	if _store != null:
 		if not ledger_error.is_empty():
 			daily_save_error = ledger_error
 		else:
 			var saved: Dictionary = _store.commit(to_snapshot())
 			daily_save_error = "" if saved["ok"] else String(saved["reason"])
-	daily_settled.emit(day, _store != null and daily_save_error.is_empty())
 
 func to_snapshot() -> Dictionary:
 	var tilled := []
 	for y in range(grid.height):
-		for x in range(grid.width):
+		for x in range(grid.origin_x, grid.origin_x + grid.width):
 			if grid.state_at(Vector2i(x,y)) in [Grid.State.TILLED, Grid.State.PLANTED] or _tilled_under_buildings.has(Vector2i(x,y)):
 				tilled.append([x,y])
 	var rows := []

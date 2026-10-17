@@ -17,6 +17,9 @@ if errorlevel 1 goto :failed
 echo [test V2] Complete Phase 7 checks, two45-day routes, GUI events and release smoke
 call test-v2.bat
 if errorlevel 1 goto :failed
+echo [test P8] Phase 8 foundation: bake audits, model checks and dev smoke
+call test-p8.bat
+if errorlevel 1 goto :failed
 echo FARMING TEST SUITE OK
 popd
 exit /b 0

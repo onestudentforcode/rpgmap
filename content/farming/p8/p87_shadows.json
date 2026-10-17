@@ -1,0 +1,15 @@
+{
+  "revision": "p87-soft-shadows",
+  "parameters_space": "already_projected_view_units",
+  "land_contact_opacity_multiplier": 1.12,
+  "land_contact_opacity_limit": 0.27,
+  "resource_contact_scale": 1.3076923076923077,
+  "cast_direction": [1.0, 0.45],
+  "cast_color": "4a4938",
+  "tree_stage_1": {"size": [24, 7], "offset": [6, 3], "opacity": 0.065},
+  "tree_stage_2": {"size": [44, 12], "offset": [13, 6], "opacity": 0.095},
+  "tree_stage_3": {"size": [68, 18], "offset": [22, 10], "opacity": 0.115},
+  "plant_cast_opacity": 0.065,
+  "facility_cast_opacity": 0.075,
+  "resource_cast_opacity": 0.085
+}

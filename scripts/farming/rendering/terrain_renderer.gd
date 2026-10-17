@@ -113,8 +113,8 @@ func _rebuild_static() -> void:
 			src0 = t["_src_ground"]
 			break
 	for y in range(_grid.height):
-		for x in range(_grid.width):
-			ground_layer.set_cell(Vector2i(x, y), src0, Vector2i.ZERO)
+		for x in range(_grid.origin_x, _grid.origin_x + _grid.width):
+			if _grid.in_bounds(x, y): ground_layer.set_cell(Vector2i(x, y), src0, Vector2i.ZERO)
 
 	for t in _terrains:
 		if t["dynamic"] or int(t["layer"]) == 0:
@@ -124,23 +124,28 @@ func _rebuild_static() -> void:
 		var src: int = t["_src_ground"] if full else t["_src_trans"]
 		var tid: String = t["id"]
 		for y in range(_grid.height):
-			for x in range(_grid.width):
+			for x in range(_grid.origin_x, _grid.origin_x + _grid.width):
 				var cell := Vector2i(x, y)
-				if _grid.terrain_at(cell) == tid:
+				if _grid.in_bounds(x, y) and _grid.terrain_at(cell) == tid:
 					layer.set_cell(cell, src, Vector2i.ZERO if full else _static_atlas(tid, cell))
 
 
 ## 全量刷新动态层（读档/复位后调用；常规变更走 update_cells 增量）。
+func refresh_all() -> void:
+	for layer in layers.values(): layer.clear()
+	_rebuild_static()
+	refresh_dynamic_all()
+
 func refresh_dynamic_all() -> void:
 	var cells: Array[Vector2i] = []
 	for y in range(_grid.height):
-		for x in range(_grid.width):
+		for x in range(_grid.origin_x, _grid.origin_x + _grid.width):
 			cells.append(Vector2i(x,y))
 	update_cells(cells)
 
 
 func _static_atlas(tid: String, cell: Vector2i) -> Vector2i:
-	var pred := func(x: int, y: int) -> bool: return _grid.terrain[y][x] == tid
+	var pred := func(x: int, y: int) -> bool: return _grid.terrain_at(Vector2i(x, y)) == tid
 	return atlas_of(_grid.bitmask_if(cell, pred))
 
 
@@ -156,7 +161,7 @@ func _tilled_pred() -> Callable:
 
 func _load_tex(rel: String) -> Texture2D:
 	var path := "res://" + rel
-	if OS.has_feature("farm_demo_release") or OS.has_feature("farm_demo_v1_release") or OS.has_feature("farm_demo_v2_release"):
+	if OS.has_feature("farm_demo_release") or OS.has_feature("farm_demo_v1_release") or OS.has_feature("farm_demo_v2_release") or OS.has_feature("farm_demo_p8_release"):
 		return load(path) as Texture2D
 	var img := Image.new()
 	var error := img.load_svg_from_string(FileAccess.get_file_as_string(path)) if path.ends_with(".svg") else img.load_png_from_buffer(FileAccess.get_file_as_bytes(path))
