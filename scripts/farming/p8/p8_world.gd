@@ -13,6 +13,7 @@ const P8Devices := preload("res://scripts/farming/p8/p8_devices.gd")
 const Logistics := preload("res://scripts/farming/p8/p10_logistics.gd")
 const Rooms := preload("res://scripts/farming/p8/p102_rooms.gd")
 const Ranch := preload("res://scripts/farming/p8/p103_ranch.gd")
+const Services := preload("res://scripts/farming/p8/p104_services.gd")
 ## Observational receipts for external business audits; never grants resources or
 ## replays work. Day-save failures are still governed by the transaction below.
 signal operation_recorded(entry: Dictionary)
@@ -36,6 +37,7 @@ var land
 var logistics
 var rooms
 var ranch
+var services
 
 func _init(slot_store = null) -> void:
 	land = P8Land.new(self)
@@ -46,6 +48,7 @@ func _init(slot_store = null) -> void:
 	logistics = Logistics.new(self, P8Data.load_data()["logistics"])
 	rooms = Rooms.new(self,P8Data.load_data()["rooms"])
 	ranch = Ranch.new(self, P8Data.load_data()["p103"])
+	services = Services.new(self, P8Data.load_data()["p104"])
 	super(slot_store)
 
 func _catalog():
@@ -110,6 +113,8 @@ func _tier_of(level: String) -> int:
 	return {"high": 0, "normal": 1, "low": 2}[level]
 
 func demolish_facility(uid: int) -> Dictionary:
+	if services.state["toys"].has(str(uid)): return _error("请先卸下玩具站里的藤球")
+	if services.has_carry(uid): return _error("请先处理工作场已保留的工作余量")
 	if not logistics.in_host(uid).is_empty(): return _error("请先撤回入驻后勤蛊，再拆除设施")
 	if research != null and not research.active_project(uid).is_empty():
 		return _error("研究台有在研项目，完成或处理后才能拆除")
@@ -126,6 +131,7 @@ func _facility_removed(uid: int) -> void:
 	devices.forget(uid)
 	logistics.forget_facility(uid)
 	ranch.forget_facility(uid)
+	services.forget_facility(uid)
 
 func to_snapshot() -> Dictionary:
 	var snapshot := super.to_snapshot()
@@ -138,6 +144,7 @@ func to_snapshot() -> Dictionary:
 	snapshot["world"]["agriculture"] = logistics.agri_to_save()
 	snapshot["world"]["rooms"] = rooms.to_save()
 	snapshot["world"]["ranch"] = ranch.to_save()
+	snapshot["world"]["services"] = services.to_save()
 	return snapshot
 
 func apply_snapshot(value) -> Dictionary:
@@ -163,6 +170,7 @@ func _snapshot_applied(snapshot: Dictionary) -> void:
 		logistics.apply_agri_save(snapshot["world"]["agriculture"])
 	rooms.apply_save(snapshot["world"]["rooms"])
 	ranch.apply_save(snapshot["world"]["ranch"])
+	services.apply_save(snapshot["world"]["services"])
 
 ## Pollination bonus: one extra oilseed per pollinated cycle at harvest.
 func _harvest_bonus(instance: Dictionary) -> Dictionary:
@@ -389,7 +397,9 @@ func _crop_rect(crop: Dictionary) -> Rect2i:
 
 func till(cell: Vector2i) -> Dictionary:
 	if rooms.state["floors"].has(Rooms.key(cell)): return _error("请使用地板工具将普通地板改为耕地")
-	return super(cell)
+	var result: Dictionary=super(cell)
+	if result["ok"]: rooms._invalidate()
+	return result
 
 func action_quote(cell: Vector2i, kind: String) -> Dictionary:
 	if kind=="till" and rooms.state["floors"].has(Rooms.key(cell)): return _error("普通地板不能直接开垦")

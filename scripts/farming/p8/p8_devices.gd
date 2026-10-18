@@ -131,6 +131,7 @@ func run_opening(day: int) -> void:
 	var services: Dictionary = settings["station"]["services"]
 	var limit := int(settings["station"]["daily_limit"])
 	for uid in _sorted_device_uids(STATION_ID):
+		if not world.services.host_ready(int(uid)): continue
 		var device := _ensure(int(uid), LAMP_ID if false else STATION_ID)
 		var coverage := _coverage(int(uid))
 		for item in ["irrigate", "fertilize"]:
@@ -142,6 +143,7 @@ func run_opening(day: int) -> void:
 			for y in range(coverage.position.y, coverage.end.y):
 				for x in range(coverage.position.x, coverage.end.x):
 					var cell := Vector2i(x, y)
+					if not world.services.agriculture_target(int(uid),cell): continue
 					var gu_target: bool = not world.logistics.at(cell).is_empty()
 					if gu_target and item == "fertilize": continue
 					if world.grid.state_at(cell) not in [1, 2] and not gu_target:

@@ -20,8 +20,10 @@ var logistics_ui := LogisticsUI.new(self)
 var build_facing := "east"
 const RoomsUI := preload("res://scripts/farming/p8/p102_ui.gd")
 const RanchUI := preload("res://scripts/farming/p8/p103_ui.gd")
+const ServicesUI := preload("res://scripts/farming/p8/p104_ui.gd")
 var rooms_ui := RoomsUI.new(self)
 var ranch_ui := RanchUI.new(self)
+var services_ui := ServicesUI.new(self)
 
 func _new(slot: int, overwrite: bool) -> void:
 	rooms_ui.floor_tool=""
@@ -271,7 +273,7 @@ func _show_cell() -> void:
 		var field: Dictionary = world.rooms.field_at(selected)
 		if not field.is_empty(): _label(sidebar,"所属田块：%s（#%d）" % [field["name"],field["uid"]])
 		_button(sidebar,"农业区与地板",rooms_ui.open)
-		if not world.facility_at(selected).is_empty() and String(world.facility_at(selected)["facility_id"]) in ["pen","rock_workyard","dispatch_station","feed_trough","small_bed","medium_bed","large_bed","care_table"]:
+		if not world.facility_at(selected).is_empty() and String(world.facility_at(selected)["facility_id"]) in ["pen","rock_workyard","dispatch_station","feed_trough","small_bed","medium_bed","large_bed","care_table","soothing_station","toy_station"]:
 			_button(sidebar,"畜牧分区",ranch_ui.open)
 
 func _board_input(event: InputEvent) -> void:
@@ -522,7 +524,16 @@ func _show_build() -> void:
 ## carry an explicit lock line and stay unstartable while gated.
 func _show_facility(facility: Dictionary) -> void:
 	logistics_ui.host_section(int(facility["uid"]))
+	if facility["facility_id"]=="toy_station": services_ui.toy_controls(sidebar,int(facility["uid"]))
 	var definition: Dictionary = world.facility_defs[facility["facility_id"]]
+	if String(facility["facility_id"]) in ["pen","rock_workyard"]:
+		_picture(sidebar,String(facility["facility_id"]),64)
+		_heading(sidebar,String(definition["name"]))
+		_encyclopedia_link(sidebar,"facility:"+String(facility["facility_id"]))
+		_label(sidebar,"由畜牧分区统一管理；在管理页设置动物、日程、配方与领取产出。")
+		_button(sidebar,"打开畜牧管理",ranch_ui.open)
+		_icon(sidebar,"clear","拆除（1AP，无返还）",func(): _confirm("拆除此畜牧设施？先处理动物、在制批次与工作余量。",func(): _result(world.demolish_facility(int(facility["uid"])));_show_cell()))
+		return
 	if definition.get("kind") == "research":
 		_show_research_bench(facility)
 		return

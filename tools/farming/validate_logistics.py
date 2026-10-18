@@ -21,7 +21,8 @@ def validate(source):
     resources = registry(source['resources'], 'resources')
     facilities = registry(source['facilities'], 'facilities')
     require(isinstance(cfg['provision'], list) and cfg['provision'] and all(i in rows for i in cfg['provision']), 'invalid logistics provision')
-    require(len(cfg['provision']) == 11 and cfg['provision'][:6] == P10_PROVISION, 'P10.1 provision must extend the six P10 instances')
+    extra = ['soothe_gu']*2 + ['command_gu']*2 if 'p104' in source else []
+    require(len(cfg['provision']) == 11+len(extra) and cfg['provision'][:6] == P10_PROVISION and (not extra or cfg['provision'][-4:]==extra), 'provision must preserve P10/P101 and the P104 supplement')
     for row in rows.values():
         require(row['role'] == 'logistics' and integer(row['rank'], 1, 5), 'invalid logistics role/rank')
         require(row['deployment'] in ('host', 'independent') and row['scope'] in ('SELF','HOST','AREA','DIRECTED_AREA'), 'invalid deployment/scope')
@@ -29,10 +30,10 @@ def validate(source):
         quantities(row['food'], resources, row['id'] + ':food', True)
         for key in ('tags','target_tags'):
             require(isinstance(row[key],list) and row[key] and len(set(row[key]))==len(row[key]) and all(isinstance(t,str) and t for t in row[key]), 'invalid effect tags')
-        require(row['effect'] in ('production','light','growth_speed','water_saving','fertility_saving','research_flat','research_speed'), 'unknown logistics effect')
+        require(row['effect'] in ('production','light','growth_speed','water_saving','fertility_saving','research_flat','research_speed','breed_speed','work_speed'), 'unknown logistics effect')
         directed = row['effect'] in AGRI_TAG
         expected_scope = {'production':'SELF','light':'AREA','growth_speed':'DIRECTED_AREA','water_saving':'DIRECTED_AREA',
-                          'fertility_saving':'DIRECTED_AREA','research_flat':'HOST','research_speed':'HOST'}[row['effect']]
+                          'fertility_saving':'DIRECTED_AREA','research_flat':'HOST','research_speed':'HOST','breed_speed':'HOST','work_speed':'HOST'}[row['effect']]
         require(row['scope']==expected_scope, 'effect scope does not match supported evaluator')
         if row['effect']=='growth_speed': require(row['value']>=100,'growth ability must be a positive bonus')
         if row['effect'] in ('water_saving','fertility_saving'): require(integer(row['value'],1,99),'retention must cut consumption strictly')

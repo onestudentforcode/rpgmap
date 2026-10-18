@@ -39,6 +39,7 @@ func run() -> void:
 	w.logistics.provision()
 	for spec in [[5,4,"east","trial-004"],[9,4,"west","trial-008"],[7,2,"south","trial-010"]]:
 		var cell:=Vector2i(spec[0],spec[1])
+		w.rooms.set_floor(cell,"ordinary")
 		var built: Dictionary=w.build_facility(cell,"field_service_station",spec[2])
 		check(built["ok"],"single-cell host builds "+str(built))
 		if not built["ok"]: quit(1); return
@@ -51,7 +52,7 @@ func run() -> void:
 	register_fields(w)
 	w.end_day()
 	var regions: Array=w.rooms.regions(w.clock.total_days)
-	check(regions.size()==1 and regions[0]["level"]==2 and regions[0]["cells"].size()==9,"three sources form level2 without center building")
+	check(regions.size()==1 and regions[0]["level"]==3 and regions[0]["cells"].size()==9,"three sources form tier3 without center building")
 	for y in range(3,6):
 		for x in range(6,9): check(w.plant(Vector2i(x,y),"golden_wheat")["ok"],"room wheat planted")
 	check(Codec.normalize(w.to_snapshot())["ok"],"growing room snapshot valid")
@@ -101,6 +102,7 @@ func room_fixture():
 	w.logistics.provision()
 	for spec in [[5,4,"east","trial-004"],[9,4,"west","trial-008"],[7,2,"south","trial-010"]]:
 		var cell:=Vector2i(spec[0],spec[1])
+		w.rooms.set_floor(cell,"ordinary")
 		var built: Dictionary=w.build_facility(cell,"field_service_station",spec[2])
 		if not built["ok"]: printerr("invalid room fixture ",built); quit(1); return w
 		var uid: int=w.facility_at(cell)["uid"]
@@ -121,11 +123,11 @@ func _geometry_and_regions() -> void:
 	check(preview["ok"] and not preview["downgrade"],"unassigned floor does not change field boundary")
 	check(w.to_snapshot()==before,"floor preview changes no state")
 	w.till(Vector2i(6,2))
-	check(w.rooms.regions(w.clock.total_days)[0]["level"]==2,"unassigned uncovered cell does not downgrade field")
+	check(w.rooms.regions(w.clock.total_days)[0]["level"]==3,"unassigned uncovered cell does not downgrade field")
 	var expanded: Array=w.rooms.state["fields"][0]["cells"].duplicate()
 	expanded.append("6,2")
 	check(w.rooms.edit_field(1,expanded)["ok"],"explicit expansion")
-	check(w.rooms.regions(w.clock.total_days)[0]["level"]==0,"explicit uncovered expansion downgrades field")
+	check(w.rooms.regions(w.clock.total_days)[0]["level"]<3,"explicit uncovered expansion removes tier3")
 	expanded.erase("6,2")
 	w.rooms.edit_field(1,expanded)
 	w.rooms.set_floor(Vector2i(6,2),"ordinary")
@@ -140,14 +142,24 @@ func _geometry_and_regions() -> void:
 	s.logistics.provision()
 	for spec in [[5,3,"south","trial-004"],[8,3,"south","trial-007"],[5,4,"east","trial-008"],[6,3,"south","trial-010"]]:
 		var cell:=Vector2i(spec[0],spec[1])
+		s.rooms.set_floor(cell,"ordinary")
 		var built: Dictionary=s.build_facility(cell,"field_service_station",spec[2])
 		if not built["ok"]: printerr("invalid split-source fixture ",built); quit(1); return
 		var uid: int=s.facility_at(cell)["uid"]
 		s.devices.configure_station(uid,false,false,30);s.logistics.deploy(spec[3],Vector2i(-1,-1),uid)
 	for c in [Vector2i(6,4),Vector2i(7,4),Vector2i(6,5),Vector2i(7,5)]: s.till(c)
 	register_fields(s)
+	# Diagonal growth hosts need their own adjacent four-cell base field;
+	# their directed service still tests single-source full-footprint coverage.
+	for cells in [["4,2","5,2","6,2","7,2"],["8,4","9,4","8,5","9,5"]]:
+		for text in cells: s.till(Rooms.cell_at(text))
+	register_fields(s)
 	s.end_day()
-	check(s.rooms.regions(s.clock.total_days)[0]["level"]==2,"cell masks can cover region from multiple sources")
+	var split_field: Dictionary=s.rooms.field_at(Vector2i(6,4))
+	var region: Dictionary={}
+	for candidate in s.rooms.regions(s.clock.total_days):
+		if candidate["uid"]==split_field["uid"]: region=candidate
+	check(region.get("level",0)==3,"cell masks can cover region from multiple sources")
 	var q: Dictionary=s.rooms.qualification(Rect2i(6,4,2,2),["plant_grow"],s.clock.total_days)
 	check(not q["seed"] and not q["material"],"two half-sources do not qualify a multi-cell plant")
 
@@ -241,11 +253,13 @@ func _independent_gu() -> void:
 
 func _ordinary_service() -> void:
 	var w=fixture();w.logistics.provision()
+	w.rooms.set_floor(Vector2i(5,4),"ordinary")
 	w.build_facility(Vector2i(5,4),"field_service_station")
 	var uid: int=w.facility_at(Vector2i(5,4))["uid"]
 	w.logistics.deploy("trial-004",Vector2i(-1,-1),uid)
 	w.logistics.set_enabled("trial-004",false)
-	w.till(Vector2i(6,3))
+	for c in [Vector2i(6,3),Vector2i(7,3),Vector2i(6,4),Vector2i(7,4)]: w.till(c)
+	register_fields(w)
 	var index: int=w.grid.index_of(Vector2i(6,3))
 	w.environment[index][0]=0;w.environment[index][1]=0
 	var water: int=w.inventory.count("clean_water");var humus: int=w.inventory.count("humus")
@@ -254,6 +268,7 @@ func _ordinary_service() -> void:
 	check(w.inventory.count("clean_water")==water-1 and w.inventory.count("humus")==humus-1,"ordinary service spends actual stock")
 	check(not w.logistics.active(w.logistics.instance("trial-004"),w.clock.total_days),"ordinary service does not activate dormant gu")
 	var limit=fixture()
+	limit.rooms.set_floor(Vector2i(5,4),"ordinary")
 	limit.build_facility(Vector2i(5,4),"field_service_station")
 	var station: int=limit.facility_at(Vector2i(5,4))["uid"]
 	limit.devices.configure_station(station,true,true,90)
@@ -265,6 +280,7 @@ func _ordinary_service() -> void:
 			limit.till(c);cells.append(c)
 			var i: int=limit.grid.index_of(c)
 			limit.environment[i][0]=0;limit.environment[i][1]=0
+	register_fields(limit)
 	water=limit.inventory.count("clean_water");humus=limit.inventory.count("humus")
 	limit.end_day()
 	var served:=0
@@ -389,7 +405,9 @@ func _large_irregular_room() -> void:
 	# Two adjacent service modules form one irregular 16-cell field. The two
 	# inner hosts are holes, not bridges; each 2x2 crop still has whole sources.
 	for spec in [[5,4,"east","trial-004"],[12,4,"west","trial-007"],[7,2,"south","trial-008"],[10,2,"south","trial-009"],[9,4,"west","trial-010"],[8,4,"east","trial-011"]]:
-		var c:=Vector2i(spec[0],spec[1]);var built: Dictionary=w.build_facility(c,"field_service_station",spec[2])
+		var c:=Vector2i(spec[0],spec[1])
+		w.rooms.set_floor(c,"ordinary")
+		var built: Dictionary=w.build_facility(c,"field_service_station",spec[2])
 		check(built["ok"],"irregular module host builds "+str(c))
 		if not built["ok"]: return
 		var uid: int=w.facility_at(c)["uid"]
@@ -402,7 +420,7 @@ func _large_irregular_room() -> void:
 	register_fields(w)
 	w.end_day()
 	var regions: Array=w.rooms.regions(w.clock.total_days)
-	check(regions.size()==1 and regions[0]["cells"].size()==16 and regions[0]["level"]==2,"multiple modules support one irregular field larger than 3x3")
+	check(regions.size()==1 and regions[0]["cells"].size()==16 and regions[0]["level"]==3,"multiple modules support one irregular field larger than 3x3")
 	for rect in [Rect2i(6,3,2,2),Rect2i(10,3,2,2)]:
 		var q: Dictionary=w.rooms.qualification(rect,["plant_grow"],w.clock.total_days)
 		check(q["seed"] and q["material"],"each large crop has a complete source per channel "+str(rect))
@@ -431,3 +449,16 @@ func register_fields(w) -> void:
 			for step in [Vector2i.LEFT,Vector2i.RIGHT,Vector2i.UP,Vector2i.DOWN]:
 				if pending.has(c+step): pending.erase(c+step);todo.append(c+step)
 		check(w.rooms.create_field(selected)["ok"],"explicit fixture field")
+	for uid in w.facilities:
+		var host: Dictionary=w.facilities[uid]
+		if host["facility_id"]!="field_service_station": continue
+		var c:=Vector2i(host["origin"][0],host["origin"][1])
+		check(w.rooms.floor_kind(c)=="ordinary","host base floor")
+		for field in w.rooms.state["fields"]:
+			var adjacent:=false
+			for text in field["cells"]:
+				var at:=Rooms.cell_at(text)
+				if absi(at.x-c.x)+absi(at.y-c.y)==1: adjacent=true
+			if adjacent and field["cells"].size()>=4:
+				check(w.services.link_agriculture(int(uid),int(field["uid"]))["ok"],"explicit station association")
+				break

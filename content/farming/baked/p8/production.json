@@ -261,6 +261,11 @@
         "mill_rice",
         0,
         0
+      ],
+      [
+        "make_vine_ball",
+        0,
+        0
       ]
     ]
   },
@@ -531,6 +536,18 @@
       "total": {
         "denominator": 40,
         "numerator": 1171
+      }
+    },
+    "make_vine_ball": {
+      "outputs": {
+        "vine_ball": {
+          "denominator": 20,
+          "numerator": 189
+        }
+      },
+      "total": {
+        "denominator": 20,
+        "numerator": 189
       }
     },
     "mill_grain": {
@@ -1894,6 +1911,26 @@
           "share": 1
         }
       }
+    },
+    {
+      "ap": 2,
+      "basis": {
+        "id": "make_vine_ball",
+        "kind": "recipe"
+      },
+      "cash": 0,
+      "days": 1,
+      "id": "make_vine_ball",
+      "inputs": {
+        "straw": 2,
+        "twig": 2
+      },
+      "outputs": {
+        "vine_ball": {
+          "quantity": 1,
+          "share": 1
+        }
+      }
     }
   ],
   "crops": [
@@ -2334,8 +2371,9 @@
         1,
         1
       ],
+      "gu_slot": "animal_work_assist",
       "id": "dispatch_station",
-      "kind": null,
+      "kind": "facility",
       "materials": {
         "raw_stone": 2,
         "raw_wood": 2
@@ -2413,6 +2451,38 @@
       },
       "name": "照料台",
       "terrain": "land"
+    },
+    {
+      "cash": 18,
+      "footprint": [
+        1,
+        1
+      ],
+      "gu_slot": "animal_breeding_assist",
+      "id": "soothing_station",
+      "kind": "facility",
+      "materials": {
+        "raw_stone": 2,
+        "wood_plank": 2
+      },
+      "name": "安抚台",
+      "terrain": "land"
+    },
+    {
+      "cash": 12,
+      "footprint": [
+        1,
+        1
+      ],
+      "id": "toy_station",
+      "item_slot": "animal_toy",
+      "kind": "facility",
+      "materials": {
+        "raw_stone": 2,
+        "wood_plank": 2
+      },
+      "name": "玩具站",
+      "terrain": "land"
     }
   ],
   "flowers": {
@@ -2461,7 +2531,7 @@
   "layout_audit": {
     "flower_cells": 12,
     "land_total": 280,
-    "land_used": 62,
+    "land_used": 64,
     "placements": {
       "algae_tank": [
         18,
@@ -2539,6 +2609,14 @@
       "smelter": [
         14,
         0
+      ],
+      "soothing_station": [
+        7,
+        2
+      ],
+      "toy_station": [
+        8,
+        2
       ],
       "woodshop": [
         16,
@@ -3036,6 +3114,56 @@
           "research_facility"
         ],
         "value": 200
+      },
+      {
+        "deployment": "host",
+        "effect": "breed_speed",
+        "fee": 1,
+        "food": {},
+        "host_kinds": [
+          "facility"
+        ],
+        "id": "soothe_gu",
+        "name": "安抚蛊",
+        "path": "音道",
+        "range": 0,
+        "rank": 1,
+        "role": "logistics",
+        "scope": "HOST",
+        "slot": "animal_breeding_assist",
+        "tags": [
+          "animal_breeding_assist",
+          "breed_speed"
+        ],
+        "target_tags": [
+          "terrestrial_animal"
+        ],
+        "value": 150
+      },
+      {
+        "deployment": "host",
+        "effect": "work_speed",
+        "fee": 1,
+        "food": {},
+        "host_kinds": [
+          "facility"
+        ],
+        "id": "command_gu",
+        "name": "驭兽蛊",
+        "path": "奴道",
+        "range": 0,
+        "rank": 1,
+        "role": "logistics",
+        "scope": "HOST",
+        "slot": "animal_work_assist",
+        "tags": [
+          "animal_work_assist",
+          "work_speed"
+        ],
+        "target_tags": [
+          "terrestrial_animal"
+        ],
+        "value": 150
       }
     ],
     "deploy_ap": 1,
@@ -3050,7 +3178,11 @@
       "water_gu",
       "water_gu",
       "fert_gu",
-      "fert_gu"
+      "fert_gu",
+      "soothe_gu",
+      "soothe_gu",
+      "command_gu",
+      "command_gu"
     ],
     "range_metric": "rect_expand_anchor",
     "rotate_ap": 1,
@@ -3174,26 +3306,26 @@
     "species": {
       "rock_belly_beast": {
         "bed": "small",
-        "breed_units": 96,
-        "growth_units": 24,
+        "breed_units": 9600,
+        "growth_units": 2400,
         "space": 1
       },
       "rock_mole": {
         "bed": "small",
-        "breed_units": 48,
-        "growth_units": 18,
+        "breed_units": 4800,
+        "growth_units": 1800,
         "space": 1
       },
       "steel_sheep": {
         "bed": "medium",
-        "breed_units": 72,
-        "growth_units": 36,
+        "breed_units": 7200,
+        "growth_units": 3600,
         "natural_diet": "iron_supplement",
         "natural_outputs": {
           "sheep_manure": 1,
           "steel_wool": 1
         },
-        "natural_units": 18,
+        "natural_units": 1800,
         "space": 2
       }
     },
@@ -3201,20 +3333,20 @@
     "version": 1,
     "work": {
       "default_recipe": "break_stone",
-      "points_per_unit": 100,
+      "points_per_unit": 10000,
       "posts_per_yard": 4,
       "recipes": {
         "break_ore": {
           "species": "rock_mole",
-          "target": 400
+          "target": 40000
         },
         "break_stone": {
           "species": "rock_mole",
-          "target": 400
+          "target": 40000
         },
         "concentrate_ore": {
           "species": "rock_belly_beast",
-          "target": 800
+          "target": 80000
         }
       }
     },
@@ -3245,7 +3377,9 @@
       },
       "pasture": {
         "min_space": 8,
-        "structures": []
+        "structures": [
+          "toy_station"
+        ]
       },
       "work": {
         "min_space": 0,
@@ -3255,6 +3389,24 @@
         ]
       }
     }
+  },
+  "p104": {
+    "agriculture_min_cells": 4,
+    "birth_percent": 10,
+    "capacity": 4,
+    "carry_cap": 10000,
+    "hosts": {
+      "dispatch_station": "animal_work_assist",
+      "soothing_station": "animal_breeding_assist"
+    },
+    "install_ap": 1,
+    "precision": 100,
+    "system_ap": 1,
+    "toy_id": "vine_ball",
+    "toy_percent": 10,
+    "toy_recovery": 1,
+    "toy_station": "toy_station",
+    "version": 1
   },
   "product": "farm_demo_p8",
   "purchase_audit": {
@@ -4341,6 +4493,20 @@
       },
       "research": "farm_preparation",
       "start_ap": 1
+    },
+    {
+      "claim_ap": 1,
+      "days": 1,
+      "facility": "woodshop",
+      "id": "make_vine_ball",
+      "inputs": {
+        "straw": 2,
+        "twig": 2
+      },
+      "outputs": {
+        "vine_ball": 1
+      },
+      "start_ap": 1
     }
   ],
   "research": [
@@ -4867,6 +5033,7 @@
         "compost_straw",
         "culture_algae",
         "dense_algae_culture",
+        "make_vine_ball",
         "research:farm_preparation",
         "sale"
       ],
@@ -4948,6 +5115,7 @@
       "consumers": [
         "char_twigs",
         "compost_twigs",
+        "make_vine_ball",
         "sale",
         "shred_twigs"
       ],
@@ -5108,6 +5276,8 @@
         "build:research_bench",
         "build:rock_workyard",
         "build:smelter",
+        "build:soothing_station",
+        "build:toy_station",
         "build:woodshop",
         "diet:rock_mole:break_stone",
         "research:rock_handling",
@@ -5289,6 +5459,8 @@
         "build:field_service_station",
         "build:kitchen",
         "build:smelter",
+        "build:soothing_station",
+        "build:toy_station",
         "sale"
       ],
       "cost_source": "saw",
@@ -6850,6 +7022,34 @@
       "supply_value": 0,
       "tags": [
         "special_feed"
+      ]
+    },
+    {
+      "buy_price": 0,
+      "consumers": [
+        "toy_station:durable_installation"
+      ],
+      "cost_source": "make_vine_ball",
+      "element": "wood",
+      "form": "solid",
+      "id": "vine_ball",
+      "name": "藤球",
+      "path_ids": [
+        "wood"
+      ],
+      "sell_price": 0,
+      "sources": [
+        "make_vine_ball"
+      ],
+      "stage": "intermediate",
+      "standard_cost": {
+        "denominator": 20,
+        "numerator": 189
+      },
+      "supply_allowed": false,
+      "supply_value": 0,
+      "tags": [
+        "animal_toy"
       ]
     }
   ],

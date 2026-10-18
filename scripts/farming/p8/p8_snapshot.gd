@@ -18,6 +18,7 @@ const Land := preload("res://scripts/farming/p8/p8_land.gd")
 const Logistics := preload("res://scripts/farming/p8/p10_logistics.gd")
 const Rooms := preload("res://scripts/farming/p8/p102_rooms.gd")
 const Ranch := preload("res://scripts/farming/p8/p103_ranch.gd")
+const Services := preload("res://scripts/farming/p8/p104_services.gd")
 const SCHEMA := 22
 
 static func fresh() -> Dictionary:
@@ -41,6 +42,8 @@ static func fresh() -> Dictionary:
 	snapshot["world"]["rooms"] = Rooms.fresh()
 	snapshot["world"]["rooms"]["random_seed"] = randi_range(1,2147483647)
 	snapshot["world"]["ranch"] = Ranch.fresh()
+	snapshot["world"]["services"] = Services.fresh()
+	snapshot["world"]["services"]["random_seed"] = snapshot["world"]["rooms"]["random_seed"]
 	var workers := []
 	for worker in snapshot["workforce"]["workers"]:
 		worker["farm_duty"] = {"enabled": false, "priority": "normal"}
@@ -72,6 +75,7 @@ static func normalize(value) -> Dictionary:
 	var raw_agriculture = world_section.get("agriculture",null)
 	var raw_rooms = world_section.get("rooms",null)
 	var raw_ranch = world_section.get("ranch",null) if world_section is Dictionary else null
+	var raw_services = world_section.get("services",null) if world_section is Dictionary else null
 	if body.has("ledger"):
 		body.erase("ledger")
 	if body.has("reports"):
@@ -84,6 +88,7 @@ static func normalize(value) -> Dictionary:
 		world_section.erase("agriculture")
 		world_section.erase("rooms")
 		world_section.erase("ranch")
+		world_section.erase("services")
 		if world_section.has("husbandry"):
 			world_section.erase("husbandry")
 		if world_section.has("p8"):
@@ -175,6 +180,9 @@ static func normalize(value) -> Dictionary:
 	for zone in ranch["ranch"]["zones"]:
 		for text in zone["cells"]:
 			if farm_cells.has(text): return fail("农业与畜牧房间地格重叠")
+	var services := Services.normalize(raw_services,checked["snapshot"],Data)
+	if not services["ok"]: return services
+	checked["snapshot"]["world"]["services"] = services["services"]
 	# A locked research plan must still point at its one original host instance.
 	for project in research["research"]["projects"]:
 		var id := String(project["gu"]["instance_id"])

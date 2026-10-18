@@ -27,8 +27,9 @@ func open() -> void:
 	for kind in ["ordinary","farmland","natural"]:
 		shell._button(shell.sidebar,FLOOR_NAMES[kind]+"（1AP）",func(): choose_floor(kind))
 	shell._label(shell.sidebar,"硬质地板的管道、输送和传动留待后续，当前不提供这些能力。")
+	shell.services_ui.agriculture(shell.sidebar)
 	shell._button(shell.sidebar,"隐藏区域覆盖" if show_regions else "显示区域覆盖",func(): show_regions=not show_regions; shell.overlay.queue_redraw(); open())
-	shell._label(shell.sidebar,"育种田：催生＋锁水，首次成熟产种基础概率25%；丰产田：催生＋节肥，额外主产物25%；二级同时拥有两种回报。概率与增产按本轮实际合格生长比例计算。")
+	shell._label(shell.sidebar,"一级配套允许运行；二级入驻蛊虫强化；三级育种田：催生＋锁水，首次成熟产种基础概率25%；三级丰产田：催生＋节肥，额外主产物25%；三级复合农业区同时拥有两种回报。概率与增产按本轮实际合格生长比例计算。")
 	var regions: Array = shell.world.rooms.regions(shell.world.clock.total_days)
 	if regions.is_empty(): shell._label(shell.sidebar,"尚无耕地。先开垦或用耕地工具铺设田块。")
 	for region in regions:

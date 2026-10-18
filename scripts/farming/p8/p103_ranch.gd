@@ -155,7 +155,11 @@ func structure_missing(zone_row: Dictionary) -> Array:
 	return missing
 
 func zone_structural(zone_row: Dictionary) -> bool:
-	return structure_missing(zone_row).is_empty()
+	if not structure_missing(zone_row).is_empty(): return false
+	if available_space(zone_row)<int(settings["zones"][zone_row["type"]]["min_space"]): return false
+	for text in zone_row["cells"]:
+		if world.rooms.floor_kind(_cell_of(text))!="ordinary": return false
+	return true
 
 func pattern_of(row: Dictionary) -> Array:
 	if String(row["mode"]) != "work":
@@ -341,6 +345,9 @@ func erase_zone(zone_uid: int) -> Dictionary:
 			return _error("有待生效安置指向该功能区")
 	_record("zone", "erase", {"zone": zone_uid, "cells": row["cells"].duplicate()})
 	state["zones"].erase(row)
+	for other in state["zones"]:
+		if int(other["birth_target"])==zone_uid: other["birth_target"]=0
+	world.services.forget_zone(zone_uid)
 	world.changed.emit()
 	return {"ok": true}
 
@@ -596,16 +603,20 @@ func _new_animal(uid: int, species_id: String, zone_uid: int, bed_uid: int, bed_
 func workyard_state(facility_uid: int) -> Dictionary:
 	var key := str(facility_uid)
 	if not state["workyards"].has(key):
-		var posts := []
-		for _index in range(int(settings["work"]["posts_per_yard"])):
-			posts.append(_idle_post())
-		state["workyards"][key] = {"recipe_id": String(settings["work"]["default_recipe"]), "posts": posts}
+		state["workyards"][key] = peek_workyard(facility_uid)
 	return state["workyards"][key]
+
+func peek_workyard(facility_uid: int) -> Dictionary:
+	if state["workyards"].has(str(facility_uid)): return state["workyards"][str(facility_uid)].duplicate(true)
+	var posts:=[]
+	for _index in range(int(settings["work"]["posts_per_yard"])): posts.append(_idle_post())
+	return {"recipe_id":String(settings["work"]["default_recipe"]),"posts":posts}
 
 func _idle_post() -> Dictionary:
 	return {"batch_id": 0, "recipe_id": "", "inputs": {}, "outputs": {}, "progress": 0, "target": 0, "status": "idle"}
 
 func set_recipe(facility_uid: int, recipe_id: String) -> Dictionary:
+	if world.services.has_carry(facility_uid): return _error("请先明确放弃原配方工作余量，再切换配方")
 	var facility: Dictionary = world.facilities.get(facility_uid, {})
 	if facility.is_empty() or String(facility["facility_id"]) != WORKYARD_ID:
 		return _error("未知工作场")
@@ -707,22 +718,32 @@ func claim_births(zone_uid: int) -> Dictionary:
 		return _error("请先为该圈养区选择有效的目标育幼区")
 	if not zone_structural(nursery):
 		return _error("目标育幼区结构缺件：" + "、".join(structure_missing(nursery)))
+	# Preflight the entire batch. A later missing bed must not leave an earlier
+	# parent claimed without AP or a successful transaction.
+	var plans := []
+	var reserved := []
+	var remaining := available_space(nursery)-_zone_usage(nursery)
+	for parent in animals_in_zone(zone_uid,["enclosure"]):
+		if not bool(parent["breed"]["pending"]): continue
+		var species: Dictionary=species_config(String(parent["species_id"]))
+		var beds:=free_bed_slots(nursery,String(species["bed"]))
+		var chosen: Dictionary={}
+		for bed in beds:
+			var key:="%d:%d" % [bed["uid"],bed["slot"]]
+			if not key in reserved: chosen=bed;reserved.append(key);break
+		if chosen.is_empty(): return _error("目标育幼区没有适配床位，整批未安置")
+		remaining-=int(species["space"])
+		if remaining<0: return _error("目标育幼区空间不足，整批未安置")
+		plans.append({"animal":parent,"bed":chosen})
 	var born := []
-	for row in animals_in_zone(zone_uid, ["enclosure"]):
-		if not bool(row["breed"]["pending"]):
-			continue
+	for plan in plans:
+		var row: Dictionary=plan["animal"]
 		var sid := String(row["species_id"])
-		var bed_type := String(species_config(sid)["bed"])
-		var beds := free_bed_slots(nursery, bed_type)
-		if beds.is_empty():
-			return _error("目标育幼区没有适配床位")
-		var space := int(species_config(sid)["space"])
-		if _zone_usage(nursery) + space > available_space(nursery):
-			return _error("目标育幼区空间不足")
 		var child := int(state["next_animal_uid"])
 		state["next_animal_uid"] = child + 1
-		state["animals"].append(_new_animal(child, sid, int(nursery["uid"]),
-			int(beds[0]["uid"]), int(beds[0]["slot"]), String(world.husbandry.species_def(sid)["default_base_diet"])))
+		var newborn:=_new_animal(child,sid,int(nursery["uid"]),int(plan["bed"]["uid"]),int(plan["bed"]["slot"]),String(world.husbandry.species_def(sid)["default_base_diet"]))
+		world.services.birth_bonus(row,newborn,int(nursery["uid"]))
+		state["animals"].append(newborn)
 		state["births"].append({"parent_uid": int(row["uid"]), "round": int(row["breed"]["round"]), "child_uid": child})
 		row["breed"]["round"] = int(row["breed"]["round"]) + 1
 		row["breed"]["units"] = 0
@@ -770,6 +791,7 @@ static func _windows_overlap(a: int, b: int) -> bool:
 ## Whole-day simulation. mutate=false keeps state and stock untouched so the UI
 ## can show the next day's plan under the same conflict rules.
 func _plan_day(day: int, mutate: bool) -> Dictionary:
+	world.services.begin_day(day)
 	var out := {"animals": {}, "windows": [], "conflicts": []}
 	var day0 := day * 8
 	var shadow := {}
@@ -811,6 +833,7 @@ func _plan_day(day: int, mutate: bool) -> Dictionary:
 				keep.append(reservation)
 		state["reservations"] = keep
 		_finish_day(day, accounts, out)
+		world.services.end_day()
 	return out
 
 func _start_window(row: Dictionary, t: int, window_rows: Array, counter: int, mutate: bool, out: Dictionary) -> Dictionary:
@@ -956,12 +979,14 @@ func _end_window(row: Dictionary, record: Dictionary, t: int, mutate: bool, shad
 		world._record_flow({}, scaled, "畜牧维持")
 	else:
 		_shadow_spend(scaled, shadow)
+	world.services.mark_maintained(int(row["uid"]),int(record["zone_uid"]),t)
 	row["served_once"] = true
 	row["qualified_until"] = t + 8
 	_record("window", "success", {"animal": int(row["uid"]), "t": t, "inputs": scaled.duplicate(), "qualified_until": t + 8})
 	out["windows"].append({"animal": int(row["uid"]), "end": t, "result": "success", "inputs": scaled.duplicate()})
 
 func _fail_window(row: Dictionary, reason: String, t: int, account: Dictionary, mutate: bool, out: Dictionary) -> void:
+	world.services.record("maintenance_fail",{"animal":int(row["uid"]),"t":t})
 	account["fails"] = int(account["fails"]) + 1
 	row["ban_until"] = maxi(int(row["ban_until"]), t + 8)
 	row["qualified_until"] = mini(int(row["qualified_until"]), t)
@@ -994,14 +1019,17 @@ func _unit_activity(row: Dictionary, u: int, t: int, symbol: String, mutate: boo
 				return "care_wait"
 			var mode := String(row["mode"])
 			if mode == "nursery" and String(row["stage"]) == "juvenile":
-				row["growth"] = mini(int(species_config(String(row["species_id"]))["growth_units"]), int(row["growth"]) + 1)
+				var before:=int(row["growth"])
+				row["growth"] = mini(int(species_config(String(row["species_id"]))["growth_units"]), int(row["growth"]) + int(world.services.config["precision"]))
+				world.services.record("growth",{"animal":int(row["uid"]),"before":before,"after":int(row["growth"]),"target":int(species_config(String(row["species_id"]))["growth_units"]),"t":t})
 			elif mode == "enclosure" and String(row["stage"]) == "adult":
-				_enclosure_care(row, mutate, shadow)
+				_enclosure_care(row, t, mutate, shadow)
 			account["r"] = int(account["r"]) + 1
+			world.services.record("activity",{"animal":int(row["uid"]),"t":t,"zone":int(row["zone_uid"]),"activity":"care"})
 			return "care"
 	return "idle"
 
-func _enclosure_care(row: Dictionary, mutate: bool, shadow: Dictionary) -> void:
+func _enclosure_care(row: Dictionary, t: int, mutate: bool, shadow: Dictionary) -> void:
 	var config := species_config(String(row["species_id"]))
 	var natural: Dictionary = row["natural"]
 	if config.has("natural_units") and not bool(natural["pending"]):
@@ -1023,7 +1051,7 @@ func _enclosure_care(row: Dictionary, mutate: bool, shadow: Dictionary) -> void:
 		if bool(natural["pending"]) or not bool(natural["paid"]):
 			pass
 		else:
-			natural["units"] = int(natural["units"]) + 1
+			natural["units"] = mini(int(config["natural_units"]),int(natural["units"]) + int(world.services.config["precision"]))
 			if int(natural["units"]) >= int(config["natural_units"]):
 				natural["pending"] = true
 				if mutate:
@@ -1032,7 +1060,12 @@ func _enclosure_care(row: Dictionary, mutate: bool, shadow: Dictionary) -> void:
 				_record("natural", "ready", {"animal": int(row["uid"]), "round": int(natural["round"]), "outputs": config["natural_outputs"].duplicate()})
 	var breed: Dictionary = row["breed"]
 	if not bool(breed["pending"]) and int(row["fatigue"]) == 0:
-		breed["units"] = int(breed["units"]) + 1
+		var source: Dictionary=world.services.gu_service(row,"breed_speed",t)
+		var before:=int(breed["units"])
+		var increment:=mini(int(config["breed_units"])-before,100 if source.is_empty() else int(source["value"]))
+		breed["units"] = before+increment
+		world.services.record("breed_progress",{"identity":"%d:%d" % [row["uid"],breed["round"]],"before":before,"points":increment,"after":int(breed["units"]),"target":int(config["breed_units"]),"t":t,"source":source.duplicate()})
+		world.services.breed_advance(row,t,increment)
 		if int(breed["units"]) >= int(config["breed_units"]):
 			breed["pending"] = true
 			_record("breed", "ready", {"animal": int(row["uid"]), "round": int(breed["round"])})
@@ -1046,16 +1079,20 @@ func _try_roam(row: Dictionary, t: int, qualified: bool, account: Dictionary, pa
 	var zone_row := zone(int(row["zone_uid"]))
 	var space := int(species_config(String(row["species_id"]))["space"])
 	for candidate in _linked_zones(zone_row, "pasture"):
+		if not zone_structural(candidate): continue
 		var key := "%d:%d" % [int(candidate["uid"]), t % 8]
 		var used := int(pasture_use.get(key, 0))
 		if used + space <= available_space(candidate):
 			pasture_use[key] = used + space
+			world.services.toy_service(row,candidate,t)
+			world.services.record("activity",{"animal":int(row["uid"]),"t":t,"zone":int(candidate["uid"]),"activity":"roam"})
 			account["r"] = int(account["r"]) + 1
 			return "roam"
 	return wait_label
 
 func _take_post(row: Dictionary, t: int, mutate: bool, shadow: Dictionary, post_taken: Dictionary, account: Dictionary) -> bool:
 	var zone_row := zone(int(row["zone_uid"]))
+	if zone_row.is_empty() or not zone_structural(zone_row): return false
 	var yards: Array = _facilities_in_zone(zone_row).filter(func(f): return String(f["facility_id"]) == WORKYARD_ID)
 	var points := int(fatigue_tier(int(row["fatigue"]))["efficiency"]) * int(settings["work"]["points_per_unit"]) / 100
 	for yard in yards:
@@ -1101,7 +1138,16 @@ func _take_post(row: Dictionary, t: int, mutate: bool, shadow: Dictionary, post_
 					"batch_id": int(post["batch_id"]), "recipe": recipe_id,
 					"inputs": def["inputs"].duplicate(), "outputs": def["outputs"].duplicate()})
 			post_taken[key] = true
-			post["progress"] = mini(int(post["target"]), int(post["progress"]) + points)
+			var source: Dictionary=world.services.gu_service(row,"work_speed",t)
+			var base_points:=points
+			if not source.is_empty(): points=int(points*int(source["value"])/100)
+			var carried: int=world.services.use_carry(row,int(yard["uid"]),index,recipe_id,t,int(post["batch_id"])) if int(post["progress"])==0 else 0
+			var before:=int(post["progress"])
+			var raw: int=before+points+carried
+			var overflow:=maxi(0,raw-int(post["target"]))
+			post["progress"] = mini(int(post["target"]),raw)
+			world.services.capture_carry(row,int(yard["uid"]),index,recipe_id,overflow,t,int(post["batch_id"]))
+			world.services.record("work_progress",{"animal":int(row["uid"]),"t":t,"yard":int(yard["uid"]),"post":index,"batch":int(post["batch_id"]),"recipe":recipe_id,"base":base_points,"points":points,"carry":carried,"before":before,"after":int(post["progress"]),"target":int(post["target"]),"overflow":overflow,"source":source.duplicate()})
 			if int(post["progress"]) >= int(post["target"]) and String(post["status"]) == "running":
 				post["status"] = "ready"
 				_record("workyard", "batch_ready", {"workyard": int(yard["uid"]), "post": index,
@@ -1125,12 +1171,13 @@ func _finish_day(day: int, accounts: Dictionary, out: Dictionary) -> void:
 		if String(row["mode"]) != "work":
 			rest = mini(rest, int(fatigue["enclosure_rest_cap"]))
 		var next := clampi(int(row["fatigue"]) + int(account["w"]) * int(fatigue["work_debt"])
-			- rest * int(fatigue["rest_credit"]) + int(account["fails"]) * int(fatigue["fail_penalty"]),
+			- rest * int(fatigue["rest_credit"]) - world.services.extra_recovery(int(row["uid"])) + int(account["fails"]) * int(fatigue["fail_penalty"]),
 			0, int(fatigue["cap"]))
 		row["account"] = {"w": int(account["w"]), "r": rest, "fails": int(account["fails"])}
 		var survivor := true
+		world.services.record("fatigue",{"animal":int(row["uid"]),"open":int(row["fatigue"]),"w":int(account["w"]),"r":rest,"fails":int(account["fails"]),"toy_extra":world.services.extra_recovery(int(row["uid"])),"next":next})
 		_record("day", "account", {"animal": int(row["uid"]), "day": day, "w": int(account["w"]),
-			"r": rest, "fails": int(account["fails"]), "fatigue": int(row["fatigue"]), "next": next})
+			"r": rest, "fails": int(account["fails"]), "toy_extra":world.services.extra_recovery(int(row["uid"])), "fatigue": int(row["fatigue"]), "next": next})
 		if next >= int(fatigue["death_threshold"]):
 			row["death_streak"] = int(row["death_streak"]) + 1
 		else:
@@ -1211,7 +1258,10 @@ func settle(completed_day: int) -> void:
 	_settle_day = -1
 
 func preview_next_day() -> Dictionary:
-	return _plan_day(world.clock.total_days + 1, false)
+	var detached=world.get_script().new()
+	var loaded: Dictionary=detached.apply_snapshot(world.to_snapshot())
+	if not loaded["ok"]: return {"animals":{},"windows":[],"conflicts":[loaded]}
+	return detached.ranch._plan_day(world.clock.total_days,false)
 
 # --- persistence --------------------------------------------------------------
 

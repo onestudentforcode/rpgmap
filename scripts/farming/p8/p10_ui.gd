@@ -18,6 +18,8 @@ func ability_text(d: Dictionary) -> String:
 		"water_saving": return "宿主四向%d×%d服务区，完整覆盖目标的水分扣耗保留%d%%（每格百分之一余量跨日累计）；不产水、不返还物品。" % [int(d["range"]),int(d["range"]),int(d["value"])]
 		"fertility_saving": return "宿主四向%d×%d服务区，完整覆盖目标的肥力扣耗保留%d%%（每格百分之一余量跨日累计）；无肥耗目标不生效。" % [int(d["range"]),int(d["range"]),int(d["value"])]
 		"research_flat": return "研究台工作量固定−1，最低1；样本不变；每天仍需玩家或负责人工作。"
+		"breed_speed": return "安抚台服务合格圈养动物，繁殖进度×%.2f；仍需开日疲劳0与有效维持，服务上限4空间/单位。" % (float(d["value"])/100.0)
+		"work_speed": return "奴道调度提高实际工作进度至%.2f倍；食料、原料、岗位与劳动疲劳照常，服务上限4空间/单位。" % (float(d["value"])/100.0)
 	return "研究速度×2，逐项样本×1.5向上取整；每天仍需一次研究工作与特殊食料。"
 
 const FACING_NAMES := {"east":"东","south":"南","west":"西","north":"北"}
@@ -30,7 +32,7 @@ func open() -> void:
 	var gu = manager()
 	if not gu.state["provisioned"]:
 		shell._heading(shell.sidebar,"首批后勤蛊试用配给")
-		shell._label(shell.sidebar,"领取11只试用蛊：饭袋草/催生/锁水/节肥各两只，明光、智道研究、宙道研究各一只。每档一次，0AP；获取与成长尚未连接上游。")
+		shell._label(shell.sidebar,"领取15只试用蛊：原农业与研究11只，另加安抚蛊、驭兽蛊各两只。每档一次，0AP；获取与成长尚未连接上游。")
 		shell._icon(shell.sidebar,"claim","领取试用蛊虫",func(): shell._result(manager().provision()); open())
 		return
 	var fees := 0

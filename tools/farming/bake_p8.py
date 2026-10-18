@@ -271,6 +271,8 @@ def extra_consumers(source):
     add('composite_stone_panel', 'construction_substitute')
     add('reclaimed_fill', 'construction_substitute')
     add('purifying_mat_culture', 'species:purifying_mat')
+    if 'p104' in source:
+        add('vine_ball', 'toy_station:durable_installation')
     for row in source.get('logistics', {}).get('definitions', []):
         for item in row['food']:
             add(item, 'gu_maintenance:' + row['id'])
@@ -475,6 +477,9 @@ def audit_layout(source):
 
 def compile_config(source, map_data=None):
     try:
+        if 'p104' in source:
+            from validate_p104 import validate as validate_p104
+            validate_p104(source)
         from validate_rooms import validate as validate_rooms
         validate_rooms(source)
         if 'logistics' in source:

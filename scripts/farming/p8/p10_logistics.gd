@@ -214,6 +214,7 @@ func service_zone(row: Dictionary, day: int) -> Rect2i:
 	return directed_zone(origin, shape, facing_of(int(row["host_uid"]))).intersection(world.grid.bounds())
 
 func active(row: Dictionary, day: int) -> bool:
+	if int(row["host_uid"])>0 and definition(row)["effect"] in ["growth_speed","water_saving","fertility_saving","breed_speed","work_speed"] and not world.services.host_ready(int(row["host_uid"])): return false
 	return deployed(row) and bool(row["enabled"]) and int(row["effective_day"]) <= day and int(row["paid_day"]) == day
 
 func run_opening(day: int) -> void:
@@ -229,6 +230,9 @@ func run_opening(day: int) -> void:
 	for row in rows:
 		if not deployed(row) or not row["enabled"] or int(row["effective_day"]) > day: continue
 		var d := definition(row)
+		if int(row["host_uid"])>0 and d["effect"] in ["growth_speed","water_saving","fertility_saving","breed_speed","work_speed"] and not world.services.host_ready(int(row["host_uid"])):
+			row["reason"]="一级房间未成立，服务暂停"
+			continue
 		if world.primeval_stones < int(d["fee"]):
 			row["enabled"] = false
 			row["reason"] = "元石不足，自动休眠；需手动申请恢复"
@@ -308,6 +312,7 @@ func resolve(target: Rect2i, target_tags: Array, day: int) -> Dictionary:
 		elif not bool(row["enabled"]): reasons.append(String(row["reason"]))
 		elif int(row["effective_day"]) > day: reasons.append("次日生效")
 		elif int(row["paid_day"]) != day: reasons.append("当日未付维护")
+		elif not active(row,day): reasons.append("一级房间未成立，服务暂停")
 		else:
 			var zone := service_zone(row, day)
 			if not zone.encloses(target):
@@ -393,7 +398,9 @@ func research_modifier(uid: int) -> Dictionary:
 func blockers(row: Dictionary, day: int) -> Array:
 	var reasons := []
 	if not deployed(row): return ["未部署"]
-	if not active(row,day): reasons.append(String(row["reason"]))
+	if not active(row,day):
+		var reason:=String(row["reason"])
+		reasons.append(reason if not reason.is_empty() else "一级房间未成立或维护未就绪")
 	var d := definition(row)
 	if d.has("production"):
 		var env: Dictionary = world.environment_at(Vector2i(int(row["origin"][0]), int(row["origin"][1])))

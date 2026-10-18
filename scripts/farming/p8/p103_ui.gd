@@ -35,6 +35,7 @@ func open() -> void:
 	_purchase_card()
 	_roster_cards()
 	_workyard_cards()
+	shell.services_ui.render(shell.sidebar)
 	shell._encyclopedia_link(shell.sidebar, "rule:animal-zones")
 
 func _warnings() -> void:
@@ -62,6 +63,8 @@ func _warnings() -> void:
 		var missing: Array = ranch().structure_missing(zone_row)
 		if not missing.is_empty():
 			notes.append("%s结构缺件：%s" % [String(zone_row["name"]), "、".join(_structure_names(missing))])
+		elif not ranch().zone_structural(zone_row):
+			notes.append("%s一级未成立：检查完整普通地板与最小可用空间" % String(zone_row["name"]))
 		if ["maintenance", "pasture"].has(String(zone_row["type"])) and int(zone_row["dispatch_uid"]) == 0:
 			notes.append("%s未关联调度站，役使动物无法使用" % String(zone_row["name"]))
 		if String(zone_row["type"]) == "enclosure" and int(zone_row["birth_target"]) == 0:
@@ -77,7 +80,7 @@ func _warnings() -> void:
 			shell._label(card, "· " + note)
 
 func _structure_names(missing: Array) -> Array:
-	var names := {"pen": "圈舍", "feed_trough": "供食槽", "bed": "床位", "care_table": "照料台", "dispatch_station": "调度站", "rock_workyard": "岩兽工作场"}
+	var names := {"pen": "圈舍", "feed_trough": "供食槽", "bed": "床位", "care_table": "照料台", "dispatch_station": "调度站", "rock_workyard": "岩兽工作场", "toy_station":"玩具站"}
 	var out := []
 	for key in missing:
 		out.append(String(names.get(String(key), String(key))))
@@ -150,9 +153,10 @@ func _zone_cards() -> void:
 		var missing: Array = ranch().structure_missing(zone_row)
 		var space: int = ranch().available_space(zone_row)
 		shell._heading(card, "%s · %s" % [String(zone_row["name"]), ZONE_NAMES[String(zone_row["type"])]])
+		shell.services_ui.zone_card(card,zone_row)
 		shell._label(card, "地格%d，可用空间%d（床占地计入）；结构%s；当前全时占用%d。" % [
 			int(zone_row["cells"].size()), space,
-			"合格" if missing.is_empty() else "缺件：" + "、".join(_structure_names(missing)),
+			"合格" if ranch().zone_structural(zone_row) else ("地板或可用空间不足" if missing.is_empty() else "缺件：" + "、".join(_structure_names(missing))),
 			ranch()._zone_usage(zone_row)])
 		if ["maintenance", "pasture"].has(String(zone_row["type"])):
 			shell._button(card, "关联下一个调度站" if int(zone_row["dispatch_uid"]) == 0 else "换关联调度站", func(): cycle_link(zone_uid))
@@ -253,16 +257,16 @@ func _roster_cards() -> void:
 		shell._heading(card, "#%d %s · %s" % [uid, String(species["name"]), _mode_label(row)])
 		var config: Dictionary = ranch().species_config(String(row["species_id"]))
 		if String(row["stage"]) == "juvenile":
-			shell._label(card, "幼体成长%d/%d照料单位；食谱%s。" % [int(row["growth"]), int(config["growth_units"]), _diet_name(row)])
+			shell._label(card, "幼体成长%.2f/%.2f照料单位；食谱%s。" % [float(row["growth"])/100.0, float(config["growth_units"])/100.0, _diet_name(row)])
 		else:
 			shell._label(card, "成体；食谱%s；%s。" % [_diet_name(row), _schedule_text(row)])
 		shell._label(card, "开日疲劳%d（%s，效率%d%%）；禁工%s；维持资格%s。" % [int(row["fatigue"]), String(tier["label"]), int(tier["efficiency"]),
 			"无" if int(row["ban_until"]) <= shell.world.clock.total_days * 8 else "至单位%d" % int(row["ban_until"]),
 			"有效" if bool(row["served_once"]) else "待首次维持"])
 		if config.has("natural_units"):
-			shell._label(card, "畜产轮次%d：%d/%d照料单位%s" % [int(row["natural"]["round"]), int(row["natural"]["units"]), int(config["natural_units"]), "，待领取" if bool(row["natural"]["pending"]) else ""])
+			shell._label(card, "畜产轮次%d：%.2f/%.2f照料单位%s" % [int(row["natural"]["round"]), float(row["natural"]["units"])/100.0, float(config["natural_units"])/100.0, "，待领取" if bool(row["natural"]["pending"]) else ""])
 		if String(row["stage"]) == "adult":
-			shell._label(card, "繁殖轮次%d：%d/%d照料单位%s（需开日疲劳0）" % [int(row["breed"]["round"]), int(row["breed"]["units"]), int(config["breed_units"]), "，待安置" if bool(row["breed"]["pending"]) else ""])
+			shell._label(card, "繁殖轮次%d：%.2f/%.2f照料单位%s（需开日疲劳0）" % [int(row["breed"]["round"]), float(row["breed"]["units"])/100.0, float(config["breed_units"])/100.0, "，待安置" if bool(row["breed"]["pending"]) else ""])
 		_diet_button(card, row)
 		if String(row["stage"]) == "adult":
 			if String(row["mode"]) != "enclosure":
@@ -376,7 +380,7 @@ func _workyard_cards() -> void:
 			yards.append(int(uid))
 	yards.sort()
 	for yard_uid in yards:
-		var yard: Dictionary = ranch().workyard_state(yard_uid)
+		var yard: Dictionary = ranch().peek_workyard(yard_uid)
 		var card = shell._card(shell.sidebar)
 		var busy := ""
 		var ready := 0
@@ -384,12 +388,13 @@ func _workyard_cards() -> void:
 			if String(post["status"]) == "ready":
 				ready += 1
 			elif String(post["status"]) == "running":
-				busy += " [%d/%d]" % [int(post["progress"]), int(post["target"])]
+				busy += " [%.2f/%.2f]" % [float(post["progress"])/100.0,float(post["target"])/100.0]
 		shell._heading(card, "岩兽工作场#%d · %s" % [yard_uid, _recipe_name(String(yard["recipe_id"]))])
 		shell._label(card, "四并行岗位；运行中：%s；待领取%d批。" % [busy if not busy.is_empty() else "无", ready])
+		shell.services_ui.work_pool(card,yard_uid)
 		if ready > 0:
 			shell._button(card, "领取完成批次（1AP）", func(): shell._result(ranch().claim_workyard(yard_uid)); open())
-		var recipes: Array = ranch().work_recipes().keys()
+		var recipes: Array = ranch().settings["work"]["recipes"].keys()
 		var index := recipes.find(String(yard["recipe_id"]))
 		var next_recipe: String = String(recipes[(index + 1) % recipes.size()])
 		shell._button(card, "换配方为%s（空场时0AP）" % _recipe_name(next_recipe), func(): shell._result(ranch().set_recipe(yard_uid, next_recipe)); open())

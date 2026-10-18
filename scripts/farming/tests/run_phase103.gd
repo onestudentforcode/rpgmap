@@ -92,6 +92,7 @@ func _zone_fixture() -> World:
 		for x in range(4, 12):
 			pasture_cells.append("%d,%d" % [x, y])
 	check(w.ranch.create_zone("pasture", pasture_cells, "放牧一区")["ok"], "pasture zone created")
+	check(w.build_facility(Vector2i(4,9),"toy_station")["ok"],"empty toy station provides base pasture service")
 	var dispatch_uid: int = w.facility_at(Vector2i(4, 7))["uid"]
 	var links := { _zone_uid(w, "maintenance"): dispatch_uid, _zone_uid(w, "pasture"): dispatch_uid }
 	check(w.ranch.submit({"links": links})["ok"], "link zones to dispatch")
@@ -147,10 +148,10 @@ func _clock_and_maintenance() -> void:
 	check(w.inventory.count("clean_water") == water - 1 and w.inventory.count("mushroom") == mushroom - 1, "window deducts one base meal at window end")
 	var mole: Dictionary = w.ranch.state["animals"][0]
 	check(bool(mole["served_once"]) and int(mole["qualified_until"]) == 8 * d0 + 2 + 8, "success qualifies until the next window end")
-	check(int(mole["growth"]) == 6, "six care units grew the juvenile")
+	check(int(mole["growth"]) == 600, "six care units grew the juvenile")
 	w.end_day()
 	mole = w.ranch.state["animals"][0]
-	check(int(mole["growth"]) == 12, "growth continues while qualified")
+	check(int(mole["growth"]) == 1200, "growth continues while qualified")
 	var drained := w.inventory.count("mushroom")
 	w.inventory.remove("mushroom", drained)
 	w._record_flow({}, {"mushroom": drained}, "清空菌菇")
@@ -159,7 +160,7 @@ func _clock_and_maintenance() -> void:
 	mole = w.ranch.state["animals"][0]
 	check(int(mole["account"]["fails"]) == 1 and int(mole["ban_until"]) == 8 * d2 + 2 + 8 and int(mole["qualified_until"]) == 8 * d2 + 2, "failure bans eight units and expires qualification")
 	check(int(mole["fatigue"]) == 12, "one failed window adds twelve fatigue at the day boundary")
-	check(int(mole["growth"]) == 12, "unqualified care does not grow")
+	check(int(mole["growth"]) == 1200, "unqualified care does not grow")
 	w.inventory.add("mushroom", 50)
 	w._record_flow({"mushroom": 50}, {}, "补回菌菇")
 	var d3 := w.clock.total_days
@@ -219,7 +220,7 @@ func _work_posts() -> void:
 		progress += int(post["progress"])
 		if String(post["status"]) == "ready":
 			ready += 1
-	check(progress == 1600 and ready == 4, "four workers fill four batches of 400 points %d/%d" % [progress, ready])
+	check(progress == 160000 and ready == 4, "four workers fill four batches of 400 points %d/%d" % [progress, ready])
 	check(stone - w.inventory.count("raw_stone") == 8, "four batch openings paid real raw stone")
 	for row in workers:
 		check(int(row["account"]["w"]) == 4, "each worker logged four work units")
@@ -255,7 +256,7 @@ func _growth_enclosure_breeding() -> void:
 	w.end_day()
 	check(w.inventory.count("clean_water") == water - 4 and w.inventory.count("mushroom") == mushroom - 4, "enclosure maintenance pays two meals each")
 	for row in breeders:
-		check(int(row["breed"]["units"]) == 6, "breed progress counts care units")
+		check(int(row["breed"]["units"]) == 600, "breed progress counts care units")
 	for i in range(7):
 		w.end_day()
 	var pending: Array = w.ranch.state["animals"].filter(func(a): return bool(a["breed"]["pending"]))

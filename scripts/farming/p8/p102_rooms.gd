@@ -131,6 +131,7 @@ func erase_field(uid: int) -> Dictionary:
 	var row := field(uid)
 	if row.is_empty(): return world._error("未知田块")
 	state["fields"].erase(row)
+	world.services.forget_field(uid)
 	_invalidate()
 	world.record_operation({"kind":"room","stage":"field_erase","day":world.clock.total_days,"uid":uid})
 	world.changed.emit()
@@ -168,9 +169,13 @@ func regions(day: int, override_cell := Vector2i(-999,-999), override_kind := ""
 				elif not groups[tag]["source"]["instance_id"] in sources[tag]: sources[tag].append(groups[tag]["source"]["instance_id"])
 		var seed: bool = covered["plant_growth_speed"] and covered["plant_water_saving"]
 		var material: bool = covered["plant_growth_speed"] and covered["plant_fertility_saving"]
+		var base := false
+		for host in world.services.state["agriculture"]:
+			if int(world.services.state["agriculture"][host])==int(row["uid"]) and world.services.host_ready(int(host)): base=true
+		var enhanced: bool = base and covered.values().has(true)
 		result.append({"uid":int(row["uid"]),"label":String(row["name"]),"structural":intact,"cells":cells,"seed":seed,"material":material,"covered":covered,"missing":missing,"sources":sources,
-			"level":2 if seed and material else (1 if seed or material else 0),
-			"name":"二级·复合农业区" if seed and material else ("一级·育种田" if seed else ("一级·丰产田" if material else "普通田块"))})
+			"level":3 if seed or material else (2 if enhanced else (1 if base else 0)),
+			"name":"三级·复合农业区" if seed and material else ("三级·育种田" if seed else ("三级·丰产田" if material else ("二级·强化农业区" if enhanced else ("一级·农业区" if base else "普通田块"))))})
 	return result
 
 ## Predict connectivity and tier changes without touching the grid, rewards or RNG.
