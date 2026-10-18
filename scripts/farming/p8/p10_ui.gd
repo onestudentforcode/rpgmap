@@ -24,6 +24,7 @@ const FACING_NAMES := {"east":"东","south":"南","west":"西","north":"北"}
 
 func open() -> void:
 	shell.rooms_ui.floor_tool=""
+	shell.rooms_ui.field_tool=false
 	shell._context = "logistics"
 	shell._page("后勤蛊 · 部署与经营协同")
 	var gu = manager()

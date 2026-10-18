@@ -25,11 +25,13 @@ var ranch_ui := RanchUI.new(self)
 
 func _new(slot: int, overwrite: bool) -> void:
 	rooms_ui.floor_tool=""
+	rooms_ui.field_tool=false
 	logistics_ui.placing=""
 	super(slot,overwrite)
 
 func _select_tool(kind: String) -> void:
 	rooms_ui.floor_tool=""
+	rooms_ui.field_tool=false
 	super(kind)
 var production_visuals := true
 var _facility_thumbnails: Dictionary = {}
@@ -266,11 +268,20 @@ func _show_cell() -> void:
 	super()
 	if _started and world.grid.in_bounds(selected.x,selected.y):
 		_label(sidebar,"铺面：%s" % {"ordinary":"普通地板","farmland":"耕地","natural":"自然地面"}[world.rooms.floor_kind(selected)])
+		var field: Dictionary = world.rooms.field_at(selected)
+		if not field.is_empty(): _label(sidebar,"所属田块：%s（#%d）" % [field["name"],field["uid"]])
 		_button(sidebar,"农业区与地板",rooms_ui.open)
 		if not world.facility_at(selected).is_empty() and String(world.facility_at(selected)["facility_id"]) in ["pen","rock_workyard","dispatch_station","feed_trough","small_bed","medium_bed","large_bed","care_table"]:
 			_button(sidebar,"畜牧分区",ranch_ui.open)
 
 func _board_input(event: InputEvent) -> void:
+	if _started and not shade.visible and not is_instance_valid(confirmation) and rooms_ui.field_tool and _context == "rooms":
+		if event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_RIGHT:
+			rooms_ui.open()
+			return
+		if event is InputEventMouseButton and not event.pressed and event.button_index == MOUSE_BUTTON_LEFT and not _text_focus():
+			rooms_ui.click_field(_cell(event.position))
+			return
 	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_RIGHT and event.pressed:
 		rooms_ui.floor_tool=""
 		ranch_ui.toggle_erase()

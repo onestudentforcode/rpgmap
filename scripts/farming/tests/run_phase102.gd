@@ -18,8 +18,8 @@ func fixture():
 func _initialize() -> void: call_deferred("run")
 func run() -> void:
 	var w = fixture()
-	check(Codec.SCHEMA==21 and Codec.normalize(w.to_snapshot())["ok"],"schema21 fresh valid")
-	for old in [17,18,19,20]:
+	check(Codec.SCHEMA==22 and Codec.normalize(w.to_snapshot())["ok"],"schema22 fresh valid")
+	for old in [17,18,19,20,21]:
 		var bad: Dictionary=w.to_snapshot();bad["schema"]=old
 		check(not Codec.normalize(bad)["ok"],"old schema rejected "+str(old))
 	var cash_before: int=w.inventory.count("raw_wood")
@@ -48,6 +48,7 @@ func run() -> void:
 		check(w.devices.configure_station(uid,false,false,30)["ok"],"isolate effect fixture from ordinary service")
 	for y in range(3,6):
 		for x in range(6,9): check(w.till(Vector2i(x,y))["ok"],"till shared nine-cell field")
+	register_fields(w)
 	w.end_day()
 	var regions: Array=w.rooms.regions(w.clock.total_days)
 	check(regions.size()==1 and regions[0]["level"]==2 and regions[0]["cells"].size()==9,"three sources form level2 without center building")
@@ -107,6 +108,7 @@ func room_fixture():
 		w.logistics.deploy(spec[3],Vector2i(-1,-1),uid)
 	for y in range(3,6):
 		for x in range(6,9): w.till(Vector2i(x,y))
+	register_fields(w)
 	w.end_day()
 	return w
 
@@ -116,18 +118,19 @@ func _geometry_and_regions() -> void:
 	var w=room_fixture()
 	var before: Dictionary=w.to_snapshot()
 	var preview: Dictionary=w.rooms.preview_floor(Vector2i(6,2),"farmland")
-	check(preview["ok"] and preview["downgrade"] and preview["after"][0]["level"]==0,"new uncovered field predicts downgrade")
-	check(w.to_snapshot()==before,"floor preview changes no state or rewards")
+	check(preview["ok"] and not preview["downgrade"],"unassigned floor does not change field boundary")
+	check(w.to_snapshot()==before,"floor preview changes no state")
 	w.till(Vector2i(6,2))
-	check(w.rooms.regions(w.clock.total_days)[0]["level"]==0,"empty uncovered field downgrades entire component")
+	check(w.rooms.regions(w.clock.total_days)[0]["level"]==2,"unassigned uncovered cell does not downgrade field")
+	var expanded: Array=w.rooms.state["fields"][0]["cells"].duplicate()
+	expanded.append("6,2")
+	check(w.rooms.edit_field(1,expanded)["ok"],"explicit expansion")
+	check(w.rooms.regions(w.clock.total_days)[0]["level"]==0,"explicit uncovered expansion downgrades field")
+	expanded.erase("6,2")
+	w.rooms.edit_field(1,expanded)
 	w.rooms.set_floor(Vector2i(6,2),"ordinary")
-	check(w.rooms.regions(w.clock.total_days)[0]["level"]==2,"ordinary floor removes uncovered bridge")
-	w.till(Vector2i(4,3))
-	check(w.rooms.regions(w.clock.total_days).size()==2,"diagonal cells do not connect")
-	w.till(Vector2i(5,3))
-	check(w.rooms.regions(w.clock.total_days).size()==1,"four-neighbor path merges regions")
-	w.rooms.set_floor(Vector2i(5,3),"ordinary")
-	check(w.rooms.regions(w.clock.total_days).size()==2,"ordinary path splits field")
+	w.till(Vector2i(4,3));w.till(Vector2i(5,3))
+	check(w.rooms.regions(w.clock.total_days).size()==1,"new bridge never creates or merges ownership")
 	check(not w.rooms.quote_floor(Vector2i(0,14),"ordinary")["ok"],"floor cannot pave water")
 	check(not w.rooms.quote_floor(Vector2i(25,4),"ordinary")["ok"],"floor cannot pave unowned land")
 	check(not w.rooms.quote_floor(Vector2i(15,8),"ordinary")["ok"],"floor cannot cover natural source")
@@ -142,6 +145,7 @@ func _geometry_and_regions() -> void:
 		var uid: int=s.facility_at(cell)["uid"]
 		s.devices.configure_station(uid,false,false,30);s.logistics.deploy(spec[3],Vector2i(-1,-1),uid)
 	for c in [Vector2i(6,4),Vector2i(7,4),Vector2i(6,5),Vector2i(7,5)]: s.till(c)
+	register_fields(s)
 	s.end_day()
 	check(s.rooms.regions(s.clock.total_days)[0]["level"]==2,"cell masks can cover region from multiple sources")
 	var q: Dictionary=s.rooms.qualification(Rect2i(6,4,2,2),["plant_grow"],s.clock.total_days)
@@ -367,7 +371,7 @@ func _old_disk_slots() -> void:
 	var store=Store.new(directory)
 	var w=World.new(store)
 	var before: Dictionary=w.to_snapshot()
-	for schema in [17,18,19,20]:
+	for schema in [17,18,19,20,21]:
 		var old: Dictionary=before.duplicate(true);old["schema"]=schema
 		var text:=JSON.stringify(old)
 		var envelope:=JSON.stringify({"schema":1,"slot_id":1,"saved_at":0,"snapshot_json":text,"checksum":text.sha256_text()})
@@ -395,6 +399,7 @@ func _large_irregular_room() -> void:
 			var c:=Vector2i(x,y)
 			if not w.facility_at(c).is_empty(): continue
 			check(w.till(c)["ok"],"irregular field tile "+str(c))
+	register_fields(w)
 	w.end_day()
 	var regions: Array=w.rooms.regions(w.clock.total_days)
 	check(regions.size()==1 and regions[0]["cells"].size()==16 and regions[0]["level"]==2,"multiple modules support one irregular field larger than 3x3")
@@ -407,3 +412,22 @@ func _large_irregular_room() -> void:
 		var data: Dictionary=w.rooms.state["plants"][str(crop["uid"])]
 		check(data["growth"]==150 and data["seed_work"]==150 and data["material_work"]==150,"irregular full-room growth qualifies real work")
 	check(Codec.normalize(w.to_snapshot())["ok"],"irregular multi-module room saves strictly")
+
+# Fixture construction explicitly registers selected farmland; production code
+# never calls this flood-fill helper or automatically claims new floor tiles.
+func register_fields(w) -> void:
+	var pending := {}
+	for y in range(w.grid.bounds().position.y,w.grid.bounds().end.y):
+		for x in range(w.grid.bounds().position.x,w.grid.bounds().end.x):
+			var c:=Vector2i(x,y)
+			if w.rooms.farmland(c) and w.rooms.field_at(c).is_empty(): pending[c]=true
+	while not pending.is_empty():
+		var todo: Array=[pending.keys()[0]]
+		pending.erase(todo[0])
+		var selected: Array=[]
+		while not todo.is_empty():
+			var c: Vector2i=todo.pop_front()
+			selected.append(w.rooms.key(c))
+			for step in [Vector2i.LEFT,Vector2i.RIGHT,Vector2i.UP,Vector2i.DOWN]:
+				if pending.has(c+step): pending.erase(c+step);todo.append(c+step)
+		check(w.rooms.create_field(selected)["ok"],"explicit fixture field")

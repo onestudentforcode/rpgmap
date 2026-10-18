@@ -3,6 +3,7 @@ extends RefCounted
 ## till state; only ordinary paving and per-plant reward provenance are saved.
 const Grid := preload("res://scripts/farming/core/grid/land_grid.gd")
 const Scalars := preload("res://scripts/farming/v1/v1_world_state.gd")
+const Geometry := preload("res://scripts/farming/p8/room_geometry.gd")
 const STEPS := [Vector2i.LEFT, Vector2i.RIGHT, Vector2i.UP, Vector2i.DOWN]
 var _owner: WeakRef
 var world:
@@ -14,7 +15,7 @@ var _regions := []
 var _by_cell := {}
 
 static func fresh() -> Dictionary:
-	return {"floors": {}, "plants": {}, "gu_rounds": {}, "random_seed": 1729}
+	return {"floors": {}, "plants": {}, "gu_rounds": {}, "random_seed": 1729, "fields": [], "next_field_uid": 1}
 
 func _init(owner, config: Dictionary) -> void:
 	_owner = weakref(owner)
@@ -55,41 +56,119 @@ func set_floor(cell: Vector2i, kind: String) -> Dictionary:
 	for item in q["inputs"]: world.inventory.remove(item, int(q["inputs"][item]))
 	world._record_flow({}, q["inputs"], "铺设材料")
 	world.record_operation({"kind":"room", "stage":"floor", "day":world.clock.total_days, "cell":[cell.x,cell.y], "floor":kind, "inputs":q["inputs"]})
+	_invalidate()
 	return world._finish(1, q)
 
-## Pure queries; panel reads do not advance contribution or draw random values.
+func field(uid: int) -> Dictionary:
+	for row in state["fields"]:
+		if int(row["uid"]) == uid: return row
+	return {}
+
+func field_at(cell: Vector2i) -> Dictionary:
+	for row in state["fields"]:
+		if key(cell) in row["cells"]: return row
+	return {}
+
+func _invalidate() -> void:
+	_day = -1
+	_by_cell.clear()
+
+func preview_field(cells: Array, ignore_uid: int = 0) -> Dictionary:
+	if not Geometry.connected(cells): return world._error("田块地格须唯一且上下左右连通")
+	for text in cells:
+		var c := cell_at(text)
+		if not world.grid.in_bounds(c.x,c.y) or not world.land.contains(c) or not farmland(c): return world._error("只能选择已购地块上的耕地")
+		var owner := field_at(c)
+		if not owner.is_empty() and int(owner["uid"]) != ignore_uid: return world._error("地格已属于其他田块")
+	for crop in world.crops:
+		var rect: Rect2i = world._crop_rect(world.crops[crop])
+		var count := 0
+		for y in range(rect.position.y, rect.end.y):
+			for x in range(rect.position.x, rect.end.x):
+				if key(Vector2i(x,y)) in cells: count += 1
+		if count > 0 and count != rect.size.x * rect.size.y: return world._error("田块边界不能切开作物完整占地")
+	return {"ok": true, "count": cells.size()}
+
+func create_field(cells: Array, label: String = "") -> Dictionary:
+	var can: Dictionary = world._can_act(0)
+	if not can["ok"]: return can
+	var q := preview_field(cells)
+	if not q["ok"]: return q
+	var uid := int(state["next_field_uid"])
+	state["next_field_uid"] = uid + 1
+	state["fields"].append({"uid": uid, "name": label.strip_edges() if not label.strip_edges().is_empty() else "田块%d" % uid, "cells": cells.duplicate()})
+	_invalidate()
+	world.record_operation({"kind":"room","stage":"field_create","day":world.clock.total_days,"uid":uid,"cells":cells.duplicate()})
+	world.changed.emit()
+	return {"ok": true, "uid": uid}
+
+func edit_field(uid: int, cells: Array) -> Dictionary:
+	var can: Dictionary = world._can_act(0)
+	if not can["ok"]: return can
+	var row := field(uid)
+	if row.is_empty(): return world._error("未知田块")
+	var q := preview_field(cells, uid)
+	if not q["ok"]: return q
+	row["cells"] = cells.duplicate()
+	_invalidate()
+	world.record_operation({"kind":"room","stage":"field_edit","day":world.clock.total_days,"uid":uid,"cells":cells.duplicate()})
+	world.changed.emit()
+	return {"ok": true}
+
+func rename_field(uid: int, label: String) -> Dictionary:
+	var can: Dictionary = world._can_act(0)
+	if not can["ok"]: return can
+	var row := field(uid)
+	if row.is_empty() or label.strip_edges().is_empty(): return world._error("田块或名称无效")
+	row["name"] = label.strip_edges()
+	_invalidate()
+	world.changed.emit()
+	return {"ok": true}
+
+func erase_field(uid: int) -> Dictionary:
+	var can: Dictionary = world._can_act(0)
+	if not can["ok"]: return can
+	var row := field(uid)
+	if row.is_empty(): return world._error("未知田块")
+	state["fields"].erase(row)
+	_invalidate()
+	world.record_operation({"kind":"room","stage":"field_erase","day":world.clock.total_days,"uid":uid})
+	world.changed.emit()
+	return {"ok": true}
+
+func footprint_allowed(rect: Rect2i) -> bool:
+	var owner := -1
+	for y in range(rect.position.y, rect.end.y):
+		for x in range(rect.position.x, rect.end.x):
+			var row := field_at(Vector2i(x,y))
+			var uid := int(row.get("uid",0))
+			if owner == -1: owner = uid
+			elif uid != owner: return false
+	return true
+
+## Pure queries; only explicitly registered members participate. New farmland,
+## bridges and neighboring fields never acquire an identity through adjacency.
 func regions(day: int, override_cell := Vector2i(-999,-999), override_kind := "") -> Array:
-	var pending := {}
-	var bounds: Rect2i = world.grid.bounds()
-	for y in range(bounds.position.y, bounds.end.y):
-		for x in range(bounds.position.x, bounds.end.x):
-			var cell := Vector2i(x,y)
-			var is_field: bool = override_kind == "farmland" if cell == override_cell and not override_kind.is_empty() else farmland(cell)
-			if is_field: pending[cell] = true
 	var result := []
-	while not pending.is_empty():
-		var todo := [pending.keys()[0]]
-		pending.erase(todo[0])
+	for row in state["fields"]:
 		var cells := []
+		var intact := true
 		var covered := {"plant_growth_speed":true,"plant_water_saving":true,"plant_fertility_saving":true}
 		var missing := {"plant_growth_speed":[],"plant_water_saving":[],"plant_fertility_saving":[]}
 		var sources := {"plant_growth_speed":[],"plant_water_saving":[],"plant_fertility_saving":[]}
-		var cursor := 0
-		while cursor < todo.size():
-			var c: Vector2i = todo[cursor]
-			cursor += 1
+		for text in row["cells"]:
+			var c := cell_at(text)
 			cells.append(c)
+			var valid: bool = override_kind == "farmland" if c == override_cell and not override_kind.is_empty() else farmland(c)
+			intact = intact and valid
 			var groups: Dictionary = world.logistics.resolve(Rect2i(c,Vector2i.ONE),["plant_grow"],day)["groups"]
 			for tag in covered:
-				covered[tag] = bool(covered[tag]) and groups.has(tag)
-				if not groups.has(tag): missing[tag].append(c)
+				covered[tag] = bool(covered[tag]) and groups.has(tag) and valid
+				if not groups.has(tag) or not valid: missing[tag].append(c)
 				elif not groups[tag]["source"]["instance_id"] in sources[tag]: sources[tag].append(groups[tag]["source"]["instance_id"])
-			for step in STEPS:
-				var next: Vector2i = c+step
-				if pending.has(next): pending.erase(next); todo.append(next)
 		var seed: bool = covered["plant_growth_speed"] and covered["plant_water_saving"]
 		var material: bool = covered["plant_growth_speed"] and covered["plant_fertility_saving"]
-		result.append({"cells":cells,"seed":seed,"material":material,"covered":covered,"missing":missing,"sources":sources,
+		result.append({"uid":int(row["uid"]),"label":String(row["name"]),"structural":intact,"cells":cells,"seed":seed,"material":material,"covered":covered,"missing":missing,"sources":sources,
 			"level":2 if seed and material else (1 if seed or material else 0),
 			"name":"二级·复合农业区" if seed and material else ("一级·育种田" if seed else ("一级·丰产田" if material else "普通田块"))})
 	return result
@@ -256,6 +335,25 @@ static func normalize(value, snapshot: Dictionary, catalog) -> Dictionary:
 	var rects := [owned.rect(land["base"])]
 	for p in land["parcels"]:
 		if p["id"] in body["land"]["purchased"]: rects.append(owned.rect(p["rect"]))
+	if not value["fields"] is Array or not Scalars.whole(value["next_field_uid"],1): return Scalars.fail("田块索引非法")
+	out["next_field_uid"] = int(value["next_field_uid"])
+	var field_ids := {}
+	var field_cells := {}
+	for row in value["fields"]:
+		if not Scalars.exact(row,["uid","name","cells"]) or not Scalars.whole(row["uid"],1,out["next_field_uid"]-1): return Scalars.fail("田块身份非法")
+		if field_ids.has(int(row["uid"])) or not row["name"] is String or String(row["name"]).strip_edges().is_empty(): return Scalars.fail("田块身份重复或名称非法")
+		if not row["cells"] is Array or not Geometry.connected(row["cells"]): return Scalars.fail("田块地格非法或不连通")
+		field_ids[int(row["uid"])] = true
+		for text in row["cells"]:
+			if field_cells.has(text): return Scalars.fail("田块地格重叠")
+			var c := cell_at(text)
+			var accessible := false
+			for r in rects:
+				if r.has_point(c): accessible = true
+			if not Scalars.coordinate([c.x,c.y],int(m["size"][0]),int(m["size"][1]),int(m.get("origin_x",0))) or not accessible: return Scalars.fail("田块坐标越界或无地权")
+			if not catalog.tillable_map().get(m["grid"][c.y][c.x-int(m.get("origin_x",0))],false): return Scalars.fail("田块地形非法")
+			field_cells[text] = int(row["uid"])
+		out["fields"].append({"uid":int(row["uid"]),"name":String(row["name"]),"cells":row["cells"].duplicate()})
 	for text in value["floors"]:
 		if not text is String or text.split(",").size()!=2: return Scalars.fail("铺面坐标非法")
 		var c := cell_at(text)
@@ -270,6 +368,13 @@ static func normalize(value, snapshot: Dictionary, catalog) -> Dictionary:
 		out["floors"][text] = "ordinary"
 	var crops := {}
 	for crop in body["crops"]: crops[str(crop["uid"])] = crop
+	for crop in body["crops"]:
+		var d: Dictionary = catalog.definitions("crops")[crop["crop_id"]]
+		var ids := {}
+		for y in range(int(crop["origin"][1]),int(crop["origin"][1])+int(d["footprint"][1])):
+			for x in range(int(crop["origin"][0]),int(crop["origin"][0])+int(d["footprint"][0])):
+				ids[int(field_cells.get(key(Vector2i(x,y)),0))] = true
+		if ids.size()>1: return Scalars.fail("作物占地跨田块边界")
 	if value["plants"].size()!=crops.size(): return Scalars.fail("植物奖励索引不完整")
 	var definitions: Dictionary = catalog.definitions("crops")
 	for id in value["plants"]:

@@ -1,0 +1,53 @@
+{
+  "status": "boundary_complete",
+  "schema": 22,
+  "policy_commit": "fad3a0c43d1cac524ac3400c2d7373f8c25e66bc",
+  "logs": {
+    "boundary-final.log": {
+      "marker": "ROOM BOUNDARIES OK (46)",
+      "sha256": "b92d2ac974998b803d889f3d9a6bd88b9e90e65662be8c07eb99c1c0b3455056"
+    },
+    "boundary-final-p102.log": {
+      "marker": "P102 MODEL OK (229)",
+      "sha256": "754d401d37db3877567e151cfe86d2085671fa42dcc6232770528647d12a0410"
+    },
+    "boundary-final-p103.log": {
+      "marker": "P103 MODEL OK (550)",
+      "sha256": "421f6b5faba5548c753ef0ce175a894955087b42b856386d7658be4d0321c12a"
+    },
+    "boundary-scenario.log": {
+      "marker": "BOUNDARY SCENARIO OK (18)",
+      "sha256": "97a9f4360fa45529bab61f3aa177abe9f7de31b6c0572bd90a20ff6c593de503"
+    }
+  },
+  "audit": {
+    "days": 3,
+    "growth_receipts": 6,
+    "claims": 1,
+    "fields": 2,
+    "negative_cases": 4
+  },
+  "ui": "check-only; subjective playtest not signed",
+  "source_manifest": {
+    "docs/farming/master-plan.md": "cf97083f140e270009c0bbbc6e14376b301017006be17a319f0292550e6ea941",
+    "docs/farming/phase-10.4-畜牧蛊虫与三级生产系统.md": "7f5d0653c37c41a321f0a9c17446531b6ee8a06b74a885d0670e0bc83be09714",
+    "docs/farming/testing.md": "b52a14710d9e17c20c698de031b2eb9260081413efed30a09aa724c54579f369",
+    "docs/farming/房间归属与连通设计.md": "b1d79c958c60b7f7825a48a6027fe5d7258948852b815ea267a9e828e7090d5a",
+    "handoff.md": "b69ed412d1dc47f9c5b4e4ea43d7aaf28d837472b8485749cf659fb959244b90",
+    "scripts/farming/p8/p102_rooms.gd": "390b612d7c6323e4cf99c01c4f3e1c0a4a96a715d4f8b97730092688299ba33a",
+    "scripts/farming/p8/p102_ui.gd": "8c4728a9cd92e6f0c73f75438657ae9c98572e9de8d4c8bbf3a92132bebc0c48",
+    "scripts/farming/p8/p103_ranch.gd": "4f5a2964a40bb9d05b244fdeb13ec76ca284c300055fe1b710cd45e9ba83ccc0",
+    "scripts/farming/p8/p103_ui.gd": "0e523b43a23a04a0c084554aa7b13595e535ceff979a1909cd3c342808231255",
+    "scripts/farming/p8/p10_ui.gd": "3e19e99c9bca6909faa57292343ea5a5ed9ae22a9f6240202d376aa03526d7b4",
+    "scripts/farming/p8/p8_scene.gd": "d458b278a1409047dce90f43731bbca547fff5d5ab5c82b4a708d87e013b8a84",
+    "scripts/farming/p8/p8_snapshot.gd": "ba6f4c0b73ac9fe67258f88c4e90fa1b6874d71a4e64ba4ee362feee32ee0d04",
+    "scripts/farming/p8/p8_world.gd": "38bce81c6aa108603db8877de24c672054c203d993d414548d1af931c0323056",
+    "scripts/farming/p8/room_geometry.gd": "a99d7170de76d5a972c79d6b374e48b8a92413de28c2fc07c52db6a19b33d861",
+    "scripts/farming/tests/run_phase102.gd": "6e0dbcfe9222756970cfaad40e9c579833bbcab7ba58dfdb0d7c74f3358b1778",
+    "scripts/farming/tests/run_phase103.gd": "0f4044b61cbee0b6d47d881a868fdbb8500b1e74529378512d6675de457c4b35",
+    "scripts/farming/tests/run_room_boundaries.gd": "9ac179db34a5ae544a23ea5123abdf6010428b0fff2bf5ca2ce10eba0ea00a8a",
+    "scripts/farming/tests/run_room_boundary_playtest.gd": "de32c85f7f6db7a5973b44c36040e9b9bde031e426577c5e6a5294dead32f714",
+    "tools/farming/audit_room_boundaries.py": "b678d9521c7039b78ebd412047c123dbf4597723d37888b65c3c41675f3c1fbb",
+    "tools/farming/test_room_boundaries_audit.py": "b314761ed10629ac10f73a00c3bf856002e07c92a582fbf0e55a2ff152113378"
+  }
+}

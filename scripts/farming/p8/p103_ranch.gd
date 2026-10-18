@@ -183,21 +183,7 @@ static func _cell_of(text: String) -> Vector2i:
 	return Vector2i(int(parts[0]), int(parts[1]))
 
 static func _connected(cells: Array) -> bool:
-	if cells.is_empty():
-		return false
-	var set := {}
-	for text in cells:
-		set[String(text)] = true
-	var seen := {String(cells[0]): true}
-	var todo := [String(cells[0])]
-	while not todo.is_empty():
-		var cell := _cell_of(String(todo.pop_front()))
-		for step in [Vector2i(1, 0), Vector2i(-1, 0), Vector2i(0, 1), Vector2i(0, -1)]:
-			var key := "%d,%d" % [cell.x + step.x, cell.y + step.y]
-			if set.has(key) and not seen.has(key):
-				seen[key] = true
-				todo.append(key)
-	return seen.size() == set.size()
+	return preload("res://scripts/farming/p8/room_geometry.gd").connected(cells)
 
 ## Numeric-tolerant item-map equality: parsed JSON stores floats, live state ints.
 static func _same_items(a: Dictionary, b: Dictionary) -> bool:
@@ -237,6 +223,8 @@ func _zone_cells_free(cells: Array, ignore_zone := -1) -> String:
 			return "地格不在已购地块内"
 		if world.rooms.floor_kind(cell) != "ordinary":
 			return "功能区只能铺设在普通地板上"
+		if not world.rooms.field_at(cell).is_empty():
+			return "地格仍属于农业田块，请先编辑田块边界"
 		for other in state["zones"]:
 			if int(other["uid"]) == ignore_zone:
 				continue

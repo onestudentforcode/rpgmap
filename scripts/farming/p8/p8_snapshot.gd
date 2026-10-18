@@ -18,7 +18,7 @@ const Land := preload("res://scripts/farming/p8/p8_land.gd")
 const Logistics := preload("res://scripts/farming/p8/p10_logistics.gd")
 const Rooms := preload("res://scripts/farming/p8/p102_rooms.gd")
 const Ranch := preload("res://scripts/farming/p8/p103_ranch.gd")
-const SCHEMA := 21
+const SCHEMA := 22
 
 static func fresh() -> Dictionary:
 	var snapshot: Dictionary = Common.fresh(Data, SCHEMA)
@@ -169,6 +169,12 @@ static func normalize(value) -> Dictionary:
 	var ranch := Ranch.normalize(raw_ranch,checked["snapshot"],Data)
 	if not ranch["ok"]: return ranch
 	checked["snapshot"]["world"]["ranch"] = ranch["ranch"]
+	var farm_cells := {}
+	for field in rooms["rooms"]["fields"]:
+		for text in field["cells"]: farm_cells[text] = true
+	for zone in ranch["ranch"]["zones"]:
+		for text in zone["cells"]:
+			if farm_cells.has(text): return fail("农业与畜牧房间地格重叠")
 	# A locked research plan must still point at its one original host instance.
 	for project in research["research"]["projects"]:
 		var id := String(project["gu"]["instance_id"])

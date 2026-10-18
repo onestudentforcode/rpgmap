@@ -2,10 +2,14 @@ extends RefCounted
 var shell
 var floor_tool := ""
 var show_regions := false
+var field_tool := false
+var field_edit := 0
+var field_cells: Array = []
 const FLOOR_NAMES := {"ordinary":"普通地板","farmland":"耕地","natural":"拆除铺面"}
 func _init(owner) -> void: shell = owner
 
 func choose_floor(kind: String) -> void:
+	field_tool = false
 	floor_tool = kind
 	shell.build_tool = ""
 	shell.logistics_ui.placing = ""
@@ -15,9 +19,11 @@ func choose_floor(kind: String) -> void:
 
 func open() -> void:
 	floor_tool=""
+	field_tool=false
 	shell._context = "rooms"
 	shell._page("露天农业区 · 地板与收获奖励")
-	shell._label(shell.sidebar,"耕地按上下左右连通，普通地板隔开田块；空耕地也参加判定。不要求墙、门或中心建筑。")
+	shell._label(shell.sidebar,"先铺耕地，再明确划定田块。四邻接只检查同一田块内部；紧贴的田块不会合并，新耕地不会自动加入。不要求墙或门。")
+	shell._button(shell.sidebar,"划定新田块（0AP）",func(): choose_field())
 	for kind in ["ordinary","farmland","natural"]:
 		shell._button(shell.sidebar,FLOOR_NAMES[kind]+"（1AP）",func(): choose_floor(kind))
 	shell._label(shell.sidebar,"硬质地板的管道、输送和传动留待后续，当前不提供这些能力。")
@@ -27,6 +33,10 @@ func open() -> void:
 	if regions.is_empty(): shell._label(shell.sidebar,"尚无耕地。先开垦或用耕地工具铺设田块。")
 	for region in regions:
 		var card = shell._card(shell.sidebar)
+		shell._label(card,"%s · 编号%d" % [region["label"],region["uid"]])
+		var uid: int = region["uid"]
+		shell._button(card,"编辑田块边界（0AP）",func(): choose_field(uid))
+		shell._button(card,"解除田块划区（保留作物与历史贡献）",func(): shell._result(shell.world.rooms.erase_field(uid)); open())
 		shell._heading(card,"%s · %d格" % [region["name"],region["cells"].size()])
 		for tag in region["covered"]:
 			var names := {"plant_growth_speed":"催生","plant_water_saving":"锁水","plant_fertility_saving":"节肥"}
@@ -38,6 +48,36 @@ func open() -> void:
 		var c: Vector2i = region["cells"][0]
 		shell._button(card,"定位田块",func(): show_regions=true; shell._locate(c))
 	shell._encyclopedia_link(shell.sidebar,"rule:rooms")
+
+func choose_field(uid: int = 0) -> void:
+	field_tool = true
+	field_edit = uid
+	floor_tool = ""
+	shell.build_tool = ""
+	shell.logistics_ui.placing = ""
+	shell.ranch_ui.zone_tool = ""
+	shell.ranch_ui.paint_zone = -1
+	field_cells = shell.world.rooms.field(uid).get("cells",[]).duplicate()
+	_field_page()
+
+func _field_page() -> void:
+	shell._context = "rooms"
+	shell._page("编辑田块" if field_edit > 0 else "划定田块")
+	shell._label(shell.sidebar,"点击耕地加入/移除选区，右键取消。选中的地格须四邻接，不得与其他田块重叠或切开多格作物。已选%d格。" % field_cells.size())
+	var q: Dictionary = shell.world.rooms.preview_field(field_cells,field_edit)
+	shell._label(shell.sidebar,"选区可用" if q["ok"] else String(q["reason"]))
+	shell._button(shell.sidebar,"确认边界（0AP）",func():
+		var result: Dictionary = shell.world.rooms.edit_field(field_edit,field_cells) if field_edit > 0 else shell.world.rooms.create_field(field_cells)
+		shell._result(result)
+		if result["ok"]: open())
+	shell._button(shell.sidebar,"取消",open)
+	shell.overlay.queue_redraw()
+
+func click_field(cell: Vector2i) -> void:
+	var text: String = shell.world.rooms.key(cell)
+	if text in field_cells: field_cells.erase(text)
+	elif shell.world.rooms.farmland(cell): field_cells.append(text)
+	_field_page()
 
 func crop_details(parent: Node, row: Dictionary) -> void:
 	var data: Dictionary = shell.world.rooms.state["plants"].get(str(row["uid"]),{})
@@ -82,7 +122,7 @@ func draw_ground(target: Node2D, projected: bool) -> void:
 			target.draw_line(Vector2(rect.position.x,y),Vector2(rect.end.x,y),Color("b4a58a"),1)
 	if not show_regions: return
 	for region in shell.world.rooms.regions(shell.world.clock.total_days):
-		var color := Color("76ad8c") if region["level"]==2 else (Color("b9a270") if region["level"]==1 else Color("91a4a6"))
+		var color := Color.from_hsv(fmod(float(region["uid"])*0.381966,1.0),0.5,0.8)
 		for c in region["cells"]:
 			var rect := Rect2(Vector2(c)*64,Vector2(64,64))
 			if projected: rect=shell.projection.ground_rect(rect)
@@ -90,6 +130,13 @@ func draw_ground(target: Node2D, projected: bool) -> void:
 			target.draw_rect(rect.grow(-1),Color(color,0.7),false,1)
 
 func draw_preview(target: Node2D, projected: bool) -> void:
+	if field_tool and shell._context == "rooms":
+		for text in field_cells:
+			var cell: Vector2i = shell.world.rooms.cell_at(text)
+			var box := Rect2(Vector2(cell)*64,Vector2(64,64))
+			if projected: box = shell.projection.ground_rect(box)
+			target.draw_rect(box,Color(0.2,0.6,0.8,0.35))
+		return
 	if floor_tool.is_empty() or not shell.world.grid.in_bounds(shell._hover.x,shell._hover.y): return
 	var rect:=Rect2(Vector2(shell._hover)*64,Vector2(64,64))
 	if projected: rect=shell.projection.ground_rect(rect)

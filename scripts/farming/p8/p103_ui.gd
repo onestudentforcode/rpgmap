@@ -26,6 +26,7 @@ func open() -> void:
 	shell.build_tool = ""
 	shell.logistics_ui.placing = ""
 	shell.rooms_ui.floor_tool = ""
+	shell.rooms_ui.field_tool = false
 	shell._page("畜牧分区 · 陆生动物名册与排班")
 	shell._label(shell.sidebar, "钢绵羊、啮岩鼹、岩腹兽走名册制：普通地板划功能区，八单位日程自动结算维持、劳动、恢复与繁殖。")
 	_warnings()

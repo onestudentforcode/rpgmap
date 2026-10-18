@@ -284,6 +284,9 @@ func build_facility(cell: Vector2i, facility_id: String, facing: String = "east"
 
 func plant(cell: Vector2i, crop_id: String) -> Dictionary:
 	if crop_defs.has(crop_id):
+		var shape: Array = crop_defs[crop_id]["footprint"]
+		if not rooms.footprint_allowed(Rect2i(cell,Vector2i(int(shape[0]),int(shape[1])))):
+			return _error("作物完整占地不能跨越田块边界")
 		var blocked := research_block(String(crop_defs[crop_id].get("research", "")))
 		if not blocked.is_empty():
 			return _error(blocked)
