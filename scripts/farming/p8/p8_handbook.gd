@@ -202,7 +202,7 @@ static var CHAPTERS: Array = _chapters()
 static func _chapters() -> Array:
 	var result := BASE_CHAPTERS.duplicate(true)
 	var data: Dictionary = JSON.parse_string(FileAccess.get_file_as_string("res://content/farming/baked/encyclopedia/encyclopedia.json"))
-	for id in ["rule:agriculture","rule:rooms"]:
+	for id in ["rule:agriculture","rule:rooms","rule:animal-zones"]:
 		for entity in data["entities"]:
 			if entity["id"] != id: continue
 			var cards := []

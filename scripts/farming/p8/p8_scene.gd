@@ -19,7 +19,9 @@ var logistics_ui := LogisticsUI.new(self)
 ## Chosen orientation for the next agriculture-station placement.
 var build_facing := "east"
 const RoomsUI := preload("res://scripts/farming/p8/p102_ui.gd")
+const RanchUI := preload("res://scripts/farming/p8/p103_ui.gd")
 var rooms_ui := RoomsUI.new(self)
+var ranch_ui := RanchUI.new(self)
 
 func _new(slot: int, overwrite: bool) -> void:
 	rooms_ui.floor_tool=""
@@ -265,9 +267,13 @@ func _show_cell() -> void:
 	if _started and world.grid.in_bounds(selected.x,selected.y):
 		_label(sidebar,"铺面：%s" % {"ordinary":"普通地板","farmland":"耕地","natural":"自然地面"}[world.rooms.floor_kind(selected)])
 		_button(sidebar,"农业区与地板",rooms_ui.open)
+		if not world.facility_at(selected).is_empty() and String(world.facility_at(selected)["facility_id"]) in ["pen","rock_workyard","dispatch_station","feed_trough","small_bed","medium_bed","large_bed","care_table"]:
+			_button(sidebar,"畜牧分区",ranch_ui.open)
 
 func _board_input(event: InputEvent) -> void:
-	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_RIGHT and event.pressed: rooms_ui.floor_tool=""
+	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_RIGHT and event.pressed:
+		rooms_ui.floor_tool=""
+		ranch_ui.toggle_erase()
 	if _started and not shade.visible and not is_instance_valid(confirmation) and not rooms_ui.floor_tool.is_empty() and event is InputEventMouseMotion and not _map_pan:
 		_hover=_cell(event.position)
 		var change: Dictionary=world.rooms.preview_floor(_hover,rooms_ui.floor_tool)
@@ -284,6 +290,11 @@ func _board_input(event: InputEvent) -> void:
 			overlay.queue_redraw()
 		return
 	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_RIGHT and event.pressed: logistics_ui.placing = ""
+	if _started and not shade.visible and not is_instance_valid(confirmation) and event is InputEventMouseButton and event.button_index==MOUSE_BUTTON_LEFT and not event.pressed 			and (not ranch_ui.zone_tool.is_empty() or ranch_ui.paint_zone > 0) and not _text_focus():
+		selected=_cell(event.position)
+		ranch_ui.click_cell(selected)
+		overlay.queue_redraw()
+		return
 	if _started and not shade.visible and not is_instance_valid(confirmation) and not _text_focus():
 		if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_MIDDLE:
 			_map_pan = event.pressed
@@ -319,6 +330,7 @@ func _board_input(event: InputEvent) -> void:
 
 func _draw_world_entities(target: Node2D, readable: float) -> void:
 	rooms_ui.draw_ground(target,false)
+	ranch_ui.draw_ground(target,false)
 	var entities: Array[Dictionary] = []
 	for uid in world.crops:
 		var crop: Dictionary = world.crops[uid]
@@ -419,6 +431,7 @@ func draw_map(target: Node2D) -> void:
 func _extra_nav() -> void:
 	super()
 	_icon(top_nav,"area","农业区 · 地板与收获奖励",rooms_ui.open)
+	_icon(top_nav,"dispatch_station","畜牧分区 · 名册、功能区与排班",ranch_ui.open)
 	_icon(top_nav,"growth_gu","后勤蛊 · 入驻、生产与维护",logistics_ui.open)
 	_icon(top_nav,"research_bench","研究 · 三层工艺网络",_show_research)
 	_icon(top_nav,"area","购地 · 陆地与东西侧水库",_show_land)
@@ -563,6 +576,7 @@ func _encyclopedia_link(parent: Node, entity_id: String) -> Button:
 
 func _context_refresh() -> void:
 	if _context == "rooms": rooms_ui.open(); return
+	if _context == "ranch": ranch_ui.open(); return
 	if _context == "logistics": logistics_ui.open()
 	if _context == "encyclopedia":
 		encyclopedia.refresh()

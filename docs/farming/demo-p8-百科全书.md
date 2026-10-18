@@ -14,7 +14,7 @@
 - **配方与食谱（61）**：[蜜盏蜂·花源份额＋清水](#蜜盏蜂花源份额清水-dietbell_beebase_dietsflower_share)、[蜜盏蜂·酿蜜周期](#蜜盏蜂酿蜜周期-dietbell_beespecial_dietshoney_cycle)、[滤藻鲤·藻料餐](#滤藻鲤藻料餐-dietfilter_algae_carpbase_dietsalgae_meal)、[滤藻鲤·高密度藻餐](#滤藻鲤高密度藻餐-dietfilter_algae_carpbase_dietsdense_meal)、[滤藻鲤·水养复合餐](#滤藻鲤水养复合餐-dietfilter_algae_carpbase_dietswater_meal)、[滤藻鲤·谷粒育肥](#滤藻鲤谷粒育肥-dietfilter_algae_carpspecial_dietsgrain_fatten)、[净水菌毯·培养清水](#净水菌毯培养清水-dietpurifying_matbase_dietsculture_water)、[净水菌毯·菌毯净水运行](#净水菌毯菌毯净水运行-dietpurifying_matspecial_dietsbio_purify)、[净水菌毯·营养液回收运行](#净水菌毯营养液回收运行-dietpurifying_matspecial_dietsrecover_nutrients)、[岩腹兽·牧草清水餐](#岩腹兽牧草清水餐-dietrock_belly_beastbase_dietsgrass_water_meal)、[岩腹兽·陆养复合餐](#岩腹兽陆养复合餐-dietrock_belly_beastbase_dietsland_meal)、[岩腹兽·生物选矿轮](#岩腹兽生物选矿轮-dietrock_belly_beastspecial_dietsconcentrate_ore)、[啮岩鼹·菌菇清水餐](#啮岩鼹菌菇清水餐-dietrock_molebase_dietsfungus_meal)、[啮岩鼹·破碎矿石轮](#啮岩鼹破碎矿石轮-dietrock_molespecial_dietsbreak_ore)、[啮岩鼹·破碎石材轮](#啮岩鼹破碎石材轮-dietrock_molespecial_dietsbreak_stone)、[钢绵羊·谷粒餐](#钢绵羊谷粒餐-dietsteel_sheepbase_dietsgrain_meal)、[钢绵羊·牧草餐](#钢绵羊牧草餐-dietsteel_sheepbase_dietsgrass_meal)、[钢绵羊·陆养复合餐](#钢绵羊陆养复合餐-dietsteel_sheepbase_dietsland_meal)、[钢绵羊·含铁补料](#钢绵羊含铁补料-dietsteel_sheepspecial_dietsiron_supplement)、[钢绵羊·矿质补料餐](#钢绵羊矿质补料餐-dietsteel_sheepspecial_dietsmineral_supplement)、[藻露羹熬制](#藻露羹熬制-recipealgae_dew_soup)、[复合石板组装](#复合石板组装-recipeassemble_stone_panel)、[菌毯净水](#菌毯净水-recipebio_purify)、[陆养料调配](#陆养料调配-recipeblend_land_feed)、[水养料调配](#水养料调配-recipeblend_water_feed)、[破碎矿石](#破碎矿石-recipebreak_ore)、[破碎石材](#破碎石材-recipebreak_stone)、[枝条炭化](#枝条炭化-recipechar_twigs)、[木屑堆肥](#木屑堆肥-recipecompost_chips)、[鱼粪堆肥](#鱼粪堆肥-recipecompost_fish_manure)、[牧草堆肥](#牧草堆肥-recipecompost_grass)、[油饼堆肥](#油饼堆肥-recipecompost_oil_cake)、[羊粪堆肥](#羊粪堆肥-recipecompost_sheep_manure)、[污泥堆肥](#污泥堆肥-recipecompost_sludge)、[废滤炭堆肥](#废滤炭堆肥-recipecompost_spent_filter)、[秸秆堆肥](#秸秆堆肥-recipecompost_straw)、[枝条堆肥](#枝条堆肥-recipecompost_twigs)、[生物选矿](#生物选矿-recipeconcentrate_ore)、[藻料培养](#藻料培养-recipeculture_algae)、[高密度藻培养](#高密度藻培养-recipedense_algae_culture)、[菌鱼灵膳烹制](#菌鱼灵膳烹制-recipefungus_fish_meal)、[蜜谷灵饼烘焙](#蜜谷灵饼烘焙-recipehoney_grain_cake)、[蜜炼金食炼制](#蜜炼金食炼制-recipehoney_mineral_food)、[炭砂滤料制作](#炭砂滤料制作-recipemake_filter_media)、[谷粉研磨](#谷粉研磨-recipemill_grain)、[草粉研磨](#草粉研磨-recipemill_grass)、[稻米磨粉](#稻米磨粉-recipemill_rice)、[矿质补料调配](#矿质补料调配-recipemineral_feed)、[蜜油火膏熬制](#蜜油火膏熬制-recipeoil_honey_paste)、[油籽榨油](#油籽榨油-recipepress_oilseed)、[再生填料回收](#再生填料回收-reciperecover_fill)、[营养液回收](#营养液回收-reciperecover_nutrients)、[油脂精炼](#油脂精炼-reciperefine_oil)、[蜂蜡精炼](#蜂蜡精炼-reciperefine_wax)、[锯切木板](#锯切木板-recipesaw_planks)、[枝条粉碎](#枝条粉碎-recipeshred_twigs)、[原木粉碎](#原木粉碎-recipeshred_wood)、[木炭冶炼](#木炭冶炼-recipesmelt_charcoal)、[富集矿冶炼](#富集矿冶炼-recipesmelt_concentrate)、[松脂冶炼](#松脂冶炼-recipesmelt_resin)、[腐土菌丸炼制](#腐土菌丸炼制-recipesoil_spirit_pill)
 - **研究与科技（12）**：[饲料与蜡油精制](#饲料与蜡油精制-researchadvanced_feed_oil_wax)、[灵食初制](#灵食初制-researchbasic_spirit_cooking)、[蜂群协作](#蜂群协作-researchbeekeeping)、[菌毯净化](#菌毯净化-researchbiofiltration)、[复合灵食](#复合灵食-researchcomposite_spirit_food)、[农产初加工](#农产初加工-researchfarm_preparation)、[田间自动维护](#田间自动维护-researchfield_maintenance)、[花源栽培](#花源栽培-researchflower_cultivation)、[矿质材料工艺](#矿质材料工艺-researchmineral_materials)、[生物选矿](#生物选矿-researchore_concentration)、[岩料破碎](#岩料破碎-researchrock_handling)、[水与藻料回流](#水与藻料回流-researchwater_recirculation)
 - **资源点与环境（10）**：[灵田·水库](#灵田水库-mapfarm_02)、[东侧远田](#东侧远田-parceleast_far)、[东侧下田](#东侧下田-parceleast_lower)、[东侧近田](#东侧近田-parceleast_near)、[东侧远岸水库](#东侧远岸水库-parceleast_water_far)、[东侧近岸水库](#东侧近岸水库-parceleast_water_near)、[西侧水库](#西侧水库-parcelwest_water)、[采矿点](#采矿点-sourceore_source)、[泉水点](#泉水点-sourcespring_source)、[采石点](#采石点-sourcestone_source)
-- **基础玩法（17）**：[农业辅助蛊：定向服务区与效果决议](#农业辅助蛊定向服务区与效果决议-ruleagriculture)、[持续生产与保留量](#持续生产与保留量-ruleauto_production)、[建材替代](#建材替代-rulebuild_substitute)、[作物生长速率公式](#作物生长速率公式-rulecrop_growth)、[日结顺序与自动推进](#日结顺序与自动推进-ruleday_settle)、[环境值与有效光照](#环境值与有效光照-ruleenvironment)、[购地与连续地图](#购地与连续地图-ruleexpansion)、[花源份额](#花源份额-ruleflower_share)、[养殖服务与周期口径](#养殖服务与周期口径-rulehusbandry_service)、[活体配方的双重注册](#活体配方的双重注册-ruleliving_mapping)、[后勤蛊部署、维护与生产协同](#后勤蛊部署维护与生产协同-rulelogistics)、[市集交易](#市集交易-rulemarket)、[五行供货与转数](#五行供货与转数-ruleorders)、[研究系统](#研究系统-ruleresearch)、[露天农业区：地板、育种与丰产](#露天农业区地板育种与丰产-rulerooms)、[存档与经济](#存档与经济-rulesave)、[雇工与统一调度器](#雇工与统一调度器-ruleworker_scheduler)
+- **基础玩法（18）**：[农业辅助蛊：定向服务区与效果决议](#农业辅助蛊定向服务区与效果决议-ruleagriculture)、[畜牧分区：陆生动物名册与八单位日程](#畜牧分区陆生动物名册与八单位日程-ruleanimal-zones)、[持续生产与保留量](#持续生产与保留量-ruleauto_production)、[建材替代](#建材替代-rulebuild_substitute)、[作物生长速率公式](#作物生长速率公式-rulecrop_growth)、[日结顺序与自动推进](#日结顺序与自动推进-ruleday_settle)、[环境值与有效光照](#环境值与有效光照-ruleenvironment)、[购地与连续地图](#购地与连续地图-ruleexpansion)、[花源份额](#花源份额-ruleflower_share)、[养殖服务与周期口径](#养殖服务与周期口径-rulehusbandry_service)、[活体配方的双重注册](#活体配方的双重注册-ruleliving_mapping)、[后勤蛊部署、维护与生产协同](#后勤蛊部署维护与生产协同-rulelogistics)、[市集交易](#市集交易-rulemarket)、[五行供货与转数](#五行供货与转数-ruleorders)、[研究系统](#研究系统-ruleresearch)、[露天农业区：地板、育种与丰产](#露天农业区地板育种与丰产-rulerooms)、[存档与经济](#存档与经济-rulesave)、[雇工与统一调度器](#雇工与统一调度器-ruleworker_scheduler)
 
 ---
 
@@ -4000,7 +4000,7 @@
 相关规则：[日结顺序与自动推进](#日结顺序与自动推进-ruleday_settle)
 
 
-## 基础玩法（17）
+## 基础玩法（18）
 
 ### 农业辅助蛊：定向服务区与效果决议 `rule:agriculture`
 
@@ -4011,6 +4011,17 @@
 5. 催生只提高当日生长点推进（首轮×1.5），不改成熟目标、不按视觉阶段减天；待收对象不再推进。锁水/节肥分别按保留比例减少目标环境水/肥扣耗（首轮各保留50%），以每格百分之一余量跨日累计，不产生实物、不返还物品、不抬高环境值。
 6. 饭袋草蛊属于植物目标但无肥力消耗，节肥对其无效。余量归属地格：收获、重种、取消、换蛊、休眠、转向、拆建与读档都不清除。
 7. 未采用的启用来源只要满足扣费条件仍支付维护；缺元石或食料时不授予当日运行资格，普通生产回退基础效率，环境不足的原降效规则保留。
+
+### 畜牧分区：陆生动物名册与八单位日程 `rule:animal-zones`
+
+1. 钢绵羊、啮岩鼹、岩腹兽走名册制：购入即幼体，占用育幼区全时空间与床位；成体在次日日界由玩家选择圈养或役使，未安置则维持等待。三种动物退出旧的每日手动/雇工维护路径，鱼、蜂、菌毯不变。
+2. 五类功能区都在普通地板上四邻接划定：育幼区（圈舍＋供食槽＋床，最小空间4）、圈养区（另加照料台，最小空间8）、工作区（调度站＋岩兽工作场）、维持放牧区（食槽＋床，最小空间4）、额外放牧区（最小空间8）。圈舍与食槽等占地不计可用空间，床占地计入；划区、命名、调整0AP。
+3. 床采用格内密度：一格普通地板放4张小床或4张中床，以4张一组建造、组价按单格价；大床占满一格仅1张。小床收1空间体型，中床收2空间，严格匹配；同一床位可错时共用不重叠的两单位窗口，跨午夜预约不重置。
+4. 每天按八个内部逻辑单位结算（不换算AP）：标准班维持2＋工作4＋额外放牧2，晚班为其平移4格；育幼/圈养固定维持2＋照料6。维持窗口必须连续两单位整段成功：开窗时预约床位、食槽服务位（每槽2只）与窗口空间，窗口结束统一扣一次基础餐（育幼/役使1份、圈养2份）。
+5. 维持失败（缺食缺水、床位/空间/结构失效）自窗口结束点固定禁工八单位，可跨天；补食或再次成功都不提前解除。禁工结束且重新取得维持资格后才恢复劳动。
+6. 疲劳只在日界更新：下一开日＝clamp(当前＋工作单位－2×有效恢复＋12×失败窗口数, 0, 100)。0-7正常100%、8-15疲倦75%、16-23过劳50%、24-39罢工、40以上濒危；连续第三个开日≥40死亡。圈养照料单位也按恢复计，每日上限12。
+7. 岩兽工作场为四个并行岗位，批次归设施：有合格动物实际获岗才开批并扣一次原料，换班保留进度；碎石400/碎矿400/富集800工作点达标待领取，1AP按场领取。正常/疲倦/过劳每劳动单位提供100/75/50整数点。
+8. 圈养与育幼按照料单位积累：长成需36/18/24单位；钢绵羊每轮18照料单位产钢绵1＋羊粪1（开轮扣含铁补料1份）。成体圈养且开日疲劳0才累计无性繁殖，72/48/96单位后产同种幼体1只，待安置状态1AP批量领取并检查目标育幼区容量。
 
 ### 持续生产与保留量 `rule:auto_production`
 
