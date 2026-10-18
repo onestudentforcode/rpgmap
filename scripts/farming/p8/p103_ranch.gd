@@ -480,6 +480,13 @@ func _stage_assignment(row: Dictionary, request: Dictionary) -> String:
 	row["pending"]["zone_uid"] = zone_uid
 	row["pending"]["bed_uid"] = bed_uid
 	row["pending"]["bed_slot"] = bed_slot
+	if mode == "work" and request.has("pattern"):
+		# Entry pattern: choosing the shift when the animal first joins work is
+		# not a schedule change; later switches keep the maintenance-gap rule.
+		if not settings["patterns"].has(String(request["pattern"])):
+			return "未知班次"
+		if String(row["mode"]) != "work":
+			row["pending"]["pattern"] = String(request["pattern"])
 	return ""
 
 ## Bed reallocation inside the current zone is free and immediate.
@@ -661,7 +668,7 @@ func claim_workyard(facility_uid: int) -> Dictionary:
 	for item in outputs:
 		world.inventory.add(String(item), int(outputs[item]))
 	world._record_flow(outputs, {}, "畜牧劳动领取")
-	_record("workyard", "claim", {"workyard": facility_uid, "outputs": outputs.duplicate(), "posts": claimed})
+	_record("workyard", "claim", {"workyard": facility_uid, "recipe": String(yard["recipe_id"]), "outputs": outputs.duplicate(), "posts": claimed})
 	return world._finish(int(settings["ap"]["claim_workyard"]), {"ok": true, "items": outputs.duplicate(), "posts": claimed})
 
 # --- enclosure products and births --------------------------------------------

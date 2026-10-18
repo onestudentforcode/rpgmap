@@ -38,6 +38,14 @@ func record_operation(entry: Dictionary) -> void:
 		var recipe := String(row["recipe"])
 		claimed[recipe] = int(claimed.get(recipe, 0)) + 1
 		if not claimed_days.has(recipe): claimed_days[recipe] = int(row["day"]) + 1
+	# Ranch work-post claims aggregate several finished batches per receipt;
+	# count each claimed batch under its recipe so the summary matches the
+	# auditor's receipt-based tally.
+	if row["kind"] == "ranch:workyard" and row["stage"] == "claim" and int(row["day"]) < horizon:
+		var ranch_recipe := String(row.get("recipe", ""))
+		if not ranch_recipe.is_empty():
+			claimed[ranch_recipe] = int(claimed.get(ranch_recipe, 0)) + int(row.get("posts", 0))
+			if not claimed_days.has(ranch_recipe): claimed_days[ranch_recipe] = int(row["day"]) + 1
 
 
 func validate_layout(world, plan: Array) -> void:
@@ -243,7 +251,7 @@ func _configure_habitats(world) -> void:
 				else:
 					act(world, "beast grass base feed", func(): return world.husbandry.set_base_diet(int(uid), "grass_water_meal"))
 			"purifying_mat":
-				recipe = "recover_nutrients" if world.research.is_completed("water_recirculation") and world.inventory.count("filter_media") > 0 and world.inventory.count("nutrient_liquid") < 6 else "bio_purify"
+				recipe = "recover_nutrients" if world.research.is_completed("water_recirculation") and world.inventory.count("filter_media") > 0 and world.inventory.count("nutrient_liquid") < 6 and active_day < horizon - 12 else "bio_purify"
 				target = "nutrient_liquid" if recipe == "recover_nutrients" else "sludge"; quantity = 6
 			"filter_algae_carp":
 				recipe = "grain_fatten"; target = "fish_meat"; quantity = 8
