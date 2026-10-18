@@ -8,7 +8,7 @@
 
 - **作物与种植（7）**：[速生杉](#速生杉-cropfast_fir)、[金穗麦](#金穗麦-cropgolden_wheat)、[蜜铃灌木](#蜜铃灌木-crophoneybell_bush)、[油籽花](#油籽花-cropoilseed_flower)、[青牧草](#青牧草-croppasture_grass)、[松脂树](#松脂树-cropresin_tree)、[木腐菇](#木腐菇-cropwood_decay_mushroom)
 - **养殖与培养（6）**：[蜜盏蜂](#蜜盏蜂-speciesbell_bee)、[滤藻鲤](#滤藻鲤-speciesfilter_algae_carp)、[净水菌毯](#净水菌毯-speciespurifying_mat)、[岩腹兽](#岩腹兽-speciesrock_belly_beast)、[啮岩鼹](#啮岩鼹-speciesrock_mole)、[钢绵羊](#钢绵羊-speciessteel_sheep)
-- **建筑与设施（15）**：[藻类培养槽](#藻类培养槽-facilityalgae_tank)、[蜂箱](#蜂箱-facilitybee_hive)、[炭化炉](#炭化炉-facilitychar_kiln)、[堆肥箱](#堆肥箱-facilitycompost_bin)、[农产加工台](#农产加工台-facilityfarm_processor)、[田间维护站](#田间维护站-facilityfield_service_station)、[水场](#水场-facilityfish_pond)、[补光灯](#补光灯-facilitygrowth_lamp)、[厨房](#厨房-facilitykitchen)、[圈舍](#圈舍-facilitypen)、[净水菌床](#净水菌床-facilitypurifying_bed)、[研究台](#研究台-facilityresearch_bench)、[岩兽工作场](#岩兽工作场-facilityrock_workyard)、[小型冶炼炉](#小型冶炼炉-facilitysmelter)、[木工台](#木工台-facilitywoodshop)
+- **建筑与设施（21）**：[藻类培养槽](#藻类培养槽-facilityalgae_tank)、[蜂箱](#蜂箱-facilitybee_hive)、[照料台](#照料台-facilitycare_table)、[炭化炉](#炭化炉-facilitychar_kiln)、[堆肥箱](#堆肥箱-facilitycompost_bin)、[调度站](#调度站-facilitydispatch_station)、[农产加工台](#农产加工台-facilityfarm_processor)、[供食槽](#供食槽-facilityfeed_trough)、[田间维护站](#田间维护站-facilityfield_service_station)、[水场](#水场-facilityfish_pond)、[补光灯](#补光灯-facilitygrowth_lamp)、[厨房](#厨房-facilitykitchen)、[大床](#大床-facilitylarge_bed)、[中床](#中床-facilitymedium_bed)、[圈舍](#圈舍-facilitypen)、[净水菌床](#净水菌床-facilitypurifying_bed)、[研究台](#研究台-facilityresearch_bench)、[岩兽工作场](#岩兽工作场-facilityrock_workyard)、[小床](#小床-facilitysmall_bed)、[小型冶炼炉](#小型冶炼炉-facilitysmelter)、[木工台](#木工台-facilitywoodshop)
 - **后勤蛊与协同（7）**：[明光蛊](#明光蛊-gubright_gu)、[节肥蛊](#节肥蛊-gufert_gu)、[催生蛊](#催生蛊-gugrowth_gu)、[饭袋草蛊](#饭袋草蛊-gurice_bag_gu)、[宙道研究蛊](#宙道研究蛊-gutime_gu)、[锁水蛊](#锁水蛊-guwater_gu)、[智道研究蛊](#智道研究蛊-guwisdom_gu)
 - **材料与物品（65）**：[藻料](#藻料-resourcealgae_feed)、[蜂蜡](#蜂蜡-resourcebeeswax)、[木炭](#木炭-resourcecharcoal)、[清水](#清水-resourceclean_water)、[复合石板](#复合石板-resourcecomposite_stone_panel)、[粗植物油](#粗植物油-resourcecrude_oil)、[碎铁矿](#碎铁矿-resourcecrushed_ore)、[高密度藻料](#高密度藻料-resourcedense_algae)、[藻露羹](#藻露羹-resourcedew_soup)、[腐土菌丸](#腐土菌丸-resourceearth_pill)、[速生杉苗](#速生杉苗-resourcefast_fir_seed)、[炭砂滤料](#炭砂滤料-resourcefilter_media)、[蜜油火膏](#蜜油火膏-resourcefire_paste)、[鱼粪](#鱼粪-resourcefish_manure)、[鱼肉](#鱼肉-resourcefish_meat)、[菌鱼灵膳](#菌鱼灵膳-resourcefish_spirit_meal)、[花瓣](#花瓣-resourceflower_petal)、[牧草](#牧草-resourcefodder_grass)、[蜜炼金食](#蜜炼金食-resourcegold_food)、[金穗麦种子](#金穗麦种子-resourcegolden_wheat_seed)、[谷粒](#谷粒-resourcegrain)、[谷粉](#谷粉-resourcegrain_meal)、[草粉](#草粉-resourcegrass_meal)、[草籽](#草籽-resourcegrass_seed)、[砂砾](#砂砾-resourcegravel)、[蜂蜜](#蜂蜜-resourcehoney)、[蜜谷灵饼](#蜜谷灵饼-resourcehoney_cake)、[蜜铃苗](#蜜铃苗-resourcehoneybell_seed)、[腐殖土](#腐殖土-resourcehumus)、[铁锭](#铁锭-resourceiron_ingot)、[含铁矿石](#含铁矿石-resourceiron_ore)、[复合陆养料](#复合陆养料-resourceland_feed)、[矿质补料](#矿质补料-resourcemineral_feed)、[木腐菇](#木腐菇-resourcemushroom)、[花蜜](#花蜜-resourcenectar)、[营养液](#营养液-resourcenutrient_liquid)、[油饼](#油饼-resourceoil_cake)、[油籽](#油籽-resourceoilseed)、[油籽花种子](#油籽花种子-resourceoilseed_flower_seed)、[富集矿砂](#富集矿砂-resourceore_concentrate)、[花粉](#花粉-resourcepollen)、[净水菌毯培养单位](#净水菌毯培养单位-resourcepurifying_mat_culture)、[普通岩石](#普通岩石-resourceraw_stone)、[原木](#原木-resourceraw_wood)、[再生填料](#再生填料-resourcereclaimed_fill)、[精炼油](#精炼油-resourcerefined_oil)、[精炼蜡](#精炼蜡-resourcerefined_wax)、[松脂](#松脂-resourceresin)、[松脂树苗](#松脂树苗-resourceresin_tree_seed)、[稻米](#稻米-resourcerice)、[羊粪肥](#羊粪肥-resourcesheep_manure)、[炉渣](#炉渣-resourceslag)、[污泥](#污泥-resourcesludge)、[废滤炭](#废滤炭-resourcespent_filter)、[钢绒](#钢绒-resourcesteel_wool)、[石粉](#石粉-resourcestone_powder)、[秸秆](#秸秆-resourcestraw)、[尾砂](#尾砂-resourcetailings)、[宙道食料](#宙道食料-resourcetime_feed)、[枝条](#枝条-resourcetwig)、[污水](#污水-resourcewastewater)、[复合水养料](#复合水养料-resourcewater_feed)、[木屑](#木屑-resourcewood_chip)、[木腐菇菌种](#木腐菇菌种-resourcewood_decay_spawn)、[木板](#木板-resourcewood_plank)
 - **配方与食谱（61）**：[蜜盏蜂·花源份额＋清水](#蜜盏蜂花源份额清水-dietbell_beebase_dietsflower_share)、[蜜盏蜂·酿蜜周期](#蜜盏蜂酿蜜周期-dietbell_beespecial_dietshoney_cycle)、[滤藻鲤·藻料餐](#滤藻鲤藻料餐-dietfilter_algae_carpbase_dietsalgae_meal)、[滤藻鲤·高密度藻餐](#滤藻鲤高密度藻餐-dietfilter_algae_carpbase_dietsdense_meal)、[滤藻鲤·水养复合餐](#滤藻鲤水养复合餐-dietfilter_algae_carpbase_dietswater_meal)、[滤藻鲤·谷粒育肥](#滤藻鲤谷粒育肥-dietfilter_algae_carpspecial_dietsgrain_fatten)、[净水菌毯·培养清水](#净水菌毯培养清水-dietpurifying_matbase_dietsculture_water)、[净水菌毯·菌毯净水运行](#净水菌毯菌毯净水运行-dietpurifying_matspecial_dietsbio_purify)、[净水菌毯·营养液回收运行](#净水菌毯营养液回收运行-dietpurifying_matspecial_dietsrecover_nutrients)、[岩腹兽·牧草清水餐](#岩腹兽牧草清水餐-dietrock_belly_beastbase_dietsgrass_water_meal)、[岩腹兽·陆养复合餐](#岩腹兽陆养复合餐-dietrock_belly_beastbase_dietsland_meal)、[岩腹兽·生物选矿轮](#岩腹兽生物选矿轮-dietrock_belly_beastspecial_dietsconcentrate_ore)、[啮岩鼹·菌菇清水餐](#啮岩鼹菌菇清水餐-dietrock_molebase_dietsfungus_meal)、[啮岩鼹·破碎矿石轮](#啮岩鼹破碎矿石轮-dietrock_molespecial_dietsbreak_ore)、[啮岩鼹·破碎石材轮](#啮岩鼹破碎石材轮-dietrock_molespecial_dietsbreak_stone)、[钢绵羊·谷粒餐](#钢绵羊谷粒餐-dietsteel_sheepbase_dietsgrain_meal)、[钢绵羊·牧草餐](#钢绵羊牧草餐-dietsteel_sheepbase_dietsgrass_meal)、[钢绵羊·陆养复合餐](#钢绵羊陆养复合餐-dietsteel_sheepbase_dietsland_meal)、[钢绵羊·含铁补料](#钢绵羊含铁补料-dietsteel_sheepspecial_dietsiron_supplement)、[钢绵羊·矿质补料餐](#钢绵羊矿质补料餐-dietsteel_sheepspecial_dietsmineral_supplement)、[藻露羹熬制](#藻露羹熬制-recipealgae_dew_soup)、[复合石板组装](#复合石板组装-recipeassemble_stone_panel)、[菌毯净水](#菌毯净水-recipebio_purify)、[陆养料调配](#陆养料调配-recipeblend_land_feed)、[水养料调配](#水养料调配-recipeblend_water_feed)、[破碎矿石](#破碎矿石-recipebreak_ore)、[破碎石材](#破碎石材-recipebreak_stone)、[枝条炭化](#枝条炭化-recipechar_twigs)、[木屑堆肥](#木屑堆肥-recipecompost_chips)、[鱼粪堆肥](#鱼粪堆肥-recipecompost_fish_manure)、[牧草堆肥](#牧草堆肥-recipecompost_grass)、[油饼堆肥](#油饼堆肥-recipecompost_oil_cake)、[羊粪堆肥](#羊粪堆肥-recipecompost_sheep_manure)、[污泥堆肥](#污泥堆肥-recipecompost_sludge)、[废滤炭堆肥](#废滤炭堆肥-recipecompost_spent_filter)、[秸秆堆肥](#秸秆堆肥-recipecompost_straw)、[枝条堆肥](#枝条堆肥-recipecompost_twigs)、[生物选矿](#生物选矿-recipeconcentrate_ore)、[藻料培养](#藻料培养-recipeculture_algae)、[高密度藻培养](#高密度藻培养-recipedense_algae_culture)、[菌鱼灵膳烹制](#菌鱼灵膳烹制-recipefungus_fish_meal)、[蜜谷灵饼烘焙](#蜜谷灵饼烘焙-recipehoney_grain_cake)、[蜜炼金食炼制](#蜜炼金食炼制-recipehoney_mineral_food)、[炭砂滤料制作](#炭砂滤料制作-recipemake_filter_media)、[谷粉研磨](#谷粉研磨-recipemill_grain)、[草粉研磨](#草粉研磨-recipemill_grass)、[稻米磨粉](#稻米磨粉-recipemill_rice)、[矿质补料调配](#矿质补料调配-recipemineral_feed)、[蜜油火膏熬制](#蜜油火膏熬制-recipeoil_honey_paste)、[油籽榨油](#油籽榨油-recipepress_oilseed)、[再生填料回收](#再生填料回收-reciperecover_fill)、[营养液回收](#营养液回收-reciperecover_nutrients)、[油脂精炼](#油脂精炼-reciperefine_oil)、[蜂蜡精炼](#蜂蜡精炼-reciperefine_wax)、[锯切木板](#锯切木板-recipesaw_planks)、[枝条粉碎](#枝条粉碎-recipeshred_twigs)、[原木粉碎](#原木粉碎-recipeshred_wood)、[木炭冶炼](#木炭冶炼-recipesmelt_charcoal)、[富集矿冶炼](#富集矿冶炼-recipesmelt_concentrate)、[松脂冶炼](#松脂冶炼-recipesmelt_resin)、[腐土菌丸炼制](#腐土菌丸炼制-recipesoil_spirit_pill)
@@ -301,7 +301,7 @@
 相关规则：[日结顺序与自动推进](#日结顺序与自动推进-ruleday_settle)、[养殖服务与周期口径](#养殖服务与周期口径-rulehusbandry_service)、[雇工与统一调度器](#雇工与统一调度器-ruleworker_scheduler)
 
 
-## 建筑与设施（15）
+## 建筑与设施（21）
 
 ### 藻类培养槽 `facility:algae_tank`
 
@@ -335,6 +335,20 @@
 
 关联条目：接纳物种：[蜜盏蜂](#蜜盏蜂-speciesbell_bee)；解锁研究：[蜂群协作](#蜂群协作-researchbeekeeping)
 
+### 照料台 `facility:care_table`
+
+加工设施；24元石
+
+| 字段 | 内容 |
+|---|---|
+| 建造费用 | 24元石＋材料 木板×2＋普通岩石×2＋1AP |
+| 占地/地形 | 1×1格；地形：陆地 |
+| 设施类型 | 加工设施 |
+| 拆除 | 1AP；需设施空闲；不返还材料与元石 |
+| 建材替代 | 普通岩石部分可用复合石板1:1或再生填料2:1整体替代（2份石） |
+
+相关规则：[建材替代](#建材替代-rulebuild_substitute)
+
 ### 炭化炉 `facility:char_kiln`
 
 加工设施；12元石
@@ -365,6 +379,20 @@
 
 相关规则：[建材替代](#建材替代-rulebuild_substitute)
 
+### 调度站 `facility:dispatch_station`
+
+加工设施；18元石
+
+| 字段 | 内容 |
+|---|---|
+| 建造费用 | 18元石＋材料 原木×2＋普通岩石×2＋1AP |
+| 占地/地形 | 1×1格；地形：陆地 |
+| 设施类型 | 加工设施 |
+| 拆除 | 1AP；需设施空闲；不返还材料与元石 |
+| 建材替代 | 普通岩石部分可用复合石板1:1或再生填料2:1整体替代（2份石） |
+
+相关规则：[建材替代](#建材替代-rulebuild_substitute)
+
 ### 农产加工台 `facility:farm_processor`
 
 加工设施；12元石
@@ -383,6 +411,17 @@
 关联条目：解锁研究：[农产初加工](#农产初加工-researchfarm_preparation)
 
 相关规则：[建材替代](#建材替代-rulebuild_substitute)
+
+### 供食槽 `facility:feed_trough`
+
+加工设施；6元石
+
+| 字段 | 内容 |
+|---|---|
+| 建造费用 | 6元石＋材料 原木×2＋1AP |
+| 占地/地形 | 1×1格；地形：陆地 |
+| 设施类型 | 加工设施 |
+| 拆除 | 1AP；需设施空闲；不返还材料与元石 |
 
 ### 田间维护站 `facility:field_service_station`
 
@@ -452,6 +491,28 @@
 关联条目：解锁研究：[灵食初制](#灵食初制-researchbasic_spirit_cooking)
 
 相关规则：[建材替代](#建材替代-rulebuild_substitute)
+
+### 大床 `facility:large_bed`
+
+加工设施；14元石
+
+| 字段 | 内容 |
+|---|---|
+| 建造费用 | 14元石＋材料 原木×4＋1AP |
+| 占地/地形 | 1×1格；地形：陆地 |
+| 设施类型 | 加工设施 |
+| 拆除 | 1AP；需设施空闲；不返还材料与元石 |
+
+### 中床 `facility:medium_bed`
+
+加工设施；10元石
+
+| 字段 | 内容 |
+|---|---|
+| 建造费用 | 10元石＋材料 原木×3＋1AP |
+| 占地/地形 | 1×1格；地形：陆地 |
+| 设施类型 | 加工设施 |
+| 拆除 | 1AP；需设施空闲；不返还材料与元石 |
 
 ### 圈舍 `facility:pen`
 
@@ -526,6 +587,17 @@
 关联条目：接纳物种：[啮岩鼹](#啮岩鼹-speciesrock_mole)；接纳物种：[岩腹兽](#岩腹兽-speciesrock_belly_beast)；解锁研究：[岩料破碎](#岩料破碎-researchrock_handling)
 
 相关规则：[建材替代](#建材替代-rulebuild_substitute)
+
+### 小床 `facility:small_bed`
+
+加工设施；6元石
+
+| 字段 | 内容 |
+|---|---|
+| 建造费用 | 6元石＋材料 原木×2＋1AP |
+| 占地/地形 | 1×1格；地形：陆地 |
+| 设施类型 | 加工设施 |
+| 拆除 | 1AP；需设施空闲；不返还材料与元石 |
 
 ### 小型冶炼炉 `facility:smelter`
 
@@ -847,13 +919,15 @@
 |---|---|---|---|
 | 加工·复合石板组装 | ×2 | 加工·复合石板组装：复合石板×2（每批）｜木工台｜需研究「矿质材料工艺」｜2自然日｜启动1＋收取1 | 砂砾×2；石粉×1；松脂×1 |
 
-**直接用途（14条）**
+**直接用途（16条）**
 
 | 过程 | 本条目数量 | 说明 | 同批 |
 |---|---|---|---|
 | 建造·藻类培养槽 | ×1 | 建造·藻类培养槽：复合石板×1（每次建造（可选1:1替石））｜藻类培养槽｜1AP | 原木×1；普通岩石×1；再生填料×2；元石×6 |
+| 建造·照料台 | ×2 | 建造·照料台：复合石板×2（每次建造（可选1:1替石））｜照料台｜1AP | 木板×2；普通岩石×2；再生填料×4；元石×24 |
 | 建造·炭化炉 | ×3 | 建造·炭化炉：复合石板×3（每次建造（可选1:1替石））｜炭化炉｜1AP | 原木×2；普通岩石×3；再生填料×6；元石×12 |
 | 建造·堆肥箱 | ×1 | 建造·堆肥箱：复合石板×1（每次建造（可选1:1替石））｜堆肥箱｜1AP | 原木×1；普通岩石×1；再生填料×2；元石×6 |
+| 建造·调度站 | ×2 | 建造·调度站：复合石板×2（每次建造（可选1:1替石））｜调度站｜1AP | 原木×2；普通岩石×2；再生填料×4；元石×18 |
 | 建造·农产加工台 | ×2 | 建造·农产加工台：复合石板×2（每次建造（可选1:1替石））｜农产加工台｜需研究「农产初加工」｜1AP | 木板×2；普通岩石×2；再生填料×4；元石×12 |
 | 建造·水场 | ×4 | 建造·水场：复合石板×4（每次建造（可选1:1替石））｜水场｜1AP | 普通岩石×4；原木×1；再生填料×8；元石×12 |
 | 建造·补光灯 | ×1 | 建造·补光灯：复合石板×1（每次建造）｜补光灯｜需研究「矿质材料工艺」｜1AP | 铁锭×1；元石×12 |
@@ -1916,14 +1990,16 @@
 | 市集采购·普通岩石 | ×按订单/库存 | 市集采购·普通岩石：普通岩石×按订单/库存（每份） | 元石×3 |
 | 采石点采集 | ×3 | 采石点采集：普通岩石×3（每次）｜1AP | — |
 
-**直接用途（16条）**
+**直接用途（18条）**
 
 | 过程 | 本条目数量 | 说明 | 同批 |
 |---|---|---|---|
 | 加工·破碎石材 | ×2 | 加工·破碎石材：普通岩石×2（每批）｜岩兽工作场｜需研究「岩料破碎」｜1自然日｜启动1＋收取1 | 砂砾×2；石粉×1 |
 | 建造·藻类培养槽 | ×1 | 建造·藻类培养槽：普通岩石×1（每次建造）｜藻类培养槽｜1AP | 原木×1；复合石板×1；再生填料×2；元石×6 |
+| 建造·照料台 | ×2 | 建造·照料台：普通岩石×2（每次建造）｜照料台｜1AP | 木板×2；复合石板×2；再生填料×4；元石×24 |
 | 建造·炭化炉 | ×3 | 建造·炭化炉：普通岩石×3（每次建造）｜炭化炉｜1AP | 原木×2；复合石板×3；再生填料×6；元石×12 |
 | 建造·堆肥箱 | ×1 | 建造·堆肥箱：普通岩石×1（每次建造）｜堆肥箱｜1AP | 原木×1；复合石板×1；再生填料×2；元石×6 |
+| 建造·调度站 | ×2 | 建造·调度站：普通岩石×2（每次建造）｜调度站｜1AP | 原木×2；复合石板×2；再生填料×4；元石×18 |
 | 建造·农产加工台 | ×2 | 建造·农产加工台：普通岩石×2（每次建造）｜农产加工台｜需研究「农产初加工」｜1AP | 木板×2；复合石板×2；再生填料×4；元石×12 |
 | 建造·水场 | ×4 | 建造·水场：普通岩石×4（每次建造）｜水场｜1AP | 原木×1；复合石板×4；再生填料×8；元石×12 |
 | 建造·厨房 | ×3 | 建造·厨房：普通岩石×3（每次建造）｜厨房｜需研究「灵食初制」｜1AP | 木板×2；复合石板×3；再生填料×6；元石×12 |
@@ -1959,7 +2035,7 @@
 | 丰产奖励·速生杉·砍伐 | ×按订单/库存 | 丰产奖励·速生杉·砍伐：原木×按订单/库存（每轮额外份数） | — |
 | 丰产奖励·松脂树·砍伐 | ×按订单/库存 | 丰产奖励·松脂树·砍伐：原木×按订单/库存（每轮额外份数） | — |
 
-**直接用途（14条）**
+**直接用途（19条）**
 
 | 过程 | 本条目数量 | 说明 | 同批 |
 |---|---|---|---|
@@ -1969,11 +2045,16 @@
 | 建造·蜂箱 | ×2 | 建造·蜂箱：原木×2（每次建造）｜蜂箱｜需研究「蜂群协作」｜1AP | 木板×2；元石×10 |
 | 建造·炭化炉 | ×2 | 建造·炭化炉：原木×2（每次建造）｜炭化炉｜1AP | 普通岩石×3；复合石板×3；再生填料×6；元石×12 |
 | 建造·堆肥箱 | ×1 | 建造·堆肥箱：原木×1（每次建造）｜堆肥箱｜1AP | 普通岩石×1；复合石板×1；再生填料×2；元石×6 |
+| 建造·调度站 | ×2 | 建造·调度站：原木×2（每次建造）｜调度站｜1AP | 普通岩石×2；复合石板×2；再生填料×4；元石×18 |
+| 建造·供食槽 | ×2 | 建造·供食槽：原木×2（每次建造）｜供食槽｜1AP | 元石×6 |
 | 建造·水场 | ×1 | 建造·水场：原木×1（每次建造）｜水场｜1AP | 普通岩石×4；复合石板×4；再生填料×8；元石×12 |
+| 建造·大床 | ×4 | 建造·大床：原木×4（每次建造）｜大床｜1AP | 元石×14 |
+| 建造·中床 | ×3 | 建造·中床：原木×3（每次建造）｜中床｜1AP | 元石×10 |
 | 建造·圈舍 | ×2 | 建造·圈舍：原木×2（每次建造）｜圈舍｜1AP | 普通岩石×3；复合石板×3；再生填料×6；元石×16 |
 | 建造·净水菌床 | ×2 | 建造·净水菌床：原木×2（每次建造）｜净水菌床｜需研究「菌毯净化」｜1AP | 普通岩石×2；复合石板×2；再生填料×4；元石×10 |
 | 建造·研究台 | ×2 | 建造·研究台：原木×2（每次建造）｜研究台｜1AP | 普通岩石×2；复合石板×2；再生填料×4；元石×8 |
 | 建造·岩兽工作场 | ×2 | 建造·岩兽工作场：原木×2（每次建造）｜岩兽工作场｜需研究「岩料破碎」｜1AP | 普通岩石×3；复合石板×3；再生填料×6；元石×12 |
+| 建造·小床 | ×2 | 建造·小床：原木×2（每次建造）｜小床｜1AP | 元石×6 |
 | 建造·木工台 | ×2 | 建造·木工台：原木×2（每次建造）｜木工台｜1AP | 普通岩石×2；复合石板×2；再生填料×4；元石×8 |
 | 铺设普通地板 | ×1 | 铺设普通地板：原木×1（每格）｜1AP | — |
 | 市集出售·原木 | ×按订单/库存 | 市集出售·原木：原木×按订单/库存（每份） | 元石×4 |
@@ -1996,13 +2077,15 @@
 |---|---|---|---|
 | 加工·再生填料回收 | ×2 | 加工·再生填料回收：再生填料×2（每批）｜木工台｜需研究「矿质材料工艺」｜1自然日｜启动1＋收取1 | 尾砂×1；炉渣×1；石粉×1 |
 
-**直接用途（13条）**
+**直接用途（15条）**
 
 | 过程 | 本条目数量 | 说明 | 同批 |
 |---|---|---|---|
 | 建造·藻类培养槽 | ×2 | 建造·藻类培养槽：再生填料×2（每次建造（可选2:1替石））｜藻类培养槽｜1AP | 原木×1；普通岩石×1；复合石板×1；元石×6 |
+| 建造·照料台 | ×4 | 建造·照料台：再生填料×4（每次建造（可选2:1替石））｜照料台｜1AP | 木板×2；普通岩石×2；复合石板×2；元石×24 |
 | 建造·炭化炉 | ×6 | 建造·炭化炉：再生填料×6（每次建造（可选2:1替石））｜炭化炉｜1AP | 原木×2；普通岩石×3；复合石板×3；元石×12 |
 | 建造·堆肥箱 | ×2 | 建造·堆肥箱：再生填料×2（每次建造（可选2:1替石））｜堆肥箱｜1AP | 原木×1；普通岩石×1；复合石板×1；元石×6 |
+| 建造·调度站 | ×4 | 建造·调度站：再生填料×4（每次建造（可选2:1替石））｜调度站｜1AP | 原木×2；普通岩石×2；复合石板×2；元石×18 |
 | 建造·农产加工台 | ×4 | 建造·农产加工台：再生填料×4（每次建造（可选2:1替石））｜农产加工台｜需研究「农产初加工」｜1AP | 木板×2；普通岩石×2；复合石板×2；元石×12 |
 | 建造·水场 | ×8 | 建造·水场：再生填料×8（每次建造（可选2:1替石））｜水场｜1AP | 普通岩石×4；原木×1；复合石板×4；元石×12 |
 | 建造·厨房 | ×6 | 建造·厨房：再生填料×6（每次建造（可选2:1替石））｜厨房｜需研究「灵食初制」｜1AP | 木板×2；普通岩石×3；复合石板×3；元石×12 |
@@ -2545,11 +2628,12 @@
 |---|---|---|---|
 | 加工·锯切木板 | ×2 | 加工·锯切木板：木板×2（每批）｜木工台｜1自然日｜启动1＋收取1 | 原木×2；木屑×1 |
 
-**直接用途（6条）**
+**直接用途（7条）**
 
 | 过程 | 本条目数量 | 说明 | 同批 |
 |---|---|---|---|
 | 建造·蜂箱 | ×2 | 建造·蜂箱：木板×2（每次建造）｜蜂箱｜需研究「蜂群协作」｜1AP | 原木×2；元石×10 |
+| 建造·照料台 | ×2 | 建造·照料台：木板×2（每次建造）｜照料台｜1AP | 普通岩石×2；复合石板×2；再生填料×4；元石×24 |
 | 建造·农产加工台 | ×2 | 建造·农产加工台：木板×2（每次建造）｜农产加工台｜需研究「农产初加工」｜1AP | 普通岩石×2；复合石板×2；再生填料×4；元石×12 |
 | 建造·田间维护站 | ×3 | 建造·田间维护站：木板×3（每次建造）｜田间维护站｜需研究「田间自动维护」｜1AP | 铁锭×1；元石×18 |
 | 建造·厨房 | ×2 | 建造·厨房：木板×2（每次建造）｜厨房｜需研究「灵食初制」｜1AP | 普通岩石×3；复合石板×3；再生填料×6；元石×12 |

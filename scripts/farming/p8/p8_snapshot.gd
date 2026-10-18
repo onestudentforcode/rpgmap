@@ -17,7 +17,8 @@ const P8Devices := preload("res://scripts/farming/p8/p8_devices.gd")
 const Land := preload("res://scripts/farming/p8/p8_land.gd")
 const Logistics := preload("res://scripts/farming/p8/p10_logistics.gd")
 const Rooms := preload("res://scripts/farming/p8/p102_rooms.gd")
-const SCHEMA := 20
+const Ranch := preload("res://scripts/farming/p8/p103_ranch.gd")
+const SCHEMA := 21
 
 static func fresh() -> Dictionary:
 	var snapshot: Dictionary = Common.fresh(Data, SCHEMA)
@@ -39,6 +40,7 @@ static func fresh() -> Dictionary:
 	snapshot["world"]["agriculture"] = Logistics.fresh_agriculture()
 	snapshot["world"]["rooms"] = Rooms.fresh()
 	snapshot["world"]["rooms"]["random_seed"] = randi_range(1,2147483647)
+	snapshot["world"]["ranch"] = Ranch.fresh()
 	var workers := []
 	for worker in snapshot["workforce"]["workers"]:
 		worker["farm_duty"] = {"enabled": false, "priority": "normal"}
@@ -69,6 +71,7 @@ static func normalize(value) -> Dictionary:
 	var raw_logistics = world_section.get("logistics",null)
 	var raw_agriculture = world_section.get("agriculture",null)
 	var raw_rooms = world_section.get("rooms",null)
+	var raw_ranch = world_section.get("ranch",null) if world_section is Dictionary else null
 	if body.has("ledger"):
 		body.erase("ledger")
 	if body.has("reports"):
@@ -80,6 +83,7 @@ static func normalize(value) -> Dictionary:
 		world_section.erase("logistics")
 		world_section.erase("agriculture")
 		world_section.erase("rooms")
+		world_section.erase("ranch")
 		if world_section.has("husbandry"):
 			world_section.erase("husbandry")
 		if world_section.has("p8"):
@@ -94,8 +98,8 @@ static func normalize(value) -> Dictionary:
 	var checked := Common.normalize(body, Data, SCHEMA, false, P8Workforce)
 	if not checked["ok"]:
 		return checked
-	if raw_ledger == null or raw_husbandry == null or raw_reports == null or raw_preferences == null or raw_operations == null or raw_research == null or raw_flowers == null or raw_devices == null:
-		return fail("P8快照缺少养殖、运营、研究、花源、资源账、报表或偏好字段")
+	if raw_ledger == null or raw_husbandry == null or raw_reports == null or raw_preferences == null or raw_operations == null or raw_research == null or raw_flowers == null or raw_devices == null or raw_ranch == null:
+		return fail("P8快照缺少养殖、运营、研究、花源、资源账、报表、偏好或畜牧分区字段")
 	var ownership := Land.normalize(raw_land, checked["snapshot"]["world"], checked["snapshot"]["workforce"], Data)
 	if not ownership["ok"]: return ownership
 	checked["snapshot"]["world"]["land"] = ownership["land"]
@@ -162,6 +166,9 @@ static func normalize(value) -> Dictionary:
 	var rooms := Rooms.normalize(raw_rooms,checked["snapshot"],Data)
 	if not rooms["ok"]: return rooms
 	checked["snapshot"]["world"]["rooms"] = rooms["rooms"]
+	var ranch := Ranch.normalize(raw_ranch,checked["snapshot"],Data)
+	if not ranch["ok"]: return ranch
+	checked["snapshot"]["world"]["ranch"] = ranch["ranch"]
 	# A locked research plan must still point at its one original host instance.
 	for project in research["research"]["projects"]:
 		var id := String(project["gu"]["instance_id"])
@@ -190,7 +197,12 @@ static func _normalize_husbandry(raw, day: int, world: Dictionary) -> Dictionary
 			if habitat is Dictionary and habitat.has("water_change_day"):
 				markers[int(habitat.get("facility_uid", 0))] = habitat["water_change_day"]
 				habitat.erase("water_change_day")
-	var checked: Dictionary = Husbandry.normalize(value, day, world, Data, Data.load_data()["husbandry"])
+	# Pen and rock workyard are P10.3 structural ranch facilities: no habitat
+	# record is created or required for them any more.
+	var filtered_world := world.duplicate(true)
+	filtered_world["facilities"] = filtered_world["facilities"].filter(
+		func(row): return not String(row["facility_id"]) in ["pen", "rock_workyard"])
+	var checked: Dictionary = Husbandry.normalize(value, day, filtered_world, Data, Data.load_data()["husbandry"])
 	if not checked["ok"]:
 		return checked
 	var facility_defs: Dictionary = Data.definitions("facilities")

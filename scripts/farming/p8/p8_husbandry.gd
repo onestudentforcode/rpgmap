@@ -73,11 +73,51 @@ func caretaker_of(facility_uid: int) -> Dictionary:
 	var owner: int = world.operations.owner_of(facility_uid)
 	return world.workforce._worker(owner) if owner > 0 else {}
 
+## P10.3: the pen and the rock workyard are structural ranch facilities.
+## They never create habitat state, so the three terrestrial species cannot
+## enter the per-day feeding path from any entry point.
+const RANCH_STRUCTURAL := ["pen", "rock_workyard"]
+
 func ensure(facility_uid: int) -> Dictionary:
+	if world.facilities.has(facility_uid) and String(world.facilities[facility_uid]["facility_id"]) in RANCH_STRUCTURAL:
+		return {}
 	var habitat: Dictionary = super(facility_uid)
 	if habitat.has("water") and not habitat.has("water_change_day"):
 		habitat["water_change_day"] = -1
 	return habitat
+
+## Mixed yards pick their single species while empty; 0AP management only.
+func set_yard_species(facility_uid: int, species_id: String) -> Dictionary:
+	if world.facilities.has(facility_uid) and String(world.facilities[facility_uid]["facility_id"]) in RANCH_STRUCTURAL:
+		return _error("圈舍与岩兽工作场已改为畜牧功能区结构件，请在畜牧分区中安置动物")
+	var checked: Dictionary = world._can_act(0)
+	if not checked["ok"]:
+		return checked
+	if not world.facilities.has(facility_uid):
+		return _error("未知设施")
+	var facility: Dictionary = world.facilities[facility_uid]
+	if world.facility_defs[String(facility["facility_id"])].get("kind") != "habitat":
+		return _error("该设施不能养殖")
+	if not species_defs.has(species_id):
+		return _error("未知物种")
+	var definition: Dictionary = world.facility_defs[String(facility["facility_id"])]
+	if not definition.get("species", []).has(species_id):
+		return _error("该设施不接纳此物种")
+	var habitat := ensure(facility_uid)
+	if habitat.is_empty():
+		return _error("该设施没有养殖配置")
+	if not habitat["individuals"].is_empty():
+		return _error("非空工作场不能更换物种；先清退全部动物")
+	var blocked: String = world.research_block(String(species_defs[species_id].get("research", "")))
+	if not blocked.is_empty(): return _error(blocked)
+	habitat["species_id"] = species_id
+	habitat["basic_diet_id"] = species_defs[species_id]["default_base_diet"]
+	habitat["special_diet_id"] = species_defs[species_id]["default_special_diet"]
+	habitat["production_enabled"] = true
+	habitat["default_notice"] = true
+	world.operations.state["production"].erase(facility_uid)
+	world.changed.emit()
+	return {"ok": true, "detail": "物种已切换，请重新设置本场自动生产策略"}
 
 func quote_purchase(facility_uid: int, count: int) -> Dictionary:
 	var habitat := habitat_of(facility_uid)
@@ -146,7 +186,7 @@ func _diet_block(facility_uid: int, diet_kind: String, diet_id: String) -> Strin
 		return ""
 	var habitat := habitat_of(facility_uid)
 	if habitat.is_empty():
-		return ""
+		return "该设施没有养殖配置"
 	var species: Dictionary = species_def(habitat["species_id"])
 	for diet in species[diet_kind]:
 		if String(diet["id"]) == diet_id:
@@ -239,35 +279,6 @@ func _bee_maintain(facility_uid: int, operator: String = "player", service_day: 
 	return world._finish(int(settings["maintenance_ap"]), outcome)
 
 # --- P8.e purifying mats -----------------------------------------------------
-
-## Mixed yards pick their single species while empty; 0AP management only.
-func set_yard_species(facility_uid: int, species_id: String) -> Dictionary:
-	var checked: Dictionary = world._can_act(0)
-	if not checked["ok"]:
-		return checked
-	if not world.facilities.has(facility_uid):
-		return _error("未知设施")
-	var facility: Dictionary = world.facilities[facility_uid]
-	if world.facility_defs[String(facility["facility_id"])].get("kind") != "habitat":
-		return _error("该设施不能养殖")
-	if not species_defs.has(species_id):
-		return _error("未知物种")
-	var definition: Dictionary = world.facility_defs[String(facility["facility_id"])]
-	if not definition.get("species", []).has(species_id):
-		return _error("该设施不接纳此物种")
-	var habitat := ensure(facility_uid)
-	if not habitat["individuals"].is_empty():
-		return _error("非空工作场不能更换物种；先清退全部动物")
-	var blocked: String = world.research_block(String(species_defs[species_id].get("research", "")))
-	if not blocked.is_empty(): return _error(blocked)
-	habitat["species_id"] = species_id
-	habitat["basic_diet_id"] = species_defs[species_id]["default_base_diet"]
-	habitat["special_diet_id"] = species_defs[species_id]["default_special_diet"]
-	habitat["production_enabled"] = true
-	habitat["default_notice"] = true
-	world.operations.state["production"].erase(facility_uid)
-	world.changed.emit()
-	return {"ok": true, "detail": "物种已切换，请重新设置本场自动生产策略"}
 
 func is_mat_habitat(facility_uid: int) -> bool:
 	if not world.facilities.has(facility_uid):

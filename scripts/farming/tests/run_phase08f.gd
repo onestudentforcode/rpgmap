@@ -33,6 +33,13 @@ func discard(world, item: String, quantity: int) -> void:
 	world.inventory.remove(item, quantity)
 	world._record_flow({}, {item: quantity}, "测试弃置")
 
+func uid_of_pen_in(world, zone_uid: int) -> int:
+	var zone_row: Dictionary = world.ranch.zone(zone_uid)
+	for facility in world.ranch._facilities_in_zone(zone_row):
+		if String(facility["facility_id"]) == "pen":
+			return int(facility["uid"])
+	return 0
+
 func uid_of(world, facility_id: String, index: int = 0) -> int:
 	var found := []
 	for uid in world.facilities:
@@ -54,95 +61,120 @@ func _initialize() -> void:
 
 # --- 1. Yards and the rock mole ------------------------------------------------
 
+## Paves and builds one standard ranch module below the y=6 wall and returns
+## the zone uids: nursery (pen+trough+small bed), work (dispatch+workyard) and
+## a linked maintenance zone (trough+small bed). No pasture: short fixtures
+## tolerate a few fatigue points instead of roaming.
+func ranch_module(world) -> Dictionary:
+	for y in range(7, 10):
+		for x in range(0, 10):
+			var paved: Dictionary = world.rooms.set_floor(Vector2i(x, y), "ordinary")
+			check(paved["ok"], "pave ranch floor %d,%d" % [x, y])
+	for spec in [["pen", 0, 7], ["feed_trough", 2, 7], ["small_bed", 3, 7],
+			["dispatch_station", 4, 7], ["rock_workyard", 5, 7],
+			["feed_trough", 7, 7], ["small_bed", 8, 7]]:
+		var built: Dictionary = world.build_facility(Vector2i(spec[1], spec[2]), String(spec[0]))
+		check(built["ok"], "build " + String(spec[0]) + " (" + String(built.get("reason", "")) + ")")
+	var nursery_cells := []
+	for y in range(7, 10):
+		for x in range(0, 4): nursery_cells.append("%d,%d" % [x, y])
+	var nursery: Dictionary = world.ranch.create_zone("nursery", nursery_cells, "n")
+	check(nursery["ok"], "nursery zone created")
+	var work_cells := []
+	for y in range(7, 9):
+		for x in range(4, 7): work_cells.append("%d,%d" % [x, y])
+	var work: Dictionary = world.ranch.create_zone("work", work_cells, "w")
+	check(work["ok"], "work zone created")
+	var maintenance_cells := []
+	for y in range(7, 9):
+		for x in range(7, 10): maintenance_cells.append("%d,%d" % [x, y])
+	var maintenance: Dictionary = world.ranch.create_zone("maintenance", maintenance_cells, "m")
+	check(maintenance["ok"], "maintenance zone created")
+	var dispatch: int = uid_of(world, "dispatch_station")
+	check(world.ranch.submit({"links": {int(maintenance["zone_uid"]): dispatch}})["ok"], "link maintenance to dispatch")
+	return {"nursery": int(nursery["zone_uid"]), "work": int(work["zone_uid"])}
+
 func _yard_species_and_mole() -> void:
 	var world := P8World.new(temp_store())
 	world.start_new(1)
-	world.grant_scaffold({"raw_wood": 6, "raw_stone": 8, "grain": 2, "humus": 1, "mushroom": 3,
-		"clean_water": 30})
-	world.primeval_stones += 60
+	world.grant_scaffold({"raw_wood": 60, "raw_stone": 30, "grain": 2, "humus": 1, "mushroom": 40,
+		"clean_water": 60})
+	world.primeval_stones += 120
 	world.build_facility(Vector2i(2, 4), "research_bench")
 	complete_research(world, 1, "flower_cultivation", {"grain": 2, "humus": 1})
 	complete_research(world, 1, "rock_handling", {"mushroom": 1, "raw_stone": 3})
-	check(world.build_facility(Vector2i(0, 1), "rock_workyard")["ok"], "build the yard after T05")
+	check(world.build_facility(Vector2i(5, 7), "rock_workyard")["reason"].find("普通地板") >= 0, "yard needs ordinary floor before research is even considered")
+	var zones := ranch_module(world)
 	var yard := uid_of(world, "rock_workyard")
-	world.husbandry.ensure(yard)
-	check(not world.husbandry.set_yard_species(yard, "rock_belly_beast")["ok"], "locked beast cannot be selected before T07")
-	var before: Dictionary = world.to_snapshot()
-	# Even a stale management selection must not bypass the purchase gate.
-	world.husbandry.habitat_of(yard)["species_id"] = "rock_belly_beast"
-	check(not world.husbandry.quote_purchase(yard, 1)["ok"] and not world.husbandry.purchase(yard, 1)["ok"], "locked beast quote and purchase refused")
-	check(world.primeval_stones == int(before["economy"]["primeval_stones"]) and world.husbandry.habitat_of(yard)["individuals"].is_empty(), "locked purchase costs nothing and creates no individual")
-	world.apply_snapshot(before)
-	check(world.husbandry.set_yard_species(yard, "rock_mole")["ok"], "still empty switches back")
-	check(world.husbandry.purchase(yard, 2)["ok"], "buy two mole pups into the chosen species")
-	check(world.husbandry.set_yard_species(yard, "rock_belly_beast")["reason"].find("清退") >= 0, "non-empty yard refuses the switch")
-	discard(world, "raw_stone", world.inventory.count("raw_stone"))
-	# Rations only: growth proceeds, no mineral products appear.
+	# The beast stays locked behind T07: quote and purchase refuse without cost.
+	check(not world.ranch.purchase(zones["nursery"], "rock_belly_beast", 1)["ok"], "locked beast purchase refused")
+	check(world.ranch.state["animals"].is_empty(), "locked purchase creates no individual")
+	complete_research(world, 1, "ore_concentration", {"crushed_ore": 2, "gravel": 1, "fodder_grass": 2})
+	var stones_before := world.primeval_stones
+	check(world.ranch.purchase(zones["nursery"], "rock_mole", 2)["ok"], "buy two mole pups through the nursery")
+	check(world.primeval_stones == stones_before - 16, "purchases charged the juvenile price")
+	var water_before := world.inventory.count("clean_water")
 	var mushrooms_before := world.inventory.count("mushroom")
-	var fed: Dictionary = world.husbandry.maintain(yard)
-	check(fed["ok"] and world.inventory.count("mushroom") == mushrooms_before - 2, "daily rations really deducted")
 	world.end_day()
-	for _day in range(3):
-		world.grant_scaffold({"mushroom": 2, "clean_water": 2})
-		world.husbandry.maintain(yard)
+	check(world.inventory.count("mushroom") == mushrooms_before - 2 and world.inventory.count("clean_water") == water_before - 2, "daily rations really deducted")
+	for _day in range(2):
 		world.end_day()
-	var summary: Dictionary = world.husbandry.summary(world.husbandry.habitat_of(yard))
-	check(int(summary["adult"]) == 2 and world.inventory.count("gravel") == 0, "adults mature on rations alone, no free minerals")
-	# R13: mineral batch paid once at the cycle start.
-	world.grant_scaffold({"raw_stone": 4, "mushroom": 2, "clean_water": 2})
-	var batch: Dictionary = world.husbandry.maintain(yard)
-	check(batch["ok"] and int(batch["started"]) == 2, "both adults start stone batches")
-	check(world.inventory.count("raw_stone") == 0, "mineral inputs paid once")
+	var adults: Array = world.ranch.state["animals"].filter(func(a): return String(a["stage"]) == "adult")
+	check(adults.size() == 2 and world.inventory.count("gravel") == 0, "adults mature on rations alone, no free minerals")
+	# Rations only while waiting; the mineral batches are paid once per post.
+	for row in adults:
+		check(world.ranch.submit({"assign": {int(row["uid"]): {"mode": "work", "zone_uid": zones["work"]}}})["ok"], "assign mole worker")
 	world.end_day()
-	world.grant_scaffold({"mushroom": 2, "clean_water": 2})
-	world.husbandry.maintain(yard)
+	world.grant_scaffold({"raw_stone": 4})
+	var stone_before_work := world.inventory.count("raw_stone")
 	world.end_day()
-	var ready: Dictionary = world.husbandry.quote_claim(yard)
-	check(ready["ok"], "one-day batches ready")
-	var claimed: Dictionary = world.husbandry.claim(yard)
+	var yard_state: Dictionary = world.ranch.workyard_state(yard)
+	var ready := 0
+	for post in yard_state["posts"]:
+		if String(post["status"]) == "ready": ready += 1
+	check(ready == 2, "both posts hold finished batches")
+	check(world.inventory.count("raw_stone") == stone_before_work - 4, "mineral inputs paid once per batch")
+	var claimed: Dictionary = world.ranch.claim_workyard(yard)
 	check(claimed["ok"] and world.inventory.count("gravel") == 4 and world.inventory.count("stone_powder") == 2, "claim issues gravel and powder, moles stay")
 	# Switching to R14 only affects the next batch.
-	world.grant_scaffold({"iron_ore": 4, "mushroom": 2, "clean_water": 2})
-	check(world.husbandry.set_special_diet(yard, "break_ore")["ok"], "switch to ore breaking")
-	world.husbandry.maintain(yard)
+	world.grant_scaffold({"iron_ore": 4})
+	check(world.ranch.set_recipe(yard, "break_ore")["ok"], "switch to ore breaking")
 	world.end_day()
-	world.grant_scaffold({"mushroom": 2, "clean_water": 2})
-	world.husbandry.maintain(yard)
-	world.end_day()
-	world.husbandry.claim(yard)
-	check(world.inventory.count("crushed_ore") == 6, "R14 issues crushed ore")
+	var claimed2: Dictionary = world.ranch.claim_workyard(yard)
+	check(claimed2["ok"] and world.inventory.count("crushed_ore") == 6, "R14 issues crushed ore")
 
 # --- 2. The beast chain through smelting ------------------------------------------
 
 func _belly_and_smelting() -> void:
 	var world := P8World.new(temp_store())
 	world.start_new(1)
-	world.grant_scaffold({"raw_wood": 8, "raw_stone": 18, "wood_plank": 4, "grain": 2, "humus": 1, "mushroom": 1,
-		"clean_water": 40, "fodder_grass": 40, "crushed_ore": 40, "charcoal": 4,
+	world.grant_scaffold({"raw_wood": 90, "raw_stone": 40, "wood_plank": 10, "grain": 2, "humus": 1, "mushroom": 60,
+		"clean_water": 120, "fodder_grass": 60, "crushed_ore": 60, "charcoal": 4,
 		"grass_meal": 4, "grain_meal": 2, "iron_ore": 3})
-	world.primeval_stones += 100
+	world.primeval_stones += 200
 	world.build_facility(Vector2i(2, 4), "research_bench")
 	complete_research(world, 1, "flower_cultivation", {"grain": 2, "humus": 1})
 	complete_research(world, 1, "beekeeping", {"nectar": 2, "pollen": 1})
 	complete_research(world, 1, "farm_preparation", {"oilseed": 2, "straw": 2})
 	complete_research(world, 1, "rock_handling", {"mushroom": 1, "raw_stone": 3})
 	complete_research(world, 1, "ore_concentration", {"crushed_ore": 2, "gravel": 1, "fodder_grass": 2})
-	check(world.build_facility(Vector2i(0, 1), "rock_workyard")["ok"], "build the beast yard")
+	var zones := ranch_module(world)
 	var yard := uid_of(world, "rock_workyard")
-	world.husbandry.ensure(yard)
-	check(world.husbandry.set_yard_species(yard, "rock_belly_beast")["ok"], "choose the beast")
-	world.husbandry.purchase(yard, 1)
+	check(world.ranch.purchase(zones["nursery"], "rock_belly_beast", 1)["ok"], "buy the beast through the nursery")
 	for _day in range(4):
-		world.husbandry.maintain(yard)
 		world.end_day()
-	check(int(world.husbandry.summary(world.husbandry.habitat_of(yard))["adult"]) == 1, "beast adult on grass rations")
+	var beast: Array = world.ranch.state["animals"].filter(func(a): return String(a["stage"]) == "adult")
+	check(beast.size() == 1, "beast adult on grass rations")
+	check(world.ranch.submit({"assign": {int(beast[0]["uid"]): {"mode": "work", "zone_uid": zones["work"]}}})["ok"], "assign the beast")
+	world.end_day()
+	check(world.ranch.set_recipe(yard, "concentrate_ore")["ok"], "switch the yard to R15")
 	world.grant_scaffold({"crushed_ore": 6})
-	world.husbandry.maintain(yard)
+	var ore_before := world.inventory.count("crushed_ore")
 	world.end_day()
-	world.husbandry.maintain(yard)
 	world.end_day()
-	world.husbandry.claim(yard)
-	check(world.inventory.count("ore_concentrate") == 2 and world.inventory.count("tailings") == 1, "R15 issues concentrate and tailings")
+	var claimed: Dictionary = world.ranch.claim_workyard(yard)
+	check(claimed["ok"] and world.inventory.count("ore_concentrate") == 2 and world.inventory.count("tailings") == 1, "R15 issues concentrate and tailings")
+	check(world.inventory.count("crushed_ore") == ore_before - 6, "beast consumed the full batch inputs")
 	# R16 on the old smelter; R08 needs the processor behind T11.
 	var smelter_built: Dictionary = world.build_facility(Vector2i(7, 1), "smelter")
 	check(smelter_built["ok"], "build the smelter (" + String(smelter_built.get("reason", "")) + " stones " + str(world.primeval_stones) + ")")
@@ -161,7 +193,7 @@ func _belly_and_smelting() -> void:
 		else: world.end_day()
 		guard += 1
 	check(world.inventory.count("iron_ingot") == 1 and world.inventory.count("slag") == 1, "R16 issues ingot and slag")
-	# R08 mineral feed and the sheep's new special diet.
+	# R08 mineral feed stays a plain recipe batch.
 	check(world.build_facility(Vector2i(0, 3), "farm_processor")["ok"], "build the processor")
 	var processor := uid_of(world, "farm_processor")
 	world.grant_scaffold({"crushed_ore": 2, "grass_meal": 2, "grain_meal": 1})
@@ -173,21 +205,36 @@ func _belly_and_smelting() -> void:
 		else: world.end_day()
 		guard += 1
 	check(world.inventory.count("mineral_feed") == 2, "R08 issues mineral feed")
-	check(world.build_facility(Vector2i(9, 1), "pen")["ok"], "build the pen")
-	var pen := uid_of(world, "pen")
-	check(world.husbandry.set_diet(pen, "special_diets", "special_diet_id", "mineral_supplement")["ok"], "sheep switches to the mineral diet")
-	check(world.husbandry.purchase(pen, 1)["ok"], "buy the sheep")
-	# Grow the sheep to adulthood on rations, then start the mineral cycle.
+	# The sheep lives in an enclosure: the natural round pays its iron supplement.
+	for y in range(10, 14):
+		for x in range(0, 4):
+			check(world.rooms.set_floor(Vector2i(x, y), "ordinary")["ok"], "pave enclosure floor %d,%d" % [x, y])
+	for spec in [["pen", 0, 10], ["feed_trough", 2, 10], ["medium_bed", 3, 10], ["care_table", 3, 11]]:
+		check(world.build_facility(Vector2i(spec[1], spec[2]), String(spec[0]))["ok"], "build enclosure " + String(spec[0]))
+	var enclosure_cells := []
+	for y in range(10, 14):
+		for x in range(0, 4): enclosure_cells.append("%d,%d" % [x, y])
+	var enclosure: Dictionary = world.ranch.create_zone("enclosure", enclosure_cells, "e")
+	check(enclosure["ok"], "enclosure zone created")
+	check(world.ranch.purchase(zones["nursery"], "steel_sheep", 1)["reason"].find("床位") >= 0, "nursery without a medium bed refuses sheep")
+	check(world.build_facility(Vector2i(3, 8), "medium_bed")["ok"], "add a medium bed to the nursery")
+	check(world.ranch.purchase(zones["nursery"], "steel_sheep", 1)["ok"], "buy the sheep once a medium bed exists")
 	for _day in range(6):
-		world.grant_scaffold({"fodder_grass": 1, "clean_water": 1})
-		world.husbandry.maintain(pen)
 		world.end_day()
-	check(int(world.husbandry.summary(world.husbandry.habitat_of(pen))["adult"]) == 1, "sheep adult on rations")
-	discard(world, "mineral_feed", world.inventory.count("mineral_feed"))
-	world.grant_scaffold({"fodder_grass": 1, "clean_water": 1, "mineral_feed": 1})
-	var maintained: Dictionary = world.husbandry.maintain(pen)
-	check(maintained["ok"] and int(maintained.get("started", 0)) == 1, "sheep starts a mineral cycle")
-	check(world.inventory.count("mineral_feed") == 0 and world.inventory.count("iron_ore") == 3, "only the chosen special diet is charged")
+	var sheep: Array = world.ranch.state["animals"].filter(func(a): return String(a["species_id"]) == "steel_sheep")
+	check(sheep.size() == 1 and String(sheep[0]["stage"]) == "adult", "sheep adult on rations")
+	var medium: Array = world.ranch.free_bed_slots(world.ranch.zone(int(enclosure["zone_uid"])), "medium")
+	check(world.ranch.submit({"assign": {int(sheep[0]["uid"]): {"mode": "enclosure", "zone_uid": int(enclosure["zone_uid"]),
+		"bed_uid": int(medium[0]["uid"]), "bed_slot": int(medium[0]["slot"])}}})["ok"], "assign the sheep to the enclosure")
+	world.end_day()
+	var iron_before := world.inventory.count("iron_ore")
+	world.end_day()
+	check(world.inventory.count("iron_ore") == iron_before - 1, "the natural round pays the iron supplement once")
+	check(bool(world.ranch.animal(int(sheep[0]["uid"]))["natural"]["paid"]), "round marked paid")
+	world.end_day()
+	world.end_day()
+	check(bool(world.ranch.animal(int(sheep[0]["uid"]))["natural"]["pending"]), "three care days finish the wool round")
+	check(world.ranch.claim_products(uid_of_pen_in(world, int(enclosure["zone_uid"])))["ok"] and world.inventory.count("steel_wool") == 1 and world.inventory.count("sheep_manure") == 1, "claim issues wool and manure")
 
 # --- 3. R17/R18 building materials ---------------------------------------------------
 
@@ -244,7 +291,10 @@ func _construction_substitutes() -> void:
 	world.grant_scaffold({"raw_wood": 2, "reclaimed_fill": 5})
 	world.build_substitute = "fill"
 	check(not world.can_build_facility(Vector2i(9, 1), "pen")["ok"], "5 fill cannot cover 3 stones x2")
-	world.grant_scaffold({"reclaimed_fill": 1})
+	world.grant_scaffold({"reclaimed_fill": 1, "raw_wood": 4})
+	for y in range(1, 3):
+		for x in range(9, 11):
+			world.rooms.set_floor(Vector2i(x, y), "ordinary")
 	check(world.can_build_facility(Vector2i(9, 1), "pen")["ok"], "6 fill covers the group")
 	check(world.build_facility(Vector2i(9, 1), "pen")["ok"], "fill substitute builds")
 	check(world.inventory.count("reclaimed_fill") == 0 and world.inventory.count("raw_wood") == 0, "fill consumed 2:1, wood untouched role")
@@ -260,31 +310,27 @@ func _construction_substitutes() -> void:
 func _e_joint_validation() -> void:
 	var world := P8World.new(temp_store())
 	world.start_new(1)
-	world.grant_scaffold({"raw_wood": 12, "raw_stone": 16, "grain": 2, "humus": 1, "mushroom": 3,
-		"clean_water": 40, "fodder_grass": 30, "iron_ore": 6, "charcoal": 4, "straw": 6,
+	world.grant_scaffold({"raw_wood": 60, "raw_stone": 30, "grain": 2, "humus": 1, "mushroom": 30,
+		"clean_water": 60, "fodder_grass": 30, "iron_ore": 6, "charcoal": 4, "straw": 6,
 		"crude_oil": 1, "beeswax": 1, "grain_meal": 1, "iron_ingot": 1})
 	world.primeval_stones += 100
 	world.build_facility(Vector2i(2, 4), "research_bench")
 	complete_research(world, 1, "flower_cultivation", {"grain": 2, "humus": 1})
 	complete_research(world, 1, "rock_handling", {"mushroom": 1, "raw_stone": 3})
 	# Real gravel from the mole closes P8.e's T08 chain.
-	check(world.build_facility(Vector2i(0, 1), "rock_workyard")["ok"], "yard for real gravel")
+	var zones := ranch_module(world)
+	check(world.ranch.purchase(zones["nursery"], "rock_mole", 1)["ok"], "buy the gravel mole")
 	var yard := uid_of(world, "rock_workyard")
-	world.husbandry.ensure(yard)
-	world.husbandry.set_yard_species(yard, "rock_mole")
-	world.husbandry.purchase(yard, 1)
 	for _day in range(3):
-		world.grant_scaffold({"mushroom": 1, "clean_water": 1})
-		world.husbandry.maintain(yard)
 		world.end_day()
+	var mole: Array = world.ranch.state["animals"].filter(func(a): return String(a["stage"]) == "adult")
+	check(mole.size() == 1, "gravel mole adult")
+	check(world.ranch.submit({"assign": {int(mole[0]["uid"]): {"mode": "work", "zone_uid": zones["work"]}}})["ok"], "assign the gravel mole")
+	world.end_day()
 	world.grant_scaffold({"raw_stone": 2})
-	world.husbandry.maintain(yard)
 	world.end_day()
-	world.grant_scaffold({"mushroom": 1, "clean_water": 1})
-	world.husbandry.maintain(yard)
-	world.end_day()
-	world.husbandry.claim(yard)
-	check(world.inventory.count("gravel") == 2, "real gravel from R13")
+	var claimed_yard: Dictionary = world.ranch.claim_workyard(yard)
+	check(claimed_yard["ok"] and world.inventory.count("gravel") == 2, "real gravel from R13")
 	# Real sewage for the sludge sample.
 	check(world.build_facility(Vector2i(0, 14), "fish_pond")["ok"], "pond for real sewage")
 	var pond := uid_of(world, "fish_pond")
@@ -366,27 +412,23 @@ func _e_joint_validation() -> void:
 func _snapshot_contracts() -> void:
 	var world := P8World.new(temp_store())
 	world.start_new(1)
-	world.grant_scaffold({"raw_wood": 6, "raw_stone": 8, "grain": 2, "humus": 1, "mushroom": 3,
-		"clean_water": 20})
-	world.primeval_stones += 40
+	world.grant_scaffold({"raw_wood": 60, "raw_stone": 30, "grain": 2, "humus": 1, "mushroom": 20,
+		"clean_water": 40})
+	world.primeval_stones += 80
 	world.build_facility(Vector2i(2, 4), "research_bench")
 	complete_research(world, 1, "flower_cultivation", {"grain": 2, "humus": 1})
 	complete_research(world, 1, "rock_handling", {"mushroom": 1, "raw_stone": 3})
-	check(world.build_facility(Vector2i(0, 1), "rock_workyard")["ok"], "build yard")
-	var yard := uid_of(world, "rock_workyard")
-	world.husbandry.ensure(yard)
 	complete_research(world, 1, "ore_concentration", {"crushed_ore": 2, "gravel": 1, "fodder_grass": 2})
-	world.husbandry.set_yard_species(yard, "rock_belly_beast")
-	world.husbandry.purchase(yard, 1)
-	world.husbandry.maintain(yard)
+	var zones := ranch_module(world)
+	check(world.ranch.purchase(zones["nursery"], "rock_belly_beast", 1)["ok"], "buy the contract beast")
 	var snapshot := world.to_snapshot()
-	check(P8Snapshot.normalize(snapshot)["ok"], "beast yard snapshot round trips")
+	check(P8Snapshot.normalize(snapshot)["ok"], "beast ranch snapshot round trips")
 	var probe: Dictionary = snapshot.duplicate(true)
 	probe["world"]["research"]["completed"].erase("ore_concentration")
 	check(not P8Snapshot.normalize(probe)["ok"], "purchased beast cannot load without T07")
 	probe = snapshot.duplicate(true)
-	probe["world"]["husbandry"]["habitats"][0]["species_id"] = "bell_bee"
-	check(not P8Snapshot.normalize(probe)["ok"], "foreign species on the yard rejected")
+	probe["world"]["ranch"]["animals"][0]["species_id"] = "bell_bee"
+	check(not P8Snapshot.normalize(probe)["ok"], "foreign species on the roster rejected")
 	var restored := P8World.new()
 	restored.apply_snapshot(snapshot)
-	check(String(restored.husbandry.habitat_of(yard)["species_id"]) == "rock_belly_beast", "chosen species survives reload")
+	check(String(restored.ranch.state["animals"][0]["species_id"]) == "rock_belly_beast", "chosen species survives reload")

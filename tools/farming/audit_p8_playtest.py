@@ -13,8 +13,8 @@ ADVANCED = {"dew_soup", "fire_paste", "earth_pill", "gold_food"}
 IRON = {"iron_ore": 3, "crushed_ore": 2, "ore_concentrate": 6, "iron_ingot": 6,
         "mineral_feed": 2, "steel_wool": 2, "gold_food": 6}
 LOGISTICS_REASONS = {"后勤蛊产物收取", "后勤蛊特殊食料", "后勤蛊生产投料", "后勤蛊补水"}
-LEGITIMATE_OUT = {"养殖投喂", "净化启动", "加工投料", "市场出售", "建设材料", "播种投料", "施肥", "水场换水", "浇水", "特殊投料", "研究样本", "菌毯培养", "蜂群饲喂", "订单交付", "设备维护", "设备燃油", "后勤蛊特殊食料", "后勤蛊生产投料"}
-LEGITIMATE_IN = {"市场采购", "资源采集", "采收收获", "采花收获", "加工收取", "养殖收取", "水场换水", "后勤蛊产物收取"}
+LEGITIMATE_OUT = {"养殖投喂", "净化启动", "加工投料", "市场出售", "建设材料", "播种投料", "施肥", "水场换水", "浇水", "特殊投料", "研究样本", "菌毯培养", "蜂群饲喂", "订单交付", "设备维护", "设备燃油", "后勤蛊特殊食料", "后勤蛊生产投料", "铺设材料", "畜牧维持", "劳动开批", "畜产特殊投料"}
+LEGITIMATE_IN = {"市场采购", "资源采集", "采收收获", "采花收获", "加工收取", "养殖收取", "水场换水", "后勤蛊产物收取", "畜牧劳动领取", "圈养畜产领取"}
 LEGITIMATE_OUT.add("后勤蛊补水")
 
 def read_json(path: Path):
@@ -169,6 +169,7 @@ def reconcile(directory: Path, require_complete: bool = True) -> dict:
                         and inside(origin, coverage(day, instance['host_uid'], definition['range']))):
                     return True
             return False
+        ranch_opens = {}
         for r in receipts:
             day, kind = r["day"], r["kind"]
             stage = "purchase" if kind == "expansion" else r["stage"]
@@ -212,6 +213,33 @@ def reconcile(directory: Path, require_complete: bool = True) -> dict:
                 assert policy["enabled"] and deficit > 0 and r["started"] <= (deficit+per_unit-1)//per_unit, "living target exceeded"
                 for item in definition["inputs"]:
                     assert r["stock_after"].get(item, 0) >= r["reserves"].get(item, 0), "living reserve violation"
+            elif kind == "ranch:workyard" and stage in ("batch_open", "claim"):
+                # P10.3 facility work posts: batches open once with real inputs
+                # and claims aggregate the finished posts of that yard.
+                if stage == "batch_open":
+                    rid = r["recipe"]
+                    definition = recipes[rid]
+                    assert r["inputs"] == definition["inputs"] and r["outputs"] == definition["outputs"], (rid, "wrong ranch recipe receipt")
+                    gate = definition.get("research")
+                    assert not gate or gate in days[day]["research"]["completed"], (rid, "ranch research bypass")
+                    assert sum(IRON.get(i, 0)*q for i, q in r["outputs"].items()) <= sum(IRON.get(i, 0)*q for i, q in r["inputs"].items()), (rid, "created iron")
+                    spent[day].update(r["inputs"])
+                    ranch_opens.setdefault(r["workyard"], []).append({"recipe": rid, "outputs": dict(r["outputs"]), "batch_id": r["batch_id"]})
+                else:
+                    pending = ranch_opens.get(r["workyard"], [])
+                    assert len(pending) >= r["posts"], (day, "ranch claim without opened batches")
+                    claimed_now = pending[len(pending)-int(r["posts"]):]
+                    del pending[len(pending)-int(r["posts"]):]
+                    total = Counter()
+                    for batch in claimed_now:
+                        total.update(batch["outputs"])
+                        claims[batch["recipe"]] += 1
+                    assert dict(total) == dict(r["outputs"]), (day, "ranch claim outputs differ from opened batches")
+                    issued[day].update(r["outputs"])
+                    uses = {item: next((d+1 for d in range(day+1, horizon) if outflows[d][item] > 0), None) for item in r["outputs"]}
+                    if all(uses.values()):
+                        for batch in claimed_now:
+                            consumed.setdefault(batch["recipe"], uses)
             elif kind == "water":
                 key = (day, r["uid"])
                 assert key not in water_changes, "duplicate water change"

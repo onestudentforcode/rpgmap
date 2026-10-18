@@ -2327,6 +2327,92 @@
       },
       "name": "补光灯",
       "research": "mineral_materials"
+    },
+    {
+      "cash": 18,
+      "footprint": [
+        1,
+        1
+      ],
+      "id": "dispatch_station",
+      "kind": null,
+      "materials": {
+        "raw_stone": 2,
+        "raw_wood": 2
+      },
+      "name": "调度站",
+      "terrain": "land"
+    },
+    {
+      "cash": 6,
+      "footprint": [
+        1,
+        1
+      ],
+      "id": "feed_trough",
+      "kind": null,
+      "materials": {
+        "raw_wood": 2
+      },
+      "name": "供食槽",
+      "terrain": "land"
+    },
+    {
+      "cash": 6,
+      "footprint": [
+        1,
+        1
+      ],
+      "id": "small_bed",
+      "kind": null,
+      "materials": {
+        "raw_wood": 2
+      },
+      "name": "小床",
+      "terrain": "land"
+    },
+    {
+      "cash": 10,
+      "footprint": [
+        1,
+        1
+      ],
+      "id": "medium_bed",
+      "kind": null,
+      "materials": {
+        "raw_wood": 3
+      },
+      "name": "中床",
+      "terrain": "land"
+    },
+    {
+      "cash": 14,
+      "footprint": [
+        1,
+        1
+      ],
+      "id": "large_bed",
+      "kind": null,
+      "materials": {
+        "raw_wood": 4
+      },
+      "name": "大床",
+      "terrain": "land"
+    },
+    {
+      "cash": 24,
+      "footprint": [
+        1,
+        1
+      ],
+      "id": "care_table",
+      "kind": null,
+      "materials": {
+        "raw_stone": 2,
+        "wood_plank": 2
+      },
+      "name": "照料台",
+      "terrain": "land"
     }
   ],
   "flowers": {
@@ -2375,7 +2461,7 @@
   "layout_audit": {
     "flower_cells": 12,
     "land_total": 280,
-    "land_used": 56,
+    "land_used": 62,
     "placements": {
       "algae_tank": [
         18,
@@ -2385,30 +2471,50 @@
         0,
         0
       ],
+      "care_table": [
+        19,
+        0
+      ],
       "char_kiln": [
         2,
         0
       ],
       "compost_bin": [
+        18,
+        1
+      ],
+      "dispatch_station": [
         19,
-        0
+        1
       ],
       "farm_processor": [
         4,
         0
       ],
+      "feed_trough": [
+        0,
+        2
+      ],
       "field_service_station": [
-        18,
-        1
+        1,
+        2
       ],
       "fish_pond": "water",
       "growth_lamp": [
-        19,
-        1
+        2,
+        2
       ],
       "kitchen": [
         6,
         0
+      ],
+      "large_bed": [
+        3,
+        2
+      ],
+      "medium_bed": [
+        4,
+        2
       ],
       "pen": [
         8,
@@ -2419,12 +2525,16 @@
         0
       ],
       "research_bench": [
-        0,
+        5,
         2
       ],
       "rock_workyard": [
         12,
         0
+      ],
+      "small_bed": [
+        6,
+        2
       ],
       "smelter": [
         14,
@@ -2965,6 +3075,185 @@
       "3": 300,
       "4": 650,
       "5": 1200
+    }
+  },
+  "p103": {
+    "ap": {
+      "claim_births": 1,
+      "claim_products": 1,
+      "claim_workyard": 1,
+      "submit": 1
+    },
+    "bed_facilities": {
+      "large_bed": {
+        "slots": 1,
+        "type": "large"
+      },
+      "medium_bed": {
+        "slots": 4,
+        "type": "medium"
+      },
+      "small_bed": {
+        "slots": 4,
+        "type": "small"
+      }
+    },
+    "fatigue": {
+      "cap": 100,
+      "death_streak": 3,
+      "death_threshold": 40,
+      "enclosure_rest_cap": 6,
+      "fail_penalty": 12,
+      "rest_credit": 2,
+      "tiers": [
+        {
+          "efficiency": 100,
+          "label": "正常",
+          "max": 7
+        },
+        {
+          "efficiency": 75,
+          "label": "疲倦",
+          "max": 15
+        },
+        {
+          "efficiency": 50,
+          "label": "过劳",
+          "max": 23
+        },
+        {
+          "efficiency": 0,
+          "label": "罢工",
+          "max": 39
+        },
+        {
+          "efficiency": 0,
+          "label": "濒危",
+          "max": 100
+        }
+      ],
+      "work_debt": 1
+    },
+    "fixed_pattern": [
+      "M",
+      "M",
+      "C",
+      "C",
+      "C",
+      "C",
+      "C",
+      "C"
+    ],
+    "meals": {
+      "enclosure": 2,
+      "nursery": 1,
+      "work": 1
+    },
+    "patterns": {
+      "late": [
+        "W",
+        "W",
+        "R",
+        "R",
+        "M",
+        "M",
+        "W",
+        "W"
+      ],
+      "standard": [
+        "M",
+        "M",
+        "W",
+        "W",
+        "W",
+        "W",
+        "R",
+        "R"
+      ]
+    },
+    "species": {
+      "rock_belly_beast": {
+        "bed": "small",
+        "breed_units": 96,
+        "growth_units": 24,
+        "space": 1
+      },
+      "rock_mole": {
+        "bed": "small",
+        "breed_units": 48,
+        "growth_units": 18,
+        "space": 1
+      },
+      "steel_sheep": {
+        "bed": "medium",
+        "breed_units": 72,
+        "growth_units": 36,
+        "natural_diet": "iron_supplement",
+        "natural_outputs": {
+          "sheep_manure": 1,
+          "steel_wool": 1
+        },
+        "natural_units": 18,
+        "space": 2
+      }
+    },
+    "trough_slots": 2,
+    "version": 1,
+    "work": {
+      "default_recipe": "break_stone",
+      "points_per_unit": 100,
+      "posts_per_yard": 4,
+      "recipes": {
+        "break_ore": {
+          "species": "rock_mole",
+          "target": 400
+        },
+        "break_stone": {
+          "species": "rock_mole",
+          "target": 400
+        },
+        "concentrate_ore": {
+          "species": "rock_belly_beast",
+          "target": 800
+        }
+      }
+    },
+    "zones": {
+      "enclosure": {
+        "min_space": 8,
+        "structures": [
+          "pen",
+          "feed_trough",
+          "bed",
+          "care_table"
+        ]
+      },
+      "maintenance": {
+        "min_space": 4,
+        "structures": [
+          "feed_trough",
+          "bed"
+        ]
+      },
+      "nursery": {
+        "min_space": 4,
+        "structures": [
+          "pen",
+          "feed_trough",
+          "bed"
+        ]
+      },
+      "pasture": {
+        "min_space": 8,
+        "structures": []
+      },
+      "work": {
+        "min_space": 0,
+        "structures": [
+          "dispatch_station",
+          "rock_workyard"
+        ]
+      }
     }
   },
   "product": "farm_demo_p8",
@@ -4613,11 +4902,16 @@
         "build:bee_hive",
         "build:char_kiln",
         "build:compost_bin",
+        "build:dispatch_station",
+        "build:feed_trough",
         "build:fish_pond",
+        "build:large_bed",
+        "build:medium_bed",
         "build:pen",
         "build:purifying_bed",
         "build:research_bench",
         "build:rock_workyard",
+        "build:small_bed",
         "build:woodshop",
         "sale",
         "saw_planks",
@@ -4802,8 +5096,10 @@
         "break_stone",
         "break_stone_provider",
         "build:algae_tank",
+        "build:care_table",
         "build:char_kiln",
         "build:compost_bin",
+        "build:dispatch_station",
         "build:farm_processor",
         "build:fish_pond",
         "build:kitchen",
@@ -4988,6 +5284,7 @@
       "buy_price": 0,
       "consumers": [
         "build:bee_hive",
+        "build:care_table",
         "build:farm_processor",
         "build:field_service_station",
         "build:kitchen",

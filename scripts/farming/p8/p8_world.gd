@@ -12,6 +12,7 @@ const P8Land := preload("res://scripts/farming/p8/p8_land.gd")
 const P8Devices := preload("res://scripts/farming/p8/p8_devices.gd")
 const Logistics := preload("res://scripts/farming/p8/p10_logistics.gd")
 const Rooms := preload("res://scripts/farming/p8/p102_rooms.gd")
+const Ranch := preload("res://scripts/farming/p8/p103_ranch.gd")
 ## Observational receipts for external business audits; never grants resources or
 ## replays work. Day-save failures are still governed by the transaction below.
 signal operation_recorded(entry: Dictionary)
@@ -34,6 +35,7 @@ var devices
 var land
 var logistics
 var rooms
+var ranch
 
 func _init(slot_store = null) -> void:
 	land = P8Land.new(self)
@@ -43,6 +45,7 @@ func _init(slot_store = null) -> void:
 	devices = P8Devices.new(self, P8Data.load_data()["devices"])
 	logistics = Logistics.new(self, P8Data.load_data()["logistics"])
 	rooms = Rooms.new(self,P8Data.load_data()["rooms"])
+	ranch = Ranch.new(self, P8Data.load_data()["p103"])
 	super(slot_store)
 
 func _catalog():
@@ -70,10 +73,19 @@ func _settle_workforce(completed_day: int) -> void:
 func _settle_husbandry(completed_day: int) -> void:
 	rooms.begin_settle(completed_day)
 	husbandry.settle(completed_day)
+	ranch.settle(completed_day)
 	logistics.settle(completed_day)
 	research.settle(completed_day)
 	flowers.settle(completed_day)
 	reports.settle(completed_day)
+
+## Pen and rock yard are structural ranch facilities now: no habitat row is
+## created for them and the three terrestrial species never enter the old path.
+func _facility_built(uid: int) -> void:
+	var facility_id := String(facilities[uid]["facility_id"])
+	if facility_id == "pen" or facility_id == Ranch.WORKYARD_ID:
+		return
+	super(uid)
 
 func begin_research_settle(completed_day: int) -> void:
 	research.begin_settle(completed_day)
@@ -101,6 +113,8 @@ func demolish_facility(uid: int) -> Dictionary:
 	if not logistics.in_host(uid).is_empty(): return _error("请先撤回入驻后勤蛊，再拆除设施")
 	if research != null and not research.active_project(uid).is_empty():
 		return _error("研究台有在研项目，完成或处理后才能拆除")
+	if ranch != null and ranch.workyard_busy(uid):
+		return _error("工作场有运行或待领取批次，先领取或处理后再拆除")
 	var result: Dictionary = super.demolish_facility(uid)
 	if result["ok"] and facilities.get(uid, {}).is_empty() and research != null:
 		research.forget_bench(uid)
@@ -111,6 +125,7 @@ func _facility_removed(uid: int) -> void:
 	operations.forget_facility(uid)
 	devices.forget(uid)
 	logistics.forget_facility(uid)
+	ranch.forget_facility(uid)
 
 func to_snapshot() -> Dictionary:
 	var snapshot := super.to_snapshot()
@@ -122,6 +137,7 @@ func to_snapshot() -> Dictionary:
 	snapshot["world"]["logistics"] = logistics.to_save()
 	snapshot["world"]["agriculture"] = logistics.agri_to_save()
 	snapshot["world"]["rooms"] = rooms.to_save()
+	snapshot["world"]["ranch"] = ranch.to_save()
 	return snapshot
 
 func apply_snapshot(value) -> Dictionary:
@@ -146,6 +162,7 @@ func _snapshot_applied(snapshot: Dictionary) -> void:
 	if snapshot["world"].has("agriculture"):
 		logistics.apply_agri_save(snapshot["world"]["agriculture"])
 	rooms.apply_save(snapshot["world"]["rooms"])
+	ranch.apply_save(snapshot["world"]["ranch"])
 
 ## Pollination bonus: one extra oilseed per pollinated cycle at harvest.
 func _harvest_bonus(instance: Dictionary) -> Dictionary:
@@ -230,15 +247,22 @@ func _with_substituted(facility_id: String, action: Callable) -> Dictionary:
 func can_build_facility(cell: Vector2i, facility_id: String) -> Dictionary:
 	if facility_id=="field_service_station" and grid.state_at(cell)==Grid.State.TILLED: return _error("请先把维护站脚下耕地改为普通地板或还原，避免桥接田块")
 	if facility_defs.has(facility_id):
+		var blocked := research_block(String(facility_defs[facility_id].get("research", "")))
+		if not blocked.is_empty():
+			return _error(blocked)
+	if facility_id in Ranch.FLOOR_FACILITIES:
+		var shape: Array = facility_defs[facility_id]["footprint"]
+		for dy in range(int(shape[1])):
+			for dx in range(int(shape[0])):
+				var target := cell + Vector2i(dx, dy)
+				if not grid.in_bounds(target.x, target.y) or rooms.floor_kind(target) != "ordinary":
+					return _error("畜牧设施必须建在普通地板上，请先铺设")
+	if facility_defs.has(facility_id):
 		var shape: Array = facility_defs[facility_id]["footprint"]
 		for dy in range(int(shape[1])):
 			for dx in range(int(shape[0])):
 				var target := cell + Vector2i(dx, dy)
 				if not land.contains(target): return _error(land.reason(target))
-	if facility_defs.has(facility_id):
-		var blocked := research_block(String(facility_defs[facility_id].get("research", "")))
-		if not blocked.is_empty():
-			return _error(blocked)
 	if not build_substitute.is_empty() and facility_defs[facility_id]["materials"].has("raw_stone"):
 		return _with_substituted(facility_id, func(): return super.can_build_facility(cell, facility_id))
 	return super(cell, facility_id)

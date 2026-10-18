@@ -28,7 +28,7 @@ class P8FoundationTests(unittest.TestCase):
         out=bake.compile_config(self.source)
         self.assertEqual(len(out['resources']),65)
         self.assertEqual(len(out['crops']),7)
-        self.assertEqual(len(out['facilities']),15)
+        self.assertEqual(len(out['facilities']),21)
         self.assertEqual(len(out['recipes']),41)
         self.assertEqual(len(out['livestock']),6)
         self.assertNotIn('species', self.source)

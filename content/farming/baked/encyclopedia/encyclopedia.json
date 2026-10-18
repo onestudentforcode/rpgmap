@@ -70,13 +70,13 @@
   "counts": {
     "crops": 7,
     "diets": 20,
-    "entities": 200,
-    "facilities": 15,
+    "entities": 206,
+    "facilities": 21,
     "livestock": 6,
     "living_mappings": 5,
     "logistics": 7,
     "parcels": 6,
-    "processes": 273,
+    "processes": 285,
     "recipes": 41,
     "research": 12,
     "resources": 65,
@@ -1180,6 +1180,48 @@
         {
           "key": "cost",
           "label": "建造费用",
+          "text": "24元石＋材料 木板×2＋普通岩石×2＋1AP"
+        },
+        {
+          "key": "footprint",
+          "label": "占地/地形",
+          "text": "1×1格；地形：陆地"
+        },
+        {
+          "key": "type",
+          "label": "设施类型",
+          "text": "加工设施"
+        },
+        {
+          "key": "demolish",
+          "label": "拆除",
+          "text": "1AP；需设施空闲；不返还材料与元石"
+        },
+        {
+          "key": "substitute",
+          "label": "建材替代",
+          "text": "普通岩石部分可用复合石板1:1或再生填料2:1整体替代（2份石）"
+        }
+      ],
+      "icon": "build",
+      "id": "facility:care_table",
+      "kind": "facility",
+      "links": [],
+      "locks": null,
+      "name": "照料台",
+      "related_rules": [
+        "rule:build_substitute"
+      ],
+      "source_id": "care_table",
+      "summary": "加工设施；24元石",
+      "tags": []
+    },
+    {
+      "category": "facilities",
+      "fields": [
+        {
+          "key": "cost",
+          "label": "建造费用",
           "text": "12元石＋材料 原木×2＋普通岩石×3＋1AP"
         },
         {
@@ -1274,6 +1316,48 @@
         {
           "key": "cost",
           "label": "建造费用",
+          "text": "18元石＋材料 原木×2＋普通岩石×2＋1AP"
+        },
+        {
+          "key": "footprint",
+          "label": "占地/地形",
+          "text": "1×1格；地形：陆地"
+        },
+        {
+          "key": "type",
+          "label": "设施类型",
+          "text": "加工设施"
+        },
+        {
+          "key": "demolish",
+          "label": "拆除",
+          "text": "1AP；需设施空闲；不返还材料与元石"
+        },
+        {
+          "key": "substitute",
+          "label": "建材替代",
+          "text": "普通岩石部分可用复合石板1:1或再生填料2:1整体替代（2份石）"
+        }
+      ],
+      "icon": "build",
+      "id": "facility:dispatch_station",
+      "kind": "facility",
+      "links": [],
+      "locks": null,
+      "name": "调度站",
+      "related_rules": [
+        "rule:build_substitute"
+      ],
+      "source_id": "dispatch_station",
+      "summary": "加工设施；18元石",
+      "tags": []
+    },
+    {
+      "category": "facilities",
+      "fields": [
+        {
+          "key": "cost",
+          "label": "建造费用",
           "text": "12元石＋材料 木板×2＋普通岩石×2＋1AP"
         },
         {
@@ -1322,6 +1406,41 @@
       ],
       "source_id": "farm_processor",
       "summary": "加工设施；12元石",
+      "tags": []
+    },
+    {
+      "category": "facilities",
+      "fields": [
+        {
+          "key": "cost",
+          "label": "建造费用",
+          "text": "6元石＋材料 原木×2＋1AP"
+        },
+        {
+          "key": "footprint",
+          "label": "占地/地形",
+          "text": "1×1格；地形：陆地"
+        },
+        {
+          "key": "type",
+          "label": "设施类型",
+          "text": "加工设施"
+        },
+        {
+          "key": "demolish",
+          "label": "拆除",
+          "text": "1AP；需设施空闲；不返还材料与元石"
+        }
+      ],
+      "icon": "build",
+      "id": "facility:feed_trough",
+      "kind": "facility",
+      "links": [],
+      "locks": null,
+      "name": "供食槽",
+      "related_rules": [],
+      "source_id": "feed_trough",
+      "summary": "加工设施；6元石",
       "tags": []
     },
     {
@@ -1554,6 +1673,76 @@
       ],
       "source_id": "kitchen",
       "summary": "加工设施；12元石",
+      "tags": []
+    },
+    {
+      "category": "facilities",
+      "fields": [
+        {
+          "key": "cost",
+          "label": "建造费用",
+          "text": "14元石＋材料 原木×4＋1AP"
+        },
+        {
+          "key": "footprint",
+          "label": "占地/地形",
+          "text": "1×1格；地形：陆地"
+        },
+        {
+          "key": "type",
+          "label": "设施类型",
+          "text": "加工设施"
+        },
+        {
+          "key": "demolish",
+          "label": "拆除",
+          "text": "1AP；需设施空闲；不返还材料与元石"
+        }
+      ],
+      "icon": "build",
+      "id": "facility:large_bed",
+      "kind": "facility",
+      "links": [],
+      "locks": null,
+      "name": "大床",
+      "related_rules": [],
+      "source_id": "large_bed",
+      "summary": "加工设施；14元石",
+      "tags": []
+    },
+    {
+      "category": "facilities",
+      "fields": [
+        {
+          "key": "cost",
+          "label": "建造费用",
+          "text": "10元石＋材料 原木×3＋1AP"
+        },
+        {
+          "key": "footprint",
+          "label": "占地/地形",
+          "text": "1×1格；地形：陆地"
+        },
+        {
+          "key": "type",
+          "label": "设施类型",
+          "text": "加工设施"
+        },
+        {
+          "key": "demolish",
+          "label": "拆除",
+          "text": "1AP；需设施空闲；不返还材料与元石"
+        }
+      ],
+      "icon": "build",
+      "id": "facility:medium_bed",
+      "kind": "facility",
+      "links": [],
+      "locks": null,
+      "name": "中床",
+      "related_rules": [],
+      "source_id": "medium_bed",
+      "summary": "加工设施；10元石",
       "tags": []
     },
     {
@@ -1802,6 +1991,41 @@
       ],
       "source_id": "rock_workyard",
       "summary": "养殖栖息设施；12元石",
+      "tags": []
+    },
+    {
+      "category": "facilities",
+      "fields": [
+        {
+          "key": "cost",
+          "label": "建造费用",
+          "text": "6元石＋材料 原木×2＋1AP"
+        },
+        {
+          "key": "footprint",
+          "label": "占地/地形",
+          "text": "1×1格；地形：陆地"
+        },
+        {
+          "key": "type",
+          "label": "设施类型",
+          "text": "加工设施"
+        },
+        {
+          "key": "demolish",
+          "label": "拆除",
+          "text": "1AP；需设施空闲；不返还材料与元石"
+        }
+      ],
+      "icon": "build",
+      "id": "facility:small_bed",
+      "kind": "facility",
+      "links": [],
+      "locks": null,
+      "name": "小床",
+      "related_rules": [],
+      "source_id": "small_bed",
+      "summary": "加工设施；6元石",
       "tags": []
     },
     {
@@ -3414,6 +3638,24 @@
           "category_hint": "build",
           "conditions": "选择复合石板替代",
           "crop": null,
+          "detail": "建造·照料台：复合石板×2（每次建造（可选1:1替石））｜照料台｜1AP",
+          "duration": "即时",
+          "facility": "照料台",
+          "name": "建造·照料台",
+          "others": "木板×2；普通岩石×2；再生填料×4；元石×24",
+          "process": "proc:build:care_table",
+          "quantity": 2,
+          "research": null,
+          "species": null,
+          "timing": "建造时",
+          "type": "build"
+        },
+        {
+          "ap": "1AP",
+          "basis": "每次建造（可选1:1替石）",
+          "category_hint": "build",
+          "conditions": "选择复合石板替代",
+          "crop": null,
           "detail": "建造·炭化炉：复合石板×3（每次建造（可选1:1替石））｜炭化炉｜1AP",
           "duration": "即时",
           "facility": "炭化炉",
@@ -3439,6 +3681,24 @@
           "others": "原木×1；普通岩石×1；再生填料×2；元石×6",
           "process": "proc:build:compost_bin",
           "quantity": 1,
+          "research": null,
+          "species": null,
+          "timing": "建造时",
+          "type": "build"
+        },
+        {
+          "ap": "1AP",
+          "basis": "每次建造（可选1:1替石）",
+          "category_hint": "build",
+          "conditions": "选择复合石板替代",
+          "crop": null,
+          "detail": "建造·调度站：复合石板×2（每次建造（可选1:1替石））｜调度站｜1AP",
+          "duration": "即时",
+          "facility": "调度站",
+          "name": "建造·调度站",
+          "others": "原木×2；普通岩石×2；再生填料×4；元石×18",
+          "process": "proc:build:dispatch_station",
+          "quantity": 2,
           "research": null,
           "species": null,
           "timing": "建造时",
@@ -8813,6 +9073,24 @@
           "category_hint": "build",
           "conditions": "",
           "crop": null,
+          "detail": "建造·照料台：普通岩石×2（每次建造）｜照料台｜1AP",
+          "duration": "即时",
+          "facility": "照料台",
+          "name": "建造·照料台",
+          "others": "木板×2；复合石板×2；再生填料×4；元石×24",
+          "process": "proc:build:care_table",
+          "quantity": 2,
+          "research": null,
+          "species": null,
+          "timing": "建造时",
+          "type": "build"
+        },
+        {
+          "ap": "1AP",
+          "basis": "每次建造",
+          "category_hint": "build",
+          "conditions": "",
+          "crop": null,
           "detail": "建造·炭化炉：普通岩石×3（每次建造）｜炭化炉｜1AP",
           "duration": "即时",
           "facility": "炭化炉",
@@ -8838,6 +9116,24 @@
           "others": "原木×1；复合石板×1；再生填料×2；元石×6",
           "process": "proc:build:compost_bin",
           "quantity": 1,
+          "research": null,
+          "species": null,
+          "timing": "建造时",
+          "type": "build"
+        },
+        {
+          "ap": "1AP",
+          "basis": "每次建造",
+          "category_hint": "build",
+          "conditions": "",
+          "crop": null,
+          "detail": "建造·调度站：普通岩石×2（每次建造）｜调度站｜1AP",
+          "duration": "即时",
+          "facility": "调度站",
+          "name": "建造·调度站",
+          "others": "原木×2；复合石板×2；再生填料×4；元石×18",
+          "process": "proc:build:dispatch_station",
+          "quantity": 2,
           "research": null,
           "species": null,
           "timing": "建造时",
@@ -9302,6 +9598,42 @@
           "category_hint": "build",
           "conditions": "",
           "crop": null,
+          "detail": "建造·调度站：原木×2（每次建造）｜调度站｜1AP",
+          "duration": "即时",
+          "facility": "调度站",
+          "name": "建造·调度站",
+          "others": "普通岩石×2；复合石板×2；再生填料×4；元石×18",
+          "process": "proc:build:dispatch_station",
+          "quantity": 2,
+          "research": null,
+          "species": null,
+          "timing": "建造时",
+          "type": "build"
+        },
+        {
+          "ap": "1AP",
+          "basis": "每次建造",
+          "category_hint": "build",
+          "conditions": "",
+          "crop": null,
+          "detail": "建造·供食槽：原木×2（每次建造）｜供食槽｜1AP",
+          "duration": "即时",
+          "facility": "供食槽",
+          "name": "建造·供食槽",
+          "others": "元石×6",
+          "process": "proc:build:feed_trough",
+          "quantity": 2,
+          "research": null,
+          "species": null,
+          "timing": "建造时",
+          "type": "build"
+        },
+        {
+          "ap": "1AP",
+          "basis": "每次建造",
+          "category_hint": "build",
+          "conditions": "",
+          "crop": null,
           "detail": "建造·水场：原木×1（每次建造）｜水场｜1AP",
           "duration": "即时",
           "facility": "水场",
@@ -9309,6 +9641,42 @@
           "others": "普通岩石×4；复合石板×4；再生填料×8；元石×12",
           "process": "proc:build:fish_pond",
           "quantity": 1,
+          "research": null,
+          "species": null,
+          "timing": "建造时",
+          "type": "build"
+        },
+        {
+          "ap": "1AP",
+          "basis": "每次建造",
+          "category_hint": "build",
+          "conditions": "",
+          "crop": null,
+          "detail": "建造·大床：原木×4（每次建造）｜大床｜1AP",
+          "duration": "即时",
+          "facility": "大床",
+          "name": "建造·大床",
+          "others": "元石×14",
+          "process": "proc:build:large_bed",
+          "quantity": 4,
+          "research": null,
+          "species": null,
+          "timing": "建造时",
+          "type": "build"
+        },
+        {
+          "ap": "1AP",
+          "basis": "每次建造",
+          "category_hint": "build",
+          "conditions": "",
+          "crop": null,
+          "detail": "建造·中床：原木×3（每次建造）｜中床｜1AP",
+          "duration": "即时",
+          "facility": "中床",
+          "name": "建造·中床",
+          "others": "元石×10",
+          "process": "proc:build:medium_bed",
+          "quantity": 3,
           "research": null,
           "species": null,
           "timing": "建造时",
@@ -9382,6 +9750,24 @@
           "process": "proc:build:rock_workyard",
           "quantity": 2,
           "research": "岩料破碎",
+          "species": null,
+          "timing": "建造时",
+          "type": "build"
+        },
+        {
+          "ap": "1AP",
+          "basis": "每次建造",
+          "category_hint": "build",
+          "conditions": "",
+          "crop": null,
+          "detail": "建造·小床：原木×2（每次建造）｜小床｜1AP",
+          "duration": "即时",
+          "facility": "小床",
+          "name": "建造·小床",
+          "others": "元石×6",
+          "process": "proc:build:small_bed",
+          "quantity": 2,
+          "research": null,
           "species": null,
           "timing": "建造时",
           "type": "build"
@@ -9520,6 +9906,24 @@
           "category_hint": "build",
           "conditions": "选择再生填料替代",
           "crop": null,
+          "detail": "建造·照料台：再生填料×4（每次建造（可选2:1替石））｜照料台｜1AP",
+          "duration": "即时",
+          "facility": "照料台",
+          "name": "建造·照料台",
+          "others": "木板×2；普通岩石×2；复合石板×2；元石×24",
+          "process": "proc:build:care_table",
+          "quantity": 4,
+          "research": null,
+          "species": null,
+          "timing": "建造时",
+          "type": "build"
+        },
+        {
+          "ap": "1AP",
+          "basis": "每次建造（可选2:1替石）",
+          "category_hint": "build",
+          "conditions": "选择再生填料替代",
+          "crop": null,
           "detail": "建造·炭化炉：再生填料×6（每次建造（可选2:1替石））｜炭化炉｜1AP",
           "duration": "即时",
           "facility": "炭化炉",
@@ -9545,6 +9949,24 @@
           "others": "原木×1；普通岩石×1；复合石板×1；元石×6",
           "process": "proc:build:compost_bin",
           "quantity": 2,
+          "research": null,
+          "species": null,
+          "timing": "建造时",
+          "type": "build"
+        },
+        {
+          "ap": "1AP",
+          "basis": "每次建造（可选2:1替石）",
+          "category_hint": "build",
+          "conditions": "选择再生填料替代",
+          "crop": null,
+          "detail": "建造·调度站：再生填料×4（每次建造（可选2:1替石））｜调度站｜1AP",
+          "duration": "即时",
+          "facility": "调度站",
+          "name": "建造·调度站",
+          "others": "原木×2；普通岩石×2；复合石板×2；元石×18",
+          "process": "proc:build:dispatch_station",
+          "quantity": 4,
           "research": null,
           "species": null,
           "timing": "建造时",
@@ -12184,6 +12606,24 @@
           "process": "proc:build:bee_hive",
           "quantity": 2,
           "research": "蜂群协作",
+          "species": null,
+          "timing": "建造时",
+          "type": "build"
+        },
+        {
+          "ap": "1AP",
+          "basis": "每次建造",
+          "category_hint": "build",
+          "conditions": "",
+          "crop": null,
+          "detail": "建造·照料台：木板×2（每次建造）｜照料台｜1AP",
+          "duration": "即时",
+          "facility": "照料台",
+          "name": "建造·照料台",
+          "others": "普通岩石×2；复合石板×2；再生填料×4；元石×24",
+          "process": "proc:build:care_table",
+          "quantity": 2,
+          "research": null,
           "species": null,
           "timing": "建造时",
           "type": "build"
@@ -17065,11 +17505,11 @@
   "generated_inputs": [
     {
       "path": "content/farming/p8/production.json",
-      "sha256": "dbe1f18b68d1aec9f428bb9894f074b48043bfcf1f741b0e800ed40564c5d9c7"
+      "sha256": "2ec5d446d71121f7a7b2d0ec04845fe8d9485ec07514bd4bd333477b0ab03988"
     },
     {
       "path": "content/farming/baked/p8/production.json",
-      "sha256": "6351b3ed3e30bce5658d95058b0441823622d2401efe6eddc947e87aef2c54ff"
+      "sha256": "f25d988ef0ba70ab8853fb1576f1b4829bb3f2d8ee847909f0fd79c71d8f1ce8"
     },
     {
       "path": "content/farming/p8/expansion.json",
@@ -19224,6 +19664,71 @@
       "effects": [
         "设施就位；养殖设施创建默认配置"
       ],
+      "facility": "facility:care_table",
+      "facility_name": "照料台",
+      "id": "proc:build:care_table",
+      "inputs": [
+        {
+          "basis": "每次建造",
+          "entity": "resource:wood_plank",
+          "name": "木板",
+          "quantity": 2,
+          "timing": "建造时"
+        },
+        {
+          "basis": "每次建造",
+          "entity": "resource:raw_stone",
+          "name": "普通岩石",
+          "quantity": 2,
+          "timing": "建造时"
+        },
+        {
+          "basis": "每次建造（可选1:1替石）",
+          "conditions": "选择复合石板替代",
+          "entity": "resource:composite_stone_panel",
+          "name": "复合石板",
+          "quantity": 2,
+          "timing": "建造时"
+        },
+        {
+          "basis": "每次建造（可选2:1替石）",
+          "conditions": "选择再生填料替代",
+          "entity": "resource:reclaimed_fill",
+          "name": "再生填料",
+          "quantity": 4,
+          "timing": "建造时"
+        },
+        {
+          "basis": "每次建造",
+          "entity": "currency:primeval_stone",
+          "name": "元石",
+          "quantity": 24,
+          "timing": "建造时"
+        }
+      ],
+      "name": "建造·照料台",
+      "outputs": [],
+      "primeval_stones": 0,
+      "research": null,
+      "research_name": null,
+      "species": null,
+      "species_name": null,
+      "type": "build",
+      "worker_fee": 0
+    },
+    {
+      "ap": 1,
+      "ap_detail": "1AP",
+      "category_hint": "build",
+      "conditions": [
+        "占地全部已购且空闲、不压资源点；地形陆地"
+      ],
+      "crop": null,
+      "crop_name": null,
+      "duration": "即时",
+      "effects": [
+        "设施就位；养殖设施创建默认配置"
+      ],
       "facility": "facility:char_kiln",
       "facility_name": "炭化炉",
       "id": "proc:build:char_kiln",
@@ -19354,6 +19859,71 @@
       "effects": [
         "设施就位；养殖设施创建默认配置"
       ],
+      "facility": "facility:dispatch_station",
+      "facility_name": "调度站",
+      "id": "proc:build:dispatch_station",
+      "inputs": [
+        {
+          "basis": "每次建造",
+          "entity": "resource:raw_wood",
+          "name": "原木",
+          "quantity": 2,
+          "timing": "建造时"
+        },
+        {
+          "basis": "每次建造",
+          "entity": "resource:raw_stone",
+          "name": "普通岩石",
+          "quantity": 2,
+          "timing": "建造时"
+        },
+        {
+          "basis": "每次建造（可选1:1替石）",
+          "conditions": "选择复合石板替代",
+          "entity": "resource:composite_stone_panel",
+          "name": "复合石板",
+          "quantity": 2,
+          "timing": "建造时"
+        },
+        {
+          "basis": "每次建造（可选2:1替石）",
+          "conditions": "选择再生填料替代",
+          "entity": "resource:reclaimed_fill",
+          "name": "再生填料",
+          "quantity": 4,
+          "timing": "建造时"
+        },
+        {
+          "basis": "每次建造",
+          "entity": "currency:primeval_stone",
+          "name": "元石",
+          "quantity": 18,
+          "timing": "建造时"
+        }
+      ],
+      "name": "建造·调度站",
+      "outputs": [],
+      "primeval_stones": 0,
+      "research": null,
+      "research_name": null,
+      "species": null,
+      "species_name": null,
+      "type": "build",
+      "worker_fee": 0
+    },
+    {
+      "ap": 1,
+      "ap_detail": "1AP",
+      "category_hint": "build",
+      "conditions": [
+        "占地全部已购且空闲、不压资源点；地形陆地"
+      ],
+      "crop": null,
+      "crop_name": null,
+      "duration": "即时",
+      "effects": [
+        "设施就位；养殖设施创建默认配置"
+      ],
       "facility": "facility:farm_processor",
       "facility_name": "农产加工台",
       "id": "proc:build:farm_processor",
@@ -19401,6 +19971,48 @@
       "primeval_stones": 0,
       "research": "research:farm_preparation",
       "research_name": "农产初加工",
+      "species": null,
+      "species_name": null,
+      "type": "build",
+      "worker_fee": 0
+    },
+    {
+      "ap": 1,
+      "ap_detail": "1AP",
+      "category_hint": "build",
+      "conditions": [
+        "占地全部已购且空闲、不压资源点；地形陆地"
+      ],
+      "crop": null,
+      "crop_name": null,
+      "duration": "即时",
+      "effects": [
+        "设施就位；养殖设施创建默认配置"
+      ],
+      "facility": "facility:feed_trough",
+      "facility_name": "供食槽",
+      "id": "proc:build:feed_trough",
+      "inputs": [
+        {
+          "basis": "每次建造",
+          "entity": "resource:raw_wood",
+          "name": "原木",
+          "quantity": 2,
+          "timing": "建造时"
+        },
+        {
+          "basis": "每次建造",
+          "entity": "currency:primeval_stone",
+          "name": "元石",
+          "quantity": 6,
+          "timing": "建造时"
+        }
+      ],
+      "name": "建造·供食槽",
+      "outputs": [],
+      "primeval_stones": 0,
+      "research": null,
+      "research_name": null,
       "species": null,
       "species_name": null,
       "type": "build",
@@ -19629,6 +20241,90 @@
       "primeval_stones": 0,
       "research": "research:basic_spirit_cooking",
       "research_name": "灵食初制",
+      "species": null,
+      "species_name": null,
+      "type": "build",
+      "worker_fee": 0
+    },
+    {
+      "ap": 1,
+      "ap_detail": "1AP",
+      "category_hint": "build",
+      "conditions": [
+        "占地全部已购且空闲、不压资源点；地形陆地"
+      ],
+      "crop": null,
+      "crop_name": null,
+      "duration": "即时",
+      "effects": [
+        "设施就位；养殖设施创建默认配置"
+      ],
+      "facility": "facility:large_bed",
+      "facility_name": "大床",
+      "id": "proc:build:large_bed",
+      "inputs": [
+        {
+          "basis": "每次建造",
+          "entity": "resource:raw_wood",
+          "name": "原木",
+          "quantity": 4,
+          "timing": "建造时"
+        },
+        {
+          "basis": "每次建造",
+          "entity": "currency:primeval_stone",
+          "name": "元石",
+          "quantity": 14,
+          "timing": "建造时"
+        }
+      ],
+      "name": "建造·大床",
+      "outputs": [],
+      "primeval_stones": 0,
+      "research": null,
+      "research_name": null,
+      "species": null,
+      "species_name": null,
+      "type": "build",
+      "worker_fee": 0
+    },
+    {
+      "ap": 1,
+      "ap_detail": "1AP",
+      "category_hint": "build",
+      "conditions": [
+        "占地全部已购且空闲、不压资源点；地形陆地"
+      ],
+      "crop": null,
+      "crop_name": null,
+      "duration": "即时",
+      "effects": [
+        "设施就位；养殖设施创建默认配置"
+      ],
+      "facility": "facility:medium_bed",
+      "facility_name": "中床",
+      "id": "proc:build:medium_bed",
+      "inputs": [
+        {
+          "basis": "每次建造",
+          "entity": "resource:raw_wood",
+          "name": "原木",
+          "quantity": 3,
+          "timing": "建造时"
+        },
+        {
+          "basis": "每次建造",
+          "entity": "currency:primeval_stone",
+          "name": "元石",
+          "quantity": 10,
+          "timing": "建造时"
+        }
+      ],
+      "name": "建造·中床",
+      "outputs": [],
+      "primeval_stones": 0,
+      "research": null,
+      "research_name": null,
       "species": null,
       "species_name": null,
       "type": "build",
@@ -19889,6 +20585,48 @@
       "primeval_stones": 0,
       "research": "research:rock_handling",
       "research_name": "岩料破碎",
+      "species": null,
+      "species_name": null,
+      "type": "build",
+      "worker_fee": 0
+    },
+    {
+      "ap": 1,
+      "ap_detail": "1AP",
+      "category_hint": "build",
+      "conditions": [
+        "占地全部已购且空闲、不压资源点；地形陆地"
+      ],
+      "crop": null,
+      "crop_name": null,
+      "duration": "即时",
+      "effects": [
+        "设施就位；养殖设施创建默认配置"
+      ],
+      "facility": "facility:small_bed",
+      "facility_name": "小床",
+      "id": "proc:build:small_bed",
+      "inputs": [
+        {
+          "basis": "每次建造",
+          "entity": "resource:raw_wood",
+          "name": "原木",
+          "quantity": 2,
+          "timing": "建造时"
+        },
+        {
+          "basis": "每次建造",
+          "entity": "currency:primeval_stone",
+          "name": "元石",
+          "quantity": 6,
+          "timing": "建造时"
+        }
+      ],
+      "name": "建造·小床",
+      "outputs": [],
+      "primeval_stones": 0,
+      "research": null,
+      "research_name": null,
       "species": null,
       "species_name": null,
       "type": "build",
@@ -21711,6 +22449,33 @@
       "effects": [
         "占地释放；不返还材料与元石"
       ],
+      "facility": "facility:care_table",
+      "facility_name": "照料台",
+      "id": "proc:demolish:care_table",
+      "inputs": [],
+      "name": "拆除·照料台",
+      "outputs": [],
+      "primeval_stones": 0,
+      "research": null,
+      "research_name": null,
+      "species": null,
+      "species_name": null,
+      "type": "demolish",
+      "worker_fee": 0
+    },
+    {
+      "ap": 1,
+      "ap_detail": "1AP",
+      "category_hint": "build",
+      "conditions": [
+        "设施空闲（无批次/无动物/无在研）"
+      ],
+      "crop": null,
+      "crop_name": null,
+      "duration": "即时",
+      "effects": [
+        "占地释放；不返还材料与元石"
+      ],
       "facility": "facility:char_kiln",
       "facility_name": "炭化炉",
       "id": "proc:demolish:char_kiln",
@@ -21765,11 +22530,65 @@
       "effects": [
         "占地释放；不返还材料与元石"
       ],
+      "facility": "facility:dispatch_station",
+      "facility_name": "调度站",
+      "id": "proc:demolish:dispatch_station",
+      "inputs": [],
+      "name": "拆除·调度站",
+      "outputs": [],
+      "primeval_stones": 0,
+      "research": null,
+      "research_name": null,
+      "species": null,
+      "species_name": null,
+      "type": "demolish",
+      "worker_fee": 0
+    },
+    {
+      "ap": 1,
+      "ap_detail": "1AP",
+      "category_hint": "build",
+      "conditions": [
+        "设施空闲（无批次/无动物/无在研）"
+      ],
+      "crop": null,
+      "crop_name": null,
+      "duration": "即时",
+      "effects": [
+        "占地释放；不返还材料与元石"
+      ],
       "facility": "facility:farm_processor",
       "facility_name": "农产加工台",
       "id": "proc:demolish:farm_processor",
       "inputs": [],
       "name": "拆除·农产加工台",
+      "outputs": [],
+      "primeval_stones": 0,
+      "research": null,
+      "research_name": null,
+      "species": null,
+      "species_name": null,
+      "type": "demolish",
+      "worker_fee": 0
+    },
+    {
+      "ap": 1,
+      "ap_detail": "1AP",
+      "category_hint": "build",
+      "conditions": [
+        "设施空闲（无批次/无动物/无在研）"
+      ],
+      "crop": null,
+      "crop_name": null,
+      "duration": "即时",
+      "effects": [
+        "占地释放；不返还材料与元石"
+      ],
+      "facility": "facility:feed_trough",
+      "facility_name": "供食槽",
+      "id": "proc:demolish:feed_trough",
+      "inputs": [],
+      "name": "拆除·供食槽",
       "outputs": [],
       "primeval_stones": 0,
       "research": null,
@@ -21900,6 +22719,60 @@
       "effects": [
         "占地释放；不返还材料与元石"
       ],
+      "facility": "facility:large_bed",
+      "facility_name": "大床",
+      "id": "proc:demolish:large_bed",
+      "inputs": [],
+      "name": "拆除·大床",
+      "outputs": [],
+      "primeval_stones": 0,
+      "research": null,
+      "research_name": null,
+      "species": null,
+      "species_name": null,
+      "type": "demolish",
+      "worker_fee": 0
+    },
+    {
+      "ap": 1,
+      "ap_detail": "1AP",
+      "category_hint": "build",
+      "conditions": [
+        "设施空闲（无批次/无动物/无在研）"
+      ],
+      "crop": null,
+      "crop_name": null,
+      "duration": "即时",
+      "effects": [
+        "占地释放；不返还材料与元石"
+      ],
+      "facility": "facility:medium_bed",
+      "facility_name": "中床",
+      "id": "proc:demolish:medium_bed",
+      "inputs": [],
+      "name": "拆除·中床",
+      "outputs": [],
+      "primeval_stones": 0,
+      "research": null,
+      "research_name": null,
+      "species": null,
+      "species_name": null,
+      "type": "demolish",
+      "worker_fee": 0
+    },
+    {
+      "ap": 1,
+      "ap_detail": "1AP",
+      "category_hint": "build",
+      "conditions": [
+        "设施空闲（无批次/无动物/无在研）"
+      ],
+      "crop": null,
+      "crop_name": null,
+      "duration": "即时",
+      "effects": [
+        "占地释放；不返还材料与元石"
+      ],
       "facility": "facility:pen",
       "facility_name": "圈舍",
       "id": "proc:demolish:pen",
@@ -21986,6 +22859,33 @@
       "id": "proc:demolish:rock_workyard",
       "inputs": [],
       "name": "拆除·岩兽工作场",
+      "outputs": [],
+      "primeval_stones": 0,
+      "research": null,
+      "research_name": null,
+      "species": null,
+      "species_name": null,
+      "type": "demolish",
+      "worker_fee": 0
+    },
+    {
+      "ap": 1,
+      "ap_detail": "1AP",
+      "category_hint": "build",
+      "conditions": [
+        "设施空闲（无批次/无动物/无在研）"
+      ],
+      "crop": null,
+      "crop_name": null,
+      "duration": "即时",
+      "effects": [
+        "占地释放；不返还材料与元石"
+      ],
+      "facility": "facility:small_bed",
+      "facility_name": "小床",
+      "id": "proc:demolish:small_bed",
+      "inputs": [],
+      "name": "拆除·小床",
       "outputs": [],
       "primeval_stones": 0,
       "research": null,
