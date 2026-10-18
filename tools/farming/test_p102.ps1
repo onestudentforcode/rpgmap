@@ -1,17 +1,25 @@
 param([string]$GodotExe = $env:GODOT_EXE_CONSOLE, [switch]$SkipPlaytest,
-      [switch]$AuditExisting, [string]$EvidenceRoot = '.art-work/p102-playtest/business-v5')
+      [switch]$AuditExisting, [string]$EvidenceRoot = '.art-work/p102-playtest/business-v5',
+      [ValidateSet('Plan','Run','Assemble','Audit','Probes','Accept')][string]$Stage = 'Accept',
+      [string]$Cases = 'all', [switch]$Rerun, [ValidateRange(1,8)][int]$Parallel = 4)
 $ErrorActionPreference = 'Stop'
 $projectRoot = [IO.Path]::GetFullPath((Join-Path $PSScriptRoot '../..'))
 if (-not $GodotExe) { $GodotExe = 'C:\Users\88445\Desktop\code\daoyan\.tools\godot-4.7.2\engine\Godot_v4.7.2-stable_win64_console.exe' }
-if (-not (Test-Path -LiteralPath $GodotExe -PathType Leaf)) { throw 'Supply -GodotExe or GODOT_EXE_CONSOLE.' }
+function Invoke-Business {
+    $businessArgs=@{GodotExe=$GodotExe; EvidenceRoot=$EvidenceRoot; Stage=$Stage; Cases=$Cases; Parallel=$Parallel}
+    if ($AuditExisting) { $businessArgs.AuditExisting=$true }
+    if ($Rerun) { $businessArgs.Rerun=$true }
+    & (Join-Path $PSScriptRoot 'run_p102_business.ps1') @businessArgs
+    if (-not $?) { throw 'P102 business partition checks failed.' }
+}
+$businessOnly=$AuditExisting -or $Rerun -or $PSBoundParameters.ContainsKey('Stage') -or $PSBoundParameters.ContainsKey('Cases')
+if ($SkipPlaytest -and $businessOnly) { throw '-SkipPlaytest cannot be combined with business stage/case selectors.' }
 $logRoot = Join-Path $projectRoot '.art-work/p102-tests'
 New-Item -ItemType Directory -Force -Path $logRoot | Out-Null
 Push-Location $projectRoot
 try {
-    if ($AuditExisting) {
-        & (Join-Path $PSScriptRoot 'run_p102_business.ps1') -GodotExe $GodotExe -EvidenceRoot $EvidenceRoot -AuditExisting
-        exit $LASTEXITCODE
-    }
+    if ($businessOnly) { Invoke-Business; return }
+    if (-not (Test-Path -LiteralPath $GodotExe -PathType Leaf)) { throw 'Supply -GodotExe or GODOT_EXE_CONSOLE.' }
     & python tools/farming/bake_p8.py --check
     if ($LASTEXITCODE -ne 0) { throw 'P10.2 production bake stale.' }
     & python tools/farming/bake_encyclopedia.py --check
@@ -50,8 +58,7 @@ try {
     Check-Game 'business-layout' 'res://scripts/farming/tests/run_p102_playtest.gd' 'P102 BUSINESS LAYOUT OK' @('--','--layout-only')
     Write-Output 'P102 DEVELOPMENT CHECKS OK (business acceptance is a separate gate)'
     if (-not $SkipPlaytest) {
-        & (Join-Path $PSScriptRoot 'run_p102_business.ps1') -GodotExe $GodotExe -EvidenceRoot $EvidenceRoot
-        if (-not $?) { throw 'P102 business acceptance failed.' }
+        Invoke-Business
     }
 } finally {
     Pop-Location
