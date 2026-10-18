@@ -70,17 +70,17 @@
   "counts": {
     "crops": 7,
     "diets": 20,
-    "entities": 207,
-    "facilities": 21,
+    "entities": 214,
+    "facilities": 23,
     "livestock": 6,
     "living_mappings": 5,
-    "logistics": 7,
+    "logistics": 9,
     "parcels": 6,
-    "processes": 285,
-    "recipes": 41,
+    "processes": 294,
+    "recipes": 42,
     "research": 12,
-    "resources": 65,
-    "rules": 18,
+    "resources": 66,
+    "rules": 19,
     "sources": 3
   },
   "display": {
@@ -1342,7 +1342,13 @@
       "icon": "dispatch_station",
       "id": "facility:dispatch_station",
       "kind": "facility",
-      "links": [],
+      "links": [
+        {
+          "entity": "gu:command_gu",
+          "label": "可入驻后勤蛊",
+          "name": "驭兽蛊"
+        }
+      ],
       "locks": null,
       "name": "调度站",
       "related_rules": [
@@ -2081,6 +2087,96 @@
         {
           "key": "cost",
           "label": "建造费用",
+          "text": "18元石＋材料 木板×2＋普通岩石×2＋1AP"
+        },
+        {
+          "key": "footprint",
+          "label": "占地/地形",
+          "text": "1×1格；地形：陆地"
+        },
+        {
+          "key": "type",
+          "label": "设施类型",
+          "text": "加工设施"
+        },
+        {
+          "key": "demolish",
+          "label": "拆除",
+          "text": "1AP；需设施空闲；不返还材料与元石"
+        },
+        {
+          "key": "substitute",
+          "label": "建材替代",
+          "text": "普通岩石部分可用复合石板1:1或再生填料2:1整体替代（2份石）"
+        }
+      ],
+      "icon": "soothing_station",
+      "id": "facility:soothing_station",
+      "kind": "facility",
+      "links": [
+        {
+          "entity": "gu:soothe_gu",
+          "label": "可入驻后勤蛊",
+          "name": "安抚蛊"
+        }
+      ],
+      "locks": null,
+      "name": "安抚台",
+      "related_rules": [
+        "rule:build_substitute"
+      ],
+      "source_id": "soothing_station",
+      "summary": "加工设施；18元石",
+      "tags": []
+    },
+    {
+      "category": "facilities",
+      "fields": [
+        {
+          "key": "cost",
+          "label": "建造费用",
+          "text": "12元石＋材料 木板×2＋普通岩石×2＋1AP"
+        },
+        {
+          "key": "footprint",
+          "label": "占地/地形",
+          "text": "1×1格；地形：陆地"
+        },
+        {
+          "key": "type",
+          "label": "设施类型",
+          "text": "加工设施"
+        },
+        {
+          "key": "demolish",
+          "label": "拆除",
+          "text": "1AP；需设施空闲；不返还材料与元石"
+        },
+        {
+          "key": "substitute",
+          "label": "建材替代",
+          "text": "普通岩石部分可用复合石板1:1或再生填料2:1整体替代（2份石）"
+        }
+      ],
+      "icon": "toy_station",
+      "id": "facility:toy_station",
+      "kind": "facility",
+      "links": [],
+      "locks": null,
+      "name": "玩具站",
+      "related_rules": [
+        "rule:build_substitute"
+      ],
+      "source_id": "toy_station",
+      "summary": "加工设施；12元石",
+      "tags": []
+    },
+    {
+      "category": "facilities",
+      "fields": [
+        {
+          "key": "cost",
+          "label": "建造费用",
           "text": "8元石＋材料 原木×2＋普通岩石×2＋1AP"
         },
         {
@@ -2101,7 +2197,7 @@
         {
           "key": "recipes",
           "label": "支持配方",
-          "text": "锯切木板、原木粉碎、枝条粉碎、炭砂滤料制作、复合石板组装、再生填料回收（一次一批次）"
+          "text": "锯切木板、原木粉碎、枝条粉碎、炭砂滤料制作、复合石板组装、再生填料回收、make_vine_ball（一次一批次）"
         },
         {
           "key": "substitute",
@@ -3861,6 +3957,42 @@
           "others": "木板×2；普通岩石×6；再生填料×12；元石×20",
           "process": "proc:build:smelter",
           "quantity": 6,
+          "research": null,
+          "species": null,
+          "timing": "建造时",
+          "type": "build"
+        },
+        {
+          "ap": "1AP",
+          "basis": "每次建造（可选1:1替石）",
+          "category_hint": "build",
+          "conditions": "选择复合石板替代",
+          "crop": null,
+          "detail": "建造·安抚台：复合石板×2（每次建造（可选1:1替石））｜安抚台｜1AP",
+          "duration": "即时",
+          "facility": "安抚台",
+          "name": "建造·安抚台",
+          "others": "木板×2；普通岩石×2；再生填料×4；元石×18",
+          "process": "proc:build:soothing_station",
+          "quantity": 2,
+          "research": null,
+          "species": null,
+          "timing": "建造时",
+          "type": "build"
+        },
+        {
+          "ap": "1AP",
+          "basis": "每次建造（可选1:1替石）",
+          "category_hint": "build",
+          "conditions": "选择复合石板替代",
+          "crop": null,
+          "detail": "建造·玩具站：复合石板×2（每次建造（可选1:1替石））｜玩具站｜1AP",
+          "duration": "即时",
+          "facility": "玩具站",
+          "name": "建造·玩具站",
+          "others": "木板×2；普通岩石×2；再生填料×4；元石×12",
+          "process": "proc:build:toy_station",
+          "quantity": 2,
           "research": null,
           "species": null,
           "timing": "建造时",
@@ -9289,6 +9421,42 @@
           "category_hint": "build",
           "conditions": "",
           "crop": null,
+          "detail": "建造·安抚台：普通岩石×2（每次建造）｜安抚台｜1AP",
+          "duration": "即时",
+          "facility": "安抚台",
+          "name": "建造·安抚台",
+          "others": "木板×2；复合石板×2；再生填料×4；元石×18",
+          "process": "proc:build:soothing_station",
+          "quantity": 2,
+          "research": null,
+          "species": null,
+          "timing": "建造时",
+          "type": "build"
+        },
+        {
+          "ap": "1AP",
+          "basis": "每次建造",
+          "category_hint": "build",
+          "conditions": "",
+          "crop": null,
+          "detail": "建造·玩具站：普通岩石×2（每次建造）｜玩具站｜1AP",
+          "duration": "即时",
+          "facility": "玩具站",
+          "name": "建造·玩具站",
+          "others": "木板×2；复合石板×2；再生填料×4；元石×12",
+          "process": "proc:build:toy_station",
+          "quantity": 2,
+          "research": null,
+          "species": null,
+          "timing": "建造时",
+          "type": "build"
+        },
+        {
+          "ap": "1AP",
+          "basis": "每次建造",
+          "category_hint": "build",
+          "conditions": "",
+          "crop": null,
           "detail": "建造·木工台：普通岩石×2（每次建造）｜木工台｜1AP",
           "duration": "即时",
           "facility": "木工台",
@@ -10111,6 +10279,42 @@
           "others": "木板×2；普通岩石×6；复合石板×6；元石×20",
           "process": "proc:build:smelter",
           "quantity": 12,
+          "research": null,
+          "species": null,
+          "timing": "建造时",
+          "type": "build"
+        },
+        {
+          "ap": "1AP",
+          "basis": "每次建造（可选2:1替石）",
+          "category_hint": "build",
+          "conditions": "选择再生填料替代",
+          "crop": null,
+          "detail": "建造·安抚台：再生填料×4（每次建造（可选2:1替石））｜安抚台｜1AP",
+          "duration": "即时",
+          "facility": "安抚台",
+          "name": "建造·安抚台",
+          "others": "木板×2；普通岩石×2；复合石板×2；元石×18",
+          "process": "proc:build:soothing_station",
+          "quantity": 4,
+          "research": null,
+          "species": null,
+          "timing": "建造时",
+          "type": "build"
+        },
+        {
+          "ap": "1AP",
+          "basis": "每次建造（可选2:1替石）",
+          "category_hint": "build",
+          "conditions": "选择再生填料替代",
+          "crop": null,
+          "detail": "建造·玩具站：再生填料×4（每次建造（可选2:1替石））｜玩具站｜1AP",
+          "duration": "即时",
+          "facility": "玩具站",
+          "name": "建造·玩具站",
+          "others": "木板×2；普通岩石×2；复合石板×2；元石×12",
+          "process": "proc:build:toy_station",
+          "quantity": 4,
           "research": null,
           "species": null,
           "timing": "建造时",
@@ -11583,6 +11787,24 @@
           "type": "craft"
         },
         {
+          "ap": "启动1＋收取1",
+          "basis": "每批",
+          "category_hint": "production",
+          "conditions": "",
+          "crop": null,
+          "detail": "加工·make_vine_ball：秸秆×2（每批）｜木工台｜1自然日｜启动1＋收取1",
+          "duration": "1自然日",
+          "facility": "木工台",
+          "name": "加工·make_vine_ball",
+          "others": "枝条×2；藤球×1",
+          "process": "proc:batch:make_vine_ball",
+          "quantity": 2,
+          "research": null,
+          "species": null,
+          "timing": "启动时",
+          "type": "craft"
+        },
+        {
           "ap": "0AP",
           "basis": "一次性",
           "category_hint": "research",
@@ -11956,6 +12178,24 @@
           "category_hint": "production",
           "conditions": "",
           "crop": null,
+          "detail": "加工·make_vine_ball：枝条×2（每批）｜木工台｜1自然日｜启动1＋收取1",
+          "duration": "1自然日",
+          "facility": "木工台",
+          "name": "加工·make_vine_ball",
+          "others": "秸秆×2；藤球×1",
+          "process": "proc:batch:make_vine_ball",
+          "quantity": 2,
+          "research": null,
+          "species": null,
+          "timing": "启动时",
+          "type": "craft"
+        },
+        {
+          "ap": "启动1＋收取1",
+          "basis": "每批",
+          "category_hint": "production",
+          "conditions": "",
+          "crop": null,
           "detail": "加工·枝条粉碎：枝条×2（每批）｜木工台｜1自然日｜启动1＋收取1",
           "duration": "1自然日",
           "facility": "木工台",
@@ -11985,6 +12225,98 @@
           "species": null,
           "timing": "交易时",
           "type": "market_sell"
+        }
+      ]
+    },
+    {
+      "category": "items",
+      "fields": [
+        {
+          "key": "class",
+          "label": "分类",
+          "text": "木行·固体·加工品；标签：animal_toy"
+        },
+        {
+          "key": "buy",
+          "label": "市集采购",
+          "text": "不可采购"
+        },
+        {
+          "key": "sell",
+          "label": "市集出售",
+          "text": "不可出售"
+        }
+      ],
+      "icon": "vine_ball",
+      "id": "resource:vine_ball",
+      "kind": "resource",
+      "links": [],
+      "locks": null,
+      "name": "藤球",
+      "related_rules": [
+        "rule:market"
+      ],
+      "source_id": "vine_ball",
+      "sources": [
+        {
+          "ap": "启动1＋收取1",
+          "basis": "每批",
+          "category_hint": "production",
+          "conditions": "",
+          "crop": null,
+          "detail": "加工·make_vine_ball：藤球×1（每批）｜木工台｜1自然日｜启动1＋收取1",
+          "duration": "1自然日",
+          "facility": "木工台",
+          "name": "加工·make_vine_ball",
+          "others": "枝条×2；秸秆×2",
+          "process": "proc:batch:make_vine_ball",
+          "quantity": 1,
+          "research": null,
+          "species": null,
+          "timing": "收取时",
+          "type": "craft"
+        },
+        {
+          "ap": "1AP",
+          "basis": "每个玩具站",
+          "category_hint": "construction",
+          "conditions": "",
+          "crop": null,
+          "detail": "卸下耐用藤球：藤球×1（每个玩具站）｜玩具站｜1AP",
+          "duration": "即时",
+          "facility": "玩具站",
+          "name": "卸下耐用藤球",
+          "others": "",
+          "process": "proc:toy:remove",
+          "quantity": 1,
+          "research": null,
+          "species": null,
+          "timing": "卸下槽位",
+          "type": "installation"
+        }
+      ],
+      "summary": "木行固体；生产材料",
+      "tags": [
+        "animal_toy"
+      ],
+      "uses": [
+        {
+          "ap": "1AP",
+          "basis": "每个玩具站",
+          "category_hint": "construction",
+          "conditions": "",
+          "crop": null,
+          "detail": "装入耐用藤球：藤球×1（每个玩具站）｜玩具站｜1AP",
+          "duration": "即时",
+          "facility": "玩具站",
+          "name": "装入耐用藤球",
+          "others": "",
+          "process": "proc:toy:install",
+          "quantity": 1,
+          "research": null,
+          "species": null,
+          "timing": "装入槽位",
+          "type": "installation"
         }
       ]
     },
@@ -12701,6 +13033,42 @@
           "type": "build"
         },
         {
+          "ap": "1AP",
+          "basis": "每次建造",
+          "category_hint": "build",
+          "conditions": "",
+          "crop": null,
+          "detail": "建造·安抚台：木板×2（每次建造）｜安抚台｜1AP",
+          "duration": "即时",
+          "facility": "安抚台",
+          "name": "建造·安抚台",
+          "others": "普通岩石×2；复合石板×2；再生填料×4；元石×18",
+          "process": "proc:build:soothing_station",
+          "quantity": 2,
+          "research": null,
+          "species": null,
+          "timing": "建造时",
+          "type": "build"
+        },
+        {
+          "ap": "1AP",
+          "basis": "每次建造",
+          "category_hint": "build",
+          "conditions": "",
+          "crop": null,
+          "detail": "建造·玩具站：木板×2（每次建造）｜玩具站｜1AP",
+          "duration": "即时",
+          "facility": "玩具站",
+          "name": "建造·玩具站",
+          "others": "普通岩石×2；复合石板×2；再生填料×4；元石×12",
+          "process": "proc:build:toy_station",
+          "quantity": 2,
+          "research": null,
+          "species": null,
+          "timing": "建造时",
+          "type": "build"
+        },
+        {
           "ap": "0AP",
           "basis": "每份",
           "category_hint": "trade",
@@ -12731,7 +13099,7 @@
         {
           "key": "obtain",
           "label": "获取",
-          "text": "每档一次试用配给共11只：饭袋草/催生/锁水/节肥各2只，明光/智道研究/宙道研究各1只；尚未连接上游获取与成长"
+          "text": "每档一次试用配给共15只：饭袋草/催生/锁水/节肥/安抚/驭兽各2只，明光/智道研究/宙道研究各1只；尚未连接上游获取与成长"
         },
         {
           "key": "deploy",
@@ -12796,7 +13164,68 @@
         {
           "key": "obtain",
           "label": "获取",
-          "text": "每档一次试用配给共11只：饭袋草/催生/锁水/节肥各2只，明光/智道研究/宙道研究各1只；尚未连接上游获取与成长"
+          "text": "每档一次试用配给共15只：饭袋草/催生/锁水/节肥/安抚/驭兽各2只，明光/智道研究/宙道研究各1只；尚未连接上游获取与成长"
+        },
+        {
+          "key": "deploy",
+          "label": "部署",
+          "text": "入驻兼容设施：调度站"
+        },
+        {
+          "key": "effect",
+          "label": "能力",
+          "text": "实际获岗劳动点×1.5，每单位服务4空间"
+        },
+        {
+          "key": "fee",
+          "label": "维护",
+          "text": "启用时1元石/游戏日；闲置仍收费，休眠/未部署免维护"
+        },
+        {
+          "key": "food",
+          "label": "特殊食料",
+          "text": "无（每个成功付费服务日；与元石原子扣除）"
+        },
+        {
+          "key": "timing",
+          "label": "时点",
+          "text": "部署/撤回各1AP；启用次日生效；停用立即取消后续效果，已付不退；运行/待收任务锁定实例"
+        }
+      ],
+      "icon": "command_gu",
+      "id": "gu:command_gu",
+      "kind": "gu",
+      "links": [
+        {
+          "entity": "facility:dispatch_station",
+          "label": "兼容设施",
+          "name": "调度站"
+        }
+      ],
+      "locks": null,
+      "name": "驭兽蛊",
+      "related_rules": [
+        "rule:logistics"
+      ],
+      "source_id": "command_gu",
+      "summary": "实际动物劳动倍率",
+      "tags": [
+        "animal_work_assist",
+        "work_speed"
+      ]
+    },
+    {
+      "category": "logistics",
+      "fields": [
+        {
+          "key": "rank",
+          "label": "转数",
+          "text": "1转原型；实例支持一至五转，升转由上游负责"
+        },
+        {
+          "key": "obtain",
+          "label": "获取",
+          "text": "每档一次试用配给共15只：饭袋草/催生/锁水/节肥/安抚/驭兽各2只，明光/智道研究/宙道研究各1只；尚未连接上游获取与成长"
         },
         {
           "key": "deploy",
@@ -12857,7 +13286,7 @@
         {
           "key": "obtain",
           "label": "获取",
-          "text": "每档一次试用配给共11只：饭袋草/催生/锁水/节肥各2只，明光/智道研究/宙道研究各1只；尚未连接上游获取与成长"
+          "text": "每档一次试用配给共15只：饭袋草/催生/锁水/节肥/安抚/驭兽各2只，明光/智道研究/宙道研究各1只；尚未连接上游获取与成长"
         },
         {
           "key": "deploy",
@@ -12918,7 +13347,7 @@
         {
           "key": "obtain",
           "label": "获取",
-          "text": "每档一次试用配给共11只：饭袋草/催生/锁水/节肥各2只，明光/智道研究/宙道研究各1只；尚未连接上游获取与成长"
+          "text": "每档一次试用配给共15只：饭袋草/催生/锁水/节肥/安抚/驭兽各2只，明光/智道研究/宙道研究各1只；尚未连接上游获取与成长"
         },
         {
           "key": "deploy",
@@ -12988,7 +13417,68 @@
         {
           "key": "obtain",
           "label": "获取",
-          "text": "每档一次试用配给共11只：饭袋草/催生/锁水/节肥各2只，明光/智道研究/宙道研究各1只；尚未连接上游获取与成长"
+          "text": "每档一次试用配给共15只：饭袋草/催生/锁水/节肥/安抚/驭兽各2只，明光/智道研究/宙道研究各1只；尚未连接上游获取与成长"
+        },
+        {
+          "key": "deploy",
+          "label": "部署",
+          "text": "入驻兼容设施：安抚台"
+        },
+        {
+          "key": "effect",
+          "label": "能力",
+          "text": "实际合格繁殖进度×1.5，每单位服务4空间"
+        },
+        {
+          "key": "fee",
+          "label": "维护",
+          "text": "启用时1元石/游戏日；闲置仍收费，休眠/未部署免维护"
+        },
+        {
+          "key": "food",
+          "label": "特殊食料",
+          "text": "无（每个成功付费服务日；与元石原子扣除）"
+        },
+        {
+          "key": "timing",
+          "label": "时点",
+          "text": "部署/撤回各1AP；启用次日生效；停用立即取消后续效果，已付不退；运行/待收任务锁定实例"
+        }
+      ],
+      "icon": "soothe_gu",
+      "id": "gu:soothe_gu",
+      "kind": "gu",
+      "links": [
+        {
+          "entity": "facility:soothing_station",
+          "label": "兼容设施",
+          "name": "安抚台"
+        }
+      ],
+      "locks": null,
+      "name": "安抚蛊",
+      "related_rules": [
+        "rule:logistics"
+      ],
+      "source_id": "soothe_gu",
+      "summary": "实际繁殖进度倍率",
+      "tags": [
+        "animal_breeding_assist",
+        "breed_speed"
+      ]
+    },
+    {
+      "category": "logistics",
+      "fields": [
+        {
+          "key": "rank",
+          "label": "转数",
+          "text": "1转原型；实例支持一至五转，升转由上游负责"
+        },
+        {
+          "key": "obtain",
+          "label": "获取",
+          "text": "每档一次试用配给共15只：饭袋草/催生/锁水/节肥/安抚/驭兽各2只，明光/智道研究/宙道研究各1只；尚未连接上游获取与成长"
         },
         {
           "key": "deploy",
@@ -13059,7 +13549,7 @@
         {
           "key": "obtain",
           "label": "获取",
-          "text": "每档一次试用配给共11只：饭袋草/催生/锁水/节肥各2只，明光/智道研究/宙道研究各1只；尚未连接上游获取与成长"
+          "text": "每档一次试用配给共15只：饭袋草/催生/锁水/节肥/安抚/驭兽各2只，明光/智道研究/宙道研究各1只；尚未连接上游获取与成长"
         },
         {
           "key": "deploy",
@@ -13120,7 +13610,7 @@
         {
           "key": "obtain",
           "label": "获取",
-          "text": "每档一次试用配给共11只：饭袋草/催生/锁水/节肥各2只，明光/智道研究/宙道研究各1只；尚未连接上游获取与成长"
+          "text": "每档一次试用配给共15只：饭袋草/催生/锁水/节肥/安抚/驭兽各2只，明光/智道研究/宙道研究各1只；尚未连接上游获取与成长"
         },
         {
           "key": "deploy",
@@ -15360,6 +15850,54 @@
         {
           "key": "facility",
           "label": "执行设施",
+          "text": "木工台（须已建成；一次一批次；可由负责人按持续生产策略自动启动）"
+        },
+        {
+          "key": "inputs",
+          "label": "投入",
+          "text": "枝条×2＋秸秆×2（启动时一次性扣除）"
+        },
+        {
+          "key": "outputs",
+          "label": "产出",
+          "text": "藤球×1（收取时入仓；完工≠入仓）"
+        },
+        {
+          "key": "duration",
+          "label": "批时",
+          "text": "1自然日（日结推进，无需每日点击）"
+        },
+        {
+          "key": "ap",
+          "label": "AP",
+          "text": "启动1＋收取1"
+        }
+      ],
+      "icon": "woodshop",
+      "id": "recipe:make_vine_ball",
+      "kind": "recipe",
+      "links": [
+        {
+          "entity": "facility:woodshop",
+          "label": "执行设施",
+          "name": "木工台"
+        }
+      ],
+      "locks": null,
+      "name": "make_vine_ball",
+      "related_rules": [
+        "rule:auto_production"
+      ],
+      "source_id": "make_vine_ball",
+      "summary": "木工台；藤球×1；1日",
+      "tags": []
+    },
+    {
+      "category": "recipes",
+      "fields": [
+        {
+          "key": "facility",
+          "label": "执行设施",
           "text": "农产加工台（须已建成；一次一批次；可由负责人按持续生产策略自动启动）"
         },
         {
@@ -17123,7 +17661,31 @@
         {
           "key": "statements",
           "label": "规则说明",
-          "text": "1. 钢绵羊、啮岩鼹、岩腹兽走名册制：购入即幼体，占用育幼区全时空间与床位；成体在次日日界由玩家选择圈养或役使，未安置则维持等待。三种动物退出旧的每日手动/雇工维护路径，鱼、蜂、菌毯不变。\n2. 五类功能区都在普通地板上四邻接划定：育幼区（圈舍＋供食槽＋床，最小空间4）、圈养区（另加照料台，最小空间8）、工作区（调度站＋岩兽工作场）、维持放牧区（食槽＋床，最小空间4）、额外放牧区（最小空间8）。圈舍与食槽等占地不计可用空间，床占地计入；划区、命名、调整0AP。\n3. 床采用格内密度：一格普通地板放4张小床或4张中床，以4张一组建造、组价按单格价；大床占满一格仅1张。小床收1空间体型，中床收2空间，严格匹配；同一床位可错时共用不重叠的两单位窗口，跨午夜预约不重置。\n4. 每天按八个内部逻辑单位结算（不换算AP）：标准班维持2＋工作4＋额外放牧2，晚班为其平移4格；育幼/圈养固定维持2＋照料6。维持窗口必须连续两单位整段成功：开窗时预约床位、食槽服务位（每槽2只）与窗口空间，窗口结束统一扣一次基础餐（育幼/役使1份、圈养2份）。\n5. 维持失败（缺食缺水、床位/空间/结构失效）自窗口结束点固定禁工八单位，可跨天；补食或再次成功都不提前解除。禁工结束且重新取得维持资格后才恢复劳动。\n6. 疲劳只在日界更新：下一开日＝clamp(当前＋工作单位－2×有效恢复＋12×失败窗口数, 0, 100)。0-7正常100%、8-15疲倦75%、16-23过劳50%、24-39罢工、40以上濒危；连续第三个开日≥40死亡。圈养照料单位也按恢复计，每日上限12。\n7. 岩兽工作场为四个并行岗位，批次归设施：有合格动物实际获岗才开批并扣一次原料，换班保留进度；碎石400/碎矿400/富集800工作点达标待领取，1AP按场领取。正常/疲倦/过劳每劳动单位提供100/75/50整数点。\n8. 圈养与育幼按照料单位积累：长成需36/18/24单位；钢绵羊每轮18照料单位产钢绵1＋羊粪1（开轮扣含铁补料1份）。成体圈养且开日疲劳0才累计无性繁殖，72/48/96单位后产同种幼体1只，待安置状态1AP批量领取并检查目标育幼区容量。"
+          "text": "1. 一级房间的配套允许基础运行；设施入驻适配蛊虫或特殊道具成为二级，缺维护时退回基础服务。三级系统由玩家明确关联多个房间，地格仍各有唯一归属。每个房间最多属于一个系统，编辑提交1AP，无变化不收费。\n2. 圈养区安抚台入驻安抚蛊，只将实际合格的繁殖进度提高至150%；工作区调度站入驻奴道驭兽蛊，将实际获岗劳动点提高至150%。各1元石/日，无新增食料；岗位满、原料不足、禁工或结构不合格不产生强化工作。\n3. 安抚台、调度站、玩具站每个单位各服务4空间；钢绵羊占2，岩腹兽和啮岩鼹占1。同类不叠加，优先最高转，同转稳定选择宿主；不同宿主可分担容量。育幼和维持放牧本期没有二级效果。\n4. 藤球在木工台用树枝2＋秸秆2制作1个，耗时1日，无研究要求。玩具站外观为抓娃娃机，装入与卸下各1AP；长期使用，不消耗耐久，卸下返回原物，装球时不能直接拆站。\n5. 每个实际有效的额外放牧单位，获得玩具服务的动物独立以10%概率额外恢复1疲劳；基础恢复不变，次日开日统一结算。查看、预览、读档和失败重试不重抽，同一动物同一单位不会重复领取。\n6. 繁育场：二级圈养与一级育幼明确关联且有预留空间和合适床位，才为本轮实际繁殖进度积累目标专属贡献。出生按贡献比例最多获得成长目标10%的初始成长；中途换目标不挪用旧贡献，不追补或重复发放。\n7. 协同役使场：二级工作＋一级维持＋二级额外放牧。当天成功维持且实际获得玩具服务的劳动者，真实批次溢出点可在日界确认，限原岗位同配方，上限正常1单位劳动。下批实际开工并支付原料后才使用，三级失效时封存，换配方或拆除前须明确放弃。\n8. 综合牧场将上述两种配置放入同一系统，分别结算两条收益，没有第三层全局倍增。育幼目标的预留床位和空间跨圈养区共享，不能重复占用。"
+        },
+        {
+          "key": "refs",
+          "label": "实现依据",
+          "text": "scripts/farming/p8/p104_services.gd::gu_service；scripts/farming/p8/p104_services.gd::toy_service；scripts/farming/p8/p104_codec.gd::validate"
+        }
+      ],
+      "icon": "help",
+      "id": "rule:animal-services",
+      "kind": "rule",
+      "locks": null,
+      "name": "畜牧强化：安抚、役使与耐用玩具",
+      "related_rules": [],
+      "source_id": "rule:animal-services",
+      "summary": "一级房间的配套允许基础运行；设施入驻适配蛊虫或特殊道具成为二级，缺维护时退回基础…",
+      "tags": []
+    },
+    {
+      "category": "rules",
+      "fields": [
+        {
+          "key": "statements",
+          "label": "规则说明",
+          "text": "1. 钢绵羊、啮岩鼹、岩腹兽走名册制：购入即幼体，占用育幼区全时空间与床位；成体在次日日界由玩家选择圈养或役使，未安置则维持等待。三种动物退出旧的每日手动/雇工维护路径，鱼、蜂、菌毯不变。\n2. 五类功能区都在普通地板上明确划定四邻接成员：育幼区（圈舍＋供食槽＋床，最小空间4）、圈养区（另加照料台，最小空间8）、工作区（调度站＋岩兽工作场）、维持放牧区（食槽＋床，最小空间4）、额外放牧区（玩具站，可空槽，最小空间8）。非床设施占地不计可用空间，床占地计入；划区、命名、调整0AP，相邻不会自动合并。一级不合格时设施与服务暂停，动物饥饿、疲劳和禁工时钟仍继续。\n3. 床采用格内密度：一格普通地板放4张小床或4张中床，以4张一组建造、组价按单格价；大床占满一格仅1张。小床收1空间体型，中床收2空间，严格匹配；同一床位可错时共用不重叠的两单位窗口，跨午夜预约不重置。\n4. 每天按八个内部逻辑单位结算（不换算AP）：标准班维持2＋工作4＋额外放牧2，晚班为其平移4格；育幼/圈养固定维持2＋照料6。维持窗口必须连续两单位整段成功：开窗时预约床位、食槽服务位（每槽2只）与窗口空间，窗口结束统一扣一次基础餐（育幼/役使1份、圈养2份）。\n5. 维持失败（缺食缺水、床位/空间/结构失效）自窗口结束点固定禁工八单位，可跨天；补食或再次成功都不提前解除。禁工结束且重新取得维持资格后才恢复劳动。\n6. 疲劳只在日界更新：下一开日＝clamp(当前＋工作单位－2×有效恢复＋12×失败窗口数, 0, 100)。0-7正常100%、8-15疲倦75%、16-23过劳50%、24-39罢工、40以上濒危；连续第三个开日≥40死亡。圈养照料单位也按恢复计，每日上限12。\n7. 岩兽工作场为四个并行岗位，批次归设施：有合格动物实际获岗才开批并扣一次原料，换班保留进度；碎石400/碎矿400/富集800工作点达标待领取，1AP按场领取。正常/疲倦/过劳每劳动单位提供100/75/50整数点。\n8. 圈养与育幼按照料单位积累：长成需36/18/24单位；钢绵羊每轮18照料单位产钢绵1＋羊粪1（开轮扣含铁补料1份）。成体圈养且开日疲劳0才累计无性繁殖，72/48/96单位后产同种幼体1只，待安置状态1AP批量领取并检查目标育幼区容量。"
         },
         {
           "key": "refs",
@@ -17459,7 +18021,7 @@
         {
           "key": "statements",
           "label": "规则说明",
-          "text": "1. 耕地按上下左右连通形成田块，空耕地参加，斜角不连；普通地板、自然地面与设施隔开田块。不要求墙、门、屋顶或中心建筑。\n2. 普通地板每格原木1、铺设/改铺/拆除每次1AP，不返材料；耕地沿用开垦1AP，不得覆盖作物、资源点或宿主。地权与自然地形仍限制铺设；换铺面不清空水肥与扣耗余量。\n3. 全区催生＋锁水为一级育种田，全区催生＋节肥为一级丰产田，三类齐全为二级复合农业区，同时打开两个奖励通道，不另叠倍。每类可由多站覆盖不同地格，但2×2植物仍需每类各有单源完整覆盖。\n4. 每轮只累计真实推进的生长点，最后一天按剩余目标封顶；育种与丰产分别累计合格点。中途补齐、缺供、拆分、扩田与降级只影响未来贡献，成熟空等不增加资格。\n5. 完整合格时首次成熟产同种种子1份的概率为25%；实际概率＝25%×首次合格生长点/首次总生长点。成熟时固定结果，随首次成熟收获、砍伐或成熟清理领取，不另耗AP；失败也用掉机会，留株再生不重抽。\n6. 每轮额外主产物期望＝本次基础主产物数量×25%×本轮丰产合格点/总生长点；整数必得，小数作为再得1份概率。只增登记主产物，不增副产物、花源份额或蛊本体；饭袋草在合格耕地可增稻米，不产种子。\n7. 成熟冻结贡献与随机依据，种子和材料分开判定；查阅、换向、读档、保存失败与重试不重抽或重复发放。基础收成、育种奖励、丰产奖励分别记账，未领取权益不是库存。\n8. 当前P8使用schema20，早期P8开发档需新开档，不迁移、不删除旧文件。硬质地板的漏斗、管道与传动后续另案。"
+          "text": "1. 田块由玩家明确登记地格，成员内部须上下左右连通，斜角不连。相邻田块不会自动合并，新开垦耕地不会自动加入；不要求墙、门、屋顶或中心建筑。缺地板保留归属并暂停资格。\n2. 普通地板每格原木1、铺设/改铺/拆除每次1AP，不返材料；耕地沿用开垦1AP，不得覆盖作物、资源点或宿主。地权与自然地形仍限制铺设；换铺面不清空水肥与扣耗余量。\n3. 农业维护站脚下普通地板，明确关联相邻且至少4格的完好田块，形成一级农业区，允许基础自动补水施肥；入驻适配蛊虫后为二级强化。全区催生＋锁水形成三级育种田，催生＋节肥为三级丰产田，三类齐全为三级复合农业区，同时打开两个奖励通道，不另叠倍。每类可由多站覆盖不同地格，但2×2植物仍需每类各有单源完整覆盖，且不得跨田块边界。\n4. 每轮只累计真实推进的生长点，最后一天按剩余目标封顶；育种与丰产分别累计合格点。中途补齐、缺供、拆分、扩田与降级只影响未来贡献，成熟空等不增加资格。\n5. 完整合格时首次成熟产同种种子1份的概率为25%；实际概率＝25%×首次合格生长点/首次总生长点。成熟时固定结果，随首次成熟收获、砍伐或成熟清理领取，不另耗AP；失败也用掉机会，留株再生不重抽。\n6. 每轮额外主产物期望＝本次基础主产物数量×25%×本轮丰产合格点/总生长点；整数必得，小数作为再得1份概率。只增登记主产物，不增副产物、花源份额或蛊本体；饭袋草在合格耕地可增稻米，不产种子。\n7. 成熟冻结贡献与随机依据，种子和材料分开判定；查阅、换向、读档、保存失败与重试不重抽或重复发放。基础收成、育种奖励、丰产奖励分别记账，未领取权益不是库存。\n8. 当前P8使用schema22，早期P8开发档需新开档，不迁移、不删除旧文件。硬质地板的漏斗、管道与传动后续另案。"
         },
         {
           "key": "refs",
@@ -17474,7 +18036,7 @@
       "name": "露天农业区：地板、育种与丰产",
       "related_rules": [],
       "source_id": "rule:rooms",
-      "summary": "耕地按上下左右连通形成田块，空耕地参加，斜角不连；普通地板、自然地面与设施隔开田…",
+      "summary": "田块由玩家明确登记地格，成员内部须上下左右连通，斜角不连。相邻田块不会自动合并，…",
       "tags": []
     },
     {
@@ -17529,11 +18091,11 @@
   "generated_inputs": [
     {
       "path": "content/farming/p8/production.json",
-      "sha256": "2ec5d446d71121f7a7b2d0ec04845fe8d9485ec07514bd4bd333477b0ab03988"
+      "sha256": "f0692c65540be0ac7f1830da43f4dd3cd0c6f61ab808f193be86cb4282eb911f"
     },
     {
       "path": "content/farming/baked/p8/production.json",
-      "sha256": "f25d988ef0ba70ab8853fb1576f1b4829bb3f2d8ee847909f0fd79c71d8f1ce8"
+      "sha256": "c457ca2c610e9a97657eee38d99092cf5946a1c295385ecbec2b38b4ee843d3b"
     },
     {
       "path": "content/farming/p8/expansion.json",
@@ -17545,7 +18107,7 @@
     },
     {
       "path": "content/farming/encyclopedia/encyclopedia.json",
-      "sha256": "870e073c5c2fc0f2a3db46cfc5842f297d9f0ab971667e20f0a74aa32f9e99e8"
+      "sha256": "dd9a13a4ee9b95e85873d4822cdc2b2760e5152181fd91e7356d8a11daf8aef3"
     },
     {
       "path": "scripts/farming/v1/v1_scene.gd",
@@ -18711,6 +19273,54 @@
       "primeval_stones": 0,
       "research": "research:water_recirculation",
       "research_name": "水与藻料回流",
+      "species": null,
+      "species_name": null,
+      "type": "craft",
+      "worker_fee": 0
+    },
+    {
+      "ap": 2,
+      "ap_detail": "启动1＋收取1",
+      "category_hint": "production",
+      "conditions": [
+        "设施空闲一次一批；可由负责人按持续生产策略在日结自动启动（保留量只挡自动）"
+      ],
+      "crop": null,
+      "crop_name": null,
+      "duration": "1自然日",
+      "effects": [],
+      "facility": "facility:woodshop",
+      "facility_name": "木工台",
+      "id": "proc:batch:make_vine_ball",
+      "inputs": [
+        {
+          "basis": "每批",
+          "entity": "resource:twig",
+          "name": "枝条",
+          "quantity": 2,
+          "timing": "启动时"
+        },
+        {
+          "basis": "每批",
+          "entity": "resource:straw",
+          "name": "秸秆",
+          "quantity": 2,
+          "timing": "启动时"
+        }
+      ],
+      "name": "加工·make_vine_ball",
+      "outputs": [
+        {
+          "basis": "每批",
+          "entity": "resource:vine_ball",
+          "name": "藤球",
+          "quantity": 1,
+          "timing": "收取时"
+        }
+      ],
+      "primeval_stones": 0,
+      "research": null,
+      "research_name": null,
       "species": null,
       "species_name": null,
       "type": "craft",
@@ -20712,6 +21322,136 @@
         }
       ],
       "name": "建造·小型冶炼炉",
+      "outputs": [],
+      "primeval_stones": 0,
+      "research": null,
+      "research_name": null,
+      "species": null,
+      "species_name": null,
+      "type": "build",
+      "worker_fee": 0
+    },
+    {
+      "ap": 1,
+      "ap_detail": "1AP",
+      "category_hint": "build",
+      "conditions": [
+        "占地全部已购且空闲、不压资源点；地形陆地"
+      ],
+      "crop": null,
+      "crop_name": null,
+      "duration": "即时",
+      "effects": [
+        "设施就位；养殖设施创建默认配置"
+      ],
+      "facility": "facility:soothing_station",
+      "facility_name": "安抚台",
+      "id": "proc:build:soothing_station",
+      "inputs": [
+        {
+          "basis": "每次建造",
+          "entity": "resource:wood_plank",
+          "name": "木板",
+          "quantity": 2,
+          "timing": "建造时"
+        },
+        {
+          "basis": "每次建造",
+          "entity": "resource:raw_stone",
+          "name": "普通岩石",
+          "quantity": 2,
+          "timing": "建造时"
+        },
+        {
+          "basis": "每次建造（可选1:1替石）",
+          "conditions": "选择复合石板替代",
+          "entity": "resource:composite_stone_panel",
+          "name": "复合石板",
+          "quantity": 2,
+          "timing": "建造时"
+        },
+        {
+          "basis": "每次建造（可选2:1替石）",
+          "conditions": "选择再生填料替代",
+          "entity": "resource:reclaimed_fill",
+          "name": "再生填料",
+          "quantity": 4,
+          "timing": "建造时"
+        },
+        {
+          "basis": "每次建造",
+          "entity": "currency:primeval_stone",
+          "name": "元石",
+          "quantity": 18,
+          "timing": "建造时"
+        }
+      ],
+      "name": "建造·安抚台",
+      "outputs": [],
+      "primeval_stones": 0,
+      "research": null,
+      "research_name": null,
+      "species": null,
+      "species_name": null,
+      "type": "build",
+      "worker_fee": 0
+    },
+    {
+      "ap": 1,
+      "ap_detail": "1AP",
+      "category_hint": "build",
+      "conditions": [
+        "占地全部已购且空闲、不压资源点；地形陆地"
+      ],
+      "crop": null,
+      "crop_name": null,
+      "duration": "即时",
+      "effects": [
+        "设施就位；养殖设施创建默认配置"
+      ],
+      "facility": "facility:toy_station",
+      "facility_name": "玩具站",
+      "id": "proc:build:toy_station",
+      "inputs": [
+        {
+          "basis": "每次建造",
+          "entity": "resource:wood_plank",
+          "name": "木板",
+          "quantity": 2,
+          "timing": "建造时"
+        },
+        {
+          "basis": "每次建造",
+          "entity": "resource:raw_stone",
+          "name": "普通岩石",
+          "quantity": 2,
+          "timing": "建造时"
+        },
+        {
+          "basis": "每次建造（可选1:1替石）",
+          "conditions": "选择复合石板替代",
+          "entity": "resource:composite_stone_panel",
+          "name": "复合石板",
+          "quantity": 2,
+          "timing": "建造时"
+        },
+        {
+          "basis": "每次建造（可选2:1替石）",
+          "conditions": "选择再生填料替代",
+          "entity": "resource:reclaimed_fill",
+          "name": "再生填料",
+          "quantity": 4,
+          "timing": "建造时"
+        },
+        {
+          "basis": "每次建造",
+          "entity": "currency:primeval_stone",
+          "name": "元石",
+          "quantity": 12,
+          "timing": "建造时"
+        }
+      ],
+      "name": "建造·玩具站",
       "outputs": [],
       "primeval_stones": 0,
       "research": null,
@@ -22959,6 +23699,60 @@
       "effects": [
         "占地释放；不返还材料与元石"
       ],
+      "facility": "facility:soothing_station",
+      "facility_name": "安抚台",
+      "id": "proc:demolish:soothing_station",
+      "inputs": [],
+      "name": "拆除·安抚台",
+      "outputs": [],
+      "primeval_stones": 0,
+      "research": null,
+      "research_name": null,
+      "species": null,
+      "species_name": null,
+      "type": "demolish",
+      "worker_fee": 0
+    },
+    {
+      "ap": 1,
+      "ap_detail": "1AP",
+      "category_hint": "build",
+      "conditions": [
+        "设施空闲（无批次/无动物/无在研）"
+      ],
+      "crop": null,
+      "crop_name": null,
+      "duration": "即时",
+      "effects": [
+        "占地释放；不返还材料与元石"
+      ],
+      "facility": "facility:toy_station",
+      "facility_name": "玩具站",
+      "id": "proc:demolish:toy_station",
+      "inputs": [],
+      "name": "拆除·玩具站",
+      "outputs": [],
+      "primeval_stones": 0,
+      "research": null,
+      "research_name": null,
+      "species": null,
+      "species_name": null,
+      "type": "demolish",
+      "worker_fee": 0
+    },
+    {
+      "ap": 1,
+      "ap_detail": "1AP",
+      "category_hint": "build",
+      "conditions": [
+        "设施空闲（无批次/无动物/无在研）"
+      ],
+      "crop": null,
+      "crop_name": null,
+      "duration": "即时",
+      "effects": [
+        "占地释放；不返还材料与元石"
+      ],
       "facility": "facility:woodshop",
       "facility_name": "木工台",
       "id": "proc:demolish:woodshop",
@@ -23091,6 +23885,41 @@
       ],
       "facility": null,
       "facility_name": null,
+      "id": "proc:gu-maintenance:command_gu",
+      "inputs": [
+        {
+          "basis": "每只·每日",
+          "entity": "currency:primeval_stone",
+          "name": "元石",
+          "quantity": 1,
+          "timing": "开日"
+        }
+      ],
+      "name": "驭兽蛊·每日维护",
+      "outputs": [],
+      "primeval_stones": 0,
+      "research": null,
+      "research_name": null,
+      "species": "gu:command_gu",
+      "species_name": "驭兽蛊",
+      "type": "gu_maintenance",
+      "worker_fee": 0
+    },
+    {
+      "ap": 0,
+      "ap_detail": "0AP",
+      "category_hint": "logistics",
+      "conditions": [
+        "已部署且启用；元石与食料同时足额；同服务日只结算一次"
+      ],
+      "crop": null,
+      "crop_name": null,
+      "duration": "即时",
+      "effects": [
+        "激活当日能力"
+      ],
+      "facility": null,
+      "facility_name": null,
       "id": "proc:gu-maintenance:fert_gu",
       "inputs": [
         {
@@ -23178,6 +24007,41 @@
       "research_name": null,
       "species": "gu:rice_bag_gu",
       "species_name": "饭袋草蛊",
+      "type": "gu_maintenance",
+      "worker_fee": 0
+    },
+    {
+      "ap": 0,
+      "ap_detail": "0AP",
+      "category_hint": "logistics",
+      "conditions": [
+        "已部署且启用；元石与食料同时足额；同服务日只结算一次"
+      ],
+      "crop": null,
+      "crop_name": null,
+      "duration": "即时",
+      "effects": [
+        "激活当日能力"
+      ],
+      "facility": null,
+      "facility_name": null,
+      "id": "proc:gu-maintenance:soothe_gu",
+      "inputs": [
+        {
+          "basis": "每只·每日",
+          "entity": "currency:primeval_stone",
+          "name": "元石",
+          "quantity": 1,
+          "timing": "开日"
+        }
+      ],
+      "name": "安抚蛊·每日维护",
+      "outputs": [],
+      "primeval_stones": 0,
+      "research": null,
+      "research_name": null,
+      "species": "gu:soothe_gu",
+      "species_name": "安抚蛊",
       "type": "gu_maintenance",
       "worker_fee": 0
     },
@@ -29169,6 +30033,74 @@
       "species": null,
       "species_name": null,
       "type": "order_supply",
+      "worker_fee": 0
+    },
+    {
+      "ap": 1,
+      "ap_detail": "1AP",
+      "category_hint": "construction",
+      "conditions": [
+        "空槽；长期使用，不消耗耐久"
+      ],
+      "crop": null,
+      "crop_name": null,
+      "duration": "即时",
+      "effects": [
+        "开启玩具服务"
+      ],
+      "facility": "facility:toy_station",
+      "facility_name": "玩具站",
+      "id": "proc:toy:install",
+      "inputs": [
+        {
+          "basis": "每个玩具站",
+          "entity": "resource:vine_ball",
+          "name": "藤球",
+          "quantity": 1,
+          "timing": "装入槽位"
+        }
+      ],
+      "name": "装入耐用藤球",
+      "outputs": [],
+      "primeval_stones": 0,
+      "research": null,
+      "research_name": null,
+      "species": null,
+      "species_name": null,
+      "type": "installation",
+      "worker_fee": 0
+    },
+    {
+      "ap": 1,
+      "ap_detail": "1AP",
+      "category_hint": "construction",
+      "conditions": [
+        "槽内已装入藤球"
+      ],
+      "crop": null,
+      "crop_name": null,
+      "duration": "即时",
+      "effects": [],
+      "facility": "facility:toy_station",
+      "facility_name": "玩具站",
+      "id": "proc:toy:remove",
+      "inputs": [],
+      "name": "卸下耐用藤球",
+      "outputs": [
+        {
+          "basis": "每个玩具站",
+          "entity": "resource:vine_ball",
+          "name": "藤球",
+          "quantity": 1,
+          "timing": "卸下槽位"
+        }
+      ],
+      "primeval_stones": 0,
+      "research": null,
+      "research_name": null,
+      "species": null,
+      "species_name": null,
+      "type": "installation",
       "worker_fee": 0
     },
     {

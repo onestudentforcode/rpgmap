@@ -620,9 +620,10 @@ for gid, row in GU.items():
     hosts = [f for f in FAC.values() if f.get('gu_slot') == row['slot'] and f.get('kind','facility') in row['host_kinds']]
     effect = {'production': '独立生产', 'light': '环境光照', 'growth_speed': '定向生长速度',
               'water_saving': '定向水分减耗', 'fertility_saving': '定向肥力减耗',
-              'research_flat': '固定研究工作量减免', 'research_speed': '研究速度倍率'}[row['effect']]
+              'research_flat': '固定研究工作量减免', 'research_speed': '研究速度倍率',
+              'breed_speed': '实际繁殖进度倍率', 'work_speed': '实际动物劳动倍率'}[row['effect']]
     fields = [field('rank','转数',f'{row["rank"]}转原型；实例支持一至五转，升转由上游负责'),
-        field('obtain','获取','每档一次试用配给共11只：饭袋草/催生/锁水/节肥各2只，明光/智道研究/宙道研究各1只；尚未连接上游获取与成长'),
+        field('obtain','获取','每档一次试用配给共15只：饭袋草/催生/锁水/节肥/安抚/驭兽各2只，明光/智道研究/宙道研究各1只；尚未连接上游获取与成长'),
         field('deploy','部署','独立占用1格陆地，不需开垦/农田' if row['deployment']=='independent' else '入驻兼容设施：'+'、'.join(f['name'] for f in hosts)),
         field('effect','能力',{
             'production':'自身进行生产，条件与产物见下方',
@@ -631,7 +632,9 @@ for gid, row in GU.items():
             'water_saving':f'宿主四向3×3服务区，完整覆盖目标的水分扣耗保留{row["value"]}%（每格百分之一余量跨日累计）',
             'fertility_saving':f'宿主四向3×3服务区，完整覆盖目标的肥力扣耗保留{row["value"]}%（每格百分之一余量跨日累计）',
             'research_flat':f'研究工作量固定减少{row["value"]}，至少保留1',
-            'research_speed':f'每个有效研究日推进{row["value"]/100:g}工作量'}[row['effect']]),
+            'research_speed':f'每个有效研究日推进{row["value"]/100:g}工作量',
+            'breed_speed':f'实际合格繁殖进度×{row["value"]/100:g}，每单位服务4空间',
+            'work_speed':f'实际获岗劳动点×{row["value"]/100:g}，每单位服务4空间'}[row['effect']]),
         field('fee','维护',f'启用时{row["fee"]}元石/游戏日；闲置仍收费，休眠/未部署免维护'),
         field('food','特殊食料',quantities_text(row['food'])+'（每个成功付费服务日；与元石原子扣除）'),
         field('timing','时点','部署/撤回各1AP；启用次日生效；停用立即取消后续效果，已付不退；运行/待收任务锁定实例')]
@@ -681,6 +684,17 @@ if SRC.get('rooms'):
                 crop='crop:'+ident if ident in CROPS else None,species='gu:'+ident if ident in GU else None,
                 ap_detail='随本轮收取，不另耗AP',conditions=['丰产田或复合农业区；只增主产物；成熟冻结，单轮只领取一次'],category_hint='production')
             produces(item,pid)
+
+if SRC.get('p104'):
+    pid=proc('proc:toy:install','installation','装入耐用藤球',
+        [io('resource:vine_ball',1,'每个玩具站','装入槽位')],[],ap=1,
+        facility='facility:toy_station',conditions=['空槽；长期使用，不消耗耐久'],
+        effects=['开启玩具服务'],category_hint='construction')
+    consumes('vine_ball',pid)
+    pid=proc('proc:toy:remove','installation','卸下耐用藤球',[],
+        [io('resource:vine_ball',1,'每个玩具站','卸下槽位')],ap=1,
+        facility='facility:toy_station',conditions=['槽内已装入藤球'],category_hint='construction')
+    produces('vine_ball',pid)
 
 # All entities exist now; resolve display names that were built during process
 # construction before the resource entities were registered.

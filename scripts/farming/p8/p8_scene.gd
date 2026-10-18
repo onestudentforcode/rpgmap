@@ -526,11 +526,12 @@ func _show_facility(facility: Dictionary) -> void:
 	logistics_ui.host_section(int(facility["uid"]))
 	if facility["facility_id"]=="toy_station": services_ui.toy_controls(sidebar,int(facility["uid"]))
 	var definition: Dictionary = world.facility_defs[facility["facility_id"]]
-	if String(facility["facility_id"]) in ["pen","rock_workyard"]:
+	if String(facility["facility_id"]) in ["pen","rock_workyard","soothing_station","toy_station"]:
 		_picture(sidebar,String(facility["facility_id"]),64)
 		_heading(sidebar,String(definition["name"]))
 		_encyclopedia_link(sidebar,"facility:"+String(facility["facility_id"]))
-		_label(sidebar,"由畜牧分区统一管理；在管理页设置动物、日程、配方与领取产出。")
+		var purpose:={"pen":"由畜牧分区统一管理动物与产出。","rock_workyard":"在畜牧管理页设置动物、日程、劳动配方与领取产出。","soothing_station":"在完整圈养区提供安抚蛊槽，提升实际繁殖进度；每单位服务4空间。","toy_station":"在额外放牧区管理耐用玩具；空槽保留基础活动，装球后提供概率恢复服务。"}
+		_label(sidebar,String(purpose[String(facility["facility_id"])]))
 		_button(sidebar,"打开畜牧管理",ranch_ui.open)
 		_icon(sidebar,"clear","拆除（1AP，无返还）",func(): _confirm("拆除此畜牧设施？先处理动物、在制批次与工作余量。",func(): _result(world.demolish_facility(int(facility["uid"])));_show_cell()))
 		return

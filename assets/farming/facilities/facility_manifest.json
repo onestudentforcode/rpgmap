@@ -1145,6 +1145,72 @@
         ],
         "opacity": 0.18
       }
+    },
+    "soothing_station": {
+      "footprint": [
+        1,
+        1
+      ],
+      "canvas_px": [
+        256,
+        256
+      ],
+      "path": "res://assets/farming/facilities/soothing_station/body.png",
+      "sha256": "7c6b810cfd03f47a867001b4512f6790dad40e5a474323c2594bed36af8fcb73",
+      "anchor_uv": [
+        0.5,
+        0.6171875
+      ],
+      "draw_size": [
+        122.0,
+        122.0
+      ],
+      "scale_multiplier": 1.0,
+      "ground_placement": "footprint_center",
+      "shadow": {
+        "size": [
+          58.0,
+          22.0
+        ],
+        "offset": [
+          0,
+          4
+        ],
+        "opacity": 0.18
+      }
+    },
+    "toy_station": {
+      "footprint": [
+        1,
+        1
+      ],
+      "canvas_px": [
+        256,
+        256
+      ],
+      "path": "res://assets/farming/facilities/toy_station/body.png",
+      "sha256": "1dcdf8b5b2c707a20833d8d6da1b74df01d1ef143b5bcb129e9fc86422772ae3",
+      "anchor_uv": [
+        0.5,
+        0.6171875
+      ],
+      "draw_size": [
+        122.0,
+        122.0
+      ],
+      "scale_multiplier": 1.0,
+      "ground_placement": "footprint_center",
+      "shadow": {
+        "size": [
+          58.0,
+          22.0
+        ],
+        "offset": [
+          0,
+          4
+        ],
+        "opacity": 0.18
+      }
     }
   }
 }

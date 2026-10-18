@@ -182,7 +182,7 @@ const BASE_CHAPTERS := [
 	]},
 	{"id": "logistics", "title": "后勤蛊：部署、维护与协同", "cards": [
 		{"title": "领取并部署第一只饭袋草蛊", "steps": [
-			"顶栏悬停找到“后勤蛊”，每档可领取一次11只试用配给：饭袋草、催生、锁水、节肥各两只，明光、智道研究、宙道研究各一只。获取与成长尚未连接上游。",
+			"顶栏悬停找到“后勤蛊”，每档可领取一次15只试用配给：饭袋草、催生、锁水、节肥、安抚、驭兽各两只，明光、智道研究、宙道研究各一只。获取与成长尚未连接上游。",
 			"选择饭袋草的地图部署，点击空闲陆地；不需开垦或农田，成功消耗1AP，次日开始维护与生产。需要光照至少60、水分至少30；可用清水浇水或由田间维护站补水。",
 			"每有效生产日耗水分8，基础3有效日后待收稻米4，不耗肥料、不产秸秆。收取1AP后才入仓，可出售、木行供货，或研究农产初加工后在加工台磨粉。"]},
 		{"title": "入驻设施与费用", "steps": [
@@ -202,7 +202,7 @@ static var CHAPTERS: Array = _chapters()
 static func _chapters() -> Array:
 	var result := BASE_CHAPTERS.duplicate(true)
 	var data: Dictionary = JSON.parse_string(FileAccess.get_file_as_string("res://content/farming/baked/encyclopedia/encyclopedia.json"))
-	for id in ["rule:agriculture","rule:rooms","rule:animal-zones"]:
+	for id in ["rule:agriculture","rule:rooms","rule:animal-zones","rule:animal-services"]:
 		for entity in data["entities"]:
 			if entity["id"] != id: continue
 			var cards := []

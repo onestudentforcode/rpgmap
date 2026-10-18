@@ -8,13 +8,13 @@
 
 - **作物与种植（7）**：[速生杉](#速生杉-cropfast_fir)、[金穗麦](#金穗麦-cropgolden_wheat)、[蜜铃灌木](#蜜铃灌木-crophoneybell_bush)、[油籽花](#油籽花-cropoilseed_flower)、[青牧草](#青牧草-croppasture_grass)、[松脂树](#松脂树-cropresin_tree)、[木腐菇](#木腐菇-cropwood_decay_mushroom)
 - **养殖与培养（6）**：[蜜盏蜂](#蜜盏蜂-speciesbell_bee)、[滤藻鲤](#滤藻鲤-speciesfilter_algae_carp)、[净水菌毯](#净水菌毯-speciespurifying_mat)、[岩腹兽](#岩腹兽-speciesrock_belly_beast)、[啮岩鼹](#啮岩鼹-speciesrock_mole)、[钢绵羊](#钢绵羊-speciessteel_sheep)
-- **建筑与设施（21）**：[藻类培养槽](#藻类培养槽-facilityalgae_tank)、[蜂箱](#蜂箱-facilitybee_hive)、[照料台](#照料台-facilitycare_table)、[炭化炉](#炭化炉-facilitychar_kiln)、[堆肥箱](#堆肥箱-facilitycompost_bin)、[调度站](#调度站-facilitydispatch_station)、[农产加工台](#农产加工台-facilityfarm_processor)、[供食槽](#供食槽-facilityfeed_trough)、[田间维护站](#田间维护站-facilityfield_service_station)、[水场](#水场-facilityfish_pond)、[补光灯](#补光灯-facilitygrowth_lamp)、[厨房](#厨房-facilitykitchen)、[大床](#大床-facilitylarge_bed)、[中床](#中床-facilitymedium_bed)、[圈舍](#圈舍-facilitypen)、[净水菌床](#净水菌床-facilitypurifying_bed)、[研究台](#研究台-facilityresearch_bench)、[岩兽工作场](#岩兽工作场-facilityrock_workyard)、[小床](#小床-facilitysmall_bed)、[小型冶炼炉](#小型冶炼炉-facilitysmelter)、[木工台](#木工台-facilitywoodshop)
-- **后勤蛊与协同（7）**：[明光蛊](#明光蛊-gubright_gu)、[节肥蛊](#节肥蛊-gufert_gu)、[催生蛊](#催生蛊-gugrowth_gu)、[饭袋草蛊](#饭袋草蛊-gurice_bag_gu)、[宙道研究蛊](#宙道研究蛊-gutime_gu)、[锁水蛊](#锁水蛊-guwater_gu)、[智道研究蛊](#智道研究蛊-guwisdom_gu)
-- **材料与物品（65）**：[藻料](#藻料-resourcealgae_feed)、[蜂蜡](#蜂蜡-resourcebeeswax)、[木炭](#木炭-resourcecharcoal)、[清水](#清水-resourceclean_water)、[复合石板](#复合石板-resourcecomposite_stone_panel)、[粗植物油](#粗植物油-resourcecrude_oil)、[碎铁矿](#碎铁矿-resourcecrushed_ore)、[高密度藻料](#高密度藻料-resourcedense_algae)、[藻露羹](#藻露羹-resourcedew_soup)、[腐土菌丸](#腐土菌丸-resourceearth_pill)、[速生杉苗](#速生杉苗-resourcefast_fir_seed)、[炭砂滤料](#炭砂滤料-resourcefilter_media)、[蜜油火膏](#蜜油火膏-resourcefire_paste)、[鱼粪](#鱼粪-resourcefish_manure)、[鱼肉](#鱼肉-resourcefish_meat)、[菌鱼灵膳](#菌鱼灵膳-resourcefish_spirit_meal)、[花瓣](#花瓣-resourceflower_petal)、[牧草](#牧草-resourcefodder_grass)、[蜜炼金食](#蜜炼金食-resourcegold_food)、[金穗麦种子](#金穗麦种子-resourcegolden_wheat_seed)、[谷粒](#谷粒-resourcegrain)、[谷粉](#谷粉-resourcegrain_meal)、[草粉](#草粉-resourcegrass_meal)、[草籽](#草籽-resourcegrass_seed)、[砂砾](#砂砾-resourcegravel)、[蜂蜜](#蜂蜜-resourcehoney)、[蜜谷灵饼](#蜜谷灵饼-resourcehoney_cake)、[蜜铃苗](#蜜铃苗-resourcehoneybell_seed)、[腐殖土](#腐殖土-resourcehumus)、[铁锭](#铁锭-resourceiron_ingot)、[含铁矿石](#含铁矿石-resourceiron_ore)、[复合陆养料](#复合陆养料-resourceland_feed)、[矿质补料](#矿质补料-resourcemineral_feed)、[木腐菇](#木腐菇-resourcemushroom)、[花蜜](#花蜜-resourcenectar)、[营养液](#营养液-resourcenutrient_liquid)、[油饼](#油饼-resourceoil_cake)、[油籽](#油籽-resourceoilseed)、[油籽花种子](#油籽花种子-resourceoilseed_flower_seed)、[富集矿砂](#富集矿砂-resourceore_concentrate)、[花粉](#花粉-resourcepollen)、[净水菌毯培养单位](#净水菌毯培养单位-resourcepurifying_mat_culture)、[普通岩石](#普通岩石-resourceraw_stone)、[原木](#原木-resourceraw_wood)、[再生填料](#再生填料-resourcereclaimed_fill)、[精炼油](#精炼油-resourcerefined_oil)、[精炼蜡](#精炼蜡-resourcerefined_wax)、[松脂](#松脂-resourceresin)、[松脂树苗](#松脂树苗-resourceresin_tree_seed)、[稻米](#稻米-resourcerice)、[羊粪肥](#羊粪肥-resourcesheep_manure)、[炉渣](#炉渣-resourceslag)、[污泥](#污泥-resourcesludge)、[废滤炭](#废滤炭-resourcespent_filter)、[钢绒](#钢绒-resourcesteel_wool)、[石粉](#石粉-resourcestone_powder)、[秸秆](#秸秆-resourcestraw)、[尾砂](#尾砂-resourcetailings)、[宙道食料](#宙道食料-resourcetime_feed)、[枝条](#枝条-resourcetwig)、[污水](#污水-resourcewastewater)、[复合水养料](#复合水养料-resourcewater_feed)、[木屑](#木屑-resourcewood_chip)、[木腐菇菌种](#木腐菇菌种-resourcewood_decay_spawn)、[木板](#木板-resourcewood_plank)
-- **配方与食谱（61）**：[蜜盏蜂·花源份额＋清水](#蜜盏蜂花源份额清水-dietbell_beebase_dietsflower_share)、[蜜盏蜂·酿蜜周期](#蜜盏蜂酿蜜周期-dietbell_beespecial_dietshoney_cycle)、[滤藻鲤·藻料餐](#滤藻鲤藻料餐-dietfilter_algae_carpbase_dietsalgae_meal)、[滤藻鲤·高密度藻餐](#滤藻鲤高密度藻餐-dietfilter_algae_carpbase_dietsdense_meal)、[滤藻鲤·水养复合餐](#滤藻鲤水养复合餐-dietfilter_algae_carpbase_dietswater_meal)、[滤藻鲤·谷粒育肥](#滤藻鲤谷粒育肥-dietfilter_algae_carpspecial_dietsgrain_fatten)、[净水菌毯·培养清水](#净水菌毯培养清水-dietpurifying_matbase_dietsculture_water)、[净水菌毯·菌毯净水运行](#净水菌毯菌毯净水运行-dietpurifying_matspecial_dietsbio_purify)、[净水菌毯·营养液回收运行](#净水菌毯营养液回收运行-dietpurifying_matspecial_dietsrecover_nutrients)、[岩腹兽·牧草清水餐](#岩腹兽牧草清水餐-dietrock_belly_beastbase_dietsgrass_water_meal)、[岩腹兽·陆养复合餐](#岩腹兽陆养复合餐-dietrock_belly_beastbase_dietsland_meal)、[岩腹兽·生物选矿轮](#岩腹兽生物选矿轮-dietrock_belly_beastspecial_dietsconcentrate_ore)、[啮岩鼹·菌菇清水餐](#啮岩鼹菌菇清水餐-dietrock_molebase_dietsfungus_meal)、[啮岩鼹·破碎矿石轮](#啮岩鼹破碎矿石轮-dietrock_molespecial_dietsbreak_ore)、[啮岩鼹·破碎石材轮](#啮岩鼹破碎石材轮-dietrock_molespecial_dietsbreak_stone)、[钢绵羊·谷粒餐](#钢绵羊谷粒餐-dietsteel_sheepbase_dietsgrain_meal)、[钢绵羊·牧草餐](#钢绵羊牧草餐-dietsteel_sheepbase_dietsgrass_meal)、[钢绵羊·陆养复合餐](#钢绵羊陆养复合餐-dietsteel_sheepbase_dietsland_meal)、[钢绵羊·含铁补料](#钢绵羊含铁补料-dietsteel_sheepspecial_dietsiron_supplement)、[钢绵羊·矿质补料餐](#钢绵羊矿质补料餐-dietsteel_sheepspecial_dietsmineral_supplement)、[藻露羹熬制](#藻露羹熬制-recipealgae_dew_soup)、[复合石板组装](#复合石板组装-recipeassemble_stone_panel)、[菌毯净水](#菌毯净水-recipebio_purify)、[陆养料调配](#陆养料调配-recipeblend_land_feed)、[水养料调配](#水养料调配-recipeblend_water_feed)、[破碎矿石](#破碎矿石-recipebreak_ore)、[破碎石材](#破碎石材-recipebreak_stone)、[枝条炭化](#枝条炭化-recipechar_twigs)、[木屑堆肥](#木屑堆肥-recipecompost_chips)、[鱼粪堆肥](#鱼粪堆肥-recipecompost_fish_manure)、[牧草堆肥](#牧草堆肥-recipecompost_grass)、[油饼堆肥](#油饼堆肥-recipecompost_oil_cake)、[羊粪堆肥](#羊粪堆肥-recipecompost_sheep_manure)、[污泥堆肥](#污泥堆肥-recipecompost_sludge)、[废滤炭堆肥](#废滤炭堆肥-recipecompost_spent_filter)、[秸秆堆肥](#秸秆堆肥-recipecompost_straw)、[枝条堆肥](#枝条堆肥-recipecompost_twigs)、[生物选矿](#生物选矿-recipeconcentrate_ore)、[藻料培养](#藻料培养-recipeculture_algae)、[高密度藻培养](#高密度藻培养-recipedense_algae_culture)、[菌鱼灵膳烹制](#菌鱼灵膳烹制-recipefungus_fish_meal)、[蜜谷灵饼烘焙](#蜜谷灵饼烘焙-recipehoney_grain_cake)、[蜜炼金食炼制](#蜜炼金食炼制-recipehoney_mineral_food)、[炭砂滤料制作](#炭砂滤料制作-recipemake_filter_media)、[谷粉研磨](#谷粉研磨-recipemill_grain)、[草粉研磨](#草粉研磨-recipemill_grass)、[稻米磨粉](#稻米磨粉-recipemill_rice)、[矿质补料调配](#矿质补料调配-recipemineral_feed)、[蜜油火膏熬制](#蜜油火膏熬制-recipeoil_honey_paste)、[油籽榨油](#油籽榨油-recipepress_oilseed)、[再生填料回收](#再生填料回收-reciperecover_fill)、[营养液回收](#营养液回收-reciperecover_nutrients)、[油脂精炼](#油脂精炼-reciperefine_oil)、[蜂蜡精炼](#蜂蜡精炼-reciperefine_wax)、[锯切木板](#锯切木板-recipesaw_planks)、[枝条粉碎](#枝条粉碎-recipeshred_twigs)、[原木粉碎](#原木粉碎-recipeshred_wood)、[木炭冶炼](#木炭冶炼-recipesmelt_charcoal)、[富集矿冶炼](#富集矿冶炼-recipesmelt_concentrate)、[松脂冶炼](#松脂冶炼-recipesmelt_resin)、[腐土菌丸炼制](#腐土菌丸炼制-recipesoil_spirit_pill)
+- **建筑与设施（23）**：[藻类培养槽](#藻类培养槽-facilityalgae_tank)、[蜂箱](#蜂箱-facilitybee_hive)、[照料台](#照料台-facilitycare_table)、[炭化炉](#炭化炉-facilitychar_kiln)、[堆肥箱](#堆肥箱-facilitycompost_bin)、[调度站](#调度站-facilitydispatch_station)、[农产加工台](#农产加工台-facilityfarm_processor)、[供食槽](#供食槽-facilityfeed_trough)、[田间维护站](#田间维护站-facilityfield_service_station)、[水场](#水场-facilityfish_pond)、[补光灯](#补光灯-facilitygrowth_lamp)、[厨房](#厨房-facilitykitchen)、[大床](#大床-facilitylarge_bed)、[中床](#中床-facilitymedium_bed)、[圈舍](#圈舍-facilitypen)、[净水菌床](#净水菌床-facilitypurifying_bed)、[研究台](#研究台-facilityresearch_bench)、[岩兽工作场](#岩兽工作场-facilityrock_workyard)、[小床](#小床-facilitysmall_bed)、[小型冶炼炉](#小型冶炼炉-facilitysmelter)、[安抚台](#安抚台-facilitysoothing_station)、[玩具站](#玩具站-facilitytoy_station)、[木工台](#木工台-facilitywoodshop)
+- **后勤蛊与协同（9）**：[明光蛊](#明光蛊-gubright_gu)、[驭兽蛊](#驭兽蛊-gucommand_gu)、[节肥蛊](#节肥蛊-gufert_gu)、[催生蛊](#催生蛊-gugrowth_gu)、[饭袋草蛊](#饭袋草蛊-gurice_bag_gu)、[安抚蛊](#安抚蛊-gusoothe_gu)、[宙道研究蛊](#宙道研究蛊-gutime_gu)、[锁水蛊](#锁水蛊-guwater_gu)、[智道研究蛊](#智道研究蛊-guwisdom_gu)
+- **材料与物品（66）**：[藻料](#藻料-resourcealgae_feed)、[蜂蜡](#蜂蜡-resourcebeeswax)、[木炭](#木炭-resourcecharcoal)、[清水](#清水-resourceclean_water)、[复合石板](#复合石板-resourcecomposite_stone_panel)、[粗植物油](#粗植物油-resourcecrude_oil)、[碎铁矿](#碎铁矿-resourcecrushed_ore)、[高密度藻料](#高密度藻料-resourcedense_algae)、[藻露羹](#藻露羹-resourcedew_soup)、[腐土菌丸](#腐土菌丸-resourceearth_pill)、[速生杉苗](#速生杉苗-resourcefast_fir_seed)、[炭砂滤料](#炭砂滤料-resourcefilter_media)、[蜜油火膏](#蜜油火膏-resourcefire_paste)、[鱼粪](#鱼粪-resourcefish_manure)、[鱼肉](#鱼肉-resourcefish_meat)、[菌鱼灵膳](#菌鱼灵膳-resourcefish_spirit_meal)、[花瓣](#花瓣-resourceflower_petal)、[牧草](#牧草-resourcefodder_grass)、[蜜炼金食](#蜜炼金食-resourcegold_food)、[金穗麦种子](#金穗麦种子-resourcegolden_wheat_seed)、[谷粒](#谷粒-resourcegrain)、[谷粉](#谷粉-resourcegrain_meal)、[草粉](#草粉-resourcegrass_meal)、[草籽](#草籽-resourcegrass_seed)、[砂砾](#砂砾-resourcegravel)、[蜂蜜](#蜂蜜-resourcehoney)、[蜜谷灵饼](#蜜谷灵饼-resourcehoney_cake)、[蜜铃苗](#蜜铃苗-resourcehoneybell_seed)、[腐殖土](#腐殖土-resourcehumus)、[铁锭](#铁锭-resourceiron_ingot)、[含铁矿石](#含铁矿石-resourceiron_ore)、[复合陆养料](#复合陆养料-resourceland_feed)、[矿质补料](#矿质补料-resourcemineral_feed)、[木腐菇](#木腐菇-resourcemushroom)、[花蜜](#花蜜-resourcenectar)、[营养液](#营养液-resourcenutrient_liquid)、[油饼](#油饼-resourceoil_cake)、[油籽](#油籽-resourceoilseed)、[油籽花种子](#油籽花种子-resourceoilseed_flower_seed)、[富集矿砂](#富集矿砂-resourceore_concentrate)、[花粉](#花粉-resourcepollen)、[净水菌毯培养单位](#净水菌毯培养单位-resourcepurifying_mat_culture)、[普通岩石](#普通岩石-resourceraw_stone)、[原木](#原木-resourceraw_wood)、[再生填料](#再生填料-resourcereclaimed_fill)、[精炼油](#精炼油-resourcerefined_oil)、[精炼蜡](#精炼蜡-resourcerefined_wax)、[松脂](#松脂-resourceresin)、[松脂树苗](#松脂树苗-resourceresin_tree_seed)、[稻米](#稻米-resourcerice)、[羊粪肥](#羊粪肥-resourcesheep_manure)、[炉渣](#炉渣-resourceslag)、[污泥](#污泥-resourcesludge)、[废滤炭](#废滤炭-resourcespent_filter)、[钢绒](#钢绒-resourcesteel_wool)、[石粉](#石粉-resourcestone_powder)、[秸秆](#秸秆-resourcestraw)、[尾砂](#尾砂-resourcetailings)、[宙道食料](#宙道食料-resourcetime_feed)、[枝条](#枝条-resourcetwig)、[藤球](#藤球-resourcevine_ball)、[污水](#污水-resourcewastewater)、[复合水养料](#复合水养料-resourcewater_feed)、[木屑](#木屑-resourcewood_chip)、[木腐菇菌种](#木腐菇菌种-resourcewood_decay_spawn)、[木板](#木板-resourcewood_plank)
+- **配方与食谱（62）**：[蜜盏蜂·花源份额＋清水](#蜜盏蜂花源份额清水-dietbell_beebase_dietsflower_share)、[蜜盏蜂·酿蜜周期](#蜜盏蜂酿蜜周期-dietbell_beespecial_dietshoney_cycle)、[滤藻鲤·藻料餐](#滤藻鲤藻料餐-dietfilter_algae_carpbase_dietsalgae_meal)、[滤藻鲤·高密度藻餐](#滤藻鲤高密度藻餐-dietfilter_algae_carpbase_dietsdense_meal)、[滤藻鲤·水养复合餐](#滤藻鲤水养复合餐-dietfilter_algae_carpbase_dietswater_meal)、[滤藻鲤·谷粒育肥](#滤藻鲤谷粒育肥-dietfilter_algae_carpspecial_dietsgrain_fatten)、[净水菌毯·培养清水](#净水菌毯培养清水-dietpurifying_matbase_dietsculture_water)、[净水菌毯·菌毯净水运行](#净水菌毯菌毯净水运行-dietpurifying_matspecial_dietsbio_purify)、[净水菌毯·营养液回收运行](#净水菌毯营养液回收运行-dietpurifying_matspecial_dietsrecover_nutrients)、[岩腹兽·牧草清水餐](#岩腹兽牧草清水餐-dietrock_belly_beastbase_dietsgrass_water_meal)、[岩腹兽·陆养复合餐](#岩腹兽陆养复合餐-dietrock_belly_beastbase_dietsland_meal)、[岩腹兽·生物选矿轮](#岩腹兽生物选矿轮-dietrock_belly_beastspecial_dietsconcentrate_ore)、[啮岩鼹·菌菇清水餐](#啮岩鼹菌菇清水餐-dietrock_molebase_dietsfungus_meal)、[啮岩鼹·破碎矿石轮](#啮岩鼹破碎矿石轮-dietrock_molespecial_dietsbreak_ore)、[啮岩鼹·破碎石材轮](#啮岩鼹破碎石材轮-dietrock_molespecial_dietsbreak_stone)、[钢绵羊·谷粒餐](#钢绵羊谷粒餐-dietsteel_sheepbase_dietsgrain_meal)、[钢绵羊·牧草餐](#钢绵羊牧草餐-dietsteel_sheepbase_dietsgrass_meal)、[钢绵羊·陆养复合餐](#钢绵羊陆养复合餐-dietsteel_sheepbase_dietsland_meal)、[钢绵羊·含铁补料](#钢绵羊含铁补料-dietsteel_sheepspecial_dietsiron_supplement)、[钢绵羊·矿质补料餐](#钢绵羊矿质补料餐-dietsteel_sheepspecial_dietsmineral_supplement)、[藻露羹熬制](#藻露羹熬制-recipealgae_dew_soup)、[复合石板组装](#复合石板组装-recipeassemble_stone_panel)、[菌毯净水](#菌毯净水-recipebio_purify)、[陆养料调配](#陆养料调配-recipeblend_land_feed)、[水养料调配](#水养料调配-recipeblend_water_feed)、[破碎矿石](#破碎矿石-recipebreak_ore)、[破碎石材](#破碎石材-recipebreak_stone)、[枝条炭化](#枝条炭化-recipechar_twigs)、[木屑堆肥](#木屑堆肥-recipecompost_chips)、[鱼粪堆肥](#鱼粪堆肥-recipecompost_fish_manure)、[牧草堆肥](#牧草堆肥-recipecompost_grass)、[油饼堆肥](#油饼堆肥-recipecompost_oil_cake)、[羊粪堆肥](#羊粪堆肥-recipecompost_sheep_manure)、[污泥堆肥](#污泥堆肥-recipecompost_sludge)、[废滤炭堆肥](#废滤炭堆肥-recipecompost_spent_filter)、[秸秆堆肥](#秸秆堆肥-recipecompost_straw)、[枝条堆肥](#枝条堆肥-recipecompost_twigs)、[生物选矿](#生物选矿-recipeconcentrate_ore)、[藻料培养](#藻料培养-recipeculture_algae)、[高密度藻培养](#高密度藻培养-recipedense_algae_culture)、[菌鱼灵膳烹制](#菌鱼灵膳烹制-recipefungus_fish_meal)、[蜜谷灵饼烘焙](#蜜谷灵饼烘焙-recipehoney_grain_cake)、[蜜炼金食炼制](#蜜炼金食炼制-recipehoney_mineral_food)、[炭砂滤料制作](#炭砂滤料制作-recipemake_filter_media)、[make_vine_ball](#make_vine_ball-recipemake_vine_ball)、[谷粉研磨](#谷粉研磨-recipemill_grain)、[草粉研磨](#草粉研磨-recipemill_grass)、[稻米磨粉](#稻米磨粉-recipemill_rice)、[矿质补料调配](#矿质补料调配-recipemineral_feed)、[蜜油火膏熬制](#蜜油火膏熬制-recipeoil_honey_paste)、[油籽榨油](#油籽榨油-recipepress_oilseed)、[再生填料回收](#再生填料回收-reciperecover_fill)、[营养液回收](#营养液回收-reciperecover_nutrients)、[油脂精炼](#油脂精炼-reciperefine_oil)、[蜂蜡精炼](#蜂蜡精炼-reciperefine_wax)、[锯切木板](#锯切木板-recipesaw_planks)、[枝条粉碎](#枝条粉碎-recipeshred_twigs)、[原木粉碎](#原木粉碎-recipeshred_wood)、[木炭冶炼](#木炭冶炼-recipesmelt_charcoal)、[富集矿冶炼](#富集矿冶炼-recipesmelt_concentrate)、[松脂冶炼](#松脂冶炼-recipesmelt_resin)、[腐土菌丸炼制](#腐土菌丸炼制-recipesoil_spirit_pill)
 - **研究与科技（12）**：[饲料与蜡油精制](#饲料与蜡油精制-researchadvanced_feed_oil_wax)、[灵食初制](#灵食初制-researchbasic_spirit_cooking)、[蜂群协作](#蜂群协作-researchbeekeeping)、[菌毯净化](#菌毯净化-researchbiofiltration)、[复合灵食](#复合灵食-researchcomposite_spirit_food)、[农产初加工](#农产初加工-researchfarm_preparation)、[田间自动维护](#田间自动维护-researchfield_maintenance)、[花源栽培](#花源栽培-researchflower_cultivation)、[矿质材料工艺](#矿质材料工艺-researchmineral_materials)、[生物选矿](#生物选矿-researchore_concentration)、[岩料破碎](#岩料破碎-researchrock_handling)、[水与藻料回流](#水与藻料回流-researchwater_recirculation)
 - **资源点与环境（10）**：[灵田·水库](#灵田水库-mapfarm_02)、[东侧远田](#东侧远田-parceleast_far)、[东侧下田](#东侧下田-parceleast_lower)、[东侧近田](#东侧近田-parceleast_near)、[东侧远岸水库](#东侧远岸水库-parceleast_water_far)、[东侧近岸水库](#东侧近岸水库-parceleast_water_near)、[西侧水库](#西侧水库-parcelwest_water)、[采矿点](#采矿点-sourceore_source)、[泉水点](#泉水点-sourcespring_source)、[采石点](#采石点-sourcestone_source)
-- **基础玩法（18）**：[农业辅助蛊：定向服务区与效果决议](#农业辅助蛊定向服务区与效果决议-ruleagriculture)、[畜牧分区：陆生动物名册与八单位日程](#畜牧分区陆生动物名册与八单位日程-ruleanimal-zones)、[持续生产与保留量](#持续生产与保留量-ruleauto_production)、[建材替代](#建材替代-rulebuild_substitute)、[作物生长速率公式](#作物生长速率公式-rulecrop_growth)、[日结顺序与自动推进](#日结顺序与自动推进-ruleday_settle)、[环境值与有效光照](#环境值与有效光照-ruleenvironment)、[购地与连续地图](#购地与连续地图-ruleexpansion)、[花源份额](#花源份额-ruleflower_share)、[养殖服务与周期口径](#养殖服务与周期口径-rulehusbandry_service)、[活体配方的双重注册](#活体配方的双重注册-ruleliving_mapping)、[后勤蛊部署、维护与生产协同](#后勤蛊部署维护与生产协同-rulelogistics)、[市集交易](#市集交易-rulemarket)、[五行供货与转数](#五行供货与转数-ruleorders)、[研究系统](#研究系统-ruleresearch)、[露天农业区：地板、育种与丰产](#露天农业区地板育种与丰产-rulerooms)、[存档与经济](#存档与经济-rulesave)、[雇工与统一调度器](#雇工与统一调度器-ruleworker_scheduler)
+- **基础玩法（19）**：[农业辅助蛊：定向服务区与效果决议](#农业辅助蛊定向服务区与效果决议-ruleagriculture)、[畜牧强化：安抚、役使与耐用玩具](#畜牧强化安抚役使与耐用玩具-ruleanimal-services)、[畜牧分区：陆生动物名册与八单位日程](#畜牧分区陆生动物名册与八单位日程-ruleanimal-zones)、[持续生产与保留量](#持续生产与保留量-ruleauto_production)、[建材替代](#建材替代-rulebuild_substitute)、[作物生长速率公式](#作物生长速率公式-rulecrop_growth)、[日结顺序与自动推进](#日结顺序与自动推进-ruleday_settle)、[环境值与有效光照](#环境值与有效光照-ruleenvironment)、[购地与连续地图](#购地与连续地图-ruleexpansion)、[花源份额](#花源份额-ruleflower_share)、[养殖服务与周期口径](#养殖服务与周期口径-rulehusbandry_service)、[活体配方的双重注册](#活体配方的双重注册-ruleliving_mapping)、[后勤蛊部署、维护与生产协同](#后勤蛊部署维护与生产协同-rulelogistics)、[市集交易](#市集交易-rulemarket)、[五行供货与转数](#五行供货与转数-ruleorders)、[研究系统](#研究系统-ruleresearch)、[露天农业区：地板、育种与丰产](#露天农业区地板育种与丰产-rulerooms)、[存档与经济](#存档与经济-rulesave)、[雇工与统一调度器](#雇工与统一调度器-ruleworker_scheduler)
 
 ---
 
@@ -301,7 +301,7 @@
 相关规则：[日结顺序与自动推进](#日结顺序与自动推进-ruleday_settle)、[养殖服务与周期口径](#养殖服务与周期口径-rulehusbandry_service)、[雇工与统一调度器](#雇工与统一调度器-ruleworker_scheduler)
 
 
-## 建筑与设施（21）
+## 建筑与设施（23）
 
 ### 藻类培养槽 `facility:algae_tank`
 
@@ -390,6 +390,8 @@
 | 设施类型 | 加工设施 |
 | 拆除 | 1AP；需设施空闲；不返还材料与元石 |
 | 建材替代 | 普通岩石部分可用复合石板1:1或再生填料2:1整体替代（2份石） |
+
+关联条目：可入驻后勤蛊：[驭兽蛊](#驭兽蛊-gucommand_gu)
 
 相关规则：[建材替代](#建材替代-rulebuild_substitute)
 
@@ -614,6 +616,36 @@
 
 相关规则：[建材替代](#建材替代-rulebuild_substitute)
 
+### 安抚台 `facility:soothing_station`
+
+加工设施；18元石
+
+| 字段 | 内容 |
+|---|---|
+| 建造费用 | 18元石＋材料 木板×2＋普通岩石×2＋1AP |
+| 占地/地形 | 1×1格；地形：陆地 |
+| 设施类型 | 加工设施 |
+| 拆除 | 1AP；需设施空闲；不返还材料与元石 |
+| 建材替代 | 普通岩石部分可用复合石板1:1或再生填料2:1整体替代（2份石） |
+
+关联条目：可入驻后勤蛊：[安抚蛊](#安抚蛊-gusoothe_gu)
+
+相关规则：[建材替代](#建材替代-rulebuild_substitute)
+
+### 玩具站 `facility:toy_station`
+
+加工设施；12元石
+
+| 字段 | 内容 |
+|---|---|
+| 建造费用 | 12元石＋材料 木板×2＋普通岩石×2＋1AP |
+| 占地/地形 | 1×1格；地形：陆地 |
+| 设施类型 | 加工设施 |
+| 拆除 | 1AP；需设施空闲；不返还材料与元石 |
+| 建材替代 | 普通岩石部分可用复合石板1:1或再生填料2:1整体替代（2份石） |
+
+相关规则：[建材替代](#建材替代-rulebuild_substitute)
+
 ### 木工台 `facility:woodshop`
 
 加工设施；8元石
@@ -624,13 +656,13 @@
 | 占地/地形 | 2×2格；地形：陆地 |
 | 设施类型 | 加工设施 |
 | 拆除 | 1AP；需设施空闲；不返还材料与元石 |
-| 支持配方 | 锯切木板、原木粉碎、枝条粉碎、炭砂滤料制作、复合石板组装、再生填料回收（一次一批次） |
+| 支持配方 | 锯切木板、原木粉碎、枝条粉碎、炭砂滤料制作、复合石板组装、再生填料回收、make_vine_ball（一次一批次） |
 | 建材替代 | 普通岩石部分可用复合石板1:1或再生填料2:1整体替代（2份石） |
 
 相关规则：[建材替代](#建材替代-rulebuild_substitute)
 
 
-## 后勤蛊与协同（7）
+## 后勤蛊与协同（9）
 
 ### 明光蛊 `gu:bright_gu`
 
@@ -639,7 +671,7 @@
 | 字段 | 内容 |
 |---|---|
 | 转数 | 1转原型；实例支持一至五转，升转由上游负责 |
-| 获取 | 每档一次试用配给共11只：饭袋草/催生/锁水/节肥各2只，明光/智道研究/宙道研究各1只；尚未连接上游获取与成长 |
+| 获取 | 每档一次试用配给共15只：饭袋草/催生/锁水/节肥/安抚/驭兽各2只，明光/智道研究/宙道研究各1只；尚未连接上游获取与成长 |
 | 部署 | 入驻兼容设施：补光灯 |
 | 能力 | 范围外扩2格，提供光照80，同格光照取最大 |
 | 维护 | 启用时1元石/游戏日；闲置仍收费，休眠/未部署免维护 |
@@ -651,6 +683,24 @@
 
 相关规则：[后勤蛊部署、维护与生产协同](#后勤蛊部署维护与生产协同-rulelogistics)
 
+### 驭兽蛊 `gu:command_gu`
+
+实际动物劳动倍率
+
+| 字段 | 内容 |
+|---|---|
+| 转数 | 1转原型；实例支持一至五转，升转由上游负责 |
+| 获取 | 每档一次试用配给共15只：饭袋草/催生/锁水/节肥/安抚/驭兽各2只，明光/智道研究/宙道研究各1只；尚未连接上游获取与成长 |
+| 部署 | 入驻兼容设施：调度站 |
+| 能力 | 实际获岗劳动点×1.5，每单位服务4空间 |
+| 维护 | 启用时1元石/游戏日；闲置仍收费，休眠/未部署免维护 |
+| 特殊食料 | 无（每个成功付费服务日；与元石原子扣除） |
+| 时点 | 部署/撤回各1AP；启用次日生效；停用立即取消后续效果，已付不退；运行/待收任务锁定实例 |
+
+关联条目：兼容设施：[调度站](#调度站-facilitydispatch_station)
+
+相关规则：[后勤蛊部署、维护与生产协同](#后勤蛊部署维护与生产协同-rulelogistics)
+
 ### 节肥蛊 `gu:fert_gu`
 
 定向肥力减耗
@@ -658,7 +708,7 @@
 | 字段 | 内容 |
 |---|---|
 | 转数 | 1转原型；实例支持一至五转，升转由上游负责 |
-| 获取 | 每档一次试用配给共11只：饭袋草/催生/锁水/节肥各2只，明光/智道研究/宙道研究各1只；尚未连接上游获取与成长 |
+| 获取 | 每档一次试用配给共15只：饭袋草/催生/锁水/节肥/安抚/驭兽各2只，明光/智道研究/宙道研究各1只；尚未连接上游获取与成长 |
 | 部署 | 入驻兼容设施：田间维护站 |
 | 能力 | 宿主四向3×3服务区，完整覆盖目标的肥力扣耗保留50%（每格百分之一余量跨日累计） |
 | 维护 | 启用时1元石/游戏日；闲置仍收费，休眠/未部署免维护 |
@@ -676,7 +726,7 @@
 | 字段 | 内容 |
 |---|---|
 | 转数 | 1转原型；实例支持一至五转，升转由上游负责 |
-| 获取 | 每档一次试用配给共11只：饭袋草/催生/锁水/节肥各2只，明光/智道研究/宙道研究各1只；尚未连接上游获取与成长 |
+| 获取 | 每档一次试用配给共15只：饭袋草/催生/锁水/节肥/安抚/驭兽各2只，明光/智道研究/宙道研究各1只；尚未连接上游获取与成长 |
 | 部署 | 入驻兼容设施：田间维护站 |
 | 能力 | 宿主四向3×3服务区，完整覆盖的植物目标生产速度×1.5；同tag最高转优先 |
 | 维护 | 启用时1元石/游戏日；闲置仍收费，休眠/未部署免维护 |
@@ -694,7 +744,7 @@
 | 字段 | 内容 |
 |---|---|
 | 转数 | 1转原型；实例支持一至五转，升转由上游负责 |
-| 获取 | 每档一次试用配给共11只：饭袋草/催生/锁水/节肥各2只，明光/智道研究/宙道研究各1只；尚未连接上游获取与成长 |
+| 获取 | 每档一次试用配给共15只：饭袋草/催生/锁水/节肥/安抚/驭兽各2只，明光/智道研究/宙道研究各1只；尚未连接上游获取与成长 |
 | 部署 | 独立占用1格陆地，不需开垦/农田 |
 | 能力 | 自身进行生产，条件与产物见下方 |
 | 维护 | 启用时1元石/游戏日；闲置仍收费，休眠/未部署免维护 |
@@ -707,6 +757,24 @@
 
 相关规则：[后勤蛊部署、维护与生产协同](#后勤蛊部署维护与生产协同-rulelogistics)
 
+### 安抚蛊 `gu:soothe_gu`
+
+实际繁殖进度倍率
+
+| 字段 | 内容 |
+|---|---|
+| 转数 | 1转原型；实例支持一至五转，升转由上游负责 |
+| 获取 | 每档一次试用配给共15只：饭袋草/催生/锁水/节肥/安抚/驭兽各2只，明光/智道研究/宙道研究各1只；尚未连接上游获取与成长 |
+| 部署 | 入驻兼容设施：安抚台 |
+| 能力 | 实际合格繁殖进度×1.5，每单位服务4空间 |
+| 维护 | 启用时1元石/游戏日；闲置仍收费，休眠/未部署免维护 |
+| 特殊食料 | 无（每个成功付费服务日；与元石原子扣除） |
+| 时点 | 部署/撤回各1AP；启用次日生效；停用立即取消后续效果，已付不退；运行/待收任务锁定实例 |
+
+关联条目：兼容设施：[安抚台](#安抚台-facilitysoothing_station)
+
+相关规则：[后勤蛊部署、维护与生产协同](#后勤蛊部署维护与生产协同-rulelogistics)
+
 ### 宙道研究蛊 `gu:time_gu`
 
 研究速度倍率
@@ -714,7 +782,7 @@
 | 字段 | 内容 |
 |---|---|
 | 转数 | 1转原型；实例支持一至五转，升转由上游负责 |
-| 获取 | 每档一次试用配给共11只：饭袋草/催生/锁水/节肥各2只，明光/智道研究/宙道研究各1只；尚未连接上游获取与成长 |
+| 获取 | 每档一次试用配给共15只：饭袋草/催生/锁水/节肥/安抚/驭兽各2只，明光/智道研究/宙道研究各1只；尚未连接上游获取与成长 |
 | 部署 | 入驻兼容设施：研究台 |
 | 能力 | 每个有效研究日推进2工作量 |
 | 维护 | 启用时2元石/游戏日；闲置仍收费，休眠/未部署免维护 |
@@ -733,7 +801,7 @@
 | 字段 | 内容 |
 |---|---|
 | 转数 | 1转原型；实例支持一至五转，升转由上游负责 |
-| 获取 | 每档一次试用配给共11只：饭袋草/催生/锁水/节肥各2只，明光/智道研究/宙道研究各1只；尚未连接上游获取与成长 |
+| 获取 | 每档一次试用配给共15只：饭袋草/催生/锁水/节肥/安抚/驭兽各2只，明光/智道研究/宙道研究各1只；尚未连接上游获取与成长 |
 | 部署 | 入驻兼容设施：田间维护站 |
 | 能力 | 宿主四向3×3服务区，完整覆盖目标的水分扣耗保留50%（每格百分之一余量跨日累计） |
 | 维护 | 启用时1元石/游戏日；闲置仍收费，休眠/未部署免维护 |
@@ -751,7 +819,7 @@
 | 字段 | 内容 |
 |---|---|
 | 转数 | 1转原型；实例支持一至五转，升转由上游负责 |
-| 获取 | 每档一次试用配给共11只：饭袋草/催生/锁水/节肥各2只，明光/智道研究/宙道研究各1只；尚未连接上游获取与成长 |
+| 获取 | 每档一次试用配给共15只：饭袋草/催生/锁水/节肥/安抚/驭兽各2只，明光/智道研究/宙道研究各1只；尚未连接上游获取与成长 |
 | 部署 | 入驻兼容设施：研究台 |
 | 能力 | 研究工作量固定减少1，至少保留1 |
 | 维护 | 启用时1元石/游戏日；闲置仍收费，休眠/未部署免维护 |
@@ -763,7 +831,7 @@
 相关规则：[后勤蛊部署、维护与生产协同](#后勤蛊部署维护与生产协同-rulelogistics)
 
 
-## 材料与物品（65）
+## 材料与物品（66）
 
 ### 藻料 `resource:algae_feed`
 
@@ -919,7 +987,7 @@
 |---|---|---|---|
 | 加工·复合石板组装 | ×2 | 加工·复合石板组装：复合石板×2（每批）｜木工台｜需研究「矿质材料工艺」｜2自然日｜启动1＋收取1 | 砂砾×2；石粉×1；松脂×1 |
 
-**直接用途（16条）**
+**直接用途（18条）**
 
 | 过程 | 本条目数量 | 说明 | 同批 |
 |---|---|---|---|
@@ -937,6 +1005,8 @@
 | 建造·研究台 | ×2 | 建造·研究台：复合石板×2（每次建造（可选1:1替石））｜研究台｜1AP | 原木×2；普通岩石×2；再生填料×4；元石×8 |
 | 建造·岩兽工作场 | ×3 | 建造·岩兽工作场：复合石板×3（每次建造（可选1:1替石））｜岩兽工作场｜需研究「岩料破碎」｜1AP | 原木×2；普通岩石×3；再生填料×6；元石×12 |
 | 建造·小型冶炼炉 | ×6 | 建造·小型冶炼炉：复合石板×6（每次建造（可选1:1替石））｜小型冶炼炉｜1AP | 木板×2；普通岩石×6；再生填料×12；元石×20 |
+| 建造·安抚台 | ×2 | 建造·安抚台：复合石板×2（每次建造（可选1:1替石））｜安抚台｜1AP | 木板×2；普通岩石×2；再生填料×4；元石×18 |
+| 建造·玩具站 | ×2 | 建造·玩具站：复合石板×2（每次建造（可选1:1替石））｜玩具站｜1AP | 木板×2；普通岩石×2；再生填料×4；元石×12 |
 | 建造·木工台 | ×2 | 建造·木工台：复合石板×2（每次建造（可选1:1替石））｜木工台｜1AP | 原木×2；普通岩石×2；再生填料×4；元石×8 |
 | 市集出售·复合石板 | ×按订单/库存 | 市集出售·复合石板：复合石板×按订单/库存（每份） | 元石×4 |
 
@@ -1990,7 +2060,7 @@
 | 市集采购·普通岩石 | ×按订单/库存 | 市集采购·普通岩石：普通岩石×按订单/库存（每份） | 元石×3 |
 | 采石点采集 | ×3 | 采石点采集：普通岩石×3（每次）｜1AP | — |
 
-**直接用途（18条）**
+**直接用途（20条）**
 
 | 过程 | 本条目数量 | 说明 | 同批 |
 |---|---|---|---|
@@ -2008,6 +2078,8 @@
 | 建造·研究台 | ×2 | 建造·研究台：普通岩石×2（每次建造）｜研究台｜1AP | 原木×2；复合石板×2；再生填料×4；元石×8 |
 | 建造·岩兽工作场 | ×3 | 建造·岩兽工作场：普通岩石×3（每次建造）｜岩兽工作场｜需研究「岩料破碎」｜1AP | 原木×2；复合石板×3；再生填料×6；元石×12 |
 | 建造·小型冶炼炉 | ×6 | 建造·小型冶炼炉：普通岩石×6（每次建造）｜小型冶炼炉｜1AP | 木板×2；复合石板×6；再生填料×12；元石×20 |
+| 建造·安抚台 | ×2 | 建造·安抚台：普通岩石×2（每次建造）｜安抚台｜1AP | 木板×2；复合石板×2；再生填料×4；元石×18 |
+| 建造·玩具站 | ×2 | 建造·玩具站：普通岩石×2（每次建造）｜玩具站｜1AP | 木板×2；复合石板×2；再生填料×4；元石×12 |
 | 建造·木工台 | ×2 | 建造·木工台：普通岩石×2（每次建造）｜木工台｜1AP | 原木×2；复合石板×2；再生填料×4；元石×8 |
 | 整体维护·啮岩鼹 | ×2 | 整体维护·啮岩鼹：普通岩石×2（每只·每轮）｜岩兽工作场｜啮岩鼹｜1AP | 木腐菇×1；清水×1；含铁矿石×2 |
 | 启动研究·岩料破碎 | ×3 | 启动研究·岩料破碎：普通岩石×3（一次性）｜研究台 | 木腐菇×1；元石×6 |
@@ -2077,7 +2149,7 @@
 |---|---|---|---|
 | 加工·再生填料回收 | ×2 | 加工·再生填料回收：再生填料×2（每批）｜木工台｜需研究「矿质材料工艺」｜1自然日｜启动1＋收取1 | 尾砂×1；炉渣×1；石粉×1 |
 
-**直接用途（15条）**
+**直接用途（17条）**
 
 | 过程 | 本条目数量 | 说明 | 同批 |
 |---|---|---|---|
@@ -2094,6 +2166,8 @@
 | 建造·研究台 | ×4 | 建造·研究台：再生填料×4（每次建造（可选2:1替石））｜研究台｜1AP | 原木×2；普通岩石×2；复合石板×2；元石×8 |
 | 建造·岩兽工作场 | ×6 | 建造·岩兽工作场：再生填料×6（每次建造（可选2:1替石））｜岩兽工作场｜需研究「岩料破碎」｜1AP | 原木×2；普通岩石×3；复合石板×3；元石×12 |
 | 建造·小型冶炼炉 | ×12 | 建造·小型冶炼炉：再生填料×12（每次建造（可选2:1替石））｜小型冶炼炉｜1AP | 木板×2；普通岩石×6；复合石板×6；元石×20 |
+| 建造·安抚台 | ×4 | 建造·安抚台：再生填料×4（每次建造（可选2:1替石））｜安抚台｜1AP | 木板×2；普通岩石×2；复合石板×2；元石×18 |
+| 建造·玩具站 | ×4 | 建造·玩具站：再生填料×4（每次建造（可选2:1替石））｜玩具站｜1AP | 木板×2；普通岩石×2；复合石板×2；元石×12 |
 | 建造·木工台 | ×4 | 建造·木工台：再生填料×4（每次建造（可选2:1替石））｜木工台｜1AP | 原木×2；普通岩石×2；复合石板×2；元石×8 |
 | 市集出售·再生填料 | ×按订单/库存 | 市集出售·再生填料：再生填料×按订单/库存（每份） | 元石×1 |
 
@@ -2410,13 +2484,14 @@
 | 市集采购·秸秆 | ×按订单/库存 | 市集采购·秸秆：秸秆×按订单/库存（每份） | 元石×3 |
 | 收获·金穗麦 | ×2 | 收获·金穗麦：秸秆×2（每次收获）｜1AP | 谷粒×3 |
 
-**直接用途（5条）**
+**直接用途（6条）**
 
 | 过程 | 本条目数量 | 说明 | 同批 |
 |---|---|---|---|
 | 加工·秸秆堆肥 | ×2 | 加工·秸秆堆肥：秸秆×2（每批）｜堆肥箱｜2自然日｜启动1＋收取1 | 腐殖土×2 |
 | 加工·藻料培养 | ×2 | 加工·藻料培养：秸秆×2（每批）｜藻类培养槽｜2自然日｜启动1＋收取1 | 清水×3；藻料×6 |
 | 加工·高密度藻培养 | ×1 | 加工·高密度藻培养：秸秆×1（每批）｜藻类培养槽｜需研究「水与藻料回流」｜2自然日｜启动1＋收取1 | 营养液×2；清水×1；高密度藻料×3 |
+| 加工·make_vine_ball | ×2 | 加工·make_vine_ball：秸秆×2（每批）｜木工台｜1自然日｜启动1＋收取1 | 枝条×2；藤球×1 |
 | 启动研究·农产初加工 | ×2 | 启动研究·农产初加工：秸秆×2（一次性）｜研究台 | 油籽×2；元石×6 |
 | 市集出售·秸秆 | ×按订单/库存 | 市集出售·秸秆：秸秆×按订单/库存（每份） | 元石×1 |
 
@@ -2491,14 +2566,40 @@
 | 收获·松脂树 | ×3 | 收获·松脂树：枝条×3（每次砍伐）｜1AP | 松脂×4；原木×4 |
 | 丰产奖励·蜜铃灌木·砍伐 | ×按订单/库存 | 丰产奖励·蜜铃灌木·砍伐：枝条×按订单/库存（每轮额外份数） | — |
 
-**直接用途（4条）**
+**直接用途（5条）**
 
 | 过程 | 本条目数量 | 说明 | 同批 |
 |---|---|---|---|
 | 加工·枝条炭化 | ×4 | 加工·枝条炭化：枝条×4（每批）｜炭化炉｜2自然日｜启动1＋收取1 | 木炭×3 |
 | 加工·枝条堆肥 | ×3 | 加工·枝条堆肥：枝条×3（每批）｜堆肥箱｜2自然日｜启动1＋收取1 | 腐殖土×2 |
+| 加工·make_vine_ball | ×2 | 加工·make_vine_ball：枝条×2（每批）｜木工台｜1自然日｜启动1＋收取1 | 秸秆×2；藤球×1 |
 | 加工·枝条粉碎 | ×2 | 加工·枝条粉碎：枝条×2（每批）｜木工台｜1自然日｜启动1＋收取1 | 木屑×3 |
 | 市集出售·枝条 | ×按订单/库存 | 市集出售·枝条：枝条×按订单/库存（每份） | 元石×2 |
+
+相关规则：[市集交易](#市集交易-rulemarket)
+
+### 藤球 `resource:vine_ball`
+
+木行固体；生产材料
+
+| 字段 | 内容 |
+|---|---|
+| 分类 | 木行·固体·加工品；标签：animal_toy |
+| 市集采购 | 不可采购 |
+| 市集出售 | 不可出售 |
+
+**获取来源（2条）**
+
+| 过程 | 本条目数量 | 说明 | 同批 |
+|---|---|---|---|
+| 加工·make_vine_ball | ×1 | 加工·make_vine_ball：藤球×1（每批）｜木工台｜1自然日｜启动1＋收取1 | 枝条×2；秸秆×2 |
+| 卸下耐用藤球 | ×1 | 卸下耐用藤球：藤球×1（每个玩具站）｜玩具站｜1AP | — |
+
+**直接用途（1条）**
+
+| 过程 | 本条目数量 | 说明 | 同批 |
+|---|---|---|---|
+| 装入耐用藤球 | ×1 | 装入耐用藤球：藤球×1（每个玩具站）｜玩具站｜1AP | — |
 
 相关规则：[市集交易](#市集交易-rulemarket)
 
@@ -2628,7 +2729,7 @@
 |---|---|---|---|
 | 加工·锯切木板 | ×2 | 加工·锯切木板：木板×2（每批）｜木工台｜1自然日｜启动1＋收取1 | 原木×2；木屑×1 |
 
-**直接用途（7条）**
+**直接用途（9条）**
 
 | 过程 | 本条目数量 | 说明 | 同批 |
 |---|---|---|---|
@@ -2638,12 +2739,14 @@
 | 建造·田间维护站 | ×3 | 建造·田间维护站：木板×3（每次建造）｜田间维护站｜需研究「田间自动维护」｜1AP | 铁锭×1；元石×18 |
 | 建造·厨房 | ×2 | 建造·厨房：木板×2（每次建造）｜厨房｜需研究「灵食初制」｜1AP | 普通岩石×3；复合石板×3；再生填料×6；元石×12 |
 | 建造·小型冶炼炉 | ×2 | 建造·小型冶炼炉：木板×2（每次建造）｜小型冶炼炉｜1AP | 普通岩石×6；复合石板×6；再生填料×12；元石×20 |
+| 建造·安抚台 | ×2 | 建造·安抚台：木板×2（每次建造）｜安抚台｜1AP | 普通岩石×2；复合石板×2；再生填料×4；元石×18 |
+| 建造·玩具站 | ×2 | 建造·玩具站：木板×2（每次建造）｜玩具站｜1AP | 普通岩石×2；复合石板×2；再生填料×4；元石×12 |
 | 市集出售·木板 | ×按订单/库存 | 市集出售·木板：木板×按订单/库存（每份） | 元石×8 |
 
 相关规则：[市集交易](#市集交易-rulemarket)
 
 
-## 配方与食谱（61）
+## 配方与食谱（62）
 
 ### 蜜盏蜂·花源份额＋清水 `diet:bell_bee/base_diets/flower_share`
 
@@ -3363,6 +3466,22 @@
 
 相关规则：[持续生产与保留量](#持续生产与保留量-ruleauto_production)
 
+### make_vine_ball `recipe:make_vine_ball`
+
+木工台；藤球×1；1日
+
+| 字段 | 内容 |
+|---|---|
+| 执行设施 | 木工台（须已建成；一次一批次；可由负责人按持续生产策略自动启动） |
+| 投入 | 枝条×2＋秸秆×2（启动时一次性扣除） |
+| 产出 | 藤球×1（收取时入仓；完工≠入仓） |
+| 批时 | 1自然日（日结推进，无需每日点击） |
+| AP | 启动1＋收取1 |
+
+关联条目：执行设施：[木工台](#木工台-facilitywoodshop)
+
+相关规则：[持续生产与保留量](#持续生产与保留量-ruleauto_production)
+
 ### 谷粉研磨 `recipe:mill_grain`
 
 农产加工台；谷粉×2；1日
@@ -4000,7 +4119,7 @@
 相关规则：[日结顺序与自动推进](#日结顺序与自动推进-ruleday_settle)
 
 
-## 基础玩法（18）
+## 基础玩法（19）
 
 ### 农业辅助蛊：定向服务区与效果决议 `rule:agriculture`
 
@@ -4012,10 +4131,21 @@
 6. 饭袋草蛊属于植物目标但无肥力消耗，节肥对其无效。余量归属地格：收获、重种、取消、换蛊、休眠、转向、拆建与读档都不清除。
 7. 未采用的启用来源只要满足扣费条件仍支付维护；缺元石或食料时不授予当日运行资格，普通生产回退基础效率，环境不足的原降效规则保留。
 
+### 畜牧强化：安抚、役使与耐用玩具 `rule:animal-services`
+
+1. 一级房间的配套允许基础运行；设施入驻适配蛊虫或特殊道具成为二级，缺维护时退回基础服务。三级系统由玩家明确关联多个房间，地格仍各有唯一归属。每个房间最多属于一个系统，编辑提交1AP，无变化不收费。
+2. 圈养区安抚台入驻安抚蛊，只将实际合格的繁殖进度提高至150%；工作区调度站入驻奴道驭兽蛊，将实际获岗劳动点提高至150%。各1元石/日，无新增食料；岗位满、原料不足、禁工或结构不合格不产生强化工作。
+3. 安抚台、调度站、玩具站每个单位各服务4空间；钢绵羊占2，岩腹兽和啮岩鼹占1。同类不叠加，优先最高转，同转稳定选择宿主；不同宿主可分担容量。育幼和维持放牧本期没有二级效果。
+4. 藤球在木工台用树枝2＋秸秆2制作1个，耗时1日，无研究要求。玩具站外观为抓娃娃机，装入与卸下各1AP；长期使用，不消耗耐久，卸下返回原物，装球时不能直接拆站。
+5. 每个实际有效的额外放牧单位，获得玩具服务的动物独立以10%概率额外恢复1疲劳；基础恢复不变，次日开日统一结算。查看、预览、读档和失败重试不重抽，同一动物同一单位不会重复领取。
+6. 繁育场：二级圈养与一级育幼明确关联且有预留空间和合适床位，才为本轮实际繁殖进度积累目标专属贡献。出生按贡献比例最多获得成长目标10%的初始成长；中途换目标不挪用旧贡献，不追补或重复发放。
+7. 协同役使场：二级工作＋一级维持＋二级额外放牧。当天成功维持且实际获得玩具服务的劳动者，真实批次溢出点可在日界确认，限原岗位同配方，上限正常1单位劳动。下批实际开工并支付原料后才使用，三级失效时封存，换配方或拆除前须明确放弃。
+8. 综合牧场将上述两种配置放入同一系统，分别结算两条收益，没有第三层全局倍增。育幼目标的预留床位和空间跨圈养区共享，不能重复占用。
+
 ### 畜牧分区：陆生动物名册与八单位日程 `rule:animal-zones`
 
 1. 钢绵羊、啮岩鼹、岩腹兽走名册制：购入即幼体，占用育幼区全时空间与床位；成体在次日日界由玩家选择圈养或役使，未安置则维持等待。三种动物退出旧的每日手动/雇工维护路径，鱼、蜂、菌毯不变。
-2. 五类功能区都在普通地板上四邻接划定：育幼区（圈舍＋供食槽＋床，最小空间4）、圈养区（另加照料台，最小空间8）、工作区（调度站＋岩兽工作场）、维持放牧区（食槽＋床，最小空间4）、额外放牧区（最小空间8）。圈舍与食槽等占地不计可用空间，床占地计入；划区、命名、调整0AP。
+2. 五类功能区都在普通地板上明确划定四邻接成员：育幼区（圈舍＋供食槽＋床，最小空间4）、圈养区（另加照料台，最小空间8）、工作区（调度站＋岩兽工作场）、维持放牧区（食槽＋床，最小空间4）、额外放牧区（玩具站，可空槽，最小空间8）。非床设施占地不计可用空间，床占地计入；划区、命名、调整0AP，相邻不会自动合并。一级不合格时设施与服务暂停，动物饥饿、疲劳和禁工时钟仍继续。
 3. 床采用格内密度：一格普通地板放4张小床或4张中床，以4张一组建造、组价按单格价；大床占满一格仅1张。小床收1空间体型，中床收2空间，严格匹配；同一床位可错时共用不重叠的两单位窗口，跨午夜预约不重置。
 4. 每天按八个内部逻辑单位结算（不换算AP）：标准班维持2＋工作4＋额外放牧2，晚班为其平移4格；育幼/圈养固定维持2＋照料6。维持窗口必须连续两单位整段成功：开窗时预约床位、食槽服务位（每槽2只）与窗口空间，窗口结束统一扣一次基础餐（育幼/役使1份、圈养2份）。
 5. 维持失败（缺食缺水、床位/空间/结构失效）自窗口结束点固定禁工八单位，可跨天；补食或再次成功都不提前解除。禁工结束且重新取得维持资格后才恢复劳动。
@@ -4116,14 +4246,14 @@
 
 ### 露天农业区：地板、育种与丰产 `rule:rooms`
 
-1. 耕地按上下左右连通形成田块，空耕地参加，斜角不连；普通地板、自然地面与设施隔开田块。不要求墙、门、屋顶或中心建筑。
+1. 田块由玩家明确登记地格，成员内部须上下左右连通，斜角不连。相邻田块不会自动合并，新开垦耕地不会自动加入；不要求墙、门、屋顶或中心建筑。缺地板保留归属并暂停资格。
 2. 普通地板每格原木1、铺设/改铺/拆除每次1AP，不返材料；耕地沿用开垦1AP，不得覆盖作物、资源点或宿主。地权与自然地形仍限制铺设；换铺面不清空水肥与扣耗余量。
-3. 全区催生＋锁水为一级育种田，全区催生＋节肥为一级丰产田，三类齐全为二级复合农业区，同时打开两个奖励通道，不另叠倍。每类可由多站覆盖不同地格，但2×2植物仍需每类各有单源完整覆盖。
+3. 农业维护站脚下普通地板，明确关联相邻且至少4格的完好田块，形成一级农业区，允许基础自动补水施肥；入驻适配蛊虫后为二级强化。全区催生＋锁水形成三级育种田，催生＋节肥为三级丰产田，三类齐全为三级复合农业区，同时打开两个奖励通道，不另叠倍。每类可由多站覆盖不同地格，但2×2植物仍需每类各有单源完整覆盖，且不得跨田块边界。
 4. 每轮只累计真实推进的生长点，最后一天按剩余目标封顶；育种与丰产分别累计合格点。中途补齐、缺供、拆分、扩田与降级只影响未来贡献，成熟空等不增加资格。
 5. 完整合格时首次成熟产同种种子1份的概率为25%；实际概率＝25%×首次合格生长点/首次总生长点。成熟时固定结果，随首次成熟收获、砍伐或成熟清理领取，不另耗AP；失败也用掉机会，留株再生不重抽。
 6. 每轮额外主产物期望＝本次基础主产物数量×25%×本轮丰产合格点/总生长点；整数必得，小数作为再得1份概率。只增登记主产物，不增副产物、花源份额或蛊本体；饭袋草在合格耕地可增稻米，不产种子。
 7. 成熟冻结贡献与随机依据，种子和材料分开判定；查阅、换向、读档、保存失败与重试不重抽或重复发放。基础收成、育种奖励、丰产奖励分别记账，未领取权益不是库存。
-8. 当前P8使用schema20，早期P8开发档需新开档，不迁移、不删除旧文件。硬质地板的漏斗、管道与传动后续另案。
+8. 当前P8使用schema22，早期P8开发档需新开档，不迁移、不删除旧文件。硬质地板的漏斗、管道与传动后续另案。
 
 ### 存档与经济 `rule:save`
 
