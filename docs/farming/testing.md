@@ -1,5 +1,7 @@
 # 当前农场测试与历史入口
 
+> **2026-10-19 P10.5草案待实施：** [阶段页§14](phase-10.5-陆生物种扩充与精养生产.md)规划三用途互斥/钢绵羊迁移、四精养工艺、六新物种/群与容量、桑叶—蚕丝、灵液交易、役使/建材和系统保存七个短分区；精养进度/付料/领取去重、疲劳递推、禁止蚕繁殖须独立审计并做篡改探针。保持≤30日模块主体，只有里程碑一条60～120日整合；整合须外部逐日保存完整库存/现金账，不能以末15日尾账冒充全程。拟新增P10.5执行入口，目前没有脚本/通过证据，本次不跑玩法测试，代码仍schema22。下方为已交付历史记录。
+
 > **显式边界前置（2026-10-18）：** `run_room_boundaries.gd`46项；`run_room_boundary_playtest.gd`固定夹具仅3日、18项；`python tools/farming/audit_room_boundaries.py .art-work/p104-boundary/scenario.json`收据及库存对账；`python -m unittest discover -s tools/farming -p test_room_boundaries_audit.py -v`诚实场景与四类篡改检查通过。证据`.art-work/p104-tests/boundary*.log`和`.art-work/p104-boundary/scenario.json`，设计见[明文规则](房间归属与连通设计.md)。当前开发schema22，后续P10.4整合只在里程碑安排一条长线冒烟，历史长回放不改。
 
 > **2026-10-19 P10.4已实施并技术验收：** `test-p10-4.bat`默认Model，Plan/Run/Audit/Probes/UI/Smoke/Accept独立执行，可`-Cases toy -Rerun`归档并只重跑该分区。模型261、容量/小数342、农业317、畜牧555；八短场景900、Python4测试含八类审计篡改、实际GPU31、一条完成的60日整合780通过。服务全60日独立审计，库存独立审计为保存的末15日，更早逐日运行时/Codec已校验；没有全程外部库存账。当前schema22。见[补跑说明](p104-分层验收与补跑.md)与[当前证据](phase104-validation.json)，后续旧公告按历史阅读。
