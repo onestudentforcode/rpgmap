@@ -1,0 +1,138 @@
+{
+  "kind": "p104-cost-comparison",
+  "source_sha256": "f0692c65540be0ac7f1830da43f4dd3cd0c6f61ab808f193be86cb4282eb911f",
+  "one_time_facilities": {
+    "soothing_station": {
+      "cash": 18,
+      "materials": {
+        "wood_plank": 2,
+        "raw_stone": 2
+      },
+      "market_material_cost_if_all_buyable": null,
+      "standard_material_cost_including_unbuyable": 10.4542,
+      "cash_plus_standard_material_cost": 28.4542
+    },
+    "toy_station": {
+      "cash": 12,
+      "materials": {
+        "wood_plank": 2,
+        "raw_stone": 2
+      },
+      "market_material_cost_if_all_buyable": null,
+      "standard_material_cost_including_unbuyable": 10.4542,
+      "cash_plus_standard_material_cost": 22.4542
+    },
+    "dispatch_station": {
+      "cash": 18,
+      "materials": {
+        "raw_wood": 2,
+        "raw_stone": 2
+      },
+      "market_material_cost_if_all_buyable": 18,
+      "standard_material_cost_including_unbuyable": 10.7167,
+      "cash_plus_standard_material_cost": 28.7167
+    },
+    "woodshop": {
+      "cash": 8,
+      "materials": {
+        "raw_wood": 2,
+        "raw_stone": 2
+      },
+      "market_material_cost_if_all_buyable": 18,
+      "standard_material_cost_including_unbuyable": 10.7167,
+      "cash_plus_standard_material_cost": 18.7167
+    }
+  },
+  "ordinary_floor_per_cell": 6,
+  "vine_ball": {
+    "inputs": {
+      "twig": 2,
+      "straw": 2
+    },
+    "market_replacement_input_cost": 12,
+    "days": 1,
+    "start_claim_ap": 2,
+    "install_ap": 1,
+    "daily_item_consumption": 0
+  },
+  "mole": {
+    "purchase_juvenile": 8,
+    "ordinary_breeding_days": 8,
+    "soothed_breeding_days": 6,
+    "ordinary_growth_days": 3,
+    "full_contribution_initial_growth_percent": 10,
+    "ordinary_enclosure_food_daily": {
+      "mushroom": 2,
+      "clean_water": 2
+    },
+    "daily_food_standard_cost": 8.6094,
+    "mushroom_is_not_buyable": true,
+    "soothe_upkeep_daily": 1
+  },
+  "short_samples": {
+    "breeding": {
+      "days": 6,
+      "fixture": true,
+      "gu_upkeep_all_instances": 12,
+      "first_child_after_days": 6,
+      "initial_growth_points": [
+        180
+      ],
+      "work_units": 24,
+      "provided_work_points": 360000,
+      "carry_used_points": 35000,
+      "raw_overflow_points": 45000,
+      "confirmed_pool_points": 10000
+    },
+    "breeding-base": {
+      "days": 8,
+      "fixture": true,
+      "gu_upkeep_all_instances": 8,
+      "first_child_after_days": 8,
+      "initial_growth_points": [
+        0
+      ],
+      "work_units": 32,
+      "provided_work_points": 480000,
+      "carry_used_points": 50000,
+      "raw_overflow_points": 60000,
+      "confirmed_pool_points": 10000
+    },
+    "work": {
+      "days": 6,
+      "fixture": true,
+      "gu_upkeep_all_instances": 12,
+      "first_child_after_days": 6,
+      "initial_growth_points": [
+        180
+      ],
+      "work_units": 24,
+      "provided_work_points": 360000,
+      "carry_used_points": 35000,
+      "raw_overflow_points": 45000,
+      "confirmed_pool_points": 10000
+    },
+    "work-base": {
+      "days": 6,
+      "fixture": true,
+      "gu_upkeep_all_instances": 12,
+      "first_child_after_days": 6,
+      "initial_growth_points": [
+        180
+      ],
+      "work_units": 24,
+      "provided_work_points": 360000,
+      "carry_used_points": 0,
+      "raw_overflow_points": 40000,
+      "confirmed_pool_points": 0
+    }
+  },
+  "interpretation": [
+    "Short samples are explicitly scaffolded rule fixtures, not cash profitability.",
+    "A null market material cost means an ingredient is unbuyable, never free. Standard costs include production/AP/time allocations.",
+    "The current unlimited 8-stone juvenile purchase remains cheaper than breeding food and facilities.",
+    "A durable ball has no per-service material cost; recovery clipped at zero is not profit.",
+    "Carry saves previously wasted paid labor, never the raw input cost of the next batch.",
+    "No claim of increased product throughput is inferred from work points alone."
+  ]
+}
