@@ -14,10 +14,10 @@ func check(ok: bool, label: String) -> void:
 func _initialize() -> void:
 	var w := World.new()
 	print("fresh ",Codec.normalize(w.to_snapshot())) if not Codec.normalize(w.to_snapshot())["ok"] else print("fresh valid")
-	check(Codec.normalize(w.to_snapshot())["ok"],"fresh schema18 valid")
+	check(Codec.normalize(w.to_snapshot())["ok"],"fresh current-schema valid")
 	check(w.logistics.provision()["ok"],"claim trial provision")
 	check(not w.logistics.provision()["ok"],"cannot claim twice")
-	check(w.logistics.state["instances"].size()==6,"six instances from five prototypes")
+	check(w.logistics.state["instances"].size()==11,"eleven instances from seven prototypes")
 	check(w.logistics.deploy("trial-001",Vector2i(5,5))["ok"],"rice on wild land")
 	check(not w.logistics.deploy("trial-001",Vector2i(6,5))["ok"],"same instance cannot deploy twice")
 	check(w.logistics.deploy("trial-002",Vector2i(6,5))["ok"],"same definition another instance deploys")
@@ -44,11 +44,11 @@ func _initialize() -> void:
 	var damaged := w.to_snapshot()
 	damaged["world"]["logistics"]["instances"][1]["instance_id"] = "trial-001"
 	check(not Codec.normalize(damaged)["ok"],"duplicate identity rejected")
-	# Original schema17 save upgrades without removing inventory or old projects.
+	# P10.2 explicitly rejects early development saves; it does not migrate them.
 	var old := World.new().to_snapshot()
 	old["schema"]=17
 	old["world"].erase("logistics")
-	check(Codec.normalize(old)["ok"],"schema17 upgrades without deleting old files")
+	check(not Codec.normalize(old)["ok"],"schema17 rejected without deleting old files")
 	_research()
 	_long_research()
 	_environment()
@@ -167,30 +167,31 @@ func _growth() -> void:
 	check(w.build_facility(Vector2i(4,4),"field_service_station")["ok"],"growth host built")
 	var uid := int(w.facilities.keys()[0])
 	check(w.logistics.deploy("trial-004",Vector2i(-1,-1),uid)["ok"],"growth host compatibility")
-	w.logistics.deploy("trial-001",Vector2i(3,4))
-	w.till(Vector2i(3,5))
-	w.plant(Vector2i(3,5),"golden_wheat")
+	# The 1x1 host's east service zone is x5..7,y3..5 (P10.2 §3.3).
+	w.logistics.deploy("trial-001",Vector2i(6,4))
+	w.till(Vector2i(7,5))
+	w.plant(Vector2i(7,5),"golden_wheat")
 	w.end_day()
-	var before: int = w.instance_at(Vector2i(3,5))["progress"]
+	var before: int = w.instance_at(Vector2i(7,5))["progress"]
 	w.end_day()
-	check(int(w.logistics.instance("trial-001")["job"]["progress"])==120,"fractional multiplier retains 1.2 work per day")
-	check(int(w.instance_at(Vector2i(3,5))["progress"])-before==120,"same boost applies to ordinary crop")
-	check(w.logistics.growth_percent(Vector2i(10,10),2)==100,"outside coverage no boost")
+	check(int(w.logistics.instance("trial-001")["job"]["progress"])==150,"directed zone boosts rice to 1.5 work per day")
+	check(int(w.instance_at(Vector2i(7,5))["progress"])-before==150,"same boost applies to ordinary crop")
+	check(w.logistics.growth_percent(Rect2i(Vector2i(10,10),Vector2i.ONE),["plant_grow"],2)==100,"outside coverage no boost")
 	# Two explicit effect-source fixtures prove max selection and removal. They
 	# are not save fixtures or normal-play acquisition paths.
 	var stronger: Dictionary = w.logistics.definitions["growth_gu"].duplicate(true)
 	stronger["id"]="strong_test"
-	stronger["value"]=130
+	stronger["value"]=160
 	w.logistics.definitions["strong_test"]=stronger
 	var source: Dictionary = w.logistics.instance("trial-004").duplicate(true)
 	source["instance_id"]="test-source"
 	source["definition_id"]="strong_test"
 	w.logistics.state["instances"].append(source)
-	check(w.logistics.growth_percent(Vector2i(3,4),2)==130,"same family takes strongest, not multiplied")
-	check(w.logistics.definitions["growth_gu"]["value"]==120 and w.logistics.definitions["strong_test"]["value"]==130,"effect sources never enhance each other")
+	check(w.logistics.growth_percent(Rect2i(Vector2i(6,4),Vector2i.ONE),["plant_grow"],2)==160,"same family takes strongest, not multiplied")
+	check(w.logistics.definitions["growth_gu"]["value"]==150 and w.logistics.definitions["strong_test"]["value"]==160,"effect sources never enhance each other")
 	w.logistics.state["instances"].pop_back()
-	check(w.logistics.growth_percent(Vector2i(3,4),2)==120,"stronger source removed restores weaker")
-	var cell := Vector2i(3,4)
+	check(w.logistics.growth_percent(Rect2i(Vector2i(6,4),Vector2i.ONE),["plant_grow"],2)==150,"stronger source removed restores weaker")
+	var cell := Vector2i(6,4)
 	w.environment[w.grid.index_of(cell)][0]=0
 	var progress: int = w.logistics.instance("trial-001")["job"]["progress"]
 	var fertility: int = w.environment[w.grid.index_of(cell)][1]

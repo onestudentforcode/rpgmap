@@ -155,7 +155,9 @@ func cast_visual(entity: Dictionary) -> Dictionary:
 func draw_map(target: Node2D) -> void:
 	var font := theme.default_font
 	var readable := maxf(1.0,1.0/(camera.zoom.x*_ui_scale))
+	rooms_ui.draw_ground(target,true)
 	_draw_world_entities(target,readable)
+	rooms_ui.draw_preview(target,true)
 	logistics_ui.draw_overlay(target,true)
 	for entity in last_entities:
 		if entity["kind"] == "source" and world.workforce.state["sources"].has(entity["ident"]):

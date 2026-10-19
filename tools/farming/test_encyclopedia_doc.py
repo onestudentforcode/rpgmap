@@ -26,14 +26,14 @@ class EncyclopediaManual(unittest.TestCase):
         counts = BAK['counts']
         self.assertEqual(counts['resources'], 65)
         self.assertEqual(counts['crops'], 7)
-        self.assertEqual(counts['facilities'], 15)
+        self.assertEqual(counts['facilities'], 21)
         self.assertEqual(counts['recipes'], 41)
         self.assertEqual(counts['livestock'], 6)
         self.assertEqual(counts['diets'], 20)
         self.assertEqual(counts['research'], 12)
         self.assertEqual(counts['parcels'], 6)
-        self.assertEqual(counts['entities'], 196)
-        self.assertEqual(counts['rules'], 15)
+        self.assertEqual(counts['entities'], 207)
+        self.assertEqual(counts['rules'], 18)
 
     def test_every_entity_has_a_section(self):
         missing = []

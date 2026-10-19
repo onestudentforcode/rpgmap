@@ -1,0 +1,484 @@
+{
+  "phase": "10.2",
+  "date": "2026-10-18",
+  "status": "development_complete",
+  "schema": {
+    "current": 20,
+    "old_p8_rejected": [
+      17,
+      18,
+      19
+    ],
+    "old_files_preserved": true
+  },
+  "checks": {
+    "model": {
+      "path": ".art-work/p102-tests/model.stdout.log",
+      "sha256": "89c669e93c7a60fde265af5c71043f01d091c083ed1c11ee2c344ca277455efe",
+      "marker": "P102 MODEL OK (209)"
+    },
+    "ui": {
+      "path": ".art-work/p102-tests/ui.stdout.log",
+      "sha256": "96ddb95bbb0354f2872296f2c21d155304ec101725bf75f3d7bc92a73961522b",
+      "marker": "P102 UI OK (30)"
+    },
+    "logistics-model": {
+      "path": ".art-work/p102-tests/logistics-model.stdout.log",
+      "sha256": "b71577a41096a578f16f60335d2c06eb3f915417e1540d85dad4d00ec560bdaf",
+      "marker": "PHASE10 TEST OK (181)"
+    },
+    "logistics-ui": {
+      "path": ".art-work/p102-tests/logistics-ui.stdout.log",
+      "sha256": "6efbf380f662856b2eb2aaac4d5cd2c3aa77f6da0654f1649038a098b9bb6677",
+      "marker": "PHASE10 UI OK (21)"
+    },
+    "agriculture-model": {
+      "path": ".art-work/p102-tests/agriculture-model.stdout.log",
+      "sha256": "3355b6f6bd8a893cd605de89d38ba7f9c5e68e2d497a85504e5b48ce8e20de2b",
+      "marker": "PHASE101 TEST OK (154)"
+    },
+    "agriculture-ui": {
+      "path": ".art-work/p102-tests/agriculture-ui.stdout.log",
+      "sha256": "f1dbc06d85096e57705bc4c0c8df8caaae3d06ec0877059f2122e514225b6dbb",
+      "marker": "PHASE101 UI OK (28)"
+    },
+    "handbook-ui": {
+      "path": ".art-work/p102-tests/handbook-ui.stdout.log",
+      "sha256": "613b73bf15fbb3f38cc93632c3afbfbf2b4f91887fb4e3534b32b8915c893dfa",
+      "marker": "P8 HANDBOOK UI OK: 89 checks"
+    },
+    "encyclopedia-ui": {
+      "path": ".art-work/p102-tests/encyclopedia-ui.stdout.log",
+      "sha256": "ed4a87e9f432a8737d30ea2b37df3a30567123f039ec85d4de0af618882660da",
+      "marker": "P9 ENCYCLOPEDIA OK: 44 checks"
+    },
+    "handbook-doc": {
+      "path": ".art-work/p102-tests/handbook-doc.stdout.log",
+      "sha256": "634d68c10c9cd1b94dab637aa49030eee65ac34c58fc8e19780d64b8996c7263",
+      "marker": "P8 HANDBOOK DOC OK: 14 chapters"
+    },
+    "encyclopedia-doc": {
+      "path": ".art-work/p102-tests/encyclopedia-doc.stdout.log",
+      "sha256": "2815bc2a7e1fc02181c613606cfdd3a061be5483418bd2633123b05c01b63f9f",
+      "marker": "P8 ENCYCLOPEDIA DOC OK: 200 entities / 17 rules"
+    },
+    "business-layout": {
+      "path": ".art-work/p102-tests/business-layout.stdout.log",
+      "sha256": "c3dcfcbc319ab3fd6453cc3feb2a233cc249286f501c876a6a5b13f2cc6f7e18",
+      "marker": "P102 BUSINESS LAYOUT OK (49)"
+    },
+    "gpu": {
+      "path": ".art-work/p102-gpu.engine.log",
+      "sha256": "265b100a7709dfb4f354b2d6235a9934944c538fad573a21095b5f1f4cff1094",
+      "marker": "P102 UI OK (37)"
+    },
+    "python": {
+      "path": ".art-work/p102-python-final.log",
+      "sha256": "3e21a9a5328fb12d958165602a98afd05683832d4878747a89e38a6e90780333",
+      "marker": "Ran 129 tests"
+    },
+    "full_p8": {
+      "isolated_workspace_stores": true,
+      "gates": [
+        {
+          "path": ".art-work/p8-tests/art.stdout.log",
+          "sha256": "caf4981d7df3f46b06e04fa691fc9bcbc9475684f00a7fb59ab75353e5130d17",
+          "marker": "P8 ART UI OK: 60 checks",
+          "combined_stdout_stderr": true
+        },
+        {
+          "path": ".art-work/p8-tests/encyclopedia-doc.stdout.log",
+          "sha256": "da174143956d4acd53a73ed7dd43119963455bf73ac31acfeb9263e4ad98f15e",
+          "marker": "P8 ENCYCLOPEDIA DOC OK: 200 entities / 17 rules",
+          "combined_stdout_stderr": true
+        },
+        {
+          "path": ".art-work/p8-tests/encyclopedia.stdout.log",
+          "sha256": "2d3f19cfa477ca700d2ec869622a828b5bf1ee90d3f94036cd4c9ea2499ab45d",
+          "marker": "P9 ENCYCLOPEDIA OK: 44 checks",
+          "combined_stdout_stderr": true
+        },
+        {
+          "path": ".art-work/p8-tests/expansion.stdout.log",
+          "sha256": "c8b5bcab449244d06f3ddfe9d13287c7b49e0825d2d9cb1a73063d9f1f45f795",
+          "marker": "P8 EXPANSION OK: 69 checks",
+          "combined_stdout_stderr": true
+        },
+        {
+          "path": ".art-work/p8-tests/handbook-doc.stdout.log",
+          "sha256": "ec53fe1466b9d9a1c592aa9258f02ff179f7febfd4595d1cd30e7dc8828981e0",
+          "marker": "P8 HANDBOOK DOC OK: 14 chapters",
+          "combined_stdout_stderr": true
+        },
+        {
+          "path": ".art-work/p8-tests/handbook.stdout.log",
+          "sha256": "4607f626a50d885d538ed9785aa123e95325697929da663b16c2c4ac42c97c72",
+          "marker": "P8 HANDBOOK UI OK: 89 checks",
+          "combined_stdout_stderr": true
+        },
+        {
+          "path": ".art-work/p8-tests/interactions087.stdout.log",
+          "sha256": "59c4bc584975f0175b0c1ff51782f0d9ff86cf66732740564daefd8703986eed",
+          "marker": "P87 INTERACTIONS OK: 324 checks",
+          "combined_stdout_stderr": true
+        },
+        {
+          "path": ".art-work/p8-tests/phase08a.stdout.log",
+          "sha256": "35859ccc3cacc97a1ac106d0d34f804d5d4a8c9f8c49a7104f194be270351c93",
+          "marker": "PHASE08A TEST OK · 77 checks",
+          "combined_stdout_stderr": true
+        },
+        {
+          "path": ".art-work/p8-tests/phase08b.stdout.log",
+          "sha256": "6c6869b221ca633b4264777fb5276ec2200725c59d593e055e0da975ba22c674",
+          "marker": "PHASE08B TEST OK · 98 checks",
+          "combined_stdout_stderr": true
+        },
+        {
+          "path": ".art-work/p8-tests/phase08c.stdout.log",
+          "sha256": "a06c851128f1a9ddbce560de4be66632a1c1e70b2ecdb6ab91d17f4cd035ce48",
+          "marker": "PHASE08C TEST OK · 85 checks",
+          "combined_stdout_stderr": true
+        },
+        {
+          "path": ".art-work/p8-tests/phase08d.stdout.log",
+          "sha256": "2a7b4b774cec243ad606e23dd954b46613c653a9f51d9c13e3b907515c883b97",
+          "marker": "PHASE08D TEST OK · 190 checks",
+          "combined_stdout_stderr": true
+        },
+        {
+          "path": ".art-work/p8-tests/phase08e.stdout.log",
+          "sha256": "6777f2b8c4e7af0dda3a646126185c45723b77bce15336d7b53fa3d59a051777",
+          "marker": "PHASE08E TEST OK · 89 checks",
+          "combined_stdout_stderr": true
+        },
+        {
+          "path": ".art-work/p8-tests/phase08f.stdout.log",
+          "sha256": "e581a2ef3b1a4ce62affbd3a2cb7630b65b263b9761d14cb22d9043f69f40c35",
+          "marker": "PHASE08F TEST OK · 92 checks",
+          "combined_stdout_stderr": true
+        },
+        {
+          "path": ".art-work/p8-tests/phase08g.stdout.log",
+          "sha256": "954aea63e2441356d29df6e903515e55b865b683df88c8e3feae50147e89bafc",
+          "marker": "PHASE08G TEST OK · 117 checks",
+          "combined_stdout_stderr": true
+        },
+        {
+          "path": ".art-work/p8-tests/phase08h_living.stdout.log",
+          "sha256": "b438a6b70b5325787b164cd53b4e235d2a65311d9cfcfc386b08b3918443495d",
+          "marker": "PHASE08H LIVING OK · 60 checks",
+          "combined_stdout_stderr": true
+        },
+        {
+          "path": ".art-work/p8-tests/phase10-ui.stdout.log",
+          "sha256": "aea5af4c4a84593adb211648e808fd830b56ff1f026d7ce00ec6ad0cef2d422b",
+          "marker": "PHASE10 UI OK (21)",
+          "combined_stdout_stderr": true
+        },
+        {
+          "path": ".art-work/p8-tests/phase10.stdout.log",
+          "sha256": "1c59eba02bfb0543ba1ff763884b90e3d265089c6bd530da548aa009761df6f0",
+          "marker": "PHASE10 TEST OK (181)",
+          "combined_stdout_stderr": true
+        },
+        {
+          "path": ".art-work/p8-tests/phase101-ui.stdout.log",
+          "sha256": "a28f47ac34f8f397ea6a63ae89f2195d58e9fe113825be014910f6faa424d211",
+          "marker": "PHASE101 UI OK (28)",
+          "combined_stdout_stderr": true
+        },
+        {
+          "path": ".art-work/p8-tests/phase101.stdout.log",
+          "sha256": "b865338b1892e343350cd4ad72bd584b9d248253e7a380f0cd0b113c4c7c1df1",
+          "marker": "PHASE101 TEST OK (154)",
+          "combined_stdout_stderr": true
+        },
+        {
+          "path": ".art-work/p8-tests/phase102-ui.stdout.log",
+          "sha256": "5550e332e1f77a5187493f7e8f79b5c0c6c3d38c7d50e57d2d358a0f60066de0",
+          "marker": "P102 UI OK (30)",
+          "combined_stdout_stderr": true
+        },
+        {
+          "path": ".art-work/p8-tests/phase102.stdout.log",
+          "sha256": "6330377443949d9746b57deebb4155ff08fbeab7878624776fde2ddd5a5d796f",
+          "marker": "P102 MODEL OK (180)",
+          "combined_stdout_stderr": true
+        },
+        {
+          "path": ".art-work/p8-tests/projection087.stdout.log",
+          "sha256": "1ceeb0d16c2b167122ca2d218d76ab7ec9d03917fe8e03343269d26780a0d6d5",
+          "marker": "P87 PROJECTION OK: 89 checks",
+          "combined_stdout_stderr": true
+        },
+        {
+          "path": ".art-work/p8-tests/release.stdout.log",
+          "sha256": "87397449874ffaecd2f1673f3b98f4d3cb4d7d1ff1ec1ed696669e188c95204a",
+          "marker": "P8 RELEASE SMOKE OK (20 checks)",
+          "combined_stdout_stderr": true
+        },
+        {
+          "path": ".art-work/p8-tests/visuals085.stdout.log",
+          "sha256": "e6a5141f988ce25844dd2f19e666ec2224c804d4c8352fee2092cc9f48027f11",
+          "marker": "PHASE085 VISUALS OK: 209 checks",
+          "combined_stdout_stderr": true
+        },
+        {
+          "path": ".art-work/p8-tests/visuals086.stdout.log",
+          "sha256": "11517ab2ef7bf73fa79745296e6ded5b417e8f81c9f11d246feee812b38d483b",
+          "marker": "P86 PRODUCTION OK: 95 checks",
+          "combined_stdout_stderr": true
+        },
+        {
+          "path": ".art-work/p8-tests/visuals087.stdout.log",
+          "sha256": "ff60400a2c0df9d13ccec1963265765e30805243f4d87b0d270c0cd0ac84c5ed",
+          "marker": "P87 PRODUCTION OK: 146 checks",
+          "combined_stdout_stderr": true
+        }
+      ]
+    },
+    "historical_v1_v2": {
+      "isolated_workspace_stores": true,
+      "gates": [
+        {
+          "path": ".art-work/p102-historical/run_phase07a.stdout.log",
+          "sha256": "4ef4fa2611b89949b421dca05396f4fba06f45112420cb9a5788cb5ee4f23e8c",
+          "marker": "PHASE07A TEST OK: 41 checks"
+        },
+        {
+          "path": ".art-work/p102-historical/run_phase07b.stdout.log",
+          "sha256": "5dda86750588eb234a10e81af67e8a5cd279ae099ab1b6e5d9e6fba20cef6563",
+          "marker": "PHASE07B TEST OK: 95 checks"
+        },
+        {
+          "path": ".art-work/p102-historical/run_phase07c.stdout.log",
+          "sha256": "a1e6fad0d4fb16f09dc5b5959b89ca8b661b0052732ffe3f56425854785fb1b8",
+          "marker": "PHASE07C TEST OK: 55 checks"
+        },
+        {
+          "path": ".art-work/p102-historical/run_phase07d.stdout.log",
+          "sha256": "ca8061f4a08dda615af13811f8783a2ba638b49cefda67ff566fee5a159f6973",
+          "marker": "PHASE07D TEST OK: 43 checks"
+        },
+        {
+          "path": ".art-work/p102-historical/run_phase07e.stdout.log",
+          "sha256": "96f6a69dbbd639a819743cacd4b42b29977de66e006be3bda41114d1277ccdde",
+          "marker": "PHASE07E TEST OK: 35 checks"
+        },
+        {
+          "path": ".art-work/p102-historical/run_phase07f.stdout.log",
+          "sha256": "750cccd9d97a004d5d6de19dc8187730d0060af627d1d05177bb86671e8f4967",
+          "marker": "PHASE07F TEST OK: 62 checks"
+        },
+        {
+          "path": ".art-work/p102-historical/run_v1_foundation.stdout.log",
+          "sha256": "702d0b30f4b76a7940a02326eeb366fd70fb557409c58bb3285a7b32a6f244f6",
+          "marker": "V1 FOUNDATION TEST OK: 77 checks"
+        },
+        {
+          "path": ".art-work/p102-historical/run_v1_journal.stdout.log",
+          "sha256": "033cf17fcad2cc2e4711ce6476395f7c9c2cc97073918851ee2db1a5f2798170",
+          "marker": "V1 JOURNAL TEST OK: 121 checks"
+        },
+        {
+          "path": ".art-work/p102-historical/run_v1_orders.stdout.log",
+          "sha256": "b5f846e3fb8bbcb22ca13dbc88b95fa47eef15ec2d310da1627cc5ec538501d0",
+          "marker": "V1 ORDERS TEST OK: 407 checks"
+        },
+        {
+          "path": ".art-work/p102-historical/run_v1_phase65_ui.stdout.log",
+          "sha256": "81cb6279dc01e291afcf6d796ae12237aab2206d237d3aa9bdd0bbcf7f02f912",
+          "marker": "V1 PHASE65 UI TEST OK: 79 checks"
+        },
+        {
+          "path": ".art-work/p102-historical/run_v1_processing.stdout.log",
+          "sha256": "b718880a89379914256e50e76c26e005eb7014243641055e0032972bd73499ee",
+          "marker": "V1 PROCESSING TEST OK: 269 checks"
+        },
+        {
+          "path": ".art-work/p102-historical/run_v1_production.stdout.log",
+          "sha256": "5faea92f160f855cfb6a5b4e958411b032fd00216ab15b9db78224e99c2c00df",
+          "marker": "V1 PRODUCTION TEST OK: 152 checks"
+        },
+        {
+          "path": ".art-work/p102-historical/run_v1_workforce.stdout.log",
+          "sha256": "464bd596f51209688cea79be41ba780f504a5fab93f5cda1a8fd0bd85ede2386",
+          "marker": "V1 WORKFORCE TEST OK: 101 checks"
+        },
+        {
+          "path": ".art-work/p102-historical/run_v1_workforce_ui.stdout.log",
+          "sha256": "49547bca677139b4d3b67163a26145b6285a9e113de8284a756f096ecfbd0f7e",
+          "marker": "V1 WORKFORCE UI TEST OK: 61 checks"
+        },
+        {
+          "path": ".art-work/p102-historical/run_v2_caretaker_replay.stdout.log",
+          "sha256": "a2c9f813c758d48f540ba967735cce9075996067acebc12a5c6871c2cca69c10",
+          "marker": "P7.d CARETAKER REPLAY OK · 24 days · wool 2 · fish 6 · wages 11 · cash 3"
+        },
+        {
+          "path": ".art-work/p102-historical/run_v2_husbandry_replay.stdout.log",
+          "sha256": "ad23323e55b5998f3c593ee621a9ca0572cf380a285f65fa08e9753cfa2c673f",
+          "marker": "P7.b HUSBANDRY REPLAY OK · 14 days · sheep { \"juvenile\": 0, \"adult\": 1, \"water\": -1 } · carp { \"juvenile\": 0, \"adult\": 2, \"water\": 80 }"
+        },
+        {
+          "path": ".art-work/p102-historical/run_v2_input_review.stdout.log",
+          "sha256": "96dd6053d582692562b6c6de49ef4b2549fad5c00a58ff8cd832d38c55471ea1",
+          "marker": "V2 INPUT REVIEW OK: 19 checks"
+        },
+        {
+          "path": ".art-work/p102-historical/run_v2_playtest.stdout.log",
+          "sha256": "f04f73362976c686c082ff3de39cf7eb87797e12121f40b65ac8225634a203f4",
+          "marker": "V2 TWO45 PLAYTEST OK"
+        },
+        {
+          "path": ".art-work/p102-historical/run_v2_production_replay.stdout.log",
+          "sha256": "2b98ad3dc0a4d54bfd001cc057643bb186aa498a7ba5520f3c4517a6d5d86fb1",
+          "marker": "P7.c PRODUCTION REPLAY OK · 24 days · wool 2 · fish meat 6 · humus 2"
+        },
+        {
+          "path": ".art-work/p102-historical/run_v2_startup_ledger.stdout.log",
+          "sha256": "e7744c20cbd79341ffdfc5a0d23ee28d71e7046242597b9925ef126f2054c0cc",
+          "marker": "P7.a STARTUP LEDGER OK · 10 daily rows · cash 30 · animal purchase reservation22, not runtime animals"
+        },
+        {
+          "path": ".art-work/p102-historical/v1-release.stdout.log",
+          "sha256": "1c24a39c935d046486ec6d9a2200b0baf19208a46ea001dd8dfaa3d07de42a30",
+          "marker": "V1 RELEASE SMOKE OK: 12 checks"
+        },
+        {
+          "path": ".art-work/p102-historical/v2-release.stdout.log",
+          "sha256": "ded2cf5d0647770868e301a1be9aaa1fea1739d985c477a1d7fb22c4a3795276",
+          "marker": "V2 RELEASE SMOKE OK: 14 checks"
+        }
+      ]
+    },
+    "assets": {
+      "path": ".art-work/p102-asset-qc.json",
+      "sha256": "8f20df06144dad7833945f4a873da59cd36e1fd837d9b275ca0a4988da85c88c",
+      "checked": 75,
+      "failed": 0,
+      "historical_palette_warnings_retained": true
+    }
+  },
+  "business": {
+    "path": "docs/farming/phase102-business.json",
+    "sha256": "5a7d0757ed820345bfea8bbaa51da083e9eee0251dff049866b47978903aa5a0"
+  },
+  "screenshots": [
+    {
+      "path": ".shots/p102/01-field-and-stations.png",
+      "sha256": "1a97ef41863da95ebca9b6a7a3075dd277154e4609ecf3f7a711537525e9af32",
+      "size": [
+        1920,
+        1080
+      ]
+    },
+    {
+      "path": ".shots/p102/01b-downgrade-preview.png",
+      "sha256": "815e41cfc050d374123dccf0b3d50fffecb1f8b6aeff9896277111ea36a863a9",
+      "size": [
+        1920,
+        1080
+      ]
+    },
+    {
+      "path": ".shots/p102/02-manager.png",
+      "sha256": "33d4fa0838352de58144e6424bd80a43a6a0e777de36043f0ccf67ecff5d35e0",
+      "size": [
+        1920,
+        1080
+      ]
+    },
+    {
+      "path": ".shots/p102/03-manager-1920.png",
+      "sha256": "33d4fa0838352de58144e6424bd80a43a6a0e777de36043f0ccf67ecff5d35e0",
+      "size": [
+        1920,
+        1080
+      ]
+    },
+    {
+      "path": ".shots/p102/03-manager-960.png",
+      "sha256": "769aa1b9bfc43d46df4802eec981322fa22937e6c13b7223557e88a501f1b047",
+      "size": [
+        960,
+        540
+      ]
+    },
+    {
+      "path": ".shots/p102/04-crop-reward.png",
+      "sha256": "04dc73f4198926e5936254ed79aa82dbfcf04c52c1f11fddbd00f9e17f6125ba",
+      "size": [
+        960,
+        540
+      ]
+    },
+    {
+      "path": ".shots/p102/05-dense-stations-paving-tree.png",
+      "sha256": "7e7e680cb493ded448ce23799ff7666df843675ac0fa5158003a4ebd7b03e425",
+      "size": [
+        1920,
+        1080
+      ]
+    }
+  ],
+  "source_sha256": {
+    "content/farming/baked/maps/farm_02.json": "e339076b592f24f060a0c0620494ea231df3cb68dff114bc775f03300de4837e",
+    "content/farming/baked/p8/expansion.json": "65c274ce6e62021345e6cf93c6bdfe1bd1f8d0b57ddd8968a064c28222d35076",
+    "content/farming/baked/p8/production.json": "6351b3ed3e30bce5658d95058b0441823622d2401efe6eddc947e87aef2c54ff",
+    "content/farming/p8/expansion.json": "4ef4c760b53b2d6a103e7a97524fae3431d8470a6e0a1a4529d84d3077fc3b76",
+    "content/farming/p8/production.json": "dbe1f18b68d1aec9f428bb9894f074b48043bfcf1f741b0e800ed40564c5d9c7",
+    "scripts/farming/core/grid/land_grid.gd": "e24c80851df8452158f52cfd0e147d79c26be9d3064c3bb0ca3910fbf8bdc762",
+    "scripts/farming/p8/p102_rooms.gd": "90c9f00a5ba94a1e8a1294497c769b10393e78882b5f9d8fad6f6d71e14aa16f",
+    "scripts/farming/p8/p10_logistics.gd": "cf71a01599b748f1b691e3dd81b77216abc32ceafca86248a054531df33cb19a",
+    "scripts/farming/p8/p10_ui.gd": "8dd7098f2ccd6346493b5fea2f4d2d0614e95baa9fb65094e89366be848e3dd7",
+    "scripts/farming/p8/p8_data.gd": "b22c0cf3550c6b24b676c9cdfcf4418a395748ede8374b1b60bbad15b5ace6b7",
+    "scripts/farming/p8/p8_devices.gd": "af5cdbc496d96e6c1d8d17a7afd6f59589d2970f255f084f6753b1086c8b5738",
+    "scripts/farming/p8/p8_flowers.gd": "534e3fe0a28a2e8efd5911304ffff0e81651ff83c1bcc57523bac3a44af2a62c",
+    "scripts/farming/p8/p8_husbandry.gd": "2b491602ceadc762849dfbd3af726ab5916079f24d11f9c11eb1f0a576a0a7ae",
+    "scripts/farming/p8/p8_land.gd": "b8256fae73f308ad906375920ab7d332fb49c9932ab6b7b0ed8d553c88036873",
+    "scripts/farming/p8/p8_operations.gd": "0d14214da65fd23cb89de0b73336374935bfbd1e1442a42465eb072f5cbf58dd",
+    "scripts/farming/p8/p8_research.gd": "8215ee994ab2938481e3e29d9ce20358732af602490388f2153d373db6ee11aa",
+    "scripts/farming/p8/p8_scene.gd": "aa49845bda4b120ae8aa14d5e27a151fc06cea41859234f8ce6ee260b8abb65f",
+    "scripts/farming/p8/p8_snapshot.gd": "51b6a69ce1dfcdd5a80dbed57440e67bea46ad88ffa53ea9b5a250a5247b6dc4",
+    "scripts/farming/p8/p8_workforce.gd": "2a7bac85fc99d3016862b379bf71e21e67b6b90166065b744c1de73a18e5efd6",
+    "scripts/farming/p8/p8_world.gd": "46805cdf13cdd3f7dd3e1ae26d3e2b81dd12f3f8fc2d5ccc636303a4083fcefa",
+    "scripts/farming/tests/run_p102_playtest.gd": "49927c5fb01b90c0ed936dce1ac5c1e2bbff130ca59f95f7c6ecd0870ca778c1",
+    "scripts/farming/tests/run_p8_playtest.gd": "77afa85369a6b90cb07358ae4e28a79593e8e966d5f02074b2fb56a6f8ff1f5f",
+    "scripts/farming/v1/v1_world.gd": "1dddbd397ef94260b397bf80c5bf3cb350eed419f02d17e6a19f56b090983490",
+    "scripts/farming/v1/v1_world_state.gd": "774e5873f4036738ef4c71407485df06b918dd07e47c70b6a313318a5856e38c",
+    "scripts/farming/v2/v2_husbandry.gd": "7641039529798a22f183fe36c8784b6fc823cbcaaafdb47d8dab527f61b7a024",
+    "scripts/farming/v2/v2_resource_ledger.gd": "4dec130b159e404f390526c4126d9dabb05e8772c1d7bf8c0292c60cb9340578",
+    "tools/farming/audit_p102_playtest.py": "1738995496d3466c334de3e3bed0ecc498388b2680dca1d89804fe51762843e0",
+    "tools/farming/record_p102_validation.py": "17d7bb4c75f7e3d41e72eb3bbdd38372c3c7361eb7c17d8c55db70702e57ff39",
+    "tools/farming/report_p102_business.py": "7675dbc5bb48f982415df573aa1194b673563ecab24539562a9d7f4febae528e",
+    "tools/farming/run_p102_business.ps1": "05495d0d9cf3c85b836f8320608b31d857b61324c6e6a9589600c9d3f9c852a7",
+    "tools/farming/test_p102.ps1": "3aa91f8f3d39379ac0bdb62541fc4ce960af7a9554e0cb7b5a280d30a2d48b50",
+    "tools/farming/test_p102_audit.py": "7b89376408df5992db3bd87fe3652ef2fe707957f2f545047ad4fda37b0693fa",
+    "tools/farming/test_p102_contract.py": "c3077d730424479759b9fd204337dd472af1ac79c2689a6f0d91b48cd7331106",
+    "tools/farming/test_p102_historical.ps1": "baf25dd4e882aac0bf76de5cf77230620676c63fdad7febd7ca700f6bd380345",
+    "assets/farming/facilities/facility_manifest.json": "462678821edd3c0991d5bab6960ee7d7415c0db527856328f70accc35985f3c7",
+    "content/farming/p8/grounding.json": "1638e8f700c949e60c0be68b5be6e02e84e255b963d602deb219872dd391307f",
+    "content/farming/encyclopedia/encyclopedia.json": "1a7188f8bd0812ee77d55da2526c460e0c6e62dab2471eb175e00f6ab7edce5d",
+    "content/farming/baked/encyclopedia/encyclopedia.json": "595a0644e3921413a67d1e59eb9fb190b025ef9833d00d948617ffc857fe8c6c",
+    "scripts/farming/p8/p102_ui.gd": "1fdb9faa7434c822bbe897fc0871c8e9525e49ca66ac830e7a83d414fd08d9d4",
+    "scripts/farming/p8/p87_scene.gd": "9f6e4beadf3191f93d8226870683913f34803c60417a20b96e64d5163b870225",
+    "scripts/farming/p8/p8_handbook.gd": "91c53827a054d0fb1682f440fac410050613df7ac0a0eed89ba2f6a2b19662d5",
+    "scripts/farming/tests/run_phase102.gd": "0bec41c7d3d721533557cc8023dd2e6270ae3bffcb3882b6d4b8637d5f1afc30",
+    "scripts/farming/tests/run_phase102_ui.gd": "b3df471b170a0d50ec102560224aab76454127021f9d590ad352887cc8ee41fe",
+    "scripts/farming/tests/p8_crop_fixture.gd": "e4b232152fbc39a0569ab9ada4abbbe271e2dd8a26da87d302f4bb2cfd9a6604",
+    "scripts/farming/tests/run_phase08h_living.gd": "5b7aa8334c3564ac68c60244f8dd2d51299013b5ea62547b04a0bf4c80811b3c",
+    "tools/farming/validate_rooms.py": "81ab93dc859a5aaa87175d2d59985f82fb248cb98c63207b39824a219636c4d4",
+    "tools/farming/bake_p8.py": "5c81003af3721193894f406dd04a48b07194054a1ef848e4b2e46d3640d2916c",
+    "tools/farming/bake_encyclopedia.py": "1ef3b06080d318e32594c1aab6b9e5a8484f19768f7c4cce808cdc0ee84560de",
+    "tools/farming/test_p8.ps1": "62f8ac47c2da019f1930d7492779d5f973e32ba20815620a7b0e7136c6c8e2ab",
+    "test-p10-2.bat": "6d7dc22200aa47c07ad8d9ed4f20cd50ba55de5c17c7747c42f3077fa20b83b6"
+  },
+  "limits": [
+    "User subjective playtest is not signed off by the agent.",
+    "No development Windows package; hard floors, pipes, funnels, transmission, gu upgrades and hunger redesign remain deferred.",
+    "Historical P10/P10.1 evidence is preserved without rewriting its manifests.",
+    "Whole-farm cash comparisons do not isolate causal agricultural profit."
+  ]
+}

@@ -5,6 +5,8 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[2]
 path = ROOT / 'content/farming/p8/production.json'
 data = json.loads(path.read_text(encoding='utf-8'))
+if 'rooms' in data:
+    raise SystemExit('P10.2 source installed; historical P10 installer must not overwrite current rules.')
 
 def upsert(section, row):
     data[section] = [r for r in data[section] if r['id'] != row['id']] + [row]

@@ -54,9 +54,9 @@ func tilled_count(world) -> int:
 func _namespace() -> void:
 	var world := P8World.new(temp_store())
 	check(world.data_source.load_data()["product"] == "farm_demo_p8", "P8 product identity")
-	check(world._items.size() == 65 and world.facility_defs.size() == 15, "65 resources and 15 facilities registered")
+	check(world._items.size() == 65 and world.facility_defs.size() == 21, "65 resources and 21 facilities registered")
 	check(world.recipe_defs.size() == 41 and world.crop_defs.size() == 7, "41 recipes and 7 crops registered")
-	check(P8Snapshot.fresh()["schema"] == 18, "schema 18 logistics snapshots")
+	check(P8Snapshot.fresh()["schema"] == P8Snapshot.SCHEMA, "current schema with logistics and agriculture snapshots")
 	check(not P8Snapshot.normalize(V2Snapshot.fresh())["ok"], "V2 snapshots rejected by the P8 codec")
 	check(not V2Snapshot.normalize(P8Snapshot.fresh())["ok"], "P8 snapshots rejected by the V2 codec")
 	check(world.start_new(1)["ok"], "start a P8 slot")
@@ -94,17 +94,29 @@ func _research_lockout() -> void:
 		if world.facilities[uid]["facility_id"] == "woodshop": woodshop = int(uid)
 	check(not world.start_batch(woodshop, "make_filter_media")["ok"], "gated recipe start blocked")
 	check(world.start_batch(woodshop, "saw_planks")["ok"], "default recipe still starts")
-	# Optional research diets stay unselectable; defaults keep working.
-	world.grant_scaffold({"fodder_grass": 6, "clean_water": 6})
-	check(world.build_facility(Vector2i(7, 1), "pen")["ok"], "build a pen")
+	# Optional research diets stay unselectable; defaults keep working. The
+	# pen is a P10.3 structural facility: sheep buy through a ranch nursery.
+	world.grant_scaffold({"fodder_grass": 6, "clean_water": 6, "raw_wood": 30, "raw_stone": 10})
+	for y in range(1, 4):
+		for x in range(6, 10):
+			check(world.rooms.set_floor(Vector2i(x, y), "ordinary")["ok"], "pave ranch floor %d,%d" % [x, y])
+	check(world.build_facility(Vector2i(6, 1), "pen")["ok"], "build a pen")
 	var pen := 0
 	for uid in world.facilities:
 		if world.facilities[uid]["facility_id"] == "pen": pen = int(uid)
+	check(not world.build_facility(Vector2i(4, 1), "pen")["ok"], "ranch facility needs ordinary floor")
 	world.husbandry.ensure(pen)
-	check(world.husbandry.set_diet(pen, "base_diets", "basic_diet_id", "land_meal")["reason"].find("研究") >= 0, "gated base diet blocked")
-	check(world.husbandry.set_diet(pen, "special_diets", "special_diet_id", "mineral_supplement")["reason"].find("研究") >= 0, "gated special diet blocked")
-	check(world.husbandry.set_diet(pen, "base_diets", "basic_diet_id", "grain_meal")["ok"], "default diet switch still works")
-	check(world.husbandry.purchase(pen, 1)["ok"], "default species purchase works")
+	check(world.husbandry.set_diet(pen, "base_diets", "basic_diet_id", "land_meal")["reason"].length() > 0, "old habitat path closed for the pen")
+	check(not world.husbandry.purchase(pen, 1)["ok"], "old species purchase closed for the pen")
+	check(world.build_facility(Vector2i(8, 1), "feed_trough")["ok"], "build a trough")
+	check(world.build_facility(Vector2i(9, 1), "medium_bed")["ok"], "build a medium bed group")
+	var nursery: Dictionary = world.ranch.create_zone("nursery", ["6,1", "7,1", "8,1", "9,1", "6,2", "7,2", "8,2", "9,2", "6,3", "7,3", "8,3", "9,3"], "育幼区")
+	check(nursery["ok"], "nursery zone created")
+	check(not world.ranch.purchase(int(nursery["zone_uid"]), "filter_algae_carp", 1)["ok"], "ranch purchase refuses non-terrestrial species")
+	check(world.ranch.purchase(int(nursery["zone_uid"]), "steel_sheep", 1)["ok"], "default species purchase works through the ranch")
+	var sheep_uid := int(world.ranch.state["animals"][0]["uid"])
+	check(world.ranch.set_diet(sheep_uid, "land_meal")["reason"].find("研究") >= 0, "gated base diet blocked")
+	check(world.ranch.set_diet(sheep_uid, "grain_meal")["ok"], "default diet switch still works")
 
 # --- 3. Real water change ---------------------------------------------------
 

@@ -1,0 +1,96 @@
+{
+  "date": "2026-10-18",
+  "status": "passed",
+  "scope": "partition orchestration only; no game/runtime/operator code changed",
+  "python": {
+    "path": ".art-work/p102-partitions-python.log",
+    "sha256": "f0fdaa1e61a41d02b3db93102c4738bd29c8fc5abfa87393f9f3e5ecd45358bb",
+    "tests": 146,
+    "partition_tests": 17
+  },
+  "source_sha256": {
+    "tools/farming/run_p102_business.py": "3ca5eac15038d555e4c747d33bb3d181a6dca0be2f6a9501b17ae4595e875740",
+    "tools/farming/run_p102_business.ps1": "07435597123ca9ae0bd1c80094ffd1ce291b8cd9e1a4165be7fa3f7af35ad327",
+    "tools/farming/test_p102.ps1": "6e8261685d8ef253219571665a35a248a59dc88c7958968cc8943b3b9f0a7df4",
+    "tools/farming/test_p102_partitions.py": "3d07f12aa49718dc2fb209a29a162751b199fbbfbbfa51a88fc4787a760952be"
+  },
+  "game_manifest": {
+    "path": ".art-work/p102-playtest/business-v5/compound-parts/A/manifest.json",
+    "sha256": "b24144ed2b34b9cf1b3b8e39167c8d55731c3daaec7469a0898c2460c1d5e2aa"
+  },
+  "single_case_smoke": {
+    "case": "compound/B",
+    "days": 120,
+    "operator_checks": 460,
+    "process_exit_code": 0,
+    "root": ".art-work/p102-partition-smoke",
+    "preservation": {
+      "unchanged_A_files": 17,
+      "unchanged_archived_B_files": 17
+    },
+    "before_inventory": {
+      "path": ".art-work/p102-partition-smoke/before.json",
+      "sha256": "bae384903fa93223c087a9d99742c29cc045fe8e8b0a8689dfd0baeda6565b98"
+    },
+    "all_steps_partial": true,
+    "unselected_configs_absent": true,
+    "steps": [
+      {
+        "path": ".art-work/p102-partition-smoke/.steps/20261018T020230-f5ed8530/result.json",
+        "sha256": "e36238f2476b6fc64eadd18ceb1b92e77fd663e0720a3b1bbe2255c1f7c1e39c"
+      },
+      {
+        "path": ".art-work/p102-partition-smoke/.steps/20261018T021202-9114e1c6/result.json",
+        "sha256": "a4f3828f40a10377034c8a31c8f575e0b8d48eb4be08f1fec05b043800e634e6"
+      },
+      {
+        "path": ".art-work/p102-partition-smoke/.steps/20261018T021204-54d2d99b/result.json",
+        "sha256": "967467680ad4f804564cd43de10643687ad769041f5e66f63b91b2ea14591dd0"
+      },
+      {
+        "path": ".art-work/p102-partition-smoke/.steps/20261018T021207-7738ac11/result.json",
+        "sha256": "919fe158f88b78adb76540ed8233826eb0e9b9b77d40d82933646e3199237e75"
+      }
+    ],
+    "negative_probes": {
+      "path": ".art-work/p102-partition-smoke/room-negative/results.json",
+      "sha256": "1240adcef0ad70235f4fbb667cc6f0a22ad594e878f80964f5cb6dd6ba5994f2",
+      "rejected": 16
+    }
+  },
+  "full_existing_acceptance": {
+    "games_started": 0,
+    "cases": 8,
+    "report": {
+      "path": ".art-work/p102-playtest/business-v5/.steps/20261018T021049-80e66d83/result.json",
+      "sha256": "17ac1dbf5ccc036b38531f535b61a6d714817a61af6cf3a48dfd2956c3f770eb"
+    },
+    "step_logs": [
+      {
+        "path": ".art-work/p102-playtest/business-v5/.steps/20261018T021049-80e66d83/audit-compound.log",
+        "sha256": "2e59a8109fa01bbae2db289416d69fa85765d58b642f4e31946aa103d81375e9"
+      },
+      {
+        "path": ".art-work/p102-playtest/business-v5/.steps/20261018T021049-80e66d83/audit-ordinary.log",
+        "sha256": "2e59a8109fa01bbae2db289416d69fa85765d58b642f4e31946aa103d81375e9"
+      },
+      {
+        "path": ".art-work/p102-playtest/business-v5/.steps/20261018T021049-80e66d83/audit-seed.log",
+        "sha256": "2e59a8109fa01bbae2db289416d69fa85765d58b642f4e31946aa103d81375e9"
+      },
+      {
+        "path": ".art-work/p102-playtest/business-v5/.steps/20261018T021049-80e66d83/audit-material.log",
+        "sha256": "2e59a8109fa01bbae2db289416d69fa85765d58b642f4e31946aa103d81375e9"
+      },
+      {
+        "path": ".art-work/p102-playtest/business-v5/.steps/20261018T021049-80e66d83/probes.log",
+        "sha256": "ceb173e68c389088257acd54195ac2695b16c6ae534c33fc4a070ae2d68967a9"
+      }
+    ]
+  },
+  "historical_game_evidence_hashes_unchanged": true,
+  "limits": [
+    "Cases are complete 120-day routes, not arbitrary resumable time slices.",
+    "Recorded source changes invalidate cases; no mixed-version or edited manifests are accepted."
+  ]
+}

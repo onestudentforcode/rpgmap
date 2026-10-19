@@ -3,6 +3,7 @@ extends SceneTree
 const World := preload("res://scripts/farming/p8/p8_world.gd")
 const Store := preload("res://scripts/farming/p8/p8_slot_store.gd")
 const Snapshot := preload("res://scripts/farming/p8/p8_snapshot.gd")
+const CropFixture := preload("res://scripts/farming/tests/p8_crop_fixture.gd")
 var checks := 0
 var failures: Array[String] = []
 
@@ -56,37 +57,42 @@ func _initialize() -> void:
 	quit(0 if failures.is_empty() else 1)
 
 func _target_and_reserve() -> void:
+	# The three terrestrial species left the living-strategy path in P10.3; the
+	# purifying mat carries the same target/reserve/wage semantics.
 	var world = fresh()
-	var yard := habitat(world, Vector2i(0, 1), "rock_workyard", "rock_mole")
-	owner(world, [yard])
-	stock(world, "raw_stone", 10)
-	check(world.operations.set_production(yard, true, "break_stone", "gravel", 3)["ok"], "living target accepted")
-	check(world.operations.set_reserve("raw_stone", 9)["ok"], "mineral reserve")
+	var bed := habitat(world, Vector2i(0, 1), "purifying_bed", "purifying_mat", 3)
+	owner(world, [bed])
+	stock(world, "wastewater", 20)
+	stock(world, "clean_water", 0)
+	check(world.operations.set_production(bed, true, "bio_purify", "clean_water", 3)["ok"], "living target accepted")
+	check(world.operations.set_reserve("wastewater", 17)["ok"], "input reserve")
 	var before: int = world.primeval_stones
 	world.end_day()
 	check(world.workforce.state["spent"] == 0 and world.primeval_stones == before, "blocked idle units take no wage")
-	check(world.inventory.count("raw_stone") == 10, "reserve blocks all new mineral inputs")
-	world.operations.set_reserve("raw_stone", 6)
+	check(world.inventory.count("wastewater") == 20, "reserve blocks all new inputs")
+	world.operations.set_reserve("wastewater", 12)
 	world.end_day()
-	check(world.inventory.count("raw_stone") == 6, "only two units start for a three-unit target")
-	check(world.operations.effective_stock("gravel") == 4 and world.inventory.count("gravel") == 0, "running or ready output counts once, never as real stock")
+	check(world.inventory.count("wastewater") == 12, "only two units start for a three-unit target")
+	check(world.operations.effective_stock("clean_water") == 4 and world.inventory.count("clean_water") == 0, "running or ready output counts once, never as real stock")
 	check(world.workforce.state["spent"] == 1, "whole-facility start charged once")
 	world.end_day()
-	check(world.inventory.count("gravel") == 4 and world.inventory.count("raw_stone") == 6, "claim meets target without restarting")
-	check(world.workforce.state["spent"] == 2, "claim charged once")
 	world.end_day()
-	check(world.workforce.state["spent"] == 2, "target satisfied costs no idle wage")
+	check(world.inventory.count("clean_water") == 4 and world.inventory.count("wastewater") == 12, "claim meets target without restarting")
+	check(world.workforce.state["spent"] == 3, "start, advance and claim each charged once")
+	world.end_day()
+	check(world.workforce.state["spent"] == 3, "target satisfied costs no idle wage")
 	var snapshot: Dictionary = world.to_snapshot()
 	check(Snapshot.normalize(snapshot)["ok"], "living strategy normalizes")
 	var restored := World.new()
-	check(restored.apply_snapshot(snapshot)["ok"] and restored.operations.strategy_of(yard)["target_qty"] == 3, "strategy restore")
+	check(restored.apply_snapshot(snapshot)["ok"] and restored.operations.strategy_of(bed)["target_qty"] == 3, "strategy restore")
 	var tampered: Dictionary = snapshot.duplicate(true)
-	tampered["world"]["p8"]["production"][0]["recipe_id"] = "concentrate_ore"
+	tampered["world"]["p8"]["production"][0]["recipe_id"] = "honey_cycle"
 	check(not Snapshot.normalize(tampered)["ok"], "foreign species recipe rejected on load")
-	check(world.husbandry.set_special_diet(yard, "break_ore")["ok"] and not world.operations.strategy_of(yard)["enabled"], "manual recipe switch stops obsolete strategy")
-	stock(world, "mushroom", 20)
+	check(world.husbandry.set_special_diet(bed, "recover_nutrients")["ok"] and not world.operations.strategy_of(bed)["enabled"], "manual recipe switch stops obsolete strategy")
 	stock(world, "clean_water", 20)
-	check(world.husbandry.maintain(yard)["ok"], "manual care remains available beyond target")
+	stock(world, "wastewater", 20)
+	stock(world, "filter_media", 4)
+	check(world.husbandry.maintain(bed)["ok"], "manual care remains available beyond target")
 
 func _mixed_units_and_stop() -> void:
 	var world = fresh()
@@ -110,15 +116,16 @@ func _mixed_units_and_stop() -> void:
 
 func _shared_target() -> void:
 	var world = fresh()
-	var first := habitat(world, Vector2i(0, 1), "rock_workyard", "rock_mole")
-	var second := habitat(world, Vector2i(3, 1), "rock_workyard", "rock_mole")
+	var first := habitat(world, Vector2i(0, 1), "purifying_bed", "purifying_mat", 2)
+	var second := habitat(world, Vector2i(3, 1), "purifying_bed", "purifying_mat", 2)
 	owner(world, [first, second])
-	stock(world, "raw_stone", 10)
-	world.operations.set_reserve("raw_stone", 4)
-	world.operations.set_production(first, true, "break_stone", "gravel", 6)
-	world.operations.set_production(second, true, "break_stone", "gravel", 6)
+	stock(world, "wastewater", 20)
+	stock(world, "clean_water", 0)
+	world.operations.set_reserve("wastewater", 12)
+	world.operations.set_production(first, true, "bio_purify", "clean_water", 6)
+	world.operations.set_production(second, true, "bio_purify", "clean_water", 6)
 	world.end_day()
-	check(world.operations.effective_stock("gravel") == 6 and world.inventory.count("raw_stone") == 4, "two living facilities share one effective target and reserve")
+	check(world.operations.effective_stock("clean_water") == 4 and world.inventory.count("wastewater") == 12, "two living facilities share one effective target and reserve")
 	check(world.workforce.state["spent"] == 1, "second facility cannot start redundant batches")
 
 func _bees_and_manual_override() -> void:
@@ -130,7 +137,7 @@ func _bees_and_manual_override() -> void:
 		world.plant(cell, "honeybell_bush")
 	for crop in world.crops.values():
 		crop["state"] = "mature"
-		crop["progress"] = 600
+		CropFixture.progress(world,int(crop["uid"]),600)
 	owner(world, [hive])
 	check(world.operations.set_production(hive, true, "honey_cycle", "honey", 1)["ok"], "zero-input honey recipe accepted")
 	world.flowers.hive_coverage(hive)

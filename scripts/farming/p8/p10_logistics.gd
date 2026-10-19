@@ -1,17 +1,36 @@
 extends RefCounted
 ## Logistics owns deployment/paid service days, never upstream acquisition or
 ## growth. All mutations run inside the world's existing candidate transaction.
+## P10.1 adds the three agriculture gu: one shared station slot, a directed 3x3
+## service zone frozen per the phase doc table, whole-footprint coverage and a
+## per-tag resolution (highest rank, then real benefit, then stable instance id).
 const Scalars := preload("res://scripts/farming/v1/v1_world_state.gd")
 const Grid := preload("res://scripts/farming/core/grid/land_grid.gd")
+const HOST_ID := "field_service_station"
+const FACINGS := ["east", "south", "west", "north"]
+const ZONE := 3
+## Schema18 saves keep their final pre-upgrade service day on the old contract:
+## host-rect expansion of 2 at 120%. These constants are that frozen contract.
+const LEGACY_RANGE := 2
+const LEGACY_GROWTH := 120
+const EFFECT_TAG := {"growth_speed": "plant_growth_speed", "water_saving": "plant_water_saving",
+	"fertility_saving": "plant_fertility_saving"}
+const P10_PROVISION := ["rice_bag_gu", "rice_bag_gu", "bright_gu", "growth_gu", "wisdom_gu", "time_gu"]
 var _owner: WeakRef
 var world:
 	get: return _owner.get_ref()
 var config: Dictionary
 var definitions := {}
 var state := fresh()
+## Host facings, per-cell water/fertility deduction remainders and the legacy
+## switch day; serialized as the separate world.agriculture snapshot section.
+var agri := fresh_agriculture()
 
 static func fresh() -> Dictionary:
-	return {"provisioned": false, "instances": [], "active_day": -1, "history": [], "spent": 0}
+	return {"provisioned": false, "agri_supplement": false, "instances": [], "active_day": -1, "history": [], "spent": 0}
+
+static func fresh_agriculture() -> Dictionary:
+	return {"facings": {}, "remainders": {"water": {}, "fertility": {}}, "legacy_until": -1}
 
 func _init(owner, settings: Dictionary) -> void:
 	_owner = weakref(owner)
@@ -49,6 +68,7 @@ func provision() -> Dictionary:
 			"rank": 1, "host_uid": 0, "origin": [], "enabled": false, "effective_day": 0,
 			"paid_day": -1, "paid_fee": 0, "paid_food": {}, "reason": "未部署", "job": {}})
 	state["provisioned"] = true
+	state["agri_supplement"] = true
 	return world._finish(0, {"ok": true})
 
 func deployed(row: Dictionary) -> bool:
@@ -140,12 +160,69 @@ func set_enabled(id: String, enabled: bool) -> Dictionary:
 	row["reason"] = "次日恢复" if enabled else "手动休眠"
 	return world._finish(0, {"ok": true})
 
+# --- Host facings (P10.1 §3.2) ----------------------------------------------
+
+func attach_facing(uid: int, facing: String) -> void:
+	agri["facings"][uid] = {"active": facing, "next": facing}
+
+func forget_facility(uid: int) -> void:
+	agri["facings"].erase(uid)
+
+func facing_of(uid: int) -> String:
+	return String(agri["facings"].get(uid, {}).get("active", "east"))
+
+func next_facing_of(uid: int) -> String:
+	return String(agri["facings"].get(uid, {}).get("next", "east"))
+
+## Turning the service zone costs 1 AP and only takes effect at the next day
+## opening; today's already-paid layout stays locked for the whole service day.
+func set_facing(uid: int, facing: String) -> Dictionary:
+	var checked: Dictionary = world._can_act(int(config.get("rotate_ap", 1)))
+	if not checked["ok"]: return checked
+	if not world.facilities.has(uid) or String(world.facilities[uid]["facility_id"]) != HOST_ID:
+		return world._error("朝向只属于田间维护站")
+	if not facing in FACINGS: return world._error("朝向非法")
+	var row: Dictionary = agri["facings"].get(uid, {"active": facing_of(uid), "next": facing_of(uid)})
+	if String(row["next"]) == facing: return world._error("朝向未改变")
+	row["next"] = facing
+	agri["facings"][uid] = row
+	world.record_operation({"kind": "agriculture", "stage": "facing", "day": world.clock.total_days,
+		"uid": uid, "facing": facing, "effective_day": world.clock.total_days+1})
+	return world._finish(int(config.get("rotate_ap", 1)), {"ok": true})
+
+## P10.2 replaces the host with one cell. Keep a gapless 3x3 region immediately
+## in front, centered on the facing axis; the host cell is never in its own zone.
+static func directed_zone(origin: Vector2i, shape: Array, facing: String) -> Rect2i:
+	var x := origin.x
+	var y := origin.y
+	var w := int(shape[0])
+	var h := int(shape[1])
+	match facing:
+		"east": return Rect2i(x + w, y - 1, ZONE, ZONE)
+		"south": return Rect2i(x - 1, y + h, ZONE, ZONE)
+		"west": return Rect2i(x - ZONE, y - 1, ZONE, ZONE)
+	return Rect2i(x - 1, y - ZONE, ZONE, ZONE)
+
+func service_zone(row: Dictionary, day: int) -> Rect2i:
+	if int(row["host_uid"]) <= 0 or not world.facilities.has(int(row["host_uid"])): return Rect2i()
+	var host: Dictionary = world.facilities[int(row["host_uid"])]
+	var origin := Vector2i(int(host["origin"][0]), int(host["origin"][1]))
+	var shape: Array = world.facility_defs[host["facility_id"]]["footprint"]
+	if day <= int(agri["legacy_until"]):
+		return Rect2i(origin.x - LEGACY_RANGE, origin.y - LEGACY_RANGE,
+			int(shape[0]) + LEGACY_RANGE * 2, int(shape[1]) + LEGACY_RANGE * 2).intersection(world.grid.bounds())
+	return directed_zone(origin, shape, facing_of(int(row["host_uid"]))).intersection(world.grid.bounds())
+
 func active(row: Dictionary, day: int) -> bool:
+	if int(row["host_uid"])>0 and definition(row)["effect"] in ["growth_speed","water_saving","fertility_saving","breed_speed","work_speed"] and not world.services.host_ready(int(row["host_uid"])): return false
 	return deployed(row) and bool(row["enabled"]) and int(row["effective_day"]) <= day and int(row["paid_day"]) == day
 
 func run_opening(day: int) -> void:
 	if int(state["active_day"]) == day: return
 	state["active_day"] = day
+	# The committed facing becomes today's locked layout before any service runs.
+	for uid in agri["facings"]:
+		agri["facings"][uid]["active"] = agri["facings"][uid]["next"]
 	var receipt := {"day": day, "fees": 0, "food": {}, "services": []}
 	# Provision IDs are stable and ordered; never depend on dictionary iteration.
 	var rows: Array = state["instances"].duplicate()
@@ -153,6 +230,9 @@ func run_opening(day: int) -> void:
 	for row in rows:
 		if not deployed(row) or not row["enabled"] or int(row["effective_day"]) > day: continue
 		var d := definition(row)
+		if int(row["host_uid"])>0 and d["effect"] in ["growth_speed","water_saving","fertility_saving","breed_speed","work_speed"] and not world.services.host_ready(int(row["host_uid"])):
+			row["reason"]="一级房间未成立，服务暂停"
+			continue
 		if world.primeval_stones < int(d["fee"]):
 			row["enabled"] = false
 			row["reason"] = "元石不足，自动休眠；需手动申请恢复"
@@ -181,6 +261,8 @@ func run_opening(day: int) -> void:
 	state["history"].append(receipt)
 	if state["history"].size() > 15: state["history"].pop_front()
 
+## Expand-around-host coverage for the P10 area effects (light). The agriculture
+## gu use service_zone() with their directed geometry instead.
 func coverage(row: Dictionary) -> Rect2i:
 	var origin: Array = row["origin"]
 	var shape := [1,1]
@@ -210,10 +292,97 @@ func light_at(cell: Vector2i, day: int) -> int:
 	for effect in effects_at(cell,"light",day): value = maxi(value,int(effect["value"]))
 	return value
 
-func growth_percent(cell: Vector2i, day: int) -> int:
-	var value := 100
-	for effect in effects_at(cell,"growth_speed",day,["biological_production"]): value = maxi(value,int(effect["value"]))
-	return value
+# --- Agriculture resolution (P10.1 §4.2) --------------------------------------
+
+## One shared decision for models, UI, predictions and audits: input is the full
+## target (footprint rect, qualification tags, service day); output carries each
+## effect group's adopted source plus every candidate and rejection reason.
+func resolve(target: Rect2i, target_tags: Array, day: int) -> Dictionary:
+	var legacy := day <= int(agri["legacy_until"])
+	var rows: Array = state["instances"].duplicate()
+	rows.sort_custom(func(a,b): return a["instance_id"] < b["instance_id"])
+	var pools := {}
+	var rejected := []
+	for row in rows:
+		var d := definition(row)
+		var tag := String(EFFECT_TAG.get(String(d["effect"]), ""))
+		if tag.is_empty(): continue
+		var reasons := []
+		if not deployed(row): reasons.append("未部署")
+		elif not bool(row["enabled"]): reasons.append(String(row["reason"]))
+		elif int(row["effective_day"]) > day: reasons.append("次日生效")
+		elif int(row["paid_day"]) != day: reasons.append("当日未付维护")
+		elif not active(row,day): reasons.append("一级房间未成立，服务暂停")
+		else:
+			var zone := service_zone(row, day)
+			if not zone.encloses(target):
+				reasons.append("部分覆盖不生效" if zone.intersects(target) else "未覆盖")
+			elif target_tags.is_empty() or not _shares_tag(target_tags, d["target_tags"]):
+				reasons.append("目标标签不符")
+		if not reasons.is_empty():
+			if deployed(row): rejected.append({"instance_id": row["instance_id"], "name": d["name"], "reason": "；".join(PackedStringArray(reasons))})
+			continue
+		var value := int(d["value"])
+		if legacy and String(d["effect"]) == "growth_speed": value = LEGACY_GROWTH
+		if not pools.has(tag): pools[tag] = []
+		pools[tag].append({"instance_id": row["instance_id"], "name": d["name"], "effect": String(d["effect"]),
+			"rank": int(row["rank"]), "value": value})
+	var groups := {}
+	for tag in pools:
+		var best := {}
+		for entry in pools[tag]:
+			if best.is_empty() or _stronger(entry, best): best = entry
+		var candidates := []
+		for entry in pools[tag]:
+			var adopted: bool = entry["instance_id"] == best["instance_id"]
+			candidates.append({"instance_id": entry["instance_id"], "name": entry["name"], "rank": int(entry["rank"]),
+				"value": int(entry["value"]), "adopted": adopted,
+				"reason": "" if adopted else "同类被%s（%d转）覆盖，仍付维护" % [String(best["name"]), int(best["rank"])]})
+		groups[tag] = {"source": best, "value": int(best["value"]), "candidates": candidates}
+	return {"groups": groups, "rejected": rejected}
+
+static func _shares_tag(target_tags: Array, served: Array) -> bool:
+	for tag in served:
+		if tag in target_tags: return true
+	return false
+
+## Rank first; at equal rank the real benefit decides (higher growth multiplier
+## or lower retention); ties break on the stable instance id, never on order.
+static func _stronger(a: Dictionary, b: Dictionary) -> bool:
+	if int(a["rank"]) != int(b["rank"]): return int(a["rank"]) > int(b["rank"])
+	if String(a["effect"]) == "growth_speed":
+		if int(a["value"]) != int(b["value"]): return int(a["value"]) > int(b["value"])
+	else:
+		if int(a["value"]) != int(b["value"]): return int(a["value"]) < int(b["value"])
+	return String(a["instance_id"]) < String(b["instance_id"])
+
+func growth_percent(target: Rect2i, target_tags: Array, day: int) -> int:
+	var group: Dictionary = resolve(target, target_tags, day)["groups"].get("plant_growth_speed", {})
+	return int(group.get("value", 100))
+
+## Water and fertility retention resolve independently; 100 means no saving.
+func retention_percent(target: Rect2i, target_tags: Array, day: int) -> Dictionary:
+	var outcome: Dictionary = resolve(target, target_tags, day)["groups"]
+	return {"water": int(outcome.get("plant_water_saving", {}).get("value", 100)),
+		"fertility": int(outcome.get("plant_fertility_saving", {}).get("value", 100))}
+
+## Fixed-hundredths accumulation per cell (P10.1 §5.3). The remainder belongs
+## to the ground cell and survives harvests, replants, gu swaps, turns, reloads.
+func consume_environment(cell: Vector2i, index: int, field: int, use: int, retention: int) -> void:
+	var key := "water" if field == 0 else "fertility"
+	var cell_key := "%d,%d" % [cell.x, cell.y]
+	var remainder := int(agri["remainders"][key].get(cell_key, 0))
+	var accumulated := remainder + use * maxi(0, retention)
+	var deduct := int(accumulated / 100)
+	remainder = int(accumulated % 100)
+	if remainder == 0: agri["remainders"][key].erase(cell_key)
+	else: agri["remainders"][key][cell_key] = remainder
+	var before := int(world.environment[index][field])
+	var applied := mini(before, deduct)
+	world.environment[index][field] = before - applied
+	if applied < deduct:
+		world.record_operation({"kind": "agriculture", "stage": "clamp", "day": world.clock.total_days,
+			"cell": [cell.x, cell.y], "field": key, "unmet": deduct - applied})
 
 func research_modifier(uid: int) -> Dictionary:
 	var row := in_host(uid)
@@ -229,10 +398,12 @@ func research_modifier(uid: int) -> Dictionary:
 func blockers(row: Dictionary, day: int) -> Array:
 	var reasons := []
 	if not deployed(row): return ["未部署"]
-	if not active(row,day): reasons.append(String(row["reason"]))
+	if not active(row,day):
+		var reason:=String(row["reason"])
+		reasons.append(reason if not reason.is_empty() else "一级房间未成立或维护未就绪")
 	var d := definition(row)
 	if d.has("production"):
-		var env: Dictionary = world.environment_at(Vector2i(int(row["origin"][0]),int(row["origin"][1])))
+		var env: Dictionary = world.environment_at(Vector2i(int(row["origin"][0]), int(row["origin"][1])))
 		if int(env["water"]) < int(d["production"]["min_water"]): reasons.append("水分不足")
 		if int(env["light"]) < int(d["production"]["min_light"]): reasons.append("光照不足")
 	return reasons
@@ -256,11 +427,15 @@ func settle(day: int) -> void:
 			job = {"target":int(p["days"])*100,"progress":0,"inputs":p["inputs"].duplicate(),"outputs":p["outputs"].duplicate(),"ready":false}
 			row["job"] = job
 		if job["ready"]: continue
-		var cell := Vector2i(int(row["origin"][0]),int(row["origin"][1]))
-		job["progress"] = mini(int(job["target"]),int(job["progress"])+growth_percent(cell,day))
+		var cell := Vector2i(int(row["origin"][0]), int(row["origin"][1]))
+		var target := Rect2i(cell, Vector2i.ONE)
+		var old_progress := int(job["progress"])
+		job["progress"] = mini(int(job["target"]), int(job["progress"]) + growth_percent(target, d["target_tags"], day))
 		job["ready"] = job["progress"] == job["target"]
+		world.rooms.gu_grew(row,int(job["progress"])-old_progress,day)
 		var index: int = world.grid.index_of(cell)
-		world.environment[index][0] = maxi(0,int(world.environment[index][0])-int(p["water_use"]))
+		var retention := int(retention_percent(target, d["target_tags"], day)["water"])
+		consume_environment(cell, index, 0, int(p["water_use"]), retention)
 		world.record_operation({"kind":"logistics", "stage":"progress", "day":day,"instance_id":row["instance_id"],"progress":job["progress"],"ready":job["ready"]})
 
 func claim(id: String) -> Dictionary:
@@ -271,33 +446,45 @@ func claim(id: String) -> Dictionary:
 	var outputs: Dictionary = row["job"]["outputs"].duplicate()
 	for item in outputs: world.inventory.add(item,int(outputs[item]))
 	world._record_flow(outputs,{},"后勤蛊产物收取")
+	var extra: Dictionary = world.rooms.claim_gu(row,outputs)
+	var combined := outputs.duplicate()
+	for channel in extra.values():
+		for item in channel: combined[item] = int(combined.get(item,0))+int(channel[item])
 	row["job"] = {}
 	world.record_operation({"kind":"logistics", "stage":"claim", "day":world.clock.total_days,"instance_id":id,"outputs":outputs})
-	return world._finish(int(config["claim_ap"]),{"ok":true,"items":outputs})
+	return world._finish(int(config["claim_ap"]),{"ok":true,"items":combined,"base_items":outputs,"room_rewards":extra})
 
 func cancel_job(id: String) -> Dictionary:
 	var checked: Dictionary = world._can_act(0)
 	if not checked["ok"]: return checked
 	var row := instance(id)
 	if row.is_empty() or row["job"].is_empty() or row["job"].get("ready",false): return world._error("没有可取消的在制任务；待收产物请先收取")
+	world.rooms.cancel_gu(id)
 	row["job"] = {}
 	return world._finish(0,{"ok":true})
 
 func to_save() -> Dictionary:
 	return state.duplicate(true)
 
+func agri_to_save() -> Dictionary:
+	return agri.duplicate(true)
+
 func apply_save(value: Dictionary) -> void:
 	state = value.duplicate(true)
 	for row in state["instances"]:
 		if row["origin"].is_empty(): continue
-		var cell := Vector2i(int(row["origin"][0]),int(row["origin"][1]))
+		var cell := Vector2i(int(row["origin"][0]), int(row["origin"][1]))
 		var tilled: bool = world.grid.state_at(cell) == Grid.State.TILLED
 		world.grid.reserve(cell,1,1,"gu:"+String(row["instance_id"]))
 		if tilled: world._tilled_under_buildings[cell] = true
 
+func apply_agri_save(value: Dictionary) -> void:
+	agri = value.duplicate(true)
+
 static func normalize(value, day: int, body: Dictionary, catalog) -> Dictionary:
-	if not Scalars.exact(value,fresh().keys()) or not value["provisioned"] is bool or not value["instances"] is Array or not value["history"] is Array or not Scalars.whole(value["spent"]) or not Scalars.whole(value["active_day"],-1,day):
+	if not Scalars.exact(value,fresh().keys()) or not value["provisioned"] is bool or not value["agri_supplement"] is bool or not value["instances"] is Array or not value["history"] is Array or not Scalars.whole(value["spent"]):
 		return Scalars.fail("后勤蛊快照结构非法")
+	if bool(value["provisioned"]) and not bool(value["agri_supplement"]): return Scalars.fail("已领取档缺少农业配给标记")
 	# Validate scalar ranges before canonicalizing; never round invalid fractions.
 	var cfg: Dictionary = _canonical(catalog.load_data()["logistics"])
 	var defs := {}
@@ -329,12 +516,10 @@ static func normalize(value, day: int, body: Dictionary, catalog) -> Dictionary:
 		if int(r["paid_day"]) > int(value["active_day"]) or (r["paid_day"] == -1 and (r["paid_fee"] != 0 or r["paid_food"] != {})) or (r["paid_day"] >= 0 and (r["paid_fee"] != d["fee"] or not _quantities_equal(r["paid_food"],d["food"]))): return Scalars.fail("后勤蛊付费收据非法")
 		if not r["origin"].is_empty():
 			if d["deployment"] != "independent" or r["host_uid"] != 0 or not Scalars.coordinate(r["origin"],width,height,origin_x) or occupied.has(str(r["origin"])): return Scalars.fail("独立蛊占地非法或重叠")
-			var c := Vector2i(int(r["origin"][0]),int(r["origin"][1]))
+			var c := Vector2i(int(r["origin"][0]), int(r["origin"][1]))
 			if not catalog.tillable_map().get(m["grid"][c.y][c.x-origin_x],false): return Scalars.fail("独立蛊占地地形非法")
-			var land_cfg: Dictionary = catalog.load_data().get("_unused",{})
-			# Ownership is validated from the actual parcel configuration.
 			var land_script = load("res://scripts/farming/p8/p8_land.gd")
-			land_cfg = land_script.settings()
+			var land_cfg: Dictionary = land_script.settings()
 			var owned: bool = land_script.rect(land_cfg["base"]).has_point(c)
 			for parcel in land_cfg["parcels"]:
 				if parcel["id"] in body["world"]["land"]["purchased"] and land_script.rect(parcel["rect"]).has_point(c): owned = true
@@ -376,6 +561,79 @@ static func normalize(value, day: int, body: Dictionary, catalog) -> Dictionary:
 	for r in value["instances"]:
 		if int(r["paid_day"]) >= 0 and int(r["paid_day"]) == int(value["active_day"]) and r["instance_id"] not in last_services: return Scalars.fail("后勤蛊付费资格缺少维护服务收据")
 	return {"ok":true,"logistics":_canonical(value)}
+
+## Strict schema18 -> 19 conversion for the logistics section. The old shape is
+## checked first (six P10 instances max, no agriculture flag), then the five
+## supplement instances are appended once; everything else is re-validated by
+## the normal normalize pass against the converted structure.
+static func upgrade18(value, catalog) -> Dictionary:
+	if not value is Dictionary or not Scalars.exact(value, ["provisioned","instances","active_day","history","spent"]):
+		return Scalars.fail("schema18后勤蛊结构非法")
+	var cfg: Dictionary = _canonical(catalog.load_data()["logistics"])
+	var provision: Array = cfg["provision"]
+	if provision.slice(0, P10_PROVISION.size()) != P10_PROVISION: return Scalars.fail("配给前六位与P10基线不符")
+	if bool(value["provisioned"]) and value["instances"].size() != P10_PROVISION.size(): return Scalars.fail("schema18试用实例数量非法")
+	if not bool(value["provisioned"]) and not value["instances"].is_empty(): return Scalars.fail("未领取档不得持有实例")
+	for receipt in value["history"]:
+		if not receipt is Dictionary or not receipt.get("services") is Array: return Scalars.fail("schema18维护日报结构非法")
+		for id in receipt["services"]:
+			var index := int(String(id).trim_prefix("trial-")) if String(id).begins_with("trial-") else 0
+			if index < 1 or index > P10_PROVISION.size(): return Scalars.fail("schema18维护服务超出当时实例范围")
+	var out: Dictionary = value.duplicate(true)
+	out["agri_supplement"] = true
+	if bool(value["provisioned"]):
+		for index in range(P10_PROVISION.size(), provision.size()):
+			out["instances"].append({"instance_id": "trial-%03d" % (index+1), "definition_id": provision[index],
+				"rank": 1, "host_uid": 0, "origin": [], "enabled": false, "effective_day": 0,
+				"paid_day": -1, "paid_fee": 0, "paid_food": {}, "reason": "未部署", "job": {}})
+	return {"ok": true, "logistics": _canonical(out)}
+
+## Converted saves keep their final pre-upgrade service day on the legacy
+## contract; from the next opening the directed zone and 150% take over.
+static func converted_agriculture(day: int) -> Dictionary:
+	return {"facings": {}, "remainders": {"water": {}, "fertility": {}}, "legacy_until": day}
+
+static func normalize_agriculture(value, day: int, active_day: int, world: Dictionary, catalog) -> Dictionary:
+	if not value is Dictionary or not Scalars.exact(value, ["facings", "remainders", "legacy_until"]):
+		return Scalars.fail("农业辅助快照结构非法")
+	if not Scalars.whole(value["legacy_until"], -1, day): return Scalars.fail("农业切换日非法")
+	if int(value["legacy_until"]) >= 0 and int(value["legacy_until"]) < maxi(0, active_day - 1): return Scalars.fail("农业切换日早于最后服务日")
+	var m: Dictionary = catalog.load_map()
+	var width := int(m["size"][0])
+	var height := int(m["size"][1])
+	var origin_x := int(m.get("origin_x", 0))
+	var facilities := {}
+	for row in world["facilities"]: facilities[int(row["uid"])] = String(row["facility_id"])
+	var facings := {}
+	for uid in value["facings"]:
+		var key := int(uid)
+		if not facilities.has(key) or facilities[key] != HOST_ID: return Scalars.fail("朝向宿主非法")
+		var row = value["facings"][uid]
+		if not row is Dictionary or not Scalars.exact(row, ["active", "next"]): return Scalars.fail("朝向字段非法")
+		if not (row["active"] in FACINGS and row["next"] in FACINGS): return Scalars.fail("朝向取值非法")
+		facings[key] = {"active": String(row["active"]), "next": String(row["next"])}
+	var land_script = load("res://scripts/farming/p8/p8_land.gd")
+	var land_cfg: Dictionary = land_script.settings()
+	var owned_rects := [land_script.rect(land_cfg["base"])]
+	for parcel in land_cfg["parcels"]:
+		if parcel["id"] in world["land"]["purchased"]: owned_rects.append(land_script.rect(parcel["rect"]))
+	var remainders := {"water": {}, "fertility": {}}
+	for key in ["water", "fertility"]:
+		var section = value["remainders"].get(key, null)
+		if not section is Dictionary: return Scalars.fail("余量结构非法")
+		for cell_key in section:
+			var parts := String(cell_key).split(",")
+			if parts.size() != 2 or not parts[0].is_valid_int() or not parts[1].is_valid_int(): return Scalars.fail("余量坐标非法")
+			var c := Vector2i(int(parts[0]), int(parts[1]))
+			if c.x < origin_x or c.x >= origin_x + width or c.y < 0 or c.y >= height: return Scalars.fail("余量坐标越界")
+			if not catalog.tillable_map().get(m["grid"][c.y][c.x - origin_x], false): return Scalars.fail("余量位于不可种植地形")
+			var owned := false
+			for rect in owned_rects:
+				if rect.has_point(c): owned = true
+			if not owned: return Scalars.fail("余量位于未购地块")
+			if not Scalars.whole(section[cell_key], 1, 99): return Scalars.fail("余量数值非法")
+			remainders[key][String(cell_key)] = int(section[cell_key])
+	return {"ok": true, "agriculture": {"facings": facings, "remainders": remainders, "legacy_until": int(value["legacy_until"])}}
 
 static func _quantities_equal(value, expected: Dictionary) -> bool:
 	if not Scalars.exact(value,expected.keys()): return false

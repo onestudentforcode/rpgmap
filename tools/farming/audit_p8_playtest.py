@@ -13,8 +13,8 @@ ADVANCED = {"dew_soup", "fire_paste", "earth_pill", "gold_food"}
 IRON = {"iron_ore": 3, "crushed_ore": 2, "ore_concentrate": 6, "iron_ingot": 6,
         "mineral_feed": 2, "steel_wool": 2, "gold_food": 6}
 LOGISTICS_REASONS = {"后勤蛊产物收取", "后勤蛊特殊食料", "后勤蛊生产投料", "后勤蛊补水"}
-LEGITIMATE_OUT = {"养殖投喂", "净化启动", "加工投料", "市场出售", "建设材料", "播种投料", "施肥", "水场换水", "浇水", "特殊投料", "研究样本", "菌毯培养", "蜂群饲喂", "订单交付", "设备维护", "设备燃油", "后勤蛊特殊食料", "后勤蛊生产投料"}
-LEGITIMATE_IN = {"市场采购", "资源采集", "采收收获", "采花收获", "加工收取", "养殖收取", "水场换水", "后勤蛊产物收取"}
+LEGITIMATE_OUT = {"养殖投喂", "净化启动", "加工投料", "市场出售", "建设材料", "播种投料", "施肥", "水场换水", "浇水", "特殊投料", "研究样本", "菌毯培养", "蜂群饲喂", "订单交付", "设备维护", "设备燃油", "后勤蛊特殊食料", "后勤蛊生产投料", "铺设材料", "畜牧维持", "劳动开批", "畜产特殊投料"}
+LEGITIMATE_IN = {"市场采购", "资源采集", "采收收获", "采花收获", "加工收取", "养殖收取", "水场换水", "后勤蛊产物收取", "畜牧劳动领取", "圈养畜产领取"}
 LEGITIMATE_OUT.add("后勤蛊补水")
 
 def read_json(path: Path):
@@ -26,13 +26,20 @@ def read_lines(path: Path):
 def inside(cell, rect):
     return rect[0] <= cell[0] < rect[0]+rect[2] and rect[1] <= cell[1] < rect[1]+rect[3]
 
-def balance(ledger: dict) -> Counter:
+def balance(ledger: dict, room_proof: dict | None = None) -> Counter:
     stock = Counter(ledger["opening"])
     for key, sign in (("inflows", 1), ("outflows", -1)):
+        room_reasons={'育种奖励','丰产奖励'} if sign>0 else {'铺设材料'}
+        allowed=(LEGITIMATE_IN if sign>0 else LEGITIMATE_OUT) | (room_reasons if room_proof is not None else set())
         for item, reasons in ledger[key].items():
-            assert reasons.keys() <= (LEGITIMATE_IN if sign > 0 else LEGITIMATE_OUT), ("unrecognised flow", item, reasons)
+            assert reasons.keys() <= allowed, ("unrecognised flow", item, reasons)
             assert all(type(qty) in (int, float) and qty > 0 and qty == int(qty) for qty in reasons.values())
             stock[item] += sign * sum(reasons.values())
+        if room_proof is not None:
+            for reason in room_reasons:
+                actual=Counter({item:reasons[reason] for item,reasons in ledger[key].items() if reason in reasons})
+                expected=Counter(room_proof.get(key,{}).get(reason,{}))
+                assert actual==expected,('unreceipted or missing room stock flow',ledger['day'],reason,actual,expected)
     assert all(qty >= 0 for qty in stock.values()), "negative inventory"
     assert stock == Counter(ledger["closing"]), ("inventory balance", ledger["day"])
     return stock
@@ -50,6 +57,8 @@ def reconcile(directory: Path, require_complete: bool = True) -> dict:
     expansion = read_json(ROOT / "content/farming/baked/p8/expansion.json")
     parcels = {p['id']: p for p in expansion['parcels']}
     horizon, initial = summary["settings"]["days"], summary["settings"]["initial_currency"]
+    assert type(horizon) in (int,float) and horizon==int(horizon), "fractional business horizon"
+    horizon=int(horizon)
     assert 90 <= horizon <= 180 and 60 <= initial <= 120, "relaxation exceeds agreed bounds"
     assert config["ap_per_day"] == 24 and config["initial_primeval_stones"] == initial
     items = {r["id"]: r for r in catalog["resources"]}
@@ -63,6 +72,10 @@ def reconcile(directory: Path, require_complete: bool = True) -> dict:
     required = {r["id"] for r in catalog["recipes"] if r.get("research") and not r.get("optional_logistics")}
     routes = summary["routes"]
     if require_complete: assert set(routes) == {"A", "B"}, "complete audit requires two independent routes"
+    room_audits=None
+    if any((directory/f'{route}-rooms.jsonl').exists() for route in routes):
+        from audit_p102_playtest import audit as audit_rooms
+        room_audits=audit_rooms(directory,require_complete)
     result = {"settings": summary["settings"], "mode": "complete" if require_complete else "diagnostic", "routes": {}}
     all_claims, all_consumers = set(), set()
     has_logistics = any((directory / f"{route}-logistics.jsonl").exists() for route in routes)
@@ -80,10 +93,11 @@ def reconcile(directory: Path, require_complete: bool = True) -> dict:
             day, ledger = row["day"] - 1, row["ledger"]
             assert ledger["day"] == day
             if inventory is not None: assert Counter(ledger["opening"]) == inventory, "stock continuity"
-            inventory = balance(ledger)
+            room_proof=room_audits[route]['proofs'].get(day,{}) if room_audits is not None else None
+            inventory = balance(ledger,room_proof)
             opening = row["opening"]
             assert opening["day"] == day + 1 and Counter(opening["opening"]) == inventory
-            balance(opening)  # opening device costs belong to the next day's book
+            balance(opening,{} if room_audits is not None else None)  # opening never claims room yields or lays floors
             journal = row["journal"]
             cash += sum(journal[k] for k in INCOME) - sum(journal[k] for k in EXPENSE)
             opening_cash = row.get('opening_cash', {})
@@ -155,6 +169,7 @@ def reconcile(directory: Path, require_complete: bool = True) -> dict:
                         and inside(origin, coverage(day, instance['host_uid'], definition['range']))):
                     return True
             return False
+        ranch_opens = {}
         for r in receipts:
             day, kind = r["day"], r["kind"]
             stage = "purchase" if kind == "expansion" else r["stage"]
@@ -198,6 +213,33 @@ def reconcile(directory: Path, require_complete: bool = True) -> dict:
                 assert policy["enabled"] and deficit > 0 and r["started"] <= (deficit+per_unit-1)//per_unit, "living target exceeded"
                 for item in definition["inputs"]:
                     assert r["stock_after"].get(item, 0) >= r["reserves"].get(item, 0), "living reserve violation"
+            elif kind == "ranch:workyard" and stage in ("batch_open", "claim"):
+                # P10.3 facility work posts: batches open once with real inputs
+                # and claims aggregate the finished posts of that yard.
+                if stage == "batch_open":
+                    rid = r["recipe"]
+                    definition = recipes[rid]
+                    assert r["inputs"] == definition["inputs"] and r["outputs"] == definition["outputs"], (rid, "wrong ranch recipe receipt")
+                    gate = definition.get("research")
+                    assert not gate or gate in days[day]["research"]["completed"], (rid, "ranch research bypass")
+                    assert sum(IRON.get(i, 0)*q for i, q in r["outputs"].items()) <= sum(IRON.get(i, 0)*q for i, q in r["inputs"].items()), (rid, "created iron")
+                    spent[day].update(r["inputs"])
+                    ranch_opens.setdefault(r["workyard"], []).append({"recipe": rid, "outputs": dict(r["outputs"]), "batch_id": r["batch_id"]})
+                else:
+                    pending = ranch_opens.get(r["workyard"], [])
+                    assert len(pending) >= r["posts"], (day, "ranch claim without opened batches")
+                    claimed_now = pending[len(pending)-int(r["posts"]):]
+                    del pending[len(pending)-int(r["posts"]):]
+                    total = Counter()
+                    for batch in claimed_now:
+                        total.update(batch["outputs"])
+                        claims[batch["recipe"]] += 1
+                    assert dict(total) == dict(r["outputs"]), (day, "ranch claim outputs differ from opened batches")
+                    issued[day].update(r["outputs"])
+                    uses = {item: next((d+1 for d in range(day+1, horizon) if outflows[d][item] > 0), None) for item in r["outputs"]}
+                    if all(uses.values()):
+                        for batch in claimed_now:
+                            consumed.setdefault(batch["recipe"], uses)
             elif kind == "water":
                 key = (day, r["uid"])
                 assert key not in water_changes, "duplicate water change"
@@ -322,6 +364,9 @@ def reconcile(directory: Path, require_complete: bool = True) -> dict:
         # receipt against the same books before granting the ordinary audit.
         from audit_p10_playtest import audit as audit_logistics
         result['logistics'] = audit_logistics(directory, require_complete)
+    if room_audits is not None:
+        result['rooms']={r:{k:v for k,v in data.items() if k!='proofs'} for r,data in room_audits.items()}
+        result['room_auditor_sha256']=hashlib.sha256((ROOT/'tools/farming/audit_p102_playtest.py').read_bytes()).hexdigest()
     result["auditor_sha256"] = hashlib.sha256(Path(__file__).read_bytes()).hexdigest()
     result["evidence_sha256"] = {p.name: hashlib.sha256(p.read_bytes()).hexdigest() for p in sorted(directory.glob("*"))
         if p.is_file() and p.name not in {"audit.json", "audit-failure.json"}}

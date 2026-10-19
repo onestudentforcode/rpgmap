@@ -271,6 +271,7 @@ func plant(cell: Vector2i, crop_id: String) -> Dictionary:
 	var uid := _next_uid
 	_next_uid += 1
 	crops[uid] = {"uid": uid, "crop_id": crop_id, "origin": [cell.x, cell.y], "progress": 0, "state": "growing", "harvest_count": 0}
+	_crop_planted(crops[uid])
 	# Culture water also moistens the bed; it is not charged twice as irrigation.
 	if definition["mode"] == "culture_each_cycle":
 		var index := grid.index_of(cell)
@@ -295,9 +296,15 @@ func harvest(cell: Vector2i, mode: String = "harvest") -> Dictionary:
 	var bonus := _harvest_bonus(instance)
 	for ident in bonus:
 		outputs[ident] = int(outputs.get(ident, 0)) + int(bonus[ident])
+	var removed: bool = definition["mode"] != "tap_or_fell" or mode != "harvest"
+	var extra := _crop_room_rewards(instance,mode,outputs,removed)
 	for ident in outputs:
 		inventory.add(ident, int(outputs[ident]))
 	_record_flow(outputs, {}, "采收收获")
+	# Room rewards entered their own ledger channels in the derived product.
+	var combined := outputs.duplicate()
+	for channel in extra.values():
+		for ident in channel: combined[ident] = int(combined.get(ident,0))+int(channel[ident])
 	if definition["mode"] == "tap_or_fell" and mode == "harvest":
 		crops[uid]["harvest_count"] = int(crops[uid]["harvest_count"]) + 1
 		crops[uid]["progress"] = 0
@@ -307,7 +314,7 @@ func harvest(cell: Vector2i, mode: String = "harvest") -> Dictionary:
 		crops.erase(uid)
 	_count("harvests",instance["crop_id"])
 	for ident in outputs: _count("produce",ident,int(outputs[ident]))
-	return _finish(1, {"ok": true, "items": outputs.duplicate(), "removed": not crops.has(uid)})
+	return _finish(1, {"ok": true, "items": combined, "base_items":outputs.duplicate(),"room_rewards":extra,"removed": not crops.has(uid)})
 
 func irrigate(cell: Vector2i) -> Dictionary:
 	return _improve(cell, 0, "clean_water", "irrigate_units", "irrigate_gain")
@@ -315,6 +322,14 @@ func irrigate(cell: Vector2i) -> Dictionary:
 ## Extra harvest outputs for derived products; the base harvest adds none.
 func _harvest_bonus(_instance: Dictionary) -> Dictionary:
 	return {}
+
+func _crop_planted(_row: Dictionary) -> void: pass
+
+func _crop_room_rewards(_row: Dictionary, _mode: String, _base: Dictionary, _removed: bool) -> Dictionary: return {}
+
+func _crop_clearing(_row: Dictionary) -> Dictionary: return {}
+
+func _crop_grew(_row: Dictionary, _delta: int, _day: int) -> void: pass
 
 func clear_crop(cell: Vector2i) -> Dictionary:
 	var checked := _can_act()
@@ -324,10 +339,13 @@ func clear_crop(cell: Vector2i) -> Dictionary:
 	if crop.is_empty():
 		return _error("没有可清理的作物")
 	var uid := int(crop["uid"])
+	var extra := _crop_clearing(crop)
 	grid.release("v1_crop:%d" % uid)
 	crops.erase(uid)
 	_count("cleared",crop["crop_id"])
-	return _finish(1, {"ok": true, "removed_uid": uid})
+	var result := {"ok": true, "removed_uid": uid}
+	if not extra.is_empty(): result.merge({"base_items":{},"room_rewards":extra})
+	return _finish(1, result)
 
 func fertilize(cell: Vector2i) -> Dictionary:
 	return _improve(cell, 1, "humus", "fertilize_units", "fertilize_gain")
@@ -588,14 +606,19 @@ func _on_day_changed(day: int) -> void:
 		var growth := maxi(1, floori(float(water_rate * fertility_rate * light_rate) / 10000.0 * float(_crop_growth_percent(row,day-1))/100.0))
 		if row["state"] != "mature":
 			var target := int(definition["cycle_days"] if row["harvest_count"] > 0 else definition["days"]) * 100
+			var old_progress := int(row["progress"])
 			row["progress"] = mini(target, int(row["progress"]) + growth)
 			if row["progress"] == target:
 				row["state"] = "mature"
 				_count("matured",row["crop_id"])
+			_crop_grew(row,int(row["progress"])-old_progress,day-1)
+		# Deduction is a seam: products may cut each cell's use by a retention
+		# percent and carry fractional hundredths across days (P10.1 §5.3).
+		var retention: Dictionary = _crop_resource_retention(row, day-1)
 		for cell in cells:
 			var index: int = grid.index_of(cell)
-			environment[index][0] = maxi(0, int(environment[index][0]) - int(definition["water_use"]))
-			environment[index][1] = maxi(0, int(environment[index][1]) - int(definition["fertility_use"]))
+			_consume_environment(cell, index, 0, int(definition["water_use"]), int(retention["water"]))
+			_consume_environment(cell, index, 1, int(definition["fertility_use"]), int(retention["fertility"]))
 	_source_day = day
 	for ident in _source_used:
 		_source_used[ident] = 0
@@ -618,6 +641,16 @@ func _on_day_changed(day: int) -> void:
 ## Day D+1 opening device step, executed inside the settlement transaction.
 func _crop_growth_percent(_crop: Dictionary, _day: int) -> int:
 	return 100
+
+## Retention of the crop's original water/fertility deduction for the settled
+## service day, in percent; 100 keeps the classic integer deduction.
+func _crop_resource_retention(_row: Dictionary, _day: int) -> Dictionary:
+	return {"water": 100, "fertility": 100}
+
+## Per-cell environment deduction seam. The base product subtracts the integer
+## use directly; P8 routes it through the fixed-hundredths accumulator.
+func _consume_environment(_cell: Vector2i, index: int, field: int, use: int, _retention: int) -> void:
+	environment[index][field] = maxi(0, int(environment[index][field]) - use)
 
 func _opening_devices(_day: int) -> void:
 	pass

@@ -3,6 +3,7 @@ const Visuals := preload("res://scripts/farming/p8/p8_plant_visuals.gd")
 const Shell := preload("res://scripts/farming/p8/p8_scene.gd")
 const World := preload("res://scripts/farming/p8/p8_world.gd")
 const Store := preload("res://scripts/farming/p8/p8_slot_store.gd")
+const CropFixture := preload("res://scripts/farming/tests/p8_crop_fixture.gd")
 var failures: Array[String] = []
 var checks := 0
 
@@ -100,16 +101,16 @@ func _lifecycle(visuals) -> void:
 		var initial: Dictionary = visuals.visual(world.crops[uid],definition,flower_window)
 		check(not initial.is_empty() and initial["key"] == "stage_0", "new seed visual %s" % ident)
 		for stage in range(3):
-			world.crops[uid]["progress"] = ceili(float(int(definition["days"])*100)*stage/3.0)
+			CropFixture.progress(world,uid,ceili(float(int(definition["days"])*100)*stage/3.0))
 			var result: Dictionary = visuals.visual(world.crops[uid],definition,flower_window)
 			check(not result.is_empty() and result["rect"] == initial["rect"],"canvas %s/%d" % [ident,stage])
 		if ident == "oilseed_flower":
 			for progress in [299,300,499,500]:
-				world.crops[uid]["progress"] = progress
+				CropFixture.progress(world,uid,progress)
 				world.environment[world.grid.index_of(cell)][0] = 0
 				check(not world.flowers.eligible(uid),"dry flower production blocked")
 				check((visuals.visual(world.crops[uid],definition,flower_window)["key"] == "flowering") == (progress >= 300 and progress < 500),"dry flower morphology %d" % progress)
-		world.crops[uid]["progress"] = int(definition["days"])*100
+		CropFixture.progress(world,uid,int(definition["days"])*100)
 		world.crops[uid]["state"] = "mature"
 		var before := world.to_snapshot()
 		for i in range(10): visuals.visual(world.crops[uid],definition,flower_window)
@@ -127,7 +128,7 @@ func _lifecycle(visuals) -> void:
 		check(harvest["ok"],"real harvest %s" % ident)
 		if definition["mode"] == "tap_or_fell":
 			check(world.crops.has(uid) and visuals.visual(world.crops[uid],definition,flower_window)["key"] == "stage_3","perennial regrow body %s" % ident)
-			world.crops[uid]["state"] = "mature"
+			CropFixture.progress(world,uid,int(definition["cycle_days"])*100)
 			check(world.harvest(cell,"fell")["ok"] and not world.crops.has(uid),"real fell removes %s" % ident)
 		else:
 			check(not world.crops.has(uid),"real harvest removes %s" % ident)

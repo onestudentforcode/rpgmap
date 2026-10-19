@@ -82,6 +82,9 @@ func _layout_and_saves() -> void:
 	check(w.environment_at(Vector2i(-4,14))["water"] == 60 and w.environment_at(Vector2i(20,0))["light"] == w.config["light"]["default"], "negative index and new land light")
 	check(w.build_facility(Vector2i(-4,14),"fish_pond")["ok"], "west bank water habitat")
 	check(w.build_facility(Vector2i(20,14),"fish_pond")["ok"], "east bank water habitat")
+	for y in range(12, 14):
+		for x in range(19, 21):
+			check(w.rooms.set_floor(Vector2i(x, y), "ordinary")["ok"], "pave pen floor %d,%d" % [x, y])
 	check(w.build_facility(Vector2i(19,12),"pen")["ok"], "owned cross-parcel footprint accepted")
 	check(w.till(Vector2i(20,0))["ok"] and w.workforce.set_seed(Vector2i(20,0),"golden_wheat")["ok"], "new land cultivation/planning")
 	var worker: Dictionary = w.workforce.hire("扩地检查")

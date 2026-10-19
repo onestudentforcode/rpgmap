@@ -212,9 +212,13 @@ for cid, row in CROPS.items():
         fields.append(field('flower', '花期/花源', '成熟期间每日可产1份额' if cid == 'honeybell_bush' else f'生长进度{window[0]}~{window[1] - 1}期间为花期（{row["flower_days"]}日），每日期1份额'))
     if mode == 'culture_each_cycle':
         fields.append(field('culture', '培养水润床', '播种投入中的清水每份+30水分直接润床，不另算浇水'))
+    if SRC.get('rooms'):
+        primary=SRC['rooms']['primary'][cid]
+        fields.append(field('room_primary','丰产主产物','；'.join(('砍伐' if m=='fell' else '采收')+'：'+rname(item) for m,item in primary.items())+'。仅本轮合格生长贡献参与25%增产，副产物不增加'))
+        fields.append(field('room_seed','育种回流',f'首次成熟仅判定一次；完整合格25%概率得{rname(seed)}×1，随首次成熟收取/成熟清理领取，留株不重抽'))
     summary = f'{MODE_NAMES[mode].split("，")[0]}；首熟{row["days"]}日；{quantities_text(row["outputs"])}'
     add_entity(f'crop:{cid}', 'crop', cid, CROP_NAMES[cid], 'crops', [], summary, fields,
-               ['rule:crop_growth', 'rule:environment', 'rule:day_settle'], lock_of(row.get('research')))
+               ['rule:crop_growth', 'rule:environment', 'rule:day_settle']+(['rule:rooms'] if SRC.get('rooms') else []), lock_of(row.get('research')))
 
 for sid, row in LIVESTOCK.items():
     unit = row.get('unit', UNIT_DEFAULT[sid])
@@ -614,17 +618,23 @@ def _relation_row(p, io_row, direction):
 GU = {r['id']: r for r in SRC.get('logistics', {}).get('definitions', [])}
 for gid, row in GU.items():
     hosts = [f for f in FAC.values() if f.get('gu_slot') == row['slot'] and f.get('kind','facility') in row['host_kinds']]
-    effect = {'production': '独立生产', 'light': '环境光照', 'growth_speed': '范围生产速度',
-              'research_flat': '固定研究工作量减免', 'research_speed': '研究速度倍率'}[row['effect']]
+    effect = {'production': '独立生产', 'light': '环境光照', 'growth_speed': '定向生长速度',
+              'water_saving': '定向水分减耗', 'fertility_saving': '定向肥力减耗',
+              'research_flat': '固定研究工作量减免', 'research_speed': '研究速度倍率',
+              'breed_speed': '实际繁殖进度倍率', 'work_speed': '实际动物劳动倍率'}[row['effect']]
     fields = [field('rank','转数',f'{row["rank"]}转原型；实例支持一至五转，升转由上游负责'),
-        field('obtain','获取','每档一次试用配给；饭袋草2只，其他各1只；尚未连接上游获取与成长'),
+        field('obtain','获取','每档一次试用配给共15只：饭袋草/催生/锁水/节肥/安抚/驭兽各2只，明光/智道研究/宙道研究各1只；尚未连接上游获取与成长'),
         field('deploy','部署','独立占用1格陆地，不需开垦/农田' if row['deployment']=='independent' else '入驻兼容设施：'+'、'.join(f['name'] for f in hosts)),
         field('effect','能力',{
             'production':'自身进行生产，条件与产物见下方',
             'light':f'范围外扩{row["range"]}格，提供光照{row["value"]}，同格光照取最大',
-            'growth_speed':f'范围外扩{row["range"]}格，生物生产速度×{row["value"]/100:g}；同类取最强',
+            'growth_speed':f'宿主四向3×3服务区，完整覆盖的植物目标生产速度×{row["value"]/100:g}；同tag最高转优先',
+            'water_saving':f'宿主四向3×3服务区，完整覆盖目标的水分扣耗保留{row["value"]}%（每格百分之一余量跨日累计）',
+            'fertility_saving':f'宿主四向3×3服务区，完整覆盖目标的肥力扣耗保留{row["value"]}%（每格百分之一余量跨日累计）',
             'research_flat':f'研究工作量固定减少{row["value"]}，至少保留1',
-            'research_speed':f'每个有效研究日推进{row["value"]/100:g}工作量'}[row['effect']]),
+            'research_speed':f'每个有效研究日推进{row["value"]/100:g}工作量',
+            'breed_speed':f'实际合格繁殖进度×{row["value"]/100:g}，每单位服务4空间',
+            'work_speed':f'实际获岗劳动点×{row["value"]/100:g}，每单位服务4空间'}[row['effect']]),
         field('fee','维护',f'启用时{row["fee"]}元石/游戏日；闲置仍收费，休眠/未部署免维护'),
         field('food','特殊食料',quantities_text(row['food'])+'（每个成功付费服务日；与元石原子扣除）'),
         field('timing','时点','部署/撤回各1AP；启用次日生效；停用立即取消后续效果，已付不退；运行/待收任务锁定实例')]
@@ -651,6 +661,40 @@ for gid, row in GU.items():
             [io('resource:clean_water',ENV['irrigate_units'],'每次','手动补水')],[],ap=1,species='gu:'+gid,
             effects=[f'占地水分+{ENV["irrigate_gain"]}，上限100，不改变肥力'],category_hint='logistics')
         consumes('clean_water',pid)
+
+# Room rewards are separate conditional sources, never folded into base yield.
+if SRC.get('rooms'):
+    rooms=SRC['rooms']
+    pid=proc('proc:floor:ordinary','floor','铺设普通地板',
+        [io('resource:'+k,v,'每格','铺设') for k,v in rooms['floor']['inputs'].items()],[],
+        ap=rooms['floor']['place_ap'],conditions=['已购合法空闲陆地；普通地板分隔耕地，拆除不返料'],category_hint='construction')
+    for k in rooms['floor']['inputs']: consumes(k,pid)
+    for cid,row in CROPS.items():
+        seed=row['seed']
+        pid=proc('proc:room-seed:'+cid,'room_seed','育种奖励·'+CROP_NAMES[cid],[],
+            [io('resource:'+seed,1,'每株首次成熟；成功时','首次成熟收取或成熟清理',conditions=f'{rooms["seed_percent"]}%×首次育种合格生长比例；每株仅判定一次')],
+            crop='crop:'+cid,ap_detail='随首次成熟收取，不另耗AP',
+            conditions=['育种田或复合农业区；逐株各必需效果单源完整覆盖；成熟已冻结结果'],category_hint='production')
+        produces(seed,pid)
+    for ident,modes in rooms['primary'].items():
+        for mode,item in modes.items():
+            name=CROP_NAMES.get(ident,GU.get(ident,{}).get('name',ident))
+            pid=proc(f'proc:room-material:{ident}:{mode}','room_material','丰产奖励·'+name+('·砍伐' if mode=='fell' else '·收取'),[],
+                [io('resource:'+item,None,'每轮额外份数','合法成熟主产物收取',conditions=f'基础主产物量×{rooms["material_percent"]}%×本轮合格生长比例，整数必得、小数概率再得1份')],
+                crop='crop:'+ident if ident in CROPS else None,species='gu:'+ident if ident in GU else None,
+                ap_detail='随本轮收取，不另耗AP',conditions=['丰产田或复合农业区；只增主产物；成熟冻结，单轮只领取一次'],category_hint='production')
+            produces(item,pid)
+
+if SRC.get('p104'):
+    pid=proc('proc:toy:install','installation','装入耐用藤球',
+        [io('resource:vine_ball',1,'每个玩具站','装入槽位')],[],ap=1,
+        facility='facility:toy_station',conditions=['空槽；长期使用，不消耗耐久'],
+        effects=['开启玩具服务'],category_hint='construction')
+    consumes('vine_ball',pid)
+    pid=proc('proc:toy:remove','installation','卸下耐用藤球',[],
+        [io('resource:vine_ball',1,'每个玩具站','卸下槽位')],ap=1,
+        facility='facility:toy_station',conditions=['槽内已装入藤球'],category_hint='construction')
+    produces('vine_ball',pid)
 
 # All entities exist now; resolve display names that were built during process
 # construction before the resource entities were registered.

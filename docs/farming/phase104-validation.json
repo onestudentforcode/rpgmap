@@ -1,0 +1,356 @@
+{
+  "phase": "10.4",
+  "status": "implemented-and-technically-verified",
+  "date": "2026-10-19",
+  "schema": 22,
+  "model_checks": {
+    "p104": 261,
+    "allocation_and_fractional_work": 342,
+    "agriculture_regression": 317,
+    "ranch_regression": 555
+  },
+  "count_note": "Assertion counts include repeated explicit fixture setup; these are not unique feature counts.",
+  "modules": [
+    {
+      "ok": true,
+      "route": "structure",
+      "days": 3,
+      "checks": 117,
+      "services": 86,
+      "toy_services": 6,
+      "births": 0,
+      "work_units": 12,
+      "carry_used": 0,
+      "fixture": true,
+      "independent_inventory_days": 3,
+      "service_history_days": 3
+    },
+    {
+      "ok": true,
+      "route": "hosts",
+      "days": 3,
+      "checks": 115,
+      "services": 90,
+      "toy_services": 6,
+      "births": 0,
+      "work_units": 12,
+      "carry_used": 0,
+      "fixture": true,
+      "independent_inventory_days": 3,
+      "service_history_days": 3
+    },
+    {
+      "ok": true,
+      "route": "toy",
+      "days": 2,
+      "checks": 21,
+      "services": 2,
+      "toy_services": 0,
+      "births": 0,
+      "work_units": 0,
+      "carry_used": 0,
+      "fixture": false,
+      "independent_inventory_days": 2,
+      "service_history_days": 2
+    },
+    {
+      "ok": true,
+      "route": "breeding",
+      "days": 6,
+      "checks": 125,
+      "services": 246,
+      "toy_services": 12,
+      "births": 1,
+      "work_units": 24,
+      "carry_used": 5,
+      "fixture": true,
+      "independent_inventory_days": 6,
+      "service_history_days": 6
+    },
+    {
+      "ok": true,
+      "route": "work",
+      "days": 6,
+      "checks": 125,
+      "services": 246,
+      "toy_services": 12,
+      "births": 1,
+      "work_units": 24,
+      "carry_used": 5,
+      "fixture": true,
+      "independent_inventory_days": 6,
+      "service_history_days": 6
+    },
+    {
+      "ok": true,
+      "route": "compound",
+      "days": 12,
+      "checks": 142,
+      "services": 577,
+      "toy_services": 28,
+      "births": 2,
+      "work_units": 56,
+      "carry_used": 13,
+      "fixture": true,
+      "independent_inventory_days": 12,
+      "service_history_days": 12
+    },
+    {
+      "ok": true,
+      "route": "breeding-base",
+      "days": 8,
+      "checks": 129,
+      "services": 248,
+      "toy_services": 16,
+      "births": 1,
+      "work_units": 32,
+      "carry_used": 7,
+      "fixture": true,
+      "independent_inventory_days": 8,
+      "service_history_days": 8
+    },
+    {
+      "ok": true,
+      "route": "work-base",
+      "days": 6,
+      "checks": 126,
+      "services": 230,
+      "toy_services": 12,
+      "births": 1,
+      "work_units": 24,
+      "carry_used": 0,
+      "fixture": true,
+      "independent_inventory_days": 6,
+      "service_history_days": 6
+    }
+  ],
+  "integration": {
+    "ok": true,
+    "route": "integration-smoke",
+    "days": 60,
+    "checks": 780,
+    "services": 4145,
+    "toy_services": 618,
+    "births": 3,
+    "work_units": 558,
+    "carry_used": 138,
+    "fixture": true,
+    "independent_inventory_days": 15,
+    "service_history_days": 60
+  },
+  "art": {
+    "facility_textures": 23,
+    "new_facilities": 2,
+    "new_icons": 5,
+    "historical_visual_baseline_modified": false
+  },
+  "gpu_checks": 31,
+  "gpu_frames": [
+    {
+      "path": ".art-work/p104-ui/reviewed-shots/manager-1400.png",
+      "size": [
+        1400,
+        900
+      ],
+      "sha256": "82aae15bdfa773afcf562b86be9929abbab7c916b32ff9db7ba15af384373fee"
+    },
+    {
+      "path": ".art-work/p104-ui/reviewed-shots/manager-1920.png",
+      "size": [
+        1920,
+        1080
+      ],
+      "sha256": "46832e481fa966d01c540112a27d8f54772e810332373aff727f36c06d1e5fca"
+    },
+    {
+      "path": ".art-work/p104-ui/reviewed-shots/manager-960.png",
+      "size": [
+        960,
+        540
+      ],
+      "sha256": "580d9b5898f533b83ff7911bdd3220ef51ce1cbc5ce225dd901dac722d41ce9e"
+    },
+    {
+      "path": ".art-work/p104-ui/reviewed-shots/new-stations-grounding.png",
+      "size": [
+        1920,
+        1080
+      ],
+      "sha256": "097624adbecc54b07f1ecb432b4c9a0b0357e159e3b4d4c1dec06c35d38cacd6"
+    },
+    {
+      "path": ".art-work/p104-ui/reviewed-shots/service-rule.png",
+      "size": [
+        1920,
+        1080
+      ],
+      "sha256": "f44b72e7965f2f615995d5be56601315c104fbf3ca53cd916717967257bf9b2f"
+    },
+    {
+      "path": ".art-work/p104-ui/reviewed-shots/soothing-station-grounding.png",
+      "size": [
+        1920,
+        1080
+      ],
+      "sha256": "713afaf8321ee7f50dbf208c498791d9b2a7f2efaf0b2032e794157a9119c135"
+    },
+    {
+      "path": ".art-work/p104-ui/reviewed-shots/system-controls-1400.png",
+      "size": [
+        1400,
+        900
+      ],
+      "sha256": "568f8b29025049f563419b86445e5171b2e7097800172f0b92a696d76b7cd262"
+    },
+    {
+      "path": ".art-work/p104-ui/reviewed-shots/system-controls-1920.png",
+      "size": [
+        1920,
+        1080
+      ],
+      "sha256": "b14b548533e369e0d16b5ed67967a473d88ee341334c9f2fcaf25dde4980cf3b"
+    },
+    {
+      "path": ".art-work/p104-ui/reviewed-shots/system-controls-960.png",
+      "size": [
+        960,
+        540
+      ],
+      "sha256": "77cae78df8763098e22a64b18453f92f5338af408bf8c1beecd5caa86c69fffc"
+    },
+    {
+      "path": ".art-work/p104-ui/reviewed-shots/toy-controls.png",
+      "size": [
+        1920,
+        1080
+      ],
+      "sha256": "85210f6627d0146f902cc8a5ed262899fb5a8ab8332a91e5b0ec288da754e9bc"
+    }
+  ],
+  "python_contract_tests": 2,
+  "independent_audit_tests": 2,
+  "audit_tamper_categories": 8,
+  "source_sha256": {
+    "assets/farming/facilities/facility_manifest.json": "ea7e433366aea67858362d5c3368fe16fdc561129c697791fe7e648dc121cf9e",
+    "content/farming/baked/encyclopedia/encyclopedia.json": "ff566fb48a8425459d246382239510a4925d4d6d5fbc6a1ab951e48516edeb8a",
+    "content/farming/baked/p8/production.json": "c457ca2c610e9a97657eee38d99092cf5946a1c295385ecbec2b38b4ee843d3b",
+    "content/farming/encyclopedia/encyclopedia.json": "dd9a13a4ee9b95e85873d4822cdc2b2760e5152181fd91e7356d8a11daf8aef3",
+    "content/farming/p8/grounding.json": "8b4fcbad7253ba3b869f15a2d45d9c0c18238a5e35fe3f38810cd983f04783c7",
+    "content/farming/p8/production.json": "f0692c65540be0ac7f1830da43f4dd3cd0c6f61ab808f193be86cb4282eb911f",
+    "scripts/farming/core/clock/farm_clock.gd": "db609b384329910db26516c625558f0c341cb12e76ca15a320bf43ae658be3d2",
+    "scripts/farming/core/crops/crop_manager.gd": "3299be88aa711506e71436d2e9dd8a16007465190ffad97d7630bba794d325e5",
+    "scripts/farming/core/crops/farm_batch.gd": "3c4de9c233c7e689b1e607afda45fc4db00b9820bc19cf2ed1576d9b243948ae",
+    "scripts/farming/core/economy/farm_economy.gd": "348fb25b1c02606c48fda7fb50b012d6901b583201ab8fb4efd1118393db55e9",
+    "scripts/farming/core/economy/farm_records.gd": "8c2a333bf580e7d3a5445084bd894683c216ea72b605a2b447aeb3694990e082",
+    "scripts/farming/core/economy/farm_tools.gd": "741422a6d03de15f79fb0c493958a439e96430b58a7b83fc1d5e1da7f9e3b39a",
+    "scripts/farming/core/economy/farm_tutorial.gd": "4bc0cd34c2704d6fcc98e3209656f78aeaa40e6b89ec1080f33215878bee4d08",
+    "scripts/farming/core/farm_data.gd": "080894529f77232f710610ff64af09a6c3190de08a532945d11e546bf2be4c3f",
+    "scripts/farming/core/grid/land_grid.gd": "e24c80851df8452158f52cfd0e147d79c26be9d3064c3bb0ca3910fbf8bdc762",
+    "scripts/farming/core/inventory/farm_inventory.gd": "327ce0d0e6d932fc87f64da9e330c9b5a15cde034f19ef9b9c05fe4be1f3a0e7",
+    "scripts/farming/core/storage/farm_settings.gd": "decf201326acbb945a855ca775bbe590f11f948b22001d3a9f05f54f6f257f47",
+    "scripts/farming/core/storage/farm_slot_store.gd": "3a92403198f322dcb547edb6a004141c50eb15ea9f73360dc2166630c2f9a17c",
+    "scripts/farming/core/storage/farm_snapshot.gd": "30057c7f1f70647a2cf46873774905af25436f1ae852fcdcffa03fe75b814c03",
+    "scripts/farming/p8/p102_rooms.gd": "3859294abcfcd0ee2035363b19af4a4e1a4ce2d8861bcfb6ca9f873c9ee708fc",
+    "scripts/farming/p8/p102_ui.gd": "7849a5af3c9fc4c883ee61952495c826f994b44de117339643c4186da71ebf73",
+    "scripts/farming/p8/p103_ranch.gd": "5864d855a310bdf809480a2576aadf1c2862258640156ca96a999640fc8184b6",
+    "scripts/farming/p8/p103_ui.gd": "a439a543099695179713c876b52531fccd695f3dd674a52cbaa6b91d8fa33d97",
+    "scripts/farming/p8/p104_codec.gd": "0db71b4f87ca15a0a85d27eb149220bc2e6982080644efd4c4c870c9f1580a73",
+    "scripts/farming/p8/p104_services.gd": "8adcd6a0785a6d956d5d91dcee82c9c016a85fd16fe6ebbfacfefc1f35a8f211",
+    "scripts/farming/p8/p104_ui.gd": "276948228208c2f3f03e7671b6359c6416ee5d971ce8e0e31b27f32c9118334e",
+    "scripts/farming/p8/p10_logistics.gd": "88064f2601bee19863411b68d6d7d6a8be27ad6c14fb3b8d17b16cf33f844fcc",
+    "scripts/farming/p8/p10_ui.gd": "b44bc3d5735ee284321b830839846bdcca733c8232847cba3ff53c29fa4475db",
+    "scripts/farming/p8/p86_environment_trial.gd": "d26465451720e33998bef5fd7f3cc9483c878500ccf5424bb816b43387841b25",
+    "scripts/farming/p8/p87_grounding.gd": "b7f2f65c33e3fd3b40eb09ca3b74cf2346dde726dbcb357a394777411477e58c",
+    "scripts/farming/p8/p87_projection.gd": "ec0cb9a9ea40c2fd7255d575d86c29d0746a997c0f8a25ab30eebfa66f081c42",
+    "scripts/farming/p8/p87_projection_trial.gd": "92d347a604c1814e739760f8a02c2c22099d5a216f6182a45362a05c3d54b7ef",
+    "scripts/farming/p8/p87_scene.gd": "9f6e4beadf3191f93d8226870683913f34803c60417a20b96e64d5163b870225",
+    "scripts/farming/p8/p8_data.gd": "b22c0cf3550c6b24b676c9cdfcf4418a395748ede8374b1b60bbad15b5ace6b7",
+    "scripts/farming/p8/p8_devices.gd": "412750985cd3d92fee61f24301730005142aefa46c198e003cd7d68937184ca8",
+    "scripts/farming/p8/p8_encyclopedia.gd": "1099b2c8c1ab2880296f87dd30d9fb3d2c4453f9cc9111b6fc7224108ccb1704",
+    "scripts/farming/p8/p8_environment_visuals.gd": "a3b3ba38f6eac34de2d325ee89bf38a87e16c9939d95b242567ceb39f87ef53e",
+    "scripts/farming/p8/p8_facility_visuals.gd": "8291ec0819a74825f08732dfb5539de79f859d3b546d3ef9802e7b59572b29f7",
+    "scripts/farming/p8/p8_flowers.gd": "534e3fe0a28a2e8efd5911304ffff0e81651ff83c1bcc57523bac3a44af2a62c",
+    "scripts/farming/p8/p8_grounding.gd": "d1e87f2f71b8edaf03e996a9c2513174a3bdd48a5c22b39b7104586200cda473",
+    "scripts/farming/p8/p8_handbook.gd": "090e730737ec532fe6803e1295ac2a94deb12c7191f4360b1bcfd5209c6ecc1d",
+    "scripts/farming/p8/p8_husbandry.gd": "f1a6d751d794f143c37605f1ef353a3057422a4de7864615b6ded947140f2104",
+    "scripts/farming/p8/p8_land.gd": "b8256fae73f308ad906375920ab7d332fb49c9932ab6b7b0ed8d553c88036873",
+    "scripts/farming/p8/p8_operations.gd": "0d14214da65fd23cb89de0b73336374935bfbd1e1442a42465eb072f5cbf58dd",
+    "scripts/farming/p8/p8_plant_visuals.gd": "455c17f3ea67a4dc84bf5657006e0e0727cbc84e1c1bffe4171dcad0193f9bb5",
+    "scripts/farming/p8/p8_research.gd": "8215ee994ab2938481e3e29d9ce20358732af602490388f2153d373db6ee11aa",
+    "scripts/farming/p8/p8_scene.gd": "97382e6c00ae8f21404f57af5449b6dbf3c33fa5472a509aa8247d6267352a3b",
+    "scripts/farming/p8/p8_slot_store.gd": "88c52b47692fa98e30d1671626385e98b9219922090b874fdfa39ef8744386e0",
+    "scripts/farming/p8/p8_snapshot.gd": "259b70e1cde9228ec2ef225f314f6a150e2c512888cd1a27c1f37f7774f936f8",
+    "scripts/farming/p8/p8_ui_style.gd": "4067a3d2730e35a1c6a09e56d03aa8b9c3216782c3a67aa2865a54424a0fabbf",
+    "scripts/farming/p8/p8_workforce.gd": "2a7bac85fc99d3016862b379bf71e21e67b6b90166065b744c1de73a18e5efd6",
+    "scripts/farming/p8/p8_world.gd": "c39b1f70b510ba5b4f668f5e739c077b613cfd9280aad4b333eeb19bd8253d7e",
+    "scripts/farming/p8/room_geometry.gd": "a99d7170de76d5a972c79d6b374e48b8a92413de28c2fc07c52db6a19b33d861",
+    "scripts/farming/tests/run_p104_capacity.gd": "6191ab25f4a64cc7e0af5d0dc178f8a6eabd443fa52bcfa4945174a592c183cc",
+    "scripts/farming/tests/run_p104_playtest.gd": "2eef1964aa41dd338953bd9c01ab71c84bd6a14b5631b9007df505ced4655e3a",
+    "scripts/farming/tests/run_p104_smoke.gd": "2ad0aa6239fd98b5ba3d57afc779354b7fa3d08aa5f4bb61cc4a06db2507342c",
+    "scripts/farming/tests/run_phase102.gd": "f4b1e3fd92dc6182cd9c373dc68e46716f27e4e8aed299fe947338f81475874e",
+    "scripts/farming/tests/run_phase103.gd": "9352b5e1f39e2e39271c1d98210099da6f91168590a2626976a31cc426660209",
+    "scripts/farming/tests/run_phase104.gd": "34ea948b2c9c73e74d12788bfe4d7be39cc6a230c91e57a593d7aaf01a959f0f",
+    "scripts/farming/tests/run_phase104_ui.gd": "921c027d423979f3d5f1971b6d517089232a4488c7a1efa34b87e6b3e6f088ce",
+    "scripts/farming/v1/v1_data.gd": "2943ae11e72917b9810fe31e196e3bfb5022e9d373da2b5ab7a96448ac51a788",
+    "scripts/farming/v1/v1_journal.gd": "596b2bcbfe78a4aa6ebf842f7ec75c6ce48f3ffc890b0a0ce07b885a5d2fe81b",
+    "scripts/farming/v1/v1_orders.gd": "6af4a9ef4956f5c467ccf3f357d74d066bf70adf708d62c01de44386ffd65791",
+    "scripts/farming/v1/v1_scene.gd": "18e195d32dc59c3b6a4b976298a3ea1cf709ea203caf546b584c0f31aaf3ebcd",
+    "scripts/farming/v1/v1_settings.gd": "64a645aa99d26ce188e7bfbe2fed58b47124656df6fc410b1f6d1126df549f24",
+    "scripts/farming/v1/v1_slot_store.gd": "3e0ff7e4d8fb67d4e0c326a91f6868db9660e2325900489fcc4d3d366664133a",
+    "scripts/farming/v1/v1_snapshot.gd": "a44d3edf1116636986bfdf284854fc00487e7534d493aaedfc21b1480109e2d4",
+    "scripts/farming/v1/v1_ui_icons.gd": "d2904eb3824ad27ff643c5912a23dd90d1454c7facc56cce12d33f6e5e09bfea",
+    "scripts/farming/v1/v1_ui_style.gd": "cf23c35e0eb220951ff2e9198a48803bc439cf4b5ccf58f29cc27e28979b62ef",
+    "scripts/farming/v1/v1_workforce.gd": "d35652e7eb4964f3d056daa63b00b6feb09ae8cfe3a44b5c003f7300e67fb9e0",
+    "scripts/farming/v1/v1_world.gd": "1dddbd397ef94260b397bf80c5bf3cb350eed419f02d17e6a19f56b090983490",
+    "scripts/farming/v1/v1_world_state.gd": "774e5873f4036738ef4c71407485df06b918dd07e47c70b6a313318a5856e38c",
+    "scripts/farming/v2/v2_data.gd": "5a7d38c5371c2a20fb961dcb12396031cc77fcd3d44341eb579b235fdfd3cc1f",
+    "scripts/farming/v2/v2_husbandry.gd": "7641039529798a22f183fe36c8784b6fc823cbcaaafdb47d8dab527f61b7a024",
+    "scripts/farming/v2/v2_reports.gd": "7a1795573a8a10eb1a2c77cdd0e172974f50d16f22b0a3e00138eb61297a0d58",
+    "scripts/farming/v2/v2_resource_ledger.gd": "4dec130b159e404f390526c4126d9dabb05e8772c1d7bf8c0292c60cb9340578",
+    "scripts/farming/v2/v2_scene.gd": "d0701ae13c31185619187b5c3774e65c0d245a3ad91074c6a3192188070eebbf",
+    "scripts/farming/v2/v2_slot_store.gd": "496095c968bf593856c8b4a4dd25a8756f004a72c1c1f41a79fcf441159fb482",
+    "scripts/farming/v2/v2_snapshot.gd": "1726f69c494fa77bec2a96f71625041e132b194f522057866a37c4e50bf063af",
+    "scripts/farming/v2/v2_world.gd": "41260beed3b8a7bdf976a2d9cc1dc2085201f1e005414c42ae029293182d8939",
+    "tools/farming/audit_p104_playtest.py": "b2a9b5ea8383d46d6d61e1d3bf01a87b85ab2abb35b3f31280b0e43f8df6b9ed",
+    "tools/farming/collect_p104_evidence.py": "8a712917a8e8c227cfb2a7744c78c12c9c91befb0929513e68efca36f63c2405",
+    "tools/farming/gen_p104_facility_art.py": "dc3b4b033ac6fb655a70fb7fda4ba849293ba18e75a939b22fbcd0651272e5b5",
+    "tools/farming/qc_p104_assets.py": "68f5da618ceef2107d2881b2df84b282eee8a6de67775b6a162e5d63b7ebf5ed",
+    "tools/farming/report_p104_costs.py": "56e62a0e8e7478fb89e88704be979559b9ec5f91f825d16618b1760401382c9a",
+    "tools/farming/test_p104.ps1": "913dc6dad0f6b9dc14e4d60b1b4dd5c1a6255e66cb7275c21d402139eb0b3781",
+    "tools/farming/test_p104_audit.py": "b88ad8d20d2e1caaeac74507a0130b73f6467e9b8d8c0a4b14a8c9c1dca9b2f9",
+    "tools/farming/test_p104_contract.py": "a8201f200bcfe4324870bda0e7abedd7f3c9510e3a9fd85afdad63911fec1456",
+    "tools/farming/validate_p104.py": "f1bcfc11f1f3cc727be010deca3ff9a402383938652b36140bd1b22c9229f394"
+  },
+  "artifact_sha256": {
+    ".art-work/p104-playtest/final-v3/structure/scenario.json": "42c9bab81c92f045271aa2b0e0b294d26cff950a7ce96ccca0e8744ce9d65c67",
+    ".art-work/p104-playtest/final-v3/hosts/scenario.json": "daba6146559819bdb16bb2dfe2b4257181020308b36511546338abb774bbee9f",
+    ".art-work/p104-playtest/final-v3/toy/scenario.json": "27746a3e10a78213dca2f196622d6629e96d8996dace5299f80b18569e6cd03c",
+    ".art-work/p104-playtest/final-v3/breeding/scenario.json": "e4980c1bbaef22f9bb8b04c2b3085e071b681f87876ffbba1c7f530ba35d6215",
+    ".art-work/p104-playtest/final-v3/work/scenario.json": "17610a663adc0514c15338a4c61d3d4730e2dacf01c061d48fd1d59f48ed3421",
+    ".art-work/p104-playtest/final-v3/compound/scenario.json": "1024eb5df3dde8639bf8c2756b66f18536d5b8ac29b4bb0578f0f8567d35fa22",
+    ".art-work/p104-playtest/final-v3/breeding-base/scenario.json": "c96083fd64722e6192cf0eba2e1869299459ced0129baa9d9e155a728187777e",
+    ".art-work/p104-playtest/final-v3/work-base/scenario.json": "97a8866e83e48827ae84545ab0f96bace961aeb1c0a426ed6fa5438403d3ca83",
+    ".art-work/p104-smoke/final-v1.json": "cfd52954f8d8e3aa4fdba55c7bb766f54c3fd255aed05820a4c147ad6515ee4a"
+  },
+  "log_sha256": {
+    ".art-work/p104-playtest/final-v2/logs/model.stdout.log": "f568da77c4213dd7e77b7b6c1d84aaee56f4c7b664ed65d92c026ccf93ee0c1d",
+    ".art-work/p104-playtest/final-v2/logs/model.stderr.log": "354f6b41afac0af85c870c4ddfdbe208e44ad5223ae6d89aba867d4090718998",
+    ".art-work/p104-playtest/final-v2/logs/agriculture.stdout.log": "65095a30ab1eac596d0c161d6c74c039f768726414efe7f79db5cbe1ca1f66fb",
+    ".art-work/p104-playtest/final-v2/logs/agriculture.stderr.log": "354f6b41afac0af85c870c4ddfdbe208e44ad5223ae6d89aba867d4090718998",
+    ".art-work/p104-playtest/final-v2/logs/ranch.stdout.log": "d08b5e5c36accdf02547e91f8f553fbc4e359d2bff3e3636d471f92ad963aa56",
+    ".art-work/p104-playtest/final-v2/logs/ranch.stderr.log": "354f6b41afac0af85c870c4ddfdbe208e44ad5223ae6d89aba867d4090718998",
+    ".art-work/p104-tests/capacity.log": "01fccd0cdeb0ff2e33da4571d6ffc203dcc5442345a200f430122f7e13938b66",
+    ".art-work/p104-tests/ui-gpu-reviewed.stdout.log": "0ade7d2d4b120eb216094eb385dc9e2101f0716b5f0caaa7991575bd3eb7aa0d",
+    ".art-work/p104-tests/ui-gpu-reviewed.stderr.log": "354f6b41afac0af85c870c4ddfdbe208e44ad5223ae6d89aba867d4090718998",
+    ".art-work/p104-tests/smoke-v7.log": "5e7e2e7c018bf9b07fed845b208de4f43ffe7a116f81b7545294c9a548826bc1"
+  },
+  "limitations": [
+    "Subjective player acceptance is not signed by the agent.",
+    "New facility art is deterministic placeholder art, not final production art.",
+    "Only the toy crafting route starts with the real 90-stone budget. Other modules and the 60-day smoke are labelled scaffolds, not profit tests.",
+    "Unlimited cheap juvenile purchases still make breeding economically unattractive; no price changes were included.",
+    "Historical P10.1-10.3 and boundary validation records are preserved. Early interrupted harness/debug attempts are not acceptance evidence.",
+    "The smoke independently audits 60 days of service history and the retained final 15 inventory-ledger days. Earlier inventory days passed runtime reconciliation and strict per-day codec checks; their external ledger rows were not retained.",
+    "Service histories are retained in saves; longer-horizon storage/performance optimization is a later task."
+  ]
+}

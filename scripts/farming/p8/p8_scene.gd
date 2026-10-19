@@ -16,6 +16,25 @@ const Encyclopedia := preload("res://scripts/farming/p8/p8_encyclopedia.gd")
 var encyclopedia := Encyclopedia.new(self)
 const LogisticsUI := preload("res://scripts/farming/p8/p10_ui.gd")
 var logistics_ui := LogisticsUI.new(self)
+## Chosen orientation for the next agriculture-station placement.
+var build_facing := "east"
+const RoomsUI := preload("res://scripts/farming/p8/p102_ui.gd")
+const RanchUI := preload("res://scripts/farming/p8/p103_ui.gd")
+const ServicesUI := preload("res://scripts/farming/p8/p104_ui.gd")
+var rooms_ui := RoomsUI.new(self)
+var ranch_ui := RanchUI.new(self)
+var services_ui := ServicesUI.new(self)
+
+func _new(slot: int, overwrite: bool) -> void:
+	rooms_ui.floor_tool=""
+	rooms_ui.field_tool=false
+	logistics_ui.placing=""
+	super(slot,overwrite)
+
+func _select_tool(kind: String) -> void:
+	rooms_ui.floor_tool=""
+	rooms_ui.field_tool=false
+	super(kind)
 var production_visuals := true
 var _facility_thumbnails: Dictionary = {}
 var visual_trial_profile := "baseline"
@@ -249,9 +268,46 @@ func _show_cell() -> void:
 		_show_land(parcel)
 		return
 	super()
+	if _started and world.grid.in_bounds(selected.x,selected.y):
+		_label(sidebar,"铺面：%s" % {"ordinary":"普通地板","farmland":"耕地","natural":"自然地面"}[world.rooms.floor_kind(selected)])
+		var field: Dictionary = world.rooms.field_at(selected)
+		if not field.is_empty(): _label(sidebar,"所属田块：%s（#%d）" % [field["name"],field["uid"]])
+		_button(sidebar,"农业区与地板",rooms_ui.open)
+		if not world.facility_at(selected).is_empty() and String(world.facility_at(selected)["facility_id"]) in ["pen","rock_workyard","dispatch_station","feed_trough","small_bed","medium_bed","large_bed","care_table","soothing_station","toy_station"]:
+			_button(sidebar,"畜牧分区",ranch_ui.open)
 
 func _board_input(event: InputEvent) -> void:
+	if _started and not shade.visible and not is_instance_valid(confirmation) and rooms_ui.field_tool and _context == "rooms":
+		if event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_RIGHT:
+			rooms_ui.open()
+			return
+		if event is InputEventMouseButton and not event.pressed and event.button_index == MOUSE_BUTTON_LEFT and not _text_focus():
+			rooms_ui.click_field(_cell(event.position))
+			return
+	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_RIGHT and event.pressed:
+		rooms_ui.floor_tool=""
+		ranch_ui.toggle_erase()
+	if _started and not shade.visible and not is_instance_valid(confirmation) and not rooms_ui.floor_tool.is_empty() and event is InputEventMouseMotion and not _map_pan:
+		_hover=_cell(event.position)
+		var change: Dictionary=world.rooms.preview_floor(_hover,rooms_ui.floor_tool)
+		hover_hint.text=change.get("summary",change.get("reason",""))
+		hover_hint.tooltip_text=hover_hint.text
+		overlay.queue_redraw()
+		return
+	if _started and not shade.visible and not is_instance_valid(confirmation) and not rooms_ui.floor_tool.is_empty() and event is InputEventMouseButton and event.button_index==MOUSE_BUTTON_LEFT:
+		if not event.pressed:
+			_drag=false
+			selected=_cell(event.position)
+			_result(world.rooms.set_floor(selected,rooms_ui.floor_tool))
+			_show_cell()
+			overlay.queue_redraw()
+		return
 	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_RIGHT and event.pressed: logistics_ui.placing = ""
+	if _started and not shade.visible and not is_instance_valid(confirmation) and event is InputEventMouseButton and event.button_index==MOUSE_BUTTON_LEFT and not event.pressed 			and (not ranch_ui.zone_tool.is_empty() or ranch_ui.paint_zone > 0) and not _text_focus():
+		selected=_cell(event.position)
+		ranch_ui.click_cell(selected)
+		overlay.queue_redraw()
+		return
 	if _started and not shade.visible and not is_instance_valid(confirmation) and not _text_focus():
 		if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_MIDDLE:
 			_map_pan = event.pressed
@@ -263,6 +319,19 @@ func _board_input(event: InputEvent) -> void:
 				overlay.queue_redraw()
 				return
 			_map_pan = false
+		# Station placement carries the chosen facing; every other build keeps
+		# the shared base path unchanged.
+		if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT and not event.pressed \
+				and build_tool == "field_service_station" and _drag:
+			_drag = false
+			_drag_end = _cell(event.position)
+			selected = _drag_end
+			# The P8 world takes the orientation; the base class signature stays 2-arg.
+			var p8w: Variant = world
+			_result(p8w.build_facility(selected,build_tool,build_facing))
+			_show_cell()
+			overlay.queue_redraw()
+			return
 	else:
 		_map_pan = false
 	super(event)
@@ -273,6 +342,8 @@ func _board_input(event: InputEvent) -> void:
 			hover_hint.text = "%s · %d元石 · 点击查看购买条件" % [world.land.parcels[id]["name"],world.land.parcels[id]["price"]]
 
 func _draw_world_entities(target: Node2D, readable: float) -> void:
+	rooms_ui.draw_ground(target,false)
+	ranch_ui.draw_ground(target,false)
 	var entities: Array[Dictionary] = []
 	for uid in world.crops:
 		var crop: Dictionary = world.crops[uid]
@@ -347,6 +418,15 @@ func _draw_facility_preview(target: Node2D, rect: Rect2) -> void:
 
 func draw_map(target: Node2D) -> void:
 	super(target)
+	# Build preview for the agriculture station: the directed service zone that
+	# the placement will lock in, clipped to the map like the runtime zone.
+	if build_tool == "field_service_station" and _started and world.grid.in_bounds(_hover.x,_hover.y):
+		var def: Dictionary = world.facility_defs[build_tool]
+		var zone: Rect2i = world.logistics.directed_zone(_hover, def["footprint"], build_facing).intersection(world.grid.bounds())
+		if zone.size.x > 0 and zone.size.y > 0:
+			var zone_rect := Rect2(Vector2(zone.position)*64,Vector2(zone.size)*64)
+			target.draw_rect(zone_rect,Color("e8d9a0",0.18))
+			target.draw_rect(zone_rect,Color("e8d9a0"),false,2)
 	var font := theme.default_font
 	var readable := maxf(1.0, 1.0/(camera.zoom.x*_ui_scale))
 	for id in world.land.parcels:
@@ -363,6 +443,8 @@ func draw_map(target: Node2D) -> void:
 
 func _extra_nav() -> void:
 	super()
+	_icon(top_nav,"area","农业区 · 地板与收获奖励",rooms_ui.open)
+	_icon(top_nav,"dispatch_station","畜牧分区 · 名册、功能区与排班",ranch_ui.open)
 	_icon(top_nav,"growth_gu","后勤蛊 · 入驻、生产与维护",logistics_ui.open)
 	_icon(top_nav,"research_bench","研究 · 三层工艺网络",_show_research)
 	_icon(top_nav,"area","购地 · 陆地与东西侧水库",_show_land)
@@ -385,6 +467,7 @@ func _market_lock_text(item_id: String) -> String:
 ## Build catalog keeps every registered facility visible; gated ones show the
 ## lock reason instead of a placement button.
 func _show_build() -> void:
+	rooms_ui.floor_tool=""
 	_context = "build"
 	_page("营建 · 加工设施")
 	_label(sidebar,"选择设施，再到地图点击放置。建造消耗1AP，工具持续选中；右键取消。")
@@ -418,17 +501,40 @@ func _show_build() -> void:
 				choice.selected = 0
 				choice.item_selected.connect(func(index): world.build_substitute = String(choice.get_item_metadata(index)); _show_build())
 				card.add_child(choice)
+			if ident == "field_service_station":
+				var facing_row := HBoxContainer.new()
+				card.add_child(facing_row)
+				_label(facing_row,"朝向")
+				var facing_choice := OptionButton.new()
+				for dir in ["east","south","west","north"]:
+					facing_choice.add_item(logistics_ui.FACING_NAMES[dir]+"向")
+					facing_choice.set_item_metadata(facing_choice.item_count-1, dir)
+				facing_choice.selected = ["east","south","west","north"].find(build_facing)
+				facing_choice.item_selected.connect(func(index): build_facing = String(facing_choice.get_item_metadata(index)))
+				facing_row.add_child(facing_choice)
+				_label(card,"蛊服务区在朝向侧3×3，建造时选定；之后转向1AP、次日开日生效。")
 			_icon(card,"build","放置 "+definition["name"],func():
 				_close_page()
 				_select_tool("inspect")
 				build_tool = ident
-				notice.text = "放置%s · 占地%d×%d，%d元石+%s · 右键取消" % [definition["name"],definition["footprint"][0],definition["footprint"][1],definition["cash"],_materials(definition["materials"])])
+				notice.text = "放置%s · 占地%d×%d，%d元石+%s%s · 右键取消" % [definition["name"],definition["footprint"][0],definition["footprint"][1],definition["cash"],_materials(definition["materials"]),
+					(" · 服务区%s向3×3" % logistics_ui.FACING_NAMES[build_facing]) if ident == "field_service_station" else ""])
 
 ## Non-habitat panels: research benches explain the pending system, recipe cards
 ## carry an explicit lock line and stay unstartable while gated.
 func _show_facility(facility: Dictionary) -> void:
 	logistics_ui.host_section(int(facility["uid"]))
+	if facility["facility_id"]=="toy_station": services_ui.toy_controls(sidebar,int(facility["uid"]))
 	var definition: Dictionary = world.facility_defs[facility["facility_id"]]
+	if String(facility["facility_id"]) in ["pen","rock_workyard","soothing_station","toy_station"]:
+		_picture(sidebar,String(facility["facility_id"]),64)
+		_heading(sidebar,String(definition["name"]))
+		_encyclopedia_link(sidebar,"facility:"+String(facility["facility_id"]))
+		var purpose:={"pen":"由畜牧分区统一管理动物与产出。","rock_workyard":"在畜牧管理页设置动物、日程、劳动配方与领取产出。","soothing_station":"在完整圈养区提供安抚蛊槽，提升实际繁殖进度；每单位服务4空间。","toy_station":"在额外放牧区管理耐用玩具；空槽保留基础活动，装球后提供概率恢复服务。"}
+		_label(sidebar,String(purpose[String(facility["facility_id"])]))
+		_button(sidebar,"打开畜牧管理",ranch_ui.open)
+		_icon(sidebar,"clear","拆除（1AP，无返还）",func(): _confirm("拆除此畜牧设施？先处理动物、在制批次与工作余量。",func(): _result(world.demolish_facility(int(facility["uid"])));_show_cell()))
+		return
 	if definition.get("kind") == "research":
 		_show_research_bench(facility)
 		return
@@ -492,12 +598,15 @@ func _encyclopedia_link(parent: Node, entity_id: String) -> Button:
 	return button
 
 func _context_refresh() -> void:
+	if _context == "rooms": rooms_ui.open(); return
+	if _context == "ranch": ranch_ui.open(); return
 	if _context == "logistics": logistics_ui.open()
 	if _context == "encyclopedia":
 		encyclopedia.refresh()
 
 func _show_report() -> void:
 	super()
+	rooms_ui.report(sidebar)
 	if not world.logistics.state["provisioned"]: return
 	var card := _card(sidebar)
 	_heading(card,"后勤蛊 · 实际维护与生产")
@@ -507,6 +616,15 @@ func _show_report() -> void:
 		if int(bill["fees"]) > 0:
 			_label(card,"服务日%d：维护%d元石，食料%s" % [int(bill["day"])+1,int(bill["fees"]),logistics_ui.items_text(bill["food"])])
 	_icon(card,"growth_gu","查看部署、生产进度与收取",logistics_ui.open)
+
+func _result(result: Dictionary) -> void:
+	super(result)
+	var receipt: String=rooms_ui.result_text(result)
+	if receipt.is_empty(): return
+	notice.text=receipt
+	notice.tooltip_text=receipt
+	window_feedback.text=receipt
+	window_feedback.tooltip_text=receipt
 
 func _show_help() -> void:
 	_context = "help"
@@ -915,7 +1033,8 @@ func _show_research() -> void:
 # --- P8.d flower sources -----------------------------------------------------
 
 func _crop_extra(crop: Dictionary) -> void:
-	logistics_ui.effect_details(sidebar,Vector2i(int(crop["origin"][0]),int(crop["origin"][1])))
+	logistics_ui.crop_agriculture(sidebar, crop)
+	rooms_ui.crop_details(sidebar,crop)
 	_encyclopedia_link(sidebar,"crop:" + String(crop["crop_id"]))
 	if not world.flowers.is_flower_crop(String(crop["crop_id"])):
 		return
