@@ -645,7 +645,7 @@ func _ranch_zone_of(world, type_id: String) -> int:
 
 func _ranch_module_ready(world) -> bool:
 	for spec in [["pen", 0, 11], ["feed_trough", 2, 11], ["feed_trough", 3, 11], ["small_bed", 4, 11],
-			["dispatch_station", 8, 11], ["rock_workyard", 9, 11], ["rock_workyard", 11, 11],
+			["dispatch_station", 8, 11], ["rock_breaking_yard", 9, 11], ["ore_sorting_yard", 11, 11],
 			["feed_trough", 4, 10], ["feed_trough", 7, 10], ["small_bed", 8, 10]]:
 		if world.facility_at(Vector2i(int(spec[1]), int(spec[2]))).is_empty():
 			return false
@@ -777,7 +777,7 @@ func _run_route(route: String) -> void:
 			["field_service_station", 7, 9, ""], ["growth_lamp", 7, 13, ""], ["bee_hive", 5, 9, ""],
 			["pen", 0, 11, ""], ["feed_trough", 2, 11, ""], ["feed_trough", 3, 11, ""],
 			["small_bed", 4, 11, ""], ["small_bed", 4, 12, ""],
-			["dispatch_station", 8, 11, ""], ["rock_workyard", 9, 11, ""], ["rock_workyard", 11, 11, ""],
+			["dispatch_station", 8, 11, ""], ["rock_breaking_yard", 9, 11, ""], ["ore_sorting_yard", 11, 11, ""],
 			["feed_trough", 4, 10, ""], ["feed_trough", 7, 10, ""], ["small_bed", 8, 10, ""],
 		]
 	else:
@@ -792,7 +792,7 @@ func _run_route(route: String) -> void:
 			["field_service_station", 7, 9, ""], ["growth_lamp", 7, 13, ""], ["bee_hive", 5, 9, ""],
 			["pen", 0, 11, ""], ["feed_trough", 2, 11, ""], ["feed_trough", 3, 11, ""],
 			["small_bed", 4, 11, ""], ["small_bed", 4, 12, ""],
-			["dispatch_station", 8, 11, ""], ["rock_workyard", 9, 11, ""], ["rock_workyard", 11, 11, ""],
+			["dispatch_station", 8, 11, ""], ["rock_breaking_yard", 9, 11, ""], ["ore_sorting_yard", 11, 11, ""],
 			["feed_trough", 4, 10, ""], ["feed_trough", 7, 10, ""], ["small_bed", 8, 10, ""],
 		]
 	var stock_plan: Array = [["fish_pond", 0, 2], ["bee_hive", 0, 2],

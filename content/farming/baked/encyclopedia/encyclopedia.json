@@ -437,7 +437,7 @@
           "text": "首次成熟仅判定一次；完整合格25%概率得果桑种苗×1，随首次成熟收取/成熟清理领取，留株不重抽"
         }
       ],
-      "icon": "plant",
+      "icon": "mulberry_tree",
       "id": "crop:mulberry_tree",
       "kind": "crop",
       "links": [
@@ -1307,7 +1307,7 @@
           "text": "普通岩石部分可用复合石板1:1或再生填料2:1整体替代（4份石）"
         }
       ],
-      "icon": "build",
+      "icon": "carbonization_nest",
       "id": "facility:carbonization_nest",
       "kind": "facility",
       "links": [
@@ -1514,7 +1514,7 @@
           "text": "普通岩石部分可用复合石板1:1或再生填料2:1整体替代（2份石）"
         }
       ],
-      "icon": "build",
+      "icon": "compost_mouse_den",
       "id": "facility:compost_mouse_den",
       "kind": "facility",
       "links": [
@@ -2013,7 +2013,7 @@
           "text": "普通岩石部分可用复合石板1:1或再生填料2:1整体替代（3份石）"
         }
       ],
-      "icon": "build",
+      "icon": "ore_sorting_yard",
       "id": "facility:ore_sorting_yard",
       "kind": "facility",
       "links": [
@@ -2256,7 +2256,7 @@
           "text": "普通岩石部分可用复合石板1:1或再生填料2:1整体替代（3份石）"
         }
       ],
-      "icon": "build",
+      "icon": "rock_breaking_yard",
       "id": "facility:rock_breaking_yard",
       "kind": "facility",
       "links": [
@@ -2317,7 +2317,7 @@
           "text": "普通岩石部分可用复合石板1:1或再生填料2:1整体替代（4份石）"
         }
       ],
-      "icon": "build",
+      "icon": "scale_station",
       "id": "facility:scale_station",
       "kind": "facility",
       "links": [
@@ -2388,7 +2388,7 @@
           "text": "普通岩石部分可用复合石板1:1或再生填料2:1整体替代（4份石）"
         }
       ],
-      "icon": "build",
+      "icon": "shell_forming_station",
       "id": "facility:shell_forming_station",
       "kind": "facility",
       "links": [
@@ -2444,7 +2444,7 @@
           "text": "叶丝蚕"
         }
       ],
-      "icon": "build",
+      "icon": "silkworm_rack",
       "id": "facility:silkworm_rack",
       "kind": "facility",
       "links": [
@@ -2625,7 +2625,7 @@
           "text": "普通岩石部分可用复合石板1:1或再生填料2:1整体替代（3份石）"
         }
       ],
-      "icon": "build",
+      "icon": "spirit_liquid_collector",
       "id": "facility:spirit_liquid_collector",
       "kind": "facility",
       "links": [
@@ -2767,7 +2767,7 @@
           "text": "普通岩石部分可用复合石板1:1或再生填料2:1整体替代（2份石）"
         }
       ],
-      "icon": "build",
+      "icon": "wool_station",
       "id": "facility:wool_station",
       "kind": "facility",
       "links": [
@@ -2903,7 +2903,7 @@
           "text": "保留个体（回到空闲成体）"
         }
       ],
-      "icon": "workers",
+      "icon": "carbonization_nest",
       "id": "species:carbon_belly_bug",
       "kind": "species",
       "links": [
@@ -2971,7 +2971,7 @@
           "text": "保留个体（回到空闲成体）"
         }
       ],
-      "icon": "workers",
+      "icon": "compost_mouse_den",
       "id": "species:compost_mouse",
       "kind": "species",
       "links": [
@@ -3031,7 +3031,7 @@
           "text": "保留个体（回到空闲成体）"
         }
       ],
-      "icon": "workers",
+      "icon": "spirit_liquid_collector",
       "id": "species:dew_shell_snail",
       "kind": "species",
       "links": [
@@ -3156,7 +3156,7 @@
           "text": "保留个体（回到空闲成体）"
         }
       ],
-      "icon": "workers",
+      "icon": "shell_forming_station",
       "id": "species:gravel_shell_snail",
       "kind": "species",
       "links": [
@@ -3224,7 +3224,7 @@
           "text": "保留个体（回到空闲成体）"
         }
       ],
-      "icon": "workers",
+      "icon": "silkworm_rack",
       "id": "species:leaf_silkworm",
       "kind": "species",
       "links": [
@@ -3284,7 +3284,7 @@
           "text": "保留个体（回到空闲成体）"
         }
       ],
-      "icon": "workers",
+      "icon": "scale_station",
       "id": "species:mineral_scale_lizard",
       "kind": "species",
       "links": [
@@ -3420,7 +3420,7 @@
           "text": "保留个体（回到空闲成体）"
         }
       ],
-      "icon": "workers",
+      "icon": "ore_sorting_yard",
       "id": "species:rock_belly_beast",
       "kind": "species",
       "links": [
@@ -3488,7 +3488,7 @@
           "text": "保留个体（回到空闲成体）"
         }
       ],
-      "icon": "workers",
+      "icon": "rock_breaking_yard",
       "id": "species:rock_mole",
       "kind": "species",
       "links": [
@@ -9703,7 +9703,7 @@
           "text": "可供货（金行）；供养值41：订单数量=ceil(需求/供养值)，回款=数量×卖价＋10%溢价"
         }
       ],
-      "icon": "gold",
+      "icon": "mineral_scale",
       "id": "resource:mineral_scale",
       "kind": "resource",
       "links": [],
@@ -9820,7 +9820,7 @@
           "text": "可供货（水行）；供养值11：订单数量=ceil(需求/供养值)，回款=数量×卖价＋10%溢价"
         }
       ],
-      "icon": "water",
+      "icon": "mucus",
       "id": "resource:mucus",
       "kind": "resource",
       "links": [],
@@ -9986,7 +9986,7 @@
           "text": "1元石/份（计入销售收入）"
         }
       ],
-      "icon": "wood",
+      "icon": "mulberry_leaf",
       "id": "resource:mulberry_leaf",
       "kind": "resource",
       "links": [],
@@ -10133,7 +10133,7 @@
           "text": "不可出售"
         }
       ],
-      "icon": "wood",
+      "icon": "mulberry_seed",
       "id": "resource:mulberry_seed",
       "kind": "resource",
       "links": [],
@@ -13658,7 +13658,7 @@
           "text": "可供货（土行）；供养值8：订单数量=ceil(需求/供养值)，回款=数量×卖价＋10%溢价"
         }
       ],
-      "icon": "earth",
+      "icon": "rock_shell",
       "id": "resource:rock_shell",
       "kind": "resource",
       "links": [],
@@ -13788,7 +13788,7 @@
           "text": "1元石/份（计入销售收入）"
         }
       ],
-      "icon": "wood",
+      "icon": "shed_skin",
       "id": "resource:shed_skin",
       "kind": "resource",
       "links": [],
@@ -13979,7 +13979,7 @@
           "text": "可供货（木行）；供养值9：订单数量=ceil(需求/供养值)，回款=数量×卖价＋10%溢价"
         }
       ],
-      "icon": "wood",
+      "icon": "silk",
       "id": "resource:silk",
       "kind": "resource",
       "links": [],
@@ -14433,7 +14433,7 @@
           "text": "交易出口＋水产用途预留：本期仅可出售或水行供货，水产加工配方尚未实装，百科不显示任何可用配方入口。"
         }
       ],
-      "icon": "water",
+      "icon": "spirit_liquid",
       "id": "resource:spirit_liquid",
       "kind": "resource",
       "links": [],
@@ -17228,7 +17228,7 @@
           "text": "牧草×1＋清水×1/单位/日"
         }
       ],
-      "icon": "fodder_grass",
+      "icon": "carbonization_nest",
       "id": "diet:carbon_belly_bug/base_diets/grass_water_meal",
       "kind": "diet",
       "links": [
@@ -17273,7 +17273,7 @@
           "text": "木炭×2＋腐殖土×1/轮/单位"
         }
       ],
-      "icon": "fodder_grass",
+      "icon": "carbonization_nest",
       "id": "diet:carbon_belly_bug/special_diets/bug_char_chips",
       "kind": "diet",
       "links": [
@@ -17318,7 +17318,7 @@
           "text": "木炭×4＋腐殖土×1/轮/单位"
         }
       ],
-      "icon": "fodder_grass",
+      "icon": "carbonization_nest",
       "id": "diet:carbon_belly_bug/special_diets/bug_char_twigs",
       "kind": "diet",
       "links": [
@@ -17358,7 +17358,7 @@
           "text": "牧草×1＋清水×1/单位/日"
         }
       ],
-      "icon": "fodder_grass",
+      "icon": "compost_mouse_den",
       "id": "diet:compost_mouse/base_diets/grass_water_meal",
       "kind": "diet",
       "links": [
@@ -17403,7 +17403,7 @@
           "text": "腐殖土×4/轮/单位"
         }
       ],
-      "icon": "fodder_grass",
+      "icon": "compost_mouse_den",
       "id": "diet:compost_mouse/special_diets/mouse_compost_fiber",
       "kind": "diet",
       "links": [
@@ -17448,7 +17448,7 @@
           "text": "腐殖土×3/轮/单位"
         }
       ],
-      "icon": "fodder_grass",
+      "icon": "compost_mouse_den",
       "id": "diet:compost_mouse/special_diets/mouse_compost_residue",
       "kind": "diet",
       "links": [
@@ -17488,7 +17488,7 @@
           "text": "牧草×1＋清水×1/单位/日"
         }
       ],
-      "icon": "fodder_grass",
+      "icon": "spirit_liquid_collector",
       "id": "diet:dew_shell_snail/base_diets/grass_water_meal",
       "kind": "diet",
       "links": [
@@ -17528,7 +17528,7 @@
           "text": "清水×2/单位/轮"
         }
       ],
-      "icon": "fodder_grass",
+      "icon": "spirit_liquid_collector",
       "id": "diet:dew_shell_snail/special_diets/dew_round",
       "kind": "diet",
       "links": [
@@ -17744,7 +17744,7 @@
           "text": "藻料×1＋清水×1/单位/日"
         }
       ],
-      "icon": "fodder_grass",
+      "icon": "shell_forming_station",
       "id": "diet:gravel_shell_snail/base_diets/algae_water_meal",
       "kind": "diet",
       "links": [
@@ -17789,7 +17789,7 @@
           "text": "岩壳片×2＋黏液×1/轮/单位"
         }
       ],
-      "icon": "fodder_grass",
+      "icon": "shell_forming_station",
       "id": "diet:gravel_shell_snail/special_diets/form_rock_shell",
       "kind": "diet",
       "links": [
@@ -17829,7 +17829,7 @@
           "text": "桑叶×1＋清水×1/单位/日"
         }
       ],
-      "icon": "fodder_grass",
+      "icon": "silkworm_rack",
       "id": "diet:leaf_silkworm/base_diets/mulberry_meal",
       "kind": "diet",
       "links": [
@@ -17869,7 +17869,7 @@
           "text": "桑叶×2/单位/轮"
         }
       ],
-      "icon": "fodder_grass",
+      "icon": "silkworm_rack",
       "id": "diet:leaf_silkworm/special_diets/silk_round",
       "kind": "diet",
       "links": [
@@ -17909,7 +17909,7 @@
           "text": "牧草×1＋清水×1/单位/日"
         }
       ],
-      "icon": "fodder_grass",
+      "icon": "scale_station",
       "id": "diet:mineral_scale_lizard/base_diets/grass_water_meal",
       "kind": "diet",
       "links": [
@@ -17949,7 +17949,7 @@
           "text": "复合陆养料×1＋清水×1/单位/日"
         }
       ],
-      "icon": "fodder_grass",
+      "icon": "scale_station",
       "id": "diet:mineral_scale_lizard/base_diets/land_meal",
       "kind": "diet",
       "links": [
@@ -17997,7 +17997,7 @@
           "text": "矿质补料×2/单位/轮"
         }
       ],
-      "icon": "fodder_grass",
+      "icon": "scale_station",
       "id": "diet:mineral_scale_lizard/special_diets/scale_round",
       "kind": "diet",
       "links": [
@@ -18172,7 +18172,7 @@
           "text": "牧草×1＋清水×1/单位/日"
         }
       ],
-      "icon": "fodder_grass",
+      "icon": "ore_sorting_yard",
       "id": "diet:rock_belly_beast/base_diets/grass_water_meal",
       "kind": "diet",
       "links": [
@@ -18212,7 +18212,7 @@
           "text": "复合陆养料×1＋清水×1/单位/日"
         }
       ],
-      "icon": "fodder_grass",
+      "icon": "ore_sorting_yard",
       "id": "diet:rock_belly_beast/base_diets/land_meal",
       "kind": "diet",
       "links": [
@@ -18265,7 +18265,7 @@
           "text": "富集矿砂×2＋尾砂×1/轮/单位"
         }
       ],
-      "icon": "fodder_grass",
+      "icon": "ore_sorting_yard",
       "id": "diet:rock_belly_beast/special_diets/concentrate_ore",
       "kind": "diet",
       "links": [
@@ -18305,7 +18305,7 @@
           "text": "木腐菇×1＋清水×1/单位/日"
         }
       ],
-      "icon": "fodder_grass",
+      "icon": "rock_breaking_yard",
       "id": "diet:rock_mole/base_diets/fungus_meal",
       "kind": "diet",
       "links": [
@@ -18350,7 +18350,7 @@
           "text": "碎铁矿×3/轮/单位"
         }
       ],
-      "icon": "fodder_grass",
+      "icon": "rock_breaking_yard",
       "id": "diet:rock_mole/special_diets/break_ore",
       "kind": "diet",
       "links": [
@@ -18395,7 +18395,7 @@
           "text": "砂砾×2＋石粉×1/轮/单位"
         }
       ],
-      "icon": "fodder_grass",
+      "icon": "rock_breaking_yard",
       "id": "diet:rock_mole/special_diets/break_stone",
       "kind": "diet",
       "links": [
@@ -19120,7 +19120,7 @@
           "text": "活体工艺：由啮岩鼹的特殊食谱执行（整体维护/自动计划），本条目与该食谱同源，勿重复计数"
         }
       ],
-      "icon": "build",
+      "icon": "rock_breaking_yard",
       "id": "recipe:break_ore",
       "kind": "recipe",
       "links": [
@@ -19182,7 +19182,7 @@
           "text": "活体工艺：由啮岩鼹的特殊食谱执行（整体维护/自动计划），本条目与该食谱同源，勿重复计数"
         }
       ],
-      "icon": "build",
+      "icon": "rock_breaking_yard",
       "id": "recipe:break_stone",
       "kind": "recipe",
       "links": [
@@ -19244,7 +19244,7 @@
           "text": "活体工艺：由炭腹虫的特殊食谱执行（整体维护/自动计划），本条目与该食谱同源，勿重复计数"
         }
       ],
-      "icon": "build",
+      "icon": "carbonization_nest",
       "id": "recipe:bug_char_chips",
       "kind": "recipe",
       "links": [
@@ -19306,7 +19306,7 @@
           "text": "活体工艺：由炭腹虫的特殊食谱执行（整体维护/自动计划），本条目与该食谱同源，勿重复计数"
         }
       ],
-      "icon": "build",
+      "icon": "carbonization_nest",
       "id": "recipe:bug_char_twigs",
       "kind": "recipe",
       "links": [
@@ -19872,7 +19872,7 @@
           "text": "活体工艺：由岩腹兽的特殊食谱执行（整体维护/自动计划），本条目与该食谱同源，勿重复计数"
         }
       ],
-      "icon": "build",
+      "icon": "ore_sorting_yard",
       "id": "recipe:concentrate_ore",
       "kind": "recipe",
       "links": [
@@ -20038,7 +20038,7 @@
           "text": "活体工艺：由砾甲蜗牛的特殊食谱执行（整体维护/自动计划），本条目与该食谱同源，勿重复计数"
         }
       ],
-      "icon": "build",
+      "icon": "shell_forming_station",
       "id": "recipe:form_rock_shell",
       "kind": "recipe",
       "links": [
@@ -20652,7 +20652,7 @@
           "text": "活体工艺：由堆肥鼠的特殊食谱执行（整体维护/自动计划），本条目与该食谱同源，勿重复计数"
         }
       ],
-      "icon": "build",
+      "icon": "compost_mouse_den",
       "id": "recipe:mouse_compost_fiber",
       "kind": "recipe",
       "links": [
@@ -20706,7 +20706,7 @@
           "text": "活体工艺：由堆肥鼠的特殊食谱执行（整体维护/自动计划），本条目与该食谱同源，勿重复计数"
         }
       ],
-      "icon": "build",
+      "icon": "compost_mouse_den",
       "id": "recipe:mouse_compost_residue",
       "kind": "recipe",
       "links": [

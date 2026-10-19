@@ -18,7 +18,7 @@ func fixture():
 func _initialize() -> void: call_deferred("run")
 func run() -> void:
 	var w = fixture()
-	check(Codec.SCHEMA==22 and Codec.normalize(w.to_snapshot())["ok"],"schema22 fresh valid")
+	check(Codec.SCHEMA==23 and Codec.normalize(w.to_snapshot())["ok"],"schema23 fresh valid")
 	for old in [17,18,19,20,21]:
 		var bad: Dictionary=w.to_snapshot();bad["schema"]=old
 		check(not Codec.normalize(bad)["ok"],"old schema rejected "+str(old))
@@ -387,7 +387,7 @@ func _old_disk_slots() -> void:
 	var store=Store.new(directory)
 	var w=World.new(store)
 	var before: Dictionary=w.to_snapshot()
-	for schema in [17,18,19,20,21]:
+	for schema in [17,18,19,20,21,22]:
 		var old: Dictionary=before.duplicate(true);old["schema"]=schema
 		var text:=JSON.stringify(old)
 		var envelope:=JSON.stringify({"schema":1,"slot_id":1,"saved_at":0,"snapshot_json":text,"checksum":text.sha256_text()})
