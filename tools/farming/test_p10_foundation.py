@@ -103,8 +103,8 @@ class LogisticsFoundation(unittest.TestCase):
         self.assertEqual(model['inputs'],{'clean_water':1})
     def test_new_recipe_reachable_without_extra_research(self):
         out=bake_p8.compile_config(self.source)
-        self.assertEqual(out['research_audit']['days'],44)
-        self.assertEqual(out['research_audit']['fee'],94)
+        self.assertEqual(out['research_audit']['days'],48)
+        self.assertEqual(out['research_audit']['fee'],104)
         project=next(r for r in out['research'] if r['id']=='farm_preparation')
         self.assertIn('mill_rice',project['unlocks']['recipes'])
 

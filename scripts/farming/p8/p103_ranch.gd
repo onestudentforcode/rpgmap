@@ -323,7 +323,7 @@ static func _intified_animal(row: Dictionary) -> Dictionary:
 		"served_once": bool(row["served_once"]),
 		"natural": {"round": int(row["natural"]["round"]), "units": int(row["natural"]["units"]),
 			"pending": bool(row["natural"]["pending"]), "paid": bool(row["natural"]["paid"]),
-			"diet_id": String(row["natural"].get("diet_id", ""))},
+			"diet_id": String(row["natural"].get("diet_id", "")), "paid_diet": String(row["natural"].get("paid_diet", ""))},
 		"breed": {"round": int(row["breed"]["round"]), "units": int(row["breed"]["units"]), "pending": bool(row["breed"]["pending"])},
 		"death_streak": int(row["death_streak"]),
 		"account": {"w": int(account["w"]), "r": int(account["r"]), "fails": int(account["fails"])}}
@@ -767,7 +767,7 @@ func _new_animal(uid: int, species_id: String, zone_uid: int, bed_uid: int, bed_
 		"zone_uid": zone_uid, "bed_uid": bed_uid, "bed_slot": bed_slot,
 		"pending": {}, "diet_id": diet_id, "pattern": "standard", "priority": 0,
 		"fatigue": 0, "ban_until": -1, "qualified_until": -1, "served_once": false,
-		"natural": {"round": 0, "units": 0, "pending": false, "paid": false, "diet_id": natural_diet},
+		"natural": {"round": 0, "units": 0, "pending": false, "paid": false, "diet_id": natural_diet, "paid_diet": ""},
 		"breed": {"round": 0, "units": 0, "pending": false},
 		"death_streak": 0, "account": {"w": 0, "r": 0, "fails": 0},
 		"anchor": anchor, "miss_streak": 0, "bad_water_streak": 0}
@@ -901,8 +901,13 @@ func claim_natural(facility_uid: int) -> Dictionary:
 	for row in animals_in_zone(int(zone_row["uid"]), [production_type]):
 		if String(row["species_id"]) != station_species or not bool(row["natural"]["pending"]):
 			continue
-		for item in natural_config(station_species)["outputs"]:
-			var amount := int(natural_config(station_species)["outputs"][item])
+		var payout: Dictionary = natural_config(station_species)["outputs"]
+		var variants: Dictionary = natural_config(station_species).get("variants", {})
+		var paid_diet := String(row["natural"].get("paid_diet", ""))
+		if variants.has(paid_diet):
+			payout = variants[paid_diet]["outputs"]
+		for item in payout:
+			var amount := int(payout[item])
 			if not Scalars.whole(world.inventory.count(String(item)) + int(outputs.get(String(item), 0)) + amount):
 				return _error("输出库存越界：" + String(world._items[String(item)]["name"]))
 			outputs[String(item)] = int(outputs.get(String(item), 0)) + amount
@@ -920,6 +925,7 @@ func claim_natural(facility_uid: int) -> Dictionary:
 		natural["units"] = 0
 		natural["pending"] = false
 		natural["paid"] = false
+		natural["paid_diet"] = ""
 	for item in outputs:
 		world.inventory.add(String(item), int(outputs[item]))
 	world._record_flow(outputs, {}, "精养畜产领取")
@@ -1414,6 +1420,7 @@ func _intensive_care(row: Dictionary, t: int, mutate: bool, shadow: Dictionary, 
 		else:
 			_shadow_spend(diet, shadow)
 		natural["paid"] = true
+		natural["paid_diet"] = diet_id
 		_record("natural", "round_start", {"animal": int(row["uid"]), "round": int(natural["round"]),
 			"diet": diet_id, "inputs": diet.duplicate(), "station": station_uid})
 	var target := int(config["units"])
@@ -1493,7 +1500,26 @@ func _loach_service(row: Dictionary, t: int, mutate: bool, shadow: Dictionary, _
 				if mutate:
 					world._report_event({"category": "growth", "facility_uid": int(yard["uid"]), "kind": "批次完成",
 						"count": 1, "items": post["outputs"].duplicate(), "note": "待领取"})
+				_loach_purify(zone_row, int(yard["uid"]), int(post["batch_id"]))
 			return
+
+## One finished loach batch improves its body once: at most eight cells worth
+## of eight points, capped at the area ceiling (§16.2.6).
+func _loach_purify(zone_row: Dictionary, yard_uid: int, batch_id: int) -> void:
+	var body: Dictionary = world.water.body(int(zone_row.get("body_uid", 0)))
+	if body.is_empty():
+		return
+	var cells := mini(world.water.area(body), 8)
+	var gain := cells * 8 * 100
+	var cap: int = world.water.area(body) * world.water.points_per_cell()
+	var before := int(body["quality"])
+	var after := mini(before + gain, cap)
+	if after == before:
+		return
+	body["quality"] = after
+	world.record_operation({"kind": "water", "stage": "loach_purify", "day": world.clock.total_days,
+		"workyard": yard_uid, "batch": batch_id, "body": int(body["uid"]), "cells": cells,
+		"applied": after - before, "quality_after": after})
 
 func _try_roam(row: Dictionary, t: int, qualified: bool, account: Dictionary, pasture_use: Dictionary, wait_label: String) -> String:
 	if not qualified:
@@ -1904,7 +1930,7 @@ static func normalize(value, snapshot: Dictionary, catalog) -> Dictionary:
 			fulltime[key] = int(row["uid"])
 		elif String(row["mode"]) != "work" and not bool(species_cfg.get("fixed", false)) and int(row["bed_slot"]) != 0:
 			return Scalars.fail("动物床位序号非法")
-		if not Scalars.exact(row["natural"], ["round", "units", "pending", "paid", "diet_id"]) or not Scalars.exact(row["breed"], ["round", "units", "pending"]):
+		if not Scalars.exact(row["natural"], ["round", "units", "pending", "paid", "diet_id", "paid_diet"]) or not Scalars.exact(row["breed"], ["round", "units", "pending"]):
 			return Scalars.fail("动物周期结构非法")
 		if not row["natural"]["pending"] is bool or not row["natural"]["paid"] is bool or not row["breed"]["pending"] is bool:
 			return Scalars.fail("动物周期标记非法")

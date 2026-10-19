@@ -87,4 +87,7 @@ def validate(source):
             carriers.add(row['id'])
     require(carriers == PLANT_GROW_TARGETS, 'plant_grow qualification registry mismatch')
     for row in source['crops']:
-        require(row.get('target_tags') == ['plant_grow'], f"{row['id']}: crops carry exactly the plant_grow qualification")
+        # P10.6 §16.2.8: water crops sit outside agriculture gu service, so
+        # only land crops carry the plant_grow qualification.
+        wanted = [] if row.get('medium', 'land') == 'water' else ['plant_grow']
+        require(row.get('target_tags', []) == wanted, f"{row['id']}: crops carry exactly the plant_grow qualification")

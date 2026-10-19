@@ -122,7 +122,12 @@ def _compile(source, product='farm_demo_v1', providers=None, map_data=None, extr
         require(crop['seed'] in resources and 'seed' in resources[crop['seed']]['tags'] and pair(crop['footprint']) and integer(crop['days'], 1), f'{ident}: crop definition')
         require(crop['mode'] in ['harvest_replant', 'fell_replant', 'tap_or_fell', 'culture_each_cycle'], f'{ident}: lifecycle')
         for key in ['water_use', 'fertility_use', 'light']: require(integer(crop[key], 0, 100), f'{ident}: environment')
-        if crop['mode'] == 'tap_or_fell': require(integer(crop['cycle_days'], 1) and bool(crop.get('fell_outputs')), f'{ident}: tree cycle')
+        if crop['mode'] == 'tap_or_fell':
+            # P10.6 water crops tap out and are cleared for replanting; only
+            # land trees pay wood at the fell.
+            require(integer(crop['cycle_days'], 1), f'{ident}: tree cycle')
+            if crop.get('medium', 'land') != 'water':
+                require(bool(crop.get('fell_outputs')), f'{ident}: tree cycle')
         if crop['mode'] == 'culture_each_cycle': require(crop['inputs'].get('wood_chip', 0) > 0, f'{ident}: recurring substrate')
         quantities(crop['inputs'], resources, ident, True)
         quantities(crop['outputs'], resources, ident)
@@ -176,11 +181,19 @@ def _compile(source, product='farm_demo_v1', providers=None, map_data=None, extr
             require(not model['inputs'] and model['days'] == 0 and model['ap'] == producer['ap'], f'{ident}: collection cost mismatch')
         else:
             required = {producer['seed']: 1, **producer['inputs']}
+            # P10.6 water crops pay their first round's nutrition at the
+            # baseline and need neither tilling nor irrigation.
+            water_crop = producer.get('medium', 'land') == 'water'
+            if water_crop and producer.get('round_inputs'):
+                required.update(producer['round_inputs'][0]['inputs'])
             require(all(model['inputs'].get(iid) == count for iid, count in required.items()) and set(model['inputs']) <= set(required) | {'clean_water'} and model['days'] == producer['days'], f'{ident}: crop baseline mismatch')
             operations = model['operations']
             require(isinstance(operations, dict) and set(operations) == {'till', 'plant', 'harvest', 'irrigate'} and all(integer(v) for v in operations.values()), f'{ident}: standard operations')
             expected_irrigation = 0 if producer['mode'] == 'culture_each_cycle' else math.ceil(model['inputs'].get('clean_water', 0) / config['environment']['irrigate_units'])
-            require(operations['till'] == math.prod(producer['footprint']) and operations['plant'] == 1 and operations['harvest'] == 1 and operations['irrigate'] == expected_irrigation and model['ap'] == sum(operations.values()) * config['standard_action_ap'], f'{ident}: standard AP mismatch')
+            if water_crop:
+                require(operations == {'till': 0, 'plant': 1, 'harvest': 1, 'irrigate': 0} and model['ap'] == 2 * config['standard_action_ap'], f'{ident}: water operations')
+            else:
+                require(operations['till'] == math.prod(producer['footprint']) and operations['plant'] == 1 and operations['harvest'] == 1 and operations['irrigate'] == expected_irrigation and model['ap'] == sum(operations.values()) * config['standard_action_ap'], f'{ident}: standard AP mismatch')
     # Reachability includes construction prerequisites: a facility cannot require its own only output.
     reachable = {iid for iid, item in resources.items() if item['buy_price'] > 0} | {entry['item'] for entry in sources.values()}
     built = set()

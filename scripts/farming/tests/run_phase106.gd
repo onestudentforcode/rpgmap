@@ -33,6 +33,10 @@ func run() -> void:
 	_coral_anchor(_world())
 	_survival(_world())
 	_water_birth(_world())
+	_water_crops(_world())
+	_industry(_world())
+	_spirit_variants(_world())
+	_loach_chain(_world())
 	print("P106 MODEL %s (%d)" % ["OK" if failures.is_empty() else "FAIL", checks])
 	quit(0 if failures.is_empty() else 1)
 
@@ -40,7 +44,8 @@ func _world() -> World:
 	var world := World.new(Store.new("res://.art-work/p106-tests/slots-%d-%d" % [OS.get_process_id(), Time.get_ticks_usec()]))
 	world.start_new(1)
 	world.grant_scaffold({"twig": 200, "wood_plank": 60, "raw_stone": 120, "raw_wood": 60, "clean_water": 300,
-		"algae_feed": 400, "grain": 100, "stone_powder": 200, "water_feed": 100})
+		"algae_feed": 400, "grain": 100, "stone_powder": 200, "water_feed": 100, "humus": 60,
+		"water_retaining_matrix": 20, "spirit_liquid": 20, "sludge": 40, "duckweed": 20})
 	world.primeval_stones += 3000
 	world._cash("sales_revenue", 3000)
 	world.research.state["completed"] = world.research.project_defs().keys()
@@ -543,3 +548,146 @@ func _water_birth(w: World) -> void:
 		func(a): return int(a["uid"]) != int(jellies[0]["uid"]) and String(a["species_id"]) == "gel_jellyfish")
 	check(children.size() == 1 and String(children[0]["mode"]) == "water_nursery"
 		and int(children[0]["zone_uid"]) == zones["nursery"], "child lands in the water nursery")
+
+# --- stage d: water crops, industry, spirit variants, loach batches ----------
+
+func _crop_zone(w: World) -> Dictionary:
+	w.water.build_fence([Vector2i(2, 14), Vector2i(3, 14), Vector2i(4, 14), Vector2i(5, 14),
+		Vector2i(2, 15), Vector2i(3, 15), Vector2i(4, 15), Vector2i(5, 15),
+		Vector2i(2, 16), Vector2i(3, 16), Vector2i(4, 16), Vector2i(5, 16)], 0)
+	w.end_day()
+	w.build_facility(Vector2i(2, 14), "aquatic_crop_station")
+	var cells := []
+	for y in range(14, 17):
+		for x in range(2, 6):
+			cells.append("%d,%d" % [x, y])
+	var zone: Dictionary = w.ranch.create_zone("aqua_planting", cells, "plants")
+	check(zone["ok"] and w.ranch.zone_structural(w.ranch.zone(int(zone["zone_uid"]))), "planting zone structural")
+	return zone
+
+func _water_crops(w: World) -> void:
+	var zone := _crop_zone(w)
+	check(not w.plant(Vector2i(4, 14), "duckweed")["ok"], "planting needs the seed")
+	check(w.buy("duckweed_seed", 1)["ok"], "duckweed seed buyable at 2 stones")
+	var planted: Dictionary = w.plant(Vector2i(4, 14), "duckweed")
+	check(planted["ok"], "duckweed plants on the fence")
+	check(not w.plant(Vector2i(4, 14), "reed")["ok"], "one crop per water cell")
+	check(not w.plant(Vector2i(4, 13), "duckweed")["ok"], "water crops refuse land")
+	var humus_before := w.inventory.count("humus")
+	w.end_day()
+	var crop: Dictionary = w.instance_at(Vector2i(4, 14))
+	check(int(crop["progress"]) == 100 and w.inventory.count("humus") == humus_before - 1, "first day grows and pays the humus round")
+	for _day in range(2):
+		w.end_day()
+	crop = w.instance_at(Vector2i(4, 14))
+	check(String(crop["state"]) == "mature", "duckweed matures on day three")
+	var duckweed_before := w.inventory.count("duckweed")
+	check(w.harvest(Vector2i(4, 14))["ok"], "duckweed harvest runs")
+	check(w.inventory.count("duckweed") == duckweed_before + 4, "duckweed pays four per tap")
+	crop = w.instance_at(Vector2i(4, 14))
+	check(String(crop["state"]) == "regrowing", "duckweed regrows after the tap")
+	var matrix_before := w.inventory.count("water_retaining_matrix")
+	var humus_at_round := w.inventory.count("humus")
+	check(w.set_water_round_input(Vector2i(4, 14), "matrix_round")["ok"], "round input switches to the matrix")
+	w.end_day()
+	crop = w.instance_at(Vector2i(4, 14))
+	check(String(crop["state"]) == "mature", "one regrow day with the matrix")
+	check(w.inventory.count("humus") == humus_at_round, "matrix round skips the humus")
+	# Taps run out at six, then the plot clears for replanting.
+	for tap in range(5):
+		if String(w.instance_at(Vector2i(4, 14))["state"]) == "mature":
+			check(w.harvest(Vector2i(4, 14))["ok"], "duckweed tap %d" % tap)
+		w.end_day()
+	check(not w.harvest(Vector2i(4, 14))["ok"], "sixth round refuses further taps")
+	check(w.clear_crop(Vector2i(4, 14))["ok"], "exhausted duckweed clears")
+	check(w.instance_at(Vector2i(4, 14)).is_empty(), "cleared cell replants")
+
+func _industry(w: World) -> void:
+	w.grant_scaffold({"fish_meat": 10, "mussel_shell": 4, "coral_stone": 4, "charcoal": 2,
+		"wastewater": 12, "filter_media": 2, "pearl": 2, "water_gel": 2, "humus": 4, "reed_stalk": 4})
+	var processor := 0
+	var woodshop_uid := 0
+	var bed := 0
+	check(w.build_facility(Vector2i(2, 4), "farm_processor")["ok"], "processor builds")
+	check(w.build_facility(Vector2i(5, 4), "woodshop")["ok"], "woodshop builds")
+	check(w.build_facility(Vector2i(8, 4), "purifying_bed")["ok"], "purifying bed builds")
+	for uid in w.facilities:
+		var fid := String(w.facilities[uid]["facility_id"])
+		if fid == "farm_processor":
+			processor = int(uid)
+		elif fid == "woodshop":
+			woodshop_uid = int(uid)
+		elif fid == "purifying_bed":
+			bed = int(uid)
+	for spec in [["dry_fish_meal", processor], ["grind_shell", processor], ["make_water_retaining_matrix", processor],
+			["make_coral_filter_media", woodshop_uid], ["pearl_polish_water", bed]]:
+		var recipe_id := String(spec[0])
+		var carrier := int(spec[1])
+		var started: Dictionary = w.start_batch(carrier, recipe_id)
+		check(started["ok"], recipe_id + " starts")
+		for _day in range(2):
+			w.end_day()
+		var batch: Dictionary = w.facilities[carrier]["batch"]
+		if String(batch.get("status", "")) == "ready":
+			check(w.claim_batch(carrier, int(batch["batch_id"]))["ok"], recipe_id + " claims")
+		else:
+			check(false, recipe_id + " completes")
+	check(w.inventory.count("fish_meal") >= 3, "fish meal produced")
+	check(w.inventory.count("stone_powder") >= 2, "shell grinding pays powder")
+	check(w.inventory.count("water_retaining_matrix") >= 4, "matrix produced")
+	check(w.inventory.count("filter_media") >= 4, "coral filter media produced")
+	check(w.inventory.count("clean_water") > 0, "pearl polish pays clean water")
+
+func _spirit_variants(w: World) -> void:
+	var zones := _water_module(w, "water_production", "pearl_station")
+	var mussels := _buy_and_assign(w, zones, "pearl_mussel", "small")
+	var mussel: Dictionary = mussels[0]
+	check(w.ranch.set_natural_diet(int(mussel["uid"]), "pearl_spirit_round")["ok"], "spirit round diet chosen")
+	for _day in range(5):
+		w.end_day()
+	mussel = w.ranch.animal(int(mussel["uid"]))
+	check(bool(mussel["natural"]["pending"]), "spirit round completes")
+	check(String(mussel["natural"]["paid_diet"]) == "pearl_spirit_round", "paid diet locked on the round")
+	var station_uid := 0
+	for uid in w.facilities:
+		if String(w.facilities[uid]["facility_id"]) == "pearl_station":
+			station_uid = int(uid)
+	var pearls := w.inventory.count("pearl")
+	var claim: Dictionary = w.ranch.claim_natural(station_uid)
+	check(claim["ok"], "spirit claim runs")
+	check(w.inventory.count("pearl") == pearls + 3, "spirit round pays three pearls")
+	check(String(w.ranch.animal(int(mussel["uid"]))["natural"]["paid_diet"]) == "", "paid diet resets with the round")
+
+func _loach_chain(w: World) -> void:
+	var zones := _water_module(w, "water_loach", "silt_processing_station")
+	check(w.ranch.purchase(zones["nursery"], "silt_loach", 1)["ok"], "buy the loach")
+	for _day in range(8):
+		w.end_day()
+	var adults: Array = w.ranch.state["animals"].filter(func(a): return String(a["stage"]) == "adult")
+	check(adults.size() == 1, "loach adult")
+	var yard := 0
+	for uid in w.facilities:
+		if String(w.facilities[uid]["facility_id"]) == "silt_processing_station":
+			yard = int(uid)
+	check(w.ranch.set_recipe(yard, "silt_process")["ok"], "silt recipe set")
+	var beds: Array = w.ranch.free_bed_slots(w.ranch.zone(zones["pool"]), "small")
+	check(w.ranch.submit({"assign": {int(adults[0]["uid"]): {"mode": "water_loach", "zone_uid": zones["pool"],
+		"bed_uid": int(beds[0]["uid"]), "bed_slot": int(beds[0]["slot"])}}})["ok"], "loach assigned")
+	w.end_day()
+	w.grant_scaffold({"sludge": 10, "duckweed": 5})
+	var body: Dictionary = w.water.body_of(Vector2i(6, 14))
+	var quality_before := int(body["quality"])
+	var sludge_before := w.inventory.count("sludge")
+	for _day in range(3):
+		w.end_day()
+	check(sludge_before - w.inventory.count("sludge") >= 2, "batch paid its sludge and duckweed")
+	var claimed: Dictionary = w.ranch.claim_workyard(yard)
+	check(claimed["ok"], "loach batch claims")
+	check(w.inventory.count("humus") >= 3, "loach batch pays humus")
+	var purified := 0
+	for entry in receipts:
+		if entry.get("kind") == "water" and entry.get("stage") == "loach_purify":
+			purified += 1
+	check(purified == 1, "one purification per finished batch")
+	check(int(body["quality"]) > quality_before or purified == 1, "body improved by the batch")
+

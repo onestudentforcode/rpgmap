@@ -26,16 +26,16 @@ class P8FoundationTests(unittest.TestCase):
 
     def test_registry_counts(self):
         out=bake.compile_config(self.source)
-        self.assertEqual(len(out['resources']),78)
-        self.assertEqual(len(out['crops']),8)
+        self.assertEqual(len(out['resources']),84)
+        self.assertEqual(len(out['crops']),10)
         self.assertEqual(len(out['facilities']),39)
-        self.assertEqual(len(out['recipes']),51)
+        self.assertEqual(len(out['recipes']),64)
         self.assertEqual(len(out['livestock']),17)
         self.assertNotIn('species', self.source)
-        self.assertEqual(len(out['research']),12)
+        self.assertEqual(len(out['research']),13)
         audit=out['research_audit']
-        self.assertEqual(audit['fee'],94); self.assertEqual(audit['days'],44)
-        self.assertEqual(len(audit['order']),12)
+        self.assertEqual(audit['fee'],104); self.assertEqual(audit['days'],48)
+        self.assertEqual(len(audit['order']),13)
         self.assertEqual(out['layout_audit']['land_used']<=out['layout_audit']['land_total'],True)
 
     def test_old_supply_values_frozen(self):

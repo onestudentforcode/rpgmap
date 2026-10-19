@@ -6,19 +6,40 @@
 
 ## 目录
 
-- **作物与种植（8）**：[速生杉](#速生杉-cropfast_fir)、[金穗麦](#金穗麦-cropgolden_wheat)、[蜜铃灌木](#蜜铃灌木-crophoneybell_bush)、[果桑树](#果桑树-cropmulberry_tree)、[油籽花](#油籽花-cropoilseed_flower)、[青牧草](#青牧草-croppasture_grass)、[松脂树](#松脂树-cropresin_tree)、[木腐菇](#木腐菇-cropwood_decay_mushroom)
+- **作物与种植（10）**：[浮萍](#浮萍-cropduckweed)、[速生杉](#速生杉-cropfast_fir)、[金穗麦](#金穗麦-cropgolden_wheat)、[蜜铃灌木](#蜜铃灌木-crophoneybell_bush)、[果桑树](#果桑树-cropmulberry_tree)、[油籽花](#油籽花-cropoilseed_flower)、[青牧草](#青牧草-croppasture_grass)、[芦苇](#芦苇-cropreed)、[松脂树](#松脂树-cropresin_tree)、[木腐菇](#木腐菇-cropwood_decay_mushroom)
 - **养殖与培养（17）**：[蜜盏蜂](#蜜盏蜂-speciesbell_bee)、[炭腹虫](#炭腹虫-speciescarbon_belly_bug)、[堆肥鼠](#堆肥鼠-speciescompost_mouse)、[露壳蜗牛](#露壳蜗牛-speciesdew_shell_snail)、[滤藻鲤](#滤藻鲤-speciesfilter_algae_carp)、[凝胶水母](#凝胶水母-speciesgel_jellyfish)、[砾甲蜗牛](#砾甲蜗牛-speciesgravel_shell_snail)、[叶丝蚕](#叶丝蚕-speciesleaf_silkworm)、[矿鳞蜥](#矿鳞蜥-speciesmineral_scale_lizard)、[油鳍鱼](#油鳍鱼-speciesoilfin_fish)、[珍珠蚌](#珍珠蚌-speciespearl_mussel)、[净水菌毯](#净水菌毯-speciespurifying_mat)、[礁骨珊瑚](#礁骨珊瑚-speciesreef_coral)、[岩腹兽](#岩腹兽-speciesrock_belly_beast)、[啮岩鼹](#啮岩鼹-speciesrock_mole)、[净泥鳅](#净泥鳅-speciessilt_loach)、[钢绵羊](#钢绵羊-speciessteel_sheep)
 - **建筑与设施（39）**：[藻类培养槽](#藻类培养槽-facilityalgae_tank)、[水生种植台](#水生种植台-facilityaquatic_crop_station)、[蜂箱](#蜂箱-facilitybee_hive)、[炭化巢](#炭化巢-facilitycarbonization_nest)、[照料台](#照料台-facilitycare_table)、[捕鲤台](#捕鲤台-facilitycarp_harvest_station)、[炭化炉](#炭化炉-facilitychar_kiln)、[堆肥箱](#堆肥箱-facilitycompost_bin)、[翻肥窝](#翻肥窝-facilitycompost_mouse_den)、[采礁台](#采礁台-facilitycoral_station)、[调度站](#调度站-facilitydispatch_station)、[农产加工台](#农产加工台-facilityfarm_processor)、[供食槽](#供食槽-facilityfeed_trough)、[田间维护站](#田间维护站-facilityfield_service_station)、[水场](#水场-facilityfish_pond)、[采胶台](#采胶台-facilitygel_station)、[补光灯](#补光灯-facilitygrowth_lamp)、[厨房](#厨房-facilitykitchen)、[大床](#大床-facilitylarge_bed)、[中床](#中床-facilitymedium_bed)、[取油台](#取油台-facilityoilfish_harvest_station)、[选矿场](#选矿场-facilityore_sorting_yard)、[采珠台](#采珠台-facilitypearl_station)、[圈舍](#圈舍-facilitypen)、[净水菌床](#净水菌床-facilitypurifying_bed)、[研究台](#研究台-facilityresearch_bench)、[碎岩场](#碎岩场-facilityrock_breaking_yard)、[养鳞台](#养鳞台-facilityscale_station)、[岩壳成型台](#岩壳成型台-facilityshell_forming_station)、[蚕架](#蚕架-facilitysilkworm_rack)、[泥料处理台](#泥料处理台-facilitysilt_processing_station)、[小床](#小床-facilitysmall_bed)、[小型冶炼炉](#小型冶炼炉-facilitysmelter)、[安抚台](#安抚台-facilitysoothing_station)、[集露台](#集露台-facilityspirit_liquid_collector)、[玩具站](#玩具站-facilitytoy_station)、[换水站](#换水站-facilitywater_change_station)、[木工台](#木工台-facilitywoodshop)、[采毛台](#采毛台-facilitywool_station)
 - **后勤蛊与协同（9）**：[明光蛊](#明光蛊-gubright_gu)、[驭兽蛊](#驭兽蛊-gucommand_gu)、[节肥蛊](#节肥蛊-gufert_gu)、[催生蛊](#催生蛊-gugrowth_gu)、[饭袋草蛊](#饭袋草蛊-gurice_bag_gu)、[安抚蛊](#安抚蛊-gusoothe_gu)、[宙道研究蛊](#宙道研究蛊-gutime_gu)、[锁水蛊](#锁水蛊-guwater_gu)、[智道研究蛊](#智道研究蛊-guwisdom_gu)
-- **材料与物品（78）**：[藻料](#藻料-resourcealgae_feed)、[蜂蜡](#蜂蜡-resourcebeeswax)、[木炭](#木炭-resourcecharcoal)、[清水](#清水-resourceclean_water)、[复合石板](#复合石板-resourcecomposite_stone_panel)、[珊瑚石](#珊瑚石-resourcecoral_stone)、[粗油](#粗油-resourcecrude_oil)、[碎铁矿](#碎铁矿-resourcecrushed_ore)、[高密度藻料](#高密度藻料-resourcedense_algae)、[藻露羹](#藻露羹-resourcedew_soup)、[腐土菌丸](#腐土菌丸-resourceearth_pill)、[速生杉苗](#速生杉苗-resourcefast_fir_seed)、[炭砂滤料](#炭砂滤料-resourcefilter_media)、[蜜油火膏](#蜜油火膏-resourcefire_paste)、[鱼粪](#鱼粪-resourcefish_manure)、[鱼肉](#鱼肉-resourcefish_meat)、[菌鱼灵膳](#菌鱼灵膳-resourcefish_spirit_meal)、[花瓣](#花瓣-resourceflower_petal)、[牧草](#牧草-resourcefodder_grass)、[蜜炼金食](#蜜炼金食-resourcegold_food)、[金穗麦种子](#金穗麦种子-resourcegolden_wheat_seed)、[谷粒](#谷粒-resourcegrain)、[谷粉](#谷粉-resourcegrain_meal)、[草粉](#草粉-resourcegrass_meal)、[草籽](#草籽-resourcegrass_seed)、[砂砾](#砂砾-resourcegravel)、[蜂蜜](#蜂蜜-resourcehoney)、[蜜谷灵饼](#蜜谷灵饼-resourcehoney_cake)、[蜜铃苗](#蜜铃苗-resourcehoneybell_seed)、[腐殖土](#腐殖土-resourcehumus)、[铁锭](#铁锭-resourceiron_ingot)、[含铁矿石](#含铁矿石-resourceiron_ore)、[复合陆养料](#复合陆养料-resourceland_feed)、[矿质补料](#矿质补料-resourcemineral_feed)、[矿质鳞片](#矿质鳞片-resourcemineral_scale)、[黏液](#黏液-resourcemucus)、[桑叶](#桑叶-resourcemulberry_leaf)、[果桑种苗](#果桑种苗-resourcemulberry_seed)、[木腐菇](#木腐菇-resourcemushroom)、[贝壳](#贝壳-resourcemussel_shell)、[花蜜](#花蜜-resourcenectar)、[营养液](#营养液-resourcenutrient_liquid)、[油饼](#油饼-resourceoil_cake)、[油籽](#油籽-resourceoilseed)、[油籽花种子](#油籽花种子-resourceoilseed_flower_seed)、[富集矿砂](#富集矿砂-resourceore_concentrate)、[珍珠](#珍珠-resourcepearl)、[花粉](#花粉-resourcepollen)、[净水菌毯培养单位](#净水菌毯培养单位-resourcepurifying_mat_culture)、[普通岩石](#普通岩石-resourceraw_stone)、[原木](#原木-resourceraw_wood)、[再生填料](#再生填料-resourcereclaimed_fill)、[精炼油](#精炼油-resourcerefined_oil)、[精炼蜡](#精炼蜡-resourcerefined_wax)、[松脂](#松脂-resourceresin)、[松脂树苗](#松脂树苗-resourceresin_tree_seed)、[稻米](#稻米-resourcerice)、[岩壳片](#岩壳片-resourcerock_shell)、[蜕皮](#蜕皮-resourceshed_skin)、[羊粪肥](#羊粪肥-resourcesheep_manure)、[蚕丝](#蚕丝-resourcesilk)、[炉渣](#炉渣-resourceslag)、[污泥](#污泥-resourcesludge)、[废滤炭](#废滤炭-resourcespent_filter)、[灵液](#灵液-resourcespirit_liquid)、[钢绒](#钢绒-resourcesteel_wool)、[石粉](#石粉-resourcestone_powder)、[秸秆](#秸秆-resourcestraw)、[尾砂](#尾砂-resourcetailings)、[宙道食料](#宙道食料-resourcetime_feed)、[枝条](#枝条-resourcetwig)、[藤球](#藤球-resourcevine_ball)、[污水](#污水-resourcewastewater)、[复合水养料](#复合水养料-resourcewater_feed)、[凝水胶](#凝水胶-resourcewater_gel)、[木屑](#木屑-resourcewood_chip)、[木腐菇菌种](#木腐菇菌种-resourcewood_decay_spawn)、[木板](#木板-resourcewood_plank)
-- **配方与食谱（97）**：[蜜盏蜂·花源份额＋清水](#蜜盏蜂花源份额清水-dietbell_beebase_dietsflower_share)、[蜜盏蜂·酿蜜周期](#蜜盏蜂酿蜜周期-dietbell_beespecial_dietshoney_cycle)、[炭腹虫·牧草清水餐](#炭腹虫牧草清水餐-dietcarbon_belly_bugbase_dietsgrass_water_meal)、[炭腹虫·木屑炭化轮](#炭腹虫木屑炭化轮-dietcarbon_belly_bugspecial_dietsbug_char_chips)、[炭腹虫·树枝炭化轮](#炭腹虫树枝炭化轮-dietcarbon_belly_bugspecial_dietsbug_char_twigs)、[堆肥鼠·牧草清水餐](#堆肥鼠牧草清水餐-dietcompost_mousebase_dietsgrass_water_meal)、[堆肥鼠·秸秆堆肥轮](#堆肥鼠秸秆堆肥轮-dietcompost_mousespecial_dietsmouse_compost_fiber)、[堆肥鼠·残料堆肥轮](#堆肥鼠残料堆肥轮-dietcompost_mousespecial_dietsmouse_compost_residue)、[露壳蜗牛·牧草清水餐](#露壳蜗牛牧草清水餐-dietdew_shell_snailbase_dietsgrass_water_meal)、[露壳蜗牛·灵液采集轮](#露壳蜗牛灵液采集轮-dietdew_shell_snailspecial_dietsdew_round)、[滤藻鲤·藻料餐](#滤藻鲤藻料餐-dietfilter_algae_carpbase_dietsalgae_meal)、[滤藻鲤·高密度藻餐](#滤藻鲤高密度藻餐-dietfilter_algae_carpbase_dietsdense_meal)、[滤藻鲤·水养复合餐](#滤藻鲤水养复合餐-dietfilter_algae_carpbase_dietswater_meal)、[滤藻鲤·谷粒育肥](#滤藻鲤谷粒育肥-dietfilter_algae_carpspecial_dietsgrain_fatten)、[凝胶水母·藻料餐](#凝胶水母藻料餐-dietgel_jellyfishbase_dietsalgae_meal)、[凝胶水母·高密度藻餐](#凝胶水母高密度藻餐-dietgel_jellyfishbase_dietsdense_meal)、[凝胶水母·采胶轮投料](#凝胶水母采胶轮投料-dietgel_jellyfishspecial_dietsgel_water_round)、[砾甲蜗牛·藻料清水餐](#砾甲蜗牛藻料清水餐-dietgravel_shell_snailbase_dietsalgae_water_meal)、[砾甲蜗牛·岩壳成型轮](#砾甲蜗牛岩壳成型轮-dietgravel_shell_snailspecial_dietsform_rock_shell)、[叶丝蚕·桑叶清水餐](#叶丝蚕桑叶清水餐-dietleaf_silkwormbase_dietsmulberry_meal)、[叶丝蚕·产丝轮](#叶丝蚕产丝轮-dietleaf_silkwormspecial_dietssilk_round)、[矿鳞蜥·牧草清水餐](#矿鳞蜥牧草清水餐-dietmineral_scale_lizardbase_dietsgrass_water_meal)、[矿鳞蜥·陆养复合餐](#矿鳞蜥陆养复合餐-dietmineral_scale_lizardbase_dietsland_meal)、[矿鳞蜥·养鳞轮](#矿鳞蜥养鳞轮-dietmineral_scale_lizardspecial_dietsscale_round)、[油鳍鱼·藻料餐](#油鳍鱼藻料餐-dietoilfin_fishbase_dietsalgae_meal)、[油鳍鱼·水养复合餐](#油鳍鱼水养复合餐-dietoilfin_fishbase_dietswater_meal)、[油鳍鱼·取油轮投料](#油鳍鱼取油轮投料-dietoilfin_fishspecial_dietsoilfin_oil_round)、[珍珠蚌·藻料餐](#珍珠蚌藻料餐-dietpearl_musselbase_dietsalgae_meal)、[珍珠蚌·育珠轮投料](#珍珠蚌育珠轮投料-dietpearl_musselspecial_dietspearl_powder_round)、[净水菌毯·培养清水](#净水菌毯培养清水-dietpurifying_matbase_dietsculture_water)、[净水菌毯·菌毯净水运行](#净水菌毯菌毯净水运行-dietpurifying_matspecial_dietsbio_purify)、[净水菌毯·营养液回收运行](#净水菌毯营养液回收运行-dietpurifying_matspecial_dietsrecover_nutrients)、[礁骨珊瑚·藻料餐](#礁骨珊瑚藻料餐-dietreef_coralbase_dietsalgae_meal)、[礁骨珊瑚·采礁轮投料](#礁骨珊瑚采礁轮投料-dietreef_coralspecial_dietscoral_mineral_round)、[岩腹兽·牧草清水餐](#岩腹兽牧草清水餐-dietrock_belly_beastbase_dietsgrass_water_meal)、[岩腹兽·陆养复合餐](#岩腹兽陆养复合餐-dietrock_belly_beastbase_dietsland_meal)、[岩腹兽·生物选矿轮](#岩腹兽生物选矿轮-dietrock_belly_beastspecial_dietsconcentrate_ore)、[啮岩鼹·菌菇清水餐](#啮岩鼹菌菇清水餐-dietrock_molebase_dietsfungus_meal)、[啮岩鼹·破碎矿石轮](#啮岩鼹破碎矿石轮-dietrock_molespecial_dietsbreak_ore)、[啮岩鼹·破碎石材轮](#啮岩鼹破碎石材轮-dietrock_molespecial_dietsbreak_stone)、[净泥鳅·藻料餐](#净泥鳅藻料餐-dietsilt_loachbase_dietsalgae_meal)、[钢绵羊·谷粒餐](#钢绵羊谷粒餐-dietsteel_sheepbase_dietsgrain_meal)、[钢绵羊·牧草餐](#钢绵羊牧草餐-dietsteel_sheepbase_dietsgrass_meal)、[钢绵羊·陆养复合餐](#钢绵羊陆养复合餐-dietsteel_sheepbase_dietsland_meal)、[钢绵羊·含铁补料](#钢绵羊含铁补料-dietsteel_sheepspecial_dietsiron_supplement)、[钢绵羊·矿质补料餐](#钢绵羊矿质补料餐-dietsteel_sheepspecial_dietsmineral_supplement)、[藻露羹熬制](#藻露羹熬制-recipealgae_dew_soup)、[黏液复合石板](#黏液复合石板-recipeassemble_mucus_panel)、[鳞甲复合板](#鳞甲复合板-recipeassemble_scale_panel)、[岩壳石板](#岩壳石板-recipeassemble_shell_panel)、[复合石板组装](#复合石板组装-recipeassemble_stone_panel)、[菌毯净水](#菌毯净水-recipebio_purify)、[陆养料调配](#陆养料调配-recipeblend_land_feed)、[水养料调配](#水养料调配-recipeblend_water_feed)、[破碎矿石](#破碎矿石-recipebreak_ore)、[破碎石材](#破碎石材-recipebreak_stone)、[木屑生物炭化](#木屑生物炭化-recipebug_char_chips)、[树枝生物炭化](#树枝生物炭化-recipebug_char_twigs)、[枝条炭化](#枝条炭化-recipechar_twigs)、[木屑堆肥](#木屑堆肥-recipecompost_chips)、[鱼粪堆肥](#鱼粪堆肥-recipecompost_fish_manure)、[牧草堆肥](#牧草堆肥-recipecompost_grass)、[油饼堆肥](#油饼堆肥-recipecompost_oil_cake)、[羊粪堆肥](#羊粪堆肥-recipecompost_sheep_manure)、[污泥堆肥](#污泥堆肥-recipecompost_sludge)、[废滤炭堆肥](#废滤炭堆肥-recipecompost_spent_filter)、[秸秆堆肥](#秸秆堆肥-recipecompost_straw)、[枝条堆肥](#枝条堆肥-recipecompost_twigs)、[生物选矿](#生物选矿-recipeconcentrate_ore)、[藻料培养](#藻料培养-recipeculture_algae)、[高密度藻培养](#高密度藻培养-recipedense_algae_culture)、[岩壳成型](#岩壳成型-recipeform_rock_shell)、[菌鱼灵膳烹制](#菌鱼灵膳烹制-recipefungus_fish_meal)、[蜜谷灵饼烘焙](#蜜谷灵饼烘焙-recipehoney_grain_cake)、[蜜炼金食炼制](#蜜炼金食炼制-recipehoney_mineral_food)、[炭砂滤料制作](#炭砂滤料制作-recipemake_filter_media)、[丝质滤材](#丝质滤材-recipemake_silk_filter_media)、[make_vine_ball](#make_vine_ball-recipemake_vine_ball)、[谷粉研磨](#谷粉研磨-recipemill_grain)、[草粉研磨](#草粉研磨-recipemill_grass)、[稻米磨粉](#稻米磨粉-recipemill_rice)、[矿质补料调配](#矿质补料调配-recipemineral_feed)、[秸秆翻肥](#秸秆翻肥-recipemouse_compost_fiber)、[残料翻肥](#残料翻肥-recipemouse_compost_residue)、[蜜油火膏熬制](#蜜油火膏熬制-recipeoil_honey_paste)、[油籽榨油](#油籽榨油-recipepress_oilseed)、[再生填料回收](#再生填料回收-reciperecover_fill)、[营养液回收](#营养液回收-reciperecover_nutrients)、[油脂精炼](#油脂精炼-reciperefine_oil)、[蜂蜡精炼](#蜂蜡精炼-reciperefine_wax)、[锯切木板](#锯切木板-recipesaw_planks)、[枝条粉碎](#枝条粉碎-recipeshred_twigs)、[原木粉碎](#原木粉碎-recipeshred_wood)、[木炭冶炼](#木炭冶炼-recipesmelt_charcoal)、[富集矿冶炼](#富集矿冶炼-recipesmelt_concentrate)、[松脂冶炼](#松脂冶炼-recipesmelt_resin)、[腐土菌丸炼制](#腐土菌丸炼制-recipesoil_spirit_pill)
-- **研究与科技（12）**：[饲料与蜡油精制](#饲料与蜡油精制-researchadvanced_feed_oil_wax)、[灵食初制](#灵食初制-researchbasic_spirit_cooking)、[蜂群协作](#蜂群协作-researchbeekeeping)、[菌毯净化](#菌毯净化-researchbiofiltration)、[复合灵食](#复合灵食-researchcomposite_spirit_food)、[农产初加工](#农产初加工-researchfarm_preparation)、[田间自动维护](#田间自动维护-researchfield_maintenance)、[花源栽培](#花源栽培-researchflower_cultivation)、[矿质材料工艺](#矿质材料工艺-researchmineral_materials)、[生物选矿](#生物选矿-researchore_concentration)、[岩料破碎](#岩料破碎-researchrock_handling)、[水与藻料回流](#水与藻料回流-researchwater_recirculation)
+- **材料与物品（84）**：[藻料](#藻料-resourcealgae_feed)、[蜂蜡](#蜂蜡-resourcebeeswax)、[木炭](#木炭-resourcecharcoal)、[清水](#清水-resourceclean_water)、[复合石板](#复合石板-resourcecomposite_stone_panel)、[珊瑚石](#珊瑚石-resourcecoral_stone)、[粗油](#粗油-resourcecrude_oil)、[碎铁矿](#碎铁矿-resourcecrushed_ore)、[高密度藻料](#高密度藻料-resourcedense_algae)、[藻露羹](#藻露羹-resourcedew_soup)、[浮萍](#浮萍-resourceduckweed)、[浮萍种苗](#浮萍种苗-resourceduckweed_seed)、[腐土菌丸](#腐土菌丸-resourceearth_pill)、[速生杉苗](#速生杉苗-resourcefast_fir_seed)、[炭砂滤料](#炭砂滤料-resourcefilter_media)、[蜜油火膏](#蜜油火膏-resourcefire_paste)、[鱼粪](#鱼粪-resourcefish_manure)、[鱼粉](#鱼粉-resourcefish_meal)、[鱼肉](#鱼肉-resourcefish_meat)、[菌鱼灵膳](#菌鱼灵膳-resourcefish_spirit_meal)、[花瓣](#花瓣-resourceflower_petal)、[牧草](#牧草-resourcefodder_grass)、[蜜炼金食](#蜜炼金食-resourcegold_food)、[金穗麦种子](#金穗麦种子-resourcegolden_wheat_seed)、[谷粒](#谷粒-resourcegrain)、[谷粉](#谷粉-resourcegrain_meal)、[草粉](#草粉-resourcegrass_meal)、[草籽](#草籽-resourcegrass_seed)、[砂砾](#砂砾-resourcegravel)、[蜂蜜](#蜂蜜-resourcehoney)、[蜜谷灵饼](#蜜谷灵饼-resourcehoney_cake)、[蜜铃苗](#蜜铃苗-resourcehoneybell_seed)、[腐殖土](#腐殖土-resourcehumus)、[铁锭](#铁锭-resourceiron_ingot)、[含铁矿石](#含铁矿石-resourceiron_ore)、[复合陆养料](#复合陆养料-resourceland_feed)、[矿质补料](#矿质补料-resourcemineral_feed)、[矿质鳞片](#矿质鳞片-resourcemineral_scale)、[黏液](#黏液-resourcemucus)、[桑叶](#桑叶-resourcemulberry_leaf)、[果桑种苗](#果桑种苗-resourcemulberry_seed)、[木腐菇](#木腐菇-resourcemushroom)、[贝壳](#贝壳-resourcemussel_shell)、[花蜜](#花蜜-resourcenectar)、[营养液](#营养液-resourcenutrient_liquid)、[油饼](#油饼-resourceoil_cake)、[油籽](#油籽-resourceoilseed)、[油籽花种子](#油籽花种子-resourceoilseed_flower_seed)、[富集矿砂](#富集矿砂-resourceore_concentrate)、[珍珠](#珍珠-resourcepearl)、[花粉](#花粉-resourcepollen)、[净水菌毯培养单位](#净水菌毯培养单位-resourcepurifying_mat_culture)、[普通岩石](#普通岩石-resourceraw_stone)、[原木](#原木-resourceraw_wood)、[再生填料](#再生填料-resourcereclaimed_fill)、[芦苇种苗](#芦苇种苗-resourcereed_seed)、[苇秆](#苇秆-resourcereed_stalk)、[精炼油](#精炼油-resourcerefined_oil)、[精炼蜡](#精炼蜡-resourcerefined_wax)、[松脂](#松脂-resourceresin)、[松脂树苗](#松脂树苗-resourceresin_tree_seed)、[稻米](#稻米-resourcerice)、[岩壳片](#岩壳片-resourcerock_shell)、[蜕皮](#蜕皮-resourceshed_skin)、[羊粪肥](#羊粪肥-resourcesheep_manure)、[蚕丝](#蚕丝-resourcesilk)、[炉渣](#炉渣-resourceslag)、[污泥](#污泥-resourcesludge)、[废滤炭](#废滤炭-resourcespent_filter)、[灵液](#灵液-resourcespirit_liquid)、[钢绒](#钢绒-resourcesteel_wool)、[石粉](#石粉-resourcestone_powder)、[秸秆](#秸秆-resourcestraw)、[尾砂](#尾砂-resourcetailings)、[宙道食料](#宙道食料-resourcetime_feed)、[枝条](#枝条-resourcetwig)、[藤球](#藤球-resourcevine_ball)、[污水](#污水-resourcewastewater)、[复合水养料](#复合水养料-resourcewater_feed)、[凝水胶](#凝水胶-resourcewater_gel)、[保水基质](#保水基质-resourcewater_retaining_matrix)、[木屑](#木屑-resourcewood_chip)、[木腐菇菌种](#木腐菇菌种-resourcewood_decay_spawn)、[木板](#木板-resourcewood_plank)
+- **配方与食谱（113）**：[蜜盏蜂·花源份额＋清水](#蜜盏蜂花源份额清水-dietbell_beebase_dietsflower_share)、[蜜盏蜂·酿蜜周期](#蜜盏蜂酿蜜周期-dietbell_beespecial_dietshoney_cycle)、[炭腹虫·牧草清水餐](#炭腹虫牧草清水餐-dietcarbon_belly_bugbase_dietsgrass_water_meal)、[炭腹虫·木屑炭化轮](#炭腹虫木屑炭化轮-dietcarbon_belly_bugspecial_dietsbug_char_chips)、[炭腹虫·树枝炭化轮](#炭腹虫树枝炭化轮-dietcarbon_belly_bugspecial_dietsbug_char_twigs)、[堆肥鼠·牧草清水餐](#堆肥鼠牧草清水餐-dietcompost_mousebase_dietsgrass_water_meal)、[堆肥鼠·秸秆堆肥轮](#堆肥鼠秸秆堆肥轮-dietcompost_mousespecial_dietsmouse_compost_fiber)、[堆肥鼠·残料堆肥轮](#堆肥鼠残料堆肥轮-dietcompost_mousespecial_dietsmouse_compost_residue)、[露壳蜗牛·牧草清水餐](#露壳蜗牛牧草清水餐-dietdew_shell_snailbase_dietsgrass_water_meal)、[露壳蜗牛·灵液采集轮](#露壳蜗牛灵液采集轮-dietdew_shell_snailspecial_dietsdew_round)、[滤藻鲤·藻料餐](#滤藻鲤藻料餐-dietfilter_algae_carpbase_dietsalgae_meal)、[滤藻鲤·高密度藻餐](#滤藻鲤高密度藻餐-dietfilter_algae_carpbase_dietsdense_meal)、[滤藻鲤·水养复合餐](#滤藻鲤水养复合餐-dietfilter_algae_carpbase_dietswater_meal)、[滤藻鲤·谷粒育肥](#滤藻鲤谷粒育肥-dietfilter_algae_carpspecial_dietsgrain_fatten)、[凝胶水母·藻料餐](#凝胶水母藻料餐-dietgel_jellyfishbase_dietsalgae_meal)、[凝胶水母·高密度藻餐](#凝胶水母高密度藻餐-dietgel_jellyfishbase_dietsdense_meal)、[凝胶水母·灵液凝胶轮](#凝胶水母灵液凝胶轮-dietgel_jellyfishspecial_dietsgel_spirit_round)、[凝胶水母·采胶轮投料](#凝胶水母采胶轮投料-dietgel_jellyfishspecial_dietsgel_water_round)、[砾甲蜗牛·藻料清水餐](#砾甲蜗牛藻料清水餐-dietgravel_shell_snailbase_dietsalgae_water_meal)、[砾甲蜗牛·岩壳成型轮](#砾甲蜗牛岩壳成型轮-dietgravel_shell_snailspecial_dietsform_rock_shell)、[叶丝蚕·桑叶清水餐](#叶丝蚕桑叶清水餐-dietleaf_silkwormbase_dietsmulberry_meal)、[叶丝蚕·产丝轮](#叶丝蚕产丝轮-dietleaf_silkwormspecial_dietssilk_round)、[矿鳞蜥·牧草清水餐](#矿鳞蜥牧草清水餐-dietmineral_scale_lizardbase_dietsgrass_water_meal)、[矿鳞蜥·陆养复合餐](#矿鳞蜥陆养复合餐-dietmineral_scale_lizardbase_dietsland_meal)、[矿鳞蜥·养鳞轮](#矿鳞蜥养鳞轮-dietmineral_scale_lizardspecial_dietsscale_round)、[油鳍鱼·藻料餐](#油鳍鱼藻料餐-dietoilfin_fishbase_dietsalgae_meal)、[油鳍鱼·水养复合餐](#油鳍鱼水养复合餐-dietoilfin_fishbase_dietswater_meal)、[油鳍鱼·取油轮投料](#油鳍鱼取油轮投料-dietoilfin_fishspecial_dietsoilfin_oil_round)、[珍珠蚌·藻料餐](#珍珠蚌藻料餐-dietpearl_musselbase_dietsalgae_meal)、[珍珠蚌·育珠轮投料](#珍珠蚌育珠轮投料-dietpearl_musselspecial_dietspearl_powder_round)、[珍珠蚌·灵液育珠轮](#珍珠蚌灵液育珠轮-dietpearl_musselspecial_dietspearl_spirit_round)、[净水菌毯·培养清水](#净水菌毯培养清水-dietpurifying_matbase_dietsculture_water)、[净水菌毯·菌毯净水运行](#净水菌毯菌毯净水运行-dietpurifying_matspecial_dietsbio_purify)、[净水菌毯·营养液回收运行](#净水菌毯营养液回收运行-dietpurifying_matspecial_dietsrecover_nutrients)、[礁骨珊瑚·藻料餐](#礁骨珊瑚藻料餐-dietreef_coralbase_dietsalgae_meal)、[礁骨珊瑚·采礁轮投料](#礁骨珊瑚采礁轮投料-dietreef_coralspecial_dietscoral_mineral_round)、[岩腹兽·牧草清水餐](#岩腹兽牧草清水餐-dietrock_belly_beastbase_dietsgrass_water_meal)、[岩腹兽·陆养复合餐](#岩腹兽陆养复合餐-dietrock_belly_beastbase_dietsland_meal)、[岩腹兽·生物选矿轮](#岩腹兽生物选矿轮-dietrock_belly_beastspecial_dietsconcentrate_ore)、[啮岩鼹·菌菇清水餐](#啮岩鼹菌菇清水餐-dietrock_molebase_dietsfungus_meal)、[啮岩鼹·破碎矿石轮](#啮岩鼹破碎矿石轮-dietrock_molespecial_dietsbreak_ore)、[啮岩鼹·破碎石材轮](#啮岩鼹破碎石材轮-dietrock_molespecial_dietsbreak_stone)、[净泥鳅·藻料餐](#净泥鳅藻料餐-dietsilt_loachbase_dietsalgae_meal)、[净泥鳅·浮萍替代餐](#净泥鳅浮萍替代餐-dietsilt_loachbase_dietsduckweed_meal)、[钢绵羊·谷粒餐](#钢绵羊谷粒餐-dietsteel_sheepbase_dietsgrain_meal)、[钢绵羊·牧草餐](#钢绵羊牧草餐-dietsteel_sheepbase_dietsgrass_meal)、[钢绵羊·陆养复合餐](#钢绵羊陆养复合餐-dietsteel_sheepbase_dietsland_meal)、[钢绵羊·含铁补料](#钢绵羊含铁补料-dietsteel_sheepspecial_dietsiron_supplement)、[钢绵羊·矿质补料餐](#钢绵羊矿质补料餐-dietsteel_sheepspecial_dietsmineral_supplement)、[藻露羹熬制](#藻露羹熬制-recipealgae_dew_soup)、[珊瑚复合石板](#珊瑚复合石板-recipeassemble_coral_panel)、[黏液复合石板](#黏液复合石板-recipeassemble_mucus_panel)、[鳞甲复合板](#鳞甲复合板-recipeassemble_scale_panel)、[岩壳石板](#岩壳石板-recipeassemble_shell_panel)、[复合石板组装](#复合石板组装-recipeassemble_stone_panel)、[菌毯净水](#菌毯净水-recipebio_purify)、[鱼粉陆养料](#鱼粉陆养料-recipeblend_fish_land_feed)、[鱼粉水养料](#鱼粉水养料-recipeblend_fish_water_feed)、[陆养料调配](#陆养料调配-recipeblend_land_feed)、[水养料调配](#水养料调配-recipeblend_water_feed)、[破碎矿石](#破碎矿石-recipebreak_ore)、[破碎石材](#破碎石材-recipebreak_stone)、[木屑生物炭化](#木屑生物炭化-recipebug_char_chips)、[树枝生物炭化](#树枝生物炭化-recipebug_char_twigs)、[苇秆炭化](#苇秆炭化-recipechar_reed)、[枝条炭化](#枝条炭化-recipechar_twigs)、[木屑堆肥](#木屑堆肥-recipecompost_chips)、[鱼粪堆肥](#鱼粪堆肥-recipecompost_fish_manure)、[牧草堆肥](#牧草堆肥-recipecompost_grass)、[油饼堆肥](#油饼堆肥-recipecompost_oil_cake)、[苇秆堆肥](#苇秆堆肥-recipecompost_reed)、[羊粪堆肥](#羊粪堆肥-recipecompost_sheep_manure)、[污泥堆肥](#污泥堆肥-recipecompost_sludge)、[废滤炭堆肥](#废滤炭堆肥-recipecompost_spent_filter)、[秸秆堆肥](#秸秆堆肥-recipecompost_straw)、[枝条堆肥](#枝条堆肥-recipecompost_twigs)、[生物选矿](#生物选矿-recipeconcentrate_ore)、[藻料培养](#藻料培养-recipeculture_algae)、[高密度藻培养](#高密度藻培养-recipedense_algae_culture)、[鱼肉制粉](#鱼肉制粉-recipedry_fish_meal)、[岩壳成型](#岩壳成型-recipeform_rock_shell)、[菌鱼灵膳烹制](#菌鱼灵膳烹制-recipefungus_fish_meal)、[珊瑚制粉](#珊瑚制粉-recipegrind_coral)、[壳石制粉](#壳石制粉-recipegrind_shell)、[蜜谷灵饼烘焙](#蜜谷灵饼烘焙-recipehoney_grain_cake)、[蜜炼金食炼制](#蜜炼金食炼制-recipehoney_mineral_food)、[多孔滤材](#多孔滤材-recipemake_coral_filter_media)、[炭砂滤料制作](#炭砂滤料制作-recipemake_filter_media)、[丝质滤材](#丝质滤材-recipemake_silk_filter_media)、[make_vine_ball](#make_vine_ball-recipemake_vine_ball)、[保水基质](#保水基质-recipemake_water_retaining_matrix)、[浮萍制粉](#浮萍制粉-recipemill_duckweed)、[谷粉研磨](#谷粉研磨-recipemill_grain)、[草粉研磨](#草粉研磨-recipemill_grass)、[稻米磨粉](#稻米磨粉-recipemill_rice)、[矿质补料调配](#矿质补料调配-recipemineral_feed)、[秸秆翻肥](#秸秆翻肥-recipemouse_compost_fiber)、[残料翻肥](#残料翻肥-recipemouse_compost_residue)、[蜜油火膏熬制](#蜜油火膏熬制-recipeoil_honey_paste)、[珍珠精滤](#珍珠精滤-recipepearl_polish_water)、[油籽榨油](#油籽榨油-recipepress_oilseed)、[再生填料回收](#再生填料回收-reciperecover_fill)、[营养液回收](#营养液回收-reciperecover_nutrients)、[油脂精炼](#油脂精炼-reciperefine_oil)、[蜂蜡精炼](#蜂蜡精炼-reciperefine_wax)、[锯切木板](#锯切木板-recipesaw_planks)、[枝条粉碎](#枝条粉碎-recipeshred_twigs)、[原木粉碎](#原木粉碎-recipeshred_wood)、[泥料处理](#泥料处理-recipesilt_process)、[木炭冶炼](#木炭冶炼-recipesmelt_charcoal)、[富集矿冶炼](#富集矿冶炼-recipesmelt_concentrate)、[松脂冶炼](#松脂冶炼-recipesmelt_resin)、[腐土菌丸炼制](#腐土菌丸炼制-recipesoil_spirit_pill)
+- **研究与科技（13）**：[饲料与蜡油精制](#饲料与蜡油精制-researchadvanced_feed_oil_wax)、[水产精养](#水产精养-researchaquatic_intensive_care)、[灵食初制](#灵食初制-researchbasic_spirit_cooking)、[蜂群协作](#蜂群协作-researchbeekeeping)、[菌毯净化](#菌毯净化-researchbiofiltration)、[复合灵食](#复合灵食-researchcomposite_spirit_food)、[农产初加工](#农产初加工-researchfarm_preparation)、[田间自动维护](#田间自动维护-researchfield_maintenance)、[花源栽培](#花源栽培-researchflower_cultivation)、[矿质材料工艺](#矿质材料工艺-researchmineral_materials)、[生物选矿](#生物选矿-researchore_concentration)、[岩料破碎](#岩料破碎-researchrock_handling)、[水与藻料回流](#水与藻料回流-researchwater_recirculation)
 - **资源点与环境（10）**：[灵田·水库](#灵田水库-mapfarm_02)、[东侧远田](#东侧远田-parceleast_far)、[东侧下田](#东侧下田-parceleast_lower)、[东侧近田](#东侧近田-parceleast_near)、[东侧远岸水库](#东侧远岸水库-parceleast_water_far)、[东侧近岸水库](#东侧近岸水库-parceleast_water_near)、[西侧水库](#西侧水库-parcelwest_water)、[采矿点](#采矿点-sourceore_source)、[泉水点](#泉水点-sourcespring_source)、[采石点](#采石点-sourcestone_source)
 - **基础玩法（19）**：[农业辅助蛊：定向服务区与效果决议](#农业辅助蛊定向服务区与效果决议-ruleagriculture)、[畜牧强化：安抚、役使与耐用玩具](#畜牧强化安抚役使与耐用玩具-ruleanimal-services)、[畜牧分区：九种陆生动物、三用途与八单位日程](#畜牧分区九种陆生动物三用途与八单位日程-ruleanimal-zones)、[持续生产与保留量](#持续生产与保留量-ruleauto_production)、[建材替代](#建材替代-rulebuild_substitute)、[作物生长速率公式](#作物生长速率公式-rulecrop_growth)、[日结顺序与自动推进](#日结顺序与自动推进-ruleday_settle)、[环境值与有效光照](#环境值与有效光照-ruleenvironment)、[购地与连续地图](#购地与连续地图-ruleexpansion)、[花源份额](#花源份额-ruleflower_share)、[养殖服务与周期口径](#养殖服务与周期口径-rulehusbandry_service)、[活体配方的双重注册](#活体配方的双重注册-ruleliving_mapping)、[后勤蛊部署、维护与生产协同](#后勤蛊部署维护与生产协同-rulelogistics)、[市集交易](#市集交易-rulemarket)、[五行供货与转数](#五行供货与转数-ruleorders)、[研究系统](#研究系统-ruleresearch)、[露天农业区：地板、育种与丰产](#露天农业区地板育种与丰产-rulerooms)、[存档与经济](#存档与经济-rulesave)、[雇工与统一调度器](#雇工与统一调度器-ruleworker_scheduler)
 
 ---
 
-## 作物与种植（8）
+## 作物与种植（10）
+
+### 浮萍 `crop:duckweed`
+
+可留株采收（按再生周期）或砍伐移除；首熟3日；浮萍×4
+
+| 字段 | 内容 |
+|---|---|
+| 种子/菌种 | 浮萍种苗×1（播种时消耗；市集可购2元石/份） |
+| 占地 | 1×1格（全部开垦且空闲才能播种） |
+| 播种投入 | 浮萍种苗×1，1AP |
+| 采收模式 | 可留株采收（按再生周期）或砍伐移除 |
+| 首次成熟 | 3自然日（全适宜条件；实际时长按生长公式，见规则「作物生长速率公式」） |
+| 光照偏好 | 60（与占格平均有效光照相差≤20为满速，否则光效50%） |
+| 每日环境扣减 | 每格水分−0、肥力−0（成熟待收期间照扣） |
+| 收获产物 | 浮萍×4，1AP |
+| 采后再生 | 留株采收后1日恢复可采 |
+| 水生种植 | 种在鱼栅水面的水生种植区；光照≥60且水体水质≥30才生长，无需灌溉；每生长轮付humus_round或matrix_round投料一次，采满6轮后清理重种 |
+
+关联条目：种子：[浮萍种苗](#浮萍种苗-resourceduckweed_seed)
+
+相关规则：[作物生长速率公式](#作物生长速率公式-rulecrop_growth)、[日结顺序与自动推进](#日结顺序与自动推进-ruleday_settle)、[环境值与有效光照](#环境值与有效光照-ruleenvironment)、[露天农业区：地板、育种与丰产](#露天农业区地板育种与丰产-rulerooms)
 
 ### 速生杉 `crop:fast_fir`
 
@@ -153,6 +174,27 @@
 | 育种回流 | 首次成熟仅判定一次；完整合格25%概率得草籽×1，随首次成熟收取/成熟清理领取，留株不重抽 |
 
 关联条目：种子：[草籽](#草籽-resourcegrass_seed)
+
+相关规则：[作物生长速率公式](#作物生长速率公式-rulecrop_growth)、[日结顺序与自动推进](#日结顺序与自动推进-ruleday_settle)、[环境值与有效光照](#环境值与有效光照-ruleenvironment)、[露天农业区：地板、育种与丰产](#露天农业区地板育种与丰产-rulerooms)
+
+### 芦苇 `crop:reed`
+
+可留株采收（按再生周期）或砍伐移除；首熟5日；苇秆×6
+
+| 字段 | 内容 |
+|---|---|
+| 种子/菌种 | 芦苇种苗×1（播种时消耗；市集可购3元石/份） |
+| 占地 | 1×1格（全部开垦且空闲才能播种） |
+| 播种投入 | 芦苇种苗×1，1AP |
+| 采收模式 | 可留株采收（按再生周期）或砍伐移除 |
+| 首次成熟 | 5自然日（全适宜条件；实际时长按生长公式，见规则「作物生长速率公式」） |
+| 光照偏好 | 60（与占格平均有效光照相差≤20为满速，否则光效50%） |
+| 每日环境扣减 | 每格水分−0、肥力−0（成熟待收期间照扣） |
+| 收获产物 | 苇秆×6，1AP |
+| 采后再生 | 留株采收后2日恢复可采 |
+| 水生种植 | 种在鱼栅水面的水生种植区；光照≥60且水体水质≥30才生长，无需灌溉；每生长轮付humus_round或matrix_round投料一次，采满4轮后清理重种 |
+
+关联条目：种子：[芦苇种苗](#芦苇种苗-resourcereed_seed)
 
 相关规则：[作物生长速率公式](#作物生长速率公式-rulecrop_growth)、[日结顺序与自动推进](#日结顺序与自动推进-ruleday_settle)、[环境值与有效光照](#环境值与有效光照-ruleenvironment)、[露天农业区：地板、育种与丰产](#露天农业区地板育种与丰产-rulerooms)
 
@@ -648,7 +690,7 @@
 | 占地/地形 | 2×2格；地形：陆地 |
 | 设施类型 | 加工设施 |
 | 拆除 | 1AP；需设施空闲；不返还材料与元石 |
-| 支持配方 | 枝条炭化（一次一批次） |
+| 支持配方 | 枝条炭化、苇秆炭化（一次一批次） |
 | 建材替代 | 普通岩石部分可用复合石板1:1或再生填料2:1整体替代（3份石） |
 
 相关规则：[建材替代](#建材替代-rulebuild_substitute)
@@ -663,7 +705,7 @@
 | 占地/地形 | 1×1格；地形：陆地 |
 | 设施类型 | 加工设施 |
 | 拆除 | 1AP；需设施空闲；不返还材料与元石 |
-| 支持配方 | 秸秆堆肥、枝条堆肥、木屑堆肥、羊粪堆肥、鱼粪堆肥、牧草堆肥、油饼堆肥、污泥堆肥、废滤炭堆肥（一次一批次） |
+| 支持配方 | 秸秆堆肥、枝条堆肥、木屑堆肥、羊粪堆肥、鱼粪堆肥、牧草堆肥、油饼堆肥、污泥堆肥、废滤炭堆肥、苇秆堆肥（一次一批次） |
 | 建材替代 | 普通岩石部分可用复合石板1:1或再生填料2:1整体替代（1份石） |
 
 相关规则：[建材替代](#建材替代-rulebuild_substitute)
@@ -734,7 +776,7 @@
 | 占地/地形 | 2×2格；地形：陆地 |
 | 设施类型 | 加工设施 |
 | 拆除 | 1AP；需设施空闲；不返还材料与元石 |
-| 支持配方 | 谷粉研磨、草粉研磨、油籽榨油、油脂精炼、陆养料调配、水养料调配、蜂蜡精炼、矿质补料调配、稻米磨粉（一次一批次） |
+| 支持配方 | 谷粉研磨、草粉研磨、油籽榨油、油脂精炼、陆养料调配、水养料调配、蜂蜡精炼、矿质补料调配、稻米磨粉、浮萍制粉、鱼肉制粉、鱼粉陆养料、鱼粉水养料、壳石制粉、珊瑚制粉、保水基质（一次一批次） |
 | 建材替代 | 普通岩石部分可用复合石板1:1或再生填料2:1整体替代（2份石） |
 
 关联条目：解锁研究：[农产初加工](#农产初加工-researchfarm_preparation)
@@ -1061,6 +1103,7 @@
 | 设施类型 | 加工设施 |
 | 拆除 | 1AP；需设施空闲；不返还材料与元石 |
 | 接纳物种 | 净泥鳅 |
+| 支持配方 | 泥料处理（一次一批次） |
 | 建材替代 | 普通岩石部分可用复合石板1:1或再生填料2:1整体替代（2份石） |
 
 关联条目：接纳物种：[净泥鳅](#净泥鳅-speciessilt_loach)；解锁研究：[菌毯净化](#菌毯净化-researchbiofiltration)
@@ -1164,7 +1207,7 @@
 | 占地/地形 | 2×2格；地形：陆地 |
 | 设施类型 | 加工设施 |
 | 拆除 | 1AP；需设施空闲；不返还材料与元石 |
-| 支持配方 | 锯切木板、原木粉碎、枝条粉碎、炭砂滤料制作、复合石板组装、再生填料回收、make_vine_ball、丝质滤材、黏液复合石板、鳞甲复合板、岩壳石板（一次一批次） |
+| 支持配方 | 锯切木板、原木粉碎、枝条粉碎、炭砂滤料制作、复合石板组装、再生填料回收、make_vine_ball、丝质滤材、黏液复合石板、鳞甲复合板、岩壳石板、多孔滤材、珊瑚复合石板（一次一批次） |
 | 建材替代 | 普通岩石部分可用复合石板1:1或再生填料2:1整体替代（2份石） |
 
 相关规则：[建材替代](#建材替代-rulebuild_substitute)
@@ -1356,7 +1399,7 @@
 相关规则：[后勤蛊部署、维护与生产协同](#后勤蛊部署维护与生产协同-rulelogistics)
 
 
-## 材料与物品（78）
+## 材料与物品（84）
 
 ### 藻料 `resource:algae_feed`
 
@@ -1374,18 +1417,19 @@
 |---|---|---|---|
 | 加工·藻料培养 | ×6 | 加工·藻料培养：藻料×6（每批）｜藻类培养槽｜2自然日｜启动1＋收取1 | 清水×3；秸秆×2 |
 
-**直接用途（9条）**
+**直接用途（10条）**
 
 | 过程 | 本条目数量 | 说明 | 同批 |
 |---|---|---|---|
+| 加工·鱼粉水养料 | ×3 | 加工·鱼粉水养料：藻料×3（每批）｜农产加工台｜需研究「饲料与蜡油精制」｜1自然日｜启动1＋收取1 | 谷粉×1；鱼粉×1；复合水养料×4 |
 | 加工·水养料调配 | ×3 | 加工·水养料调配：藻料×3（每批）｜农产加工台｜需研究「饲料与蜡油精制」｜1自然日｜启动1＋收取1 | 谷粉×1；油饼×1；复合水养料×4 |
 | 整体维护·滤藻鲤 | ×1 | 整体维护·滤藻鲤：藻料×1（每尾·每日）｜捕鲤台｜滤藻鲤｜1AP | 复合水养料×1；高密度藻料×1；谷粒×1 |
-| 整体维护·凝胶水母 | ×1 | 整体维护·凝胶水母：藻料×1（每群·每日）｜采胶台｜凝胶水母｜1AP | 高密度藻料×1；清水×1 |
+| 整体维护·凝胶水母 | ×1 | 整体维护·凝胶水母：藻料×1（每群·每日）｜采胶台｜凝胶水母｜1AP | 高密度藻料×1；清水×1；清水×1；灵液×1 |
 | 整体维护·砾甲蜗牛 | ×1 | 整体维护·砾甲蜗牛：藻料×1（每只·每日）｜岩壳成型台｜砾甲蜗牛｜1AP | 清水×1；石粉×3；清水×1 |
 | 整体维护·油鳍鱼 | ×1 | 整体维护·油鳍鱼：藻料×1（每尾·每日）｜取油台｜油鳍鱼｜1AP | 复合水养料×1；复合水养料×1 |
-| 整体维护·珍珠蚌 | ×1 | 整体维护·珍珠蚌：藻料×1（每只·每日）｜采珠台｜珍珠蚌｜1AP | 石粉×1 |
+| 整体维护·珍珠蚌 | ×1 | 整体维护·珍珠蚌：藻料×1（每只·每日）｜采珠台｜珍珠蚌｜1AP | 石粉×1；石粉×1；灵液×1 |
 | 整体维护·礁骨珊瑚 | ×1 | 整体维护·礁骨珊瑚：藻料×1（每群·每日）｜采礁台｜礁骨珊瑚｜1AP | 石粉×3；清水×1 |
-| 整体维护·净泥鳅 | ×1 | 整体维护·净泥鳅：藻料×1（每尾·每日）｜泥料处理台｜净泥鳅｜1AP | — |
+| 整体维护·净泥鳅 | ×1 | 整体维护·净泥鳅：藻料×1（每尾·每日）｜泥料处理台｜净泥鳅｜1AP | 浮萍×1 |
 | 市集出售·藻料 | ×按订单/库存 | 市集出售·藻料：藻料×按订单/库存（每份） | 元石×2 |
 
 相关规则：[市集交易](#市集交易-rulemarket)
@@ -1427,17 +1471,18 @@
 | 市集出售 | 5元石/份（计入销售收入） |
 | 五行供货 | 可供货（火行）；供养值4：订单数量=ceil(需求/供养值)，回款=数量×卖价＋10%溢价 |
 
-**获取来源（5条）**
+**获取来源（6条）**
 
 | 过程 | 本条目数量 | 说明 | 同批 |
 |---|---|---|---|
 | 加工·木屑生物炭化 | ×2 | 加工·木屑生物炭化：木炭×2（每批）｜炭化巢｜需研究「农产初加工」｜1自然日｜启动1＋收取1 | 木屑×4；腐殖土×1 |
 | 加工·树枝生物炭化 | ×4 | 加工·树枝生物炭化：木炭×4（每批）｜炭化巢｜需研究「农产初加工」｜1自然日｜启动1＋收取1 | 枝条×4；腐殖土×1 |
+| 加工·苇秆炭化 | ×2 | 加工·苇秆炭化：木炭×2（每批）｜炭化炉｜1自然日｜启动1＋收取1 | 苇秆×3 |
 | 加工·枝条炭化 | ×3 | 加工·枝条炭化：木炭×3（每批）｜炭化炉｜2自然日｜启动1＋收取1 | 枝条×4 |
 | 收取·炭腹虫 | ×4 | 收取·炭腹虫：木炭×4（每群·每轮）｜炭化巢｜炭腹虫｜1AP | 腐殖土×1；腐殖土×1 |
 | 收取·炭腹虫 | ×2 | 收取·炭腹虫：木炭×2（每群·每轮）｜炭化巢｜炭腹虫｜1AP | 腐殖土×1；腐殖土×1 |
 
-**直接用途（14条）**
+**直接用途（15条）**
 
 | 过程 | 本条目数量 | 说明 | 同批 |
 |---|---|---|---|
@@ -1445,6 +1490,7 @@
 | 加工·菌鱼灵膳烹制 | ×1 | 加工·菌鱼灵膳烹制：木炭×1（每批）｜厨房｜需研究「灵食初制」｜1自然日｜启动1＋收取1 | 木腐菇×1；鱼肉×1；精炼油×1；菌鱼灵膳×2 |
 | 加工·蜜谷灵饼烘焙 | ×1 | 加工·蜜谷灵饼烘焙：木炭×1（每批）｜厨房｜需研究「灵食初制」｜1自然日｜启动1＋收取1 | 谷粉×2；蜂蜜×1；清水×1；蜜谷灵饼×2 |
 | 加工·蜜炼金食炼制 | ×1 | 加工·蜜炼金食炼制：木炭×1（每批）｜厨房｜需研究「复合灵食」｜2自然日｜启动1＋收取1 | 铁锭×1；蜂蜜×1；蜜炼金食×1 |
+| 加工·多孔滤材 | ×1 | 加工·多孔滤材：木炭×1（每批）｜木工台｜需研究「水与藻料回流」｜1自然日｜启动1＋收取1 | 珊瑚石×1；炭砂滤料×3 |
 | 加工·炭砂滤料制作 | ×1 | 加工·炭砂滤料制作：木炭×1（每批）｜木工台｜需研究「水与藻料回流」｜1自然日｜启动1＋收取1 | 砂砾×2；炭砂滤料×2 |
 | 加工·丝质滤材 | ×1 | 加工·丝质滤材：木炭×1（每批）｜木工台｜需研究「水与藻料回流」｜1自然日｜启动1＋收取1 | 蚕丝×1；木屑×1；炭砂滤料×3 |
 | 加工·蜜油火膏熬制 | ×1 | 加工·蜜油火膏熬制：木炭×1（每批）｜厨房｜需研究「复合灵食」｜2自然日｜启动1＋收取1 | 精炼油×1；蜂蜜×1；精炼蜡×1；蜜油火膏×2 |
@@ -1469,18 +1515,19 @@
 | 市集出售 | 1元石/份（计入销售收入） |
 | 五行供货 | 可供货（水行）；供养值1：订单数量=ceil(需求/供养值)，回款=数量×卖价＋10%溢价 |
 
-**获取来源（6条）**
+**获取来源（7条）**
 
 | 过程 | 本条目数量 | 说明 | 同批 |
 |---|---|---|---|
 | 加工·菌毯净水 | ×2 | 加工·菌毯净水：清水×2（每批）｜净水菌床｜需研究「菌毯净化」｜2自然日｜启动1＋收取1 | 污水×4；木屑×1；污泥×1 |
+| 加工·珍珠精滤 | ×4 | 加工·珍珠精滤：清水×4（每批）｜净水菌床｜需研究「水产精养」｜1自然日｜启动1＋收取1 | 污水×6；炭砂滤料×1；珍珠×1；污泥×2 |
 | 加工·营养液回收 | ×1 | 加工·营养液回收：清水×1（每批）｜净水菌床｜需研究「水与藻料回流」｜2自然日｜启动1＋收取1 | 污水×4；炭砂滤料×1；营养液×2；污泥×1 |
 | 市集采购·清水 | ×按订单/库存 | 市集采购·清水：清水×按订单/库存（每份） | 元石×2 |
 | 收取·净水菌毯 | ×2 | 收取·净水菌毯：清水×2（每培养单位·每轮）｜净水菌床｜净水菌毯｜1AP | 污泥×1；营养液×2；污泥×1 |
 | 收取·净水菌毯 | ×1 | 收取·净水菌毯：清水×1（每培养单位·每轮）｜净水菌床｜净水菌毯｜1AP | 污泥×1；营养液×2；污泥×1 |
 | 泉水点采集 | ×5 | 泉水点采集：清水×5（每次）｜1AP | — |
 
-**直接用途（32条）**
+**直接用途（33条）**
 
 | 过程 | 本条目数量 | 说明 | 同批 |
 |---|---|---|---|
@@ -1496,7 +1543,8 @@
 | 整体维护·堆肥鼠 | ×1 | 整体维护·堆肥鼠：清水×1（每只·每日）｜翻肥窝｜堆肥鼠｜1AP | 牧草×1；秸秆×2；木屑×1；污泥×2；油饼×1 |
 | 整体维护·露壳蜗牛 | ×1 | 整体维护·露壳蜗牛：清水×1（每只·每日）｜集露台｜露壳蜗牛｜1AP | 牧草×1 |
 | 整体维护·露壳蜗牛 | ×2 | 整体维护·露壳蜗牛：清水×2（每只·每轮）｜集露台｜露壳蜗牛｜1AP | 牧草×1 |
-| 整体维护·凝胶水母 | ×1 | 整体维护·凝胶水母：清水×1（每群·每轮）｜采胶台｜凝胶水母｜1AP | 藻料×1；高密度藻料×1 |
+| 整体维护·凝胶水母 | ×1 | 整体维护·凝胶水母：清水×1（每群·每轮）｜采胶台｜凝胶水母｜1AP | 藻料×1；高密度藻料×1；灵液×1 |
+| 整体维护·凝胶水母 | ×1 | 整体维护·凝胶水母：清水×1（每群·每轮）｜采胶台｜凝胶水母｜1AP | 藻料×1；高密度藻料×1；灵液×1 |
 | 整体维护·砾甲蜗牛 | ×1 | 整体维护·砾甲蜗牛：清水×1（每只·每日）｜岩壳成型台｜砾甲蜗牛｜1AP | 藻料×1；石粉×3 |
 | 整体维护·砾甲蜗牛 | ×1 | 整体维护·砾甲蜗牛：清水×1（每只·每轮）｜岩壳成型台｜砾甲蜗牛｜1AP | 藻料×1；石粉×3 |
 | 整体维护·叶丝蚕 | ×1 | 整体维护·叶丝蚕：清水×1（每群·每日）｜蚕架｜叶丝蚕｜1AP | 桑叶×1；桑叶×2 |
@@ -1529,10 +1577,11 @@
 | 市集采购 | 不可采购 |
 | 市集出售 | 4元石/份（计入销售收入） |
 
-**获取来源（4条）**
+**获取来源（5条）**
 
 | 过程 | 本条目数量 | 说明 | 同批 |
 |---|---|---|---|
+| 加工·珊瑚复合石板 | ×3 | 加工·珊瑚复合石板：复合石板×3（每批）｜木工台｜需研究「矿质材料工艺」｜1自然日｜启动1＋收取1 | 珊瑚石×2；石粉×1；黏液×1 |
 | 加工·黏液复合石板 | ×2 | 加工·黏液复合石板：复合石板×2（每批）｜木工台｜需研究「矿质材料工艺」｜1自然日｜启动1＋收取1 | 砂砾×2；石粉×1；黏液×1 |
 | 加工·鳞甲复合板 | ×3 | 加工·鳞甲复合板：复合石板×3（每批）｜木工台｜需研究「矿质材料工艺」｜1自然日｜启动1＋收取1 | 矿质鳞片×2；蜕皮×1；砂砾×1 |
 | 加工·岩壳石板 | ×3 | 加工·岩壳石板：复合石板×3（每批）｜木工台｜需研究「矿质材料工艺」｜1自然日｜启动1＋收取1 | 岩壳片×2；黏液×1 |
@@ -1587,7 +1636,6 @@
 | 分类 | 土行·固体·加工品；标签：animal_product |
 | 市集采购 | 不可采购 |
 | 市集出售 | 2元石/份（计入销售收入） |
-| 下游用途 | 无下游配方：出售与供货是该物品的设计出口 |
 
 **获取来源（1条）**
 
@@ -1595,10 +1643,13 @@
 |---|---|---|---|
 | 收取·礁骨珊瑚 | ×2 | 收取·礁骨珊瑚：珊瑚石×2（每群·每轮）｜采礁台｜礁骨珊瑚｜1AP | — |
 
-**直接用途（1条）**
+**直接用途（4条）**
 
 | 过程 | 本条目数量 | 说明 | 同批 |
 |---|---|---|---|
+| 加工·珊瑚复合石板 | ×2 | 加工·珊瑚复合石板：珊瑚石×2（每批）｜木工台｜需研究「矿质材料工艺」｜1自然日｜启动1＋收取1 | 石粉×1；黏液×1；复合石板×3 |
+| 加工·珊瑚制粉 | ×2 | 加工·珊瑚制粉：珊瑚石×2（每批）｜农产加工台｜需研究「矿质材料工艺」｜1自然日｜启动1＋收取1 | 石粉×2 |
+| 加工·多孔滤材 | ×1 | 加工·多孔滤材：珊瑚石×1（每批）｜木工台｜需研究「水与藻料回流」｜1自然日｜启动1＋收取1 | 木炭×1；炭砂滤料×3 |
 | 市集出售·珊瑚石 | ×按订单/库存 | 市集出售·珊瑚石：珊瑚石×按订单/库存（每份） | 元石×2 |
 
 相关规则：[市集交易](#市集交易-rulemarket)
@@ -1681,7 +1732,7 @@
 |---|---|---|---|
 | 加工·藻露羹熬制 | ×1 | 加工·藻露羹熬制：高密度藻料×1（每批）｜厨房｜需研究「复合灵食」｜2自然日｜启动1＋收取1 | 清水×3；花瓣×1；木炭×1；藻露羹×2 |
 | 整体维护·滤藻鲤 | ×1 | 整体维护·滤藻鲤：高密度藻料×1（每尾·每日）｜捕鲤台｜滤藻鲤｜1AP | 藻料×1；复合水养料×1；谷粒×1 |
-| 整体维护·凝胶水母 | ×1 | 整体维护·凝胶水母：高密度藻料×1（每群·每日）｜采胶台｜凝胶水母｜1AP | 藻料×1；清水×1 |
+| 整体维护·凝胶水母 | ×1 | 整体维护·凝胶水母：高密度藻料×1（每群·每日）｜采胶台｜凝胶水母｜1AP | 藻料×1；清水×1；清水×1；灵液×1 |
 | 启动研究·复合灵食 | ×1 | 启动研究·复合灵食：高密度藻料×1（一次性）｜研究台 | 精炼油×1；铁锭×1；元石×12 |
 | 市集出售·高密度藻料 | ×按订单/库存 | 市集出售·高密度藻料：高密度藻料×按订单/库存（每份） | 元石×4 |
 
@@ -1713,6 +1764,58 @@
 | 五行供货·藻露羹 | ×按订单/库存 | 五行供货·藻露羹：藻露羹×按订单/库存（数量=ceil(订单需求/供养值)） | 元石×按公式 |
 
 相关规则：[市集交易](#市集交易-rulemarket)、[五行供货与转数](#五行供货与转数-ruleorders)
+
+### 浮萍 `resource:duckweed`
+
+水行固体；生产材料
+
+| 字段 | 内容 |
+|---|---|
+| 分类 | 水行·固体·加工品；标签：plant_product |
+| 市集采购 | 不可采购 |
+| 市集出售 | 1元石/份（计入销售收入） |
+
+**获取来源（1条）**
+
+| 过程 | 本条目数量 | 说明 | 同批 |
+|---|---|---|---|
+| 收获·浮萍 | ×4 | 收获·浮萍：浮萍×4（每次收获）｜1AP | — |
+
+**直接用途（4条）**
+
+| 过程 | 本条目数量 | 说明 | 同批 |
+|---|---|---|---|
+| 加工·浮萍制粉 | ×2 | 加工·浮萍制粉：浮萍×2（每批）｜农产加工台｜需研究「农产初加工」｜1自然日｜启动1＋收取1 | 草粉×2 |
+| 加工·泥料处理 | ×1 | 加工·泥料处理：浮萍×1（每批）｜泥料处理台｜1自然日｜启动1＋收取1 | 污泥×2；腐殖土×3 |
+| 整体维护·净泥鳅 | ×1 | 整体维护·净泥鳅：浮萍×1（每尾·每日）｜泥料处理台｜净泥鳅｜1AP | 藻料×1 |
+| 市集出售·浮萍 | ×按订单/库存 | 市集出售·浮萍：浮萍×按订单/库存（每份） | 元石×1 |
+
+相关规则：[市集交易](#市集交易-rulemarket)
+
+### 浮萍种苗 `resource:duckweed_seed`
+
+水行固体；生产材料
+
+| 字段 | 内容 |
+|---|---|
+| 分类 | 水行·固体·加工品；标签：seed |
+| 市集采购 | 2元石/份 |
+| 市集出售 | 不可出售 |
+
+**获取来源（2条）**
+
+| 过程 | 本条目数量 | 说明 | 同批 |
+|---|---|---|---|
+| 市集采购·浮萍种苗 | ×按订单/库存 | 市集采购·浮萍种苗：浮萍种苗×按订单/库存（每份） | 元石×2 |
+| 育种奖励·浮萍 | ×1 | 育种奖励·浮萍：浮萍种苗×1（每株首次成熟；成功时） | — |
+
+**直接用途（1条）**
+
+| 过程 | 本条目数量 | 说明 | 同批 |
+|---|---|---|---|
+| 播种·浮萍 | ×1 | 播种·浮萍：浮萍种苗×1（每次播种）｜1AP | — |
+
+相关规则：[市集交易](#市集交易-rulemarket)
 
 ### 腐土菌丸 `resource:earth_pill`
 
@@ -1777,17 +1880,19 @@
 | 市集采购 | 不可采购 |
 | 市集出售 | 2元石/份（计入销售收入） |
 
-**获取来源（2条）**
+**获取来源（3条）**
 
 | 过程 | 本条目数量 | 说明 | 同批 |
 |---|---|---|---|
+| 加工·多孔滤材 | ×3 | 加工·多孔滤材：炭砂滤料×3（每批）｜木工台｜需研究「水与藻料回流」｜1自然日｜启动1＋收取1 | 珊瑚石×1；木炭×1 |
 | 加工·炭砂滤料制作 | ×2 | 加工·炭砂滤料制作：炭砂滤料×2（每批）｜木工台｜需研究「水与藻料回流」｜1自然日｜启动1＋收取1 | 木炭×1；砂砾×2 |
 | 加工·丝质滤材 | ×3 | 加工·丝质滤材：炭砂滤料×3（每批）｜木工台｜需研究「水与藻料回流」｜1自然日｜启动1＋收取1 | 蚕丝×1；木屑×1；木炭×1 |
 
-**直接用途（3条）**
+**直接用途（4条）**
 
 | 过程 | 本条目数量 | 说明 | 同批 |
 |---|---|---|---|
+| 加工·珍珠精滤 | ×1 | 加工·珍珠精滤：炭砂滤料×1（每批）｜净水菌床｜需研究「水产精养」｜1自然日｜启动1＋收取1 | 污水×6；珍珠×1；清水×4；污泥×2 |
 | 加工·营养液回收 | ×1 | 加工·营养液回收：炭砂滤料×1（每批）｜净水菌床｜需研究「水与藻料回流」｜2自然日｜启动1＋收取1 | 污水×4；营养液×2；清水×1；污泥×1 |
 | 整体维护·净水菌毯 | ×1 | 整体维护·净水菌毯：炭砂滤料×1（每培养单位·每轮）｜净水菌床｜净水菌毯｜1AP | 清水×1；污水×4；木屑×1；污水×4 |
 | 市集出售·炭砂滤料 | ×按订单/库存 | 市集出售·炭砂滤料：炭砂滤料×按订单/库存（每份） | 元石×2 |
@@ -1846,6 +1951,32 @@
 
 相关规则：[市集交易](#市集交易-rulemarket)
 
+### 鱼粉 `resource:fish_meal`
+
+木行固体；生产材料
+
+| 字段 | 内容 |
+|---|---|
+| 分类 | 木行·固体·加工品；标签：processing |
+| 市集采购 | 不可采购 |
+| 市集出售 | 2元石/份（计入销售收入） |
+
+**获取来源（1条）**
+
+| 过程 | 本条目数量 | 说明 | 同批 |
+|---|---|---|---|
+| 加工·鱼肉制粉 | ×3 | 加工·鱼肉制粉：鱼粉×3（每批）｜农产加工台｜需研究「饲料与蜡油精制」｜1自然日｜启动1＋收取1 | 鱼肉×2 |
+
+**直接用途（3条）**
+
+| 过程 | 本条目数量 | 说明 | 同批 |
+|---|---|---|---|
+| 加工·鱼粉陆养料 | ×1 | 加工·鱼粉陆养料：鱼粉×1（每批）｜农产加工台｜需研究「饲料与蜡油精制」｜1自然日｜启动1＋收取1 | 草粉×2；油饼×1；复合陆养料×3 |
+| 加工·鱼粉水养料 | ×1 | 加工·鱼粉水养料：鱼粉×1（每批）｜农产加工台｜需研究「饲料与蜡油精制」｜1自然日｜启动1＋收取1 | 藻料×3；谷粉×1；复合水养料×4 |
+| 市集出售·鱼粉 | ×按订单/库存 | 市集出售·鱼粉：鱼粉×按订单/库存（每份） | 元石×2 |
+
+相关规则：[市集交易](#市集交易-rulemarket)
+
 ### 鱼肉 `resource:fish_meat`
 
 木行固体；可供货（供养值7）
@@ -1864,10 +1995,11 @@
 | 收取·滤藻鲤 | ×3 | 收取·滤藻鲤：鱼肉×3（每尾·每轮）｜捕鲤台｜滤藻鲤｜1AP | 鱼粪×1 |
 | 收取·油鳍鱼 | ×1 | 收取·油鳍鱼：鱼肉×1（每尾·每轮）｜取油台｜油鳍鱼｜1AP | 粗油×2 |
 
-**直接用途（4条）**
+**直接用途（5条）**
 
 | 过程 | 本条目数量 | 说明 | 同批 |
 |---|---|---|---|
+| 加工·鱼肉制粉 | ×2 | 加工·鱼肉制粉：鱼肉×2（每批）｜农产加工台｜需研究「饲料与蜡油精制」｜1自然日｜启动1＋收取1 | 鱼粉×3 |
 | 加工·菌鱼灵膳烹制 | ×1 | 加工·菌鱼灵膳烹制：鱼肉×1（每批）｜厨房｜需研究「灵食初制」｜1自然日｜启动1＋收取1 | 木腐菇×1；精炼油×1；木炭×1；菌鱼灵膳×2 |
 | 启动研究·灵食初制 | ×1 | 启动研究·灵食初制：鱼肉×1（一次性）｜研究台 | 蜂蜜×1；谷粉×1；元石×8 |
 | 市集出售·鱼肉 | ×按订单/库存 | 市集出售·鱼肉：鱼肉×按订单/库存（每份） | 元石×9 |
@@ -2064,10 +2196,11 @@
 | 加工·谷粉研磨 | ×2 | 加工·谷粉研磨：谷粉×2（每批）｜农产加工台｜需研究「农产初加工」｜1自然日｜启动1＋收取1 | 谷粒×2 |
 | 加工·稻米磨粉 | ×2 | 加工·稻米磨粉：谷粉×2（每批）｜农产加工台｜需研究「农产初加工」｜1自然日｜启动1＋收取1 | 稻米×3 |
 
-**直接用途（7条）**
+**直接用途（8条）**
 
 | 过程 | 本条目数量 | 说明 | 同批 |
 |---|---|---|---|
+| 加工·鱼粉水养料 | ×1 | 加工·鱼粉水养料：谷粉×1（每批）｜农产加工台｜需研究「饲料与蜡油精制」｜1自然日｜启动1＋收取1 | 藻料×3；鱼粉×1；复合水养料×4 |
 | 加工·陆养料调配 | ×1 | 加工·陆养料调配：谷粉×1（每批）｜农产加工台｜需研究「饲料与蜡油精制」｜1自然日｜启动1＋收取1 | 草粉×2；油饼×1；复合陆养料×3 |
 | 加工·水养料调配 | ×1 | 加工·水养料调配：谷粉×1（每批）｜农产加工台｜需研究「饲料与蜡油精制」｜1自然日｜启动1＋收取1 | 藻料×3；油饼×1；复合水养料×4 |
 | 加工·蜜谷灵饼烘焙 | ×2 | 加工·蜜谷灵饼烘焙：谷粉×2（每批）｜厨房｜需研究「灵食初制」｜1自然日｜启动1＋收取1 | 蜂蜜×1；清水×1；木炭×1；蜜谷灵饼×2 |
@@ -2088,16 +2221,18 @@
 | 市集采购 | 不可采购 |
 | 市集出售 | 1元石/份（计入销售收入） |
 
-**获取来源（1条）**
+**获取来源（2条）**
 
 | 过程 | 本条目数量 | 说明 | 同批 |
 |---|---|---|---|
+| 加工·浮萍制粉 | ×2 | 加工·浮萍制粉：草粉×2（每批）｜农产加工台｜需研究「农产初加工」｜1自然日｜启动1＋收取1 | 浮萍×2 |
 | 加工·草粉研磨 | ×2 | 加工·草粉研磨：草粉×2（每批）｜农产加工台｜需研究「农产初加工」｜1自然日｜启动1＋收取1 | 牧草×3 |
 
-**直接用途（4条）**
+**直接用途（5条）**
 
 | 过程 | 本条目数量 | 说明 | 同批 |
 |---|---|---|---|
+| 加工·鱼粉陆养料 | ×2 | 加工·鱼粉陆养料：草粉×2（每批）｜农产加工台｜需研究「饲料与蜡油精制」｜1自然日｜启动1＋收取1 | 鱼粉×1；油饼×1；复合陆养料×3 |
 | 加工·陆养料调配 | ×2 | 加工·陆养料调配：草粉×2（每批）｜农产加工台｜需研究「饲料与蜡油精制」｜1自然日｜启动1＋收取1 | 谷粉×1；油饼×1；复合陆养料×3 |
 | 加工·矿质补料调配 | ×2 | 加工·矿质补料调配：草粉×2（每批）｜农产加工台｜需研究「矿质材料工艺」｜1自然日｜启动1＋收取1 | 碎铁矿×2；谷粉×1；矿质补料×2 |
 | 加工·腐土菌丸炼制 | ×1 | 加工·腐土菌丸炼制：草粉×1（每批）｜厨房｜需研究「复合灵食」｜2自然日｜启动1＋收取1 | 腐殖土×2；木腐菇×1；木炭×1；腐土菌丸×2 |
@@ -2258,7 +2393,7 @@
 | 市集出售 | 4元石/份（计入销售收入） |
 | 五行供货 | 可供货（土行）；供养值4：订单数量=ceil(需求/供养值)，回款=数量×卖价＋10%溢价 |
 
-**获取来源（19条）**
+**获取来源（21条）**
 
 | 过程 | 本条目数量 | 说明 | 同批 |
 |---|---|---|---|
@@ -2268,6 +2403,7 @@
 | 加工·鱼粪堆肥 | ×2 | 加工·鱼粪堆肥：腐殖土×2（每批）｜堆肥箱｜2自然日｜启动1＋收取1 | 鱼粪×2 |
 | 加工·牧草堆肥 | ×2 | 加工·牧草堆肥：腐殖土×2（每批）｜堆肥箱｜2自然日｜启动1＋收取1 | 牧草×2 |
 | 加工·油饼堆肥 | ×2 | 加工·油饼堆肥：腐殖土×2（每批）｜堆肥箱｜需研究「农产初加工」｜2自然日｜启动1＋收取1 | 油饼×2 |
+| 加工·苇秆堆肥 | ×2 | 加工·苇秆堆肥：腐殖土×2（每批）｜堆肥箱｜1自然日｜启动1＋收取1 | 苇秆×2 |
 | 加工·羊粪堆肥 | ×2 | 加工·羊粪堆肥：腐殖土×2（每批）｜堆肥箱｜2自然日｜启动1＋收取1 | 羊粪肥×2 |
 | 加工·污泥堆肥 | ×2 | 加工·污泥堆肥：腐殖土×2（每批）｜堆肥箱｜需研究「菌毯净化」｜2自然日｜启动1＋收取1 | 污泥×2 |
 | 加工·废滤炭堆肥 | ×1 | 加工·废滤炭堆肥：腐殖土×1（每批）｜堆肥箱｜需研究「饲料与蜡油精制」｜2自然日｜启动1＋收取1 | 废滤炭×2 |
@@ -2275,6 +2411,7 @@
 | 加工·枝条堆肥 | ×2 | 加工·枝条堆肥：腐殖土×2（每批）｜堆肥箱｜2自然日｜启动1＋收取1 | 枝条×3 |
 | 加工·秸秆翻肥 | ×4 | 加工·秸秆翻肥：腐殖土×4（每批）｜翻肥窝｜1自然日｜启动1＋收取1 | 秸秆×2；木屑×1 |
 | 加工·残料翻肥 | ×3 | 加工·残料翻肥：腐殖土×3（每批）｜翻肥窝｜需研究「菌毯净化」｜1自然日｜启动1＋收取1 | 污泥×2；油饼×1 |
+| 加工·泥料处理 | ×3 | 加工·泥料处理：腐殖土×3（每批）｜泥料处理台｜1自然日｜启动1＋收取1 | 污泥×2；浮萍×1 |
 | 收取·炭腹虫 | ×1 | 收取·炭腹虫：腐殖土×1（每群·每轮）｜炭化巢｜炭腹虫｜1AP | 木炭×4；木炭×2 |
 | 收取·炭腹虫 | ×1 | 收取·炭腹虫：腐殖土×1（每群·每轮）｜炭化巢｜炭腹虫｜1AP | 木炭×4；木炭×2 |
 | 收取·堆肥鼠 | ×4 | 收取·堆肥鼠：腐殖土×4（每只·每轮）｜翻肥窝｜堆肥鼠｜1AP | — |
@@ -2282,10 +2419,11 @@
 | 收取·净泥鳅 | ×3 | 收取·净泥鳅：腐殖土×3（每尾·每轮）｜泥料处理台｜净泥鳅｜1AP | — |
 | 收获·木腐菇 | ×1 | 收获·木腐菇：腐殖土×1（每次收获）｜1AP | 木腐菇×3 |
 
-**直接用途（7条）**
+**直接用途（8条）**
 
 | 过程 | 本条目数量 | 说明 | 同批 |
 |---|---|---|---|
+| 加工·保水基质 | ×1 | 加工·保水基质：腐殖土×1（每批）｜农产加工台｜需研究「水产精养」｜1自然日｜启动1＋收取1 | 凝水胶×1；苇秆×1；保水基质×4 |
 | 加工·腐土菌丸炼制 | ×2 | 加工·腐土菌丸炼制：腐殖土×2（每批）｜厨房｜需研究「复合灵食」｜2自然日｜启动1＋收取1 | 木腐菇×1；草粉×1；木炭×1；腐土菌丸×2 |
 | 施肥 | ×1 | 施肥：腐殖土×1（每次）｜1AP | — |
 | 启动研究·田间自动维护 | ×2 | 启动研究·田间自动维护：腐殖土×2（一次性）｜研究台 | 清水×4；复合陆养料×1；元石×12 |
@@ -2369,10 +2507,11 @@
 | 市集采购 | 不可采购 |
 | 市集出售 | 3元石/份（计入销售收入） |
 
-**获取来源（1条）**
+**获取来源（2条）**
 
 | 过程 | 本条目数量 | 说明 | 同批 |
 |---|---|---|---|
+| 加工·鱼粉陆养料 | ×3 | 加工·鱼粉陆养料：复合陆养料×3（每批）｜农产加工台｜需研究「饲料与蜡油精制」｜1自然日｜启动1＋收取1 | 鱼粉×1；草粉×2；油饼×1 |
 | 加工·陆养料调配 | ×3 | 加工·陆养料调配：复合陆养料×3（每批）｜农产加工台｜需研究「饲料与蜡油精制」｜1自然日｜启动1＋收取1 | 谷粉×1；草粉×2；油饼×1 |
 
 **直接用途（5条）**
@@ -2459,10 +2598,11 @@
 | 收取·露壳蜗牛 | ×1 | 收取·露壳蜗牛：黏液×1（每只·每轮）｜集露台｜露壳蜗牛｜1AP | 灵液×2 |
 | 收取·砾甲蜗牛 | ×1 | 收取·砾甲蜗牛：黏液×1（每只·每轮）｜岩壳成型台｜砾甲蜗牛｜1AP | 岩壳片×2 |
 
-**直接用途（4条）**
+**直接用途（5条）**
 
 | 过程 | 本条目数量 | 说明 | 同批 |
 |---|---|---|---|
+| 加工·珊瑚复合石板 | ×1 | 加工·珊瑚复合石板：黏液×1（每批）｜木工台｜需研究「矿质材料工艺」｜1自然日｜启动1＋收取1 | 珊瑚石×2；石粉×1；复合石板×3 |
 | 加工·黏液复合石板 | ×1 | 加工·黏液复合石板：黏液×1（每批）｜木工台｜需研究「矿质材料工艺」｜1自然日｜启动1＋收取1 | 砂砾×2；石粉×1；复合石板×2 |
 | 加工·岩壳石板 | ×1 | 加工·岩壳石板：黏液×1（每批）｜木工台｜需研究「矿质材料工艺」｜1自然日｜启动1＋收取1 | 岩壳片×2；复合石板×3 |
 | 市集出售·黏液 | ×按订单/库存 | 市集出售·黏液：黏液×按订单/库存（每份） | 元石×2 |
@@ -2564,12 +2704,12 @@
 | 分类 | 土行·固体·加工品；标签：animal_product |
 | 市集采购 | 不可采购 |
 | 市集出售 | 1元石/份（计入销售收入） |
-| 下游用途 | 无下游配方：出售与供货是该物品的设计出口 |
 
-**直接用途（1条）**
+**直接用途（2条）**
 
 | 过程 | 本条目数量 | 说明 | 同批 |
 |---|---|---|---|
+| 加工·壳石制粉 | ×2 | 加工·壳石制粉：贝壳×2（每批）｜农产加工台｜需研究「矿质材料工艺」｜1自然日｜启动1＋收取1 | 石粉×2 |
 | 市集出售·贝壳 | ×按订单/库存 | 市集出售·贝壳：贝壳×按订单/库存（每份） | 元石×1 |
 
 相关规则：[市集交易](#市集交易-rulemarket)
@@ -2645,10 +2785,11 @@
 |---|---|---|---|
 | 加工·油籽榨油 | ×2 | 加工·油籽榨油：油饼×2（每批）｜农产加工台｜需研究「农产初加工」｜2自然日｜启动1＋收取1 | 油籽×4；粗油×2 |
 
-**直接用途（6条）**
+**直接用途（7条）**
 
 | 过程 | 本条目数量 | 说明 | 同批 |
 |---|---|---|---|
+| 加工·鱼粉陆养料 | ×1 | 加工·鱼粉陆养料：油饼×1（每批）｜农产加工台｜需研究「饲料与蜡油精制」｜1自然日｜启动1＋收取1 | 鱼粉×1；草粉×2；复合陆养料×3 |
 | 加工·陆养料调配 | ×1 | 加工·陆养料调配：油饼×1（每批）｜农产加工台｜需研究「饲料与蜡油精制」｜1自然日｜启动1＋收取1 | 谷粉×1；草粉×2；复合陆养料×3 |
 | 加工·水养料调配 | ×1 | 加工·水养料调配：油饼×1（每批）｜农产加工台｜需研究「饲料与蜡油精制」｜1自然日｜启动1＋收取1 | 藻料×3；谷粉×1；复合水养料×4 |
 | 加工·油饼堆肥 | ×2 | 加工·油饼堆肥：油饼×2（每批）｜堆肥箱｜需研究「农产初加工」｜2自然日｜启动1＋收取1 | 腐殖土×2 |
@@ -2751,7 +2892,6 @@
 | 分类 | 金行·固体·加工品；标签：animal_product |
 | 市集采购 | 不可采购 |
 | 市集出售 | 6元石/份（计入销售收入） |
-| 下游用途 | 无下游配方：出售与供货是该物品的设计出口 |
 
 **获取来源（1条）**
 
@@ -2759,10 +2899,12 @@
 |---|---|---|---|
 | 收取·珍珠蚌 | ×2 | 收取·珍珠蚌：珍珠×2（每只·每轮）｜采珠台｜珍珠蚌｜1AP | — |
 
-**直接用途（1条）**
+**直接用途（3条）**
 
 | 过程 | 本条目数量 | 说明 | 同批 |
 |---|---|---|---|
+| 加工·珍珠精滤 | ×1 | 加工·珍珠精滤：珍珠×1（每批）｜净水菌床｜需研究「水产精养」｜1自然日｜启动1＋收取1 | 污水×6；炭砂滤料×1；清水×4；污泥×2 |
+| 启动研究·水产精养 | ×2 | 启动研究·水产精养：珍珠×2（一次性）｜研究台 | 凝水胶×2；元石×10 |
 | 市集出售·珍珠 | ×按订单/库存 | 市集出售·珍珠：珍珠×按订单/库存（每份） | 元石×6 |
 
 相关规则：[市集交易](#市集交易-rulemarket)
@@ -2972,6 +3114,58 @@
 | 建造·木工台 | ×4 | 建造·木工台：再生填料×4（每次建造（可选2:1替石））｜木工台｜1AP | 原木×2；普通岩石×2；复合石板×2；元石×8 |
 | 建造·采毛台 | ×4 | 建造·采毛台：再生填料×4（每次建造（可选2:1替石））｜采毛台｜1AP | 木板×2；普通岩石×2；复合石板×2；元石×12 |
 | 市集出售·再生填料 | ×按订单/库存 | 市集出售·再生填料：再生填料×按订单/库存（每份） | 元石×1 |
+
+相关规则：[市集交易](#市集交易-rulemarket)
+
+### 芦苇种苗 `resource:reed_seed`
+
+木行固体；生产材料
+
+| 字段 | 内容 |
+|---|---|
+| 分类 | 木行·固体·加工品；标签：seed |
+| 市集采购 | 3元石/份 |
+| 市集出售 | 不可出售 |
+
+**获取来源（2条）**
+
+| 过程 | 本条目数量 | 说明 | 同批 |
+|---|---|---|---|
+| 市集采购·芦苇种苗 | ×按订单/库存 | 市集采购·芦苇种苗：芦苇种苗×按订单/库存（每份） | 元石×3 |
+| 育种奖励·芦苇 | ×1 | 育种奖励·芦苇：芦苇种苗×1（每株首次成熟；成功时） | — |
+
+**直接用途（1条）**
+
+| 过程 | 本条目数量 | 说明 | 同批 |
+|---|---|---|---|
+| 播种·芦苇 | ×1 | 播种·芦苇：芦苇种苗×1（每次播种）｜1AP | — |
+
+相关规则：[市集交易](#市集交易-rulemarket)
+
+### 苇秆 `resource:reed_stalk`
+
+木行固体；生产材料
+
+| 字段 | 内容 |
+|---|---|
+| 分类 | 木行·固体·加工品；标签：plant_product |
+| 市集采购 | 不可采购 |
+| 市集出售 | 1元石/份（计入销售收入） |
+
+**获取来源（1条）**
+
+| 过程 | 本条目数量 | 说明 | 同批 |
+|---|---|---|---|
+| 收获·芦苇 | ×6 | 收获·芦苇：苇秆×6（每次收获）｜1AP | — |
+
+**直接用途（4条）**
+
+| 过程 | 本条目数量 | 说明 | 同批 |
+|---|---|---|---|
+| 加工·苇秆炭化 | ×3 | 加工·苇秆炭化：苇秆×3（每批）｜炭化炉｜1自然日｜启动1＋收取1 | 木炭×2 |
+| 加工·苇秆堆肥 | ×2 | 加工·苇秆堆肥：苇秆×2（每批）｜堆肥箱｜1自然日｜启动1＋收取1 | 腐殖土×2 |
+| 加工·保水基质 | ×1 | 加工·保水基质：苇秆×1（每批）｜农产加工台｜需研究「水产精养」｜1自然日｜启动1＋收取1 | 凝水胶×1；腐殖土×1；保水基质×4 |
+| 市集出售·苇秆 | ×按订单/库存 | 市集出售·苇秆：苇秆×按订单/库存（每份） | 元石×1 |
 
 相关规则：[市集交易](#市集交易-rulemarket)
 
@@ -3252,21 +3446,23 @@
 | 市集采购 | 不可采购 |
 | 市集出售 | 不可出售 |
 
-**获取来源（4条）**
+**获取来源（5条）**
 
 | 过程 | 本条目数量 | 说明 | 同批 |
 |---|---|---|---|
 | 加工·菌毯净水 | ×1 | 加工·菌毯净水：污泥×1（每批）｜净水菌床｜需研究「菌毯净化」｜2自然日｜启动1＋收取1 | 污水×4；木屑×1；清水×2 |
+| 加工·珍珠精滤 | ×2 | 加工·珍珠精滤：污泥×2（每批）｜净水菌床｜需研究「水产精养」｜1自然日｜启动1＋收取1 | 污水×6；炭砂滤料×1；珍珠×1；清水×4 |
 | 加工·营养液回收 | ×1 | 加工·营养液回收：污泥×1（每批）｜净水菌床｜需研究「水与藻料回流」｜2自然日｜启动1＋收取1 | 污水×4；炭砂滤料×1；营养液×2；清水×1 |
 | 收取·净水菌毯 | ×1 | 收取·净水菌毯：污泥×1（每培养单位·每轮）｜净水菌床｜净水菌毯｜1AP | 清水×2；营养液×2；清水×1 |
 | 收取·净水菌毯 | ×1 | 收取·净水菌毯：污泥×1（每培养单位·每轮）｜净水菌床｜净水菌毯｜1AP | 清水×2；营养液×2；清水×1 |
 
-**直接用途（4条）**
+**直接用途（5条）**
 
 | 过程 | 本条目数量 | 说明 | 同批 |
 |---|---|---|---|
 | 加工·污泥堆肥 | ×2 | 加工·污泥堆肥：污泥×2（每批）｜堆肥箱｜需研究「菌毯净化」｜2自然日｜启动1＋收取1 | 腐殖土×2 |
 | 加工·残料翻肥 | ×2 | 加工·残料翻肥：污泥×2（每批）｜翻肥窝｜需研究「菌毯净化」｜1自然日｜启动1＋收取1 | 油饼×1；腐殖土×3 |
+| 加工·泥料处理 | ×2 | 加工·泥料处理：污泥×2（每批）｜泥料处理台｜1自然日｜启动1＋收取1 | 浮萍×1；腐殖土×3 |
 | 整体维护·堆肥鼠 | ×2 | 整体维护·堆肥鼠：污泥×2（每只·每轮）｜翻肥窝｜堆肥鼠｜1AP | 牧草×1；清水×1；秸秆×2；木屑×1；油饼×1 |
 | 启动研究·水与藻料回流 | ×1 | 启动研究·水与藻料回流：污泥×1（一次性）｜研究台 | 砂砾×1；木炭×1；元石×8 |
 
@@ -3306,7 +3502,6 @@
 | 市集采购 | 不可采购 |
 | 市集出售 | 6元石/份（计入销售收入） |
 | 五行供货 | 可供货（水行）；供养值16：订单数量=ceil(需求/供养值)，回款=数量×卖价＋10%溢价 |
-| 下游用途 | 交易出口＋水产用途预留：本期仅可出售或水行供货，水产加工配方尚未实装，百科不显示任何可用配方入口。 |
 
 **获取来源（1条）**
 
@@ -3314,10 +3509,12 @@
 |---|---|---|---|
 | 收取·露壳蜗牛 | ×2 | 收取·露壳蜗牛：灵液×2（每只·每轮）｜集露台｜露壳蜗牛｜1AP | 黏液×1 |
 
-**直接用途（2条）**
+**直接用途（4条）**
 
 | 过程 | 本条目数量 | 说明 | 同批 |
 |---|---|---|---|
+| 整体维护·凝胶水母 | ×1 | 整体维护·凝胶水母：灵液×1（每群·每轮）｜采胶台｜凝胶水母｜1AP | 藻料×1；高密度藻料×1；清水×1；清水×1 |
+| 整体维护·珍珠蚌 | ×1 | 整体维护·珍珠蚌：灵液×1（每只·每轮）｜采珠台｜珍珠蚌｜1AP | 藻料×1；石粉×1；石粉×1 |
 | 市集出售·灵液 | ×按订单/库存 | 市集出售·灵液：灵液×按订单/库存（每份） | 元石×6 |
 | 五行供货·灵液 | ×按订单/库存 | 五行供货·灵液：灵液×按订单/库存（数量=ceil(订单需求/供养值)） | 元石×按公式 |
 
@@ -3360,23 +3557,27 @@
 | 市集采购 | 不可采购 |
 | 市集出售 | 1元石/份（计入销售收入） |
 
-**获取来源（2条）**
+**获取来源（4条）**
 
 | 过程 | 本条目数量 | 说明 | 同批 |
 |---|---|---|---|
 | 加工·破碎石材 | ×1 | 加工·破碎石材：石粉×1（每批）｜碎岩场｜需研究「岩料破碎」｜1自然日｜启动1＋收取1 | 普通岩石×2；砂砾×2 |
+| 加工·珊瑚制粉 | ×2 | 加工·珊瑚制粉：石粉×2（每批）｜农产加工台｜需研究「矿质材料工艺」｜1自然日｜启动1＋收取1 | 珊瑚石×2 |
+| 加工·壳石制粉 | ×2 | 加工·壳石制粉：石粉×2（每批）｜农产加工台｜需研究「矿质材料工艺」｜1自然日｜启动1＋收取1 | 贝壳×2 |
 | 收取·啮岩鼹 | ×1 | 收取·啮岩鼹：石粉×1（每只·每轮）｜碎岩场｜啮岩鼹｜1AP | 砂砾×2；碎铁矿×3 |
 
-**直接用途（9条）**
+**直接用途（11条）**
 
 | 过程 | 本条目数量 | 说明 | 同批 |
 |---|---|---|---|
+| 加工·珊瑚复合石板 | ×1 | 加工·珊瑚复合石板：石粉×1（每批）｜木工台｜需研究「矿质材料工艺」｜1自然日｜启动1＋收取1 | 珊瑚石×2；黏液×1；复合石板×3 |
 | 加工·黏液复合石板 | ×1 | 加工·黏液复合石板：石粉×1（每批）｜木工台｜需研究「矿质材料工艺」｜1自然日｜启动1＋收取1 | 砂砾×2；黏液×1；复合石板×2 |
 | 加工·复合石板组装 | ×1 | 加工·复合石板组装：石粉×1（每批）｜木工台｜需研究「矿质材料工艺」｜2自然日｜启动1＋收取1 | 砂砾×2；松脂×1；复合石板×2 |
 | 加工·岩壳成型 | ×3 | 加工·岩壳成型：石粉×3（每批）｜岩壳成型台｜需研究「矿质材料工艺」｜1自然日｜启动1＋收取1 | 清水×1；岩壳片×2；黏液×1 |
 | 加工·再生填料回收 | ×1 | 加工·再生填料回收：石粉×1（每批）｜木工台｜需研究「矿质材料工艺」｜1自然日｜启动1＋收取1 | 尾砂×1；炉渣×1；再生填料×2 |
 | 整体维护·砾甲蜗牛 | ×3 | 整体维护·砾甲蜗牛：石粉×3（每只·每轮）｜岩壳成型台｜砾甲蜗牛｜1AP | 藻料×1；清水×1；清水×1 |
-| 整体维护·珍珠蚌 | ×1 | 整体维护·珍珠蚌：石粉×1（每只·每轮）｜采珠台｜珍珠蚌｜1AP | 藻料×1 |
+| 整体维护·珍珠蚌 | ×1 | 整体维护·珍珠蚌：石粉×1（每只·每轮）｜采珠台｜珍珠蚌｜1AP | 藻料×1；灵液×1 |
+| 整体维护·珍珠蚌 | ×1 | 整体维护·珍珠蚌：石粉×1（每只·每轮）｜采珠台｜珍珠蚌｜1AP | 藻料×1；灵液×1 |
 | 整体维护·礁骨珊瑚 | ×3 | 整体维护·礁骨珊瑚：石粉×3（每群·每轮）｜采礁台｜礁骨珊瑚｜1AP | 藻料×1；清水×1 |
 | 启动研究·矿质材料工艺 | ×1 | 启动研究·矿质材料工艺：石粉×1（一次性）｜研究台 | 富集矿砂×1；铁锭×1；元石×12 |
 | 市集出售·石粉 | ×按订单/库存 | 市集出售·石粉：石粉×按订单/库存（每份） | 元石×1 |
@@ -3541,11 +3742,12 @@
 |---|---|---|---|
 | 水场换水（真实） | ×2 | 水场换水（真实）：污水×2（每次）｜1AP | 清水×2 |
 
-**直接用途（5条）**
+**直接用途（6条）**
 
 | 过程 | 本条目数量 | 说明 | 同批 |
 |---|---|---|---|
 | 加工·菌毯净水 | ×4 | 加工·菌毯净水：污水×4（每批）｜净水菌床｜需研究「菌毯净化」｜2自然日｜启动1＋收取1 | 木屑×1；清水×2；污泥×1 |
+| 加工·珍珠精滤 | ×6 | 加工·珍珠精滤：污水×6（每批）｜净水菌床｜需研究「水产精养」｜1自然日｜启动1＋收取1 | 炭砂滤料×1；珍珠×1；清水×4；污泥×2 |
 | 加工·营养液回收 | ×4 | 加工·营养液回收：污水×4（每批）｜净水菌床｜需研究「水与藻料回流」｜2自然日｜启动1＋收取1 | 炭砂滤料×1；营养液×2；清水×1；污泥×1 |
 | 整体维护·净水菌毯 | ×4 | 整体维护·净水菌毯：污水×4（每培养单位·每轮）｜净水菌床｜净水菌毯｜1AP | 清水×1；木屑×1；炭砂滤料×1 |
 | 整体维护·净水菌毯 | ×4 | 整体维护·净水菌毯：污水×4（每培养单位·每轮）｜净水菌床｜净水菌毯｜1AP | 清水×1；木屑×1；炭砂滤料×1 |
@@ -3563,10 +3765,11 @@
 | 市集采购 | 不可采购 |
 | 市集出售 | 3元石/份（计入销售收入） |
 
-**获取来源（1条）**
+**获取来源（2条）**
 
 | 过程 | 本条目数量 | 说明 | 同批 |
 |---|---|---|---|
+| 加工·鱼粉水养料 | ×4 | 加工·鱼粉水养料：复合水养料×4（每批）｜农产加工台｜需研究「饲料与蜡油精制」｜1自然日｜启动1＋收取1 | 藻料×3；谷粉×1；鱼粉×1 |
 | 加工·水养料调配 | ×4 | 加工·水养料调配：复合水养料×4（每批）｜农产加工台｜需研究「饲料与蜡油精制」｜1自然日｜启动1＋收取1 | 藻料×3；谷粉×1；油饼×1 |
 
 **直接用途（4条）**
@@ -3589,7 +3792,6 @@
 | 分类 | 水行·固体·加工品；标签：animal_product |
 | 市集采购 | 不可采购 |
 | 市集出售 | 4元石/份（计入销售收入） |
-| 下游用途 | 无下游配方：出售与供货是该物品的设计出口 |
 
 **获取来源（1条）**
 
@@ -3597,11 +3799,38 @@
 |---|---|---|---|
 | 收取·凝胶水母 | ×2 | 收取·凝胶水母：凝水胶×2（每群·每轮）｜采胶台｜凝胶水母｜1AP | — |
 
+**直接用途（3条）**
+
+| 过程 | 本条目数量 | 说明 | 同批 |
+|---|---|---|---|
+| 加工·保水基质 | ×1 | 加工·保水基质：凝水胶×1（每批）｜农产加工台｜需研究「水产精养」｜1自然日｜启动1＋收取1 | 腐殖土×1；苇秆×1；保水基质×4 |
+| 启动研究·水产精养 | ×2 | 启动研究·水产精养：凝水胶×2（一次性）｜研究台 | 珍珠×2；元石×10 |
+| 市集出售·凝水胶 | ×按订单/库存 | 市集出售·凝水胶：凝水胶×按订单/库存（每份） | 元石×4 |
+
+相关规则：[市集交易](#市集交易-rulemarket)
+
+### 保水基质 `resource:water_retaining_matrix`
+
+土行固体；生产材料
+
+| 字段 | 内容 |
+|---|---|
+| 分类 | 土行·固体·加工品；标签：processing |
+| 市集采购 | 不可采购 |
+| 市集出售 | 2元石/份（计入销售收入） |
+| 下游用途 | 无下游配方：出售与供货是该物品的设计出口 |
+
+**获取来源（1条）**
+
+| 过程 | 本条目数量 | 说明 | 同批 |
+|---|---|---|---|
+| 加工·保水基质 | ×4 | 加工·保水基质：保水基质×4（每批）｜农产加工台｜需研究「水产精养」｜1自然日｜启动1＋收取1 | 凝水胶×1；腐殖土×1；苇秆×1 |
+
 **直接用途（1条）**
 
 | 过程 | 本条目数量 | 说明 | 同批 |
 |---|---|---|---|
-| 市集出售·凝水胶 | ×按订单/库存 | 市集出售·凝水胶：凝水胶×按订单/库存（每份） | 元石×4 |
+| 市集出售·保水基质 | ×按订单/库存 | 市集出售·保水基质：保水基质×按订单/库存（每份） | 元石×2 |
 
 相关规则：[市集交易](#市集交易-rulemarket)
 
@@ -3714,7 +3943,7 @@
 相关规则：[市集交易](#市集交易-rulemarket)
 
 
-## 配方与食谱（97）
+## 配方与食谱（113）
 
 ### 蜜盏蜂·花源份额＋清水 `diet:bell_bee/base_diets/flower_share`
 
@@ -3952,6 +4181,22 @@
 
 相关规则：[养殖服务与周期口径](#养殖服务与周期口径-rulehusbandry_service)
 
+### 凝胶水母·灵液凝胶轮 `diet:gel_jellyfish/special_diets/gel_spirit_round`
+
+特殊食谱
+
+> 解锁条件：需完成研究 [水产精养](#水产精养-researchaquatic_intensive_care)；未解锁时仍可阅读本条目，阅读不解锁玩法。
+
+| 字段 | 内容 |
+|---|---|
+| 所属物种 | 凝胶水母 |
+| 类型 | 特殊食谱（成体生产；周期启动时一次付清投入） |
+| 投入 | 清水×1＋灵液×1/单位/轮 |
+
+关联条目：所属物种：[凝胶水母](#凝胶水母-speciesgel_jellyfish)；解锁研究：[水产精养](#水产精养-researchaquatic_intensive_care)
+
+相关规则：[养殖服务与周期口径](#养殖服务与周期口径-rulehusbandry_service)
+
 ### 凝胶水母·采胶轮投料 `diet:gel_jellyfish/special_diets/gel_water_round`
 
 特殊食谱
@@ -4142,6 +4387,22 @@
 
 相关规则：[养殖服务与周期口径](#养殖服务与周期口径-rulehusbandry_service)
 
+### 珍珠蚌·灵液育珠轮 `diet:pearl_mussel/special_diets/pearl_spirit_round`
+
+特殊食谱
+
+> 解锁条件：需完成研究 [水产精养](#水产精养-researchaquatic_intensive_care)；未解锁时仍可阅读本条目，阅读不解锁玩法。
+
+| 字段 | 内容 |
+|---|---|
+| 所属物种 | 珍珠蚌 |
+| 类型 | 特殊食谱（成体生产；周期启动时一次付清投入） |
+| 投入 | 石粉×1＋灵液×1/单位/轮 |
+
+关联条目：所属物种：[珍珠蚌](#珍珠蚌-speciespearl_mussel)；解锁研究：[水产精养](#水产精养-researchaquatic_intensive_care)
+
+相关规则：[养殖服务与周期口径](#养殖服务与周期口径-rulehusbandry_service)
+
 ### 净水菌毯·培养清水 `diet:purifying_mat/base_diets/culture_water`
 
 基础食谱
@@ -4319,6 +4580,20 @@
 
 相关规则：[养殖服务与周期口径](#养殖服务与周期口径-rulehusbandry_service)
 
+### 净泥鳅·浮萍替代餐 `diet:silt_loach/base_diets/duckweed_meal`
+
+基础食谱
+
+| 字段 | 内容 |
+|---|---|
+| 所属物种 | 净泥鳅 |
+| 类型 | 基础食谱（维持成长与有效日；每日服务时扣投入） |
+| 投入 | 浮萍×1/单位/日 |
+
+关联条目：所属物种：[净泥鳅](#净泥鳅-speciessilt_loach)
+
+相关规则：[养殖服务与周期口径](#养殖服务与周期口径-rulehusbandry_service)
+
 ### 钢绵羊·谷粒餐 `diet:steel_sheep/base_diets/grain_meal`
 
 基础食谱
@@ -4408,6 +4683,24 @@
 | AP | 启动1＋收取1 |
 
 关联条目：执行设施：[厨房](#厨房-facilitykitchen)；解锁研究：[复合灵食](#复合灵食-researchcomposite_spirit_food)
+
+相关规则：[持续生产与保留量](#持续生产与保留量-ruleauto_production)
+
+### 珊瑚复合石板 `recipe:assemble_coral_panel`
+
+木工台；复合石板×3；1日
+
+> 解锁条件：需完成研究 [矿质材料工艺](#矿质材料工艺-researchmineral_materials)；未解锁时仍可阅读本条目，阅读不解锁玩法。
+
+| 字段 | 内容 |
+|---|---|
+| 执行设施 | 木工台（须已建成；一次一批次；可由负责人按持续生产策略自动启动） |
+| 投入 | 珊瑚石×2＋石粉×1＋黏液×1（启动时一次性扣除） |
+| 产出 | 复合石板×3（收取时入仓；完工≠入仓） |
+| 批时 | 1自然日（日结推进，无需每日点击） |
+| AP | 启动1＋收取1 |
+
+关联条目：执行设施：[木工台](#木工台-facilitywoodshop)；解锁研究：[矿质材料工艺](#矿质材料工艺-researchmineral_materials)
 
 相关规则：[持续生产与保留量](#持续生产与保留量-ruleauto_production)
 
@@ -4501,6 +4794,42 @@
 关联条目：执行设施：[净水菌床](#净水菌床-facilitypurifying_bed)；解锁研究：[菌毯净化](#菌毯净化-researchbiofiltration)
 
 相关规则：[持续生产与保留量](#持续生产与保留量-ruleauto_production)、[活体配方的双重注册](#活体配方的双重注册-ruleliving_mapping)
+
+### 鱼粉陆养料 `recipe:blend_fish_land_feed`
+
+农产加工台；复合陆养料×3；1日
+
+> 解锁条件：需完成研究 [饲料与蜡油精制](#饲料与蜡油精制-researchadvanced_feed_oil_wax)；未解锁时仍可阅读本条目，阅读不解锁玩法。
+
+| 字段 | 内容 |
+|---|---|
+| 执行设施 | 农产加工台（须已建成；一次一批次；可由负责人按持续生产策略自动启动） |
+| 投入 | 鱼粉×1＋草粉×2＋油饼×1（启动时一次性扣除） |
+| 产出 | 复合陆养料×3（收取时入仓；完工≠入仓） |
+| 批时 | 1自然日（日结推进，无需每日点击） |
+| AP | 启动1＋收取1 |
+
+关联条目：执行设施：[农产加工台](#农产加工台-facilityfarm_processor)；解锁研究：[饲料与蜡油精制](#饲料与蜡油精制-researchadvanced_feed_oil_wax)
+
+相关规则：[持续生产与保留量](#持续生产与保留量-ruleauto_production)
+
+### 鱼粉水养料 `recipe:blend_fish_water_feed`
+
+农产加工台；复合水养料×4；1日
+
+> 解锁条件：需完成研究 [饲料与蜡油精制](#饲料与蜡油精制-researchadvanced_feed_oil_wax)；未解锁时仍可阅读本条目，阅读不解锁玩法。
+
+| 字段 | 内容 |
+|---|---|
+| 执行设施 | 农产加工台（须已建成；一次一批次；可由负责人按持续生产策略自动启动） |
+| 投入 | 藻料×3＋谷粉×1＋鱼粉×1（启动时一次性扣除） |
+| 产出 | 复合水养料×4（收取时入仓；完工≠入仓） |
+| 批时 | 1自然日（日结推进，无需每日点击） |
+| AP | 启动1＋收取1 |
+
+关联条目：执行设施：[农产加工台](#农产加工台-facilityfarm_processor)；解锁研究：[饲料与蜡油精制](#饲料与蜡油精制-researchadvanced_feed_oil_wax)
+
+相关规则：[持续生产与保留量](#持续生产与保留量-ruleauto_production)
 
 ### 陆养料调配 `recipe:blend_land_feed`
 
@@ -4614,6 +4943,22 @@
 
 相关规则：[持续生产与保留量](#持续生产与保留量-ruleauto_production)、[活体配方的双重注册](#活体配方的双重注册-ruleliving_mapping)
 
+### 苇秆炭化 `recipe:char_reed`
+
+炭化炉；木炭×2；1日
+
+| 字段 | 内容 |
+|---|---|
+| 执行设施 | 炭化炉（须已建成；一次一批次；可由负责人按持续生产策略自动启动） |
+| 投入 | 苇秆×3（启动时一次性扣除） |
+| 产出 | 木炭×2（收取时入仓；完工≠入仓） |
+| 批时 | 1自然日（日结推进，无需每日点击） |
+| AP | 启动1＋收取1 |
+
+关联条目：执行设施：[炭化炉](#炭化炉-facilitychar_kiln)
+
+相关规则：[持续生产与保留量](#持续生产与保留量-ruleauto_production)
+
 ### 枝条炭化 `recipe:char_twigs`
 
 炭化炉；木炭×3；2日
@@ -4693,6 +5038,22 @@
 | AP | 启动1＋收取1 |
 
 关联条目：执行设施：[堆肥箱](#堆肥箱-facilitycompost_bin)；解锁研究：[农产初加工](#农产初加工-researchfarm_preparation)
+
+相关规则：[持续生产与保留量](#持续生产与保留量-ruleauto_production)
+
+### 苇秆堆肥 `recipe:compost_reed`
+
+堆肥箱；腐殖土×2；1日
+
+| 字段 | 内容 |
+|---|---|
+| 执行设施 | 堆肥箱（须已建成；一次一批次；可由负责人按持续生产策略自动启动） |
+| 投入 | 苇秆×2（启动时一次性扣除） |
+| 产出 | 腐殖土×2（收取时入仓；完工≠入仓） |
+| 批时 | 1自然日（日结推进，无需每日点击） |
+| AP | 启动1＋收取1 |
+
+关联条目：执行设施：[堆肥箱](#堆肥箱-facilitycompost_bin)
 
 相关规则：[持续生产与保留量](#持续生产与保留量-ruleauto_production)
 
@@ -4833,6 +5194,24 @@
 
 相关规则：[持续生产与保留量](#持续生产与保留量-ruleauto_production)
 
+### 鱼肉制粉 `recipe:dry_fish_meal`
+
+农产加工台；鱼粉×3；1日
+
+> 解锁条件：需完成研究 [饲料与蜡油精制](#饲料与蜡油精制-researchadvanced_feed_oil_wax)；未解锁时仍可阅读本条目，阅读不解锁玩法。
+
+| 字段 | 内容 |
+|---|---|
+| 执行设施 | 农产加工台（须已建成；一次一批次；可由负责人按持续生产策略自动启动） |
+| 投入 | 鱼肉×2（启动时一次性扣除） |
+| 产出 | 鱼粉×3（收取时入仓；完工≠入仓） |
+| 批时 | 1自然日（日结推进，无需每日点击） |
+| AP | 启动1＋收取1 |
+
+关联条目：执行设施：[农产加工台](#农产加工台-facilityfarm_processor)；解锁研究：[饲料与蜡油精制](#饲料与蜡油精制-researchadvanced_feed_oil_wax)
+
+相关规则：[持续生产与保留量](#持续生产与保留量-ruleauto_production)
+
 ### 岩壳成型 `recipe:form_rock_shell`
 
 岩壳成型台；岩壳片×2＋黏液×1；1日
@@ -4870,6 +5249,42 @@
 
 相关规则：[持续生产与保留量](#持续生产与保留量-ruleauto_production)
 
+### 珊瑚制粉 `recipe:grind_coral`
+
+农产加工台；石粉×2；1日
+
+> 解锁条件：需完成研究 [矿质材料工艺](#矿质材料工艺-researchmineral_materials)；未解锁时仍可阅读本条目，阅读不解锁玩法。
+
+| 字段 | 内容 |
+|---|---|
+| 执行设施 | 农产加工台（须已建成；一次一批次；可由负责人按持续生产策略自动启动） |
+| 投入 | 珊瑚石×2（启动时一次性扣除） |
+| 产出 | 石粉×2（收取时入仓；完工≠入仓） |
+| 批时 | 1自然日（日结推进，无需每日点击） |
+| AP | 启动1＋收取1 |
+
+关联条目：执行设施：[农产加工台](#农产加工台-facilityfarm_processor)；解锁研究：[矿质材料工艺](#矿质材料工艺-researchmineral_materials)
+
+相关规则：[持续生产与保留量](#持续生产与保留量-ruleauto_production)
+
+### 壳石制粉 `recipe:grind_shell`
+
+农产加工台；石粉×2；1日
+
+> 解锁条件：需完成研究 [矿质材料工艺](#矿质材料工艺-researchmineral_materials)；未解锁时仍可阅读本条目，阅读不解锁玩法。
+
+| 字段 | 内容 |
+|---|---|
+| 执行设施 | 农产加工台（须已建成；一次一批次；可由负责人按持续生产策略自动启动） |
+| 投入 | 贝壳×2（启动时一次性扣除） |
+| 产出 | 石粉×2（收取时入仓；完工≠入仓） |
+| 批时 | 1自然日（日结推进，无需每日点击） |
+| AP | 启动1＋收取1 |
+
+关联条目：执行设施：[农产加工台](#农产加工台-facilityfarm_processor)；解锁研究：[矿质材料工艺](#矿质材料工艺-researchmineral_materials)
+
+相关规则：[持续生产与保留量](#持续生产与保留量-ruleauto_production)
+
 ### 蜜谷灵饼烘焙 `recipe:honey_grain_cake`
 
 厨房；蜜谷灵饼×2；1日
@@ -4903,6 +5318,24 @@
 | AP | 启动1＋收取1 |
 
 关联条目：执行设施：[厨房](#厨房-facilitykitchen)；解锁研究：[复合灵食](#复合灵食-researchcomposite_spirit_food)
+
+相关规则：[持续生产与保留量](#持续生产与保留量-ruleauto_production)
+
+### 多孔滤材 `recipe:make_coral_filter_media`
+
+木工台；炭砂滤料×3；1日
+
+> 解锁条件：需完成研究 [水与藻料回流](#水与藻料回流-researchwater_recirculation)；未解锁时仍可阅读本条目，阅读不解锁玩法。
+
+| 字段 | 内容 |
+|---|---|
+| 执行设施 | 木工台（须已建成；一次一批次；可由负责人按持续生产策略自动启动） |
+| 投入 | 珊瑚石×1＋木炭×1（启动时一次性扣除） |
+| 产出 | 炭砂滤料×3（收取时入仓；完工≠入仓） |
+| 批时 | 1自然日（日结推进，无需每日点击） |
+| AP | 启动1＋收取1 |
+
+关联条目：执行设施：[木工台](#木工台-facilitywoodshop)；解锁研究：[水与藻料回流](#水与藻料回流-researchwater_recirculation)
 
 相关规则：[持续生产与保留量](#持续生产与保留量-ruleauto_production)
 
@@ -4955,6 +5388,42 @@
 | AP | 启动1＋收取1 |
 
 关联条目：执行设施：[木工台](#木工台-facilitywoodshop)
+
+相关规则：[持续生产与保留量](#持续生产与保留量-ruleauto_production)
+
+### 保水基质 `recipe:make_water_retaining_matrix`
+
+农产加工台；保水基质×4；1日
+
+> 解锁条件：需完成研究 [水产精养](#水产精养-researchaquatic_intensive_care)；未解锁时仍可阅读本条目，阅读不解锁玩法。
+
+| 字段 | 内容 |
+|---|---|
+| 执行设施 | 农产加工台（须已建成；一次一批次；可由负责人按持续生产策略自动启动） |
+| 投入 | 凝水胶×1＋腐殖土×1＋苇秆×1（启动时一次性扣除） |
+| 产出 | 保水基质×4（收取时入仓；完工≠入仓） |
+| 批时 | 1自然日（日结推进，无需每日点击） |
+| AP | 启动1＋收取1 |
+
+关联条目：执行设施：[农产加工台](#农产加工台-facilityfarm_processor)；解锁研究：[水产精养](#水产精养-researchaquatic_intensive_care)
+
+相关规则：[持续生产与保留量](#持续生产与保留量-ruleauto_production)
+
+### 浮萍制粉 `recipe:mill_duckweed`
+
+农产加工台；草粉×2；1日
+
+> 解锁条件：需完成研究 [农产初加工](#农产初加工-researchfarm_preparation)；未解锁时仍可阅读本条目，阅读不解锁玩法。
+
+| 字段 | 内容 |
+|---|---|
+| 执行设施 | 农产加工台（须已建成；一次一批次；可由负责人按持续生产策略自动启动） |
+| 投入 | 浮萍×2（启动时一次性扣除） |
+| 产出 | 草粉×2（收取时入仓；完工≠入仓） |
+| 批时 | 1自然日（日结推进，无需每日点击） |
+| AP | 启动1＋收取1 |
+
+关联条目：执行设施：[农产加工台](#农产加工台-facilityfarm_processor)；解锁研究：[农产初加工](#农产初加工-researchfarm_preparation)
 
 相关规则：[持续生产与保留量](#持续生产与保留量-ruleauto_production)
 
@@ -5081,6 +5550,24 @@
 | AP | 启动1＋收取1 |
 
 关联条目：执行设施：[厨房](#厨房-facilitykitchen)；解锁研究：[复合灵食](#复合灵食-researchcomposite_spirit_food)
+
+相关规则：[持续生产与保留量](#持续生产与保留量-ruleauto_production)
+
+### 珍珠精滤 `recipe:pearl_polish_water`
+
+净水菌床；清水×4＋污泥×2；1日
+
+> 解锁条件：需完成研究 [水产精养](#水产精养-researchaquatic_intensive_care)；未解锁时仍可阅读本条目，阅读不解锁玩法。
+
+| 字段 | 内容 |
+|---|---|
+| 执行设施 | 净水菌床（须已建成；一次一批次；可由负责人按持续生产策略自动启动） |
+| 投入 | 污水×6＋炭砂滤料×1＋珍珠×1（启动时一次性扣除） |
+| 产出 | 清水×4＋污泥×2（收取时入仓；完工≠入仓） |
+| 批时 | 1自然日（日结推进，无需每日点击） |
+| AP | 启动1＋收取1 |
+
+关联条目：执行设施：[净水菌床](#净水菌床-facilitypurifying_bed)；解锁研究：[水产精养](#水产精养-researchaquatic_intensive_care)
 
 相关规则：[持续生产与保留量](#持续生产与保留量-ruleauto_production)
 
@@ -5223,6 +5710,22 @@
 
 相关规则：[持续生产与保留量](#持续生产与保留量-ruleauto_production)
 
+### 泥料处理 `recipe:silt_process`
+
+泥料处理台；腐殖土×3；1日
+
+| 字段 | 内容 |
+|---|---|
+| 执行设施 | 泥料处理台（须已建成；一次一批次；可由负责人按持续生产策略自动启动） |
+| 投入 | 污泥×2＋浮萍×1（启动时一次性扣除） |
+| 产出 | 腐殖土×3（收取时入仓；完工≠入仓） |
+| 批时 | 1自然日（日结推进，无需每日点击） |
+| AP | 启动1＋收取1 |
+
+关联条目：执行设施：[泥料处理台](#泥料处理台-facilitysilt_processing_station)
+
+相关规则：[持续生产与保留量](#持续生产与保留量-ruleauto_production)
+
 ### 木炭冶炼 `recipe:smelt_charcoal`
 
 小型冶炼炉；铁锭×1；2日
@@ -5292,11 +5795,11 @@
 相关规则：[持续生产与保留量](#持续生产与保留量-ruleauto_production)
 
 
-## 研究与科技（12）
+## 研究与科技（13）
 
 ### 饲料与蜡油精制 `research:advanced_feed_oil_wax`
 
-第2层研究；8元石＋4有效日；解锁7项
+第2层研究；8元石＋4有效日；解锁10项
 
 | 字段 | 内容 |
 |---|---|
@@ -5305,9 +5808,26 @@
 | 启动费 | 8元石（一次性；暂停不退款） |
 | 有效研究日 | 4个（每台每日最多登记1次研究工作：手动1AP或负责人1元石；只等日子不推进） |
 | 研究台 | 每台同时1个项目；完成知识全农场共享 |
-| 解锁内容 | 配方·油脂精炼、配方·陆养料调配、配方·水养料调配、配方·蜂蜡精炼、配方·废滤炭堆肥、食谱·land_meal、食谱·water_meal |
+| 解锁内容 | 配方·鱼粉陆养料、配方·鱼粉水养料、配方·陆养料调配、配方·水养料调配、配方·废滤炭堆肥、配方·鱼肉制粉、配方·油脂精炼、配方·蜂蜡精炼、食谱·land_meal、食谱·water_meal |
 
-关联条目：解锁配方：[油脂精炼](#油脂精炼-reciperefine_oil)；解锁配方：[陆养料调配](#陆养料调配-recipeblend_land_feed)；解锁配方：[水养料调配](#水养料调配-recipeblend_water_feed)；解锁配方：[蜂蜡精炼](#蜂蜡精炼-reciperefine_wax)；解锁配方：[废滤炭堆肥](#废滤炭堆肥-recipecompost_spent_filter)；解锁食谱：[钢绵羊·陆养复合餐](#钢绵羊陆养复合餐-dietsteel_sheepbase_dietsland_meal)；解锁食谱：[岩腹兽·陆养复合餐](#岩腹兽陆养复合餐-dietrock_belly_beastbase_dietsland_meal)；解锁食谱：[矿鳞蜥·陆养复合餐](#矿鳞蜥陆养复合餐-dietmineral_scale_lizardbase_dietsland_meal)；解锁食谱：[滤藻鲤·水养复合餐](#滤藻鲤水养复合餐-dietfilter_algae_carpbase_dietswater_meal)；解锁食谱：[油鳍鱼·水养复合餐](#油鳍鱼水养复合餐-dietoilfin_fishbase_dietswater_meal)
+关联条目：解锁配方：[鱼粉陆养料](#鱼粉陆养料-recipeblend_fish_land_feed)；解锁配方：[鱼粉水养料](#鱼粉水养料-recipeblend_fish_water_feed)；解锁配方：[陆养料调配](#陆养料调配-recipeblend_land_feed)；解锁配方：[水养料调配](#水养料调配-recipeblend_water_feed)；解锁配方：[废滤炭堆肥](#废滤炭堆肥-recipecompost_spent_filter)；解锁配方：[鱼肉制粉](#鱼肉制粉-recipedry_fish_meal)；解锁配方：[油脂精炼](#油脂精炼-reciperefine_oil)；解锁配方：[蜂蜡精炼](#蜂蜡精炼-reciperefine_wax)；解锁食谱：[钢绵羊·陆养复合餐](#钢绵羊陆养复合餐-dietsteel_sheepbase_dietsland_meal)；解锁食谱：[岩腹兽·陆养复合餐](#岩腹兽陆养复合餐-dietrock_belly_beastbase_dietsland_meal)；解锁食谱：[矿鳞蜥·陆养复合餐](#矿鳞蜥陆养复合餐-dietmineral_scale_lizardbase_dietsland_meal)；解锁食谱：[滤藻鲤·水养复合餐](#滤藻鲤水养复合餐-dietfilter_algae_carpbase_dietswater_meal)；解锁食谱：[油鳍鱼·水养复合餐](#油鳍鱼水养复合餐-dietoilfin_fishbase_dietswater_meal)
+
+相关规则：[研究系统](#研究系统-ruleresearch)
+
+### 水产精养 `research:aquatic_intensive_care`
+
+第2层研究；10元石＋4有效日；解锁6项
+
+| 字段 | 内容 |
+|---|---|
+| 层级与前置 | 第2层；前置：水与藻料回流 |
+| 样本 | 珍珠×2＋凝水胶×2（启动时一次性消耗） |
+| 启动费 | 10元石（一次性；暂停不退款） |
+| 有效研究日 | 4个（每台每日最多登记1次研究工作：手动1AP或负责人1元石；只等日子不推进） |
+| 研究台 | 每台同时1个项目；完成知识全农场共享 |
+| 解锁内容 | 配方·保水基质、配方·珍珠精滤、食谱·matrix_round、食谱·reed_substrate、食谱·pearl_spirit_round、食谱·gel_spirit_round |
+
+关联条目：解锁配方：[保水基质](#保水基质-recipemake_water_retaining_matrix)；解锁配方：[珍珠精滤](#珍珠精滤-recipepearl_polish_water)；解锁食谱：[珍珠蚌·灵液育珠轮](#珍珠蚌灵液育珠轮-dietpearl_musselspecial_dietspearl_spirit_round)；解锁食谱：[凝胶水母·灵液凝胶轮](#凝胶水母灵液凝胶轮-dietgel_jellyfishspecial_dietsgel_spirit_round)
 
 相关规则：[研究系统](#研究系统-ruleresearch)
 
@@ -5381,7 +5901,7 @@
 
 ### 农产初加工 `research:farm_preparation`
 
-第1层研究；6元石＋2有效日；解锁12项
+第1层研究；6元石＋2有效日；解锁13项
 
 | 字段 | 内容 |
 |---|---|
@@ -5390,9 +5910,9 @@
 | 启动费 | 6元石（一次性；暂停不退款） |
 | 有效研究日 | 2个（每台每日最多登记1次研究工作：手动1AP或负责人1元石；只等日子不推进） |
 | 研究台 | 每台同时1个项目；完成知识全农场共享 |
-| 解锁内容 | 设施·炭化巢、设施·农产加工台、设施·取油台、配方·木屑生物炭化、配方·树枝生物炭化、配方·油饼堆肥、配方·谷粉研磨、配方·草粉研磨、配方·稻米磨粉、配方·油籽榨油、物种·炭腹虫、物种·油鳍鱼 |
+| 解锁内容 | 设施·炭化巢、设施·农产加工台、设施·取油台、配方·木屑生物炭化、配方·树枝生物炭化、配方·油饼堆肥、配方·浮萍制粉、配方·谷粉研磨、配方·草粉研磨、配方·稻米磨粉、配方·油籽榨油、物种·炭腹虫、物种·油鳍鱼 |
 
-关联条目：解锁设施：[炭化巢](#炭化巢-facilitycarbonization_nest)；解锁设施：[农产加工台](#农产加工台-facilityfarm_processor)；解锁设施：[取油台](#取油台-facilityoilfish_harvest_station)；解锁配方：[木屑生物炭化](#木屑生物炭化-recipebug_char_chips)；解锁配方：[树枝生物炭化](#树枝生物炭化-recipebug_char_twigs)；解锁配方：[油饼堆肥](#油饼堆肥-recipecompost_oil_cake)；解锁配方：[谷粉研磨](#谷粉研磨-recipemill_grain)；解锁配方：[草粉研磨](#草粉研磨-recipemill_grass)；解锁配方：[稻米磨粉](#稻米磨粉-recipemill_rice)；解锁配方：[油籽榨油](#油籽榨油-recipepress_oilseed)；解锁物种：[炭腹虫](#炭腹虫-speciescarbon_belly_bug)；解锁物种：[油鳍鱼](#油鳍鱼-speciesoilfin_fish)
+关联条目：解锁设施：[炭化巢](#炭化巢-facilitycarbonization_nest)；解锁设施：[农产加工台](#农产加工台-facilityfarm_processor)；解锁设施：[取油台](#取油台-facilityoilfish_harvest_station)；解锁配方：[木屑生物炭化](#木屑生物炭化-recipebug_char_chips)；解锁配方：[树枝生物炭化](#树枝生物炭化-recipebug_char_twigs)；解锁配方：[油饼堆肥](#油饼堆肥-recipecompost_oil_cake)；解锁配方：[浮萍制粉](#浮萍制粉-recipemill_duckweed)；解锁配方：[谷粉研磨](#谷粉研磨-recipemill_grain)；解锁配方：[草粉研磨](#草粉研磨-recipemill_grass)；解锁配方：[稻米磨粉](#稻米磨粉-recipemill_rice)；解锁配方：[油籽榨油](#油籽榨油-recipepress_oilseed)；解锁物种：[炭腹虫](#炭腹虫-speciescarbon_belly_bug)；解锁物种：[油鳍鱼](#油鳍鱼-speciesoilfin_fish)
 
 相关规则：[研究系统](#研究系统-ruleresearch)
 
@@ -5432,7 +5952,7 @@
 
 ### 矿质材料工艺 `research:mineral_materials`
 
-第3层研究；12元石＋6有效日；解锁16项
+第3层研究；12元石＋6有效日；解锁19项
 
 | 字段 | 内容 |
 |---|---|
@@ -5441,9 +5961,9 @@
 | 启动费 | 12元石（一次性；暂停不退款） |
 | 有效研究日 | 6个（每台每日最多登记1次研究工作：手动1AP或负责人1元石；只等日子不推进） |
 | 研究台 | 每台同时1个项目；完成知识全农场共享 |
-| 解锁内容 | 设施·采礁台、设施·补光灯、设施·养鳞台、设施·岩壳成型台、配方·黏液复合石板、配方·鳞甲复合板、配方·岩壳石板、配方·复合石板组装、配方·岩壳成型、配方·矿质补料调配、配方·再生填料回收、配方·富集矿冶炼、物种·砾甲蜗牛、物种·矿鳞蜥、物种·礁骨珊瑚、食谱·mineral_supplement |
+| 解锁内容 | 设施·采礁台、设施·补光灯、设施·养鳞台、设施·岩壳成型台、配方·珊瑚复合石板、配方·黏液复合石板、配方·鳞甲复合板、配方·岩壳石板、配方·复合石板组装、配方·岩壳成型、配方·珊瑚制粉、配方·壳石制粉、配方·矿质补料调配、配方·再生填料回收、配方·富集矿冶炼、物种·砾甲蜗牛、物种·矿鳞蜥、物种·礁骨珊瑚、食谱·mineral_supplement |
 
-关联条目：解锁设施：[采礁台](#采礁台-facilitycoral_station)；解锁设施：[补光灯](#补光灯-facilitygrowth_lamp)；解锁设施：[养鳞台](#养鳞台-facilityscale_station)；解锁设施：[岩壳成型台](#岩壳成型台-facilityshell_forming_station)；解锁配方：[黏液复合石板](#黏液复合石板-recipeassemble_mucus_panel)；解锁配方：[鳞甲复合板](#鳞甲复合板-recipeassemble_scale_panel)；解锁配方：[岩壳石板](#岩壳石板-recipeassemble_shell_panel)；解锁配方：[复合石板组装](#复合石板组装-recipeassemble_stone_panel)；解锁配方：[岩壳成型](#岩壳成型-recipeform_rock_shell)；解锁配方：[矿质补料调配](#矿质补料调配-recipemineral_feed)；解锁配方：[再生填料回收](#再生填料回收-reciperecover_fill)；解锁配方：[富集矿冶炼](#富集矿冶炼-recipesmelt_concentrate)；解锁物种：[砾甲蜗牛](#砾甲蜗牛-speciesgravel_shell_snail)；解锁物种：[矿鳞蜥](#矿鳞蜥-speciesmineral_scale_lizard)；解锁物种：[礁骨珊瑚](#礁骨珊瑚-speciesreef_coral)；解锁食谱：[钢绵羊·矿质补料餐](#钢绵羊矿质补料餐-dietsteel_sheepspecial_dietsmineral_supplement)
+关联条目：解锁设施：[采礁台](#采礁台-facilitycoral_station)；解锁设施：[补光灯](#补光灯-facilitygrowth_lamp)；解锁设施：[养鳞台](#养鳞台-facilityscale_station)；解锁设施：[岩壳成型台](#岩壳成型台-facilityshell_forming_station)；解锁配方：[珊瑚复合石板](#珊瑚复合石板-recipeassemble_coral_panel)；解锁配方：[黏液复合石板](#黏液复合石板-recipeassemble_mucus_panel)；解锁配方：[鳞甲复合板](#鳞甲复合板-recipeassemble_scale_panel)；解锁配方：[岩壳石板](#岩壳石板-recipeassemble_shell_panel)；解锁配方：[复合石板组装](#复合石板组装-recipeassemble_stone_panel)；解锁配方：[岩壳成型](#岩壳成型-recipeform_rock_shell)；解锁配方：[珊瑚制粉](#珊瑚制粉-recipegrind_coral)；解锁配方：[壳石制粉](#壳石制粉-recipegrind_shell)；解锁配方：[矿质补料调配](#矿质补料调配-recipemineral_feed)；解锁配方：[再生填料回收](#再生填料回收-reciperecover_fill)；解锁配方：[富集矿冶炼](#富集矿冶炼-recipesmelt_concentrate)；解锁物种：[砾甲蜗牛](#砾甲蜗牛-speciesgravel_shell_snail)；解锁物种：[矿鳞蜥](#矿鳞蜥-speciesmineral_scale_lizard)；解锁物种：[礁骨珊瑚](#礁骨珊瑚-speciesreef_coral)；解锁食谱：[钢绵羊·矿质补料餐](#钢绵羊矿质补料餐-dietsteel_sheepspecial_dietsmineral_supplement)
 
 相关规则：[研究系统](#研究系统-ruleresearch)
 
@@ -5483,7 +6003,7 @@
 
 ### 水与藻料回流 `research:water_recirculation`
 
-第2层研究；8元石＋4有效日；解锁9项
+第2层研究；8元石＋4有效日；解锁10项
 
 | 字段 | 内容 |
 |---|---|
@@ -5492,9 +6012,9 @@
 | 启动费 | 8元石（一次性；暂停不退款） |
 | 有效研究日 | 4个（每台每日最多登记1次研究工作：手动1AP或负责人1元石；只等日子不推进） |
 | 研究台 | 每台同时1个项目；完成知识全农场共享 |
-| 解锁内容 | 设施·采胶台、设施·采珠台、配方·高密度藻培养、配方·炭砂滤料制作、配方·丝质滤材、配方·营养液回收、物种·凝胶水母、物种·珍珠蚌、食谱·dense_meal |
+| 解锁内容 | 设施·采胶台、设施·采珠台、配方·高密度藻培养、配方·多孔滤材、配方·炭砂滤料制作、配方·丝质滤材、配方·营养液回收、物种·凝胶水母、物种·珍珠蚌、食谱·dense_meal |
 
-关联条目：解锁设施：[采胶台](#采胶台-facilitygel_station)；解锁设施：[采珠台](#采珠台-facilitypearl_station)；解锁配方：[高密度藻培养](#高密度藻培养-recipedense_algae_culture)；解锁配方：[炭砂滤料制作](#炭砂滤料制作-recipemake_filter_media)；解锁配方：[丝质滤材](#丝质滤材-recipemake_silk_filter_media)；解锁配方：[营养液回收](#营养液回收-reciperecover_nutrients)；解锁物种：[凝胶水母](#凝胶水母-speciesgel_jellyfish)；解锁物种：[珍珠蚌](#珍珠蚌-speciespearl_mussel)；解锁食谱：[滤藻鲤·高密度藻餐](#滤藻鲤高密度藻餐-dietfilter_algae_carpbase_dietsdense_meal)；解锁食谱：[凝胶水母·高密度藻餐](#凝胶水母高密度藻餐-dietgel_jellyfishbase_dietsdense_meal)
+关联条目：解锁设施：[采胶台](#采胶台-facilitygel_station)；解锁设施：[采珠台](#采珠台-facilitypearl_station)；解锁配方：[高密度藻培养](#高密度藻培养-recipedense_algae_culture)；解锁配方：[多孔滤材](#多孔滤材-recipemake_coral_filter_media)；解锁配方：[炭砂滤料制作](#炭砂滤料制作-recipemake_filter_media)；解锁配方：[丝质滤材](#丝质滤材-recipemake_silk_filter_media)；解锁配方：[营养液回收](#营养液回收-reciperecover_nutrients)；解锁物种：[凝胶水母](#凝胶水母-speciesgel_jellyfish)；解锁物种：[珍珠蚌](#珍珠蚌-speciespearl_mussel)；解锁食谱：[滤藻鲤·高密度藻餐](#滤藻鲤高密度藻餐-dietfilter_algae_carpbase_dietsdense_meal)；解锁食谱：[凝胶水母·高密度藻餐](#凝胶水母高密度藻餐-dietgel_jellyfishbase_dietsdense_meal)
 
 相关规则：[研究系统](#研究系统-ruleresearch)
 

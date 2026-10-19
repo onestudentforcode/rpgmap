@@ -238,6 +238,132 @@ install('cost_models', dict(id='coral_round', basis={'kind': 'animal', 'id': 're
     inputs={'algae_feed': 72, 'stone_powder': 12, 'clean_water': 4}, ap=14, days=12, cash=56,
     outputs={'coral_stone': {'quantity': 8, 'share': 1}}))
 
+# --- stage d: water crops, recipes, research and trade (§16.2.8/§16.2.9) ----
+def resource(row):
+    row.setdefault('form', 'solid')
+    row.setdefault('stage', 'intermediate')
+    row.setdefault('supply_allowed', False)
+    row.setdefault('buy_price', 0)
+    install('resources', row)
+
+
+resource(dict(id='duckweed', name='浮萍', element='water', tags=['plant_product'], sell_price=1, cost_source='duckweed'))
+resource(dict(id='duckweed_seed', name='浮萍种苗', element='water', tags=['seed'], buy_price=2, sell_price=0, cost_source='purchase'))
+resource(dict(id='reed_stalk', name='苇秆', element='wood', tags=['plant_product'], sell_price=1, cost_source='reed'))
+resource(dict(id='reed_seed', name='芦苇种苗', element='wood', tags=['seed'], buy_price=3, sell_price=0, cost_source='purchase'))
+resource(dict(id='fish_meal', name='鱼粉', element='wood', tags=['processing'], sell_price=2, cost_source='dry_fish_meal'))
+resource(dict(id='water_retaining_matrix', name='保水基质', element='earth', tags=['processing'], sell_price=2, cost_source='make_water_retaining_matrix'))
+
+# Water crops reuse the mulberry tap-or-fell lifecycle with a water medium:
+# growth gates on light and shared body quality, every round pays its
+# nutrition inputs, and the round variant unlocked by the aquatic research
+# swaps humus for the matrix.
+install_all('crops', [
+    dict(id='duckweed', name='浮萍', seed='duckweed_seed', footprint=[1, 1], days=3, cycle_days=1,
+        mode='tap_or_fell', medium='water', inputs={}, fell_outputs={}, target_tags=[],
+        outputs={'duckweed': 4}, water_use=0, fertility_use=0, light=60, max_taps=6,
+        round_inputs=[dict(id='humus_round', inputs={'humus': 1}),
+                      dict(id='matrix_round', inputs={'water_retaining_matrix': 1}, research='aquatic_intensive_care')]),
+    dict(id='reed', name='芦苇', seed='reed_seed', footprint=[1, 1], days=5, cycle_days=2,
+        mode='tap_or_fell', medium='water', inputs={}, fell_outputs={}, target_tags=[],
+        outputs={'reed_stalk': 6}, water_use=0, fertility_use=0, light=60, max_taps=4,
+        round_inputs=[dict(id='humus_round', inputs={'humus': 1}),
+                      dict(id='matrix_round', inputs={'water_retaining_matrix': 1}, research='aquatic_intensive_care')]),
+])
+
+# The mushroom substrate variant: same 4-day culture round, reed replaces the
+# wood chips; spawn and growth conditions unchanged.
+for crop in data['crops']:
+    if crop['id'] == 'wood_decay_mushroom':
+        crop['input_variants'] = [dict(id='reed_substrate', inputs={'reed_stalk': 3, 'clean_water': 2},
+            research='aquatic_intensive_care')]
+
+install_all('recipes', [
+    dict(id='mill_duckweed', name='浮萍制粉', facility='farm_processor', days=1, start_ap=1, claim_ap=1,
+        inputs={'duckweed': 2}, outputs={'grass_meal': 2}, research='farm_preparation'),
+    dict(id='dry_fish_meal', name='鱼肉制粉', facility='farm_processor', days=1, start_ap=1, claim_ap=1,
+        inputs={'fish_meat': 2}, outputs={'fish_meal': 3}, research='advanced_feed_oil_wax'),
+    dict(id='blend_fish_land_feed', name='鱼粉陆养料', facility='farm_processor', days=1, start_ap=1, claim_ap=1,
+        inputs={'fish_meal': 1, 'grass_meal': 2, 'oil_cake': 1}, outputs={'land_feed': 3}, research='advanced_feed_oil_wax'),
+    dict(id='blend_fish_water_feed', name='鱼粉水养料', facility='farm_processor', days=1, start_ap=1, claim_ap=1,
+        inputs={'algae_feed': 3, 'grain_meal': 1, 'fish_meal': 1}, outputs={'water_feed': 4}, research='advanced_feed_oil_wax'),
+    dict(id='grind_shell', name='壳石制粉', facility='farm_processor', days=1, start_ap=1, claim_ap=1,
+        inputs={'mussel_shell': 2}, outputs={'stone_powder': 2}, research='mineral_materials'),
+    dict(id='grind_coral', name='珊瑚制粉', facility='farm_processor', days=1, start_ap=1, claim_ap=1,
+        inputs={'coral_stone': 2}, outputs={'stone_powder': 2}, research='mineral_materials'),
+    dict(id='make_water_retaining_matrix', name='保水基质', facility='farm_processor', days=1, start_ap=1, claim_ap=1,
+        inputs={'water_gel': 1, 'humus': 1, 'reed_stalk': 1}, outputs={'water_retaining_matrix': 4}, research='aquatic_intensive_care'),
+    dict(id='make_coral_filter_media', name='多孔滤材', facility='woodshop', days=1, start_ap=1, claim_ap=1,
+        inputs={'coral_stone': 1, 'charcoal': 1}, outputs={'filter_media': 3}, research='water_recirculation'),
+    dict(id='assemble_coral_panel', name='珊瑚复合石板', facility='woodshop', days=1, start_ap=1, claim_ap=1,
+        inputs={'coral_stone': 2, 'stone_powder': 1, 'mucus': 1}, outputs={'composite_stone_panel': 3}, research='mineral_materials'),
+    dict(id='compost_reed', name='苇秆堆肥', facility='compost_bin', days=1, start_ap=1, claim_ap=1,
+        inputs={'reed_stalk': 2}, outputs={'humus': 2}),
+    dict(id='char_reed', name='苇秆炭化', facility='char_kiln', days=1, start_ap=1, claim_ap=1,
+        inputs={'reed_stalk': 3}, outputs={'charcoal': 2}),
+    dict(id='pearl_polish_water', name='珍珠精滤', facility='purifying_bed', days=1, start_ap=1, claim_ap=1,
+        inputs={'wastewater': 6, 'filter_media': 1, 'pearl': 1}, outputs={'clean_water': 4, 'sludge': 2}, research='aquatic_intensive_care'),
+    dict(id='silt_process', name='泥料处理', facility='silt_processing_station', days=1, start_ap=1, claim_ap=1,
+        inputs={'sludge': 2, 'duckweed': 1}, outputs={'humus': 3}),
+])
+
+# The loach batch joins the work registry; its feed variant returns now that
+# duckweed exists.
+data['p103']['work']['recipes']['silt_process'] = {'species': 'silt_loach', 'target': 1200}
+data['p103']['work']['facilities']['silt_processing_station'] = ['silt_process']
+for row in data['livestock']:
+    if row['id'] == 'silt_loach':
+        row['base_diets'].append(dict(id='duckweed_meal', name='浮萍替代餐', inputs={'duckweed': 1}))
+        row['default_special_diet'] = ''
+
+# Spirit-liquid round variants for pearl and gel (§16.2.9): the higher payout
+# rides on the diet, locked at round payment.
+for row in data['livestock']:
+    if row['id'] == 'pearl_mussel':
+        row['special_diets'].append(dict(id='pearl_spirit_round', name='灵液育珠轮', inputs={'stone_powder': 1, 'spirit_liquid': 1},
+            research='aquatic_intensive_care'))
+    if row['id'] == 'gel_jellyfish':
+        row['special_diets'].append(dict(id='gel_spirit_round', name='灵液凝胶轮', inputs={'clean_water': 1, 'spirit_liquid': 1},
+            research='aquatic_intensive_care'))
+data['p103']['species']['pearl_mussel']['natural']['variants'] = {'pearl_spirit_round': {'outputs': {'pearl': 3}}}
+data['p103']['species']['gel_jellyfish']['natural']['variants'] = {'gel_spirit_round': {'outputs': {'water_gel': 3}}}
+
+# The advanced aquatic research node: layer 2, 4 days, on water recycling.
+install('research', dict(id='aquatic_intensive_care', name='水产精养', layer=2, fee=10, days=4,
+    prerequisites=['water_recirculation'], samples={'pearl': 2, 'water_gel': 2},
+    unlocks={'purchases': [], 'crops': [], 'facilities': [], 'species': [],
+             'recipes': ['make_water_retaining_matrix', 'pearl_polish_water'],
+             'diets': ['matrix_round', 'reed_substrate', 'pearl_spirit_round', 'gel_spirit_round']}))
+# Existing rows cross-register the shared gates.
+for row in data['research']:
+    if row['id'] == 'advanced_feed_oil_wax':
+        row['unlocks']['recipes'] = sorted(set(row['unlocks']['recipes']) | {'dry_fish_meal', 'blend_fish_land_feed', 'blend_fish_water_feed'})
+    if row['id'] == 'farm_preparation':
+        row['unlocks']['recipes'] = sorted(set(row['unlocks']['recipes']) | {'mill_duckweed'})
+    if row['id'] == 'mineral_materials':
+        row['unlocks']['recipes'] = sorted(set(row['unlocks']['recipes']) | {'grind_shell', 'grind_coral', 'assemble_coral_panel'})
+    if row['id'] == 'water_recirculation':
+        row['unlocks']['recipes'] = sorted(set(row['unlocks']['recipes']) | {'make_coral_filter_media'})
+
+# Cost rows for the new economy leaves.
+install('cost_models', dict(id='duckweed', basis={'kind': 'crop', 'id': 'duckweed'},
+    inputs={'duckweed_seed': 1, 'humus': 1}, ap=2, days=3, cash=0,
+    operations={'till': 0, 'plant': 1, 'harvest': 1, 'irrigate': 0},
+    outputs={'duckweed': {'quantity': 4, 'share': 1}}))
+install('cost_models', dict(id='reed', basis={'kind': 'crop', 'id': 'reed'},
+    inputs={'reed_seed': 1, 'humus': 1}, ap=2, days=5, cash=0,
+    operations={'till': 0, 'plant': 1, 'harvest': 1, 'irrigate': 0},
+    outputs={'reed_stalk': {'quantity': 6, 'share': 1}}))
+install('cost_models', dict(id='dry_fish_meal', basis={'kind': 'recipe', 'id': 'dry_fish_meal'},
+    inputs={'fish_meat': 2}, ap=2, days=1, cash=0,
+    outputs={'fish_meal': {'quantity': 3, 'share': 1}}))
+install('cost_models', dict(id='make_water_retaining_matrix', basis={'kind': 'recipe', 'id': 'make_water_retaining_matrix'},
+    inputs={'water_gel': 1, 'humus': 1, 'reed_stalk': 1}, ap=2, days=1, cash=0,
+    outputs={'water_retaining_matrix': {'quantity': 4, 'share': 1}}))
+install('cost_models', dict(id='pearl_polish_water', basis={'kind': 'recipe', 'id': 'pearl_polish_water'},
+    inputs={'wastewater': 6, 'filter_media': 1, 'pearl': 1}, ap=2, days=1, cash=0,
+    outputs={'clean_water': {'quantity': 4, 'share': 0.67}, 'sludge': {'quantity': 2, 'share': 0.33}}))
+
 path.write_text(json.dumps(data, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
-print('P10.6 source installed: %d facilities, %d livestock, %d zone types, %d cost models'
-      % (len(data['facilities']), len(data['livestock']), len(data['p103']['zones']), len(data['cost_models'])))
+print('P10.6 source installed: %d resources, %d crops, %d recipes, %d research, %d livestock, %d cost models'
+      % (len(data['resources']), len(data['crops']), len(data['recipes']), len(data['research']), len(data['livestock']), len(data['cost_models'])))

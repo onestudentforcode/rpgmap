@@ -311,6 +311,71 @@
         "assemble_shell_panel",
         0,
         0
+      ],
+      [
+        "mill_duckweed",
+        0,
+        0
+      ],
+      [
+        "dry_fish_meal",
+        0,
+        0
+      ],
+      [
+        "blend_fish_land_feed",
+        0,
+        0
+      ],
+      [
+        "blend_fish_water_feed",
+        0,
+        0
+      ],
+      [
+        "grind_shell",
+        0,
+        0
+      ],
+      [
+        "grind_coral",
+        0,
+        0
+      ],
+      [
+        "make_water_retaining_matrix",
+        0,
+        0
+      ],
+      [
+        "make_coral_filter_media",
+        0,
+        0
+      ],
+      [
+        "assemble_coral_panel",
+        0,
+        0
+      ],
+      [
+        "compost_reed",
+        0,
+        0
+      ],
+      [
+        "char_reed",
+        0,
+        0
+      ],
+      [
+        "pearl_polish_water",
+        0,
+        0
+      ],
+      [
+        "silt_process",
+        0,
+        0
       ]
     ]
   },
@@ -515,6 +580,30 @@
         "numerator": 2402
       }
     },
+    "dry_fish_meal": {
+      "outputs": {
+        "fish_meal": {
+          "denominator": 675,
+          "numerator": 3463
+        }
+      },
+      "total": {
+        "denominator": 225,
+        "numerator": 3463
+      }
+    },
+    "duckweed": {
+      "outputs": {
+        "duckweed": {
+          "denominator": 80,
+          "numerator": 211
+        }
+      },
+      "total": {
+        "denominator": 20,
+        "numerator": 211
+      }
+    },
     "fir": {
       "outputs": {
         "raw_wood": {
@@ -649,6 +738,18 @@
       "total": {
         "denominator": 20,
         "numerator": 189
+      }
+    },
+    "make_water_retaining_matrix": {
+      "outputs": {
+        "water_retaining_matrix": {
+          "denominator": 96,
+          "numerator": 523
+        }
+      },
+      "total": {
+        "denominator": 24,
+        "numerator": 523
       }
     },
     "mill_grain": {
@@ -845,6 +946,18 @@
       "total": {
         "denominator": 20,
         "numerator": 2107
+      }
+    },
+    "reed": {
+      "outputs": {
+        "reed_stalk": {
+          "denominator": 120,
+          "numerator": 271
+        }
+      },
+      "total": {
+        "denominator": 20,
+        "numerator": 271
       }
     },
     "refine_oil": {
@@ -2318,6 +2431,123 @@
           "share": 1
         }
       }
+    },
+    {
+      "ap": 2,
+      "basis": {
+        "id": "duckweed",
+        "kind": "crop"
+      },
+      "cash": 0,
+      "days": 3,
+      "id": "duckweed",
+      "inputs": {
+        "duckweed_seed": 1,
+        "humus": 1
+      },
+      "operations": {
+        "harvest": 1,
+        "irrigate": 0,
+        "plant": 1,
+        "till": 0
+      },
+      "outputs": {
+        "duckweed": {
+          "quantity": 4,
+          "share": 1
+        }
+      }
+    },
+    {
+      "ap": 2,
+      "basis": {
+        "id": "reed",
+        "kind": "crop"
+      },
+      "cash": 0,
+      "days": 5,
+      "id": "reed",
+      "inputs": {
+        "humus": 1,
+        "reed_seed": 1
+      },
+      "operations": {
+        "harvest": 1,
+        "irrigate": 0,
+        "plant": 1,
+        "till": 0
+      },
+      "outputs": {
+        "reed_stalk": {
+          "quantity": 6,
+          "share": 1
+        }
+      }
+    },
+    {
+      "ap": 2,
+      "basis": {
+        "id": "dry_fish_meal",
+        "kind": "recipe"
+      },
+      "cash": 0,
+      "days": 1,
+      "id": "dry_fish_meal",
+      "inputs": {
+        "fish_meat": 2
+      },
+      "outputs": {
+        "fish_meal": {
+          "quantity": 3,
+          "share": 1
+        }
+      }
+    },
+    {
+      "ap": 2,
+      "basis": {
+        "id": "make_water_retaining_matrix",
+        "kind": "recipe"
+      },
+      "cash": 0,
+      "days": 1,
+      "id": "make_water_retaining_matrix",
+      "inputs": {
+        "humus": 1,
+        "reed_stalk": 1,
+        "water_gel": 1
+      },
+      "outputs": {
+        "water_retaining_matrix": {
+          "quantity": 4,
+          "share": 1
+        }
+      }
+    },
+    {
+      "ap": 2,
+      "basis": {
+        "id": "pearl_polish_water",
+        "kind": "recipe"
+      },
+      "cash": 0,
+      "days": 1,
+      "id": "pearl_polish_water",
+      "inputs": {
+        "filter_media": 1,
+        "pearl": 1,
+        "wastewater": 6
+      },
+      "outputs": {
+        "clean_water": {
+          "quantity": 4,
+          "share": 0.67
+        },
+        "sludge": {
+          "quantity": 2,
+          "share": 0.33
+        }
+      }
     }
   ],
   "crops": [
@@ -2396,6 +2626,16 @@
         1
       ],
       "id": "wood_decay_mushroom",
+      "input_variants": [
+        {
+          "id": "reed_substrate",
+          "inputs": {
+            "clean_water": 2,
+            "reed_stalk": 3
+          },
+          "research": "aquatic_intensive_care"
+        }
+      ],
       "inputs": {
         "clean_water": 2,
         "wood_chip": 3
@@ -2511,6 +2751,82 @@
         "plant_grow"
       ],
       "water_use": 3
+    },
+    {
+      "cycle_days": 1,
+      "days": 3,
+      "fell_outputs": {},
+      "fertility_use": 0,
+      "footprint": [
+        1,
+        1
+      ],
+      "id": "duckweed",
+      "inputs": {},
+      "light": 60,
+      "max_taps": 6,
+      "medium": "water",
+      "mode": "tap_or_fell",
+      "name": "浮萍",
+      "outputs": {
+        "duckweed": 4
+      },
+      "round_inputs": [
+        {
+          "id": "humus_round",
+          "inputs": {
+            "humus": 1
+          }
+        },
+        {
+          "id": "matrix_round",
+          "inputs": {
+            "water_retaining_matrix": 1
+          },
+          "research": "aquatic_intensive_care"
+        }
+      ],
+      "seed": "duckweed_seed",
+      "target_tags": [],
+      "water_use": 0
+    },
+    {
+      "cycle_days": 2,
+      "days": 5,
+      "fell_outputs": {},
+      "fertility_use": 0,
+      "footprint": [
+        1,
+        1
+      ],
+      "id": "reed",
+      "inputs": {},
+      "light": 60,
+      "max_taps": 4,
+      "medium": "water",
+      "mode": "tap_or_fell",
+      "name": "芦苇",
+      "outputs": {
+        "reed_stalk": 6
+      },
+      "round_inputs": [
+        {
+          "id": "humus_round",
+          "inputs": {
+            "humus": 1
+          }
+        },
+        {
+          "id": "matrix_round",
+          "inputs": {
+            "water_retaining_matrix": 1
+          },
+          "research": "aquatic_intensive_care"
+        }
+      ],
+      "seed": "reed_seed",
+      "target_tags": [],
+      "water_use": 0
     }
   ],
   "devices": {
@@ -4035,6 +4351,15 @@
           "outputs": {
             "pearl": 2
           }
+        },
+        {
+          "id": "pearl_spirit_round",
+          "inputs": {
+            "spirit_liquid": 1,
+            "stone_powder": 1
+          },
+          "name": "灵液育珠轮",
+          "research": "aquatic_intensive_care"
         }
       ],
       "unit": "只"
@@ -4080,6 +4405,15 @@
           "outputs": {
             "water_gel": 2
           }
+        },
+        {
+          "id": "gel_spirit_round",
+          "inputs": {
+            "clean_water": 1,
+            "spirit_liquid": 1
+          },
+          "name": "灵液凝胶轮",
+          "research": "aquatic_intensive_care"
         }
       ],
       "unit": "群"
@@ -4092,6 +4426,13 @@
             "algae_feed": 1
           },
           "name": "藻料餐"
+        },
+        {
+          "id": "duckweed_meal",
+          "inputs": {
+            "duckweed": 1
+          },
+          "name": "浮萍替代餐"
         }
       ],
       "claim_removes": false,
@@ -4585,7 +4926,14 @@
             "water_gel": 2
           },
           "station": "gel_station",
-          "units": 1200
+          "units": 1200,
+          "variants": {
+            "gel_spirit_round": {
+              "outputs": {
+                "water_gel": 3
+              }
+            }
+          }
         },
         "space": 1
       },
@@ -4654,7 +5002,14 @@
           },
           "shell": true,
           "station": "pearl_station",
-          "units": 2400
+          "units": 2400,
+          "variants": {
+            "pearl_spirit_round": {
+              "outputs": {
+                "pearl": 3
+              }
+            }
+          }
         },
         "space": 1
       },
@@ -4770,7 +5125,9 @@
         "shell_forming_station": [
           "form_rock_shell"
         ],
-        "silt_processing_station": []
+        "silt_processing_station": [
+          "silt_process"
+        ]
       },
       "points_per_unit": 10000,
       "posts_per_yard": 4,
@@ -4806,6 +5163,10 @@
         "mouse_compost_residue": {
           "species": "compost_mouse",
           "target": 40000
+        },
+        "silt_process": {
+          "species": "silt_loach",
+          "target": 1200
         }
       }
     },
@@ -6356,6 +6717,211 @@
       },
       "research": "mineral_materials",
       "start_ap": 1
+    },
+    {
+      "claim_ap": 1,
+      "days": 1,
+      "facility": "farm_processor",
+      "id": "mill_duckweed",
+      "inputs": {
+        "duckweed": 2
+      },
+      "name": "浮萍制粉",
+      "outputs": {
+        "grass_meal": 2
+      },
+      "research": "farm_preparation",
+      "start_ap": 1
+    },
+    {
+      "claim_ap": 1,
+      "days": 1,
+      "facility": "farm_processor",
+      "id": "dry_fish_meal",
+      "inputs": {
+        "fish_meat": 2
+      },
+      "name": "鱼肉制粉",
+      "outputs": {
+        "fish_meal": 3
+      },
+      "research": "advanced_feed_oil_wax",
+      "start_ap": 1
+    },
+    {
+      "claim_ap": 1,
+      "days": 1,
+      "facility": "farm_processor",
+      "id": "blend_fish_land_feed",
+      "inputs": {
+        "fish_meal": 1,
+        "grass_meal": 2,
+        "oil_cake": 1
+      },
+      "name": "鱼粉陆养料",
+      "outputs": {
+        "land_feed": 3
+      },
+      "research": "advanced_feed_oil_wax",
+      "start_ap": 1
+    },
+    {
+      "claim_ap": 1,
+      "days": 1,
+      "facility": "farm_processor",
+      "id": "blend_fish_water_feed",
+      "inputs": {
+        "algae_feed": 3,
+        "fish_meal": 1,
+        "grain_meal": 1
+      },
+      "name": "鱼粉水养料",
+      "outputs": {
+        "water_feed": 4
+      },
+      "research": "advanced_feed_oil_wax",
+      "start_ap": 1
+    },
+    {
+      "claim_ap": 1,
+      "days": 1,
+      "facility": "farm_processor",
+      "id": "grind_shell",
+      "inputs": {
+        "mussel_shell": 2
+      },
+      "name": "壳石制粉",
+      "outputs": {
+        "stone_powder": 2
+      },
+      "research": "mineral_materials",
+      "start_ap": 1
+    },
+    {
+      "claim_ap": 1,
+      "days": 1,
+      "facility": "farm_processor",
+      "id": "grind_coral",
+      "inputs": {
+        "coral_stone": 2
+      },
+      "name": "珊瑚制粉",
+      "outputs": {
+        "stone_powder": 2
+      },
+      "research": "mineral_materials",
+      "start_ap": 1
+    },
+    {
+      "claim_ap": 1,
+      "days": 1,
+      "facility": "farm_processor",
+      "id": "make_water_retaining_matrix",
+      "inputs": {
+        "humus": 1,
+        "reed_stalk": 1,
+        "water_gel": 1
+      },
+      "name": "保水基质",
+      "outputs": {
+        "water_retaining_matrix": 4
+      },
+      "research": "aquatic_intensive_care",
+      "start_ap": 1
+    },
+    {
+      "claim_ap": 1,
+      "days": 1,
+      "facility": "woodshop",
+      "id": "make_coral_filter_media",
+      "inputs": {
+        "charcoal": 1,
+        "coral_stone": 1
+      },
+      "name": "多孔滤材",
+      "outputs": {
+        "filter_media": 3
+      },
+      "research": "water_recirculation",
+      "start_ap": 1
+    },
+    {
+      "claim_ap": 1,
+      "days": 1,
+      "facility": "woodshop",
+      "id": "assemble_coral_panel",
+      "inputs": {
+        "coral_stone": 2,
+        "mucus": 1,
+        "stone_powder": 1
+      },
+      "name": "珊瑚复合石板",
+      "outputs": {
+        "composite_stone_panel": 3
+      },
+      "research": "mineral_materials",
+      "start_ap": 1
+    },
+    {
+      "claim_ap": 1,
+      "days": 1,
+      "facility": "compost_bin",
+      "id": "compost_reed",
+      "inputs": {
+        "reed_stalk": 2
+      },
+      "name": "苇秆堆肥",
+      "outputs": {
+        "humus": 2
+      },
+      "start_ap": 1
+    },
+    {
+      "claim_ap": 1,
+      "days": 1,
+      "facility": "char_kiln",
+      "id": "char_reed",
+      "inputs": {
+        "reed_stalk": 3
+      },
+      "name": "苇秆炭化",
+      "outputs": {
+        "charcoal": 2
+      },
+      "start_ap": 1
+    },
+    {
+      "claim_ap": 1,
+      "days": 1,
+      "facility": "purifying_bed",
+      "id": "pearl_polish_water",
+      "inputs": {
+        "filter_media": 1,
+        "pearl": 1,
+        "wastewater": 6
+      },
+      "name": "珍珠精滤",
+      "outputs": {
+        "clean_water": 4,
+        "sludge": 2
+      },
+      "research": "aquatic_intensive_care",
+      "start_ap": 1
+    },
+    {
+      "claim_ap": 1,
+      "days": 1,
+      "facility": "silt_processing_station",
+      "id": "silt_process",
+      "inputs": {
+        "duckweed": 1,
+        "sludge": 2
+      },
+      "name": "泥料处理",
+      "outputs": {
+        "humus": 3
+      },
+      "start_ap": 1
     }
   ],
   "research": [
@@ -6437,6 +7003,7 @@
           "bug_char_chips",
           "bug_char_twigs",
           "compost_oil_cake",
+          "mill_duckweed",
           "mill_grain",
           "mill_grass",
           "mill_rice",
@@ -6531,11 +7098,14 @@
         "facilities": [],
         "purchases": [],
         "recipes": [
-          "refine_oil",
+          "blend_fish_land_feed",
+          "blend_fish_water_feed",
           "blend_land_feed",
           "blend_water_feed",
-          "refine_wax",
-          "compost_spent_filter"
+          "compost_spent_filter",
+          "dry_fish_meal",
+          "refine_oil",
+          "refine_wax"
         ],
         "species": []
       }
@@ -6596,6 +7166,7 @@
         "purchases": [],
         "recipes": [
           "dense_algae_culture",
+          "make_coral_filter_media",
           "make_filter_media",
           "make_silk_filter_media",
           "recover_nutrients"
@@ -6688,11 +7259,14 @@
         ],
         "purchases": [],
         "recipes": [
+          "assemble_coral_panel",
           "assemble_mucus_panel",
           "assemble_scale_panel",
           "assemble_shell_panel",
           "assemble_stone_panel",
           "form_rock_shell",
+          "grind_coral",
+          "grind_shell",
           "mineral_feed",
           "recover_fill",
           "smelt_concentrate"
@@ -6733,11 +7307,41 @@
         ],
         "species": []
       }
+    },
+    {
+      "days": 4,
+      "fee": 10,
+      "id": "aquatic_intensive_care",
+      "layer": 2,
+      "name": "水产精养",
+      "prerequisites": [
+        "water_recirculation"
+      ],
+      "samples": {
+        "pearl": 2,
+        "water_gel": 2
+      },
+      "unlocks": {
+        "crops": [],
+        "diets": [
+          "matrix_round",
+          "reed_substrate",
+          "pearl_spirit_round",
+          "gel_spirit_round"
+        ],
+        "facilities": [],
+        "purchases": [],
+        "recipes": [
+          "make_water_retaining_matrix",
+          "pearl_polish_water"
+        ],
+        "species": []
+      }
     }
   ],
   "research_audit": {
-    "days": 44,
-    "fee": 94,
+    "days": 48,
+    "fee": 104,
     "order": [
       "biofiltration",
       "flower_cultivation",
@@ -6747,6 +7351,7 @@
       "ore_concentration",
       "water_recirculation",
       "advanced_feed_oil_wax",
+      "aquatic_intensive_care",
       "basic_spirit_cooking",
       "field_maintenance",
       "mineral_materials",
@@ -7110,6 +7715,7 @@
       "buy_price": 0,
       "consumers": [
         "fertilizer",
+        "make_water_retaining_matrix",
         "orders",
         "research:field_maintenance",
         "research:flower_cultivation",
@@ -7132,6 +7738,7 @@
         "compost_fish_manure",
         "compost_grass",
         "compost_oil_cake",
+        "compost_reed",
         "compost_sheep_manure",
         "compost_sludge",
         "compost_spent_filter",
@@ -7139,6 +7746,7 @@
         "compost_twigs",
         "mouse_compost_fiber",
         "mouse_compost_residue",
+        "silt_process",
         "wood_decay_mushroom"
       ],
       "stage": "intermediate",
@@ -7275,6 +7883,7 @@
         "diet:compost_mouse:grass_water_meal",
         "diet:dew_shell_snail:dew_round",
         "diet:dew_shell_snail:grass_water_meal",
+        "diet:gel_jellyfish:gel_spirit_round",
         "diet:gel_jellyfish:gel_water_round",
         "diet:gravel_shell_snail:algae_water_meal",
         "diet:gravel_shell_snail:form_rock_shell",
@@ -7330,6 +7939,7 @@
         "bio_purify",
         "market",
         "nutrient_mat_provider",
+        "pearl_polish_water",
         "purifying_mat_provider",
         "recover_nutrients",
         "spring_source"
@@ -7448,6 +8058,7 @@
         "fungus_fish_meal",
         "honey_grain_cake",
         "honey_mineral_food",
+        "make_coral_filter_media",
         "make_filter_media",
         "make_silk_filter_media",
         "oil_honey_paste",
@@ -7471,6 +8082,7 @@
       "sources": [
         "bug_char_chips",
         "bug_char_twigs",
+        "char_reed",
         "char_twigs"
       ],
       "stage": "intermediate",
@@ -7662,6 +8274,7 @@
     {
       "buy_price": 0,
       "consumers": [
+        "blend_fish_water_feed",
         "blend_water_feed",
         "diet:filter_algae_carp:algae_meal",
         "diet:gel_jellyfish:algae_meal",
@@ -7711,6 +8324,7 @@
     {
       "buy_price": 0,
       "consumers": [
+        "dry_fish_meal",
         "fungus_fish_meal",
         "orders",
         "research:basic_spirit_cooking",
@@ -8055,6 +8669,7 @@
     {
       "buy_price": 0,
       "consumers": [
+        "blend_fish_water_feed",
         "blend_land_feed",
         "blend_water_feed",
         "honey_grain_cake",
@@ -8091,6 +8706,7 @@
     {
       "buy_price": 0,
       "consumers": [
+        "blend_fish_land_feed",
         "blend_land_feed",
         "mineral_feed",
         "sale",
@@ -8106,6 +8722,7 @@
       ],
       "sell_price": 1,
       "sources": [
+        "mill_duckweed",
         "mill_grass"
       ],
       "stage": "intermediate",
@@ -8153,6 +8770,7 @@
     {
       "buy_price": 0,
       "consumers": [
+        "blend_fish_land_feed",
         "blend_land_feed",
         "blend_water_feed",
         "compost_mouse",
@@ -8269,6 +8887,7 @@
       ],
       "sell_price": 3,
       "sources": [
+        "blend_fish_land_feed",
         "blend_land_feed"
       ],
       "stage": "intermediate",
@@ -8303,6 +8922,7 @@
       ],
       "sell_price": 3,
       "sources": [
+        "blend_fish_water_feed",
         "blend_water_feed"
       ],
       "stage": "intermediate",
@@ -8383,6 +9003,7 @@
       "consumers": [
         "diet:purifying_mat:recover_nutrients",
         "nutrient_mat_provider",
+        "pearl_polish_water",
         "purifying_mat",
         "recover_nutrients",
         "sale"
@@ -8397,6 +9018,7 @@
       ],
       "sell_price": 2,
       "sources": [
+        "make_coral_filter_media",
         "make_filter_media",
         "make_silk_filter_media"
       ],
@@ -8418,6 +9040,7 @@
         "diet:purifying_mat:bio_purify",
         "diet:purifying_mat:recover_nutrients",
         "nutrient_mat_provider",
+        "pearl_polish_water",
         "purifying_mat",
         "purifying_mat_provider",
         "recover_nutrients",
@@ -8454,7 +9077,8 @@
         "compost_sludge",
         "diet:compost_mouse:mouse_compost_residue",
         "mouse_compost_residue",
-        "research:water_recirculation"
+        "research:water_recirculation",
+        "silt_process"
       ],
       "cost_source": "bio_purify",
       "element": "earth",
@@ -8468,6 +9092,7 @@
       "sources": [
         "bio_purify",
         "nutrient_mat_provider",
+        "pearl_polish_water",
         "purifying_mat_provider",
         "recover_nutrients"
       ],
@@ -8586,10 +9211,12 @@
     {
       "buy_price": 0,
       "consumers": [
+        "assemble_coral_panel",
         "assemble_mucus_panel",
         "assemble_stone_panel",
         "diet:gravel_shell_snail:form_rock_shell",
         "diet:pearl_mussel:pearl_powder_round",
+        "diet:pearl_mussel:pearl_spirit_round",
         "diet:reef_coral:coral_mineral_round",
         "form_rock_shell",
         "gravel_shell_snail",
@@ -8612,7 +9239,9 @@
       "sell_price": 1,
       "sources": [
         "break_stone",
-        "break_stone_provider"
+        "break_stone_provider",
+        "grind_coral",
+        "grind_shell"
       ],
       "stage": "primary",
       "standard_cost": {
@@ -8767,6 +9396,7 @@
       ],
       "sell_price": 4,
       "sources": [
+        "assemble_coral_panel",
         "assemble_mucus_panel",
         "assemble_scale_panel",
         "assemble_shell_panel",
@@ -9170,7 +9800,11 @@
     {
       "buy_price": 0,
       "consumers": [
+        "diet:gel_jellyfish:gel_spirit_round",
+        "diet:pearl_mussel:pearl_spirit_round",
+        "gel_jellyfish",
         "orders",
+        "pearl_mussel",
         "sale"
       ],
       "cost_source": "dew_round",
@@ -9200,6 +9834,7 @@
     {
       "buy_price": 0,
       "consumers": [
+        "assemble_coral_panel",
         "assemble_mucus_panel",
         "assemble_shell_panel",
         "orders",
@@ -9325,6 +9960,8 @@
     {
       "buy_price": 0,
       "consumers": [
+        "pearl_polish_water",
+        "research:aquatic_intensive_care",
         "sale"
       ],
       "cost_source": "pearl_round",
@@ -9353,6 +9990,7 @@
     {
       "buy_price": 0,
       "consumers": [
+        "grind_shell",
         "sale"
       ],
       "cost_source": "mussel_shell",
@@ -9381,6 +10019,8 @@
     {
       "buy_price": 0,
       "consumers": [
+        "make_water_retaining_matrix",
+        "research:aquatic_intensive_care",
         "sale"
       ],
       "cost_source": "gel_round",
@@ -9409,6 +10049,9 @@
     {
       "buy_price": 0,
       "consumers": [
+        "assemble_coral_panel",
+        "grind_coral",
+        "make_coral_filter_media",
         "sale"
       ],
       "cost_source": "coral_round",
@@ -9432,6 +10075,183 @@
       "supply_value": 0,
       "tags": [
         "animal_product"
+      ]
+    },
+    {
+      "buy_price": 0,
+      "consumers": [
+        "diet:silt_loach:duckweed_meal",
+        "mill_duckweed",
+        "sale",
+        "silt_loach",
+        "silt_process"
+      ],
+      "cost_source": "duckweed",
+      "element": "water",
+      "form": "solid",
+      "id": "duckweed",
+      "name": "浮萍",
+      "path_ids": [
+        "water"
+      ],
+      "sell_price": 1,
+      "sources": [
+        "duckweed"
+      ],
+      "stage": "intermediate",
+      "standard_cost": {
+        "denominator": 80,
+        "numerator": 211
+      },
+      "supply_allowed": false,
+      "supply_value": 0,
+      "tags": [
+        "plant_product"
+      ]
+    },
+    {
+      "buy_price": 2,
+      "consumers": [
+        "duckweed"
+      ],
+      "cost_source": "purchase",
+      "element": "water",
+      "form": "solid",
+      "id": "duckweed_seed",
+      "name": "浮萍种苗",
+      "path_ids": [
+        "water"
+      ],
+      "sell_price": 0,
+      "sources": [
+        "market"
+      ],
+      "stage": "intermediate",
+      "standard_cost": {
+        "denominator": 1,
+        "numerator": 2
+      },
+      "supply_allowed": false,
+      "supply_value": 0,
+      "tags": [
+        "seed"
+      ]
+    },
+    {
+      "buy_price": 0,
+      "consumers": [
+        "char_reed",
+        "compost_reed",
+        "make_water_retaining_matrix",
+        "sale"
+      ],
+      "cost_source": "reed",
+      "element": "wood",
+      "form": "solid",
+      "id": "reed_stalk",
+      "name": "苇秆",
+      "path_ids": [
+        "wood"
+      ],
+      "sell_price": 1,
+      "sources": [
+        "reed"
+      ],
+      "stage": "intermediate",
+      "standard_cost": {
+        "denominator": 120,
+        "numerator": 271
+      },
+      "supply_allowed": false,
+      "supply_value": 0,
+      "tags": [
+        "plant_product"
+      ]
+    },
+    {
+      "buy_price": 3,
+      "consumers": [
+        "reed"
+      ],
+      "cost_source": "purchase",
+      "element": "wood",
+      "form": "solid",
+      "id": "reed_seed",
+      "name": "芦苇种苗",
+      "path_ids": [
+        "wood"
+      ],
+      "sell_price": 0,
+      "sources": [
+        "market"
+      ],
+      "stage": "intermediate",
+      "standard_cost": {
+        "denominator": 1,
+        "numerator": 3
+      },
+      "supply_allowed": false,
+      "supply_value": 0,
+      "tags": [
+        "seed"
+      ]
+    },
+    {
+      "buy_price": 0,
+      "consumers": [
+        "blend_fish_land_feed",
+        "blend_fish_water_feed",
+        "sale"
+      ],
+      "cost_source": "dry_fish_meal",
+      "element": "wood",
+      "form": "solid",
+      "id": "fish_meal",
+      "name": "鱼粉",
+      "path_ids": [
+        "wood"
+      ],
+      "sell_price": 2,
+      "sources": [
+        "dry_fish_meal"
+      ],
+      "stage": "intermediate",
+      "standard_cost": {
+        "denominator": 675,
+        "numerator": 3463
+      },
+      "supply_allowed": false,
+      "supply_value": 0,
+      "tags": [
+        "processing"
+      ]
+    },
+    {
+      "buy_price": 0,
+      "consumers": [
+        "sale"
+      ],
+      "cost_source": "make_water_retaining_matrix",
+      "element": "earth",
+      "form": "solid",
+      "id": "water_retaining_matrix",
+      "name": "保水基质",
+      "path_ids": [
+        "earth"
+      ],
+      "sell_price": 2,
+      "sources": [
+        "make_water_retaining_matrix"
+      ],
+      "stage": "intermediate",
+      "standard_cost": {
+        "denominator": 96,
+        "numerator": 523
+      },
+      "supply_allowed": false,
+      "supply_value": 0,
+      "tags": [
+        "processing"
       ]
     }
   ],

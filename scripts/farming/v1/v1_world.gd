@@ -249,7 +249,7 @@ func action_quote(cell: Vector2i, kind: String) -> Dictionary:
 		if not inventory.has(iid,int(inputs[iid])): return _error("缺少投入："+_items[iid]["name"])
 	return {"ok":true,"ap":1,"inputs":inputs,"crop_uid":int(crop.get("uid",0))}
 
-func plant(cell: Vector2i, crop_id: String) -> Dictionary:
+func plant(cell: Vector2i, crop_id: String, variant_id := "") -> Dictionary:
 	var checked := _can_act()
 	if not checked["ok"]:
 		return checked
@@ -258,19 +258,40 @@ func plant(cell: Vector2i, crop_id: String) -> Dictionary:
 	var definition: Dictionary = crop_defs[crop_id]
 	var inputs: Dictionary = definition["inputs"].duplicate()
 	inputs[definition["seed"]] = int(inputs.get(definition["seed"], 0)) + 1
+	# Optional substrate variant (P10.6): replaces the base inputs wholesale.
+	if not variant_id.is_empty():
+		var variant: Dictionary = {}
+		for row in definition.get("input_variants", []):
+			if String(row["id"]) == variant_id:
+				variant = row
+		if variant.is_empty():
+			return _error("未知培养变体")
+		inputs = variant["inputs"].duplicate()
+		inputs[definition["seed"]] = int(inputs.get(definition["seed"], 0)) + 1
 	for ident in inputs:
 		if not inventory.has(ident, int(inputs[ident])):
 			return _error("缺少种植投入：" + _items[ident]["name"])
 	var footprint: Array = definition["footprint"]
-	checked = grid.reserve(cell, int(footprint[0]), int(footprint[1]), "v1_crop:%d" % _next_uid, Grid.State.PLANTED)
-	if not checked["ok"]:
-		return checked
+	if String(definition.get("medium", "land")) == "water":
+		# Water crops live on fenced water cells inside a planting zone; the
+		# product layer validates and keeps the grid untouched.
+		var blocked: String = _water_plant_block(cell, definition, variant_id)
+		if not blocked.is_empty():
+			return _error(blocked)
+	else:
+		checked = grid.reserve(cell, int(footprint[0]), int(footprint[1]), "v1_crop:%d" % _next_uid, Grid.State.PLANTED)
+		if not checked["ok"]:
+			return checked
 	for ident in inputs:
 		inventory.remove(ident, int(inputs[ident]))
 	_record_flow({}, inputs, "播种投料")
 	var uid := _next_uid
 	_next_uid += 1
 	crops[uid] = {"uid": uid, "crop_id": crop_id, "origin": [cell.x, cell.y], "progress": 0, "state": "growing", "harvest_count": 0}
+	if String(definition.get("medium", "land")) == "water":
+		crops[uid]["round_paid"] = -1
+	if not variant_id.is_empty():
+		crops[uid]["variant"] = variant_id
 	_crop_planted(crops[uid])
 	# Culture water also moistens the bed; it is not charged twice as irrigation.
 	if definition["mode"] == "culture_each_cycle":
@@ -324,6 +345,11 @@ func irrigate(cell: Vector2i) -> Dictionary:
 ## Extra harvest outputs for derived products; the base harvest adds none.
 func _harvest_bonus(_instance: Dictionary) -> Dictionary:
 	return {}
+
+func _water_plant_block(_cell: Vector2i, _definition: Dictionary, _variant_id: String) -> String:
+	return "本产品没有水面种植"
+
+func _settle_water_crop(_row: Dictionary, _definition: Dictionary, _day: int) -> void: pass
 
 func _crop_planted(_row: Dictionary) -> void: pass
 
@@ -614,6 +640,9 @@ func _on_day_changed(day: int) -> void:
 	for uid in crops:
 		var row: Dictionary = crops[uid]
 		var definition: Dictionary = crop_defs[row["crop_id"]]
+		if String(definition.get("medium", "land")) == "water":
+			_settle_water_crop(row, definition, day - 1)
+			continue
 		var cells: Array = grid.holder_cells("v1_crop:%d" % uid)
 		var water := 0
 		var fertility := 0

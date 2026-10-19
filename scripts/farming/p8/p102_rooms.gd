@@ -229,6 +229,9 @@ static func round_state(target: int, round_index: int = 0) -> Dictionary:
 		"frozen":false,"seed_checked":false,"seed_award":0,"seed_claimed":false,"seed_total":0,"seed_eligible":0}
 
 func plant_started(row: Dictionary) -> void:
+	# Water crops sit outside the land room reward rounds (P10.6 §16.2.8).
+	if String(world.crop_defs[row["crop_id"]].get("medium", "land")) == "water":
+		return
 	state["plants"][str(row["uid"])] = round_state(int(world.crop_defs[row["crop_id"]]["days"])*100)
 	world.record_operation({"kind":"room","stage":"plant","day":world.clock.total_days,
 		"identity":"crop:"+str(row["uid"]),"crop":row.duplicate(true),"target":int(world.crop_defs[row["crop_id"]]["days"])*100})
@@ -290,6 +293,8 @@ func rewards(identity: String, data: Dictionary, definition_id: String, mode: St
 func claim_crop(row: Dictionary, mode: String, base: Dictionary, removed: bool) -> Dictionary:
 	var id := str(row["uid"])
 	var d: Dictionary = world.crop_defs[row["crop_id"]]
+	if String(d.get("medium", "land")) == "water" or not state["plants"].has(id):
+		return {}
 	var data: Dictionary = state["plants"][id]
 	var out := rewards("crop:"+id,data,row["crop_id"],mode,base,String(d["seed"]))
 	if removed: state["plants"].erase(id)
@@ -302,6 +307,8 @@ func claim_crop(row: Dictionary, mode: String, base: Dictionary, removed: bool) 
 func clear_crop(row: Dictionary) -> Dictionary:
 	var id := str(row["uid"])
 	var result := {}
+	if not state["plants"].has(id):
+		return result
 	if row["state"] == "mature": result = rewards("crop:"+id,state["plants"][id],row["crop_id"],"clear",{},String(world.crop_defs[row["crop_id"]]["seed"]))
 	world.record_operation({"kind":"room","stage":"clear","day":world.clock.total_days,"identity":"crop:"+id})
 	state["plants"].erase(id)
@@ -372,18 +379,23 @@ static func normalize(value, snapshot: Dictionary, catalog) -> Dictionary:
 			if source["position"]==[c.x,c.y]: return Scalars.fail("铺面覆盖资源点")
 		out["floors"][text] = "ordinary"
 	var crops := {}
-	for crop in body["crops"]: crops[str(crop["uid"])] = crop
+	var land_crops := {}
 	for crop in body["crops"]:
+		crops[str(crop["uid"])] = crop
+		var medium := String(catalog.definitions("crops")[crop["crop_id"]].get("medium", "land"))
+		if medium != "water":
+			land_crops[str(crop["uid"])] = crop
+	for crop in land_crops.values():
 		var d: Dictionary = catalog.definitions("crops")[crop["crop_id"]]
 		var ids := {}
 		for y in range(int(crop["origin"][1]),int(crop["origin"][1])+int(d["footprint"][1])):
 			for x in range(int(crop["origin"][0]),int(crop["origin"][0])+int(d["footprint"][0])):
 				ids[int(field_cells.get(key(Vector2i(x,y)),0))] = true
 		if ids.size()>1: return Scalars.fail("作物占地跨田块边界")
-	if value["plants"].size()!=crops.size(): return Scalars.fail("植物奖励索引不完整")
+	if value["plants"].size()!=land_crops.size(): return Scalars.fail("植物奖励索引不完整")
 	var definitions: Dictionary = catalog.definitions("crops")
 	for id in value["plants"]:
-		if not id is String or not crops.has(id): return Scalars.fail("植物奖励身份非法")
+		if not id is String or not land_crops.has(id): return Scalars.fail("植物奖励身份非法")
 		var crop: Dictionary = crops[id]
 		var d: Dictionary = definitions[crop["crop_id"]]
 		var checked := _normalize_round(value["plants"][id],int(value["random_seed"]),"crop:"+id,String(d["seed"]))

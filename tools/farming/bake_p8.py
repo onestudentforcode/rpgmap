@@ -43,6 +43,7 @@ ALLOCATION = {
     'scale_round': {'mineral_scale': Fraction(3, 4), 'shed_skin': Fraction(1, 4)},
     'form_rock_shell': {'rock_shell': Fraction(3, 4), 'mucus': Fraction(1, 4)},
     'oilfin_round': {'crude_oil': Fraction(3, 4), 'fish_meat': Fraction(1, 4)},
+    'pearl_polish_water': {'clean_water': Fraction(67, 100), 'sludge': Fraction(33, 100)},
 }
 
 
@@ -372,7 +373,7 @@ def audit_research(source, compiled, provider_rows):
     require = common.require
     resources = {row['id']: row for row in compiled['resources']}
     research = common.registry(source['research'], 'research')
-    require(len(research) == 12, 'twelve research projects')
+    require(len(research) == 13, 'thirteen research projects (P10.6 adds aquatic intensive care)')
     layers = {1: [], 2: [], 3: []}
     total_fee = 0
     total_days = 0
@@ -387,8 +388,8 @@ def audit_research(source, compiled, provider_rows):
         layers[row['layer']].append(ident)
         total_fee += row['fee']
         total_days += row['days']
-    require((len(layers[1]), len(layers[2]), len(layers[3])) == (5, 4, 3), 'layer population 5/4/3')
-    require(total_fee == 94 and total_days == 44, 'research totals 94 stones / 44 days')
+    require((len(layers[1]), len(layers[2]), len(layers[3])) == (5, 5, 3), 'layer population 5/5/3')
+    require(total_fee == 104 and total_days == 48, 'research totals 104 stones / 48 days')
     order = _topological(research)
     # Cross-check the unlock registry against the research gates on the definitions.
     crops = common.registry(source['crops'], 'crops')
@@ -414,6 +415,11 @@ def audit_research(source, compiled, provider_rows):
             gates['species'][ident] = row['research']
     for ident, row in livestock.items():
         for diet in row['base_diets'] + row['special_diets']:
+            if diet.get('research', ''):
+                gates['diets'][diet['id']] = diet['research']
+    # P10.6 crop round inputs and substrate variants unlock like diets.
+    for ident, row in crops.items():
+        for diet in row.get('round_inputs', []) + row.get('input_variants', []):
             if diet.get('research', ''):
                 gates['diets'][diet['id']] = diet['research']
     for section, table in gates.items():

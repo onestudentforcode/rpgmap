@@ -20,7 +20,10 @@ def validate(source):
     require(c['floor']=={'inputs':{'raw_wood':1},'place_ap':1,'remove_ap':1,'refund':False},'invalid floor cost')
     require(all(integer(n,1,1) for n in [c['floor']['place_ap'],c['floor']['remove_ap'],c['floor']['inputs']['raw_wood']]),'floor costs must be integers, not booleans')
     crops=registry(source['crops'],'crops')
-    require(set(c['primary'])==set(crops)|{'rice_bag_gu'},'primary registry incomplete')
+    # P10.6 §16.2.8: water-medium crops never join the land room bonuses, so
+    # they stay out of the primary registry on purpose.
+    land_crops={cid for cid,row in crops.items() if row.get('medium','land')!='water'}
+    require(set(c['primary'])==land_crops|{'rice_bag_gu'},'primary registry incomplete')
     require(c['primary']==PRIMARY,'main product registry drift; byproducts must not receive bonuses')
     for ident,modes in c['primary'].items():
         require(isinstance(modes,dict) and modes,'invalid primary modes')

@@ -212,10 +212,13 @@ for cid, row in CROPS.items():
         fields.append(field('flower', '花期/花源', '成熟期间每日可产1份额' if cid == 'honeybell_bush' else f'生长进度{window[0]}~{window[1] - 1}期间为花期（{row["flower_days"]}日），每日期1份额'))
     if mode == 'culture_each_cycle':
         fields.append(field('culture', '培养水润床', '播种投入中的清水每份+30水分直接润床，不另算浇水'))
-    if SRC.get('rooms'):
+    if SRC.get('rooms') and cid in SRC['rooms']['primary']:
         primary=SRC['rooms']['primary'][cid]
         fields.append(field('room_primary','丰产主产物','；'.join(('砍伐' if m=='fell' else '采收')+'：'+rname(item) for m,item in primary.items())+'。仅本轮合格生长贡献参与25%增产，副产物不增加'))
         fields.append(field('room_seed','育种回流',f'首次成熟仅判定一次；完整合格25%概率得{rname(seed)}×1，随首次成熟收取/成熟清理领取，留株不重抽'))
+    if row.get('medium') == 'water':
+        rounds = '或'.join(v['id'] for v in row.get('round_inputs', []))
+        fields.append(field('water_crop','水生种植',f'种在鱼栅水面的水生种植区；光照≥{row["light"]}且水体水质≥30才生长，无需灌溉；每生长轮付{rounds}投料一次，采满{row.get("max_taps", 0)}轮后清理重种'))
     summary = f'{MODE_NAMES[mode].split("，")[0]}；首熟{row["days"]}日；{quantities_text(row["outputs"])}'
     add_entity(f'crop:{cid}', 'crop', cid, CROP_NAMES[cid], 'crops', [], summary, fields,
                ['rule:crop_growth', 'rule:environment', 'rule:day_settle']+(['rule:rooms'] if SRC.get('rooms') else []), lock_of(row.get('research')))
