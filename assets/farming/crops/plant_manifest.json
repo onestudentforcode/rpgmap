@@ -2491,6 +2491,37 @@
           }
         }
       }
+    },
+    "mulberry_tree": {
+      "footprint": [
+        2,
+        2
+      ],
+      "canvas_px": [
+        512,
+        768
+      ],
+      "anchor_uv": [
+        0.49999988079071045,
+        0.9203707501292229
+      ],
+      "draw_size": [
+        115.2,
+        172.8
+      ],
+      "scale_multiplier": 1.0,
+      "stages": {
+        "stage_0": "res://assets/farming/crops/mulberry_tree/stage_0.png",
+        "stage_1": "res://assets/farming/crops/mulberry_tree/stage_1.png",
+        "stage_2": "res://assets/farming/crops/mulberry_tree/stage_2.png",
+        "stage_3": "res://assets/farming/crops/mulberry_tree/stage_3.png"
+      },
+      "sha256": {
+        "stage_0": "16da6faf5594479fbde1be0beec28f4be47aab0569b0b7334f10c40e100397b2",
+        "stage_1": "1f4756447bbbada273678a7afbc6273feb5cd20d15b9b6d0b11e4f32b54a406b",
+        "stage_2": "7f0cf813b9840436ff5698660a66d9faa8308d720828e67033d7d0898e765b19",
+        "stage_3": "e3212a6c12b24af09fb362f3032103eaa8062239f24e723a93db9009ae1d59d3"
+      }
     }
   },
   "visual_revision": "p86",

@@ -350,6 +350,54 @@
           "opacity": 0.2
         }
       }
+    },
+    "mulberry_tree": {
+      "stages": {
+        "stage_0": {
+          "size": [
+            14,
+            5
+          ],
+          "offset": [
+            0,
+            0
+          ],
+          "opacity": 0.13
+        },
+        "stage_1": {
+          "size": [
+            23,
+            8
+          ],
+          "offset": [
+            0,
+            0
+          ],
+          "opacity": 0.16
+        },
+        "stage_2": {
+          "size": [
+            40,
+            14
+          ],
+          "offset": [
+            0,
+            0
+          ],
+          "opacity": 0.2
+        },
+        "stage_3": {
+          "size": [
+            54,
+            19
+          ],
+          "offset": [
+            0,
+            0
+          ],
+          "opacity": 0.23
+        }
+      }
     }
   },
   "facilities": {
@@ -597,6 +645,96 @@
       "offset": [
         0,
         4
+      ]
+    },
+    "wool_station": {
+      "size": [
+        58.0,
+        22.0
+      ],
+      "offset": [
+        0,
+        4
+      ]
+    },
+    "silkworm_rack": {
+      "size": [
+        58.0,
+        22.0
+      ],
+      "offset": [
+        0,
+        4
+      ]
+    },
+    "spirit_liquid_collector": {
+      "size": [
+        58.0,
+        22.0
+      ],
+      "offset": [
+        0,
+        4
+      ]
+    },
+    "scale_station": {
+      "size": [
+        58.0,
+        22.0
+      ],
+      "offset": [
+        0,
+        4
+      ]
+    },
+    "rock_breaking_yard": {
+      "size": [
+        112,
+        45
+      ],
+      "offset": [
+        0,
+        5
+      ]
+    },
+    "ore_sorting_yard": {
+      "size": [
+        112,
+        45
+      ],
+      "offset": [
+        0,
+        5
+      ]
+    },
+    "carbonization_nest": {
+      "size": [
+        112,
+        45
+      ],
+      "offset": [
+        0,
+        5
+      ]
+    },
+    "compost_mouse_den": {
+      "size": [
+        112,
+        45
+      ],
+      "offset": [
+        0,
+        5
+      ]
+    },
+    "shell_forming_station": {
+      "size": [
+        112,
+        45
+      ],
+      "offset": [
+        0,
+        5
       ]
     }
   },

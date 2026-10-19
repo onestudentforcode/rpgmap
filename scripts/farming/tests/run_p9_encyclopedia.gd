@@ -55,7 +55,7 @@ func _run() -> void:
 	root.add_child(shell)
 	await process_frame
 	wiki = shell.encyclopedia
-	check(not shell._started and wiki.data["counts"]["entities"] == 207, "baked encyclopedia loads with 207 entities")
+	check(not shell._started and wiki.data["counts"]["entities"] == 261, "baked encyclopedia loads with 261 entities")
 
 	# --- static reading before any game -------------------------------------
 	var static_before: Dictionary = shell.world.to_snapshot().duplicate(true)
@@ -65,8 +65,8 @@ func _run() -> void:
 	for node in nodes(shell.sidebar):
 		if node is Button and node.has_meta("encyclopedia_category"): category_buttons += 1
 	check(category_buttons == 9, "all nine categories listed")
-	check(category_button("crops") != null and category_button("crops").text.contains("7"), "crops category shows registry count")
-	check(category_button("rules").text.contains("18"), "rules category shows curated count")
+	check(category_button("crops") != null and category_button("crops").text.contains("8"), "crops category shows registry count")
+	check(category_button("rules").text.contains("19"), "rules category shows curated count")
 	check(not list_ids().is_empty(), "index list renders entries for the default category")
 	# search by Chinese name, ascii id and tag
 	for probe in [["秸秆", "resource:straw"], ["golden_wheat", "crop:golden_wheat"], ["organic", "resource:straw"]]:
@@ -83,9 +83,9 @@ func _run() -> void:
 	wiki.open("resource:straw")
 	check(wiki.current_id == "resource:straw", "straw opens by id")
 	var straw_text := text_of(wiki.detail_box)
-	check(straw_text.contains("获取来源（2条）") and straw_text.contains("直接用途（5条）"), "straw lists both relation sections with counts")
+	check(straw_text.contains("获取来源（2条）") and straw_text.contains("直接用途（8条）"), "straw lists both relation sections with counts")
 	check(straw_text.contains("收获·金穗麦") and straw_text.contains("市集采购·秸秆"), "straw sources include wheat harvest and market")
-	check(straw_text.contains("秸秆堆肥") and straw_text.contains("藻类培养") and straw_text.contains("高密度藻培养") and straw_text.contains("农产初加工") and straw_text.contains("市集出售"), "straw uses cover all five processes")
+	check(straw_text.contains("秸秆堆肥") and straw_text.contains("秸秆翻肥") and straw_text.contains("藻类培养") and straw_text.contains("高密度藻培养") and straw_text.contains("农产初加工") and straw_text.contains("市集出售"), "straw uses cover all six processes")
 	check(straw_text.contains("3元石/份") and straw_text.contains("1元石/份"), "straw trade facts render")
 	var straw_jumps := jump_buttons(wiki.detail_box)
 	check(straw_jumps.size() >= 5, "relation rows expose jump buttons")
@@ -127,7 +127,7 @@ func _run() -> void:
 
 	# --- rule browsing --------------------------------------------------------
 	category_button("rules").pressed.emit()
-	check("rule:crop_growth" in list_ids() and "rule:rooms" in list_ids() and "rule:animal-zones" in list_ids() and list_ids().size() == 18, "rules category lists all curated rules")
+	check("rule:crop_growth" in list_ids() and "rule:rooms" in list_ids() and "rule:animal-zones" in list_ids() and list_ids().size() == 19, "rules category lists all curated rules")
 	check(shell.world.to_snapshot() == static_before, "reading before a game changes no world state")
 
 	# --- with a running game --------------------------------------------------

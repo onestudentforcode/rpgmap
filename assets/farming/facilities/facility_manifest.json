@@ -1211,6 +1211,303 @@
         ],
         "opacity": 0.18
       }
+    },
+    "wool_station": {
+      "footprint": [
+        1,
+        1
+      ],
+      "canvas_px": [
+        256,
+        256
+      ],
+      "path": "res://assets/farming/facilities/wool_station/body.png",
+      "sha256": "828c6feacc38ad6d1c3b60c7d4f7e7df813394b9cd80ba87116e18bb74382255",
+      "anchor_uv": [
+        0.5,
+        0.6171875
+      ],
+      "draw_size": [
+        122.0,
+        122.0
+      ],
+      "scale_multiplier": 1.0,
+      "ground_placement": "footprint_center",
+      "shadow": {
+        "size": [
+          58.0,
+          22.0
+        ],
+        "offset": [
+          0,
+          4
+        ],
+        "opacity": 0.18
+      }
+    },
+    "silkworm_rack": {
+      "footprint": [
+        1,
+        1
+      ],
+      "canvas_px": [
+        256,
+        256
+      ],
+      "path": "res://assets/farming/facilities/silkworm_rack/body.png",
+      "sha256": "e9f13ecc0fcfe74bc8fca481850630d3a0c69ab659ea260fb90e5a45926bfdf4",
+      "anchor_uv": [
+        0.5,
+        0.6171875
+      ],
+      "draw_size": [
+        122.0,
+        122.0
+      ],
+      "scale_multiplier": 1.0,
+      "ground_placement": "footprint_center",
+      "shadow": {
+        "size": [
+          58.0,
+          22.0
+        ],
+        "offset": [
+          0,
+          4
+        ],
+        "opacity": 0.18
+      }
+    },
+    "spirit_liquid_collector": {
+      "footprint": [
+        1,
+        1
+      ],
+      "canvas_px": [
+        256,
+        256
+      ],
+      "path": "res://assets/farming/facilities/spirit_liquid_collector/body.png",
+      "sha256": "48157b97aa222ab8806ec85b7caf5fd09586af3a5a92394d61e05abd33a9a34e",
+      "anchor_uv": [
+        0.5,
+        0.6171875
+      ],
+      "draw_size": [
+        122.0,
+        122.0
+      ],
+      "scale_multiplier": 1.0,
+      "ground_placement": "footprint_center",
+      "shadow": {
+        "size": [
+          58.0,
+          22.0
+        ],
+        "offset": [
+          0,
+          4
+        ],
+        "opacity": 0.18
+      }
+    },
+    "scale_station": {
+      "footprint": [
+        1,
+        1
+      ],
+      "canvas_px": [
+        256,
+        256
+      ],
+      "path": "res://assets/farming/facilities/scale_station/body.png",
+      "sha256": "fa12f531907968a377a865207b557fdbaf239800004893227fceaa6cf7648467",
+      "anchor_uv": [
+        0.5,
+        0.6171875
+      ],
+      "draw_size": [
+        122.0,
+        122.0
+      ],
+      "scale_multiplier": 1.0,
+      "ground_placement": "footprint_center",
+      "shadow": {
+        "size": [
+          58.0,
+          22.0
+        ],
+        "offset": [
+          0,
+          4
+        ],
+        "opacity": 0.18
+      }
+    },
+    "rock_breaking_yard": {
+      "footprint": [
+        2,
+        2
+      ],
+      "canvas_px": [
+        512,
+        512
+      ],
+      "path": "res://assets/farming/facilities/rock_breaking_yard/body.png",
+      "sha256": "d9a43bd14428a77d546fe639716109be51f6c29a0c0d553dea758bd70e88d809",
+      "anchor_uv": [
+        0.5,
+        0.51171875
+      ],
+      "draw_size": [
+        204.8,
+        204.8
+      ],
+      "scale_multiplier": 1.0,
+      "ground_placement": "footprint_center",
+      "shadow": {
+        "size": [
+          112,
+          45
+        ],
+        "offset": [
+          0,
+          5
+        ],
+        "opacity": 0.21
+      }
+    },
+    "ore_sorting_yard": {
+      "footprint": [
+        2,
+        2
+      ],
+      "canvas_px": [
+        512,
+        512
+      ],
+      "path": "res://assets/farming/facilities/ore_sorting_yard/body.png",
+      "sha256": "971fd4d9a0b73d03ae7be49bd6e6dc70e4142c21bf9663625f62ebeff27348f7",
+      "anchor_uv": [
+        0.5,
+        0.51171875
+      ],
+      "draw_size": [
+        204.8,
+        204.8
+      ],
+      "scale_multiplier": 1.0,
+      "ground_placement": "footprint_center",
+      "shadow": {
+        "size": [
+          112,
+          45
+        ],
+        "offset": [
+          0,
+          5
+        ],
+        "opacity": 0.21
+      }
+    },
+    "carbonization_nest": {
+      "footprint": [
+        2,
+        2
+      ],
+      "canvas_px": [
+        512,
+        512
+      ],
+      "path": "res://assets/farming/facilities/carbonization_nest/body.png",
+      "sha256": "4b705986590bddf794ec8d0c5d854bf30e6d1d1463395387b5881d49ea3ae199",
+      "anchor_uv": [
+        0.5,
+        0.51171875
+      ],
+      "draw_size": [
+        204.8,
+        204.8
+      ],
+      "scale_multiplier": 1.0,
+      "ground_placement": "footprint_center",
+      "shadow": {
+        "size": [
+          112,
+          45
+        ],
+        "offset": [
+          0,
+          5
+        ],
+        "opacity": 0.21
+      }
+    },
+    "compost_mouse_den": {
+      "footprint": [
+        2,
+        2
+      ],
+      "canvas_px": [
+        512,
+        512
+      ],
+      "path": "res://assets/farming/facilities/compost_mouse_den/body.png",
+      "sha256": "2871eb8a91cc840113fd9d3b68d3fd687978dee3242103cc18343857f1e92bbe",
+      "anchor_uv": [
+        0.5,
+        0.51171875
+      ],
+      "draw_size": [
+        204.8,
+        204.8
+      ],
+      "scale_multiplier": 1.0,
+      "ground_placement": "footprint_center",
+      "shadow": {
+        "size": [
+          112,
+          45
+        ],
+        "offset": [
+          0,
+          5
+        ],
+        "opacity": 0.21
+      }
+    },
+    "shell_forming_station": {
+      "footprint": [
+        2,
+        2
+      ],
+      "canvas_px": [
+        512,
+        512
+      ],
+      "path": "res://assets/farming/facilities/shell_forming_station/body.png",
+      "sha256": "374efb584729e3cbf51c5fd1ddff793bf6a3797a2f5efb3da7b1ae943b60f93f",
+      "anchor_uv": [
+        0.5,
+        0.51171875
+      ],
+      "draw_size": [
+        204.8,
+        204.8
+      ],
+      "scale_multiplier": 1.0,
+      "ground_placement": "footprint_center",
+      "shadow": {
+        "size": [
+          112,
+          45
+        ],
+        "offset": [
+          0,
+          5
+        ],
+        "opacity": 0.21
+      }
     }
   }
 }

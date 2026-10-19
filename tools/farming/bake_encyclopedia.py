@@ -91,7 +91,7 @@ FLOWERS = SRC['flowers']
 DEVICES = SRC['devices']
 DISPLAY = CURATED['display']
 
-UNIT_DEFAULT = {'steel_sheep': '只', 'filter_algae_carp': '尾', 'bell_bee': '群', 'purifying_mat': '培养单位', 'rock_mole': '只', 'rock_belly_beast': '只'}
+UNIT_DEFAULT = {'steel_sheep': '只', 'filter_algae_carp': '尾', 'bell_bee': '群', 'purifying_mat': '培养单位', 'rock_mole': '只', 'rock_belly_beast': '只', 'carbon_belly_bug': '群', 'leaf_silkworm': '群', 'dew_shell_snail': '只', 'mineral_scale_lizard': '只', 'compost_mouse': '只', 'gravel_shell_snail': '只'}
 SOURCE_NAMES = {'stone_source': '采石点', 'ore_source': '采矿点', 'spring_source': '泉水点'}
 MODE_NAMES = DISPLAY['crop_mode_names']
 
@@ -764,7 +764,9 @@ for rid, row in RES.items():
             if i['entity'] == f'resource:{rid}':
                 use_rows.append(_relation_row(p, i, 'use'))
     if not any(r['type'] not in ('market_sell', 'order_supply') for r in use_rows):
-        fields.append(field('terminal', '下游用途', '无下游配方：出售与供货是该物品的设计出口' if use_rows else '无任何用途（见购买代理说明）'))
+        note_text = '无下游配方：出售与供货是该物品的设计出口' if use_rows else '无任何用途（见购买代理说明）'
+        note_text = DISPLAY.get('terminal_note_overrides', {}).get(rid, note_text)
+        fields.append(field('terminal', '下游用途', note_text))
     add_entity(f'resource:{rid}', 'resource', rid, row['name'], 'items', list(row['tags']),
                f'{DISPLAY["element_names"][row["element"]]}行{DISPLAY["form_names"][row["form"]]}；' + (f'可供货（供养值{b["supply_value"]}）' if row['supply_allowed'] else '生产材料'),
                fields, ['rule:market'] + (['rule:orders'] if row['supply_allowed'] else []),
