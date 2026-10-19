@@ -32,6 +32,7 @@ try {
     }
     Check-Game 'model' 'res://scripts/farming/tests/run_phase105.gd' 'P105 MODEL OK' 300000
     Check-Game 'p103-model' 'res://scripts/farming/tests/run_phase103.gd' 'P103 MODEL OK' 300000
+    Check-Game 'fixture-lint' 'res://scripts/farming/tests/run_fixture_lint.gd' 'FIXTURE LINT OK' 300000
     if (-not $SkipPlaytest) {
         Check-Game 'playtest' 'res://scripts/farming/tests/run_p105_playtest.gd' 'P105 PLAYTEST OK'
         & python tools/farming/audit_p105_playtest.py $evidenceRoot
