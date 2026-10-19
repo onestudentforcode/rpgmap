@@ -3101,6 +3101,7 @@
         1,
         1
       ],
+      "gu_slot": "animal_feeding_assist",
       "id": "feed_trough",
       "kind": null,
       "materials": {
@@ -3196,7 +3197,11 @@
         "wood_plank": 2
       },
       "name": "安抚台",
-      "terrain": "land"
+      "terrain": "land",
+      "terrains": [
+        "land",
+        "water"
+      ]
     },
     {
       "cash": 12,
@@ -3319,6 +3324,7 @@
         1,
         1
       ],
+      "gu_slot": "animal_product_assist",
       "id": "wool_station",
       "kind": null,
       "materials": {
@@ -3337,6 +3343,7 @@
         1,
         1
       ],
+      "gu_slot": "animal_product_assist",
       "id": "silkworm_rack",
       "kind": null,
       "materials": {
@@ -3355,6 +3362,7 @@
         1,
         1
       ],
+      "gu_slot": "animal_product_assist",
       "id": "spirit_liquid_collector",
       "kind": null,
       "materials": {
@@ -3373,6 +3381,7 @@
         1,
         1
       ],
+      "gu_slot": "animal_product_assist",
       "id": "scale_station",
       "kind": null,
       "materials": {
@@ -3392,6 +3401,7 @@
         1,
         1
       ],
+      "gu_slot": "animal_product_assist",
       "id": "carp_harvest_station",
       "kind": null,
       "materials": {
@@ -3410,6 +3420,7 @@
         1,
         1
       ],
+      "gu_slot": "animal_product_assist",
       "id": "oilfish_harvest_station",
       "kind": null,
       "materials": {
@@ -3429,6 +3440,7 @@
         1,
         1
       ],
+      "gu_slot": "animal_product_assist",
       "id": "pearl_station",
       "kind": null,
       "materials": {
@@ -3448,6 +3460,7 @@
         1,
         1
       ],
+      "gu_slot": "animal_product_assist",
       "id": "gel_station",
       "kind": null,
       "materials": {
@@ -3467,6 +3480,7 @@
         1,
         1
       ],
+      "gu_slot": "animal_product_assist",
       "id": "coral_station",
       "kind": null,
       "materials": {
@@ -4697,7 +4711,7 @@
           "breed_speed"
         ],
         "target_tags": [
-          "terrestrial_animal"
+          "breed_capable_animal"
         ],
         "value": 150
       },
@@ -4722,9 +4736,63 @@
           "work_speed"
         ],
         "target_tags": [
-          "terrestrial_animal"
+          "work_capable_animal"
         ],
         "value": 150
+      },
+      {
+        "deployment": "host",
+        "effect": "product_yield",
+        "fee": 1,
+        "food": {},
+        "host_kinds": [
+          "facility",
+          null
+        ],
+        "id": "product_yield_gu",
+        "market_price": 32,
+        "name": "丰养蛊",
+        "path": "生道",
+        "range": 0,
+        "rank": 1,
+        "role": "logistics",
+        "scope": "HOST",
+        "slot": "animal_product_assist",
+        "tags": [
+          "animal_product_assist",
+          "product_yield"
+        ],
+        "target_tags": [
+          "production_animal"
+        ],
+        "value": 125
+      },
+      {
+        "deployment": "host",
+        "effect": "feed_saving",
+        "fee": 1,
+        "food": {},
+        "host_kinds": [
+          "facility",
+          null
+        ],
+        "id": "feed_saving_gu",
+        "market_price": 32,
+        "name": "节粮蛊",
+        "path": "食道",
+        "range": 0,
+        "rank": 1,
+        "role": "logistics",
+        "scope": "HOST",
+        "slot": "animal_feeding_assist",
+        "tags": [
+          "animal_feeding_assist",
+          "feed_saving"
+        ],
+        "target_tags": [
+          "fed_animal"
+        ],
+        "value": 25
       }
     ],
     "deploy_ap": 1,
@@ -4888,6 +4956,7 @@
         "growth_units": 2400,
         "natural": {
           "default_diet": "dew_round",
+          "main": "spirit_liquid",
           "outputs": {
             "mucus": 1,
             "spirit_liquid": 2
@@ -4905,6 +4974,7 @@
         "natural": {
           "capture": true,
           "default_diet": "grain_fatten",
+          "main": "fish_meat",
           "outputs": {
             "fish_manure": 1,
             "fish_meat": 3
@@ -4922,6 +4992,7 @@
         "natural": {
           "capture": false,
           "default_diet": "gel_water_round",
+          "main": "water_gel",
           "outputs": {
             "water_gel": 2
           },
@@ -4949,6 +5020,7 @@
         "growth_units": 1800,
         "natural": {
           "default_diet": "silk_round",
+          "main": "silk",
           "outputs": {
             "silk": 4
           },
@@ -4963,6 +5035,7 @@
         "growth_units": 3600,
         "natural": {
           "default_diet": "scale_round",
+          "main": "mineral_scale",
           "outputs": {
             "mineral_scale": 2,
             "shed_skin": 1
@@ -4980,6 +5053,7 @@
         "natural": {
           "capture": true,
           "default_diet": "oilfin_oil_round",
+          "main": "crude_oil",
           "outputs": {
             "crude_oil": 2,
             "fish_meat": 1
@@ -4997,6 +5071,7 @@
         "natural": {
           "capture": false,
           "default_diet": "pearl_powder_round",
+          "main": "pearl",
           "outputs": {
             "pearl": 2
           },
@@ -5022,6 +5097,7 @@
         "natural": {
           "capture": false,
           "default_diet": "coral_mineral_round",
+          "main": "coral_stone",
           "outputs": {
             "coral_stone": 2
           },
@@ -5055,6 +5131,7 @@
         "growth_units": 3600,
         "natural": {
           "default_diet": "iron_supplement",
+          "main": "steel_wool",
           "outputs": {
             "sheep_manure": 1,
             "steel_wool": 1

@@ -9,7 +9,7 @@
 - **作物与种植（10）**：[浮萍](#浮萍-cropduckweed)、[速生杉](#速生杉-cropfast_fir)、[金穗麦](#金穗麦-cropgolden_wheat)、[蜜铃灌木](#蜜铃灌木-crophoneybell_bush)、[果桑树](#果桑树-cropmulberry_tree)、[油籽花](#油籽花-cropoilseed_flower)、[青牧草](#青牧草-croppasture_grass)、[芦苇](#芦苇-cropreed)、[松脂树](#松脂树-cropresin_tree)、[木腐菇](#木腐菇-cropwood_decay_mushroom)
 - **养殖与培养（17）**：[蜜盏蜂](#蜜盏蜂-speciesbell_bee)、[炭腹虫](#炭腹虫-speciescarbon_belly_bug)、[堆肥鼠](#堆肥鼠-speciescompost_mouse)、[露壳蜗牛](#露壳蜗牛-speciesdew_shell_snail)、[滤藻鲤](#滤藻鲤-speciesfilter_algae_carp)、[凝胶水母](#凝胶水母-speciesgel_jellyfish)、[砾甲蜗牛](#砾甲蜗牛-speciesgravel_shell_snail)、[叶丝蚕](#叶丝蚕-speciesleaf_silkworm)、[矿鳞蜥](#矿鳞蜥-speciesmineral_scale_lizard)、[油鳍鱼](#油鳍鱼-speciesoilfin_fish)、[珍珠蚌](#珍珠蚌-speciespearl_mussel)、[净水菌毯](#净水菌毯-speciespurifying_mat)、[礁骨珊瑚](#礁骨珊瑚-speciesreef_coral)、[岩腹兽](#岩腹兽-speciesrock_belly_beast)、[啮岩鼹](#啮岩鼹-speciesrock_mole)、[净泥鳅](#净泥鳅-speciessilt_loach)、[钢绵羊](#钢绵羊-speciessteel_sheep)
 - **建筑与设施（39）**：[藻类培养槽](#藻类培养槽-facilityalgae_tank)、[水生种植台](#水生种植台-facilityaquatic_crop_station)、[蜂箱](#蜂箱-facilitybee_hive)、[炭化巢](#炭化巢-facilitycarbonization_nest)、[照料台](#照料台-facilitycare_table)、[捕鲤台](#捕鲤台-facilitycarp_harvest_station)、[炭化炉](#炭化炉-facilitychar_kiln)、[堆肥箱](#堆肥箱-facilitycompost_bin)、[翻肥窝](#翻肥窝-facilitycompost_mouse_den)、[采礁台](#采礁台-facilitycoral_station)、[调度站](#调度站-facilitydispatch_station)、[农产加工台](#农产加工台-facilityfarm_processor)、[供食槽](#供食槽-facilityfeed_trough)、[田间维护站](#田间维护站-facilityfield_service_station)、[水场](#水场-facilityfish_pond)、[采胶台](#采胶台-facilitygel_station)、[补光灯](#补光灯-facilitygrowth_lamp)、[厨房](#厨房-facilitykitchen)、[大床](#大床-facilitylarge_bed)、[中床](#中床-facilitymedium_bed)、[取油台](#取油台-facilityoilfish_harvest_station)、[选矿场](#选矿场-facilityore_sorting_yard)、[采珠台](#采珠台-facilitypearl_station)、[圈舍](#圈舍-facilitypen)、[净水菌床](#净水菌床-facilitypurifying_bed)、[研究台](#研究台-facilityresearch_bench)、[碎岩场](#碎岩场-facilityrock_breaking_yard)、[养鳞台](#养鳞台-facilityscale_station)、[岩壳成型台](#岩壳成型台-facilityshell_forming_station)、[蚕架](#蚕架-facilitysilkworm_rack)、[泥料处理台](#泥料处理台-facilitysilt_processing_station)、[小床](#小床-facilitysmall_bed)、[小型冶炼炉](#小型冶炼炉-facilitysmelter)、[安抚台](#安抚台-facilitysoothing_station)、[集露台](#集露台-facilityspirit_liquid_collector)、[玩具站](#玩具站-facilitytoy_station)、[换水站](#换水站-facilitywater_change_station)、[木工台](#木工台-facilitywoodshop)、[采毛台](#采毛台-facilitywool_station)
-- **后勤蛊与协同（9）**：[明光蛊](#明光蛊-gubright_gu)、[驭兽蛊](#驭兽蛊-gucommand_gu)、[节肥蛊](#节肥蛊-gufert_gu)、[催生蛊](#催生蛊-gugrowth_gu)、[饭袋草蛊](#饭袋草蛊-gurice_bag_gu)、[安抚蛊](#安抚蛊-gusoothe_gu)、[宙道研究蛊](#宙道研究蛊-gutime_gu)、[锁水蛊](#锁水蛊-guwater_gu)、[智道研究蛊](#智道研究蛊-guwisdom_gu)
+- **后勤蛊与协同（11）**：[明光蛊](#明光蛊-gubright_gu)、[驭兽蛊](#驭兽蛊-gucommand_gu)、[节粮蛊](#节粮蛊-gufeed_saving_gu)、[节肥蛊](#节肥蛊-gufert_gu)、[催生蛊](#催生蛊-gugrowth_gu)、[丰养蛊](#丰养蛊-guproduct_yield_gu)、[饭袋草蛊](#饭袋草蛊-gurice_bag_gu)、[安抚蛊](#安抚蛊-gusoothe_gu)、[宙道研究蛊](#宙道研究蛊-gutime_gu)、[锁水蛊](#锁水蛊-guwater_gu)、[智道研究蛊](#智道研究蛊-guwisdom_gu)
 - **材料与物品（84）**：[藻料](#藻料-resourcealgae_feed)、[蜂蜡](#蜂蜡-resourcebeeswax)、[木炭](#木炭-resourcecharcoal)、[清水](#清水-resourceclean_water)、[复合石板](#复合石板-resourcecomposite_stone_panel)、[珊瑚石](#珊瑚石-resourcecoral_stone)、[粗油](#粗油-resourcecrude_oil)、[碎铁矿](#碎铁矿-resourcecrushed_ore)、[高密度藻料](#高密度藻料-resourcedense_algae)、[藻露羹](#藻露羹-resourcedew_soup)、[浮萍](#浮萍-resourceduckweed)、[浮萍种苗](#浮萍种苗-resourceduckweed_seed)、[腐土菌丸](#腐土菌丸-resourceearth_pill)、[速生杉苗](#速生杉苗-resourcefast_fir_seed)、[炭砂滤料](#炭砂滤料-resourcefilter_media)、[蜜油火膏](#蜜油火膏-resourcefire_paste)、[鱼粪](#鱼粪-resourcefish_manure)、[鱼粉](#鱼粉-resourcefish_meal)、[鱼肉](#鱼肉-resourcefish_meat)、[菌鱼灵膳](#菌鱼灵膳-resourcefish_spirit_meal)、[花瓣](#花瓣-resourceflower_petal)、[牧草](#牧草-resourcefodder_grass)、[蜜炼金食](#蜜炼金食-resourcegold_food)、[金穗麦种子](#金穗麦种子-resourcegolden_wheat_seed)、[谷粒](#谷粒-resourcegrain)、[谷粉](#谷粉-resourcegrain_meal)、[草粉](#草粉-resourcegrass_meal)、[草籽](#草籽-resourcegrass_seed)、[砂砾](#砂砾-resourcegravel)、[蜂蜜](#蜂蜜-resourcehoney)、[蜜谷灵饼](#蜜谷灵饼-resourcehoney_cake)、[蜜铃苗](#蜜铃苗-resourcehoneybell_seed)、[腐殖土](#腐殖土-resourcehumus)、[铁锭](#铁锭-resourceiron_ingot)、[含铁矿石](#含铁矿石-resourceiron_ore)、[复合陆养料](#复合陆养料-resourceland_feed)、[矿质补料](#矿质补料-resourcemineral_feed)、[矿质鳞片](#矿质鳞片-resourcemineral_scale)、[黏液](#黏液-resourcemucus)、[桑叶](#桑叶-resourcemulberry_leaf)、[果桑种苗](#果桑种苗-resourcemulberry_seed)、[木腐菇](#木腐菇-resourcemushroom)、[贝壳](#贝壳-resourcemussel_shell)、[花蜜](#花蜜-resourcenectar)、[营养液](#营养液-resourcenutrient_liquid)、[油饼](#油饼-resourceoil_cake)、[油籽](#油籽-resourceoilseed)、[油籽花种子](#油籽花种子-resourceoilseed_flower_seed)、[富集矿砂](#富集矿砂-resourceore_concentrate)、[珍珠](#珍珠-resourcepearl)、[花粉](#花粉-resourcepollen)、[净水菌毯培养单位](#净水菌毯培养单位-resourcepurifying_mat_culture)、[普通岩石](#普通岩石-resourceraw_stone)、[原木](#原木-resourceraw_wood)、[再生填料](#再生填料-resourcereclaimed_fill)、[芦苇种苗](#芦苇种苗-resourcereed_seed)、[苇秆](#苇秆-resourcereed_stalk)、[精炼油](#精炼油-resourcerefined_oil)、[精炼蜡](#精炼蜡-resourcerefined_wax)、[松脂](#松脂-resourceresin)、[松脂树苗](#松脂树苗-resourceresin_tree_seed)、[稻米](#稻米-resourcerice)、[岩壳片](#岩壳片-resourcerock_shell)、[蜕皮](#蜕皮-resourceshed_skin)、[羊粪肥](#羊粪肥-resourcesheep_manure)、[蚕丝](#蚕丝-resourcesilk)、[炉渣](#炉渣-resourceslag)、[污泥](#污泥-resourcesludge)、[废滤炭](#废滤炭-resourcespent_filter)、[灵液](#灵液-resourcespirit_liquid)、[钢绒](#钢绒-resourcesteel_wool)、[石粉](#石粉-resourcestone_powder)、[秸秆](#秸秆-resourcestraw)、[尾砂](#尾砂-resourcetailings)、[宙道食料](#宙道食料-resourcetime_feed)、[枝条](#枝条-resourcetwig)、[藤球](#藤球-resourcevine_ball)、[污水](#污水-resourcewastewater)、[复合水养料](#复合水养料-resourcewater_feed)、[凝水胶](#凝水胶-resourcewater_gel)、[保水基质](#保水基质-resourcewater_retaining_matrix)、[木屑](#木屑-resourcewood_chip)、[木腐菇菌种](#木腐菇菌种-resourcewood_decay_spawn)、[木板](#木板-resourcewood_plank)
 - **配方与食谱（113）**：[蜜盏蜂·花源份额＋清水](#蜜盏蜂花源份额清水-dietbell_beebase_dietsflower_share)、[蜜盏蜂·酿蜜周期](#蜜盏蜂酿蜜周期-dietbell_beespecial_dietshoney_cycle)、[炭腹虫·牧草清水餐](#炭腹虫牧草清水餐-dietcarbon_belly_bugbase_dietsgrass_water_meal)、[炭腹虫·木屑炭化轮](#炭腹虫木屑炭化轮-dietcarbon_belly_bugspecial_dietsbug_char_chips)、[炭腹虫·树枝炭化轮](#炭腹虫树枝炭化轮-dietcarbon_belly_bugspecial_dietsbug_char_twigs)、[堆肥鼠·牧草清水餐](#堆肥鼠牧草清水餐-dietcompost_mousebase_dietsgrass_water_meal)、[堆肥鼠·秸秆堆肥轮](#堆肥鼠秸秆堆肥轮-dietcompost_mousespecial_dietsmouse_compost_fiber)、[堆肥鼠·残料堆肥轮](#堆肥鼠残料堆肥轮-dietcompost_mousespecial_dietsmouse_compost_residue)、[露壳蜗牛·牧草清水餐](#露壳蜗牛牧草清水餐-dietdew_shell_snailbase_dietsgrass_water_meal)、[露壳蜗牛·灵液采集轮](#露壳蜗牛灵液采集轮-dietdew_shell_snailspecial_dietsdew_round)、[滤藻鲤·藻料餐](#滤藻鲤藻料餐-dietfilter_algae_carpbase_dietsalgae_meal)、[滤藻鲤·高密度藻餐](#滤藻鲤高密度藻餐-dietfilter_algae_carpbase_dietsdense_meal)、[滤藻鲤·水养复合餐](#滤藻鲤水养复合餐-dietfilter_algae_carpbase_dietswater_meal)、[滤藻鲤·谷粒育肥](#滤藻鲤谷粒育肥-dietfilter_algae_carpspecial_dietsgrain_fatten)、[凝胶水母·藻料餐](#凝胶水母藻料餐-dietgel_jellyfishbase_dietsalgae_meal)、[凝胶水母·高密度藻餐](#凝胶水母高密度藻餐-dietgel_jellyfishbase_dietsdense_meal)、[凝胶水母·灵液凝胶轮](#凝胶水母灵液凝胶轮-dietgel_jellyfishspecial_dietsgel_spirit_round)、[凝胶水母·采胶轮投料](#凝胶水母采胶轮投料-dietgel_jellyfishspecial_dietsgel_water_round)、[砾甲蜗牛·藻料清水餐](#砾甲蜗牛藻料清水餐-dietgravel_shell_snailbase_dietsalgae_water_meal)、[砾甲蜗牛·岩壳成型轮](#砾甲蜗牛岩壳成型轮-dietgravel_shell_snailspecial_dietsform_rock_shell)、[叶丝蚕·桑叶清水餐](#叶丝蚕桑叶清水餐-dietleaf_silkwormbase_dietsmulberry_meal)、[叶丝蚕·产丝轮](#叶丝蚕产丝轮-dietleaf_silkwormspecial_dietssilk_round)、[矿鳞蜥·牧草清水餐](#矿鳞蜥牧草清水餐-dietmineral_scale_lizardbase_dietsgrass_water_meal)、[矿鳞蜥·陆养复合餐](#矿鳞蜥陆养复合餐-dietmineral_scale_lizardbase_dietsland_meal)、[矿鳞蜥·养鳞轮](#矿鳞蜥养鳞轮-dietmineral_scale_lizardspecial_dietsscale_round)、[油鳍鱼·藻料餐](#油鳍鱼藻料餐-dietoilfin_fishbase_dietsalgae_meal)、[油鳍鱼·水养复合餐](#油鳍鱼水养复合餐-dietoilfin_fishbase_dietswater_meal)、[油鳍鱼·取油轮投料](#油鳍鱼取油轮投料-dietoilfin_fishspecial_dietsoilfin_oil_round)、[珍珠蚌·藻料餐](#珍珠蚌藻料餐-dietpearl_musselbase_dietsalgae_meal)、[珍珠蚌·育珠轮投料](#珍珠蚌育珠轮投料-dietpearl_musselspecial_dietspearl_powder_round)、[珍珠蚌·灵液育珠轮](#珍珠蚌灵液育珠轮-dietpearl_musselspecial_dietspearl_spirit_round)、[净水菌毯·培养清水](#净水菌毯培养清水-dietpurifying_matbase_dietsculture_water)、[净水菌毯·菌毯净水运行](#净水菌毯菌毯净水运行-dietpurifying_matspecial_dietsbio_purify)、[净水菌毯·营养液回收运行](#净水菌毯营养液回收运行-dietpurifying_matspecial_dietsrecover_nutrients)、[礁骨珊瑚·藻料餐](#礁骨珊瑚藻料餐-dietreef_coralbase_dietsalgae_meal)、[礁骨珊瑚·采礁轮投料](#礁骨珊瑚采礁轮投料-dietreef_coralspecial_dietscoral_mineral_round)、[岩腹兽·牧草清水餐](#岩腹兽牧草清水餐-dietrock_belly_beastbase_dietsgrass_water_meal)、[岩腹兽·陆养复合餐](#岩腹兽陆养复合餐-dietrock_belly_beastbase_dietsland_meal)、[岩腹兽·生物选矿轮](#岩腹兽生物选矿轮-dietrock_belly_beastspecial_dietsconcentrate_ore)、[啮岩鼹·菌菇清水餐](#啮岩鼹菌菇清水餐-dietrock_molebase_dietsfungus_meal)、[啮岩鼹·破碎矿石轮](#啮岩鼹破碎矿石轮-dietrock_molespecial_dietsbreak_ore)、[啮岩鼹·破碎石材轮](#啮岩鼹破碎石材轮-dietrock_molespecial_dietsbreak_stone)、[净泥鳅·藻料餐](#净泥鳅藻料餐-dietsilt_loachbase_dietsalgae_meal)、[净泥鳅·浮萍替代餐](#净泥鳅浮萍替代餐-dietsilt_loachbase_dietsduckweed_meal)、[钢绵羊·谷粒餐](#钢绵羊谷粒餐-dietsteel_sheepbase_dietsgrain_meal)、[钢绵羊·牧草餐](#钢绵羊牧草餐-dietsteel_sheepbase_dietsgrass_meal)、[钢绵羊·陆养复合餐](#钢绵羊陆养复合餐-dietsteel_sheepbase_dietsland_meal)、[钢绵羊·含铁补料](#钢绵羊含铁补料-dietsteel_sheepspecial_dietsiron_supplement)、[钢绵羊·矿质补料餐](#钢绵羊矿质补料餐-dietsteel_sheepspecial_dietsmineral_supplement)、[藻露羹熬制](#藻露羹熬制-recipealgae_dew_soup)、[珊瑚复合石板](#珊瑚复合石板-recipeassemble_coral_panel)、[黏液复合石板](#黏液复合石板-recipeassemble_mucus_panel)、[鳞甲复合板](#鳞甲复合板-recipeassemble_scale_panel)、[岩壳石板](#岩壳石板-recipeassemble_shell_panel)、[复合石板组装](#复合石板组装-recipeassemble_stone_panel)、[菌毯净水](#菌毯净水-recipebio_purify)、[鱼粉陆养料](#鱼粉陆养料-recipeblend_fish_land_feed)、[鱼粉水养料](#鱼粉水养料-recipeblend_fish_water_feed)、[陆养料调配](#陆养料调配-recipeblend_land_feed)、[水养料调配](#水养料调配-recipeblend_water_feed)、[破碎矿石](#破碎矿石-recipebreak_ore)、[破碎石材](#破碎石材-recipebreak_stone)、[木屑生物炭化](#木屑生物炭化-recipebug_char_chips)、[树枝生物炭化](#树枝生物炭化-recipebug_char_twigs)、[苇秆炭化](#苇秆炭化-recipechar_reed)、[枝条炭化](#枝条炭化-recipechar_twigs)、[木屑堆肥](#木屑堆肥-recipecompost_chips)、[鱼粪堆肥](#鱼粪堆肥-recipecompost_fish_manure)、[牧草堆肥](#牧草堆肥-recipecompost_grass)、[油饼堆肥](#油饼堆肥-recipecompost_oil_cake)、[苇秆堆肥](#苇秆堆肥-recipecompost_reed)、[羊粪堆肥](#羊粪堆肥-recipecompost_sheep_manure)、[污泥堆肥](#污泥堆肥-recipecompost_sludge)、[废滤炭堆肥](#废滤炭堆肥-recipecompost_spent_filter)、[秸秆堆肥](#秸秆堆肥-recipecompost_straw)、[枝条堆肥](#枝条堆肥-recipecompost_twigs)、[生物选矿](#生物选矿-recipeconcentrate_ore)、[藻料培养](#藻料培养-recipeculture_algae)、[高密度藻培养](#高密度藻培养-recipedense_algae_culture)、[鱼肉制粉](#鱼肉制粉-recipedry_fish_meal)、[岩壳成型](#岩壳成型-recipeform_rock_shell)、[菌鱼灵膳烹制](#菌鱼灵膳烹制-recipefungus_fish_meal)、[珊瑚制粉](#珊瑚制粉-recipegrind_coral)、[壳石制粉](#壳石制粉-recipegrind_shell)、[蜜谷灵饼烘焙](#蜜谷灵饼烘焙-recipehoney_grain_cake)、[蜜炼金食炼制](#蜜炼金食炼制-recipehoney_mineral_food)、[多孔滤材](#多孔滤材-recipemake_coral_filter_media)、[炭砂滤料制作](#炭砂滤料制作-recipemake_filter_media)、[丝质滤材](#丝质滤材-recipemake_silk_filter_media)、[make_vine_ball](#make_vine_ball-recipemake_vine_ball)、[保水基质](#保水基质-recipemake_water_retaining_matrix)、[浮萍制粉](#浮萍制粉-recipemill_duckweed)、[谷粉研磨](#谷粉研磨-recipemill_grain)、[草粉研磨](#草粉研磨-recipemill_grass)、[稻米磨粉](#稻米磨粉-recipemill_rice)、[矿质补料调配](#矿质补料调配-recipemineral_feed)、[秸秆翻肥](#秸秆翻肥-recipemouse_compost_fiber)、[残料翻肥](#残料翻肥-recipemouse_compost_residue)、[蜜油火膏熬制](#蜜油火膏熬制-recipeoil_honey_paste)、[珍珠精滤](#珍珠精滤-recipepearl_polish_water)、[油籽榨油](#油籽榨油-recipepress_oilseed)、[再生填料回收](#再生填料回收-reciperecover_fill)、[营养液回收](#营养液回收-reciperecover_nutrients)、[油脂精炼](#油脂精炼-reciperefine_oil)、[蜂蜡精炼](#蜂蜡精炼-reciperefine_wax)、[锯切木板](#锯切木板-recipesaw_planks)、[枝条粉碎](#枝条粉碎-recipeshred_twigs)、[原木粉碎](#原木粉碎-recipeshred_wood)、[泥料处理](#泥料处理-recipesilt_process)、[木炭冶炼](#木炭冶炼-recipesmelt_charcoal)、[富集矿冶炼](#富集矿冶炼-recipesmelt_concentrate)、[松脂冶炼](#松脂冶炼-recipesmelt_resin)、[腐土菌丸炼制](#腐土菌丸炼制-recipesoil_spirit_pill)
 - **研究与科技（13）**：[饲料与蜡油精制](#饲料与蜡油精制-researchadvanced_feed_oil_wax)、[水产精养](#水产精养-researchaquatic_intensive_care)、[灵食初制](#灵食初制-researchbasic_spirit_cooking)、[蜂群协作](#蜂群协作-researchbeekeeping)、[菌毯净化](#菌毯净化-researchbiofiltration)、[复合灵食](#复合灵食-researchcomposite_spirit_food)、[农产初加工](#农产初加工-researchfarm_preparation)、[田间自动维护](#田间自动维护-researchfield_maintenance)、[花源栽培](#花源栽培-researchflower_cultivation)、[矿质材料工艺](#矿质材料工艺-researchmineral_materials)、[生物选矿](#生物选矿-researchore_concentration)、[岩料破碎](#岩料破碎-researchrock_handling)、[水与藻料回流](#水与藻料回流-researchwater_recirculation)
@@ -676,7 +676,7 @@
 | 接纳物种 | 滤藻鲤 |
 | 建材替代 | 普通岩石部分可用复合石板1:1或再生填料2:1整体替代（2份石） |
 
-关联条目：接纳物种：[滤藻鲤](#滤藻鲤-speciesfilter_algae_carp)
+关联条目：接纳物种：[滤藻鲤](#滤藻鲤-speciesfilter_algae_carp)；可入驻后勤蛊：[丰养蛊](#丰养蛊-guproduct_yield_gu)
 
 相关规则：[建材替代](#建材替代-rulebuild_substitute)
 
@@ -744,7 +744,7 @@
 | 接纳物种 | 礁骨珊瑚 |
 | 建材替代 | 普通岩石部分可用复合石板1:1或再生填料2:1整体替代（4份石） |
 
-关联条目：接纳物种：[礁骨珊瑚](#礁骨珊瑚-speciesreef_coral)；解锁研究：[矿质材料工艺](#矿质材料工艺-researchmineral_materials)
+关联条目：接纳物种：[礁骨珊瑚](#礁骨珊瑚-speciesreef_coral)；可入驻后勤蛊：[丰养蛊](#丰养蛊-guproduct_yield_gu)；解锁研究：[矿质材料工艺](#矿质材料工艺-researchmineral_materials)
 
 相关规则：[建材替代](#建材替代-rulebuild_substitute)
 
@@ -793,6 +793,8 @@
 | 占地/地形 | 1×1格；地形：陆地 |
 | 设施类型 | 加工设施 |
 | 拆除 | 1AP；需设施空闲；不返还材料与元石 |
+
+关联条目：可入驻后勤蛊：[节粮蛊](#节粮蛊-gufeed_saving_gu)
 
 ### 田间维护站 `facility:field_service_station`
 
@@ -843,7 +845,7 @@
 | 接纳物种 | 凝胶水母 |
 | 建材替代 | 普通岩石部分可用复合石板1:1或再生填料2:1整体替代（3份石） |
 
-关联条目：接纳物种：[凝胶水母](#凝胶水母-speciesgel_jellyfish)；解锁研究：[水与藻料回流](#水与藻料回流-researchwater_recirculation)
+关联条目：接纳物种：[凝胶水母](#凝胶水母-speciesgel_jellyfish)；可入驻后勤蛊：[丰养蛊](#丰养蛊-guproduct_yield_gu)；解锁研究：[水与藻料回流](#水与藻料回流-researchwater_recirculation)
 
 相关规则：[建材替代](#建材替代-rulebuild_substitute)
 
@@ -919,7 +921,7 @@
 | 接纳物种 | 油鳍鱼 |
 | 建材替代 | 普通岩石部分可用复合石板1:1或再生填料2:1整体替代（3份石） |
 
-关联条目：接纳物种：[油鳍鱼](#油鳍鱼-speciesoilfin_fish)；解锁研究：[农产初加工](#农产初加工-researchfarm_preparation)
+关联条目：接纳物种：[油鳍鱼](#油鳍鱼-speciesoilfin_fish)；可入驻后勤蛊：[丰养蛊](#丰养蛊-guproduct_yield_gu)；解锁研究：[农产初加工](#农产初加工-researchfarm_preparation)
 
 相关规则：[建材替代](#建材替代-rulebuild_substitute)
 
@@ -958,7 +960,7 @@
 | 接纳物种 | 珍珠蚌 |
 | 建材替代 | 普通岩石部分可用复合石板1:1或再生填料2:1整体替代（3份石） |
 
-关联条目：接纳物种：[珍珠蚌](#珍珠蚌-speciespearl_mussel)；解锁研究：[水与藻料回流](#水与藻料回流-researchwater_recirculation)
+关联条目：接纳物种：[珍珠蚌](#珍珠蚌-speciespearl_mussel)；可入驻后勤蛊：[丰养蛊](#丰养蛊-guproduct_yield_gu)；解锁研究：[水与藻料回流](#水与藻料回流-researchwater_recirculation)
 
 相关规则：[建材替代](#建材替代-rulebuild_substitute)
 
@@ -1051,7 +1053,7 @@
 | 接纳物种 | 矿鳞蜥 |
 | 建材替代 | 普通岩石部分可用复合石板1:1或再生填料2:1整体替代（4份石） |
 
-关联条目：接纳物种：[矿鳞蜥](#矿鳞蜥-speciesmineral_scale_lizard)；解锁研究：[矿质材料工艺](#矿质材料工艺-researchmineral_materials)
+关联条目：接纳物种：[矿鳞蜥](#矿鳞蜥-speciesmineral_scale_lizard)；可入驻后勤蛊：[丰养蛊](#丰养蛊-guproduct_yield_gu)；解锁研究：[矿质材料工艺](#矿质材料工艺-researchmineral_materials)
 
 相关规则：[建材替代](#建材替代-rulebuild_substitute)
 
@@ -1088,7 +1090,7 @@
 | 拆除 | 1AP；需设施空闲；不返还材料与元石 |
 | 接纳物种 | 叶丝蚕 |
 
-关联条目：接纳物种：[叶丝蚕](#叶丝蚕-speciesleaf_silkworm)
+关联条目：接纳物种：[叶丝蚕](#叶丝蚕-speciesleaf_silkworm)；可入驻后勤蛊：[丰养蛊](#丰养蛊-guproduct_yield_gu)
 
 ### 泥料处理台 `facility:silt_processing_station`
 
@@ -1165,7 +1167,7 @@
 | 接纳物种 | 露壳蜗牛 |
 | 建材替代 | 普通岩石部分可用复合石板1:1或再生填料2:1整体替代（3份石） |
 
-关联条目：接纳物种：[露壳蜗牛](#露壳蜗牛-speciesdew_shell_snail)
+关联条目：接纳物种：[露壳蜗牛](#露壳蜗牛-speciesdew_shell_snail)；可入驻后勤蛊：[丰养蛊](#丰养蛊-guproduct_yield_gu)
 
 相关规则：[建材替代](#建材替代-rulebuild_substitute)
 
@@ -1225,12 +1227,12 @@
 | 接纳物种 | 钢绵羊 |
 | 建材替代 | 普通岩石部分可用复合石板1:1或再生填料2:1整体替代（2份石） |
 
-关联条目：接纳物种：[钢绵羊](#钢绵羊-speciessteel_sheep)
+关联条目：接纳物种：[钢绵羊](#钢绵羊-speciessteel_sheep)；可入驻后勤蛊：[丰养蛊](#丰养蛊-guproduct_yield_gu)
 
 相关规则：[建材替代](#建材替代-rulebuild_substitute)
 
 
-## 后勤蛊与协同（9）
+## 后勤蛊与协同（11）
 
 ### 明光蛊 `gu:bright_gu`
 
@@ -1269,6 +1271,24 @@
 
 相关规则：[后勤蛊部署、维护与生产协同](#后勤蛊部署维护与生产协同-rulelogistics)
 
+### 节粮蛊 `gu:feed_saving_gu`
+
+基础食物消耗折扣（按次累计取整）
+
+| 字段 | 内容 |
+|---|---|
+| 转数 | 1转原型；实例支持一至五转，升转由上游负责 |
+| 获取 | 每档一次试用配给共15只：饭袋草/催生/锁水/节肥/安抚/驭兽各2只，明光/智道研究/宙道研究各1只；尚未连接上游获取与成长 |
+| 部署 | 入驻兼容设施：供食槽 |
+| 能力 | 基础食物−25%（饮水不计，按生物×资源累计取整），每单位服务4空间 |
+| 维护 | 启用时1元石/游戏日；闲置仍收费，休眠/未部署免维护 |
+| 特殊食料 | 无（每个成功付费服务日；与元石原子扣除） |
+| 时点 | 部署/撤回各1AP；启用次日生效；停用立即取消后续效果，已付不退；运行/待收任务锁定实例 |
+
+关联条目：兼容设施：[供食槽](#供食槽-facilityfeed_trough)
+
+相关规则：[后勤蛊部署、维护与生产协同](#后勤蛊部署维护与生产协同-rulelogistics)
+
 ### 节肥蛊 `gu:fert_gu`
 
 定向肥力减耗
@@ -1302,6 +1322,24 @@
 | 时点 | 部署/撤回各1AP；启用次日生效；停用立即取消后续效果，已付不退；运行/待收任务锁定实例 |
 
 关联条目：兼容设施：[田间维护站](#田间维护站-facilityfield_service_station)
+
+相关规则：[后勤蛊部署、维护与生产协同](#后勤蛊部署维护与生产协同-rulelogistics)
+
+### 丰养蛊 `gu:product_yield_gu`
+
+主产物期望增产（整数必得＋小数随机）
+
+| 字段 | 内容 |
+|---|---|
+| 转数 | 1转原型；实例支持一至五转，升转由上游负责 |
+| 获取 | 每档一次试用配给共15只：饭袋草/催生/锁水/节肥/安抚/驭兽各2只，明光/智道研究/宙道研究各1只；尚未连接上游获取与成长 |
+| 部署 | 入驻兼容设施：采毛台、蚕架、集露台、养鳞台、捕鲤台、取油台、采珠台、采胶台、采礁台 |
+| 能力 | 主产物期望＋0.25（只登记主产物，整数必得＋小数随机一次），每单位服务4空间 |
+| 维护 | 启用时1元石/游戏日；闲置仍收费，休眠/未部署免维护 |
+| 特殊食料 | 无（每个成功付费服务日；与元石原子扣除） |
+| 时点 | 部署/撤回各1AP；启用次日生效；停用立即取消后续效果，已付不退；运行/待收任务锁定实例 |
+
+关联条目：兼容设施：[采毛台](#采毛台-facilitywool_station)；兼容设施：[蚕架](#蚕架-facilitysilkworm_rack)；兼容设施：[集露台](#集露台-facilityspirit_liquid_collector)；兼容设施：[养鳞台](#养鳞台-facilityscale_station)；兼容设施：[捕鲤台](#捕鲤台-facilitycarp_harvest_station)；兼容设施：[取油台](#取油台-facilityoilfish_harvest_station)；兼容设施：[采珠台](#采珠台-facilitypearl_station)；兼容设施：[采胶台](#采胶台-facilitygel_station)；兼容设施：[采礁台](#采礁台-facilitycoral_station)
 
 相关规则：[后勤蛊部署、维护与生产协同](#后勤蛊部署维护与生产协同-rulelogistics)
 

@@ -13,7 +13,7 @@ class LogisticsFoundation(unittest.TestCase):
         with self.assertRaises(ValueError): validate(self.source)
     def test_template_instance_boundary(self):
         cfg=self.source['logistics']
-        self.assertEqual(len(cfg['definitions']),9)
+        self.assertEqual(len(cfg['definitions']),11)
         self.assertEqual(len(cfg['provision']),15)
         self.assertEqual(cfg['provision'][:6],
             ['rice_bag_gu','rice_bag_gu','bright_gu','growth_gu','wisdom_gu','time_gu'])

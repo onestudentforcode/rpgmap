@@ -65,7 +65,7 @@ def providers(source):
     # ranch structures are dual-medium; fish_pond is retired from new builds.
     water_facilities = {'fish_pond', 'carp_harvest_station', 'oilfish_harvest_station', 'pearl_station',
                         'gel_station', 'coral_station', 'silt_processing_station', 'aquatic_crop_station'}
-    dual_medium = {'pen', 'feed_trough', 'small_bed', 'medium_bed', 'care_table'}
+    dual_medium = {'pen', 'feed_trough', 'small_bed', 'medium_bed', 'care_table', 'soothing_station'}
     for ident, facility in facilities.items():
         require(facility.get('terrain', 'land') in ('land', 'water'), f'{ident}: unknown build terrain')
         require(facility.get('terrain', 'land') != 'water' or ident in water_facilities,

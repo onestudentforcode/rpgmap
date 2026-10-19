@@ -6,6 +6,7 @@ extends RefCounted
 ## the enclosure, body-material rounds in the intensive zone, yard work in the
 ## work zone — and the ranch species never enter the per-day V2 habitat path.
 const Scalars := preload("res://scripts/farming/v1/v1_world_state.gd")
+const Draw := preload("res://scripts/farming/p8/p102_rooms.gd")
 
 const SPECIES := ["steel_sheep", "rock_mole", "rock_belly_beast", "carbon_belly_bug", "leaf_silkworm",
 	"dew_shell_snail", "mineral_scale_lizard", "compost_mouse", "gravel_shell_snail",
@@ -25,7 +26,7 @@ const FLOOR_FACILITIES := [PEN_ID, "rock_breaking_yard", "ore_sorting_yard", "ca
 const ANIMAL_KEYS := ["uid", "species_id", "stage", "growth", "mode", "zone_uid", "bed_uid", "bed_slot",
 	"pending", "diet_id", "pattern", "priority", "fatigue", "ban_until", "qualified_until",
 	"served_once", "natural", "breed", "death_streak", "account",
-	"anchor", "miss_streak", "bad_water_streak"]
+	"anchor", "miss_streak", "bad_water_streak", "saving"]
 
 ## Structural ranch facilities never create V2 habitat rows: the pen, the five
 ## species yards and the four intensive stations. One registry shared by the
@@ -314,7 +315,7 @@ static func _intified_animal(row: Dictionary) -> Dictionary:
 		pending[String(key)] = int(value) if String(key) in ["zone_uid", "bed_uid", "bed_slot"] else String(value)
 	var account: Dictionary = row["account"]
 	return {"anchor": String(row.get("anchor", "")), "miss_streak": int(row.get("miss_streak", 0)),
-		"bad_water_streak": int(row.get("bad_water_streak", 0)),
+		"bad_water_streak": int(row.get("bad_water_streak", 0)), "saving": row.get("saving", {}).duplicate(),
 		"uid": int(row["uid"]), "species_id": String(row["species_id"]), "stage": String(row["stage"]),
 		"growth": int(row["growth"]), "mode": String(row["mode"]), "zone_uid": int(row["zone_uid"]),
 		"bed_uid": int(row["bed_uid"]), "bed_slot": int(row["bed_slot"]), "pending": pending,
@@ -323,7 +324,8 @@ static func _intified_animal(row: Dictionary) -> Dictionary:
 		"served_once": bool(row["served_once"]),
 		"natural": {"round": int(row["natural"]["round"]), "units": int(row["natural"]["units"]),
 			"pending": bool(row["natural"]["pending"]), "paid": bool(row["natural"]["paid"]),
-			"diet_id": String(row["natural"].get("diet_id", "")), "paid_diet": String(row["natural"].get("paid_diet", ""))},
+			"diet_id": String(row["natural"].get("diet_id", "")), "paid_diet": String(row["natural"].get("paid_diet", "")),
+			"boost": int(row["natural"].get("boost", 0))},
 		"breed": {"round": int(row["breed"]["round"]), "units": int(row["breed"]["units"]), "pending": bool(row["breed"]["pending"])},
 		"death_streak": int(row["death_streak"]),
 		"account": {"w": int(account["w"]), "r": int(account["r"]), "fails": int(account["fails"])}}
@@ -767,10 +769,10 @@ func _new_animal(uid: int, species_id: String, zone_uid: int, bed_uid: int, bed_
 		"zone_uid": zone_uid, "bed_uid": bed_uid, "bed_slot": bed_slot,
 		"pending": {}, "diet_id": diet_id, "pattern": "standard", "priority": 0,
 		"fatigue": 0, "ban_until": -1, "qualified_until": -1, "served_once": false,
-		"natural": {"round": 0, "units": 0, "pending": false, "paid": false, "diet_id": natural_diet, "paid_diet": ""},
+		"natural": {"round": 0, "units": 0, "pending": false, "paid": false, "diet_id": natural_diet, "paid_diet": "", "boost": 0},
 		"breed": {"round": 0, "units": 0, "pending": false},
 		"death_streak": 0, "account": {"w": 0, "r": 0, "fails": 0},
-		"anchor": anchor, "miss_streak": 0, "bad_water_streak": 0}
+		"anchor": anchor, "miss_streak": 0, "bad_water_streak": 0, "saving": {}}
 
 # --- work yards ---------------------------------------------------------------
 
@@ -926,9 +928,32 @@ func claim_natural(facility_uid: int) -> Dictionary:
 		natural["pending"] = false
 		natural["paid"] = false
 		natural["paid_diet"] = ""
+		natural["boost"] = 0
+	var bonuses := {}
+	for uid in payers:
+		var payer: Dictionary = animal(int(uid))
+		var main_item := String(natural_config(station_species).get("main", ""))
+		var boosted := int(payer["natural"].get("boost", 0))
+		if main_item.is_empty() or boosted <= 0 or capture:
+			continue
+		var round_target := int(natural_config(station_species)["units"]) - int(payer["natural"].get("credit", 0))
+		if round_target <= 0:
+			continue
+		var expected := int(natural_config(station_species)["outputs"].get(main_item, 0)) * boosted
+		var extra := expected / (100 * round_target)
+		if expected % (100 * round_target) > 0:
+			var roll := Draw.draw(int(world.services.state["random_seed"]), "yield:%d" % int(uid),
+				int(payer["natural"]["round"]), "main") % (100 * round_target)
+			if roll < expected % (100 * round_target):
+				extra += 1
+		if extra > 0:
+			bonuses[int(uid)] = {"item": main_item, "extra": extra}
+			outputs[main_item] = int(outputs.get(main_item, 0)) + extra
 	for item in outputs:
 		world.inventory.add(String(item), int(outputs[item]))
 	world._record_flow(outputs, {}, "精养畜产领取")
+	if not bonuses.is_empty():
+		_record("natural", "yield_bonus", {"station": facility_uid, "bonuses": bonuses.duplicate(true)})
 	if not captures.is_empty():
 		# Capture rounds consume the animal in the same transaction as the
 		# payout; pending staged moves die with it.
@@ -1266,12 +1291,52 @@ func _end_window(row: Dictionary, record: Dictionary, t: int, mutate: bool, shad
 			record["reason"] = "窗口中途结构或床位失效"
 		_fail_window(row, String(record["reason"]), t, account, mutate, out)
 		return
-	if mutate:
+	# Feed saving (§16.2.10): an active feeding gu discounts the staple items
+	# (never the drinking water) through a per-animal per-item remainder so a
+	# 25% cut on one-unit meals still lands every fourth meal.
+	var saving_source: Dictionary = world.services.gu_service(row, "feed_saving", t)
+	var actual := {}
+	var saved := {}
+	if not saving_source.is_empty():
+		var percent := int(saving_source["value"])
 		for item in scaled:
-			world.inventory.remove(String(item), int(scaled[item]))
-		world._record_flow({}, scaled, "畜牧维持")
+			if String(item) == "clean_water":
+				actual[String(item)] = int(scaled[item])
+				continue
+			var x := int(scaled[item]) * percent + int(row["saving"].get(String(item), 0))
+			var cut := x / 100
+			if cut > int(scaled[item]):
+				cut = int(scaled[item])
+			actual[String(item)] = int(scaled[item]) - cut
+			if cut > 0:
+				saved[String(item)] = cut
+			if mutate:
+				row["saving"][String(item)] = x % 100
 	else:
-		_shadow_spend(scaled, shadow)
+		for item in scaled:
+			actual[String(item)] = int(scaled[item])
+	if mutate:
+		for item in actual:
+			world.inventory.remove(String(item), int(actual[String(item)]))
+		world._record_flow({}, actual, "畜牧维持")
+		if not saved.is_empty():
+			_record("feed", "saving", {"animal": int(row["uid"]), "t": t, "saved": saved.duplicate(),
+				"source": saving_source.duplicate()})
+	else:
+		var saving_source2: Dictionary = world.services.gu_service(row, "feed_saving", t)
+		var preview := {}
+		if not saving_source2.is_empty():
+			for item in scaled:
+				if String(item) == "clean_water":
+					preview[String(item)] = int(scaled[item])
+					continue
+				var x2 := int(scaled[item]) * int(saving_source2["value"]) + int(row["saving"].get(String(item), 0))
+				var cut2 := mini(x2 / 100, int(scaled[item]))
+				preview[String(item)] = int(scaled[item]) - cut2
+		else:
+			for item in scaled:
+				preview[String(item)] = int(scaled[item])
+		_shadow_spend(preview, shadow)
 	world.services.mark_maintained(int(row["uid"]),int(record["zone_uid"]),t)
 	row["served_once"] = true
 	row["qualified_until"] = t + 8
@@ -1427,6 +1492,12 @@ func _intensive_care(row: Dictionary, t: int, mutate: bool, shadow: Dictionary, 
 	var gain := efficiency * int(world.services.config["precision"]) / 100
 	var before := int(natural["units"])
 	natural["units"] = mini(target, before + gain)
+	# Yield boost (§16.2.10): only the points actually filled while a valid
+	# product gu served this unit accumulate; the payout lands at the claim.
+	var yield_source: Dictionary = world.services.gu_service(row, "product_yield", t)
+	var filled := int(natural["units"]) - before
+	if not yield_source.is_empty() and filled > 0:
+		natural["boost"] = int(natural.get("boost", 0)) + filled * (int(yield_source["value"]) - 100)
 	world.services.record("natural_progress", {"identity": "%d:%d" % [int(row["uid"]), int(natural["round"])],
 		"animal": int(row["uid"]), "before": before, "points": int(natural["units"]) - before, "after": int(natural["units"]),
 		"target": target, "t": t, "efficiency": efficiency, "station": station_uid, "species": sid})
@@ -1930,8 +2001,13 @@ static func normalize(value, snapshot: Dictionary, catalog) -> Dictionary:
 			fulltime[key] = int(row["uid"])
 		elif String(row["mode"]) != "work" and not bool(species_cfg.get("fixed", false)) and int(row["bed_slot"]) != 0:
 			return Scalars.fail("动物床位序号非法")
-		if not Scalars.exact(row["natural"], ["round", "units", "pending", "paid", "diet_id", "paid_diet"]) or not Scalars.exact(row["breed"], ["round", "units", "pending"]):
+		if not Scalars.exact(row["natural"], ["round", "units", "pending", "paid", "diet_id", "paid_diet", "boost"]) or not Scalars.exact(row["breed"], ["round", "units", "pending"]):
 			return Scalars.fail("动物周期结构非法")
+		if not row["saving"] is Dictionary:
+			return Scalars.fail("节粮余数字典非法")
+		for item in row["saving"]:
+			if not Scalars.whole(row["saving"][item], 0, 99):
+				return Scalars.fail("节粮余数非法")
 		if not row["natural"]["pending"] is bool or not row["natural"]["paid"] is bool or not row["breed"]["pending"] is bool:
 			return Scalars.fail("动物周期标记非法")
 		if not row["natural"]["diet_id"] is String:

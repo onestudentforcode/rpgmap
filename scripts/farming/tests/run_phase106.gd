@@ -37,6 +37,8 @@ func run() -> void:
 	_industry(_world())
 	_spirit_variants(_world())
 	_loach_chain(_world())
+	_shared_gu(_world())
+	_soothe_water(_world())
 	print("P106 MODEL %s (%d)" % ["OK" if failures.is_empty() else "FAIL", checks])
 	quit(0 if failures.is_empty() else 1)
 
@@ -691,3 +693,103 @@ func _loach_chain(w: World) -> void:
 	check(purified == 1, "one purification per finished batch")
 	check(int(body["quality"]) > quality_before or purified == 1, "body improved by the batch")
 
+
+# --- stage e: the shared gu -----------------------------------------------------
+
+func _instance_of(w: World, definition_id: String) -> String:
+	for row in w.logistics.state["instances"]:
+		if String(row["definition_id"]) == definition_id and int(row["host_uid"]) == 0:
+			return String(row["instance_id"])
+	return ""
+
+func _shared_gu(w: World) -> void:
+	var zones := _water_module(w, "water_production", "carp_harvest_station")
+	# The market path: both new gu cost 32 stones and never ride the provision.
+	var stones := w.primeval_stones
+	var bought: Dictionary = w.logistics.buy_gu("product_yield_gu")
+	check(bought["ok"] and w.primeval_stones == stones - 32, "product gu bought at 32 stones")
+	var feed_bought: Dictionary = w.logistics.buy_gu("feed_saving_gu")
+	check(feed_bought["ok"], "feed gu bought")
+	check(w.logistics.provision()["ok"], "trial provision still grants")
+	var soothe_id := _instance_of(w, "soothe_gu")
+	check(not soothe_id.is_empty(), "provision carries a soothe trial")
+	# Feed saving on the nursery trough: four one-unit meals pay 1,1,1,0.
+	var trough := 0
+	for uid in w.facilities:
+		if String(w.facilities[uid]["facility_id"]) == "feed_trough" and Vector2i(int(w.facilities[uid]["origin"][0]), int(w.facilities[uid]["origin"][1])) == Vector2i(2, 16):
+			trough = int(uid)
+	check(w.logistics.deploy(String(feed_bought["instance_id"]), Vector2i(-1, -1), trough)["ok"], "feed gu deployed on the trough")
+	# deploy() enables the instance effective next day.
+	w.end_day()
+	check(w.ranch.purchase(zones["nursery"], "filter_algae_carp", 1)["ok"], "buy the saving carp")
+	for _day in range(2):
+		w.end_day()
+	var algae := w.inventory.count("algae_feed")
+	for _day in range(4):
+		w.end_day()
+	check(w.inventory.count("algae_feed") == algae - 3, "four meals pay three with the feed gu")
+	var saving_events := 0
+	for entry in receipts:
+		if entry.get("kind") == "ranch:feed" and entry.get("stage") == "saving":
+			saving_events += 1
+	check(saving_events >= 1, "feed saving receipts recorded")
+	# Yield boost: the product gu on the carp station boosts only the main
+	# product, with the remainder drawn once at the claim.
+	var adults: Array = w.ranch.state["animals"].filter(func(a): return String(a["stage"]) == "adult")
+	check(adults.size() == 1, "saving carp adult")
+	var station_uid := 0
+	for uid in w.facilities:
+		if String(w.facilities[uid]["facility_id"]) == "carp_harvest_station":
+			station_uid = int(uid)
+	check(w.logistics.deploy(String(bought["instance_id"]), Vector2i(-1, -1), station_uid)["ok"], "product gu deployed on the station")
+	var bed: Array = w.ranch.free_bed_slots(w.ranch.zone(zones["pool"]), "small")
+	check(w.ranch.submit({"assign": {int(adults[0]["uid"]): {"mode": "water_production", "zone_uid": zones["pool"],
+		"bed_uid": int(bed[0]["uid"]), "bed_slot": int(bed[0]["slot"])}}})["ok"], "saving carp to the pool")
+	for _day in range(4):
+		w.end_day()
+	var carp: Dictionary = w.ranch.animal(int(adults[0]["uid"]))
+	check(bool(carp["natural"]["pending"]) and int(carp["natural"]["boost"]) == 1200 * 25, "full coverage banks the boost")
+	var manure := w.inventory.count("fish_manure")
+	var claim: Dictionary = w.ranch.claim_natural(station_uid)
+	check(claim["ok"] and int(claim["captures"]) == 1, "boosted capture claim")
+	check(w.inventory.count("fish_manure") == manure + 1, "the byproduct never boosts")
+	var draw := preload("res://scripts/farming/p8/p102_rooms.gd").draw(int(w.services.state["random_seed"]),
+		"yield:%d" % int(adults[0]["uid"]), 0, "main") % (100 * 1200)
+	var expected_extra := 1 if draw < 3 * 1200 * 25 % (100 * 1200) else 0
+	if 3 * 1200 * 25 < 100 * 1200:
+		expected_extra = (3 * 1200 * 25 / (100 * 1200)) + (1 if draw < 3 * 1200 * 25 % (100 * 1200) else 0)
+	check(int(claim["items"].get("fish_meat", 0)) == 3 + expected_extra, "main product pays base plus the drawn boost")
+	# Capability tags: the provisioned soothe gu serves a WATER enclosure from
+	# a soothing station built on the fence itself.
+	check(w.build_facility(Vector2i(8, 16), "soothing_station")["ok"], "soothing station builds on water")
+	var soothe_host := 0
+	for uid in w.facilities:
+		if String(w.facilities[uid]["facility_id"]) == "soothing_station":
+			soothe_host = int(uid)
+	check(w.logistics.deploy(soothe_id, Vector2i(-1, -1), soothe_host)["ok"], "soothe gu deployed on the water host")
+	w.end_day()
+
+func _soothe_water(w: World) -> void:
+	# Capability tags (§16.2.10): the same soothe gu instance serves a water
+	# enclosure from a soothing station standing on the fence.
+	var zones := _water_module(w, "water_enclosure")
+	check(w.build_facility(Vector2i(8, 16), "soothing_station")["ok"], "soothing station builds on the fence")
+	check(w.logistics.provision()["ok"], "trial provision")
+	var soothe_id := _instance_of(w, "soothe_gu")
+	var host := 0
+	for uid in w.facilities:
+		if String(w.facilities[uid]["facility_id"]) == "soothing_station":
+			host = int(uid)
+	check(w.logistics.deploy(soothe_id, Vector2i(-1, -1), host)["ok"], "soothe deployed on the water host")
+	var jellies := _buy_and_assign(w, zones, "gel_jellyfish", "small")
+	check(jellies.size() == 1, "soothed jellyfish adult")
+	for _day in range(3):
+		w.end_day()
+	var boosted := 0
+	for entry in receipts:
+		if entry.get("kind") == "service" and entry.get("stage") == "gu_service" and entry.get("effect") == "breed_speed":
+			if int(entry.get("animal", 0)) == int(jellies[0]["uid"]):
+				boosted += 1
+	check(boosted > 0, "the soothe gu serves the water jellyfish")
+	var breeder: Dictionary = w.ranch.animal(int(jellies[0]["uid"]))
+	check(int(breeder["breed"]["units"]) > 6 * 3 * 100, "water breeding advances at the boosted pace")

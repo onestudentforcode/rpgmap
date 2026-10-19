@@ -364,6 +364,55 @@ install('cost_models', dict(id='pearl_polish_water', basis={'kind': 'recipe', 'i
     inputs={'wastewater': 6, 'filter_media': 1, 'pearl': 1}, ap=2, days=1, cash=0,
     outputs={'clean_water': {'quantity': 4, 'share': 0.67}, 'sludge': {'quantity': 2, 'share': 0.33}}))
 
+# --- stage e: shared gu, main products, dual-medium soothing (§16.2.10) -----
+# Capability tags replace the old land hard-code: soothing and command serve
+# any breed-capable / work-capable animal regardless of medium.
+for definition in data['logistics']['definitions']:
+    if definition['id'] == 'soothe_gu':
+        definition['target_tags'] = ['breed_capable_animal']
+    if definition['id'] == 'command_gu':
+        definition['target_tags'] = ['work_capable_animal']
+
+# The two shared gu: one rank, one stone a day, no food, market only (never
+# provisioned). Effects match the service resolution keys.
+data['logistics']['definitions'] = [d for d in data['logistics']['definitions'] if d['id'] not in ('product_yield_gu', 'feed_saving_gu')]
+data['logistics']['definitions'] += [
+    dict(id='product_yield_gu', name='丰养蛊', path='生道', role='logistics', rank=1,
+        deployment='host', tags=['animal_product_assist', 'product_yield'],
+        target_tags=['production_animal'], fee=1, food={}, host_kinds=['facility', None],
+        slot='animal_product_assist', scope='HOST', effect='product_yield', range=0,
+        value=125, market_price=32),
+    dict(id='feed_saving_gu', name='节粮蛊', path='食道', role='logistics', rank=1,
+        deployment='host', tags=['animal_feeding_assist', 'feed_saving'],
+        target_tags=['fed_animal'], fee=1, food={}, host_kinds=['facility', None],
+        slot='animal_feeding_assist', scope='HOST', effect='feed_saving', range=0,
+        value=25, market_price=32),
+]
+
+# Host slots: the intensive stations (land and water, never the loach yard)
+# carry one product-assist slot; every trough carries one feeding slot; the
+# soothing station becomes dual-medium so water enclosures can host it too.
+PRODUCT_HOSTS = ['wool_station', 'silkworm_rack', 'spirit_liquid_collector', 'scale_station',
+                 'carp_harvest_station', 'oilfish_harvest_station', 'pearl_station', 'gel_station', 'coral_station']
+for facility in data['facilities']:
+    if facility['id'] in PRODUCT_HOSTS:
+        facility['gu_slot'] = 'animal_product_assist'
+    if facility['id'] == 'feed_trough':
+        facility['gu_slot'] = 'animal_feeding_assist'
+    if facility['id'] == 'soothing_station':
+        facility['terrains'] = ['land', 'water']
+
+# Main-product designation for the yield boost (byproducts never boost).
+MAIN_OF = {
+    'steel_sheep': 'steel_wool', 'leaf_silkworm': 'silk', 'dew_shell_snail': 'spirit_liquid',
+    'mineral_scale_lizard': 'mineral_scale',
+    'filter_algae_carp': 'fish_meat', 'oilfin_fish': 'crude_oil', 'pearl_mussel': 'pearl',
+    'gel_jellyfish': 'water_gel', 'reef_coral': 'coral_stone',
+}
+for species_id, main_item in MAIN_OF.items():
+    if 'natural' in data['p103']['species'][species_id]:
+        data['p103']['species'][species_id]['natural']['main'] = main_item
+
 path.write_text(json.dumps(data, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
-print('P10.6 source installed: %d resources, %d crops, %d recipes, %d research, %d livestock, %d cost models'
-      % (len(data['resources']), len(data['crops']), len(data['recipes']), len(data['research']), len(data['livestock']), len(data['cost_models'])))
+print('P10.6 source installed: %d resources, %d crops, %d recipes, %d research, %d livestock, %d cost models, %d gu'
+      % (len(data['resources']), len(data['crops']), len(data['recipes']), len(data['research']), len(data['livestock']), len(data['cost_models']), len(data['logistics']['definitions'])))

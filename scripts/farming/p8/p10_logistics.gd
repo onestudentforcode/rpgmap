@@ -59,6 +59,41 @@ func available_instances(provider_rows: Array) -> Dictionary:
 		result.append(row.duplicate(true))
 	return {"ok": true, "instances": result}
 
+## Market purchase (P10.6 §16.2.10): the shared gu never ride the trial
+## provision; their definitions carry a market price.
+func buy_gu(definition_id: String) -> Dictionary:
+	if not definitions.has(definition_id):
+		return world._error("未知蛊种")
+	var d: Dictionary = definitions[definition_id]
+	if not d.has("market_price"):
+		return world._error("该蛊不在市场出售")
+	var price := int(d["market_price"])
+	var checked: Dictionary = world._can_act(0)
+	if not checked["ok"]:
+		return checked
+	if world.primeval_stones < price:
+		return world._error("元石不足")
+	var serial: int = state["instances"].size() + 1
+	var identity := "market-%03d" % serial
+	while true:
+		var taken := false
+		for row in state["instances"]:
+			if String(row["instance_id"]) == identity:
+				taken = true
+		if not taken:
+			break
+		serial += 1
+		identity = "market-%03d" % serial
+	state["instances"].append({"instance_id": identity, "definition_id": definition_id,
+		"rank": 1, "host_uid": 0, "origin": [], "enabled": false, "effective_day": 0,
+		"paid_day": -1, "paid_fee": 0, "paid_food": {}, "reason": "未部署", "job": {}})
+	world.primeval_stones -= price
+	world._cash("purchase_spend", price)
+	world.record_operation({"kind": "logistics", "stage": "buy", "day": world.clock.total_days,
+		"definition": definition_id, "instance": identity, "price": price})
+	world.changed.emit()
+	return world._finish(0, {"ok": true, "instance_id": identity, "price": price})
+
 func provision() -> Dictionary:
 	var checked: Dictionary = world._can_act(0)
 	if not checked["ok"]: return checked
@@ -230,7 +265,7 @@ func run_opening(day: int) -> void:
 	for row in rows:
 		if not deployed(row) or not row["enabled"] or int(row["effective_day"]) > day: continue
 		var d := definition(row)
-		if int(row["host_uid"])>0 and d["effect"] in ["growth_speed","water_saving","fertility_saving","breed_speed","work_speed"] and not world.services.host_ready(int(row["host_uid"])):
+		if int(row["host_uid"])>0 and d["effect"] in ["growth_speed","water_saving","fertility_saving","breed_speed","work_speed","product_yield","feed_saving"] and not world.services.host_ready(int(row["host_uid"])):
 			row["reason"]="一级房间未成立，服务暂停"
 			continue
 		if world.primeval_stones < int(d["fee"]):
@@ -489,7 +524,25 @@ static func normalize(value, day: int, body: Dictionary, catalog) -> Dictionary:
 	var cfg: Dictionary = _canonical(catalog.load_data()["logistics"])
 	var defs := {}
 	for d in cfg["definitions"]: defs[d["id"]] = d
-	if value["instances"].size() != (cfg["provision"].size() if value["provisioned"] else 0): return Scalars.fail("试用实例配给数量非法")
+	# P10.6 §16.2.10: market-bought instances ride beside the one-time trial
+	# provision; only the trial- prefix stays bound to the provision list.
+	var trial_count := 0
+	var market_count := 0
+	for row in value["instances"]:
+		if String(row["instance_id"]).begins_with("trial-"):
+			trial_count += 1
+		elif String(row["instance_id"]).begins_with("market-"):
+			market_count += 1
+		else:
+			return Scalars.fail("后勤蛊实例来源非法")
+	if trial_count != (cfg["provision"].size() if value["provisioned"] else 0): return Scalars.fail("试用实例配给数量非法")
+	var priced := {}
+	for d in cfg["definitions"]:
+		if d.has("market_price"):
+			priced[d["id"]] = true
+	for row in value["instances"]:
+		if String(row["instance_id"]).begins_with("market-") and not priced.has(String(row["definition_id"])):
+			return Scalars.fail("市场蛊不在出售清单")
 	var occupied := {}
 	var hosts := {}
 	var facilities := {}
@@ -505,10 +558,20 @@ static func normalize(value, day: int, body: Dictionary, catalog) -> Dictionary:
 				for x in range(int(def["footprint"][0])): occupied[str([int(r["origin"][0])+x,int(r["origin"][1])+y])] = true
 			if section == "facilities": facilities[int(r["uid"])] = def
 	var seen := {}
+	var trial_index := 0
+	var market_index := 0
 	for index in range(value["instances"].size()):
 		var r = value["instances"][index]
 		if not Scalars.exact(r,["instance_id","definition_id","rank","host_uid","origin","enabled","effective_day","paid_day","paid_fee","paid_food","reason","job"]): return Scalars.fail("后勤蛊实例字段非法")
-		if r["instance_id"] != "trial-%03d" % (index+1) or seen.has(r["instance_id"]) or r["definition_id"] != cfg["provision"][index] or not Scalars.whole(r["rank"],1,5): return Scalars.fail("后勤蛊实例身份或转数非法")
+		# Trial instances keep their provision order; market instances number
+		# within their own namespace (P10.6 §16.2.10).
+		if String(r["instance_id"]).begins_with("trial-"):
+			if r["instance_id"] != "trial-%03d" % (trial_index+1) or r["definition_id"] != cfg["provision"][trial_index]:
+				return Scalars.fail("后勤蛊实例身份或转数非法")
+			trial_index += 1
+		elif String(r["instance_id"]).begins_with("market-"):
+			market_index += 1
+		if seen.has(r["instance_id"]) or not Scalars.whole(r["rank"],1,5): return Scalars.fail("后勤蛊实例身份或转数非法")
 		if not r["job"] is Dictionary: return Scalars.fail("后勤蛊任务结构非法")
 		seen[r["instance_id"]] = true
 		var d: Dictionary = defs[r["definition_id"]]
@@ -550,7 +613,11 @@ static func normalize(value, day: int, body: Dictionary, catalog) -> Dictionary:
 		for id in receipt["services"]:
 			if not seen.has(id) or id in served: return Scalars.fail("后勤蛊维护服务未知或重复")
 			served.append(id)
-			var r: Dictionary = value["instances"][int(String(id).trim_prefix("trial-"))-1]
+			var r: Dictionary = {}
+			for candidate in value["instances"]:
+				if String(candidate["instance_id"]) == String(id):
+					r = candidate
+					break
 			var d: Dictionary = defs[r["definition_id"]]
 			fee += int(d["fee"])
 			for item in d["food"]: food[item] = int(food.get(item,0))+int(d["food"][item])

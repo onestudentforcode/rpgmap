@@ -30,10 +30,11 @@ def validate(source):
         quantities(row['food'], resources, row['id'] + ':food', True)
         for key in ('tags','target_tags'):
             require(isinstance(row[key],list) and row[key] and len(set(row[key]))==len(row[key]) and all(isinstance(t,str) and t for t in row[key]), 'invalid effect tags')
-        require(row['effect'] in ('production','light','growth_speed','water_saving','fertility_saving','research_flat','research_speed','breed_speed','work_speed'), 'unknown logistics effect')
+        require(row['effect'] in ('production','light','growth_speed','water_saving','fertility_saving','research_flat','research_speed','breed_speed','work_speed','product_yield','feed_saving'), 'unknown logistics effect')
         directed = row['effect'] in AGRI_TAG
         expected_scope = {'production':'SELF','light':'AREA','growth_speed':'DIRECTED_AREA','water_saving':'DIRECTED_AREA',
-                          'fertility_saving':'DIRECTED_AREA','research_flat':'HOST','research_speed':'HOST','breed_speed':'HOST','work_speed':'HOST'}[row['effect']]
+                          'fertility_saving':'DIRECTED_AREA','research_flat':'HOST','research_speed':'HOST','breed_speed':'HOST','work_speed':'HOST',
+                          'product_yield':'HOST','feed_saving':'HOST'}[row['effect']]
         require(row['scope']==expected_scope, 'effect scope does not match supported evaluator')
         if row['effect']=='growth_speed': require(row['value']>=100,'growth ability must be a positive bonus')
         if row['effect'] in ('water_saving','fertility_saving'): require(integer(row['value'],1,99),'retention must cut consumption strictly')

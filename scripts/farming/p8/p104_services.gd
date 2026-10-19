@@ -295,7 +295,7 @@ func level_of(zone: Dictionary) -> Dictionary:
 		var uid:=int(host["uid"])
 		if state["toys"].has(str(uid)): installed=true;running=true
 		var gu: Dictionary=world.logistics.in_host(uid)
-		if not gu.is_empty() and world.logistics.definition(gu)["effect"] in ["breed_speed","work_speed"]:
+		if not gu.is_empty() and world.logistics.definition(gu)["effect"] in ["breed_speed","work_speed","product_yield","feed_saving"]:
 			installed=true
 			running=running or world.logistics.active(gu,world.clock.total_days)
 	return {"level":2 if installed else 1,"active":running if installed else true}

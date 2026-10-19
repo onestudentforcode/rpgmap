@@ -70,13 +70,13 @@
   "counts": {
     "crops": 10,
     "diets": 49,
-    "entities": 314,
+    "entities": 316,
     "facilities": 39,
     "livestock": 17,
     "living_mappings": 10,
-    "logistics": 9,
+    "logistics": 11,
     "parcels": 6,
-    "processes": 432,
+    "processes": 434,
     "recipes": 64,
     "research": 13,
     "resources": 84,
@@ -1613,6 +1613,11 @@
           "entity": "species:filter_algae_carp",
           "label": "接纳物种",
           "name": "滤藻鲤"
+        },
+        {
+          "entity": "gu:product_yield_gu",
+          "label": "可入驻后勤蛊",
+          "name": "丰养蛊"
         }
       ],
       "locks": null,
@@ -1825,6 +1830,11 @@
           "name": "礁骨珊瑚"
         },
         {
+          "entity": "gu:product_yield_gu",
+          "label": "可入驻后勤蛊",
+          "name": "丰养蛊"
+        },
+        {
           "entity": "research:mineral_materials",
           "label": "解锁研究",
           "name": "矿质材料工艺"
@@ -1973,7 +1983,13 @@
       "icon": "feed_trough",
       "id": "facility:feed_trough",
       "kind": "facility",
-      "links": [],
+      "links": [
+        {
+          "entity": "gu:feed_saving_gu",
+          "label": "可入驻后勤蛊",
+          "name": "节粮蛊"
+        }
+      ],
       "locks": null,
       "name": "供食槽",
       "related_rules": [],
@@ -2145,6 +2161,11 @@
           "entity": "species:gel_jellyfish",
           "label": "接纳物种",
           "name": "凝胶水母"
+        },
+        {
+          "entity": "gu:product_yield_gu",
+          "label": "可入驻后勤蛊",
+          "name": "丰养蛊"
         },
         {
           "entity": "research:water_recirculation",
@@ -2388,6 +2409,11 @@
           "name": "油鳍鱼"
         },
         {
+          "entity": "gu:product_yield_gu",
+          "label": "可入驻后勤蛊",
+          "name": "丰养蛊"
+        },
+        {
           "entity": "research:farm_preparation",
           "label": "解锁研究",
           "name": "农产初加工"
@@ -2513,6 +2539,11 @@
           "entity": "species:pearl_mussel",
           "label": "接纳物种",
           "name": "珍珠蚌"
+        },
+        {
+          "entity": "gu:product_yield_gu",
+          "label": "可入驻后勤蛊",
+          "name": "丰养蛊"
         },
         {
           "entity": "research:water_recirculation",
@@ -2819,6 +2850,11 @@
           "name": "矿鳞蜥"
         },
         {
+          "entity": "gu:product_yield_gu",
+          "label": "可入驻后勤蛊",
+          "name": "丰养蛊"
+        },
+        {
           "entity": "research:mineral_materials",
           "label": "解锁研究",
           "name": "矿质材料工艺"
@@ -2944,6 +2980,11 @@
           "entity": "species:leaf_silkworm",
           "label": "接纳物种",
           "name": "叶丝蚕"
+        },
+        {
+          "entity": "gu:product_yield_gu",
+          "label": "可入驻后勤蛊",
+          "name": "丰养蛊"
         }
       ],
       "locks": null,
@@ -3191,6 +3232,11 @@
           "entity": "species:dew_shell_snail",
           "label": "接纳物种",
           "name": "露壳蜗牛"
+        },
+        {
+          "entity": "gu:product_yield_gu",
+          "label": "可入驻后勤蛊",
+          "name": "丰养蛊"
         }
       ],
       "locks": null,
@@ -3375,6 +3421,11 @@
           "entity": "species:steel_sheep",
           "label": "接纳物种",
           "name": "钢绵羊"
+        },
+        {
+          "entity": "gu:product_yield_gu",
+          "label": "可入驻后勤蛊",
+          "name": "丰养蛊"
         }
       ],
       "locks": null,
@@ -20024,6 +20075,67 @@
         {
           "key": "deploy",
           "label": "部署",
+          "text": "入驻兼容设施：供食槽"
+        },
+        {
+          "key": "effect",
+          "label": "能力",
+          "text": "基础食物−25%（饮水不计，按生物×资源累计取整），每单位服务4空间"
+        },
+        {
+          "key": "fee",
+          "label": "维护",
+          "text": "启用时1元石/游戏日；闲置仍收费，休眠/未部署免维护"
+        },
+        {
+          "key": "food",
+          "label": "特殊食料",
+          "text": "无（每个成功付费服务日；与元石原子扣除）"
+        },
+        {
+          "key": "timing",
+          "label": "时点",
+          "text": "部署/撤回各1AP；启用次日生效；停用立即取消后续效果，已付不退；运行/待收任务锁定实例"
+        }
+      ],
+      "icon": "help",
+      "id": "gu:feed_saving_gu",
+      "kind": "gu",
+      "links": [
+        {
+          "entity": "facility:feed_trough",
+          "label": "兼容设施",
+          "name": "供食槽"
+        }
+      ],
+      "locks": null,
+      "name": "节粮蛊",
+      "related_rules": [
+        "rule:logistics"
+      ],
+      "source_id": "feed_saving_gu",
+      "summary": "基础食物消耗折扣（按次累计取整）",
+      "tags": [
+        "animal_feeding_assist",
+        "feed_saving"
+      ]
+    },
+    {
+      "category": "logistics",
+      "fields": [
+        {
+          "key": "rank",
+          "label": "转数",
+          "text": "1转原型；实例支持一至五转，升转由上游负责"
+        },
+        {
+          "key": "obtain",
+          "label": "获取",
+          "text": "每档一次试用配给共15只：饭袋草/催生/锁水/节肥/安抚/驭兽各2只，明光/智道研究/宙道研究各1只；尚未连接上游获取与成长"
+        },
+        {
+          "key": "deploy",
+          "label": "部署",
           "text": "入驻兼容设施：田间维护站"
         },
         {
@@ -20128,6 +20240,107 @@
       "tags": [
         "agriculture_assist",
         "plant_growth_speed"
+      ]
+    },
+    {
+      "category": "logistics",
+      "fields": [
+        {
+          "key": "rank",
+          "label": "转数",
+          "text": "1转原型；实例支持一至五转，升转由上游负责"
+        },
+        {
+          "key": "obtain",
+          "label": "获取",
+          "text": "每档一次试用配给共15只：饭袋草/催生/锁水/节肥/安抚/驭兽各2只，明光/智道研究/宙道研究各1只；尚未连接上游获取与成长"
+        },
+        {
+          "key": "deploy",
+          "label": "部署",
+          "text": "入驻兼容设施：采毛台、蚕架、集露台、养鳞台、捕鲤台、取油台、采珠台、采胶台、采礁台"
+        },
+        {
+          "key": "effect",
+          "label": "能力",
+          "text": "主产物期望＋0.25（只登记主产物，整数必得＋小数随机一次），每单位服务4空间"
+        },
+        {
+          "key": "fee",
+          "label": "维护",
+          "text": "启用时1元石/游戏日；闲置仍收费，休眠/未部署免维护"
+        },
+        {
+          "key": "food",
+          "label": "特殊食料",
+          "text": "无（每个成功付费服务日；与元石原子扣除）"
+        },
+        {
+          "key": "timing",
+          "label": "时点",
+          "text": "部署/撤回各1AP；启用次日生效；停用立即取消后续效果，已付不退；运行/待收任务锁定实例"
+        }
+      ],
+      "icon": "help",
+      "id": "gu:product_yield_gu",
+      "kind": "gu",
+      "links": [
+        {
+          "entity": "facility:wool_station",
+          "label": "兼容设施",
+          "name": "采毛台"
+        },
+        {
+          "entity": "facility:silkworm_rack",
+          "label": "兼容设施",
+          "name": "蚕架"
+        },
+        {
+          "entity": "facility:spirit_liquid_collector",
+          "label": "兼容设施",
+          "name": "集露台"
+        },
+        {
+          "entity": "facility:scale_station",
+          "label": "兼容设施",
+          "name": "养鳞台"
+        },
+        {
+          "entity": "facility:carp_harvest_station",
+          "label": "兼容设施",
+          "name": "捕鲤台"
+        },
+        {
+          "entity": "facility:oilfish_harvest_station",
+          "label": "兼容设施",
+          "name": "取油台"
+        },
+        {
+          "entity": "facility:pearl_station",
+          "label": "兼容设施",
+          "name": "采珠台"
+        },
+        {
+          "entity": "facility:gel_station",
+          "label": "兼容设施",
+          "name": "采胶台"
+        },
+        {
+          "entity": "facility:coral_station",
+          "label": "兼容设施",
+          "name": "采礁台"
+        }
+      ],
+      "locks": null,
+      "name": "丰养蛊",
+      "related_rules": [
+        "rule:logistics"
+      ],
+      "source_id": "product_yield_gu",
+      "summary": "主产物期望增产（整数必得＋小数随机）",
+      "tags": [
+        "animal_product_assist",
+        "product_yield"
       ]
     },
     {
@@ -27608,11 +27821,11 @@
   "generated_inputs": [
     {
       "path": "content/farming/p8/production.json",
-      "sha256": "5fb44aa9169df6fa2039a4bcea8659606c0fa77863b94a4a31ad1ed88ff198b2"
+      "sha256": "0467a49441c33a4fcd76fcf8a75080c599c993079d0689a18c5fc3e9c368307c"
     },
     {
       "path": "content/farming/baked/p8/production.json",
-      "sha256": "18111b6a9ab0b9fe2a1881f3613c81b8c7350cef23029df9f125f3ed50e48eef"
+      "sha256": "19675d0130bbe5b6899457ebb9b2b1427c49773b3c24b27b68595dd4b05d7a37"
     },
     {
       "path": "content/farming/p8/expansion.json",
@@ -37348,6 +37561,41 @@
       ],
       "facility": null,
       "facility_name": null,
+      "id": "proc:gu-maintenance:feed_saving_gu",
+      "inputs": [
+        {
+          "basis": "每只·每日",
+          "entity": "currency:primeval_stone",
+          "name": "元石",
+          "quantity": 1,
+          "timing": "开日"
+        }
+      ],
+      "name": "节粮蛊·每日维护",
+      "outputs": [],
+      "primeval_stones": 0,
+      "research": null,
+      "research_name": null,
+      "species": "gu:feed_saving_gu",
+      "species_name": "节粮蛊",
+      "type": "gu_maintenance",
+      "worker_fee": 0
+    },
+    {
+      "ap": 0,
+      "ap_detail": "0AP",
+      "category_hint": "logistics",
+      "conditions": [
+        "已部署且启用；元石与食料同时足额；同服务日只结算一次"
+      ],
+      "crop": null,
+      "crop_name": null,
+      "duration": "即时",
+      "effects": [
+        "激活当日能力"
+      ],
+      "facility": null,
+      "facility_name": null,
       "id": "proc:gu-maintenance:fert_gu",
       "inputs": [
         {
@@ -37400,6 +37648,41 @@
       "research_name": null,
       "species": "gu:growth_gu",
       "species_name": "催生蛊",
+      "type": "gu_maintenance",
+      "worker_fee": 0
+    },
+    {
+      "ap": 0,
+      "ap_detail": "0AP",
+      "category_hint": "logistics",
+      "conditions": [
+        "已部署且启用；元石与食料同时足额；同服务日只结算一次"
+      ],
+      "crop": null,
+      "crop_name": null,
+      "duration": "即时",
+      "effects": [
+        "激活当日能力"
+      ],
+      "facility": null,
+      "facility_name": null,
+      "id": "proc:gu-maintenance:product_yield_gu",
+      "inputs": [
+        {
+          "basis": "每只·每日",
+          "entity": "currency:primeval_stone",
+          "name": "元石",
+          "quantity": 1,
+          "timing": "开日"
+        }
+      ],
+      "name": "丰养蛊·每日维护",
+      "outputs": [],
+      "primeval_stones": 0,
+      "research": null,
+      "research_name": null,
+      "species": "gu:product_yield_gu",
+      "species_name": "丰养蛊",
       "type": "gu_maintenance",
       "worker_fee": 0
     },

@@ -3219,7 +3219,8 @@
       "terrains": [
         "land",
         "water"
-      ]
+      ],
+      "gu_slot": "animal_feeding_assist"
     },
     {
       "id": "small_bed",
@@ -3304,7 +3305,11 @@
       },
       "terrain": "land",
       "kind": "facility",
-      "gu_slot": "animal_breeding_assist"
+      "gu_slot": "animal_breeding_assist",
+      "terrains": [
+        "land",
+        "water"
+      ]
     },
     {
       "id": "toy_station",
@@ -3437,7 +3442,8 @@
       "kind": null,
       "species": [
         "steel_sheep"
-      ]
+      ],
+      "gu_slot": "animal_product_assist"
     },
     {
       "id": "silkworm_rack",
@@ -3455,7 +3461,8 @@
       "kind": null,
       "species": [
         "leaf_silkworm"
-      ]
+      ],
+      "gu_slot": "animal_product_assist"
     },
     {
       "id": "spirit_liquid_collector",
@@ -3473,7 +3480,8 @@
       "kind": null,
       "species": [
         "dew_shell_snail"
-      ]
+      ],
+      "gu_slot": "animal_product_assist"
     },
     {
       "id": "scale_station",
@@ -3492,7 +3500,8 @@
       "species": [
         "mineral_scale_lizard"
       ],
-      "research": "mineral_materials"
+      "research": "mineral_materials",
+      "gu_slot": "animal_product_assist"
     },
     {
       "id": "carp_harvest_station",
@@ -3510,7 +3519,8 @@
       "kind": null,
       "species": [
         "filter_algae_carp"
-      ]
+      ],
+      "gu_slot": "animal_product_assist"
     },
     {
       "id": "oilfish_harvest_station",
@@ -3529,7 +3539,8 @@
       "research": "farm_preparation",
       "species": [
         "oilfin_fish"
-      ]
+      ],
+      "gu_slot": "animal_product_assist"
     },
     {
       "id": "pearl_station",
@@ -3548,7 +3559,8 @@
       "research": "water_recirculation",
       "species": [
         "pearl_mussel"
-      ]
+      ],
+      "gu_slot": "animal_product_assist"
     },
     {
       "id": "gel_station",
@@ -3567,7 +3579,8 @@
       "research": "water_recirculation",
       "species": [
         "gel_jellyfish"
-      ]
+      ],
+      "gu_slot": "animal_product_assist"
     },
     {
       "id": "coral_station",
@@ -3586,7 +3599,8 @@
       "research": "mineral_materials",
       "species": [
         "reef_coral"
-      ]
+      ],
+      "gu_slot": "animal_product_assist"
     },
     {
       "id": "silt_processing_station",
@@ -6148,7 +6162,7 @@
           "breed_speed"
         ],
         "target_tags": [
-          "terrestrial_animal"
+          "breed_capable_animal"
         ],
         "fee": 1,
         "food": {},
@@ -6173,7 +6187,7 @@
           "work_speed"
         ],
         "target_tags": [
-          "terrestrial_animal"
+          "work_capable_animal"
         ],
         "fee": 1,
         "food": {},
@@ -6185,6 +6199,60 @@
         "effect": "work_speed",
         "range": 0,
         "value": 150
+      },
+      {
+        "id": "product_yield_gu",
+        "name": "丰养蛊",
+        "path": "生道",
+        "role": "logistics",
+        "rank": 1,
+        "deployment": "host",
+        "tags": [
+          "animal_product_assist",
+          "product_yield"
+        ],
+        "target_tags": [
+          "production_animal"
+        ],
+        "fee": 1,
+        "food": {},
+        "host_kinds": [
+          "facility",
+          null
+        ],
+        "slot": "animal_product_assist",
+        "scope": "HOST",
+        "effect": "product_yield",
+        "range": 0,
+        "value": 125,
+        "market_price": 32
+      },
+      {
+        "id": "feed_saving_gu",
+        "name": "节粮蛊",
+        "path": "食道",
+        "role": "logistics",
+        "rank": 1,
+        "deployment": "host",
+        "tags": [
+          "animal_feeding_assist",
+          "feed_saving"
+        ],
+        "target_tags": [
+          "fed_animal"
+        ],
+        "fee": 1,
+        "food": {},
+        "host_kinds": [
+          "facility",
+          null
+        ],
+        "slot": "animal_feeding_assist",
+        "scope": "HOST",
+        "effect": "feed_saving",
+        "range": 0,
+        "value": 25,
+        "market_price": 32
       }
     ],
     "rotate_ap": 1
@@ -6259,7 +6327,8 @@
             "steel_wool": 1,
             "sheep_manure": 1
           },
-          "default_diet": "iron_supplement"
+          "default_diet": "iron_supplement",
+          "main": "steel_wool"
         }
       },
       "rock_mole": {
@@ -6291,7 +6360,8 @@
           "outputs": {
             "silk": 4
           },
-          "default_diet": "silk_round"
+          "default_diet": "silk_round",
+          "main": "silk"
         }
       },
       "dew_shell_snail": {
@@ -6306,7 +6376,8 @@
             "spirit_liquid": 2,
             "mucus": 1
           },
-          "default_diet": "dew_round"
+          "default_diet": "dew_round",
+          "main": "spirit_liquid"
         }
       },
       "mineral_scale_lizard": {
@@ -6321,7 +6392,8 @@
             "mineral_scale": 2,
             "shed_skin": 1
           },
-          "default_diet": "scale_round"
+          "default_diet": "scale_round",
+          "main": "mineral_scale"
         }
       },
       "compost_mouse": {
@@ -6350,7 +6422,8 @@
             "fish_meat": 3,
             "fish_manure": 1
           },
-          "default_diet": "grain_fatten"
+          "default_diet": "grain_fatten",
+          "main": "fish_meat"
         }
       },
       "oilfin_fish": {
@@ -6367,7 +6440,8 @@
             "crude_oil": 2,
             "fish_meat": 1
           },
-          "default_diet": "oilfin_oil_round"
+          "default_diet": "oilfin_oil_round",
+          "main": "crude_oil"
         }
       },
       "pearl_mussel": {
@@ -6391,7 +6465,8 @@
                 "pearl": 3
               }
             }
-          }
+          },
+          "main": "pearl"
         }
       },
       "gel_jellyfish": {
@@ -6414,7 +6489,8 @@
                 "water_gel": 3
               }
             }
-          }
+          },
+          "main": "water_gel"
         }
       },
       "silt_loach": {
@@ -6438,7 +6514,8 @@
           "outputs": {
             "coral_stone": 2
           },
-          "default_diet": "coral_mineral_round"
+          "default_diet": "coral_mineral_round",
+          "main": "coral_stone"
         }
       }
     },

@@ -624,7 +624,8 @@ for gid, row in GU.items():
     effect = {'production': '独立生产', 'light': '环境光照', 'growth_speed': '定向生长速度',
               'water_saving': '定向水分减耗', 'fertility_saving': '定向肥力减耗',
               'research_flat': '固定研究工作量减免', 'research_speed': '研究速度倍率',
-              'breed_speed': '实际繁殖进度倍率', 'work_speed': '实际动物劳动倍率'}[row['effect']]
+              'breed_speed': '实际繁殖进度倍率', 'work_speed': '实际动物劳动倍率',
+              'product_yield': '主产物期望增产（整数必得＋小数随机）', 'feed_saving': '基础食物消耗折扣（按次累计取整）'}[row['effect']]
     fields = [field('rank','转数',f'{row["rank"]}转原型；实例支持一至五转，升转由上游负责'),
         field('obtain','获取','每档一次试用配给共15只：饭袋草/催生/锁水/节肥/安抚/驭兽各2只，明光/智道研究/宙道研究各1只；尚未连接上游获取与成长'),
         field('deploy','部署','独立占用1格陆地，不需开垦/农田' if row['deployment']=='independent' else '入驻兼容设施：'+'、'.join(f['name'] for f in hosts)),
@@ -637,7 +638,9 @@ for gid, row in GU.items():
             'research_flat':f'研究工作量固定减少{row["value"]}，至少保留1',
             'research_speed':f'每个有效研究日推进{row["value"]/100:g}工作量',
             'breed_speed':f'实际合格繁殖进度×{row["value"]/100:g}，每单位服务4空间',
-            'work_speed':f'实际获岗劳动点×{row["value"]/100:g}，每单位服务4空间'}[row['effect']]),
+            'work_speed':f'实际获岗劳动点×{row["value"]/100:g}，每单位服务4空间',
+        'product_yield':f'主产物期望＋{(row["value"]-100)/100:g}（只登记主产物，整数必得＋小数随机一次），每单位服务4空间',
+        'feed_saving':f'基础食物−{row["value"]}%（饮水不计，按生物×资源累计取整），每单位服务4空间'}[row['effect']]),
         field('fee','维护',f'启用时{row["fee"]}元石/游戏日；闲置仍收费，休眠/未部署免维护'),
         field('food','特殊食料',quantities_text(row['food'])+'（每个成功付费服务日；与元石原子扣除）'),
         field('timing','时点','部署/撤回各1AP；启用次日生效；停用立即取消后续效果，已付不退；运行/待收任务锁定实例')]
