@@ -86,7 +86,8 @@ func build_module(world: World, with_enclosure: bool) -> Dictionary:
 	for spec in [["pen", 0, 10], ["feed_trough", 2, 10], ["feed_trough", 3, 10], ["feed_trough", 4, 10],
 			["small_bed", 4, 11], ["medium_bed", 3, 11],
 			["dispatch_station", 8, 10], ["rock_breaking_yard", 9, 10], ["rock_breaking_yard", 11, 10],
-			["feed_trough", 4, 9], ["feed_trough", 5, 9], ["small_bed", 6, 9], ["medium_bed", 7, 9]]:
+			["feed_trough", 4, 9], ["feed_trough", 5, 9], ["small_bed", 6, 9], ["medium_bed", 7, 9],
+			["toy_station", 8, 12]]:
 		check(world.build_facility(Vector2i(spec[1], spec[2]), String(spec[0]))["ok"], "build " + String(spec[0]))
 	var zones := {}
 	for group in ["nursery", "work", "maintenance", "pasture"]:

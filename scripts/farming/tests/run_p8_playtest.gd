@@ -644,8 +644,10 @@ func _ranch_zone_of(world, type_id: String) -> int:
 	return 0
 
 func _ranch_module_ready(world) -> bool:
+	# The sorting yard joins later through its own research gate; the mineral
+	# economy only needs the breaking yard to start.
 	for spec in [["pen", 0, 11], ["feed_trough", 2, 11], ["feed_trough", 3, 11], ["small_bed", 4, 11],
-			["dispatch_station", 8, 11], ["rock_breaking_yard", 9, 11], ["ore_sorting_yard", 11, 11],
+			["dispatch_station", 8, 11], ["rock_breaking_yard", 9, 11],
 			["feed_trough", 4, 10], ["feed_trough", 7, 10], ["small_bed", 8, 10]]:
 		if world.facility_at(Vector2i(int(spec[1]), int(spec[2]))).is_empty():
 			return false
@@ -691,8 +693,12 @@ func _ranch_business(world) -> void:
 			act(world, "ranch assign worker " + str(uid), func(): return world.ranch.submit({"assign": {uid: {"mode": "work", "zone_uid": work}}}))
 	# Claim ready posts first: a recipe switch needs every post idle.
 	var yard_mole: int = world.facility_at(Vector2i(9, 11))["uid"]
-	var yard_beast: int = world.facility_at(Vector2i(11, 11))["uid"]
+	var yard_beast := 0
+	if not world.facility_at(Vector2i(11, 11)).is_empty():
+		yard_beast = int(world.facility_at(Vector2i(11, 11))["uid"])
 	for yard in [yard_mole, yard_beast]:
+		if yard == 0:
+			continue
 		if world.ranch.workyard_busy(yard):
 			var ready := false
 			for post in world.ranch.workyard_state(yard)["posts"]:
@@ -704,7 +710,7 @@ func _ranch_business(world) -> void:
 	var mole_recipe := "break_stone" if world.inventory.count("gravel") < 4 else ("break_ore" if world.inventory.count("crushed_ore") < 8 else "break_stone")
 	if String(world.ranch.workyard_state(yard_mole)["recipe_id"]) != mole_recipe:
 		act(world, "ranch yard recipe " + mole_recipe, func(): return world.ranch.set_recipe(yard_mole, mole_recipe))
-	if world.research.is_completed("ore_concentration") and String(world.ranch.workyard_state(yard_beast)["recipe_id"]) != "concentrate_ore":
+	if yard_beast != 0 and world.research.is_completed("ore_concentration") and String(world.ranch.workyard_state(yard_beast)["recipe_id"]) != "concentrate_ore":
 		act(world, "ranch yard recipe concentrate", func(): return world.ranch.set_recipe(yard_beast, "concentrate_ore"))
 
 func _sell_surplus(world) -> void:
