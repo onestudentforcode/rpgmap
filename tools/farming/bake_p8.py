@@ -59,9 +59,32 @@ def providers(source):
     recipes = common.registry(source['recipes'], 'recipes')
     facilities = common.registry(source['facilities'], 'facilities')
     research = {row['id']: row for row in source['research']}
+    # P10.6 §16.2: the aquatic facility set may stand on water; the five shared
+    # ranch structures are dual-medium; fish_pond is retired from new builds.
+    water_facilities = {'fish_pond', 'carp_harvest_station', 'oilfish_harvest_station', 'pearl_station',
+                        'gel_station', 'coral_station', 'silt_processing_station', 'aquatic_crop_station'}
+    dual_medium = {'pen', 'feed_trough', 'small_bed', 'medium_bed', 'care_table'}
     for ident, facility in facilities.items():
         require(facility.get('terrain', 'land') in ('land', 'water'), f'{ident}: unknown build terrain')
-        require(facility.get('terrain', 'land') != 'water' or ident == 'fish_pond', f'{ident}: only water farms use water terrain')
+        require(facility.get('terrain', 'land') != 'water' or ident in water_facilities,
+                f'{ident}: water terrain is reserved for the aquatic set')
+        require('terrains' not in facility or (ident in dual_medium and facility['terrains'] == ['land', 'water']),
+                f'{ident}: only the shared ranch structures may be dual-medium')
+        require(not facility.get('retired') or ident == 'fish_pond', f'{ident}: unknown retirement')
+    p106 = source.get('p106')
+    require(isinstance(p106, dict) and p106['version'] == 1, 'p106 water section required')
+    require(p106['fence'] == dict(cash=1, inputs={'twig': 1}, ap=1), 'fence cost frozen at 1 stone + 1 twig + 1AP')
+    require(p106['quality'] == dict(initial=100, cap=100, points_per_cell=10000, pause_threshold=30,
+                                     base_decay=2, load_factor=6), 'water quality params frozen')
+    require(p106['change'] == dict(inputs={'clean_water': 2}, wastewater=2, gain=40, max_cells=8, ap=1),
+            'water change service frozen')
+    require(p106['facilities']['change_station'] == 'water_change_station'
+            and p106['facilities']['crop_station'] == 'aquatic_crop_station', 'p106 facility registry')
+    for zone_id in ('water_nursery', 'water_enclosure', 'water_production', 'water_loach', 'aqua_planting'):
+        zone = source['p103']['zones'].get(zone_id)
+        require(isinstance(zone, dict) and zone.get('medium') == 'water', f'{zone_id}: water zone required')
+        for member in [m for group in zone.get('any_of', []) for m in group['members']] + zone['structures']:
+            require(member in facilities or member == 'bed', f'{zone_id}: unknown structure {member}')
         require(facility.get('research', '') == '' or facility['research'] in research, f'{ident}: unknown research gate')
         require(facility.get('kind', '') != 'habitat' or ident in ('pen', 'fish_pond') or facility['research'] != '', f'{ident}: new habitats must be research gated')
     for ident, recipe in recipes.items():

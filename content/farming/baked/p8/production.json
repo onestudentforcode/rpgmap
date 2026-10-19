@@ -2459,7 +2459,11 @@
       "species": [
         "steel_sheep"
       ],
-      "terrain": "land"
+      "terrain": "land",
+      "terrains": [
+        "land",
+        "water"
+      ]
     },
     {
       "capacity": 4,
@@ -2475,6 +2479,7 @@
         "raw_wood": 1
       },
       "name": "水场",
+      "retired": true,
       "species": [
         "filter_algae_carp"
       ],
@@ -2635,7 +2640,11 @@
         "raw_wood": 2
       },
       "name": "供食槽",
-      "terrain": "land"
+      "terrain": "land",
+      "terrains": [
+        "land",
+        "water"
+      ]
     },
     {
       "cash": 6,
@@ -2649,7 +2658,11 @@
         "raw_wood": 2
       },
       "name": "小床",
-      "terrain": "land"
+      "terrain": "land",
+      "terrains": [
+        "land",
+        "water"
+      ]
     },
     {
       "cash": 10,
@@ -2663,7 +2676,11 @@
         "raw_wood": 3
       },
       "name": "中床",
-      "terrain": "land"
+      "terrain": "land",
+      "terrains": [
+        "land",
+        "water"
+      ]
     },
     {
       "cash": 14,
@@ -2692,7 +2709,11 @@
         "wood_plank": 2
       },
       "name": "照料台",
-      "terrain": "land"
+      "terrain": "land",
+      "terrains": [
+        "land",
+        "water"
+      ]
     },
     {
       "cash": 18,
@@ -2897,6 +2918,131 @@
         "mineral_scale_lizard"
       ],
       "terrain": "land"
+    },
+    {
+      "cash": 12,
+      "footprint": [
+        1,
+        1
+      ],
+      "id": "carp_harvest_station",
+      "kind": null,
+      "materials": {
+        "raw_stone": 2,
+        "wood_plank": 2
+      },
+      "name": "捕鲤台",
+      "terrain": "water"
+    },
+    {
+      "cash": 16,
+      "footprint": [
+        1,
+        1
+      ],
+      "id": "oilfish_harvest_station",
+      "kind": null,
+      "materials": {
+        "raw_stone": 3,
+        "wood_plank": 2
+      },
+      "name": "取油台",
+      "research": "farm_preparation",
+      "terrain": "water"
+    },
+    {
+      "cash": 16,
+      "footprint": [
+        1,
+        1
+      ],
+      "id": "pearl_station",
+      "kind": null,
+      "materials": {
+        "raw_stone": 3,
+        "wood_plank": 2
+      },
+      "name": "采珠台",
+      "research": "water_recirculation",
+      "terrain": "water"
+    },
+    {
+      "cash": 16,
+      "footprint": [
+        1,
+        1
+      ],
+      "id": "gel_station",
+      "kind": null,
+      "materials": {
+        "raw_stone": 3,
+        "wood_plank": 2
+      },
+      "name": "采胶台",
+      "research": "water_recirculation",
+      "terrain": "water"
+    },
+    {
+      "cash": 20,
+      "footprint": [
+        1,
+        1
+      ],
+      "id": "coral_station",
+      "kind": null,
+      "materials": {
+        "raw_stone": 4,
+        "wood_plank": 2
+      },
+      "name": "采礁台",
+      "research": "mineral_materials",
+      "terrain": "water"
+    },
+    {
+      "cash": 14,
+      "footprint": [
+        1,
+        1
+      ],
+      "id": "silt_processing_station",
+      "kind": null,
+      "materials": {
+        "raw_stone": 2,
+        "wood_plank": 2
+      },
+      "name": "泥料处理台",
+      "research": "biofiltration",
+      "terrain": "water"
+    },
+    {
+      "cash": 8,
+      "footprint": [
+        1,
+        1
+      ],
+      "id": "aquatic_crop_station",
+      "kind": null,
+      "materials": {
+        "raw_stone": 2,
+        "wood_plank": 1
+      },
+      "name": "水生种植台",
+      "terrain": "water"
+    },
+    {
+      "cash": 16,
+      "footprint": [
+        1,
+        1
+      ],
+      "id": "water_change_station",
+      "kind": null,
+      "materials": {
+        "raw_stone": 4,
+        "wood_plank": 2
+      },
+      "name": "换水站",
+      "terrain": "land"
     }
   ],
   "flowers": {
@@ -2945,12 +3091,13 @@
   "layout_audit": {
     "flower_cells": 12,
     "land_total": 280,
-    "land_used": 84,
+    "land_used": 85,
     "placements": {
       "algae_tank": [
         6,
         2
       ],
+      "aquatic_crop_station": "water",
       "bee_hive": [
         0,
         0
@@ -2963,6 +3110,7 @@
         7,
         2
       ],
+      "carp_harvest_station": "water",
       "char_kiln": [
         4,
         0
@@ -2975,6 +3123,7 @@
         6,
         0
       ],
+      "coral_station": "water",
       "dispatch_station": [
         9,
         2
@@ -2992,6 +3141,7 @@
         2
       ],
       "fish_pond": "water",
+      "gel_station": "water",
       "growth_lamp": [
         12,
         2
@@ -3008,10 +3158,12 @@
         14,
         2
       ],
+      "oilfish_harvest_station": "water",
       "ore_sorting_yard": [
         12,
         0
       ],
+      "pearl_station": "water",
       "pen": [
         14,
         0
@@ -3040,6 +3192,7 @@
         17,
         2
       ],
+      "silt_processing_station": "water",
       "small_bed": [
         18,
         2
@@ -3060,12 +3213,16 @@
         7,
         3
       ],
+      "water_change_station": [
+        8,
+        3
+      ],
       "woodshop": [
         4,
         2
       ],
       "wool_station": [
-        8,
+        9,
         3
       ]
     },
@@ -4175,6 +4332,13 @@
       }
     },
     "zones": {
+      "aqua_planting": {
+        "medium": "water",
+        "min_space": 1,
+        "structures": [
+          "aquatic_crop_station"
+        ]
+      },
       "enclosure": {
         "min_space": 8,
         "structures": [
@@ -4224,6 +4388,56 @@
           "toy_station"
         ]
       },
+      "water_enclosure": {
+        "medium": "water",
+        "min_space": 8,
+        "structures": [
+          "pen",
+          "feed_trough",
+          "bed",
+          "care_table"
+        ]
+      },
+      "water_loach": {
+        "medium": "water",
+        "min_space": 4,
+        "structures": [
+          "pen",
+          "feed_trough",
+          "bed",
+          "silt_processing_station"
+        ]
+      },
+      "water_nursery": {
+        "medium": "water",
+        "min_space": 4,
+        "structures": [
+          "pen",
+          "feed_trough",
+          "bed"
+        ]
+      },
+      "water_production": {
+        "any_of": [
+          {
+            "id": "water_station",
+            "members": [
+              "carp_harvest_station",
+              "oilfish_harvest_station",
+              "pearl_station",
+              "gel_station",
+              "coral_station"
+            ]
+          }
+        ],
+        "medium": "water",
+        "min_space": 8,
+        "structures": [
+          "pen",
+          "feed_trough",
+          "bed"
+        ]
+      },
       "work": {
         "any_of": [
           {
@@ -4260,6 +4474,38 @@
     "toy_percent": 10,
     "toy_recovery": 1,
     "toy_station": "toy_station",
+    "version": 1
+  },
+  "p106": {
+    "change": {
+      "ap": 1,
+      "gain": 40,
+      "inputs": {
+        "clean_water": 2
+      },
+      "max_cells": 8,
+      "wastewater": 2
+    },
+    "facilities": {
+      "change_station": "water_change_station",
+      "crop_station": "aquatic_crop_station"
+    },
+    "fence": {
+      "ap": 1,
+      "cash": 1,
+      "inputs": {
+        "twig": 1
+      }
+    },
+    "quality": {
+      "base_decay": 2,
+      "cap": 100,
+      "initial": 100,
+      "load_factor": 6,
+      "pause_threshold": 30,
+      "points_per_cell": 10000
+    },
+    "station_change_cells": 8,
     "version": 1
   },
   "product": "farm_demo_p8",
@@ -5705,7 +5951,8 @@
         "diets": [],
         "facilities": [
           "carbonization_nest",
-          "farm_processor"
+          "farm_processor",
+          "oilfish_harvest_station"
         ],
         "purchases": [],
         "recipes": [
@@ -5737,7 +5984,8 @@
         "crops": [],
         "diets": [],
         "facilities": [
-          "purifying_bed"
+          "purifying_bed",
+          "silt_processing_station"
         ],
         "purchases": [
           "purifying_mat_culture"
@@ -5861,7 +6109,10 @@
         "diets": [
           "dense_meal"
         ],
-        "facilities": [],
+        "facilities": [
+          "gel_station",
+          "pearl_station"
+        ],
         "purchases": [],
         "recipes": [
           "dense_algae_culture",
@@ -5947,6 +6198,7 @@
           "mineral_supplement"
         ],
         "facilities": [
+          "coral_station",
           "growth_lamp",
           "scale_station",
           "shell_forming_station"
@@ -6422,26 +6674,34 @@
         "break_stone",
         "break_stone_provider",
         "build:algae_tank",
+        "build:aquatic_crop_station",
         "build:carbonization_nest",
         "build:care_table",
+        "build:carp_harvest_station",
         "build:char_kiln",
         "build:compost_bin",
         "build:compost_mouse_den",
+        "build:coral_station",
         "build:dispatch_station",
         "build:farm_processor",
         "build:fish_pond",
+        "build:gel_station",
         "build:kitchen",
+        "build:oilfish_harvest_station",
         "build:ore_sorting_yard",
+        "build:pearl_station",
         "build:pen",
         "build:purifying_bed",
         "build:research_bench",
         "build:rock_breaking_yard",
         "build:scale_station",
         "build:shell_forming_station",
+        "build:silt_processing_station",
         "build:smelter",
         "build:soothing_station",
         "build:spirit_liquid_collector",
         "build:toy_station",
+        "build:water_change_station",
         "build:woodshop",
         "build:wool_station",
         "diet:rock_mole:break_stone",
@@ -6644,19 +6904,27 @@
     {
       "buy_price": 0,
       "consumers": [
+        "build:aquatic_crop_station",
         "build:bee_hive",
         "build:carbonization_nest",
         "build:care_table",
+        "build:carp_harvest_station",
+        "build:coral_station",
         "build:farm_processor",
         "build:field_service_station",
+        "build:gel_station",
         "build:kitchen",
+        "build:oilfish_harvest_station",
+        "build:pearl_station",
         "build:scale_station",
         "build:shell_forming_station",
         "build:silkworm_rack",
+        "build:silt_processing_station",
         "build:smelter",
         "build:soothing_station",
         "build:spirit_liquid_collector",
         "build:toy_station",
+        "build:water_change_station",
         "build:wool_station",
         "sale"
       ],

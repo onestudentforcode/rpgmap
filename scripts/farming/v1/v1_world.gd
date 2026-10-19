@@ -400,18 +400,36 @@ func can_build_facility(cell: Vector2i, facility_id: String) -> Dictionary:
 	if not facility_defs.has(facility_id):
 		return _error("未知设施")
 	var definition: Dictionary = facility_defs[facility_id]
+	if bool(definition.get("retired", false)):
+		return _error("该设施已退役，不再开放新建")
 	if primeval_stones < int(definition["cash"]):
 		return _error("建设元石不足")
+	var footprint: Array = definition["footprint"]
+	var required_terrain := "water" if definition.get("terrain") == "water" else ""
+	if definition.has("terrains"):
+		# Dual-medium variant (P10.6 §16.2.5): every cell must sit on one of the
+		# listed media, and the whole footprint must share a single medium.
+		var medium := ""
+		for dy in range(int(footprint[1])):
+			for dx in range(int(footprint[0])):
+				var probe := cell + Vector2i(dx, dy)
+				var here := "water" if grid.terrain_at(probe) == "water" else "land"
+				if not definition["terrains"].has(here):
+					return _error("该设施不能建在这种地面上")
+				if medium.is_empty():
+					medium = here
+				elif medium != here:
+					return _error("设施占地不能跨越水陆两种地面")
+		required_terrain = "water" if medium == "water" else ""
 	for ident in definition["materials"]:
 		if not inventory.has(ident, int(definition["materials"][ident])):
 			return _error("建设材料不足：" + _items[ident]["name"])
-	var footprint: Array = definition["footprint"]
 	for dy in range(int(footprint[1])):
 		for dx in range(int(footprint[0])):
 			var target := cell + Vector2i(dx,dy)
 			if _source_cells.has(target):
 				return _error("设施不能覆盖资源点")
-	return grid.can_reserve(cell,int(footprint[0]),int(footprint[1]),"v1_facility:%d" % _next_facility_uid, Grid.State.OCCUPIED, "water" if definition.get("terrain") == "water" else "")
+	return grid.can_reserve(cell,int(footprint[0]),int(footprint[1]),"v1_facility:%d" % _next_facility_uid, Grid.State.OCCUPIED, required_terrain)
 
 func build_facility(cell: Vector2i, facility_id: String) -> Dictionary:
 	var checked := can_build_facility(cell,facility_id)
@@ -423,7 +441,11 @@ func build_facility(cell: Vector2i, facility_id: String) -> Dictionary:
 	for target in checked["cells"]:
 		if grid.state_at(target) == Grid.State.TILLED: tilled_before.append(target)
 	var uid := _next_facility_uid
-	checked = grid.reserve(cell, int(footprint[0]), int(footprint[1]), "v1_facility:%d" % uid, Grid.State.OCCUPIED, "water" if definition.get("terrain") == "water" else "")
+	var reserve_terrain := "water" if definition.get("terrain") == "water" else ""
+	if definition.has("terrains"):
+		var any_cell := cell + Vector2i(int(footprint[0]) - 1, int(footprint[1]) - 1)
+		reserve_terrain = "water" if grid.terrain_at(any_cell) == "water" else ""
+	checked = grid.reserve(cell, int(footprint[0]), int(footprint[1]), "v1_facility:%d" % uid, Grid.State.OCCUPIED, reserve_terrain)
 	if not checked["ok"]:
 		return checked
 	for target in tilled_before:

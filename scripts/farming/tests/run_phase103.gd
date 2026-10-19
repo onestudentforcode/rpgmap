@@ -40,7 +40,7 @@ func run() -> void:
 
 func _schema() -> void:
 	var w := fixture()
-	check(Codec.SCHEMA == 23, "schema is 23")
+	check(Codec.SCHEMA == 24, "schema is 24")
 	check(Codec.normalize(w.to_snapshot())["ok"], "fresh schema23 snapshot valid")
 	for old in [17, 18, 19, 20, 21, 22]:
 		var bad: Dictionary = w.to_snapshot()

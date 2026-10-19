@@ -70,13 +70,13 @@
   "counts": {
     "crops": 8,
     "diets": 35,
-    "entities": 261,
-    "facilities": 31,
+    "entities": 269,
+    "facilities": 39,
     "livestock": 12,
     "living_mappings": 10,
     "logistics": 9,
     "parcels": 6,
-    "processes": 363,
+    "processes": 379,
     "recipes": 51,
     "research": 12,
     "resources": 74,
@@ -1210,6 +1210,48 @@
         {
           "key": "cost",
           "label": "建造费用",
+          "text": "8元石＋材料 木板×1＋普通岩石×2＋1AP"
+        },
+        {
+          "key": "footprint",
+          "label": "占地/地形",
+          "text": "1×1格；地形：水面"
+        },
+        {
+          "key": "type",
+          "label": "设施类型",
+          "text": "加工设施"
+        },
+        {
+          "key": "demolish",
+          "label": "拆除",
+          "text": "1AP；需设施空闲；不返还材料与元石"
+        },
+        {
+          "key": "substitute",
+          "label": "建材替代",
+          "text": "普通岩石部分可用复合石板1:1或再生填料2:1整体替代（2份石）"
+        }
+      ],
+      "icon": "build",
+      "id": "facility:aquatic_crop_station",
+      "kind": "facility",
+      "links": [],
+      "locks": null,
+      "name": "水生种植台",
+      "related_rules": [
+        "rule:build_substitute"
+      ],
+      "source_id": "aquatic_crop_station",
+      "summary": "加工设施；8元石",
+      "tags": []
+    },
+    {
+      "category": "facilities",
+      "fields": [
+        {
+          "key": "cost",
+          "label": "建造费用",
           "text": "10元石＋材料 木板×2＋原木×2＋1AP"
         },
         {
@@ -1382,6 +1424,48 @@
         {
           "key": "cost",
           "label": "建造费用",
+          "text": "12元石＋材料 木板×2＋普通岩石×2＋1AP"
+        },
+        {
+          "key": "footprint",
+          "label": "占地/地形",
+          "text": "1×1格；地形：水面"
+        },
+        {
+          "key": "type",
+          "label": "设施类型",
+          "text": "加工设施"
+        },
+        {
+          "key": "demolish",
+          "label": "拆除",
+          "text": "1AP；需设施空闲；不返还材料与元石"
+        },
+        {
+          "key": "substitute",
+          "label": "建材替代",
+          "text": "普通岩石部分可用复合石板1:1或再生填料2:1整体替代（2份石）"
+        }
+      ],
+      "icon": "build",
+      "id": "facility:carp_harvest_station",
+      "kind": "facility",
+      "links": [],
+      "locks": null,
+      "name": "捕鲤台",
+      "related_rules": [
+        "rule:build_substitute"
+      ],
+      "source_id": "carp_harvest_station",
+      "summary": "加工设施；12元石",
+      "tags": []
+    },
+    {
+      "category": "facilities",
+      "fields": [
+        {
+          "key": "cost",
+          "label": "建造费用",
           "text": "12元石＋材料 原木×2＋普通岩石×3＋1AP"
         },
         {
@@ -1531,6 +1615,57 @@
       ],
       "source_id": "compost_mouse_den",
       "summary": "加工设施；12元石",
+      "tags": []
+    },
+    {
+      "category": "facilities",
+      "fields": [
+        {
+          "key": "cost",
+          "label": "建造费用",
+          "text": "20元石＋材料 木板×2＋普通岩石×4＋1AP"
+        },
+        {
+          "key": "footprint",
+          "label": "占地/地形",
+          "text": "1×1格；地形：水面"
+        },
+        {
+          "key": "type",
+          "label": "设施类型",
+          "text": "加工设施"
+        },
+        {
+          "key": "demolish",
+          "label": "拆除",
+          "text": "1AP；需设施空闲；不返还材料与元石"
+        },
+        {
+          "key": "substitute",
+          "label": "建材替代",
+          "text": "普通岩石部分可用复合石板1:1或再生填料2:1整体替代（4份石）"
+        }
+      ],
+      "icon": "build",
+      "id": "facility:coral_station",
+      "kind": "facility",
+      "links": [
+        {
+          "entity": "research:mineral_materials",
+          "label": "解锁研究",
+          "name": "矿质材料工艺"
+        }
+      ],
+      "locks": {
+        "research": "research:mineral_materials",
+        "research_name": "矿质材料工艺"
+      },
+      "name": "采礁台",
+      "related_rules": [
+        "rule:build_substitute"
+      ],
+      "source_id": "coral_station",
+      "summary": "加工设施；20元石",
       "tags": []
     },
     {
@@ -1800,6 +1935,57 @@
         {
           "key": "cost",
           "label": "建造费用",
+          "text": "16元石＋材料 木板×2＋普通岩石×3＋1AP"
+        },
+        {
+          "key": "footprint",
+          "label": "占地/地形",
+          "text": "1×1格；地形：水面"
+        },
+        {
+          "key": "type",
+          "label": "设施类型",
+          "text": "加工设施"
+        },
+        {
+          "key": "demolish",
+          "label": "拆除",
+          "text": "1AP；需设施空闲；不返还材料与元石"
+        },
+        {
+          "key": "substitute",
+          "label": "建材替代",
+          "text": "普通岩石部分可用复合石板1:1或再生填料2:1整体替代（3份石）"
+        }
+      ],
+      "icon": "build",
+      "id": "facility:gel_station",
+      "kind": "facility",
+      "links": [
+        {
+          "entity": "research:water_recirculation",
+          "label": "解锁研究",
+          "name": "水与藻料回流"
+        }
+      ],
+      "locks": {
+        "research": "research:water_recirculation",
+        "research_name": "水与藻料回流"
+      },
+      "name": "采胶台",
+      "related_rules": [
+        "rule:build_substitute"
+      ],
+      "source_id": "gel_station",
+      "summary": "加工设施；16元石",
+      "tags": []
+    },
+    {
+      "category": "facilities",
+      "fields": [
+        {
+          "key": "cost",
+          "label": "建造费用",
           "text": "12元石＋材料 复合石板×1＋铁锭×1＋1AP"
         },
         {
@@ -1980,6 +2166,57 @@
         {
           "key": "cost",
           "label": "建造费用",
+          "text": "16元石＋材料 木板×2＋普通岩石×3＋1AP"
+        },
+        {
+          "key": "footprint",
+          "label": "占地/地形",
+          "text": "1×1格；地形：水面"
+        },
+        {
+          "key": "type",
+          "label": "设施类型",
+          "text": "加工设施"
+        },
+        {
+          "key": "demolish",
+          "label": "拆除",
+          "text": "1AP；需设施空闲；不返还材料与元石"
+        },
+        {
+          "key": "substitute",
+          "label": "建材替代",
+          "text": "普通岩石部分可用复合石板1:1或再生填料2:1整体替代（3份石）"
+        }
+      ],
+      "icon": "build",
+      "id": "facility:oilfish_harvest_station",
+      "kind": "facility",
+      "links": [
+        {
+          "entity": "research:farm_preparation",
+          "label": "解锁研究",
+          "name": "农产初加工"
+        }
+      ],
+      "locks": {
+        "research": "research:farm_preparation",
+        "research_name": "农产初加工"
+      },
+      "name": "取油台",
+      "related_rules": [
+        "rule:build_substitute"
+      ],
+      "source_id": "oilfish_harvest_station",
+      "summary": "加工设施；16元石",
+      "tags": []
+    },
+    {
+      "category": "facilities",
+      "fields": [
+        {
+          "key": "cost",
+          "label": "建造费用",
           "text": "12元石＋材料 原木×2＋普通岩石×3＋1AP"
         },
         {
@@ -2038,6 +2275,57 @@
       ],
       "source_id": "ore_sorting_yard",
       "summary": "养殖栖息设施；12元石",
+      "tags": []
+    },
+    {
+      "category": "facilities",
+      "fields": [
+        {
+          "key": "cost",
+          "label": "建造费用",
+          "text": "16元石＋材料 木板×2＋普通岩石×3＋1AP"
+        },
+        {
+          "key": "footprint",
+          "label": "占地/地形",
+          "text": "1×1格；地形：水面"
+        },
+        {
+          "key": "type",
+          "label": "设施类型",
+          "text": "加工设施"
+        },
+        {
+          "key": "demolish",
+          "label": "拆除",
+          "text": "1AP；需设施空闲；不返还材料与元石"
+        },
+        {
+          "key": "substitute",
+          "label": "建材替代",
+          "text": "普通岩石部分可用复合石板1:1或再生填料2:1整体替代（3份石）"
+        }
+      ],
+      "icon": "build",
+      "id": "facility:pearl_station",
+      "kind": "facility",
+      "links": [
+        {
+          "entity": "research:water_recirculation",
+          "label": "解锁研究",
+          "name": "水与藻料回流"
+        }
+      ],
+      "locks": {
+        "research": "research:water_recirculation",
+        "research_name": "水与藻料回流"
+      },
+      "name": "采珠台",
+      "related_rules": [
+        "rule:build_substitute"
+      ],
+      "source_id": "pearl_station",
+      "summary": "加工设施；16元石",
       "tags": []
     },
     {
@@ -2467,6 +2755,57 @@
         {
           "key": "cost",
           "label": "建造费用",
+          "text": "14元石＋材料 木板×2＋普通岩石×2＋1AP"
+        },
+        {
+          "key": "footprint",
+          "label": "占地/地形",
+          "text": "1×1格；地形：水面"
+        },
+        {
+          "key": "type",
+          "label": "设施类型",
+          "text": "加工设施"
+        },
+        {
+          "key": "demolish",
+          "label": "拆除",
+          "text": "1AP；需设施空闲；不返还材料与元石"
+        },
+        {
+          "key": "substitute",
+          "label": "建材替代",
+          "text": "普通岩石部分可用复合石板1:1或再生填料2:1整体替代（2份石）"
+        }
+      ],
+      "icon": "build",
+      "id": "facility:silt_processing_station",
+      "kind": "facility",
+      "links": [
+        {
+          "entity": "research:biofiltration",
+          "label": "解锁研究",
+          "name": "菌毯净化"
+        }
+      ],
+      "locks": {
+        "research": "research:biofiltration",
+        "research_name": "菌毯净化"
+      },
+      "name": "泥料处理台",
+      "related_rules": [
+        "rule:build_substitute"
+      ],
+      "source_id": "silt_processing_station",
+      "summary": "加工设施；14元石",
+      "tags": []
+    },
+    {
+      "category": "facilities",
+      "fields": [
+        {
+          "key": "cost",
+          "label": "建造费用",
           "text": "6元石＋材料 原木×2＋1AP"
         },
         {
@@ -2684,6 +3023,48 @@
       ],
       "source_id": "toy_station",
       "summary": "加工设施；12元石",
+      "tags": []
+    },
+    {
+      "category": "facilities",
+      "fields": [
+        {
+          "key": "cost",
+          "label": "建造费用",
+          "text": "16元石＋材料 木板×2＋普通岩石×4＋1AP"
+        },
+        {
+          "key": "footprint",
+          "label": "占地/地形",
+          "text": "1×1格；地形：陆地"
+        },
+        {
+          "key": "type",
+          "label": "设施类型",
+          "text": "加工设施"
+        },
+        {
+          "key": "demolish",
+          "label": "拆除",
+          "text": "1AP；需设施空闲；不返还材料与元石"
+        },
+        {
+          "key": "substitute",
+          "label": "建材替代",
+          "text": "普通岩石部分可用复合石板1:1或再生填料2:1整体替代（4份石）"
+        }
+      ],
+      "icon": "build",
+      "id": "facility:water_change_station",
+      "kind": "facility",
+      "links": [],
+      "locks": null,
+      "name": "换水站",
+      "related_rules": [
+        "rule:build_substitute"
+      ],
+      "source_id": "water_change_station",
+      "summary": "加工设施；16元石",
       "tags": []
     },
     {
@@ -5028,6 +5409,24 @@
           "category_hint": "build",
           "conditions": "选择复合石板替代",
           "crop": null,
+          "detail": "建造·水生种植台：复合石板×2（每次建造（可选1:1替石））｜水生种植台｜1AP",
+          "duration": "即时",
+          "facility": "水生种植台",
+          "name": "建造·水生种植台",
+          "others": "木板×1；普通岩石×2；再生填料×4；元石×8",
+          "process": "proc:build:aquatic_crop_station",
+          "quantity": 2,
+          "research": null,
+          "species": null,
+          "timing": "建造时",
+          "type": "build"
+        },
+        {
+          "ap": "1AP",
+          "basis": "每次建造（可选1:1替石）",
+          "category_hint": "build",
+          "conditions": "选择复合石板替代",
+          "crop": null,
           "detail": "建造·炭化巢：复合石板×4（每次建造（可选1:1替石））｜炭化巢｜需研究「农产初加工」｜1AP",
           "duration": "即时",
           "facility": "炭化巢",
@@ -5052,6 +5451,24 @@
           "name": "建造·照料台",
           "others": "木板×2；普通岩石×2；再生填料×4；元石×24",
           "process": "proc:build:care_table",
+          "quantity": 2,
+          "research": null,
+          "species": null,
+          "timing": "建造时",
+          "type": "build"
+        },
+        {
+          "ap": "1AP",
+          "basis": "每次建造（可选1:1替石）",
+          "category_hint": "build",
+          "conditions": "选择复合石板替代",
+          "crop": null,
+          "detail": "建造·捕鲤台：复合石板×2（每次建造（可选1:1替石））｜捕鲤台｜1AP",
+          "duration": "即时",
+          "facility": "捕鲤台",
+          "name": "建造·捕鲤台",
+          "others": "木板×2；普通岩石×2；再生填料×4；元石×12",
+          "process": "proc:build:carp_harvest_station",
           "quantity": 2,
           "research": null,
           "species": null,
@@ -5118,6 +5535,24 @@
           "category_hint": "build",
           "conditions": "选择复合石板替代",
           "crop": null,
+          "detail": "建造·采礁台：复合石板×4（每次建造（可选1:1替石））｜采礁台｜需研究「矿质材料工艺」｜1AP",
+          "duration": "即时",
+          "facility": "采礁台",
+          "name": "建造·采礁台",
+          "others": "木板×2；普通岩石×4；再生填料×8；元石×20",
+          "process": "proc:build:coral_station",
+          "quantity": 4,
+          "research": "矿质材料工艺",
+          "species": null,
+          "timing": "建造时",
+          "type": "build"
+        },
+        {
+          "ap": "1AP",
+          "basis": "每次建造（可选1:1替石）",
+          "category_hint": "build",
+          "conditions": "选择复合石板替代",
+          "crop": null,
           "detail": "建造·调度站：复合石板×2（每次建造（可选1:1替石））｜调度站｜1AP",
           "duration": "即时",
           "facility": "调度站",
@@ -5168,6 +5603,24 @@
         },
         {
           "ap": "1AP",
+          "basis": "每次建造（可选1:1替石）",
+          "category_hint": "build",
+          "conditions": "选择复合石板替代",
+          "crop": null,
+          "detail": "建造·采胶台：复合石板×3（每次建造（可选1:1替石））｜采胶台｜需研究「水与藻料回流」｜1AP",
+          "duration": "即时",
+          "facility": "采胶台",
+          "name": "建造·采胶台",
+          "others": "木板×2；普通岩石×3；再生填料×6；元石×16",
+          "process": "proc:build:gel_station",
+          "quantity": 3,
+          "research": "水与藻料回流",
+          "species": null,
+          "timing": "建造时",
+          "type": "build"
+        },
+        {
+          "ap": "1AP",
           "basis": "每次建造",
           "category_hint": "build",
           "conditions": "",
@@ -5208,6 +5661,24 @@
           "category_hint": "build",
           "conditions": "选择复合石板替代",
           "crop": null,
+          "detail": "建造·取油台：复合石板×3（每次建造（可选1:1替石））｜取油台｜需研究「农产初加工」｜1AP",
+          "duration": "即时",
+          "facility": "取油台",
+          "name": "建造·取油台",
+          "others": "木板×2；普通岩石×3；再生填料×6；元石×16",
+          "process": "proc:build:oilfish_harvest_station",
+          "quantity": 3,
+          "research": "农产初加工",
+          "species": null,
+          "timing": "建造时",
+          "type": "build"
+        },
+        {
+          "ap": "1AP",
+          "basis": "每次建造（可选1:1替石）",
+          "category_hint": "build",
+          "conditions": "选择复合石板替代",
+          "crop": null,
           "detail": "建造·选矿场：复合石板×3（每次建造（可选1:1替石））｜选矿场｜需研究「生物选矿」｜1AP",
           "duration": "即时",
           "facility": "选矿场",
@@ -5216,6 +5687,24 @@
           "process": "proc:build:ore_sorting_yard",
           "quantity": 3,
           "research": "生物选矿",
+          "species": null,
+          "timing": "建造时",
+          "type": "build"
+        },
+        {
+          "ap": "1AP",
+          "basis": "每次建造（可选1:1替石）",
+          "category_hint": "build",
+          "conditions": "选择复合石板替代",
+          "crop": null,
+          "detail": "建造·采珠台：复合石板×3（每次建造（可选1:1替石））｜采珠台｜需研究「水与藻料回流」｜1AP",
+          "duration": "即时",
+          "facility": "采珠台",
+          "name": "建造·采珠台",
+          "others": "木板×2；普通岩石×3；再生填料×6；元石×16",
+          "process": "proc:build:pearl_station",
+          "quantity": 3,
+          "research": "水与藻料回流",
           "species": null,
           "timing": "建造时",
           "type": "build"
@@ -5334,6 +5823,24 @@
           "category_hint": "build",
           "conditions": "选择复合石板替代",
           "crop": null,
+          "detail": "建造·泥料处理台：复合石板×2（每次建造（可选1:1替石））｜泥料处理台｜需研究「菌毯净化」｜1AP",
+          "duration": "即时",
+          "facility": "泥料处理台",
+          "name": "建造·泥料处理台",
+          "others": "木板×2；普通岩石×2；再生填料×4；元石×14",
+          "process": "proc:build:silt_processing_station",
+          "quantity": 2,
+          "research": "菌毯净化",
+          "species": null,
+          "timing": "建造时",
+          "type": "build"
+        },
+        {
+          "ap": "1AP",
+          "basis": "每次建造（可选1:1替石）",
+          "category_hint": "build",
+          "conditions": "选择复合石板替代",
+          "crop": null,
           "detail": "建造·小型冶炼炉：复合石板×6（每次建造（可选1:1替石））｜小型冶炼炉｜1AP",
           "duration": "即时",
           "facility": "小型冶炼炉",
@@ -5395,6 +5902,24 @@
           "others": "木板×2；普通岩石×2；再生填料×4；元石×12",
           "process": "proc:build:toy_station",
           "quantity": 2,
+          "research": null,
+          "species": null,
+          "timing": "建造时",
+          "type": "build"
+        },
+        {
+          "ap": "1AP",
+          "basis": "每次建造（可选1:1替石）",
+          "category_hint": "build",
+          "conditions": "选择复合石板替代",
+          "crop": null,
+          "detail": "建造·换水站：复合石板×4（每次建造（可选1:1替石））｜换水站｜1AP",
+          "duration": "即时",
+          "facility": "换水站",
+          "name": "建造·换水站",
+          "others": "木板×2；普通岩石×4；再生填料×8；元石×16",
+          "process": "proc:build:water_change_station",
+          "quantity": 4,
           "research": null,
           "species": null,
           "timing": "建造时",
@@ -11495,6 +12020,24 @@
           "category_hint": "build",
           "conditions": "",
           "crop": null,
+          "detail": "建造·水生种植台：普通岩石×2（每次建造）｜水生种植台｜1AP",
+          "duration": "即时",
+          "facility": "水生种植台",
+          "name": "建造·水生种植台",
+          "others": "木板×1；复合石板×2；再生填料×4；元石×8",
+          "process": "proc:build:aquatic_crop_station",
+          "quantity": 2,
+          "research": null,
+          "species": null,
+          "timing": "建造时",
+          "type": "build"
+        },
+        {
+          "ap": "1AP",
+          "basis": "每次建造",
+          "category_hint": "build",
+          "conditions": "",
+          "crop": null,
           "detail": "建造·炭化巢：普通岩石×4（每次建造）｜炭化巢｜需研究「农产初加工」｜1AP",
           "duration": "即时",
           "facility": "炭化巢",
@@ -11519,6 +12062,24 @@
           "name": "建造·照料台",
           "others": "木板×2；复合石板×2；再生填料×4；元石×24",
           "process": "proc:build:care_table",
+          "quantity": 2,
+          "research": null,
+          "species": null,
+          "timing": "建造时",
+          "type": "build"
+        },
+        {
+          "ap": "1AP",
+          "basis": "每次建造",
+          "category_hint": "build",
+          "conditions": "",
+          "crop": null,
+          "detail": "建造·捕鲤台：普通岩石×2（每次建造）｜捕鲤台｜1AP",
+          "duration": "即时",
+          "facility": "捕鲤台",
+          "name": "建造·捕鲤台",
+          "others": "木板×2；复合石板×2；再生填料×4；元石×12",
+          "process": "proc:build:carp_harvest_station",
           "quantity": 2,
           "research": null,
           "species": null,
@@ -11585,6 +12146,24 @@
           "category_hint": "build",
           "conditions": "",
           "crop": null,
+          "detail": "建造·采礁台：普通岩石×4（每次建造）｜采礁台｜需研究「矿质材料工艺」｜1AP",
+          "duration": "即时",
+          "facility": "采礁台",
+          "name": "建造·采礁台",
+          "others": "木板×2；复合石板×4；再生填料×8；元石×20",
+          "process": "proc:build:coral_station",
+          "quantity": 4,
+          "research": "矿质材料工艺",
+          "species": null,
+          "timing": "建造时",
+          "type": "build"
+        },
+        {
+          "ap": "1AP",
+          "basis": "每次建造",
+          "category_hint": "build",
+          "conditions": "",
+          "crop": null,
           "detail": "建造·调度站：普通岩石×2（每次建造）｜调度站｜1AP",
           "duration": "即时",
           "facility": "调度站",
@@ -11639,6 +12218,24 @@
           "category_hint": "build",
           "conditions": "",
           "crop": null,
+          "detail": "建造·采胶台：普通岩石×3（每次建造）｜采胶台｜需研究「水与藻料回流」｜1AP",
+          "duration": "即时",
+          "facility": "采胶台",
+          "name": "建造·采胶台",
+          "others": "木板×2；复合石板×3；再生填料×6；元石×16",
+          "process": "proc:build:gel_station",
+          "quantity": 3,
+          "research": "水与藻料回流",
+          "species": null,
+          "timing": "建造时",
+          "type": "build"
+        },
+        {
+          "ap": "1AP",
+          "basis": "每次建造",
+          "category_hint": "build",
+          "conditions": "",
+          "crop": null,
           "detail": "建造·厨房：普通岩石×3（每次建造）｜厨房｜需研究「灵食初制」｜1AP",
           "duration": "即时",
           "facility": "厨房",
@@ -11657,6 +12254,24 @@
           "category_hint": "build",
           "conditions": "",
           "crop": null,
+          "detail": "建造·取油台：普通岩石×3（每次建造）｜取油台｜需研究「农产初加工」｜1AP",
+          "duration": "即时",
+          "facility": "取油台",
+          "name": "建造·取油台",
+          "others": "木板×2；复合石板×3；再生填料×6；元石×16",
+          "process": "proc:build:oilfish_harvest_station",
+          "quantity": 3,
+          "research": "农产初加工",
+          "species": null,
+          "timing": "建造时",
+          "type": "build"
+        },
+        {
+          "ap": "1AP",
+          "basis": "每次建造",
+          "category_hint": "build",
+          "conditions": "",
+          "crop": null,
           "detail": "建造·选矿场：普通岩石×3（每次建造）｜选矿场｜需研究「生物选矿」｜1AP",
           "duration": "即时",
           "facility": "选矿场",
@@ -11665,6 +12280,24 @@
           "process": "proc:build:ore_sorting_yard",
           "quantity": 3,
           "research": "生物选矿",
+          "species": null,
+          "timing": "建造时",
+          "type": "build"
+        },
+        {
+          "ap": "1AP",
+          "basis": "每次建造",
+          "category_hint": "build",
+          "conditions": "",
+          "crop": null,
+          "detail": "建造·采珠台：普通岩石×3（每次建造）｜采珠台｜需研究「水与藻料回流」｜1AP",
+          "duration": "即时",
+          "facility": "采珠台",
+          "name": "建造·采珠台",
+          "others": "木板×2；复合石板×3；再生填料×6；元石×16",
+          "process": "proc:build:pearl_station",
+          "quantity": 3,
+          "research": "水与藻料回流",
           "species": null,
           "timing": "建造时",
           "type": "build"
@@ -11783,6 +12416,24 @@
           "category_hint": "build",
           "conditions": "",
           "crop": null,
+          "detail": "建造·泥料处理台：普通岩石×2（每次建造）｜泥料处理台｜需研究「菌毯净化」｜1AP",
+          "duration": "即时",
+          "facility": "泥料处理台",
+          "name": "建造·泥料处理台",
+          "others": "木板×2；复合石板×2；再生填料×4；元石×14",
+          "process": "proc:build:silt_processing_station",
+          "quantity": 2,
+          "research": "菌毯净化",
+          "species": null,
+          "timing": "建造时",
+          "type": "build"
+        },
+        {
+          "ap": "1AP",
+          "basis": "每次建造",
+          "category_hint": "build",
+          "conditions": "",
+          "crop": null,
           "detail": "建造·小型冶炼炉：普通岩石×6（每次建造）｜小型冶炼炉｜1AP",
           "duration": "即时",
           "facility": "小型冶炼炉",
@@ -11844,6 +12495,24 @@
           "others": "木板×2；复合石板×2；再生填料×4；元石×12",
           "process": "proc:build:toy_station",
           "quantity": 2,
+          "research": null,
+          "species": null,
+          "timing": "建造时",
+          "type": "build"
+        },
+        {
+          "ap": "1AP",
+          "basis": "每次建造",
+          "category_hint": "build",
+          "conditions": "",
+          "crop": null,
+          "detail": "建造·换水站：普通岩石×4（每次建造）｜换水站｜1AP",
+          "duration": "即时",
+          "facility": "换水站",
+          "name": "建造·换水站",
+          "others": "木板×2；复合石板×4；再生填料×8；元石×16",
+          "process": "proc:build:water_change_station",
+          "quantity": 4,
           "research": null,
           "species": null,
           "timing": "建造时",
@@ -12562,6 +13231,24 @@
           "category_hint": "build",
           "conditions": "选择再生填料替代",
           "crop": null,
+          "detail": "建造·水生种植台：再生填料×4（每次建造（可选2:1替石））｜水生种植台｜1AP",
+          "duration": "即时",
+          "facility": "水生种植台",
+          "name": "建造·水生种植台",
+          "others": "木板×1；普通岩石×2；复合石板×2；元石×8",
+          "process": "proc:build:aquatic_crop_station",
+          "quantity": 4,
+          "research": null,
+          "species": null,
+          "timing": "建造时",
+          "type": "build"
+        },
+        {
+          "ap": "1AP",
+          "basis": "每次建造（可选2:1替石）",
+          "category_hint": "build",
+          "conditions": "选择再生填料替代",
+          "crop": null,
           "detail": "建造·炭化巢：再生填料×8（每次建造（可选2:1替石））｜炭化巢｜需研究「农产初加工」｜1AP",
           "duration": "即时",
           "facility": "炭化巢",
@@ -12586,6 +13273,24 @@
           "name": "建造·照料台",
           "others": "木板×2；普通岩石×2；复合石板×2；元石×24",
           "process": "proc:build:care_table",
+          "quantity": 4,
+          "research": null,
+          "species": null,
+          "timing": "建造时",
+          "type": "build"
+        },
+        {
+          "ap": "1AP",
+          "basis": "每次建造（可选2:1替石）",
+          "category_hint": "build",
+          "conditions": "选择再生填料替代",
+          "crop": null,
+          "detail": "建造·捕鲤台：再生填料×4（每次建造（可选2:1替石））｜捕鲤台｜1AP",
+          "duration": "即时",
+          "facility": "捕鲤台",
+          "name": "建造·捕鲤台",
+          "others": "木板×2；普通岩石×2；复合石板×2；元石×12",
+          "process": "proc:build:carp_harvest_station",
           "quantity": 4,
           "research": null,
           "species": null,
@@ -12652,6 +13357,24 @@
           "category_hint": "build",
           "conditions": "选择再生填料替代",
           "crop": null,
+          "detail": "建造·采礁台：再生填料×8（每次建造（可选2:1替石））｜采礁台｜需研究「矿质材料工艺」｜1AP",
+          "duration": "即时",
+          "facility": "采礁台",
+          "name": "建造·采礁台",
+          "others": "木板×2；普通岩石×4；复合石板×4；元石×20",
+          "process": "proc:build:coral_station",
+          "quantity": 8,
+          "research": "矿质材料工艺",
+          "species": null,
+          "timing": "建造时",
+          "type": "build"
+        },
+        {
+          "ap": "1AP",
+          "basis": "每次建造（可选2:1替石）",
+          "category_hint": "build",
+          "conditions": "选择再生填料替代",
+          "crop": null,
           "detail": "建造·调度站：再生填料×4（每次建造（可选2:1替石））｜调度站｜1AP",
           "duration": "即时",
           "facility": "调度站",
@@ -12706,6 +13429,24 @@
           "category_hint": "build",
           "conditions": "选择再生填料替代",
           "crop": null,
+          "detail": "建造·采胶台：再生填料×6（每次建造（可选2:1替石））｜采胶台｜需研究「水与藻料回流」｜1AP",
+          "duration": "即时",
+          "facility": "采胶台",
+          "name": "建造·采胶台",
+          "others": "木板×2；普通岩石×3；复合石板×3；元石×16",
+          "process": "proc:build:gel_station",
+          "quantity": 6,
+          "research": "水与藻料回流",
+          "species": null,
+          "timing": "建造时",
+          "type": "build"
+        },
+        {
+          "ap": "1AP",
+          "basis": "每次建造（可选2:1替石）",
+          "category_hint": "build",
+          "conditions": "选择再生填料替代",
+          "crop": null,
           "detail": "建造·厨房：再生填料×6（每次建造（可选2:1替石））｜厨房｜需研究「灵食初制」｜1AP",
           "duration": "即时",
           "facility": "厨房",
@@ -12724,6 +13465,24 @@
           "category_hint": "build",
           "conditions": "选择再生填料替代",
           "crop": null,
+          "detail": "建造·取油台：再生填料×6（每次建造（可选2:1替石））｜取油台｜需研究「农产初加工」｜1AP",
+          "duration": "即时",
+          "facility": "取油台",
+          "name": "建造·取油台",
+          "others": "木板×2；普通岩石×3；复合石板×3；元石×16",
+          "process": "proc:build:oilfish_harvest_station",
+          "quantity": 6,
+          "research": "农产初加工",
+          "species": null,
+          "timing": "建造时",
+          "type": "build"
+        },
+        {
+          "ap": "1AP",
+          "basis": "每次建造（可选2:1替石）",
+          "category_hint": "build",
+          "conditions": "选择再生填料替代",
+          "crop": null,
           "detail": "建造·选矿场：再生填料×6（每次建造（可选2:1替石））｜选矿场｜需研究「生物选矿」｜1AP",
           "duration": "即时",
           "facility": "选矿场",
@@ -12732,6 +13491,24 @@
           "process": "proc:build:ore_sorting_yard",
           "quantity": 6,
           "research": "生物选矿",
+          "species": null,
+          "timing": "建造时",
+          "type": "build"
+        },
+        {
+          "ap": "1AP",
+          "basis": "每次建造（可选2:1替石）",
+          "category_hint": "build",
+          "conditions": "选择再生填料替代",
+          "crop": null,
+          "detail": "建造·采珠台：再生填料×6（每次建造（可选2:1替石））｜采珠台｜需研究「水与藻料回流」｜1AP",
+          "duration": "即时",
+          "facility": "采珠台",
+          "name": "建造·采珠台",
+          "others": "木板×2；普通岩石×3；复合石板×3；元石×16",
+          "process": "proc:build:pearl_station",
+          "quantity": 6,
+          "research": "水与藻料回流",
           "species": null,
           "timing": "建造时",
           "type": "build"
@@ -12850,6 +13627,24 @@
           "category_hint": "build",
           "conditions": "选择再生填料替代",
           "crop": null,
+          "detail": "建造·泥料处理台：再生填料×4（每次建造（可选2:1替石））｜泥料处理台｜需研究「菌毯净化」｜1AP",
+          "duration": "即时",
+          "facility": "泥料处理台",
+          "name": "建造·泥料处理台",
+          "others": "木板×2；普通岩石×2；复合石板×2；元石×14",
+          "process": "proc:build:silt_processing_station",
+          "quantity": 4,
+          "research": "菌毯净化",
+          "species": null,
+          "timing": "建造时",
+          "type": "build"
+        },
+        {
+          "ap": "1AP",
+          "basis": "每次建造（可选2:1替石）",
+          "category_hint": "build",
+          "conditions": "选择再生填料替代",
+          "crop": null,
           "detail": "建造·小型冶炼炉：再生填料×12（每次建造（可选2:1替石））｜小型冶炼炉｜1AP",
           "duration": "即时",
           "facility": "小型冶炼炉",
@@ -12911,6 +13706,24 @@
           "others": "木板×2；普通岩石×2；复合石板×2；元石×12",
           "process": "proc:build:toy_station",
           "quantity": 4,
+          "research": null,
+          "species": null,
+          "timing": "建造时",
+          "type": "build"
+        },
+        {
+          "ap": "1AP",
+          "basis": "每次建造（可选2:1替石）",
+          "category_hint": "build",
+          "conditions": "选择再生填料替代",
+          "crop": null,
+          "detail": "建造·换水站：再生填料×8（每次建造（可选2:1替石））｜换水站｜1AP",
+          "duration": "即时",
+          "facility": "换水站",
+          "name": "建造·换水站",
+          "others": "木板×2；普通岩石×4；复合石板×4；元石×16",
+          "process": "proc:build:water_change_station",
+          "quantity": 8,
           "research": null,
           "species": null,
           "timing": "建造时",
@@ -16281,6 +17094,24 @@
           "category_hint": "build",
           "conditions": "",
           "crop": null,
+          "detail": "建造·水生种植台：木板×1（每次建造）｜水生种植台｜1AP",
+          "duration": "即时",
+          "facility": "水生种植台",
+          "name": "建造·水生种植台",
+          "others": "普通岩石×2；复合石板×2；再生填料×4；元石×8",
+          "process": "proc:build:aquatic_crop_station",
+          "quantity": 1,
+          "research": null,
+          "species": null,
+          "timing": "建造时",
+          "type": "build"
+        },
+        {
+          "ap": "1AP",
+          "basis": "每次建造",
+          "category_hint": "build",
+          "conditions": "",
+          "crop": null,
           "detail": "建造·蜂箱：木板×2（每次建造）｜蜂箱｜需研究「蜂群协作」｜1AP",
           "duration": "即时",
           "facility": "蜂箱",
@@ -16335,6 +17166,42 @@
           "category_hint": "build",
           "conditions": "",
           "crop": null,
+          "detail": "建造·捕鲤台：木板×2（每次建造）｜捕鲤台｜1AP",
+          "duration": "即时",
+          "facility": "捕鲤台",
+          "name": "建造·捕鲤台",
+          "others": "普通岩石×2；复合石板×2；再生填料×4；元石×12",
+          "process": "proc:build:carp_harvest_station",
+          "quantity": 2,
+          "research": null,
+          "species": null,
+          "timing": "建造时",
+          "type": "build"
+        },
+        {
+          "ap": "1AP",
+          "basis": "每次建造",
+          "category_hint": "build",
+          "conditions": "",
+          "crop": null,
+          "detail": "建造·采礁台：木板×2（每次建造）｜采礁台｜需研究「矿质材料工艺」｜1AP",
+          "duration": "即时",
+          "facility": "采礁台",
+          "name": "建造·采礁台",
+          "others": "普通岩石×4；复合石板×4；再生填料×8；元石×20",
+          "process": "proc:build:coral_station",
+          "quantity": 2,
+          "research": "矿质材料工艺",
+          "species": null,
+          "timing": "建造时",
+          "type": "build"
+        },
+        {
+          "ap": "1AP",
+          "basis": "每次建造",
+          "category_hint": "build",
+          "conditions": "",
+          "crop": null,
           "detail": "建造·农产加工台：木板×2（每次建造）｜农产加工台｜需研究「农产初加工」｜1AP",
           "duration": "即时",
           "facility": "农产加工台",
@@ -16371,6 +17238,24 @@
           "category_hint": "build",
           "conditions": "",
           "crop": null,
+          "detail": "建造·采胶台：木板×2（每次建造）｜采胶台｜需研究「水与藻料回流」｜1AP",
+          "duration": "即时",
+          "facility": "采胶台",
+          "name": "建造·采胶台",
+          "others": "普通岩石×3；复合石板×3；再生填料×6；元石×16",
+          "process": "proc:build:gel_station",
+          "quantity": 2,
+          "research": "水与藻料回流",
+          "species": null,
+          "timing": "建造时",
+          "type": "build"
+        },
+        {
+          "ap": "1AP",
+          "basis": "每次建造",
+          "category_hint": "build",
+          "conditions": "",
+          "crop": null,
           "detail": "建造·厨房：木板×2（每次建造）｜厨房｜需研究「灵食初制」｜1AP",
           "duration": "即时",
           "facility": "厨房",
@@ -16379,6 +17264,42 @@
           "process": "proc:build:kitchen",
           "quantity": 2,
           "research": "灵食初制",
+          "species": null,
+          "timing": "建造时",
+          "type": "build"
+        },
+        {
+          "ap": "1AP",
+          "basis": "每次建造",
+          "category_hint": "build",
+          "conditions": "",
+          "crop": null,
+          "detail": "建造·取油台：木板×2（每次建造）｜取油台｜需研究「农产初加工」｜1AP",
+          "duration": "即时",
+          "facility": "取油台",
+          "name": "建造·取油台",
+          "others": "普通岩石×3；复合石板×3；再生填料×6；元石×16",
+          "process": "proc:build:oilfish_harvest_station",
+          "quantity": 2,
+          "research": "农产初加工",
+          "species": null,
+          "timing": "建造时",
+          "type": "build"
+        },
+        {
+          "ap": "1AP",
+          "basis": "每次建造",
+          "category_hint": "build",
+          "conditions": "",
+          "crop": null,
+          "detail": "建造·采珠台：木板×2（每次建造）｜采珠台｜需研究「水与藻料回流」｜1AP",
+          "duration": "即时",
+          "facility": "采珠台",
+          "name": "建造·采珠台",
+          "others": "普通岩石×3；复合石板×3；再生填料×6；元石×16",
+          "process": "proc:build:pearl_station",
+          "quantity": 2,
+          "research": "水与藻料回流",
           "species": null,
           "timing": "建造时",
           "type": "build"
@@ -16433,6 +17354,24 @@
           "process": "proc:build:silkworm_rack",
           "quantity": 2,
           "research": null,
+          "species": null,
+          "timing": "建造时",
+          "type": "build"
+        },
+        {
+          "ap": "1AP",
+          "basis": "每次建造",
+          "category_hint": "build",
+          "conditions": "",
+          "crop": null,
+          "detail": "建造·泥料处理台：木板×2（每次建造）｜泥料处理台｜需研究「菌毯净化」｜1AP",
+          "duration": "即时",
+          "facility": "泥料处理台",
+          "name": "建造·泥料处理台",
+          "others": "普通岩石×2；复合石板×2；再生填料×4；元石×14",
+          "process": "proc:build:silt_processing_station",
+          "quantity": 2,
+          "research": "菌毯净化",
           "species": null,
           "timing": "建造时",
           "type": "build"
@@ -16503,6 +17442,24 @@
           "name": "建造·玩具站",
           "others": "普通岩石×2；复合石板×2；再生填料×4；元石×12",
           "process": "proc:build:toy_station",
+          "quantity": 2,
+          "research": null,
+          "species": null,
+          "timing": "建造时",
+          "type": "build"
+        },
+        {
+          "ap": "1AP",
+          "basis": "每次建造",
+          "category_hint": "build",
+          "conditions": "",
+          "crop": null,
+          "detail": "建造·换水站：木板×2（每次建造）｜换水站｜1AP",
+          "duration": "即时",
+          "facility": "换水站",
+          "name": "建造·换水站",
+          "others": "普通岩石×4；复合石板×4；再生填料×8；元石×16",
+          "process": "proc:build:water_change_station",
           "quantity": 2,
           "research": null,
           "species": null,
@@ -21673,7 +22630,7 @@
         {
           "key": "unlocks",
           "label": "解锁内容",
-          "text": "采购·净水菌毯培养单位、设施·净水菌床、配方·菌毯净水、配方·污泥堆肥、配方·残料翻肥、物种·净水菌毯"
+          "text": "采购·净水菌毯培养单位、设施·净水菌床、设施·泥料处理台、配方·菌毯净水、配方·污泥堆肥、配方·残料翻肥、物种·净水菌毯"
         }
       ],
       "icon": "research_bench",
@@ -21689,6 +22646,11 @@
           "entity": "facility:purifying_bed",
           "label": "解锁设施",
           "name": "净水菌床"
+        },
+        {
+          "entity": "facility:silt_processing_station",
+          "label": "解锁设施",
+          "name": "泥料处理台"
         },
         {
           "entity": "recipe:bio_purify",
@@ -21717,7 +22679,7 @@
         "rule:research"
       ],
       "source_id": "biofiltration",
-      "summary": "第1层研究；4元石＋2有效日；解锁6项",
+      "summary": "第1层研究；4元石＋2有效日；解锁7项",
       "tags": []
     },
     {
@@ -21819,7 +22781,7 @@
         {
           "key": "unlocks",
           "label": "解锁内容",
-          "text": "设施·炭化巢、设施·农产加工台、配方·木屑生物炭化、配方·树枝生物炭化、配方·油饼堆肥、配方·谷粉研磨、配方·草粉研磨、配方·稻米磨粉、配方·油籽榨油、物种·炭腹虫"
+          "text": "设施·炭化巢、设施·农产加工台、设施·取油台、配方·木屑生物炭化、配方·树枝生物炭化、配方·油饼堆肥、配方·谷粉研磨、配方·草粉研磨、配方·稻米磨粉、配方·油籽榨油、物种·炭腹虫"
         }
       ],
       "icon": "research_bench",
@@ -21835,6 +22797,11 @@
           "entity": "facility:farm_processor",
           "label": "解锁设施",
           "name": "农产加工台"
+        },
+        {
+          "entity": "facility:oilfish_harvest_station",
+          "label": "解锁设施",
+          "name": "取油台"
         },
         {
           "entity": "recipe:bug_char_chips",
@@ -21883,7 +22850,7 @@
         "rule:research"
       ],
       "source_id": "farm_preparation",
-      "summary": "第1层研究；6元石＋2有效日；解锁10项",
+      "summary": "第1层研究；6元石＋2有效日；解锁11项",
       "tags": []
     },
     {
@@ -22038,13 +23005,18 @@
         {
           "key": "unlocks",
           "label": "解锁内容",
-          "text": "设施·补光灯、设施·养鳞台、设施·岩壳成型台、配方·黏液复合石板、配方·鳞甲复合板、配方·岩壳石板、配方·复合石板组装、配方·岩壳成型、配方·矿质补料调配、配方·再生填料回收、配方·富集矿冶炼、物种·砾甲蜗牛、物种·矿鳞蜥、食谱·mineral_supplement"
+          "text": "设施·采礁台、设施·补光灯、设施·养鳞台、设施·岩壳成型台、配方·黏液复合石板、配方·鳞甲复合板、配方·岩壳石板、配方·复合石板组装、配方·岩壳成型、配方·矿质补料调配、配方·再生填料回收、配方·富集矿冶炼、物种·砾甲蜗牛、物种·矿鳞蜥、食谱·mineral_supplement"
         }
       ],
       "icon": "research_bench",
       "id": "research:mineral_materials",
       "kind": "research",
       "links": [
+        {
+          "entity": "facility:coral_station",
+          "label": "解锁设施",
+          "name": "采礁台"
+        },
         {
           "entity": "facility:growth_lamp",
           "label": "解锁设施",
@@ -22122,7 +23094,7 @@
         "rule:research"
       ],
       "source_id": "mineral_materials",
-      "summary": "第3层研究；12元石＋6有效日；解锁14项",
+      "summary": "第3层研究；12元石＋6有效日；解锁15项",
       "tags": []
     },
     {
@@ -22287,13 +23259,23 @@
         {
           "key": "unlocks",
           "label": "解锁内容",
-          "text": "配方·高密度藻培养、配方·炭砂滤料制作、配方·丝质滤材、配方·营养液回收、食谱·dense_meal"
+          "text": "设施·采胶台、设施·采珠台、配方·高密度藻培养、配方·炭砂滤料制作、配方·丝质滤材、配方·营养液回收、食谱·dense_meal"
         }
       ],
       "icon": "research_bench",
       "id": "research:water_recirculation",
       "kind": "research",
       "links": [
+        {
+          "entity": "facility:gel_station",
+          "label": "解锁设施",
+          "name": "采胶台"
+        },
+        {
+          "entity": "facility:pearl_station",
+          "label": "解锁设施",
+          "name": "采珠台"
+        },
         {
           "entity": "recipe:dense_algae_culture",
           "label": "解锁配方",
@@ -22326,7 +23308,7 @@
         "rule:research"
       ],
       "source_id": "water_recirculation",
-      "summary": "第2层研究；8元石＋4有效日；解锁5项",
+      "summary": "第2层研究；8元石＋4有效日；解锁7项",
       "tags": []
     },
     {
@@ -22789,11 +23771,11 @@
   "generated_inputs": [
     {
       "path": "content/farming/p8/production.json",
-      "sha256": "3fee1d5c9a1310723f2359df4a663cddca814c659a8959692bee58b25967661a"
+      "sha256": "018b68f6c5fd2f7b680c57ccb40565e4e978d26c2f4f38c7622dbb48470aef61"
     },
     {
       "path": "content/farming/baked/p8/production.json",
-      "sha256": "8b31d431636ea19b9f980ba5932af3093a05c9d138c0cd608d598dcab08b0821"
+      "sha256": "a421d5063dcde4d5e761e3907ee01636d79464eb2b8dcbf1acecbecd255be546"
     },
     {
       "path": "content/farming/p8/expansion.json",
@@ -25404,6 +26386,71 @@
       "ap_detail": "1AP",
       "category_hint": "build",
       "conditions": [
+        "占地全部已购且空闲、不压资源点；地形水面"
+      ],
+      "crop": null,
+      "crop_name": null,
+      "duration": "即时",
+      "effects": [
+        "设施就位；养殖设施创建默认配置"
+      ],
+      "facility": "facility:aquatic_crop_station",
+      "facility_name": "水生种植台",
+      "id": "proc:build:aquatic_crop_station",
+      "inputs": [
+        {
+          "basis": "每次建造",
+          "entity": "resource:wood_plank",
+          "name": "木板",
+          "quantity": 1,
+          "timing": "建造时"
+        },
+        {
+          "basis": "每次建造",
+          "entity": "resource:raw_stone",
+          "name": "普通岩石",
+          "quantity": 2,
+          "timing": "建造时"
+        },
+        {
+          "basis": "每次建造（可选1:1替石）",
+          "conditions": "选择复合石板替代",
+          "entity": "resource:composite_stone_panel",
+          "name": "复合石板",
+          "quantity": 2,
+          "timing": "建造时"
+        },
+        {
+          "basis": "每次建造（可选2:1替石）",
+          "conditions": "选择再生填料替代",
+          "entity": "resource:reclaimed_fill",
+          "name": "再生填料",
+          "quantity": 4,
+          "timing": "建造时"
+        },
+        {
+          "basis": "每次建造",
+          "entity": "currency:primeval_stone",
+          "name": "元石",
+          "quantity": 8,
+          "timing": "建造时"
+        }
+      ],
+      "name": "建造·水生种植台",
+      "outputs": [],
+      "primeval_stones": 0,
+      "research": null,
+      "research_name": null,
+      "species": null,
+      "species_name": null,
+      "type": "build",
+      "worker_fee": 0
+    },
+    {
+      "ap": 1,
+      "ap_detail": "1AP",
+      "category_hint": "build",
+      "conditions": [
         "占地全部已购且空闲、不压资源点；地形陆地"
       ],
       "crop": null,
@@ -25569,6 +26616,71 @@
         }
       ],
       "name": "建造·照料台",
+      "outputs": [],
+      "primeval_stones": 0,
+      "research": null,
+      "research_name": null,
+      "species": null,
+      "species_name": null,
+      "type": "build",
+      "worker_fee": 0
+    },
+    {
+      "ap": 1,
+      "ap_detail": "1AP",
+      "category_hint": "build",
+      "conditions": [
+        "占地全部已购且空闲、不压资源点；地形水面"
+      ],
+      "crop": null,
+      "crop_name": null,
+      "duration": "即时",
+      "effects": [
+        "设施就位；养殖设施创建默认配置"
+      ],
+      "facility": "facility:carp_harvest_station",
+      "facility_name": "捕鲤台",
+      "id": "proc:build:carp_harvest_station",
+      "inputs": [
+        {
+          "basis": "每次建造",
+          "entity": "resource:wood_plank",
+          "name": "木板",
+          "quantity": 2,
+          "timing": "建造时"
+        },
+        {
+          "basis": "每次建造",
+          "entity": "resource:raw_stone",
+          "name": "普通岩石",
+          "quantity": 2,
+          "timing": "建造时"
+        },
+        {
+          "basis": "每次建造（可选1:1替石）",
+          "conditions": "选择复合石板替代",
+          "entity": "resource:composite_stone_panel",
+          "name": "复合石板",
+          "quantity": 2,
+          "timing": "建造时"
+        },
+        {
+          "basis": "每次建造（可选2:1替石）",
+          "conditions": "选择再生填料替代",
+          "entity": "resource:reclaimed_fill",
+          "name": "再生填料",
+          "quantity": 4,
+          "timing": "建造时"
+        },
+        {
+          "basis": "每次建造",
+          "entity": "currency:primeval_stone",
+          "name": "元石",
+          "quantity": 12,
+          "timing": "建造时"
+        }
+      ],
+      "name": "建造·捕鲤台",
       "outputs": [],
       "primeval_stones": 0,
       "research": null,
@@ -25768,6 +26880,71 @@
       "primeval_stones": 0,
       "research": null,
       "research_name": null,
+      "species": null,
+      "species_name": null,
+      "type": "build",
+      "worker_fee": 0
+    },
+    {
+      "ap": 1,
+      "ap_detail": "1AP",
+      "category_hint": "build",
+      "conditions": [
+        "占地全部已购且空闲、不压资源点；地形水面"
+      ],
+      "crop": null,
+      "crop_name": null,
+      "duration": "即时",
+      "effects": [
+        "设施就位；养殖设施创建默认配置"
+      ],
+      "facility": "facility:coral_station",
+      "facility_name": "采礁台",
+      "id": "proc:build:coral_station",
+      "inputs": [
+        {
+          "basis": "每次建造",
+          "entity": "resource:wood_plank",
+          "name": "木板",
+          "quantity": 2,
+          "timing": "建造时"
+        },
+        {
+          "basis": "每次建造",
+          "entity": "resource:raw_stone",
+          "name": "普通岩石",
+          "quantity": 4,
+          "timing": "建造时"
+        },
+        {
+          "basis": "每次建造（可选1:1替石）",
+          "conditions": "选择复合石板替代",
+          "entity": "resource:composite_stone_panel",
+          "name": "复合石板",
+          "quantity": 4,
+          "timing": "建造时"
+        },
+        {
+          "basis": "每次建造（可选2:1替石）",
+          "conditions": "选择再生填料替代",
+          "entity": "resource:reclaimed_fill",
+          "name": "再生填料",
+          "quantity": 8,
+          "timing": "建造时"
+        },
+        {
+          "basis": "每次建造",
+          "entity": "currency:primeval_stone",
+          "name": "元石",
+          "quantity": 20,
+          "timing": "建造时"
+        }
+      ],
+      "name": "建造·采礁台",
+      "outputs": [],
+      "primeval_stones": 0,
+      "research": "research:mineral_materials",
+      "research_name": "矿质材料工艺",
       "species": null,
       "species_name": null,
       "type": "build",
@@ -26064,6 +27241,71 @@
       "ap_detail": "1AP",
       "category_hint": "build",
       "conditions": [
+        "占地全部已购且空闲、不压资源点；地形水面"
+      ],
+      "crop": null,
+      "crop_name": null,
+      "duration": "即时",
+      "effects": [
+        "设施就位；养殖设施创建默认配置"
+      ],
+      "facility": "facility:gel_station",
+      "facility_name": "采胶台",
+      "id": "proc:build:gel_station",
+      "inputs": [
+        {
+          "basis": "每次建造",
+          "entity": "resource:wood_plank",
+          "name": "木板",
+          "quantity": 2,
+          "timing": "建造时"
+        },
+        {
+          "basis": "每次建造",
+          "entity": "resource:raw_stone",
+          "name": "普通岩石",
+          "quantity": 3,
+          "timing": "建造时"
+        },
+        {
+          "basis": "每次建造（可选1:1替石）",
+          "conditions": "选择复合石板替代",
+          "entity": "resource:composite_stone_panel",
+          "name": "复合石板",
+          "quantity": 3,
+          "timing": "建造时"
+        },
+        {
+          "basis": "每次建造（可选2:1替石）",
+          "conditions": "选择再生填料替代",
+          "entity": "resource:reclaimed_fill",
+          "name": "再生填料",
+          "quantity": 6,
+          "timing": "建造时"
+        },
+        {
+          "basis": "每次建造",
+          "entity": "currency:primeval_stone",
+          "name": "元石",
+          "quantity": 16,
+          "timing": "建造时"
+        }
+      ],
+      "name": "建造·采胶台",
+      "outputs": [],
+      "primeval_stones": 0,
+      "research": "research:water_recirculation",
+      "research_name": "水与藻料回流",
+      "species": null,
+      "species_name": null,
+      "type": "build",
+      "worker_fee": 0
+    },
+    {
+      "ap": 1,
+      "ap_detail": "1AP",
+      "category_hint": "build",
+      "conditions": [
         "占地全部已购且空闲、不压资源点；地形陆地"
       ],
       "crop": null,
@@ -26262,6 +27504,71 @@
       "ap_detail": "1AP",
       "category_hint": "build",
       "conditions": [
+        "占地全部已购且空闲、不压资源点；地形水面"
+      ],
+      "crop": null,
+      "crop_name": null,
+      "duration": "即时",
+      "effects": [
+        "设施就位；养殖设施创建默认配置"
+      ],
+      "facility": "facility:oilfish_harvest_station",
+      "facility_name": "取油台",
+      "id": "proc:build:oilfish_harvest_station",
+      "inputs": [
+        {
+          "basis": "每次建造",
+          "entity": "resource:wood_plank",
+          "name": "木板",
+          "quantity": 2,
+          "timing": "建造时"
+        },
+        {
+          "basis": "每次建造",
+          "entity": "resource:raw_stone",
+          "name": "普通岩石",
+          "quantity": 3,
+          "timing": "建造时"
+        },
+        {
+          "basis": "每次建造（可选1:1替石）",
+          "conditions": "选择复合石板替代",
+          "entity": "resource:composite_stone_panel",
+          "name": "复合石板",
+          "quantity": 3,
+          "timing": "建造时"
+        },
+        {
+          "basis": "每次建造（可选2:1替石）",
+          "conditions": "选择再生填料替代",
+          "entity": "resource:reclaimed_fill",
+          "name": "再生填料",
+          "quantity": 6,
+          "timing": "建造时"
+        },
+        {
+          "basis": "每次建造",
+          "entity": "currency:primeval_stone",
+          "name": "元石",
+          "quantity": 16,
+          "timing": "建造时"
+        }
+      ],
+      "name": "建造·取油台",
+      "outputs": [],
+      "primeval_stones": 0,
+      "research": "research:farm_preparation",
+      "research_name": "农产初加工",
+      "species": null,
+      "species_name": null,
+      "type": "build",
+      "worker_fee": 0
+    },
+    {
+      "ap": 1,
+      "ap_detail": "1AP",
+      "category_hint": "build",
+      "conditions": [
         "占地全部已购且空闲、不压资源点；地形陆地"
       ],
       "crop": null,
@@ -26317,6 +27624,71 @@
       "primeval_stones": 0,
       "research": "research:ore_concentration",
       "research_name": "生物选矿",
+      "species": null,
+      "species_name": null,
+      "type": "build",
+      "worker_fee": 0
+    },
+    {
+      "ap": 1,
+      "ap_detail": "1AP",
+      "category_hint": "build",
+      "conditions": [
+        "占地全部已购且空闲、不压资源点；地形水面"
+      ],
+      "crop": null,
+      "crop_name": null,
+      "duration": "即时",
+      "effects": [
+        "设施就位；养殖设施创建默认配置"
+      ],
+      "facility": "facility:pearl_station",
+      "facility_name": "采珠台",
+      "id": "proc:build:pearl_station",
+      "inputs": [
+        {
+          "basis": "每次建造",
+          "entity": "resource:wood_plank",
+          "name": "木板",
+          "quantity": 2,
+          "timing": "建造时"
+        },
+        {
+          "basis": "每次建造",
+          "entity": "resource:raw_stone",
+          "name": "普通岩石",
+          "quantity": 3,
+          "timing": "建造时"
+        },
+        {
+          "basis": "每次建造（可选1:1替石）",
+          "conditions": "选择复合石板替代",
+          "entity": "resource:composite_stone_panel",
+          "name": "复合石板",
+          "quantity": 3,
+          "timing": "建造时"
+        },
+        {
+          "basis": "每次建造（可选2:1替石）",
+          "conditions": "选择再生填料替代",
+          "entity": "resource:reclaimed_fill",
+          "name": "再生填料",
+          "quantity": 6,
+          "timing": "建造时"
+        },
+        {
+          "basis": "每次建造",
+          "entity": "currency:primeval_stone",
+          "name": "元石",
+          "quantity": 16,
+          "timing": "建造时"
+        }
+      ],
+      "name": "建造·采珠台",
+      "outputs": [],
+      "primeval_stones": 0,
+      "research": "research:water_recirculation",
+      "research_name": "水与藻料回流",
       "species": null,
       "species_name": null,
       "type": "build",
@@ -26766,6 +28138,71 @@
       "ap_detail": "1AP",
       "category_hint": "build",
       "conditions": [
+        "占地全部已购且空闲、不压资源点；地形水面"
+      ],
+      "crop": null,
+      "crop_name": null,
+      "duration": "即时",
+      "effects": [
+        "设施就位；养殖设施创建默认配置"
+      ],
+      "facility": "facility:silt_processing_station",
+      "facility_name": "泥料处理台",
+      "id": "proc:build:silt_processing_station",
+      "inputs": [
+        {
+          "basis": "每次建造",
+          "entity": "resource:wood_plank",
+          "name": "木板",
+          "quantity": 2,
+          "timing": "建造时"
+        },
+        {
+          "basis": "每次建造",
+          "entity": "resource:raw_stone",
+          "name": "普通岩石",
+          "quantity": 2,
+          "timing": "建造时"
+        },
+        {
+          "basis": "每次建造（可选1:1替石）",
+          "conditions": "选择复合石板替代",
+          "entity": "resource:composite_stone_panel",
+          "name": "复合石板",
+          "quantity": 2,
+          "timing": "建造时"
+        },
+        {
+          "basis": "每次建造（可选2:1替石）",
+          "conditions": "选择再生填料替代",
+          "entity": "resource:reclaimed_fill",
+          "name": "再生填料",
+          "quantity": 4,
+          "timing": "建造时"
+        },
+        {
+          "basis": "每次建造",
+          "entity": "currency:primeval_stone",
+          "name": "元石",
+          "quantity": 14,
+          "timing": "建造时"
+        }
+      ],
+      "name": "建造·泥料处理台",
+      "outputs": [],
+      "primeval_stones": 0,
+      "research": "research:biofiltration",
+      "research_name": "菌毯净化",
+      "species": null,
+      "species_name": null,
+      "type": "build",
+      "worker_fee": 0
+    },
+    {
+      "ap": 1,
+      "ap_detail": "1AP",
+      "category_hint": "build",
+      "conditions": [
         "占地全部已购且空闲、不压资源点；地形陆地"
       ],
       "crop": null,
@@ -27054,6 +28491,71 @@
         }
       ],
       "name": "建造·玩具站",
+      "outputs": [],
+      "primeval_stones": 0,
+      "research": null,
+      "research_name": null,
+      "species": null,
+      "species_name": null,
+      "type": "build",
+      "worker_fee": 0
+    },
+    {
+      "ap": 1,
+      "ap_detail": "1AP",
+      "category_hint": "build",
+      "conditions": [
+        "占地全部已购且空闲、不压资源点；地形陆地"
+      ],
+      "crop": null,
+      "crop_name": null,
+      "duration": "即时",
+      "effects": [
+        "设施就位；养殖设施创建默认配置"
+      ],
+      "facility": "facility:water_change_station",
+      "facility_name": "换水站",
+      "id": "proc:build:water_change_station",
+      "inputs": [
+        {
+          "basis": "每次建造",
+          "entity": "resource:wood_plank",
+          "name": "木板",
+          "quantity": 2,
+          "timing": "建造时"
+        },
+        {
+          "basis": "每次建造",
+          "entity": "resource:raw_stone",
+          "name": "普通岩石",
+          "quantity": 4,
+          "timing": "建造时"
+        },
+        {
+          "basis": "每次建造（可选1:1替石）",
+          "conditions": "选择复合石板替代",
+          "entity": "resource:composite_stone_panel",
+          "name": "复合石板",
+          "quantity": 4,
+          "timing": "建造时"
+        },
+        {
+          "basis": "每次建造（可选2:1替石）",
+          "conditions": "选择再生填料替代",
+          "entity": "resource:reclaimed_fill",
+          "name": "再生填料",
+          "quantity": 8,
+          "timing": "建造时"
+        },
+        {
+          "basis": "每次建造",
+          "entity": "currency:primeval_stone",
+          "name": "元石",
+          "quantity": 16,
+          "timing": "建造时"
+        }
+      ],
+      "name": "建造·换水站",
       "outputs": [],
       "primeval_stones": 0,
       "research": null,
@@ -29593,6 +31095,33 @@
       "effects": [
         "占地释放；不返还材料与元石"
       ],
+      "facility": "facility:aquatic_crop_station",
+      "facility_name": "水生种植台",
+      "id": "proc:demolish:aquatic_crop_station",
+      "inputs": [],
+      "name": "拆除·水生种植台",
+      "outputs": [],
+      "primeval_stones": 0,
+      "research": null,
+      "research_name": null,
+      "species": null,
+      "species_name": null,
+      "type": "demolish",
+      "worker_fee": 0
+    },
+    {
+      "ap": 1,
+      "ap_detail": "1AP",
+      "category_hint": "build",
+      "conditions": [
+        "设施空闲（无批次/无动物/无在研）"
+      ],
+      "crop": null,
+      "crop_name": null,
+      "duration": "即时",
+      "effects": [
+        "占地释放；不返还材料与元石"
+      ],
       "facility": "facility:bee_hive",
       "facility_name": "蜂箱",
       "id": "proc:demolish:bee_hive",
@@ -29674,6 +31203,33 @@
       "effects": [
         "占地释放；不返还材料与元石"
       ],
+      "facility": "facility:carp_harvest_station",
+      "facility_name": "捕鲤台",
+      "id": "proc:demolish:carp_harvest_station",
+      "inputs": [],
+      "name": "拆除·捕鲤台",
+      "outputs": [],
+      "primeval_stones": 0,
+      "research": null,
+      "research_name": null,
+      "species": null,
+      "species_name": null,
+      "type": "demolish",
+      "worker_fee": 0
+    },
+    {
+      "ap": 1,
+      "ap_detail": "1AP",
+      "category_hint": "build",
+      "conditions": [
+        "设施空闲（无批次/无动物/无在研）"
+      ],
+      "crop": null,
+      "crop_name": null,
+      "duration": "即时",
+      "effects": [
+        "占地释放；不返还材料与元石"
+      ],
       "facility": "facility:char_kiln",
       "facility_name": "炭化炉",
       "id": "proc:demolish:char_kiln",
@@ -29733,6 +31289,33 @@
       "id": "proc:demolish:compost_mouse_den",
       "inputs": [],
       "name": "拆除·翻肥窝",
+      "outputs": [],
+      "primeval_stones": 0,
+      "research": null,
+      "research_name": null,
+      "species": null,
+      "species_name": null,
+      "type": "demolish",
+      "worker_fee": 0
+    },
+    {
+      "ap": 1,
+      "ap_detail": "1AP",
+      "category_hint": "build",
+      "conditions": [
+        "设施空闲（无批次/无动物/无在研）"
+      ],
+      "crop": null,
+      "crop_name": null,
+      "duration": "即时",
+      "effects": [
+        "占地释放；不返还材料与元石"
+      ],
+      "facility": "facility:coral_station",
+      "facility_name": "采礁台",
+      "id": "proc:demolish:coral_station",
+      "inputs": [],
+      "name": "拆除·采礁台",
       "outputs": [],
       "primeval_stones": 0,
       "research": null,
@@ -29890,6 +31473,33 @@
       "effects": [
         "占地释放；不返还材料与元石"
       ],
+      "facility": "facility:gel_station",
+      "facility_name": "采胶台",
+      "id": "proc:demolish:gel_station",
+      "inputs": [],
+      "name": "拆除·采胶台",
+      "outputs": [],
+      "primeval_stones": 0,
+      "research": null,
+      "research_name": null,
+      "species": null,
+      "species_name": null,
+      "type": "demolish",
+      "worker_fee": 0
+    },
+    {
+      "ap": 1,
+      "ap_detail": "1AP",
+      "category_hint": "build",
+      "conditions": [
+        "设施空闲（无批次/无动物/无在研）"
+      ],
+      "crop": null,
+      "crop_name": null,
+      "duration": "即时",
+      "effects": [
+        "占地释放；不返还材料与元石"
+      ],
       "facility": "facility:growth_lamp",
       "facility_name": "补光灯",
       "id": "proc:demolish:growth_lamp",
@@ -29998,11 +31608,65 @@
       "effects": [
         "占地释放；不返还材料与元石"
       ],
+      "facility": "facility:oilfish_harvest_station",
+      "facility_name": "取油台",
+      "id": "proc:demolish:oilfish_harvest_station",
+      "inputs": [],
+      "name": "拆除·取油台",
+      "outputs": [],
+      "primeval_stones": 0,
+      "research": null,
+      "research_name": null,
+      "species": null,
+      "species_name": null,
+      "type": "demolish",
+      "worker_fee": 0
+    },
+    {
+      "ap": 1,
+      "ap_detail": "1AP",
+      "category_hint": "build",
+      "conditions": [
+        "设施空闲（无批次/无动物/无在研）"
+      ],
+      "crop": null,
+      "crop_name": null,
+      "duration": "即时",
+      "effects": [
+        "占地释放；不返还材料与元石"
+      ],
       "facility": "facility:ore_sorting_yard",
       "facility_name": "选矿场",
       "id": "proc:demolish:ore_sorting_yard",
       "inputs": [],
       "name": "拆除·选矿场",
+      "outputs": [],
+      "primeval_stones": 0,
+      "research": null,
+      "research_name": null,
+      "species": null,
+      "species_name": null,
+      "type": "demolish",
+      "worker_fee": 0
+    },
+    {
+      "ap": 1,
+      "ap_detail": "1AP",
+      "category_hint": "build",
+      "conditions": [
+        "设施空闲（无批次/无动物/无在研）"
+      ],
+      "crop": null,
+      "crop_name": null,
+      "duration": "即时",
+      "effects": [
+        "占地释放；不返还材料与元石"
+      ],
+      "facility": "facility:pearl_station",
+      "facility_name": "采珠台",
+      "id": "proc:demolish:pearl_station",
+      "inputs": [],
+      "name": "拆除·采珠台",
       "outputs": [],
       "primeval_stones": 0,
       "research": null,
@@ -30214,6 +31878,33 @@
       "effects": [
         "占地释放；不返还材料与元石"
       ],
+      "facility": "facility:silt_processing_station",
+      "facility_name": "泥料处理台",
+      "id": "proc:demolish:silt_processing_station",
+      "inputs": [],
+      "name": "拆除·泥料处理台",
+      "outputs": [],
+      "primeval_stones": 0,
+      "research": null,
+      "research_name": null,
+      "species": null,
+      "species_name": null,
+      "type": "demolish",
+      "worker_fee": 0
+    },
+    {
+      "ap": 1,
+      "ap_detail": "1AP",
+      "category_hint": "build",
+      "conditions": [
+        "设施空闲（无批次/无动物/无在研）"
+      ],
+      "crop": null,
+      "crop_name": null,
+      "duration": "即时",
+      "effects": [
+        "占地释放；不返还材料与元石"
+      ],
       "facility": "facility:small_bed",
       "facility_name": "小床",
       "id": "proc:demolish:small_bed",
@@ -30327,6 +32018,33 @@
       "id": "proc:demolish:toy_station",
       "inputs": [],
       "name": "拆除·玩具站",
+      "outputs": [],
+      "primeval_stones": 0,
+      "research": null,
+      "research_name": null,
+      "species": null,
+      "species_name": null,
+      "type": "demolish",
+      "worker_fee": 0
+    },
+    {
+      "ap": 1,
+      "ap_detail": "1AP",
+      "category_hint": "build",
+      "conditions": [
+        "设施空闲（无批次/无动物/无在研）"
+      ],
+      "crop": null,
+      "crop_name": null,
+      "duration": "即时",
+      "effects": [
+        "占地释放；不返还材料与元石"
+      ],
+      "facility": "facility:water_change_station",
+      "facility_name": "换水站",
+      "id": "proc:demolish:water_change_station",
+      "inputs": [],
+      "name": "拆除·换水站",
       "outputs": [],
       "primeval_stones": 0,
       "research": null,

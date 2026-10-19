@@ -9,7 +9,8 @@ const Scalars := preload("res://scripts/farming/v1/v1_world_state.gd")
 
 const SPECIES := ["steel_sheep", "rock_mole", "rock_belly_beast", "carbon_belly_bug", "leaf_silkworm",
 	"dew_shell_snail", "mineral_scale_lizard", "compost_mouse", "gravel_shell_snail"]
-const ZONE_TYPES := ["nursery", "enclosure", "intensive", "work", "maintenance", "pasture"]
+const ZONE_TYPES := ["nursery", "enclosure", "intensive", "work", "maintenance", "pasture",
+	"water_nursery", "water_enclosure", "water_production", "water_loach", "aqua_planting"]
 const BED_TYPES := {"small_bed": "small", "medium_bed": "medium", "large_bed": "large"}
 const PEN_ID := "pen"
 const DISPATCH_ID := "dispatch_station"
@@ -55,6 +56,11 @@ static func fresh() -> Dictionary:
 
 func _error(reason: String) -> Dictionary:
 	return {"ok": false, "reason": reason}
+
+## Sum of live aquatic space weights assigned to zones of this body. Stage b
+## has no aquatic roster yet, so every body reports zero load.
+func water_load(_body_uid: int) -> int:
+	return 0
 
 # --- static queries -----------------------------------------------------------
 
@@ -199,6 +205,15 @@ func structure_missing(zone_row: Dictionary) -> Array:
 func zone_structural(zone_row: Dictionary) -> bool:
 	if not structure_missing(zone_row).is_empty(): return false
 	if available_space(zone_row)<int(settings["zones"][zone_row["type"]]["min_space"]): return false
+	if zone_medium(String(zone_row["type"])) == "water":
+		# Water zones qualify through fence membership of their one body, not
+		# through ordinary floor paving.
+		var body: Dictionary = world.water.body(int(zone_row.get("body_uid", 0)))
+		if body.is_empty(): return false
+		for text in zone_row["cells"]:
+			if int(world.water.state["fences"].get(String(text), 0)) != int(body["uid"]):
+				return false
+		return true
 	for text in zone_row["cells"]:
 		if world.rooms.floor_kind(_cell_of(text))!="ordinary": return false
 	return true
@@ -261,14 +276,25 @@ static func _intified_animal(row: Dictionary) -> Dictionary:
 		"death_streak": int(row["death_streak"]),
 		"account": {"w": int(account["w"]), "r": int(account["r"]), "fails": int(account["fails"])}}
 
-func _zone_cells_free(cells: Array, ignore_zone := -1) -> String:
+## Zone medium comes from the zone config: land zones stand on ordinary
+## floor, water zones on fish-fence cells of exactly one water body.
+func zone_medium(type_id: String) -> String:
+	return String(settings["zones"].get(type_id, {}).get("medium", "land"))
+
+func _zone_cells_free(cells: Array, ignore_zone := -1, medium := "land", body_uid := 0) -> String:
 	for text in cells:
 		var cell := _cell_of(String(text))
 		if not world.grid.in_bounds(cell.x, cell.y):
 			return "地格越界"
 		if not world.land.contains(cell):
 			return "地格不在已购地块内"
-		if world.rooms.floor_kind(cell) != "ordinary":
+		if medium == "water":
+			var owner: Dictionary = world.water.body_of(cell)
+			if owner.is_empty():
+				return "水功能区的地格必须先铺鱼栅"
+			if body_uid > 0 and int(owner["uid"]) != body_uid:
+				return "功能区不能跨越多个水体"
+		elif world.rooms.floor_kind(cell) != "ordinary":
 			return "功能区只能铺设在普通地板上"
 		if not world.rooms.field_at(cell).is_empty():
 			return "地格仍属于农业田块，请先编辑田块边界"
@@ -279,12 +305,31 @@ func _zone_cells_free(cells: Array, ignore_zone := -1) -> String:
 				return "地格已属于其他功能区"
 	return ""
 
+## The single body a water zone claim belongs to; 0 = none (invalid for water).
+func _zone_body(cells: Array) -> int:
+	var first := 0
+	for text in cells:
+		var owner: Dictionary = world.water.body_of(_cell_of(String(text)))
+		if owner.is_empty():
+			return 0
+		if first == 0:
+			first = int(owner["uid"])
+		elif int(owner["uid"]) != first:
+			return 0
+	return first
+
 func preview_zone(type_id: String, cells: Array) -> Dictionary:
 	if not ZONE_TYPES.has(type_id):
 		return _error("未知功能区类型")
 	if cells.is_empty():
 		return _error("没有选择地格")
-	var problem := _zone_cells_free(cells)
+	var medium := zone_medium(type_id)
+	var body_uid := 0
+	if medium == "water":
+		body_uid = _zone_body(cells)
+		if body_uid == 0:
+			return _error("水功能区的地格必须同属一个已铺鱼栅的水体")
+	var problem := _zone_cells_free(cells, -1, medium, body_uid)
 	if not problem.is_empty():
 		return _error(problem)
 	if not _connected(cells):
@@ -297,7 +342,9 @@ func preview_zone(type_id: String, cells: Array) -> Dictionary:
 
 static func _zone_label(type_id: String) -> String:
 	return {"nursery": "育幼区", "enclosure": "繁殖区", "intensive": "精养区", "work": "工作区",
-		"maintenance": "维持放牧区", "pasture": "额外放牧区"}[type_id]
+		"maintenance": "维持放牧区", "pasture": "额外放牧区", "water_nursery": "育幼池",
+		"water_enclosure": "繁殖池", "water_production": "生产池", "water_loach": "泥鳅净化区",
+		"aqua_planting": "水生种植区"}[type_id]
 
 func create_zone(type_id: String, cells: Array, zone_name := "") -> Dictionary:
 	var checked: Dictionary = world._can_act(0)
@@ -313,7 +360,7 @@ func create_zone(type_id: String, cells: Array, zone_name := "") -> Dictionary:
 	if zone_name.strip_edges().is_empty():
 		zone_name = "%s%d" % [_zone_label(type_id), uid]
 	state["zones"].append({"uid": uid, "type": type_id, "name": zone_name.strip_edges(),
-		"cells": cells.duplicate(), "dispatch_uid": 0, "birth_target": 0})
+		"cells": cells.duplicate(), "dispatch_uid": 0, "birth_target": 0, "body_uid": _zone_body(cells)})
 	_record("zone", "create", {"zone": uid, "type": type_id, "cells": cells.duplicate(), "name": zone_name})
 	world.changed.emit()
 	return {"ok": true, "zone_uid": uid, "detail": "功能区已创建：%s" % zone_name}
@@ -1453,7 +1500,7 @@ static func normalize(value, snapshot: Dictionary, catalog) -> Dictionary:
 		if String(facilities[uid]["facility_id"]) == DISPATCH_ID:
 			dispatch_ids[int(uid)] = true
 	for row in value["zones"]:
-		if not Scalars.exact(row, ["uid", "type", "name", "cells", "dispatch_uid", "birth_target"]):
+		if not Scalars.exact(row, ["uid", "type", "name", "cells", "dispatch_uid", "birth_target", "body_uid"]):
 			return Scalars.fail("功能区字段非法")
 		if not Scalars.whole(row["uid"], 1, int(value["next_zone_uid"]) - 1) or zone_types.has(int(row["uid"])):
 			return Scalars.fail("功能区序号非法")
@@ -1476,9 +1523,24 @@ static func normalize(value, snapshot: Dictionary, catalog) -> Dictionary:
 				return Scalars.fail("功能区关联的调度站非法")
 		if int(row["birth_target"]) > 0 and String(row["type"]) != "enclosure":
 			return Scalars.fail("只有圈养区有育幼目标")
+		var medium := String(config["zones"].get(String(row["type"]), {}).get("medium", "land"))
+		if not Scalars.whole(row["body_uid"], 0):
+			return Scalars.fail("水体关联非法")
+		if medium == "water":
+			var water_bodies := {}
+			for water_row in snapshot["world"].get("water", {"bodies": []})["bodies"]:
+				water_bodies[int(water_row["uid"])] = water_row
+			if int(row["body_uid"]) <= 0 or not water_bodies.has(int(row["body_uid"])):
+				return Scalars.fail("水功能区必须关联存在的水体")
+			for text in row["cells"]:
+				if not String(text) in water_bodies[int(row["body_uid"])]["cells"]:
+					return Scalars.fail("水功能区地格不在关联水体内")
+		elif int(row["body_uid"]) != 0:
+			return Scalars.fail("陆功能区不能关联水体")
 		zone_types[int(row["uid"])] = String(row["type"])
 		out["zones"].append({"uid": int(row["uid"]), "type": String(row["type"]), "name": String(row["name"]),
-			"cells": row["cells"].duplicate(), "dispatch_uid": int(row["dispatch_uid"]), "birth_target": int(row["birth_target"])})
+			"cells": row["cells"].duplicate(), "dispatch_uid": int(row["dispatch_uid"]), "birth_target": int(row["birth_target"]),
+			"body_uid": int(row["body_uid"])})
 	if not value["animals"] is Array:
 		return Scalars.fail("动物名册非法")
 	var species_defs: Dictionary = catalog.definitions("livestock")

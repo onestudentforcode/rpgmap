@@ -2588,6 +2588,10 @@
       "capacity": 4,
       "species": [
         "steel_sheep"
+      ],
+      "terrains": [
+        "land",
+        "water"
       ]
     },
     {
@@ -2607,7 +2611,8 @@
       "capacity": 4,
       "species": [
         "filter_algae_carp"
-      ]
+      ],
+      "retired": true
     },
     {
       "id": "algae_tank",
@@ -2764,7 +2769,11 @@
         1,
         1
       ],
-      "kind": null
+      "kind": null,
+      "terrains": [
+        "land",
+        "water"
+      ]
     },
     {
       "id": "small_bed",
@@ -2778,7 +2787,11 @@
         1,
         1
       ],
-      "kind": null
+      "kind": null,
+      "terrains": [
+        "land",
+        "water"
+      ]
     },
     {
       "id": "medium_bed",
@@ -2792,7 +2805,11 @@
         1,
         1
       ],
-      "kind": null
+      "kind": null,
+      "terrains": [
+        "land",
+        "water"
+      ]
     },
     {
       "id": "large_bed",
@@ -2821,7 +2838,11 @@
         1,
         1
       ],
-      "kind": null
+      "kind": null,
+      "terrains": [
+        "land",
+        "water"
+      ]
     },
     {
       "id": "soothing_station",
@@ -3026,6 +3047,131 @@
         "mineral_scale_lizard"
       ],
       "research": "mineral_materials"
+    },
+    {
+      "id": "carp_harvest_station",
+      "name": "捕鲤台",
+      "cash": 12,
+      "materials": {
+        "wood_plank": 2,
+        "raw_stone": 2
+      },
+      "terrain": "water",
+      "footprint": [
+        1,
+        1
+      ],
+      "kind": null
+    },
+    {
+      "id": "oilfish_harvest_station",
+      "name": "取油台",
+      "cash": 16,
+      "materials": {
+        "wood_plank": 2,
+        "raw_stone": 3
+      },
+      "terrain": "water",
+      "footprint": [
+        1,
+        1
+      ],
+      "kind": null,
+      "research": "farm_preparation"
+    },
+    {
+      "id": "pearl_station",
+      "name": "采珠台",
+      "cash": 16,
+      "materials": {
+        "wood_plank": 2,
+        "raw_stone": 3
+      },
+      "terrain": "water",
+      "footprint": [
+        1,
+        1
+      ],
+      "kind": null,
+      "research": "water_recirculation"
+    },
+    {
+      "id": "gel_station",
+      "name": "采胶台",
+      "cash": 16,
+      "materials": {
+        "wood_plank": 2,
+        "raw_stone": 3
+      },
+      "terrain": "water",
+      "footprint": [
+        1,
+        1
+      ],
+      "kind": null,
+      "research": "water_recirculation"
+    },
+    {
+      "id": "coral_station",
+      "name": "采礁台",
+      "cash": 20,
+      "materials": {
+        "wood_plank": 2,
+        "raw_stone": 4
+      },
+      "terrain": "water",
+      "footprint": [
+        1,
+        1
+      ],
+      "kind": null,
+      "research": "mineral_materials"
+    },
+    {
+      "id": "silt_processing_station",
+      "name": "泥料处理台",
+      "cash": 14,
+      "materials": {
+        "wood_plank": 2,
+        "raw_stone": 2
+      },
+      "terrain": "water",
+      "footprint": [
+        1,
+        1
+      ],
+      "kind": null,
+      "research": "biofiltration"
+    },
+    {
+      "id": "aquatic_crop_station",
+      "name": "水生种植台",
+      "cash": 8,
+      "materials": {
+        "wood_plank": 1,
+        "raw_stone": 2
+      },
+      "terrain": "water",
+      "footprint": [
+        1,
+        1
+      ],
+      "kind": null
+    },
+    {
+      "id": "water_change_station",
+      "name": "换水站",
+      "cash": 16,
+      "materials": {
+        "wood_plank": 2,
+        "raw_stone": 4
+      },
+      "terrain": "land",
+      "footprint": [
+        1,
+        1
+      ],
+      "kind": null
     }
   ],
   "recipes": [
@@ -4483,7 +4629,8 @@
         "crops": [],
         "facilities": [
           "carbonization_nest",
-          "farm_processor"
+          "farm_processor",
+          "oilfish_harvest_station"
         ],
         "recipes": [
           "bug_char_chips",
@@ -4517,7 +4664,8 @@
         ],
         "crops": [],
         "facilities": [
-          "purifying_bed"
+          "purifying_bed",
+          "silt_processing_station"
         ],
         "recipes": [
           "bio_purify",
@@ -4637,7 +4785,10 @@
       "unlocks": {
         "purchases": [],
         "crops": [],
-        "facilities": [],
+        "facilities": [
+          "gel_station",
+          "pearl_station"
+        ],
         "recipes": [
           "dense_algae_culture",
           "make_filter_media",
@@ -4723,6 +4874,7 @@
         "purchases": [],
         "crops": [],
         "facilities": [
+          "coral_station",
           "growth_lamp",
           "scale_station",
           "shell_forming_station"
@@ -5321,6 +5473,63 @@
         "structures": [
           "toy_station"
         ]
+      },
+      "water_nursery": {
+        "min_space": 4,
+        "medium": "water",
+        "structures": [
+          "pen",
+          "feed_trough",
+          "bed"
+        ]
+      },
+      "water_enclosure": {
+        "min_space": 8,
+        "medium": "water",
+        "structures": [
+          "pen",
+          "feed_trough",
+          "bed",
+          "care_table"
+        ]
+      },
+      "water_production": {
+        "min_space": 8,
+        "medium": "water",
+        "structures": [
+          "pen",
+          "feed_trough",
+          "bed"
+        ],
+        "any_of": [
+          {
+            "id": "water_station",
+            "members": [
+              "carp_harvest_station",
+              "oilfish_harvest_station",
+              "pearl_station",
+              "gel_station",
+              "coral_station"
+            ]
+          }
+        ]
+      },
+      "water_loach": {
+        "min_space": 4,
+        "medium": "water",
+        "structures": [
+          "pen",
+          "feed_trough",
+          "bed",
+          "silt_processing_station"
+        ]
+      },
+      "aqua_planting": {
+        "min_space": 1,
+        "medium": "water",
+        "structures": [
+          "aquatic_crop_station"
+        ]
       }
     },
     "fatigue": {
@@ -5512,5 +5721,37 @@
     "toy_station": "toy_station",
     "install_ap": 1,
     "system_ap": 1
+  },
+  "p106": {
+    "version": 1,
+    "fence": {
+      "cash": 1,
+      "inputs": {
+        "twig": 1
+      },
+      "ap": 1
+    },
+    "quality": {
+      "initial": 100,
+      "cap": 100,
+      "points_per_cell": 10000,
+      "pause_threshold": 30,
+      "base_decay": 2,
+      "load_factor": 6
+    },
+    "change": {
+      "inputs": {
+        "clean_water": 2
+      },
+      "wastewater": 2,
+      "gain": 40,
+      "max_cells": 8,
+      "ap": 1
+    },
+    "facilities": {
+      "change_station": "water_change_station",
+      "crop_station": "aquatic_crop_station"
+    },
+    "station_change_cells": 8
   }
 }

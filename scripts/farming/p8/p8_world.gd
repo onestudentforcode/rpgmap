@@ -14,6 +14,7 @@ const Logistics := preload("res://scripts/farming/p8/p10_logistics.gd")
 const Rooms := preload("res://scripts/farming/p8/p102_rooms.gd")
 const Ranch := preload("res://scripts/farming/p8/p103_ranch.gd")
 const Services := preload("res://scripts/farming/p8/p104_services.gd")
+const Water := preload("res://scripts/farming/p8/p106_water.gd")
 ## Observational receipts for external business audits; never grants resources or
 ## replays work. Day-save failures are still governed by the transaction below.
 signal operation_recorded(entry: Dictionary)
@@ -38,6 +39,7 @@ var logistics
 var rooms
 var ranch
 var services
+var water
 
 func _init(slot_store = null) -> void:
 	land = P8Land.new(self)
@@ -49,6 +51,7 @@ func _init(slot_store = null) -> void:
 	rooms = Rooms.new(self,P8Data.load_data()["rooms"])
 	ranch = Ranch.new(self, P8Data.load_data()["p103"])
 	services = Services.new(self, P8Data.load_data()["p104"])
+	water = Water.new(self, P8Data.load_data()["p106"])
 	super(slot_store)
 
 func _catalog():
@@ -76,7 +79,9 @@ func _settle_workforce(completed_day: int) -> void:
 func _settle_husbandry(completed_day: int) -> void:
 	rooms.begin_settle(completed_day)
 	husbandry.settle(completed_day)
+	water.auto_services(completed_day)
 	ranch.settle(completed_day)
+	water.settle(completed_day)
 	logistics.settle(completed_day)
 	research.settle(completed_day)
 	flowers.settle(completed_day)
@@ -133,6 +138,7 @@ func _facility_removed(uid: int) -> void:
 	logistics.forget_facility(uid)
 	ranch.forget_facility(uid)
 	services.forget_facility(uid)
+	water.forget_facility(uid)
 
 func to_snapshot() -> Dictionary:
 	var snapshot := super.to_snapshot()
@@ -146,6 +152,7 @@ func to_snapshot() -> Dictionary:
 	snapshot["world"]["rooms"] = rooms.to_save()
 	snapshot["world"]["ranch"] = ranch.to_save()
 	snapshot["world"]["services"] = services.to_save()
+	snapshot["world"]["water"] = water.to_save()
 	return snapshot
 
 func apply_snapshot(value) -> Dictionary:
@@ -172,6 +179,8 @@ func _snapshot_applied(snapshot: Dictionary) -> void:
 	rooms.apply_save(snapshot["world"]["rooms"])
 	ranch.apply_save(snapshot["world"]["ranch"])
 	services.apply_save(snapshot["world"]["services"])
+	if snapshot["world"].has("water"):
+		water.apply_save(snapshot["world"]["water"])
 
 ## Pollination bonus: one extra oilseed per pollinated cycle at harvest.
 func _harvest_bonus(instance: Dictionary) -> Dictionary:
@@ -259,13 +268,27 @@ func can_build_facility(cell: Vector2i, facility_id: String) -> Dictionary:
 		var blocked := research_block(String(facility_defs[facility_id].get("research", "")))
 		if not blocked.is_empty():
 			return _error(blocked)
-	if facility_id in Ranch.FLOOR_FACILITIES:
+	# Ranch structures stand on ordinary floor; since P10.6 the dual-medium
+	# shared structures and the aquatic facilities may instead stand on fenced
+	# water cells (§16.2.5). Water-only facilities never accept floor cells.
+	if facility_id in Ranch.FLOOR_FACILITIES or String(facility_defs[facility_id].get("terrain", "")) == "water":
 		var shape: Array = facility_defs[facility_id]["footprint"]
+		var wants_water: bool = String(facility_defs[facility_id].get("terrain", "")) == "water"
+		var dual: bool = facility_defs[facility_id].has("terrains")
 		for dy in range(int(shape[1])):
 			for dx in range(int(shape[0])):
 				var target := cell + Vector2i(dx, dy)
-				if not grid.in_bounds(target.x, target.y) or rooms.floor_kind(target) != "ordinary":
-					return _error("畜牧设施必须建在普通地板上，请先铺设")
+				if not grid.in_bounds(target.x, target.y):
+					return _error("畜牧设施必须建在普通地板或鱼栅水面上，请先铺设")
+				var on_floor: bool = rooms.floor_kind(target) == "ordinary"
+				var on_fence: bool = grid.terrain_at(target) == "water" and not water.body_of(target).is_empty()
+				if wants_water:
+					if on_fence:
+						continue
+					return _error("水产设施必须建在鱼栅水面上")
+				if on_floor or (dual and on_fence):
+					continue
+				return _error("畜牧设施必须建在普通地板上，请先铺设")
 	if facility_defs.has(facility_id):
 		var shape: Array = facility_defs[facility_id]["footprint"]
 		for dy in range(int(shape[1])):

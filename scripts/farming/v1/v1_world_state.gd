@@ -122,7 +122,15 @@ static func normalize(value, day: int, catalog = Data) -> Dictionary:
 		for dy in range(int(definition["footprint"][1])):
 			for dx in range(int(definition["footprint"][0])):
 				var cell := origin + Vector2i(dx,dy)
-				if cell.x >= origin_x + width or cell.y >= height or occupied.has(cell) or source_cells.has(cell) or not (map["grid"][cell.y][cell.x - origin_x] == "water" if definition.get("terrain") == "water" else tillable.get(map["grid"][cell.y][cell.x - origin_x], false)):
+				var cell_terrain: String = String(map["grid"][cell.y][cell.x - origin_x])
+				# Water-only facilities need water cells; dual-medium structures
+				# (P10.6) accept water or tillable land under one footprint.
+				var terrain_ok: bool = bool(tillable.get(cell_terrain, false))
+				if definition.get("terrain") == "water":
+					terrain_ok = cell_terrain == "water"
+				elif definition.has("terrains"):
+					terrain_ok = (cell_terrain == "water" and definition["terrains"].has("water")) or bool(tillable.get(cell_terrain, false))
+				if cell.x >= origin_x + width or cell.y >= height or occupied.has(cell) or source_cells.has(cell) or not terrain_ok:
 					return fail("设施越界、重叠或覆盖不可建设地形")
 				occupied[cell] = true
 		var batch = row["batch"]
