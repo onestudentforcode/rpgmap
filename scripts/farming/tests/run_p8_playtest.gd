@@ -607,8 +607,8 @@ func _delegate(world) -> void:
 const RANCH_PAVE := {
 	"nursery": [Vector2i(0, 11), Vector2i(1, 11), Vector2i(2, 11), Vector2i(3, 11), Vector2i(4, 11),
 		Vector2i(0, 12), Vector2i(1, 12), Vector2i(2, 12), Vector2i(3, 12), Vector2i(4, 12)],
-	"work": [Vector2i(8, 11), Vector2i(9, 11), Vector2i(10, 11), Vector2i(11, 11), Vector2i(12, 11), Vector2i(13, 11),
-		Vector2i(8, 12), Vector2i(9, 12), Vector2i(10, 12), Vector2i(11, 12), Vector2i(12, 12), Vector2i(13, 12)],
+	"work": [Vector2i(8, 11), Vector2i(9, 11), Vector2i(10, 11), Vector2i(11, 11), Vector2i(12, 11), Vector2i(13, 11), Vector2i(14, 11),
+		Vector2i(8, 12), Vector2i(9, 12), Vector2i(10, 12), Vector2i(11, 12), Vector2i(12, 12), Vector2i(13, 12), Vector2i(14, 12)],
 	"maintenance": [Vector2i(4, 10), Vector2i(5, 10), Vector2i(6, 10), Vector2i(7, 10), Vector2i(8, 10), Vector2i(9, 10)],
 	"pasture": [Vector2i(8, 13), Vector2i(9, 13), Vector2i(10, 13), Vector2i(11, 13), Vector2i(12, 13),
 		Vector2i(13, 13), Vector2i(14, 13), Vector2i(15, 13), Vector2i(16, 13), Vector2i(17, 13), Vector2i(18, 13), Vector2i(19, 13)],
@@ -696,9 +696,11 @@ func _ranch_business(world) -> void:
 	var yard_beast := 0
 	if not world.facility_at(Vector2i(11, 11)).is_empty():
 		yard_beast = int(world.facility_at(Vector2i(11, 11))["uid"])
-	for yard in [yard_mole, yard_beast]:
-		if yard == 0:
-			continue
+	var ranch_yards: Array = []
+	for uid in world.facilities:
+		if world.ranch.is_work_facility(String(world.facilities[uid]["facility_id"])):
+			ranch_yards.append(int(uid))
+	for yard in ranch_yards:
 		if world.ranch.workyard_busy(yard):
 			var ready := false
 			for post in world.ranch.workyard_state(yard)["posts"]:
@@ -708,8 +710,11 @@ func _ranch_business(world) -> void:
 				act(world, "ranch yard claim " + str(yard), func(): return world.ranch.claim_workyard(yard))
 	# Adaptive recipes keep both minerals above their consumption.
 	var mole_recipe := "break_stone" if world.inventory.count("gravel") < 4 else ("break_ore" if world.inventory.count("crushed_ore") < 8 else "break_stone")
-	if String(world.ranch.workyard_state(yard_mole)["recipe_id"]) != mole_recipe:
-		act(world, "ranch yard recipe " + mole_recipe, func(): return world.ranch.set_recipe(yard_mole, mole_recipe))
+	for yard in ranch_yards:
+		if yard == yard_beast:
+			continue
+		if String(world.ranch.workyard_state(yard)["recipe_id"]) != mole_recipe:
+			act(world, "ranch yard recipe " + mole_recipe, func(): return world.ranch.set_recipe(yard, mole_recipe))
 	if yard_beast != 0 and world.research.is_completed("ore_concentration") and String(world.ranch.workyard_state(yard_beast)["recipe_id"]) != "concentrate_ore":
 		act(world, "ranch yard recipe concentrate", func(): return world.ranch.set_recipe(yard_beast, "concentrate_ore"))
 
@@ -784,7 +789,7 @@ func _run_route(route: String) -> void:
 			["pen", 0, 11, ""], ["feed_trough", 2, 11, ""], ["feed_trough", 3, 11, ""],
 			["small_bed", 4, 11, ""], ["small_bed", 4, 12, ""],
 			["dispatch_station", 8, 11, ""], ["rock_breaking_yard", 9, 11, ""], ["ore_sorting_yard", 11, 11, ""],
-			["toy_station", 19, 13, ""],
+			["rock_breaking_yard", 13, 11, ""], ["toy_station", 19, 13, ""],
 			["feed_trough", 4, 10, ""], ["feed_trough", 7, 10, ""], ["small_bed", 8, 10, ""],
 		]
 	else:
@@ -800,7 +805,7 @@ func _run_route(route: String) -> void:
 			["pen", 0, 11, ""], ["feed_trough", 2, 11, ""], ["feed_trough", 3, 11, ""],
 			["small_bed", 4, 11, ""], ["small_bed", 4, 12, ""],
 			["dispatch_station", 8, 11, ""], ["rock_breaking_yard", 9, 11, ""], ["ore_sorting_yard", 11, 11, ""],
-			["toy_station", 19, 13, ""],
+			["rock_breaking_yard", 13, 11, ""], ["toy_station", 19, 13, ""],
 			["feed_trough", 4, 10, ""], ["feed_trough", 7, 10, ""], ["small_bed", 8, 10, ""],
 		]
 	var stock_plan: Array = [["fish_pond", 0, 2], ["bee_hive", 0, 2],
