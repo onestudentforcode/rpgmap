@@ -610,8 +610,10 @@ const RANCH_PAVE := {
 	"work": [Vector2i(8, 11), Vector2i(9, 11), Vector2i(10, 11), Vector2i(11, 11), Vector2i(12, 11), Vector2i(13, 11), Vector2i(14, 11),
 		Vector2i(8, 12), Vector2i(9, 12), Vector2i(10, 12), Vector2i(11, 12), Vector2i(12, 12), Vector2i(13, 12), Vector2i(14, 12)],
 	"maintenance": [Vector2i(4, 10), Vector2i(5, 10), Vector2i(6, 10), Vector2i(7, 10), Vector2i(8, 10), Vector2i(9, 10)],
-	"intensive": [Vector2i(0, 7), Vector2i(1, 7), Vector2i(2, 7), Vector2i(3, 7), Vector2i(4, 7), Vector2i(5, 7), Vector2i(6, 7), Vector2i(7, 7),
-		Vector2i(0, 8), Vector2i(1, 8), Vector2i(2, 8), Vector2i(3, 8), Vector2i(4, 8), Vector2i(5, 8), Vector2i(6, 8), Vector2i(7, 8)],
+	"intensive": [Vector2i(2, 0), Vector2i(3, 0), Vector2i(4, 0), Vector2i(5, 0), Vector2i(6, 0),
+		Vector2i(2, 1), Vector2i(3, 1), Vector2i(4, 1), Vector2i(5, 1), Vector2i(6, 1),
+		Vector2i(2, 2), Vector2i(3, 2), Vector2i(4, 2), Vector2i(5, 2), Vector2i(6, 2),
+		Vector2i(2, 3), Vector2i(3, 3), Vector2i(4, 3), Vector2i(5, 3), Vector2i(6, 3)],
 	"pasture": [Vector2i(8, 13), Vector2i(9, 13), Vector2i(10, 13), Vector2i(11, 13), Vector2i(12, 13),
 		Vector2i(13, 13), Vector2i(14, 13), Vector2i(15, 13), Vector2i(16, 13), Vector2i(17, 13), Vector2i(18, 13), Vector2i(19, 13)],
 }
@@ -689,7 +691,7 @@ func _ranch_business(world) -> void:
 			act(world, "ranch beast purchase", func(): return world.ranch.purchase(nursery, "rock_belly_beast", 1))
 	# One steel sheep in the intensive zone supplies gold-path orders with wool.
 	var sheep: Array = world.ranch.state["animals"].filter(func(a): return String(a["species_id"]) == "steel_sheep")
-	if sheep.size() < 1 and world.primeval_stones >= 60:
+	if sheep.size() < 1 and world.primeval_stones >= 300:
 		act(world, "ranch sheep purchase", func(): return world.ranch.purchase(nursery, "steel_sheep", 1))
 	var intensive := _ranch_zone_of(world, "intensive")
 	for row in world.ranch.state["animals"]:
@@ -812,7 +814,7 @@ func _run_route(route: String) -> void:
 			["small_bed", 4, 11, ""], ["small_bed", 4, 12, ""],
 			["dispatch_station", 8, 11, ""], ["rock_breaking_yard", 9, 11, ""], ["ore_sorting_yard", 11, 11, ""],
 			["rock_breaking_yard", 13, 11, ""], ["toy_station", 19, 13, ""],
-			["pen", 1, 7, ""], ["feed_trough", 3, 7, ""], ["medium_bed", 5, 7, ""], ["wool_station", 6, 7, ""],
+			["pen", 2, 0, ""], ["feed_trough", 4, 0, ""], ["medium_bed", 5, 0, ""], ["wool_station", 4, 1, ""],
 			["feed_trough", 4, 10, ""], ["feed_trough", 7, 10, ""], ["small_bed", 8, 10, ""],
 		]
 	else:
@@ -829,7 +831,7 @@ func _run_route(route: String) -> void:
 			["small_bed", 4, 11, ""], ["small_bed", 4, 12, ""],
 			["dispatch_station", 8, 11, ""], ["rock_breaking_yard", 9, 11, ""], ["ore_sorting_yard", 11, 11, ""],
 			["rock_breaking_yard", 13, 11, ""], ["toy_station", 19, 13, ""],
-			["pen", 1, 7, ""], ["feed_trough", 3, 7, ""], ["medium_bed", 5, 7, ""], ["wool_station", 6, 7, ""],
+			["pen", 2, 0, ""], ["feed_trough", 4, 0, ""], ["medium_bed", 5, 0, ""], ["wool_station", 4, 1, ""],
 			["feed_trough", 4, 10, ""], ["feed_trough", 7, 10, ""], ["small_bed", 8, 10, ""],
 		]
 	var stock_plan: Array = [["fish_pond", 0, 2], ["bee_hive", 0, 2],
