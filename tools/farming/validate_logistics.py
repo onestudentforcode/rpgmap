@@ -10,7 +10,7 @@ AGRI_TAG = {'growth_speed': 'plant_growth_speed', 'water_saving': 'plant_water_s
 # P10.1.a first-round frozen numbers for rank-1 agriculture definitions.
 AGRI_RANK1_VALUE = {'growth_speed': 150, 'water_saving': 50, 'fertility_saving': 50}
 PLANT_GROW_TARGETS = {'golden_wheat', 'fast_fir', 'resin_tree', 'wood_decay_mushroom',
-                      'pasture_grass', 'honeybell_bush', 'oilseed_flower', 'rice_bag_gu'}
+                      'pasture_grass', 'honeybell_bush', 'oilseed_flower', 'mulberry_tree', 'rice_bag_gu'}
 
 def validate(source):
     cfg = source['logistics']

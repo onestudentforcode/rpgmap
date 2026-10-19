@@ -1015,6 +1015,126 @@
       "buy_price": 0,
       "sell_price": 0,
       "cost_source": "make_vine_ball"
+    },
+    {
+      "id": "mulberry_seed",
+      "name": "果桑种苗",
+      "element": "wood",
+      "form": "solid",
+      "stage": "primary",
+      "tags": [
+        "seed",
+        "cultivation"
+      ],
+      "supply_allowed": false,
+      "buy_price": 6,
+      "sell_price": 0,
+      "cost_source": "purchase"
+    },
+    {
+      "id": "mulberry_leaf",
+      "name": "桑叶",
+      "element": "wood",
+      "form": "solid",
+      "stage": "primary",
+      "tags": [
+        "animal_feed",
+        "organic"
+      ],
+      "supply_allowed": false,
+      "buy_price": 2,
+      "sell_price": 1,
+      "cost_source": "mulberry"
+    },
+    {
+      "id": "silk",
+      "name": "蚕丝",
+      "element": "wood",
+      "form": "solid",
+      "stage": "intermediate",
+      "tags": [
+        "food",
+        "animal_product"
+      ],
+      "supply_allowed": true,
+      "buy_price": 0,
+      "sell_price": 4,
+      "cost_source": "silk_round"
+    },
+    {
+      "id": "spirit_liquid",
+      "name": "灵液",
+      "element": "water",
+      "form": "liquid",
+      "stage": "intermediate",
+      "tags": [
+        "food",
+        "animal_product"
+      ],
+      "supply_allowed": true,
+      "buy_price": 0,
+      "sell_price": 6,
+      "cost_source": "dew_round"
+    },
+    {
+      "id": "mucus",
+      "name": "黏液",
+      "element": "water",
+      "form": "solid",
+      "stage": "intermediate",
+      "tags": [
+        "food",
+        "animal_product"
+      ],
+      "supply_allowed": true,
+      "buy_price": 0,
+      "sell_price": 2,
+      "cost_source": "dew_round"
+    },
+    {
+      "id": "mineral_scale",
+      "name": "矿质鳞片",
+      "element": "gold",
+      "form": "solid",
+      "stage": "intermediate",
+      "tags": [
+        "food",
+        "animal_product"
+      ],
+      "supply_allowed": true,
+      "buy_price": 0,
+      "sell_price": 5,
+      "cost_source": "scale_round"
+    },
+    {
+      "id": "shed_skin",
+      "name": "蜕皮",
+      "element": "wood",
+      "form": "solid",
+      "stage": "intermediate",
+      "tags": [
+        "food",
+        "animal_product"
+      ],
+      "supply_allowed": false,
+      "buy_price": 0,
+      "sell_price": 1,
+      "cost_source": "scale_round"
+    },
+    {
+      "id": "rock_shell",
+      "name": "岩壳片",
+      "element": "earth",
+      "form": "solid",
+      "stage": "intermediate",
+      "tags": [
+        "food",
+        "animal_product"
+      ],
+      "supply_allowed": true,
+      "buy_price": 0,
+      "sell_price": 3,
+      "cost_source": "form_rock_shell"
     }
   ],
   "cost_models": [
@@ -2049,6 +2169,125 @@
         "id": "make_vine_ball"
       },
       "cash": 0
+    },
+    {
+      "id": "silk_round",
+      "basis": {
+        "kind": "animal",
+        "id": "leaf_silkworm_provider"
+      },
+      "inputs": {
+        "mulberry_leaf": 36,
+        "clean_water": 28
+      },
+      "ap": 7,
+      "days": 5,
+      "cash": 32,
+      "outputs": {
+        "silk": {
+          "quantity": 16,
+          "share": 1
+        }
+      }
+    },
+    {
+      "id": "dew_round",
+      "basis": {
+        "kind": "animal",
+        "id": "dew_shell_snail_provider"
+      },
+      "inputs": {
+        "fodder_grass": 32,
+        "clean_water": 40
+      },
+      "ap": 8,
+      "days": 6,
+      "cash": 40,
+      "outputs": {
+        "spirit_liquid": {
+          "quantity": 8,
+          "share": 0.75
+        },
+        "mucus": {
+          "quantity": 4,
+          "share": 0.25
+        }
+      }
+    },
+    {
+      "id": "scale_round",
+      "basis": {
+        "kind": "animal",
+        "id": "mineral_scale_lizard_provider"
+      },
+      "inputs": {
+        "fodder_grass": 56,
+        "clean_water": 56,
+        "mineral_feed": 8
+      },
+      "ap": 12,
+      "days": 10,
+      "cash": 72,
+      "outputs": {
+        "mineral_scale": {
+          "quantity": 8,
+          "share": 0.75
+        },
+        "shed_skin": {
+          "quantity": 4,
+          "share": 0.25
+        }
+      }
+    },
+    {
+      "id": "mulberry",
+      "basis": {
+        "kind": "crop",
+        "id": "mulberry_tree"
+      },
+      "inputs": {
+        "mulberry_seed": 1,
+        "clean_water": 4
+      },
+      "ap": 10,
+      "days": 6,
+      "cash": 0,
+      "operations": {
+        "till": 4,
+        "plant": 1,
+        "harvest": 1,
+        "irrigate": 4
+      },
+      "outputs": {
+        "mulberry_leaf": {
+          "quantity": 10,
+          "share": 1
+        }
+      }
+    },
+    {
+      "id": "form_rock_shell",
+      "basis": {
+        "kind": "recipe",
+        "id": "form_rock_shell"
+      },
+      "inputs": {
+        "stone_powder": 3,
+        "clean_water": 1
+      },
+      "ap": 2,
+      "days": 1,
+      "cash": 0,
+      "outputs": {
+        "rock_shell": {
+          "quantity": 2,
+          "share": 0.75
+        },
+        "mucus": {
+          "quantity": 1,
+          "share": 0.25
+        }
+      }
     }
   ],
   "crops": [
@@ -2212,6 +2451,33 @@
       "light": 80,
       "flower_days": 2,
       "research": "flower_cultivation",
+      "target_tags": [
+        "plant_grow"
+      ]
+    },
+    {
+      "id": "mulberry_tree",
+      "name": "果桑树",
+      "seed": "mulberry_seed",
+      "footprint": [
+        2,
+        2
+      ],
+      "days": 6,
+      "mode": "tap_or_fell",
+      "cycle_days": 2,
+      "inputs": {},
+      "outputs": {
+        "mulberry_leaf": 10
+      },
+      "fell_outputs": {
+        "raw_wood": 2,
+        "twig": 2
+      },
+      "water_use": 3,
+      "fertility_use": 1,
+      "light": 80,
+      "max_taps": 6,
       "target_tags": [
         "plant_grow"
       ]
@@ -2427,27 +2693,6 @@
       "research": "biofiltration"
     },
     {
-      "id": "rock_workyard",
-      "name": "岩兽工作场",
-      "cash": 12,
-      "materials": {
-        "raw_wood": 2,
-        "raw_stone": 3
-      },
-      "terrain": "land",
-      "footprint": [
-        2,
-        2
-      ],
-      "kind": "habitat",
-      "capacity": 4,
-      "species": [
-        "rock_mole",
-        "rock_belly_beast"
-      ],
-      "research": "rock_handling"
-    },
-    {
       "id": "kitchen",
       "name": "厨房",
       "footprint": [
@@ -2609,6 +2854,178 @@
       "terrain": "land",
       "kind": "facility",
       "item_slot": "animal_toy"
+    },
+    {
+      "id": "rock_breaking_yard",
+      "name": "碎岩场",
+      "cash": 12,
+      "materials": {
+        "raw_wood": 2,
+        "raw_stone": 3
+      },
+      "terrain": "land",
+      "footprint": [
+        2,
+        2
+      ],
+      "kind": "habitat",
+      "capacity": 4,
+      "species": [
+        "rock_mole"
+      ],
+      "research": "rock_handling"
+    },
+    {
+      "id": "ore_sorting_yard",
+      "name": "选矿场",
+      "cash": 12,
+      "materials": {
+        "raw_wood": 2,
+        "raw_stone": 3
+      },
+      "terrain": "land",
+      "footprint": [
+        2,
+        2
+      ],
+      "kind": "habitat",
+      "capacity": 4,
+      "species": [
+        "rock_belly_beast"
+      ],
+      "research": "ore_concentration"
+    },
+    {
+      "id": "carbonization_nest",
+      "name": "炭化巢",
+      "cash": 18,
+      "materials": {
+        "wood_plank": 2,
+        "raw_stone": 4
+      },
+      "terrain": "land",
+      "footprint": [
+        2,
+        2
+      ],
+      "kind": null,
+      "capacity": 4,
+      "species": [
+        "carbon_belly_bug"
+      ],
+      "research": "farm_preparation"
+    },
+    {
+      "id": "compost_mouse_den",
+      "name": "翻肥窝",
+      "cash": 12,
+      "materials": {
+        "raw_wood": 2,
+        "raw_stone": 2
+      },
+      "terrain": "land",
+      "footprint": [
+        2,
+        2
+      ],
+      "kind": null,
+      "capacity": 4,
+      "species": [
+        "compost_mouse"
+      ]
+    },
+    {
+      "id": "shell_forming_station",
+      "name": "岩壳成型台",
+      "cash": 18,
+      "materials": {
+        "wood_plank": 2,
+        "raw_stone": 4
+      },
+      "terrain": "land",
+      "footprint": [
+        2,
+        2
+      ],
+      "kind": null,
+      "capacity": 4,
+      "species": [
+        "gravel_shell_snail"
+      ],
+      "research": "mineral_materials"
+    },
+    {
+      "id": "wool_station",
+      "name": "采毛台",
+      "cash": 12,
+      "materials": {
+        "wood_plank": 2,
+        "raw_stone": 2
+      },
+      "terrain": "land",
+      "footprint": [
+        1,
+        1
+      ],
+      "kind": null,
+      "species": [
+        "steel_sheep"
+      ]
+    },
+    {
+      "id": "silkworm_rack",
+      "name": "蚕架",
+      "cash": 10,
+      "materials": {
+        "wood_plank": 2,
+        "twig": 2
+      },
+      "terrain": "land",
+      "footprint": [
+        1,
+        1
+      ],
+      "kind": null,
+      "species": [
+        "leaf_silkworm"
+      ]
+    },
+    {
+      "id": "spirit_liquid_collector",
+      "name": "集露台",
+      "cash": 12,
+      "materials": {
+        "wood_plank": 1,
+        "raw_stone": 3
+      },
+      "terrain": "land",
+      "footprint": [
+        1,
+        1
+      ],
+      "kind": null,
+      "species": [
+        "dew_shell_snail"
+      ]
+    },
+    {
+      "id": "scale_station",
+      "name": "养鳞台",
+      "cash": 18,
+      "materials": {
+        "wood_plank": 2,
+        "raw_stone": 4
+      },
+      "terrain": "land",
+      "footprint": [
+        1,
+        1
+      ],
+      "kind": null,
+      "species": [
+        "mineral_scale_lizard"
+      ],
+      "research": "mineral_materials"
     }
   ],
   "recipes": [
@@ -2991,7 +3408,7 @@
     {
       "id": "break_stone",
       "name": "破碎石材",
-      "facility": "rock_workyard",
+      "facility": "rock_breaking_yard",
       "inputs": {
         "raw_stone": 2
       },
@@ -3008,7 +3425,7 @@
     {
       "id": "break_ore",
       "name": "破碎矿石",
-      "facility": "rock_workyard",
+      "facility": "rock_breaking_yard",
       "inputs": {
         "iron_ore": 2
       },
@@ -3024,7 +3441,7 @@
     {
       "id": "concentrate_ore",
       "name": "生物选矿",
-      "facility": "rock_workyard",
+      "facility": "ore_sorting_yard",
       "inputs": {
         "crushed_ore": 6
       },
@@ -3270,6 +3687,158 @@
       "days": 1,
       "start_ap": 1,
       "claim_ap": 1
+    },
+    {
+      "id": "bug_char_twigs",
+      "name": "树枝生物炭化",
+      "facility": "carbonization_nest",
+      "inputs": {
+        "twig": 4
+      },
+      "outputs": {
+        "charcoal": 4,
+        "humus": 1
+      },
+      "days": 1,
+      "start_ap": 1,
+      "claim_ap": 1,
+      "living": true,
+      "research": "farm_preparation"
+    },
+    {
+      "id": "bug_char_chips",
+      "name": "木屑生物炭化",
+      "facility": "carbonization_nest",
+      "inputs": {
+        "wood_chip": 4
+      },
+      "outputs": {
+        "charcoal": 2,
+        "humus": 1
+      },
+      "days": 1,
+      "start_ap": 1,
+      "claim_ap": 1,
+      "living": true,
+      "research": "farm_preparation"
+    },
+    {
+      "id": "mouse_compost_fiber",
+      "name": "秸秆翻肥",
+      "facility": "compost_mouse_den",
+      "inputs": {
+        "straw": 2,
+        "wood_chip": 1
+      },
+      "outputs": {
+        "humus": 4
+      },
+      "days": 1,
+      "start_ap": 1,
+      "claim_ap": 1,
+      "living": true
+    },
+    {
+      "id": "mouse_compost_residue",
+      "name": "残料翻肥",
+      "facility": "compost_mouse_den",
+      "inputs": {
+        "sludge": 2,
+        "oil_cake": 1
+      },
+      "outputs": {
+        "humus": 3
+      },
+      "days": 1,
+      "start_ap": 1,
+      "claim_ap": 1,
+      "living": true,
+      "research": "biofiltration"
+    },
+    {
+      "id": "form_rock_shell",
+      "name": "岩壳成型",
+      "facility": "shell_forming_station",
+      "inputs": {
+        "stone_powder": 3,
+        "clean_water": 1
+      },
+      "outputs": {
+        "rock_shell": 2,
+        "mucus": 1
+      },
+      "days": 1,
+      "start_ap": 1,
+      "claim_ap": 1,
+      "living": true,
+      "research": "mineral_materials"
+    },
+    {
+      "id": "make_silk_filter_media",
+      "name": "丝质滤材",
+      "facility": "woodshop",
+      "inputs": {
+        "silk": 1,
+        "wood_chip": 1,
+        "charcoal": 1
+      },
+      "outputs": {
+        "filter_media": 3
+      },
+      "days": 1,
+      "start_ap": 1,
+      "claim_ap": 1,
+      "research": "water_recirculation"
+    },
+    {
+      "id": "assemble_mucus_panel",
+      "name": "黏液复合石板",
+      "facility": "woodshop",
+      "inputs": {
+        "gravel": 2,
+        "stone_powder": 1,
+        "mucus": 1
+      },
+      "outputs": {
+        "composite_stone_panel": 2
+      },
+      "days": 1,
+      "start_ap": 1,
+      "claim_ap": 1,
+      "research": "mineral_materials"
+    },
+    {
+      "id": "assemble_scale_panel",
+      "name": "鳞甲复合板",
+      "facility": "woodshop",
+      "inputs": {
+        "mineral_scale": 2,
+        "shed_skin": 1,
+        "gravel": 1
+      },
+      "outputs": {
+        "composite_stone_panel": 3
+      },
+      "days": 1,
+      "start_ap": 1,
+      "claim_ap": 1,
+      "research": "mineral_materials"
+    },
+    {
+      "id": "assemble_shell_panel",
+      "name": "岩壳石板",
+      "facility": "woodshop",
+      "inputs": {
+        "rock_shell": 2,
+        "mucus": 1
+      },
+      "outputs": {
+        "composite_stone_panel": 3
+      },
+      "days": 1,
+      "start_ap": 1,
+      "claim_ap": 1,
+      "research": "mineral_materials"
     }
   ],
   "orders": {
@@ -3491,7 +4060,7 @@
     {
       "id": "rock_mole",
       "name": "啮岩鼹",
-      "facility": "rock_workyard",
+      "facility": "rock_breaking_yard",
       "unit": "只",
       "juvenile_price": 8,
       "growth_days": 3,
@@ -3541,7 +4110,7 @@
     {
       "id": "rock_belly_beast",
       "name": "岩腹兽",
-      "facility": "rock_workyard",
+      "facility": "ore_sorting_yard",
       "unit": "只",
       "juvenile_price": 12,
       "growth_days": 4,
@@ -3586,6 +4155,261 @@
       },
       "claim_removes": false,
       "research": "ore_concentration"
+    },
+    {
+      "id": "carbon_belly_bug",
+      "name": "炭腹虫",
+      "facility": "carbonization_nest",
+      "unit": "群",
+      "juvenile_price": 10,
+      "growth_days": 3,
+      "cycle_days": 1,
+      "base_diets": [
+        {
+          "id": "grass_water_meal",
+          "name": "牧草清水餐",
+          "inputs": {
+            "fodder_grass": 1,
+            "clean_water": 1
+          }
+        }
+      ],
+      "default_base_diet": "grass_water_meal",
+      "special_diets": [
+        {
+          "id": "bug_char_twigs",
+          "name": "树枝炭化轮",
+          "inputs": {
+            "twig": 4
+          },
+          "outputs": {
+            "charcoal": 4,
+            "humus": 1
+          }
+        },
+        {
+          "id": "bug_char_chips",
+          "name": "木屑炭化轮",
+          "inputs": {
+            "wood_chip": 4
+          },
+          "outputs": {
+            "charcoal": 2,
+            "humus": 1
+          }
+        }
+      ],
+      "default_special_diet": "bug_char_twigs",
+      "outputs": {
+        "charcoal": 4,
+        "humus": 1
+      },
+      "claim_removes": false,
+      "research": "farm_preparation"
+    },
+    {
+      "id": "leaf_silkworm",
+      "name": "叶丝蚕",
+      "facility": "silkworm_rack",
+      "unit": "群",
+      "juvenile_price": 8,
+      "growth_days": 3,
+      "cycle_days": 2,
+      "base_diets": [
+        {
+          "id": "mulberry_meal",
+          "name": "桑叶清水餐",
+          "inputs": {
+            "mulberry_leaf": 1,
+            "clean_water": 1
+          }
+        }
+      ],
+      "default_base_diet": "mulberry_meal",
+      "special_diets": [
+        {
+          "id": "silk_round",
+          "name": "产丝轮",
+          "inputs": {
+            "mulberry_leaf": 2
+          }
+        }
+      ],
+      "default_special_diet": "silk_round",
+      "outputs": {
+        "silk": 4
+      },
+      "claim_removes": false
+    },
+    {
+      "id": "dew_shell_snail",
+      "name": "露壳蜗牛",
+      "facility": "spirit_liquid_collector",
+      "unit": "只",
+      "juvenile_price": 10,
+      "growth_days": 4,
+      "cycle_days": 2,
+      "base_diets": [
+        {
+          "id": "grass_water_meal",
+          "name": "牧草清水餐",
+          "inputs": {
+            "fodder_grass": 1,
+            "clean_water": 1
+          }
+        }
+      ],
+      "default_base_diet": "grass_water_meal",
+      "special_diets": [
+        {
+          "id": "dew_round",
+          "name": "灵液采集轮",
+          "inputs": {
+            "clean_water": 2
+          }
+        }
+      ],
+      "default_special_diet": "dew_round",
+      "outputs": {
+        "spirit_liquid": 2,
+        "mucus": 1
+      },
+      "claim_removes": false
+    },
+    {
+      "id": "mineral_scale_lizard",
+      "name": "矿鳞蜥",
+      "facility": "scale_station",
+      "unit": "只",
+      "juvenile_price": 18,
+      "growth_days": 6,
+      "cycle_days": 4,
+      "base_diets": [
+        {
+          "id": "grass_water_meal",
+          "name": "牧草清水餐",
+          "inputs": {
+            "fodder_grass": 1,
+            "clean_water": 1
+          }
+        },
+        {
+          "id": "land_meal",
+          "name": "陆养复合餐",
+          "inputs": {
+            "land_feed": 1,
+            "clean_water": 1
+          },
+          "research": "advanced_feed_oil_wax"
+        }
+      ],
+      "default_base_diet": "grass_water_meal",
+      "special_diets": [
+        {
+          "id": "scale_round",
+          "name": "养鳞轮",
+          "inputs": {
+            "mineral_feed": 2
+          }
+        }
+      ],
+      "default_special_diet": "scale_round",
+      "outputs": {
+        "mineral_scale": 2,
+        "shed_skin": 1
+      },
+      "claim_removes": false,
+      "research": "mineral_materials"
+    },
+    {
+      "id": "compost_mouse",
+      "name": "堆肥鼠",
+      "facility": "compost_mouse_den",
+      "unit": "只",
+      "juvenile_price": 8,
+      "growth_days": 3,
+      "cycle_days": 1,
+      "base_diets": [
+        {
+          "id": "grass_water_meal",
+          "name": "牧草清水餐",
+          "inputs": {
+            "fodder_grass": 1,
+            "clean_water": 1
+          }
+        }
+      ],
+      "default_base_diet": "grass_water_meal",
+      "special_diets": [
+        {
+          "id": "mouse_compost_fiber",
+          "name": "秸秆堆肥轮",
+          "inputs": {
+            "straw": 2,
+            "wood_chip": 1
+          },
+          "outputs": {
+            "humus": 4
+          }
+        },
+        {
+          "id": "mouse_compost_residue",
+          "name": "残料堆肥轮",
+          "inputs": {
+            "sludge": 2,
+            "oil_cake": 1
+          },
+          "outputs": {
+            "humus": 3
+          }
+        }
+      ],
+      "default_special_diet": "mouse_compost_fiber",
+      "outputs": {
+        "humus": 4
+      },
+      "claim_removes": false
+    },
+    {
+      "id": "gravel_shell_snail",
+      "name": "砾甲蜗牛",
+      "facility": "shell_forming_station",
+      "unit": "只",
+      "juvenile_price": 14,
+      "growth_days": 5,
+      "cycle_days": 1,
+      "base_diets": [
+        {
+          "id": "algae_water_meal",
+          "name": "藻料清水餐",
+          "inputs": {
+            "algae_feed": 1,
+            "clean_water": 1
+          }
+        }
+      ],
+      "default_base_diet": "algae_water_meal",
+      "special_diets": [
+        {
+          "id": "form_rock_shell",
+          "name": "岩壳成型轮",
+          "inputs": {
+            "stone_powder": 3,
+            "clean_water": 1
+          },
+          "outputs": {
+            "rock_shell": 2,
+            "mucus": 1
+          }
+        }
+      ],
+      "default_special_diet": "form_rock_shell",
+      "outputs": {
+        "rock_shell": 2,
+        "mucus": 1
+      },
+      "claim_removes": false,
+      "research": "mineral_materials"
     }
   ],
   "research": [
@@ -3658,16 +4482,21 @@
         "purchases": [],
         "crops": [],
         "facilities": [
+          "carbonization_nest",
           "farm_processor"
         ],
         "recipes": [
+          "bug_char_chips",
+          "bug_char_twigs",
+          "compost_oil_cake",
           "mill_grain",
           "mill_grass",
-          "press_oilseed",
-          "compost_oil_cake",
-          "mill_rice"
+          "mill_rice",
+          "press_oilseed"
         ],
-        "species": [],
+        "species": [
+          "carbon_belly_bug"
+        ],
         "diets": []
       }
     },
@@ -3692,7 +4521,8 @@
         ],
         "recipes": [
           "bio_purify",
-          "compost_sludge"
+          "compost_sludge",
+          "mouse_compost_residue"
         ],
         "species": [
           "purifying_mat"
@@ -3715,7 +4545,7 @@
         "purchases": [],
         "crops": [],
         "facilities": [
-          "rock_workyard"
+          "rock_breaking_yard"
         ],
         "recipes": [
           "break_stone",
@@ -3777,7 +4607,9 @@
       "unlocks": {
         "purchases": [],
         "crops": [],
-        "facilities": [],
+        "facilities": [
+          "ore_sorting_yard"
+        ],
         "recipes": [
           "concentrate_ore"
         ],
@@ -3807,9 +4639,10 @@
         "crops": [],
         "facilities": [],
         "recipes": [
+          "dense_algae_culture",
           "make_filter_media",
-          "recover_nutrients",
-          "dense_algae_culture"
+          "make_silk_filter_media",
+          "recover_nutrients"
         ],
         "species": [],
         "diets": [
@@ -3890,15 +4723,24 @@
         "purchases": [],
         "crops": [],
         "facilities": [
-          "growth_lamp"
+          "growth_lamp",
+          "scale_station",
+          "shell_forming_station"
         ],
         "recipes": [
-          "mineral_feed",
-          "smelt_concentrate",
+          "assemble_mucus_panel",
+          "assemble_scale_panel",
+          "assemble_shell_panel",
           "assemble_stone_panel",
-          "recover_fill"
+          "form_rock_shell",
+          "mineral_feed",
+          "recover_fill",
+          "smelt_concentrate"
         ],
-        "species": [],
+        "species": [
+          "gravel_shell_snail",
+          "mineral_scale_lizard"
+        ],
         "diets": [
           "mineral_supplement"
         ]
@@ -4302,6 +5144,10 @@
       },
       "rice_bag_gu": {
         "claim": "rice"
+      },
+      "mulberry_tree": {
+        "harvest": "mulberry_leaf",
+        "fell": "raw_wood"
       }
     },
     "requirements": {
@@ -4316,19 +5162,22 @@
     }
   },
   "p103": {
-    "version": 1,
+    "version": 2,
     "species": {
       "steel_sheep": {
         "space": 2,
         "bed": "medium",
         "growth_units": 3600,
         "breed_units": 7200,
-        "natural_units": 1800,
-        "natural_outputs": {
-          "steel_wool": 1,
-          "sheep_manure": 1
-        },
-        "natural_diet": "iron_supplement"
+        "natural": {
+          "station": "wool_station",
+          "units": 1800,
+          "outputs": {
+            "steel_wool": 1,
+            "sheep_manure": 1
+          },
+          "default_diet": "iron_supplement"
+        }
       },
       "rock_mole": {
         "space": 1,
@@ -4341,6 +5190,68 @@
         "bed": "small",
         "growth_units": 2400,
         "breed_units": 9600
+      },
+      "carbon_belly_bug": {
+        "space": 1,
+        "bed": "small",
+        "growth_units": 1800,
+        "breed_units": 6000
+      },
+      "leaf_silkworm": {
+        "space": 1,
+        "bed": "small",
+        "growth_units": 1800,
+        "breedable": false,
+        "natural": {
+          "station": "silkworm_rack",
+          "units": 1200,
+          "outputs": {
+            "silk": 4
+          },
+          "default_diet": "silk_round"
+        }
+      },
+      "dew_shell_snail": {
+        "space": 1,
+        "bed": "small",
+        "growth_units": 2400,
+        "breed_units": 7200,
+        "natural": {
+          "station": "spirit_liquid_collector",
+          "units": 1200,
+          "outputs": {
+            "spirit_liquid": 2,
+            "mucus": 1
+          },
+          "default_diet": "dew_round"
+        }
+      },
+      "mineral_scale_lizard": {
+        "space": 2,
+        "bed": "medium",
+        "growth_units": 3600,
+        "breed_units": 9600,
+        "natural": {
+          "station": "scale_station",
+          "units": 2400,
+          "outputs": {
+            "mineral_scale": 2,
+            "shed_skin": 1
+          },
+          "default_diet": "scale_round"
+        }
+      },
+      "compost_mouse": {
+        "space": 1,
+        "bed": "small",
+        "growth_units": 1800,
+        "breed_units": 4800
+      },
+      "gravel_shell_snail": {
+        "space": 2,
+        "bed": "medium",
+        "growth_units": 3000,
+        "breed_units": 8400
       }
     },
     "zones": {
@@ -4361,11 +5272,41 @@
           "care_table"
         ]
       },
+      "intensive": {
+        "min_space": 8,
+        "structures": [
+          "pen",
+          "feed_trough",
+          "bed"
+        ],
+        "any_of": [
+          {
+            "id": "intensive_station",
+            "members": [
+              "wool_station",
+              "silkworm_rack",
+              "spirit_liquid_collector",
+              "scale_station"
+            ]
+          }
+        ]
+      },
       "work": {
         "min_space": 0,
         "structures": [
-          "dispatch_station",
-          "rock_workyard"
+          "dispatch_station"
+        ],
+        "any_of": [
+          {
+            "id": "work_yard",
+            "members": [
+              "rock_breaking_yard",
+              "ore_sorting_yard",
+              "carbonization_nest",
+              "compost_mouse_den",
+              "shell_forming_station"
+            ]
+          }
         ]
       },
       "maintenance": {
@@ -4421,6 +5362,26 @@
     "work": {
       "posts_per_yard": 4,
       "points_per_unit": 10000,
+      "facilities": {
+        "rock_breaking_yard": [
+          "break_stone",
+          "break_ore"
+        ],
+        "ore_sorting_yard": [
+          "concentrate_ore"
+        ],
+        "carbonization_nest": [
+          "bug_char_twigs",
+          "bug_char_chips"
+        ],
+        "compost_mouse_den": [
+          "mouse_compost_fiber",
+          "mouse_compost_residue"
+        ],
+        "shell_forming_station": [
+          "form_rock_shell"
+        ]
+      },
       "recipes": {
         "break_stone": {
           "species": "rock_mole",
@@ -4433,14 +5394,52 @@
         "concentrate_ore": {
           "species": "rock_belly_beast",
           "target": 80000
+        },
+        "bug_char_twigs": {
+          "species": "carbon_belly_bug",
+          "target": 60000
+        },
+        "bug_char_chips": {
+          "species": "carbon_belly_bug",
+          "target": 40000
+        },
+        "mouse_compost_fiber": {
+          "species": "compost_mouse",
+          "target": 40000
+        },
+        "mouse_compost_residue": {
+          "species": "compost_mouse",
+          "target": 40000
+        },
+        "form_rock_shell": {
+          "species": "gravel_shell_snail",
+          "target": 80000
         }
+      }
+    },
+    "stations": {
+      "wool_station": {
+        "species": "steel_sheep",
+        "capacity": 4
       },
-      "default_recipe": "break_stone"
+      "silkworm_rack": {
+        "species": "leaf_silkworm",
+        "capacity": 4
+      },
+      "spirit_liquid_collector": {
+        "species": "dew_shell_snail",
+        "capacity": 4
+      },
+      "scale_station": {
+        "species": "mineral_scale_lizard",
+        "capacity": 4
+      }
     },
     "meals": {
       "nursery": 1,
       "work": 1,
-      "enclosure": 2
+      "enclosure": 2,
+      "intensive": 2
     },
     "trough_slots": 2,
     "bed_facilities": {

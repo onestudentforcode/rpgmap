@@ -33,7 +33,6 @@ func habitat(world, cell: Vector2i, type: String, species: String, count: int = 
 	check(built["ok"], "build " + type)
 	var uid := int(built.get("facility_uid", 0))
 	world.husbandry.ensure(uid)
-	if type == "rock_workyard": check(world.husbandry.set_yard_species(uid, species)["ok"], "select species")
 	check(world.husbandry.purchase(uid, count)["ok"], "purchase units")
 	if adult:
 		for unit in world.husbandry.habitat_of(uid)["individuals"]:

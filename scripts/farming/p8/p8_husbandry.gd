@@ -73,13 +73,14 @@ func caretaker_of(facility_uid: int) -> Dictionary:
 	var owner: int = world.operations.owner_of(facility_uid)
 	return world.workforce._worker(owner) if owner > 0 else {}
 
-## P10.3: the pen and the rock workyard are structural ranch facilities.
-## They never create habitat state, so the three terrestrial species cannot
-## enter the per-day feeding path from any entry point.
-const RANCH_STRUCTURAL := ["pen", "rock_workyard"]
+## P10.3/P10.5: the pen, species yards and intensive stations are structural
+## ranch facilities. They never create habitat state, so the ranch species
+## cannot enter the per-day feeding path from any entry point.
+func _ranch_structural(facility_id: String) -> bool:
+	return world.ranch != null and world.ranch.is_structural(facility_id)
 
 func ensure(facility_uid: int) -> Dictionary:
-	if world.facilities.has(facility_uid) and String(world.facilities[facility_uid]["facility_id"]) in RANCH_STRUCTURAL:
+	if world.facilities.has(facility_uid) and _ranch_structural(String(world.facilities[facility_uid]["facility_id"])):
 		return {}
 	var habitat: Dictionary = super(facility_uid)
 	if habitat.has("water") and not habitat.has("water_change_day"):
@@ -88,8 +89,8 @@ func ensure(facility_uid: int) -> Dictionary:
 
 ## Mixed yards pick their single species while empty; 0AP management only.
 func set_yard_species(facility_uid: int, species_id: String) -> Dictionary:
-	if world.facilities.has(facility_uid) and String(world.facilities[facility_uid]["facility_id"]) in RANCH_STRUCTURAL:
-		return _error("圈舍与岩兽工作场已改为畜牧功能区结构件，请在畜牧分区中安置动物")
+	if world.facilities.has(facility_uid) and _ranch_structural(String(world.facilities[facility_uid]["facility_id"])):
+		return _error("圈舍、役使设施与精养台已改为畜牧功能区结构件，请在畜牧分区中安置动物")
 	var checked: Dictionary = world._can_act(0)
 	if not checked["ok"]:
 		return checked

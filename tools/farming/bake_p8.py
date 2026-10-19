@@ -39,6 +39,9 @@ ALLOCATION = {
     'break_stone': {'gravel': Fraction(4, 5), 'stone_powder': Fraction(1, 5)},
     'concentrate_ore': {'ore_concentrate': Fraction(19, 20), 'tailings': Fraction(1, 20)},
     'smelt_concentrate': {'iron_ingot': Fraction(19, 20), 'slag': Fraction(1, 20)},
+    'dew_round': {'spirit_liquid': Fraction(3, 4), 'mucus': Fraction(1, 4)},
+    'scale_round': {'mineral_scale': Fraction(3, 4), 'shed_skin': Fraction(1, 4)},
+    'form_rock_shell': {'rock_shell': Fraction(3, 4), 'mucus': Fraction(1, 4)},
 }
 
 
@@ -89,8 +92,12 @@ def providers(source):
     result = {}
     # --- Old livestock: same derivation as V2, unchanged standard rounds.
     # bell_bee keeps its custom flower-field round below and is skipped here.
+    # The P10.3 rock species and the six P10.5 land species live in the ranch
+    # roster; their rounds are derived in the dedicated blocks below.
+    p105_species = ('carbon_belly_bug', 'leaf_silkworm', 'dew_shell_snail',
+                    'mineral_scale_lizard', 'compost_mouse', 'gravel_shell_snail')
     for ident, a in animals.items():
-        if ident in ('bell_bee', 'purifying_mat', 'rock_mole', 'rock_belly_beast'):
+        if ident in ('bell_bee', 'purifying_mat', 'rock_mole', 'rock_belly_beast') or ident in p105_species:
             continue
         require(common.integer(a['juvenile_price'], 1) and common.integer(a['growth_days'], 1) and common.integer(a['cycle_days'], 1) and type(a['claim_removes']) is bool, f'{ident}: lifecycle')
         f = facilities[a['facility']]
@@ -175,6 +182,7 @@ def providers(source):
         result[provider_id] = dict(facility='purifying_bed', inputs=dict(inputs), outputs=outputs, days=round_days,
                                    start_ap=round_days + 1, claim_ap=1, cash=POPULATION * mat['juvenile_price'])
     # --- Rock mole / rock belly beast: growth plus one production round x4.
+    # P10.5.a split the shared rock workyard: each species now owns one yard.
     for species_id, recipe_ids in (('rock_mole', ('break_stone', 'break_ore')), ('rock_belly_beast', ('concentrate_ore',))):
         row = animals[species_id]
         _check_species(row, facilities, resources, research)
@@ -182,12 +190,31 @@ def providers(source):
         for recipe_id in recipe_ids:
             recipe = recipes[recipe_id]
             _living_recipe(recipe_id, recipe, resources, research)
+            require(recipe['facility'] == row['facility'], f'{recipe_id}: recipe must live on the species yard')
             round_days = row['growth_days'] + recipe['days']
             inputs = Counter({iid: q * round_days * POPULATION for iid, q in diet['inputs'].items()})
             inputs.update({iid: q * POPULATION for iid, q in recipe['inputs'].items()})
             provider = recipe_id + '_provider'
-            result[provider] = dict(facility='rock_workyard', inputs=dict(inputs), outputs=_scaled(recipe['outputs'], POPULATION),
+            result[provider] = dict(facility=row['facility'], inputs=dict(inputs), outputs=_scaled(recipe['outputs'], POPULATION),
                                     days=round_days, start_ap=round_days + 1, claim_ap=1, cash=POPULATION * row['juvenile_price'])
+    # --- P10.5 intensive species: growth plus the first natural round x4.
+    # Nursery days carry one base meal per animal, intensive round days carry
+    # two (the shared ranch meal policy), and the round diet is paid once.
+    for species_id, round_days, round_inputs in (
+            ('leaf_silkworm', 2, {'mulberry_leaf': 2}),
+            ('dew_shell_snail', 2, {'clean_water': 2}),
+            ('mineral_scale_lizard', 4, {'mineral_feed': 2})):
+        row = animals[species_id]
+        _check_diets(species_id, row, resources, research)
+        require(species_id in facilities[row['facility']].get('species', []), f'{species_id}: station species list')
+        diet = next(d for d in row['base_diets'] if d['id'] == row['default_base_diet'])
+        days = row['growth_days'] + round_days
+        inputs = Counter({iid: q * row['growth_days'] * POPULATION for iid, q in diet['inputs'].items()})
+        inputs.update({iid: q * round_days * 2 * POPULATION for iid, q in diet['inputs'].items()})
+        inputs.update({iid: q * POPULATION for iid, q in round_inputs.items()})
+        result[species_id + '_provider'] = dict(facility=row['facility'], inputs=dict(inputs),
+                                                outputs=_scaled(row['outputs'], POPULATION), days=days,
+                                                start_ap=days + 1, claim_ap=1, cash=POPULATION * row['juvenile_price'])
     if 'logistics' in source:
         row = next(r for r in source['logistics']['definitions'] if r['id'] == 'rice_bag_gu')
         production = row['production']

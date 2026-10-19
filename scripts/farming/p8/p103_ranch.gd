@@ -1,24 +1,39 @@
 extends RefCounted
-## P10.3 terrestrial ranch: an independent animal roster, five floor zone types
-## with shared space, bed-slot reservations, the eight-unit inner clock with
-## whole-window maintenance, fixed work bans, day-opening fatigue, facility
-## work posts and asexual breeding. The three species leave the per-day V2
-## habitat path entirely; other species keep it.
+## P10.3/P10.5 terrestrial ranch: a nine-species animal roster, six floor zone
+## types with shared space, bed-slot reservations, the eight-unit inner clock
+## with whole-window maintenance, fixed work bans, day-opening fatigue, facility
+## work posts and asexual breeding. Adults pick one use at a time — breeding in
+## the enclosure, body-material rounds in the intensive zone, yard work in the
+## work zone — and the ranch species never enter the per-day V2 habitat path.
 const Scalars := preload("res://scripts/farming/v1/v1_world_state.gd")
 
-const SPECIES := ["steel_sheep", "rock_mole", "rock_belly_beast"]
-const ZONE_TYPES := ["nursery", "enclosure", "work", "maintenance", "pasture"]
+const SPECIES := ["steel_sheep", "rock_mole", "rock_belly_beast", "carbon_belly_bug", "leaf_silkworm",
+	"dew_shell_snail", "mineral_scale_lizard", "compost_mouse", "gravel_shell_snail"]
+const ZONE_TYPES := ["nursery", "enclosure", "intensive", "work", "maintenance", "pasture"]
 const BED_TYPES := {"small_bed": "small", "medium_bed": "medium", "large_bed": "large"}
-const WORKYARD_ID := "rock_workyard"
 const PEN_ID := "pen"
 const DISPATCH_ID := "dispatch_station"
 const TROUGH_ID := "feed_trough"
 const CARE_ID := "care_table"
 ## Ranch facilities must stand on ordinary floor; beds count as usable space.
-const FLOOR_FACILITIES := ["pen", WORKYARD_ID, DISPATCH_ID, TROUGH_ID, "small_bed", "medium_bed", "large_bed", CARE_ID]
+const FLOOR_FACILITIES := [PEN_ID, "rock_breaking_yard", "ore_sorting_yard", "carbonization_nest",
+	"compost_mouse_den", "shell_forming_station", DISPATCH_ID, TROUGH_ID, "small_bed", "medium_bed",
+	"large_bed", CARE_ID, "wool_station", "silkworm_rack", "spirit_liquid_collector", "scale_station"]
 const ANIMAL_KEYS := ["uid", "species_id", "stage", "growth", "mode", "zone_uid", "bed_uid", "bed_slot",
 	"pending", "diet_id", "pattern", "priority", "fatigue", "ban_until", "qualified_until",
 	"served_once", "natural", "breed", "death_streak", "account"]
+
+## Structural ranch facilities never create V2 habitat rows: the pen, the five
+## species yards and the four intensive stations. One registry shared by the
+## snapshot filter, husbandry and the world build hook.
+static func structural_facility_ids(catalog) -> Array:
+	var config: Dictionary = catalog.load_data()["p103"]
+	var out := [PEN_ID]
+	for fid in config["work"]["facilities"]:
+		out.append(String(fid))
+	for fid in config["stations"]:
+		out.append(String(fid))
+	return out
 
 var _owner: WeakRef
 var world:
@@ -45,6 +60,22 @@ func _error(reason: String) -> Dictionary:
 
 func species_config(species_id: String) -> Dictionary:
 	return settings["species"].get(species_id, {})
+
+func can_breed(species_id: String) -> bool:
+	var config := species_config(species_id)
+	return not config.is_empty() and bool(config.get("breedable", true)) and config.has("breed_units")
+
+func natural_config(species_id: String) -> Dictionary:
+	return species_config(species_id).get("natural", {})
+
+func is_work_facility(facility_id: String) -> bool:
+	return settings["work"]["facilities"].has(facility_id)
+
+func is_station(facility_id: String) -> bool:
+	return settings["stations"].has(facility_id)
+
+func is_structural(facility_id: String) -> bool:
+	return facility_id == PEN_ID or is_work_facility(facility_id) or is_station(facility_id)
 
 func animal(uid: int) -> Dictionary:
 	for row in state["animals"]:
@@ -141,7 +172,8 @@ func available_space(zone_row: Dictionary) -> int:
 	return space
 
 func structure_missing(zone_row: Dictionary) -> Array:
-	var required: Array = settings["zones"][zone_row["type"]]["structures"]
+	var zone_config: Dictionary = settings["zones"][zone_row["type"]]
+	var required: Array = zone_config["structures"]
 	var present := {}
 	for facility in _facilities_in_zone(zone_row):
 		var fid := String(facility["facility_id"])
@@ -152,6 +184,16 @@ func structure_missing(zone_row: Dictionary) -> Array:
 	for key in required:
 		if not present.has(key):
 			missing.append(key)
+	# any_of groups: at least one member facility must stand in the zone. A
+	# missing group never blocks the shared pen/bed/trough services.
+	for group in zone_config.get("any_of", []):
+		var found := false
+		for member in group["members"]:
+			if present.has(String(member)):
+				found = true
+				break
+		if not found:
+			missing.append(String(group["id"]))
 	return missing
 
 func zone_structural(zone_row: Dictionary) -> bool:
@@ -213,7 +255,8 @@ static func _intified_animal(row: Dictionary) -> Dictionary:
 		"fatigue": int(row["fatigue"]), "ban_until": int(row["ban_until"]), "qualified_until": int(row["qualified_until"]),
 		"served_once": bool(row["served_once"]),
 		"natural": {"round": int(row["natural"]["round"]), "units": int(row["natural"]["units"]),
-			"pending": bool(row["natural"]["pending"]), "paid": bool(row["natural"]["paid"])},
+			"pending": bool(row["natural"]["pending"]), "paid": bool(row["natural"]["paid"]),
+			"diet_id": String(row["natural"].get("diet_id", ""))},
 		"breed": {"round": int(row["breed"]["round"]), "units": int(row["breed"]["units"]), "pending": bool(row["breed"]["pending"])},
 		"death_streak": int(row["death_streak"]),
 		"account": {"w": int(account["w"]), "r": int(account["r"]), "fails": int(account["fails"])}}
@@ -253,7 +296,7 @@ func preview_zone(type_id: String, cells: Array) -> Dictionary:
 		"enough": space >= int(settings["zones"][type_id]["min_space"])}
 
 static func _zone_label(type_id: String) -> String:
-	return {"nursery": "育幼区", "enclosure": "圈养区", "work": "工作区",
+	return {"nursery": "育幼区", "enclosure": "繁殖区", "intensive": "精养区", "work": "工作区",
 		"maintenance": "维持放牧区", "pasture": "额外放牧区"}[type_id]
 
 func create_zone(type_id: String, cells: Array, zone_name := "") -> Dictionary:
@@ -404,7 +447,7 @@ func submit(changes: Dictionary) -> Dictionary:
 	for zone_uid in targets:
 		var row := zone(int(zone_uid))
 		if row.is_empty() or String(row["type"]) != "enclosure":
-			return _error("只有圈养区可以选择育幼区")
+			return _error("只有繁殖区可以选择育幼区")
 		var nursery := zone(int(targets[zone_uid]))
 		if nursery.is_empty() or String(nursery["type"]) != "nursery":
 			return _error("目标不是育幼区")
@@ -446,7 +489,7 @@ func _first_window_end(pattern: String, day: int) -> int:
 ## Validates one assignment request and stages it; empty string means staged.
 func _stage_assignment(row: Dictionary, request: Dictionary) -> String:
 	var mode := String(request.get("mode", row["mode"]))
-	if not ["waiting", "nursery", "enclosure", "work"].has(mode):
+	if not ["waiting", "nursery", "enclosure", "intensive", "work"].has(mode):
 		return "未知归属模式"
 	var zone_uid := int(row["zone_uid"])
 	if mode == "waiting":
@@ -459,10 +502,10 @@ func _stage_assignment(row: Dictionary, request: Dictionary) -> String:
 			return "目标功能区不存在"
 		if String(target["type"]) != mode:
 			return "目标功能区类型与归属不符"
-		if mode == "enclosure" and String(row["stage"]) != "adult":
-			return "只有成体可以进入圈养区"
-		if mode == "work" and String(row["stage"]) != "adult":
-			return "只有成体可以役使"
+		if mode in ["enclosure", "intensive", "work"] and String(row["stage"]) != "adult":
+			return "只有成体可以进入该功能区"
+		if mode == "enclosure" and not can_breed(String(row["species_id"])):
+			return "该物种本期不能繁殖，不能进入繁殖区"
 	var bed_uid := int(row["bed_uid"])
 	var bed_slot := int(row["bed_slot"])
 	if mode != "work":
@@ -590,11 +633,12 @@ func purchase(zone_uid: int, species_id: String, count: int) -> Dictionary:
 	return world._finish(0, {"ok": true, "purchased": bought, "total": total, "species_id": species_id})
 
 func _new_animal(uid: int, species_id: String, zone_uid: int, bed_uid: int, bed_slot: int, diet_id: String) -> Dictionary:
+	var natural_diet := String(natural_config(species_id).get("default_diet", ""))
 	return {"uid": uid, "species_id": species_id, "stage": "juvenile", "growth": 0,
 		"mode": "nursery", "zone_uid": zone_uid, "bed_uid": bed_uid, "bed_slot": bed_slot,
 		"pending": {}, "diet_id": diet_id, "pattern": "standard", "priority": 0,
 		"fatigue": 0, "ban_until": -1, "qualified_until": -1, "served_once": false,
-		"natural": {"round": 0, "units": 0, "pending": false, "paid": false},
+		"natural": {"round": 0, "units": 0, "pending": false, "paid": false, "diet_id": natural_diet},
 		"breed": {"round": 0, "units": 0, "pending": false},
 		"death_streak": 0, "account": {"w": 0, "r": 0, "fails": 0}}
 
@@ -608,9 +652,11 @@ func workyard_state(facility_uid: int) -> Dictionary:
 
 func peek_workyard(facility_uid: int) -> Dictionary:
 	if state["workyards"].has(str(facility_uid)): return state["workyards"][str(facility_uid)].duplicate(true)
+	var facility: Dictionary = world.facilities.get(facility_uid, {})
+	var recipes: Array = settings["work"]["facilities"].get(String(facility.get("facility_id", "")), [])
 	var posts:=[]
 	for _index in range(int(settings["work"]["posts_per_yard"])): posts.append(_idle_post())
-	return {"recipe_id":String(settings["work"]["default_recipe"]),"posts":posts}
+	return {"recipe_id": String(recipes[0]) if not recipes.is_empty() else "", "posts": posts}
 
 func _idle_post() -> Dictionary:
 	return {"batch_id": 0, "recipe_id": "", "inputs": {}, "outputs": {}, "progress": 0, "target": 0, "status": "idle"}
@@ -618,15 +664,18 @@ func _idle_post() -> Dictionary:
 func set_recipe(facility_uid: int, recipe_id: String) -> Dictionary:
 	if world.services.has_carry(facility_uid): return _error("请先明确放弃原配方工作余量，再切换配方")
 	var facility: Dictionary = world.facilities.get(facility_uid, {})
-	if facility.is_empty() or String(facility["facility_id"]) != WORKYARD_ID:
-		return _error("未知工作场")
+	var facility_id := String(facility.get("facility_id", ""))
+	if facility.is_empty() or not is_work_facility(facility_id):
+		return _error("未知役使设施")
+	if not settings["work"]["facilities"][facility_id].has(recipe_id):
+		return _error("该工艺不属于此设施")
 	if not settings["work"]["recipes"].has(recipe_id):
 		return _error("未知劳动配方")
 	var yard := workyard_state(facility_uid)
 	for post in yard["posts"]:
 		if String(post["status"]) != "idle":
-			return _error("有运行中批次的工作场不能更换配方")
-	var blocked: String = world.research_block(String(world.husbandry.species_def(String(settings["work"]["recipes"][recipe_id]["species"])).get("research", "")))
+			return _error("有运行中批次的设施不能更换配方")
+	var blocked: String = world.research_block(String(world.recipe_defs[recipe_id].get("research", "")))
 	if not blocked.is_empty():
 		return _error(blocked)
 	yard["recipe_id"] = recipe_id
@@ -643,8 +692,8 @@ func workyard_busy(facility_uid: int) -> bool:
 
 func claim_workyard(facility_uid: int) -> Dictionary:
 	var facility: Dictionary = world.facilities.get(facility_uid, {})
-	if facility.is_empty() or String(facility["facility_id"]) != WORKYARD_ID:
-		return _error("未知工作场")
+	if facility.is_empty() or not is_work_facility(String(facility["facility_id"])):
+		return _error("未知役使设施")
 	var yard := workyard_state(facility_uid)
 	var outputs := {}
 	var claimed := 0
@@ -670,33 +719,64 @@ func claim_workyard(facility_uid: int) -> Dictionary:
 	_record("workyard", "claim", {"workyard": facility_uid, "recipe": String(yard["recipe_id"]), "outputs": outputs.duplicate(), "posts": claimed})
 	return world._finish(int(settings["ap"]["claim_workyard"]), {"ok": true, "items": outputs.duplicate(), "posts": claimed})
 
-# --- enclosure products and births --------------------------------------------
+# --- intensive rounds and births ----------------------------------------------
 
-func claim_products(facility_uid: int) -> Dictionary:
+## Round-feed variant choice (0 AP). Changing a paid round only affects the
+## next one: the current round keeps its locked inputs.
+func set_natural_diet(animal_uid: int, diet_id: String) -> Dictionary:
+	var checked: Dictionary = world._can_act(0)
+	if not checked["ok"]:
+		return checked
+	var row := animal(animal_uid)
+	if row.is_empty():
+		return _error("未知动物")
+	if natural_config(String(row["species_id"])).is_empty():
+		return _error("该物种没有本体生产轮")
+	var species: Dictionary = world.husbandry.species_def(String(row["species_id"]))
+	for diet in species["special_diets"]:
+		if String(diet["id"]) == diet_id:
+			var blocked: String = world.research_block(String(diet.get("research", "")))
+			if not blocked.is_empty():
+				return _error(blocked)
+			if String(row["natural"]["diet_id"]) == diet_id:
+				return _error("没有实际变更")
+			row["natural"]["diet_id"] = diet_id
+			_record("natural", "diet", {"animal": animal_uid, "diet": diet_id,
+				"effective": "next_round" if bool(row["natural"]["paid"]) else "this_round"})
+			world.changed.emit()
+			return {"ok": true}
+	return _error("该物种没有这份补料")
+
+## Body-material rights live on the animal and are claimed through the species
+## station of the intensive zone it currently occupies.
+func claim_natural(facility_uid: int) -> Dictionary:
 	var facility: Dictionary = world.facilities.get(facility_uid, {})
-	if facility.is_empty() or String(facility["facility_id"]) != PEN_ID:
-		return _error("未知圈舍")
+	var facility_id := String(facility.get("facility_id", ""))
+	if facility.is_empty() or not is_station(facility_id):
+		return _error("请从精养台的专属领取入口领取")
+	var station_species := String(settings["stations"][facility_id]["species"])
 	var zone_row := {}
 	for row in state["zones"]:
-		if String(row["type"]) == "enclosure":
-			for inside in _facilities_in_zone(row):
-				if int(inside["uid"]) == facility_uid:
-					zone_row = row
+		if String(row["type"]) != "intensive":
+			continue
+		for inside in _facilities_in_zone(row):
+			if int(inside["uid"]) == facility_uid:
+				zone_row = row
 	if zone_row.is_empty():
-		return _error("该圈舍不在圈养区内")
+		return _error("该设施不在精养区内")
 	var outputs := {}
 	var payers := []
-	for row in animals_in_zone(int(zone_row["uid"]), ["enclosure"]):
-		if not bool(row["natural"]["pending"]):
+	for row in animals_in_zone(int(zone_row["uid"]), ["intensive"]):
+		if String(row["species_id"]) != station_species or not bool(row["natural"]["pending"]):
 			continue
-		for item in species_config(String(row["species_id"]))["natural_outputs"]:
-			var amount := int(species_config(String(row["species_id"]))["natural_outputs"][item])
+		for item in natural_config(station_species)["outputs"]:
+			var amount := int(natural_config(station_species)["outputs"][item])
 			if not Scalars.whole(world.inventory.count(String(item)) + int(outputs.get(String(item), 0)) + amount):
 				return _error("输出库存越界：" + String(world._items[String(item)]["name"]))
 			outputs[String(item)] = int(outputs.get(String(item), 0)) + amount
 		payers.append(int(row["uid"]))
 	if payers.is_empty():
-		return _error("没有待领取的畜产")
+		return _error("没有待领取的精养产物")
 	for uid in payers:
 		var natural: Dictionary = animal(int(uid))["natural"]
 		natural["round"] = int(natural["round"]) + 1
@@ -705,17 +785,18 @@ func claim_products(facility_uid: int) -> Dictionary:
 		natural["paid"] = false
 	for item in outputs:
 		world.inventory.add(String(item), int(outputs[item]))
-	world._record_flow(outputs, {}, "圈养畜产领取")
-	_record("enclosure", "claim_products", {"zone": int(zone_row["uid"]), "animals": payers, "outputs": outputs.duplicate()})
+	world._record_flow(outputs, {}, "精养畜产领取")
+	_record("natural", "claim", {"station": facility_uid, "zone": int(zone_row["uid"]),
+		"animals": payers, "outputs": outputs.duplicate()})
 	return world._finish(int(settings["ap"]["claim_products"]), {"ok": true, "items": outputs.duplicate(), "animals": payers.size()})
 
 func claim_births(zone_uid: int) -> Dictionary:
 	var zone_row := zone(zone_uid)
 	if zone_row.is_empty() or String(zone_row["type"]) != "enclosure":
-		return _error("请从圈养区领取待安置幼体")
+		return _error("请从繁殖区领取待安置幼体")
 	var nursery := zone(int(zone_row["birth_target"]))
 	if nursery.is_empty() or String(nursery["type"]) != "nursery":
-		return _error("请先为该圈养区选择有效的目标育幼区")
+		return _error("请先为该繁殖区选择有效的目标育幼区")
 	if not zone_structural(nursery):
 		return _error("目标育幼区结构缺件：" + "、".join(structure_missing(nursery)))
 	# Preflight the entire batch. A later missing bed must not leave an earlier
@@ -800,6 +881,7 @@ func _plan_day(day: int, mutate: bool) -> Dictionary:
 	var counter := int(state["next_window_uid"])
 	var pasture_use := {}
 	var post_taken := {}
+	var station_use := {}
 	var accounts := {}
 	var rows := _ordered_animals()
 	for row in rows:
@@ -820,7 +902,7 @@ func _plan_day(day: int, mutate: bool) -> Dictionary:
 				counter = maxi(counter, int(state["next_window_uid"]))
 		for row in rows:
 			var uid := int(row["uid"])
-			var activity := _unit_activity(row, u, t, String(pattern_of(row)[u]), mutate, shadow, post_taken, pasture_use, accounts)
+			var activity := _unit_activity(row, u, t, String(pattern_of(row)[u]), mutate, shadow, post_taken, pasture_use, station_use, accounts)
 			out["animals"][uid]["units"].append(activity)
 	for uid in active.keys().duplicate():
 		if int(active[uid]["start_t"]) + 2 == day0 + 8:
@@ -996,7 +1078,7 @@ func _fail_window(row: Dictionary, reason: String, t: int, account: Dictionary, 
 	_record("window", "fail", {"animal": int(row["uid"]), "t": t, "reason": reason, "ban_until": t + 8})
 	out["windows"].append({"animal": int(row["uid"]), "end": t, "result": "fail", "reason": reason})
 
-func _unit_activity(row: Dictionary, u: int, t: int, symbol: String, mutate: bool, shadow: Dictionary, post_taken: Dictionary, pasture_use: Dictionary, accounts: Dictionary) -> String:
+func _unit_activity(row: Dictionary, u: int, t: int, symbol: String, mutate: bool, shadow: Dictionary, post_taken: Dictionary, pasture_use: Dictionary, station_use: Dictionary, accounts: Dictionary) -> String:
 	var account: Dictionary = accounts.get(int(row["uid"]), {"w": 0, "r": 0, "fails": 0})
 	var qualified := t < int(row["qualified_until"])
 	match symbol:
@@ -1024,40 +1106,17 @@ func _unit_activity(row: Dictionary, u: int, t: int, symbol: String, mutate: boo
 				world.services.record("growth",{"animal":int(row["uid"]),"before":before,"after":int(row["growth"]),"target":int(species_config(String(row["species_id"]))["growth_units"]),"t":t})
 			elif mode == "enclosure" and String(row["stage"]) == "adult":
 				_enclosure_care(row, t, mutate, shadow)
+			elif mode == "intensive" and String(row["stage"]) == "adult":
+				_intensive_care(row, t, mutate, shadow, station_use)
 			account["r"] = int(account["r"]) + 1
 			world.services.record("activity",{"animal":int(row["uid"]),"t":t,"zone":int(row["zone_uid"]),"activity":"care"})
 			return "care"
 	return "idle"
 
-func _enclosure_care(row: Dictionary, t: int, mutate: bool, shadow: Dictionary) -> void:
+## Enclosure adults only breed: the old dual wool-plus-breed path is gone and
+## body materials now advance exclusively in the intensive zone.
+func _enclosure_care(row: Dictionary, t: int, mutate: bool, _shadow: Dictionary) -> void:
 	var config := species_config(String(row["species_id"]))
-	var natural: Dictionary = row["natural"]
-	if config.has("natural_units") and not bool(natural["pending"]):
-		if not bool(natural["paid"]):
-			var diet: Dictionary = world.husbandry.diet_inputs(String(row["species_id"]), "special_diets", String(config["natural_diet"]))
-			var enough := true
-			for item in diet:
-				if _shadow_count(String(item), shadow) < int(diet[item]):
-					enough = false
-			if enough:
-				if mutate:
-					for item in diet:
-						world.inventory.remove(String(item), int(diet[item]))
-					world._record_flow({}, diet, "畜产特殊投料")
-				else:
-					_shadow_spend(diet, shadow)
-				natural["paid"] = true
-				_record("natural", "round_start", {"animal": int(row["uid"]), "round": int(natural["round"]), "inputs": diet.duplicate()})
-		if bool(natural["pending"]) or not bool(natural["paid"]):
-			pass
-		else:
-			natural["units"] = mini(int(config["natural_units"]),int(natural["units"]) + int(world.services.config["precision"]))
-			if int(natural["units"]) >= int(config["natural_units"]):
-				natural["pending"] = true
-				if mutate:
-					world._report_event({"category": "growth", "facility_uid": 0, "kind": "畜产待领取",
-						"count": 1, "items": config["natural_outputs"].duplicate(), "note": ""})
-				_record("natural", "ready", {"animal": int(row["uid"]), "round": int(natural["round"]), "outputs": config["natural_outputs"].duplicate()})
 	var breed: Dictionary = row["breed"]
 	if not bool(breed["pending"]) and int(row["fatigue"]) == 0:
 		var source: Dictionary=world.services.gu_service(row,"breed_speed",t)
@@ -1071,7 +1130,86 @@ func _enclosure_care(row: Dictionary, t: int, mutate: bool, shadow: Dictionary) 
 			_record("breed", "ready", {"animal": int(row["uid"]), "round": int(breed["round"])})
 			if mutate:
 				world._report_event({"category": "growth", "facility_uid": 0, "kind": "待安置幼体",
-					"count": 1, "items": {}, "note": "请在圈养区领取并选择育幼区"})
+					"count": 1, "items": {}, "note": "请在繁殖区领取并选择育幼区"})
+
+## One intensive station serves up to `capacity` space per care unit; a heavier
+## animal consumes its full space weight. Stable by facility UID.
+func _station_service(row: Dictionary, t: int, station_use: Dictionary) -> int:
+	var sid := String(row["species_id"])
+	var natural: Dictionary = natural_config(sid)
+	if natural.is_empty():
+		return 0
+	var station_id := String(natural["station"])
+	var zone_row := zone(int(row["zone_uid"]))
+	if zone_row.is_empty() or String(zone_row["type"]) != "intensive":
+		return 0
+	var weight := int(species_config(sid)["space"])
+	var capacity := int(settings["stations"][station_id]["capacity"])
+	for facility in _facilities_in_zone(zone_row):
+		if String(facility["facility_id"]) != station_id:
+			continue
+		var key := "%d:%d" % [int(facility["uid"]), t]
+		if int(station_use.get(key, 0)) + weight > capacity:
+			continue
+		station_use[key] = int(station_use.get(key, 0)) + weight
+		return int(facility["uid"])
+	return 0
+
+## Intensive care: opening-day efficiency gates the round (100/75/50/0), the
+## round feed is paid once on the first advancing unit, soothing gu never
+## multiplies body-material progress.
+func _intensive_care(row: Dictionary, t: int, mutate: bool, shadow: Dictionary, station_use: Dictionary) -> void:
+	var sid := String(row["species_id"])
+	var config: Dictionary = natural_config(sid)
+	if config.is_empty():
+		return
+	var natural: Dictionary = row["natural"]
+	if bool(natural["pending"]):
+		return
+	var station_uid := _station_service(row, t, station_use)
+	if station_uid == 0:
+		world.services.record("natural_wait", {"animal": int(row["uid"]), "t": t})
+		return
+	var efficiency := int(fatigue_tier(int(row["fatigue"]))["efficiency"])
+	if efficiency <= 0:
+		world.services.record("natural_stall", {"animal": int(row["uid"]), "t": t, "efficiency": 0, "station": station_uid})
+		return
+	if not bool(natural["paid"]):
+		var diet_id := String(natural["diet_id"])
+		var diet: Dictionary = world.husbandry.diet_inputs(sid, "special_diets", diet_id)
+		if diet.is_empty():
+			world.services.record("natural_wait", {"animal": int(row["uid"]), "t": t})
+			return
+		var enough := true
+		for item in diet:
+			if _shadow_count(String(item), shadow) < int(diet[item]):
+				enough = false
+		if not enough:
+			world.services.record("natural_short", {"animal": int(row["uid"]), "t": t, "station": station_uid})
+			return
+		if mutate:
+			for item in diet:
+				world.inventory.remove(String(item), int(diet[item]))
+			world._record_flow({}, diet, "精养开轮投料")
+		else:
+			_shadow_spend(diet, shadow)
+		natural["paid"] = true
+		_record("natural", "round_start", {"animal": int(row["uid"]), "round": int(natural["round"]),
+			"diet": diet_id, "inputs": diet.duplicate(), "station": station_uid})
+	var target := int(config["units"])
+	var gain := efficiency * int(world.services.config["precision"]) / 100
+	var before := int(natural["units"])
+	natural["units"] = mini(target, before + gain)
+	world.services.record("natural_progress", {"identity": "%d:%d" % [int(row["uid"]), int(natural["round"])],
+		"animal": int(row["uid"]), "before": before, "points": int(natural["units"]) - before, "after": int(natural["units"]),
+		"target": target, "t": t, "efficiency": efficiency, "station": station_uid})
+	if int(natural["units"]) >= target and not bool(natural["pending"]):
+		natural["pending"] = true
+		_record("natural", "ready", {"animal": int(row["uid"]), "round": int(natural["round"]),
+			"outputs": config["outputs"].duplicate()})
+		if mutate:
+			world._report_event({"category": "growth", "facility_uid": station_uid, "kind": "精养畜产待领取",
+				"count": 1, "items": config["outputs"].duplicate(), "note": "请到专属精养台领取"})
 
 func _try_roam(row: Dictionary, t: int, qualified: bool, account: Dictionary, pasture_use: Dictionary, wait_label: String) -> String:
 	if not qualified:
@@ -1093,13 +1231,16 @@ func _try_roam(row: Dictionary, t: int, qualified: bool, account: Dictionary, pa
 func _take_post(row: Dictionary, t: int, mutate: bool, shadow: Dictionary, post_taken: Dictionary, account: Dictionary) -> bool:
 	var zone_row := zone(int(row["zone_uid"]))
 	if zone_row.is_empty() or not zone_structural(zone_row): return false
-	var yards: Array = _facilities_in_zone(zone_row).filter(func(f): return String(f["facility_id"]) == WORKYARD_ID)
+	var yards: Array = _facilities_in_zone(zone_row).filter(func(f): return is_work_facility(String(f["facility_id"])))
 	var points := int(fatigue_tier(int(row["fatigue"]))["efficiency"]) * int(settings["work"]["points_per_unit"]) / 100
 	for yard in yards:
+		var facility_id := String(yard["facility_id"])
 		var yard_state := workyard_state(int(yard["uid"]))
 		var recipe_id := String(yard_state["recipe_id"])
 		var recipe: Dictionary = settings["work"]["recipes"].get(recipe_id, {})
 		if recipe.is_empty() or String(recipe["species"]) != String(row["species_id"]):
+			continue
+		if not settings["work"]["facilities"][facility_id].has(recipe_id):
 			continue
 		for index in range(yard_state["posts"].size()):
 			var post: Dictionary = yard_state["posts"][index]
@@ -1192,7 +1333,7 @@ func _finish_day(day: int, accounts: Dictionary, out: Dictionary) -> void:
 			row["stage"] = "adult"
 			row["mode"] = "waiting"
 			world._report_event({"category": "growth", "facility_uid": 0, "kind": "成年",
-				"count": 1, "items": {}, "note": "请为其选择圈养或役使归属"})
+				"count": 1, "items": {}, "note": "请为其选择繁殖、精养或役使归属"})
 			_record("animal", "adult", {"animal": int(row["uid"]), "day": day})
 		if survivor:
 			day_accounts[int(row["uid"])] = row["account"].duplicate()
@@ -1316,7 +1457,7 @@ static func normalize(value, snapshot: Dictionary, catalog) -> Dictionary:
 			return Scalars.fail("功能区字段非法")
 		if not Scalars.whole(row["uid"], 1, int(value["next_zone_uid"]) - 1) or zone_types.has(int(row["uid"])):
 			return Scalars.fail("功能区序号非法")
-		if not ZONE_TYPES.has(String(row["type"])) or not row["name"] is String or String(row["name"]).is_empty():
+		if not config["zones"].has(String(row["type"])) or not row["name"] is String or String(row["name"]).is_empty():
 			return Scalars.fail("功能区类型或名称非法")
 		if not row["cells"] is Array or row["cells"].is_empty():
 			return Scalars.fail("功能区地格非法")
@@ -1349,18 +1490,18 @@ static func normalize(value, snapshot: Dictionary, catalog) -> Dictionary:
 		if not Scalars.whole(row["uid"], 1, int(value["next_animal_uid"]) - 1) or animal_ids.has(int(row["uid"])):
 			return Scalars.fail("动物序号非法")
 		var sid := String(row["species_id"])
-		if not SPECIES.has(sid):
+		if not config["species"].has(sid):
 			return Scalars.fail("动物物种不在畜牧范围")
+		var species_cfg: Dictionary = config["species"][sid]
 		if String(row["stage"]) not in ["juvenile", "adult"]:
 			return Scalars.fail("动物阶段非法")
-		if String(row["mode"]) not in ["waiting", "nursery", "enclosure", "work"]:
+		if String(row["mode"]) not in ["waiting", "nursery", "enclosure", "intensive", "work"]:
 			return Scalars.fail("动物归属非法")
 		if not zone_types.has(int(row["zone_uid"])):
 			return Scalars.fail("动物指向未知功能区")
 		var expected := "nursery" if String(row["mode"]) in ["nursery", "waiting"] else String(row["mode"])
 		if zone_types[int(row["zone_uid"])] != expected:
 			return Scalars.fail("动物归属与功能区类型不符")
-		var species_cfg: Dictionary = config["species"][sid]
 		var gate := String(species_defs[sid].get("research", ""))
 		if not gate.is_empty() and not snapshot["world"]["research"]["completed"].has(gate):
 			return Scalars.fail("已购入物种缺少前置研究：" + gate)
@@ -1397,17 +1538,33 @@ static func normalize(value, snapshot: Dictionary, catalog) -> Dictionary:
 			fulltime[key] = int(row["uid"])
 		elif String(row["mode"]) != "work" and int(row["bed_slot"]) != 0:
 			return Scalars.fail("动物床位序号非法")
-		if not Scalars.exact(row["natural"], ["round", "units", "pending", "paid"]) or not Scalars.exact(row["breed"], ["round", "units", "pending"]):
+		if not Scalars.exact(row["natural"], ["round", "units", "pending", "paid", "diet_id"]) or not Scalars.exact(row["breed"], ["round", "units", "pending"]):
 			return Scalars.fail("动物周期结构非法")
 		if not row["natural"]["pending"] is bool or not row["natural"]["paid"] is bool or not row["breed"]["pending"] is bool:
 			return Scalars.fail("动物周期标记非法")
+		if not row["natural"]["diet_id"] is String:
+			return Scalars.fail("动物补料标记非法")
 		if not Scalars.whole(row["natural"]["round"], 0) or not Scalars.whole(row["natural"]["units"], 0, 9999) or not Scalars.whole(row["breed"]["round"], 0) or not Scalars.whole(row["breed"]["units"], 0, 9999):
 			return Scalars.fail("动物周期进度非法")
-		if species_cfg.has("natural_units") and bool(row["natural"]["pending"]) == (int(row["natural"]["units"]) < int(species_cfg["natural_units"])):
-			return Scalars.fail("畜产周期与待领状态不符")
-		if not species_cfg.has("natural_units") and (int(row["natural"]["round"]) > 0 or int(row["natural"]["units"]) > 0 or bool(row["natural"]["pending"]) or bool(row["natural"]["paid"])):
-			return Scalars.fail("无畜产物种携带周期")
-		if bool(row["breed"]["pending"]) == (int(row["breed"]["units"]) < int(species_cfg["breed_units"])):
+		if species_cfg.has("natural"):
+			var natural_units := int(species_cfg["natural"]["units"])
+			if bool(row["natural"]["pending"]) == (int(row["natural"]["units"]) < natural_units):
+				return Scalars.fail("精养轮与待领状态不符")
+			var diet_ok := false
+			for diet in species_defs[sid]["special_diets"]:
+				if String(diet["id"]) == String(row["natural"]["diet_id"]):
+					diet_ok = true
+					var diet_gate := String(diet.get("research", ""))
+					if not diet_gate.is_empty() and not snapshot["world"]["research"]["completed"].has(diet_gate):
+						return Scalars.fail("精养轮补料缺少前置研究：" + diet_gate)
+			if not diet_ok:
+				return Scalars.fail("精养轮补料不属于该物种")
+		elif int(row["natural"]["round"]) > 0 or int(row["natural"]["units"]) > 0 or bool(row["natural"]["pending"]) or bool(row["natural"]["paid"]) or not String(row["natural"]["diet_id"]).is_empty():
+			return Scalars.fail("无本体产物物种携带精养轮")
+		if not species_cfg.has("breed_units"):
+			if int(row["breed"]["round"]) > 0 or int(row["breed"]["units"]) > 0 or bool(row["breed"]["pending"]):
+				return Scalars.fail("不可繁殖物种携带繁殖进度")
+		elif bool(row["breed"]["pending"]) == (int(row["breed"]["units"]) < int(species_cfg["breed_units"])):
 			return Scalars.fail("繁殖进度与待安置状态不符")
 		if not Scalars.exact(row["account"], ["w", "r", "fails"]):
 			return Scalars.fail("动物日账非法")
@@ -1456,18 +1613,20 @@ static func normalize(value, snapshot: Dictionary, catalog) -> Dictionary:
 	if not value["workyards"] is Dictionary:
 		return Scalars.fail("工作场状态非法")
 	var work_recipes: Dictionary = config["work"]["recipes"]
+	var work_facilities: Dictionary = config["work"]["facilities"]
 	var recipe_defs: Dictionary = catalog.definitions("recipes")
 	for key in value["workyards"]:
 		var uid := int(key)
-		if not facilities.has(uid) or String(facilities[uid]["facility_id"]) != WORKYARD_ID:
-			return Scalars.fail("工作场状态指向非工作场设施")
+		if not facilities.has(uid) or not work_facilities.has(String(facilities[uid]["facility_id"])):
+			return Scalars.fail("工作场状态指向非役使设施")
+		var yard_recipes: Array = work_facilities[String(facilities[uid]["facility_id"])]
 		var yard: Dictionary = value["workyards"][key]
 		if not Scalars.exact(yard, ["recipe_id", "posts"]):
 			return Scalars.fail("工作场字段非法")
 		if not yard["posts"] is Array or yard["posts"].size() != int(config["work"]["posts_per_yard"]):
 			return Scalars.fail("工作场岗位数非法")
-		if not work_recipes.has(String(yard["recipe_id"])):
-			return Scalars.fail("工作场配方非法")
+		if not work_recipes.has(String(yard["recipe_id"])) or not yard_recipes.has(String(yard["recipe_id"])):
+			return Scalars.fail("工作场配方非法或与设施不符")
 		var used_batches := {}
 		for post in yard["posts"]:
 			if not Scalars.exact(post, ["batch_id", "recipe_id", "inputs", "outputs", "progress", "target", "status"]):
@@ -1498,6 +1657,9 @@ static func normalize(value, snapshot: Dictionary, catalog) -> Dictionary:
 			return Scalars.fail("出生凭证字段非法")
 		if not animal_ids.has(int(row["parent_uid"])) or not animal_ids.has(int(row["child_uid"])):
 			return Scalars.fail("出生凭证指向未知动物")
+		var parent_sid := String(animal_ids[int(row["parent_uid"])]["species_id"])
+		if not config["species"][parent_sid].has("breed_units"):
+			return Scalars.fail("不可繁殖物种携带出生凭证")
 		var pair := "%d:%d" % [int(row["parent_uid"]), int(row["round"])]
 		if birth_pairs.has(pair):
 			return Scalars.fail("出生凭证重复")

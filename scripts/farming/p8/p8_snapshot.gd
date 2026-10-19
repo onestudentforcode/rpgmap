@@ -19,7 +19,7 @@ const Logistics := preload("res://scripts/farming/p8/p10_logistics.gd")
 const Rooms := preload("res://scripts/farming/p8/p102_rooms.gd")
 const Ranch := preload("res://scripts/farming/p8/p103_ranch.gd")
 const Services := preload("res://scripts/farming/p8/p104_services.gd")
-const SCHEMA := 22
+const SCHEMA := 23
 
 static func fresh() -> Dictionary:
 	var snapshot: Dictionary = Common.fresh(Data, SCHEMA)
@@ -211,11 +211,12 @@ static func _normalize_husbandry(raw, day: int, world: Dictionary) -> Dictionary
 			if habitat is Dictionary and habitat.has("water_change_day"):
 				markers[int(habitat.get("facility_uid", 0))] = habitat["water_change_day"]
 				habitat.erase("water_change_day")
-	# Pen and rock workyard are P10.3 structural ranch facilities: no habitat
-	# record is created or required for them any more.
+	# The pen, the species yards and the intensive stations are P10.3/P10.5
+	# structural ranch facilities: no habitat record is created or required.
+	var structural_ids := Ranch.structural_facility_ids(Data)
 	var filtered_world := world.duplicate(true)
 	filtered_world["facilities"] = filtered_world["facilities"].filter(
-		func(row): return not String(row["facility_id"]) in ["pen", "rock_workyard"])
+		func(row): return not String(row["facility_id"]) in structural_ids)
 	var checked: Dictionary = Husbandry.normalize(value, day, filtered_world, Data, Data.load_data()["husbandry"])
 	if not checked["ok"]:
 		return checked

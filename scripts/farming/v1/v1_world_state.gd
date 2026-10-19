@@ -89,6 +89,8 @@ static func normalize(value, day: int, catalog = Data) -> Dictionary:
 		var repeated: bool = row["harvest_count"] > 0
 		if repeated and definition["mode"] != "tap_or_fell":
 			return fail("一次性作物不能重复采收")
+		if int(definition.get("max_taps", 0)) > 0 and int(row["harvest_count"]) > int(definition["max_taps"]):
+			return fail("有限采收次数被超出")
 		var target := int(definition["cycle_days"] if repeated else definition["days"]) * 100
 		var expected_state := "regrowing" if repeated else "growing"
 		if not whole(row["progress"], 0, target) or (row["state"] != "mature" and row["state"] != expected_state) or ((row["state"] == "mature") != (row["progress"] == target)):

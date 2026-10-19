@@ -6,6 +6,7 @@ PRIMARY={
     'resin_tree':{'harvest':'resin','fell':'raw_wood'},
     'wood_decay_mushroom':{'harvest':'mushroom'},'pasture_grass':{'harvest':'fodder_grass'},
     'honeybell_bush':{'harvest':'nectar','fell':'twig'},'oilseed_flower':{'harvest':'oilseed'},
+    'mulberry_tree':{'harvest':'mulberry_leaf','fell':'raw_wood'},
     'rice_bag_gu':{'claim':'rice'}}
 
 def validate(source):

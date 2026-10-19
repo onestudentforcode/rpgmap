@@ -18,8 +18,11 @@ const FIELDS:={
 	"pool_discard":["key","recipe","points","animal","system","t","batch"],
 	"pool_credit":["key","recipe","points","animal","system","t","batch","credited","discarded"],
 	"pool_use":["key","recipe","points","animal","t","batch"],"pool_drop":["key","recipe","points"],
-	"contribution_drop":["identity"],"fatigue":["animal","open","w","r","fails","toy_extra","next"]}
-const NUMBERS:=["host","field","count","uid","animal","zone","t","rank","value","space","roll","extra","before","points","after","target","total","available","occupied","parent","child","eligible","gift","growth_target","breed_target","yard","post","batch","base","carry","overflow","system","credited","discarded","open","w","r","fails","toy_extra","next"]
+	"contribution_drop":["identity"],"fatigue":["animal","open","w","r","fails","toy_extra","next"],
+	"natural_wait":["animal","t"],"natural_stall":["animal","t","efficiency","station"],
+	"natural_short":["animal","t","station"],
+	"natural_progress":["identity","animal","before","points","after","target","t","efficiency","station"]}
+const NUMBERS:=["host","field","count","uid","animal","zone","t","rank","value","space","roll","extra","before","points","after","target","total","available","occupied","parent","child","eligible","gift","growth_target","breed_target","yard","post","batch","base","carry","overflow","system","credited","discarded","open","w","r","fails","toy_extra","next","efficiency","station"]
 
 static func fail() -> Dictionary: return S.fail("服务收据、贡献或余量不守恒")
 static func identity(row: Dictionary) -> String:
@@ -79,6 +82,17 @@ static func validate(value: Dictionary,snapshot: Dictionary,catalog) -> Dictiona
 	var counts:={}
 	var bans:={}
 	var definitions:={}
+	var species_space:={}
+	var station_species:={}
+	var station_capacity:={}
+	for row in snapshot["world"]["ranch"]["animals"]:
+		species_space[int(row["uid"])]=int(catalog.load_data()["p103"]["species"][String(row["species_id"])]["space"])
+	for fid in catalog.load_data()["p103"]["stations"]:
+		station_species[fid]=String(catalog.load_data()["p103"]["stations"][fid]["species"])
+		station_capacity[fid]=int(catalog.load_data()["p103"]["stations"][fid]["capacity"])
+	var natural_rounds:={}
+	var natural_waits:={}
+	var station_load:={}
 	for d in catalog.load_data()["logistics"]["definitions"]: definitions[d["id"]]=d
 	var instances:={}
 	for instance in snapshot["world"]["logistics"]["instances"]: instances[instance["instance_id"]]=instance
@@ -214,6 +228,38 @@ static func validate(value: Dictionary,snapshot: Dictionary,catalog) -> Dictiona
 				if e["w"]!=counts[daily]["w"] or e["r"]!=counts[daily]["r"] or e["fails"]!=counts[daily]["fails"]: return fail()
 				if e["toy_extra"]!=int(extras.get(daily,0)) or e["next"]!=clampi(int(e["open"])+int(e["w"])-2*int(e["r"])+12*int(e["fails"])-int(e["toy_extra"]),0,100): return fail()
 				fatigue[int(e["animal"])]=e
+			"natural_wait":
+				var key:="%d:%d" % [int(e["animal"]),int(e["t"])]
+				if natural_waits.has(key): return fail()
+				natural_waits[key]=true
+			"natural_stall":
+				if e["efficiency"]!=0 or int(e["station"])<=0: return fail()
+			"natural_short":
+				if int(e["station"])<=0: return fail()
+			"natural_progress":
+				# Body-material rounds: the opening-day efficiency is the only rate;
+				# soothing gu never multiplies intensive progress and one station
+				# serves at most its capacity of animal space per care unit.
+				var identity:=String(e["identity"])
+				if e["points"]!=int(e["efficiency"]) or e["efficiency"] not in [100,75,50]: return fail()
+				var before:=int(natural_rounds[identity]["after"]) if natural_rounds.has(identity) else int(e["before"])
+				if before!=int(e["before"]) or int(e["before"])>int(e["target"]): return fail()
+				if int(e["after"])!=mini(int(e["target"]),before+int(e["points"])): return fail()
+				natural_rounds[identity]=e
+				var animal_row:={}
+				for row in snapshot["world"]["ranch"]["animals"]:
+					if int(row["uid"])==int(e["animal"]): animal_row=row
+				if animal_row.is_empty(): return fail()
+				var station_id:=""
+				for fid in station_species:
+					if station_species[fid]==String(animal_row["species_id"]): station_id=fid
+				var facility:={}
+				for row in snapshot["world"]["facilities"]:
+					if int(row["uid"])==int(e["station"]): facility=row
+				if facility.is_empty() or String(facility["facility_id"])!=station_id: return fail()
+				var load_key:="%d:%d" % [int(e["station"]),int(e["t"])]
+				station_load[load_key]=int(station_load.get(load_key,0))+int(species_space[int(e["animal"])])
+				if int(station_load[load_key])>int(station_capacity[station_id]): return fail()
 	if C._canonical(toys)!=C._canonical(value["toys"]) or C._canonical(contributions)!=C._canonical(value["contributions"]): return fail()
 	for key in pools:
 		if int(pools[key]["points"])!=int(value["pools"].get(key,{}).get("points",0)): return fail()

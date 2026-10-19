@@ -82,11 +82,12 @@ func _settle_husbandry(completed_day: int) -> void:
 	flowers.settle(completed_day)
 	reports.settle(completed_day)
 
-## Pen and rock yard are structural ranch facilities now: no habitat row is
-## created for them and the three terrestrial species never enter the old path.
+## The pen, the species yards and the intensive stations are structural ranch
+## facilities: no habitat row is created for them and the ranch species never
+## enter the old path.
 func _facility_built(uid: int) -> void:
 	var facility_id := String(facilities[uid]["facility_id"])
-	if facility_id == "pen" or facility_id == Ranch.WORKYARD_ID:
+	if facility_id == "pen" or ranch.is_structural(facility_id):
 		return
 	super(uid)
 

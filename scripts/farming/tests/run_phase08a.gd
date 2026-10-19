@@ -54,8 +54,8 @@ func tilled_count(world) -> int:
 func _namespace() -> void:
 	var world := P8World.new(temp_store())
 	check(world.data_source.load_data()["product"] == "farm_demo_p8", "P8 product identity")
-	check(world._items.size() == 65 and world.facility_defs.size() == 21, "65 resources and 21 facilities registered")
-	check(world.recipe_defs.size() == 41 and world.crop_defs.size() == 7, "41 recipes and 7 crops registered")
+	check(world._items.size() == 74 and world.facility_defs.size() == 31, "74 resources and 31 facilities registered")
+	check(world.recipe_defs.size() == 51 and world.crop_defs.size() == 8, "51 recipes and 8 crops registered")
 	check(P8Snapshot.fresh()["schema"] == P8Snapshot.SCHEMA, "current schema with logistics and agriculture snapshots")
 	check(not P8Snapshot.normalize(V2Snapshot.fresh())["ok"], "V2 snapshots rejected by the P8 codec")
 	check(not V2Snapshot.normalize(P8Snapshot.fresh())["ok"], "P8 snapshots rejected by the V2 codec")
@@ -74,7 +74,7 @@ func _research_lockout() -> void:
 		["bee_hive", Vector2i(7, 1)],
 		["farm_processor", Vector2i(9, 1)],
 		["purifying_bed", Vector2i(0, 1)],
-		["rock_workyard", Vector2i(3, 1)],
+		["rock_breaking_yard", Vector2i(3, 1)],
 		["kitchen", Vector2i(5, 1)],
 		["field_service_station", Vector2i(0, 3)],
 		["growth_lamp", Vector2i(6, 3)],
