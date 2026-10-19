@@ -39,6 +39,7 @@ func run() -> void:
 	_loach_chain(_world())
 	_shared_gu(_world())
 	_soothe_water(_world())
+	_intensive_base(_world())
 	print("P106 MODEL %s (%d)" % ["OK" if failures.is_empty() else "FAIL", checks])
 	quit(0 if failures.is_empty() else 1)
 
@@ -793,3 +794,75 @@ func _soothe_water(w: World) -> void:
 	check(boosted > 0, "the soothe gu serves the water jellyfish")
 	var breeder: Dictionary = w.ranch.animal(int(jellies[0]["uid"]))
 	check(int(breeder["breed"]["units"]) > 6 * 3 * 100, "water breeding advances at the boosted pace")
+	# The level-3 breeding combo (§16.2.11): enclosure plus nursery in one
+	# system gifts the water child real initial growth, same rule as land.
+	check(w.ranch.submit({"birth_targets": {zones["pool"]: zones["nursery"]}})["ok"], "water birth target set")
+	check(w.services.set_system(0, "waterbreeding", [zones["pool"], zones["nursery"]])["ok"], "water breeding system linked")
+	for _day in range(9):
+		w.end_day()
+	check(bool(w.ranch.animal(int(jellies[0]["uid"]))["breed"]["pending"]), "boosted water breeding completes")
+	var children_before: int = w.ranch.state["animals"].size()
+	check(w.ranch.claim_births(zones["pool"])["ok"], "water system births claimed")
+	check(w.ranch.state["animals"].size() == children_before + 1, "one gifted water child")
+	var gifted := 0
+	for entry in receipts:
+		if entry.get("kind") == "service" and entry.get("stage") == "birth_bonus":
+			gifted = maxi(gifted, int(entry.get("gift", 0)))
+	check(gifted > 0, "the water child carries a real birth gift")
+
+# --- stage f: the level-3 intensive base ---------------------------------------
+
+func _intensive_base(w: World) -> void:
+	var zones := _water_module(w, "water_production", "gel_station")
+	# The product gu must actually run in the target pool for contributions.
+	var station_uid := 0
+	for uid in w.facilities:
+		if String(w.facilities[uid]["facility_id"]) == "gel_station":
+			station_uid = int(uid)
+	var bought: Dictionary = w.logistics.buy_gu("product_yield_gu")
+	check(w.logistics.deploy(String(bought["instance_id"]), Vector2i(-1, -1), station_uid)["ok"], "product gu on the gel station")
+	w.end_day()
+	check(w.ranch.purchase(zones["nursery"], "gel_jellyfish", 2)["ok"], "buy two guided juveniles")
+	var juveniles: Array = w.ranch.state["animals"].filter(func(a): return String(a["species_id"]) == "gel_jellyfish")
+	check(w.ranch.set_intensive_target(int(juveniles[0]["uid"]), zones["pool"])["ok"], "first juvenile targets the pool")
+	check(not w.ranch.set_intensive_target(int(juveniles[0]["uid"]), zones["pool"])["ok"], "target change needs a real difference")
+	check(w.ranch.set_intensive_target(int(juveniles[1]["uid"]), zones["pool"])["ok"], "sibling targets the pool too")
+	for _day in range(2):
+		w.end_day()
+	# Dropping the target mid-nursery voids the banked contribution.
+	var switcher: Dictionary = w.ranch.animal(int(juveniles[1]["uid"]))
+	check(int(switcher["contribution"]) > 0, "sibling banks while guided")
+	check(w.ranch.set_intensive_target(int(juveniles[1]["uid"]), 0)["ok"], "sibling drops the target")
+	check(int(w.ranch.animal(int(juveniles[1]["uid"]))["contribution"]) == 0, "dropping voids the contribution")
+	for _day in range(4):
+		w.end_day()
+	var guided: Dictionary = w.ranch.animal(int(juveniles[0]["uid"]))
+	check(String(guided["stage"]) == "adult", "guided juvenile adult")
+	check(int(guided["contribution"]) == 2400, "full guidance banks every growth point")
+	# The unguided sibling banked nothing after the void.
+	var free_child: Dictionary = w.ranch.animal(int(juveniles[1]["uid"]))
+	check(int(free_child["contribution"]) == 0, "untargeted juvenile banks nothing")
+	# The voucher pays out exactly once, inside the payment transaction.
+	var beds: Array = w.ranch.free_bed_slots(w.ranch.zone(zones["pool"]), "small")
+	check(w.ranch.submit({"assign": {int(guided["uid"]): {"mode": "water_production", "zone_uid": zones["pool"],
+		"bed_uid": int(beds[0]["uid"]), "bed_slot": int(beds[0]["slot"])}}})["ok"], "guided adult to the pool")
+	w.end_day()
+	w.end_day()
+	var credit_round: Dictionary = w.ranch.animal(int(guided["uid"]))
+	var credited := int(credit_round["natural"].get("credit", 0))
+	check(credited == 1200 * 10 * 2400 / (100 * 2400), "first round opens with the 10 percent credit")
+	check(String(credit_round["voucher"]) == "used" and int(credit_round["contribution"]) == 0, "voucher consumed once")
+	for _day in range(3):
+		w.end_day()
+	var claim: Dictionary = w.ranch.claim_natural(station_uid)
+	if not claim["ok"]:
+		printerr("DEBUG claim reason: " + String(claim.get("reason", "")))
+	check(claim["ok"] and int(claim.get("captures", 0)) == 0, "credited round claims")
+	var next_round: Dictionary = w.ranch.animal(int(guided["uid"]))
+	check(int(next_round["natural"].get("credit", 0)) == 0, "later rounds carry no credit")
+	var voids := 0
+	for entry in receipts:
+		if entry.get("kind") == "ranch:contribution" and entry.get("stage") == "void":
+			voids += 1
+	check(voids >= 1, "void receipt recorded")
+

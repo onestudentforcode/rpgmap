@@ -157,6 +157,17 @@ func gu_service(row: Dictionary, kind: String, t: int) -> Dictionary:
 		return choice
 	return {}
 
+## Level-3 gate (§16.2.11): the target zone counts as a level-2 intensive
+## configuration only while one of its stations actually runs a paid product gu.
+func product_service_ready(zone_row: Dictionary) -> bool:
+	for host in world.ranch._facilities_in_zone(zone_row):
+		var gu: Dictionary = world.logistics.in_host(int(host["uid"]))
+		if gu.is_empty() or String(world.logistics.definition(gu)["effect"]) != "product_yield":
+			continue
+		if world.logistics.active(gu, _day if _day >= 0 else world.clock.total_days):
+			return true
+	return false
+
 func toy_service(row: Dictionary, zone: Dictionary, t: int) -> void:
 	var identity:="toy:%d:%d" % [int(row["uid"]),t]
 	if _served.has(identity): return

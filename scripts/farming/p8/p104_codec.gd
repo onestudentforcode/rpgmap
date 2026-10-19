@@ -241,7 +241,9 @@ static func validate(value: Dictionary,snapshot: Dictionary,catalog) -> Dictiona
 				# soothing gu never multiplies intensive progress and one station
 				# serves at most its capacity of animal space per care unit.
 				var identity:=String(e["identity"])
-				if e["points"]!=int(e["efficiency"]) or e["efficiency"] not in [100,75,50]: return fail()
+				# A first-round credit (P10.6 §16.2.11) or a near-full round may
+				# truncate the last fill to the remaining headroom.
+				if e["points"]!=mini(int(e["efficiency"]),int(e["target"])-int(e["before"])) or e["efficiency"] not in [100,75,50]: return fail()
 				var before:=int(natural_rounds[identity]["after"]) if natural_rounds.has(identity) else int(e["before"])
 				if before!=int(e["before"]) or int(e["before"])>int(e["target"]): return fail()
 				if int(e["after"])!=mini(int(e["target"]),before+int(e["points"])): return fail()

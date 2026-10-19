@@ -26,7 +26,7 @@ const FLOOR_FACILITIES := [PEN_ID, "rock_breaking_yard", "ore_sorting_yard", "ca
 const ANIMAL_KEYS := ["uid", "species_id", "stage", "growth", "mode", "zone_uid", "bed_uid", "bed_slot",
 	"pending", "diet_id", "pattern", "priority", "fatigue", "ban_until", "qualified_until",
 	"served_once", "natural", "breed", "death_streak", "account",
-	"anchor", "miss_streak", "bad_water_streak", "saving"]
+	"anchor", "miss_streak", "bad_water_streak", "saving", "intensive_target", "contribution", "voucher"]
 
 ## Structural ranch facilities never create V2 habitat rows: the pen, the five
 ## species yards and the four intensive stations. One registry shared by the
@@ -325,7 +325,9 @@ static func _intified_animal(row: Dictionary) -> Dictionary:
 		"natural": {"round": int(row["natural"]["round"]), "units": int(row["natural"]["units"]),
 			"pending": bool(row["natural"]["pending"]), "paid": bool(row["natural"]["paid"]),
 			"diet_id": String(row["natural"].get("diet_id", "")), "paid_diet": String(row["natural"].get("paid_diet", "")),
-			"boost": int(row["natural"].get("boost", 0))},
+			"boost": int(row["natural"].get("boost", 0)), "credit": int(row["natural"].get("credit", 0))},
+		"intensive_target": int(row.get("intensive_target", 0)), "contribution": int(row.get("contribution", 0)),
+		"voucher": String(row.get("voucher", "none")),
 		"breed": {"round": int(row["breed"]["round"]), "units": int(row["breed"]["units"]), "pending": bool(row["breed"]["pending"])},
 		"death_streak": int(row["death_streak"]),
 		"account": {"w": int(account["w"]), "r": int(account["r"]), "fails": int(account["fails"])}}
@@ -769,10 +771,11 @@ func _new_animal(uid: int, species_id: String, zone_uid: int, bed_uid: int, bed_
 		"zone_uid": zone_uid, "bed_uid": bed_uid, "bed_slot": bed_slot,
 		"pending": {}, "diet_id": diet_id, "pattern": "standard", "priority": 0,
 		"fatigue": 0, "ban_until": -1, "qualified_until": -1, "served_once": false,
-		"natural": {"round": 0, "units": 0, "pending": false, "paid": false, "diet_id": natural_diet, "paid_diet": "", "boost": 0},
+		"natural": {"round": 0, "units": 0, "pending": false, "paid": false, "diet_id": natural_diet, "paid_diet": "", "boost": 0, "credit": 0},
 		"breed": {"round": 0, "units": 0, "pending": false},
 		"death_streak": 0, "account": {"w": 0, "r": 0, "fails": 0},
-		"anchor": anchor, "miss_streak": 0, "bad_water_streak": 0, "saving": {}}
+		"anchor": anchor, "miss_streak": 0, "bad_water_streak": 0, "saving": {},
+		"intensive_target": 0, "contribution": 0, "voucher": "none"}
 
 # --- work yards ---------------------------------------------------------------
 
@@ -929,12 +932,13 @@ func claim_natural(facility_uid: int) -> Dictionary:
 		natural["paid"] = false
 		natural["paid_diet"] = ""
 		natural["boost"] = 0
+		natural["credit"] = 0
 	var bonuses := {}
 	for uid in payers:
 		var payer: Dictionary = animal(int(uid))
 		var main_item := String(natural_config(station_species).get("main", ""))
 		var boosted := int(payer["natural"].get("boost", 0))
-		if main_item.is_empty() or boosted <= 0 or capture:
+		if main_item.is_empty() or boosted <= 0:
 			continue
 		var round_target := int(natural_config(station_species)["units"]) - int(payer["natural"].get("credit", 0))
 		if round_target <= 0:
@@ -1384,10 +1388,12 @@ func _unit_activity(row: Dictionary, u: int, t: int, symbol: String, mutate: boo
 				var before:=int(row["growth"])
 				row["growth"] = mini(int(species_config(String(row["species_id"]))["growth_units"]), int(row["growth"]) + int(world.services.config["precision"]))
 				world.services.record("growth",{"animal":int(row["uid"]),"before":before,"after":int(row["growth"]),"target":int(species_config(String(row["species_id"]))["growth_units"]),"t":t})
+				_nursery_contribution(row, int(row["growth"]) - before, t)
 			elif mode == "water_nursery" and String(row["stage"]) == "juvenile":
 				var before0:=int(row["growth"])
 				row["growth"] = mini(int(species_config(String(row["species_id"]))["growth_units"]), int(row["growth"]) + int(world.services.config["precision"]))
 				world.services.record("growth",{"animal":int(row["uid"]),"before":before0,"after":int(row["growth"]),"target":int(species_config(String(row["species_id"]))["growth_units"]),"t":t})
+				_nursery_contribution(row, int(row["growth"]) - before0, t)
 			elif mode == "enclosure" and String(row["stage"]) == "adult":
 				_enclosure_care(row, t, mutate, shadow)
 			elif mode == "water_enclosure" and String(row["stage"]) == "adult":
@@ -1421,6 +1427,70 @@ func _enclosure_care(row: Dictionary, t: int, mutate: bool, _shadow: Dictionary)
 			if mutate:
 				world._report_event({"category": "growth", "facility_uid": 0, "kind": "待安置幼体",
 					"count": 1, "items": {}, "note": "请在繁殖区领取并选择育幼区"})
+
+## Level-3 intensive base (§16.2.11): each real growth point under a valid
+## target accumulates once; the reservation shares the target capacity ledger.
+func _nursery_contribution(row: Dictionary, gained: int, t: int) -> void:
+	if gained <= 0 or int(row["intensive_target"]) <= 0 or String(row["voucher"]) != "none":
+		return
+	var target := zone(int(row["intensive_target"]))
+	if target.is_empty() or not zone_structural(target):
+		return
+	var species_cfg: Dictionary = species_config(String(row["species_id"]))
+	var production_type := "water_production" if String(species_cfg.get("medium", "land")) == "water" else "intensive"
+	if String(target["type"]) != production_type:
+		return
+	var natural: Dictionary = natural_config(String(row["species_id"]))
+	if natural.is_empty():
+		return
+	var station_present := false
+	for facility in _facilities_in_zone(target):
+		if String(facility["facility_id"]) == String(natural["station"]):
+			station_present = true
+	if not station_present or not world.services.product_service_ready(target):
+		return
+	var reserved := 0
+	for other in state["animals"]:
+		if int(other["uid"]) == int(row["uid"]) or int(other["intensive_target"]) != int(target["uid"]):
+			continue
+		if String(other["stage"]) == "juvenile" and String(other["voucher"]) == "none":
+			reserved += int(species_config(String(other["species_id"]))["space"])
+	if _zone_usage(target) + reserved + int(species_cfg["space"]) > available_space(target):
+		return
+	row["contribution"] = int(row["contribution"]) + gained
+	_record("contribution", "growth", {"animal": int(row["uid"]), "target": int(target["uid"]),
+		"points": gained, "total": int(row["contribution"]), "t": t,
+		"growth_target": int(species_cfg["growth_units"])})
+
+## Explicit target choice (0 AP): switching voids the old contribution with a
+## receipt; the voucher follows the animal, not the target.
+func set_intensive_target(animal_uid: int, zone_uid: int) -> Dictionary:
+	var row := animal(animal_uid)
+	if row.is_empty():
+		return _error("未知动物")
+	if String(row["stage"]) != "juvenile":
+		return _error("只有育幼中的幼体可以指定精养目标")
+	if int(row["intensive_target"]) == zone_uid:
+		return _error("目标未变化")
+	if zone_uid != 0:
+		var target := zone(zone_uid)
+		if target.is_empty():
+			return _error("目标功能区不存在")
+		var production_type := "water_production" if species_medium(String(row["species_id"])) == "water" else "intensive"
+		if String(target["type"]) != production_type:
+			return _error("目标必须是本介质的精养生产区")
+		if int(row["intensive_target"]) > 0 and int(row["contribution"]) > 0:
+			_record("contribution", "void", {"animal": animal_uid, "old_target": int(row["intensive_target"]),
+				"voided": int(row["contribution"])})
+		row["intensive_target"] = zone_uid
+	else:
+		if int(row["intensive_target"]) > 0 and int(row["contribution"]) > 0:
+			_record("contribution", "void", {"animal": animal_uid, "old_target": int(row["intensive_target"]),
+				"voided": int(row["contribution"])})
+		row["intensive_target"] = 0
+	row["contribution"] = 0
+	world.changed.emit()
+	return {"ok": true}
 
 ## One intensive station serves up to `capacity` space per care unit; a heavier
 ## animal consumes its full space weight. Stable by facility UID.
@@ -1486,6 +1556,18 @@ func _intensive_care(row: Dictionary, t: int, mutate: bool, shadow: Dictionary, 
 			_shadow_spend(diet, shadow)
 		natural["paid"] = true
 		natural["paid_diet"] = diet_id
+		if String(row["voucher"]) == "none" and int(row["intensive_target"]) == int(row["zone_uid"]) and int(row["contribution"]) > 0:
+			var round_target := int(config["units"])
+			var growth_target := int(species_config(String(row["species_id"]))["growth_units"])
+			var eligible := mini(int(row["contribution"]), growth_target)
+			var credit := round_target * 10 * eligible / (100 * growth_target)
+			if credit > 0:
+				natural["units"] = mini(round_target, credit)
+				natural["credit"] = credit
+				row["voucher"] = "used"
+				row["contribution"] = 0
+				_record("contribution", "voucher", {"animal": int(row["uid"]), "round": int(natural["round"]),
+					"credit": credit, "eligible": eligible, "growth_target": growth_target, "target": round_target})
 		_record("natural", "round_start", {"animal": int(row["uid"]), "round": int(natural["round"]),
 			"diet": diet_id, "inputs": diet.duplicate(), "station": station_uid})
 	var target := int(config["units"])
@@ -2001,8 +2083,22 @@ static func normalize(value, snapshot: Dictionary, catalog) -> Dictionary:
 			fulltime[key] = int(row["uid"])
 		elif String(row["mode"]) != "work" and not bool(species_cfg.get("fixed", false)) and int(row["bed_slot"]) != 0:
 			return Scalars.fail("动物床位序号非法")
-		if not Scalars.exact(row["natural"], ["round", "units", "pending", "paid", "diet_id", "paid_diet", "boost"]) or not Scalars.exact(row["breed"], ["round", "units", "pending"]):
+		if not Scalars.exact(row["natural"], ["round", "units", "pending", "paid", "diet_id", "paid_diet", "boost", "credit"]) or not Scalars.exact(row["breed"], ["round", "units", "pending"]):
 			return Scalars.fail("动物周期结构非法")
+		if not ["none", "used"].has(String(row["voucher"])):
+			return Scalars.fail("首轮凭证状态非法")
+		if not Scalars.whole(row["contribution"], 0) or not Scalars.whole(row["intensive_target"], 0):
+			return Scalars.fail("育幼贡献字段非法")
+		if String(row["voucher"]) == "used" and int(row["contribution"]) != 0:
+			return Scalars.fail("已用凭证不应保留贡献")
+		if int(row["intensive_target"]) > 0:
+			var target_zone := zone_row_of(value, int(row["intensive_target"]))
+			if target_zone.is_empty():
+				return Scalars.fail("精养目标不存在")
+			if String(zone_row_of(value, int(row["zone_uid"]))["type"]) == String(target_zone["type"]):
+				pass
+			elif WATER_MODES.has(String(target_zone["type"])) != WATER_MODES.has(String(zone_row_of(value, int(row["zone_uid"]))["type"])):
+				return Scalars.fail("精养目标介质不符")
 		if not row["saving"] is Dictionary:
 			return Scalars.fail("节粮余数字典非法")
 		for item in row["saving"]:
