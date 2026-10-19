@@ -48,7 +48,7 @@ func _scenario(name: String, script: Callable) -> void:
 	write_json("%s-final.json" % name, world.to_snapshot())
 
 func fixture() -> World:
-	var world := World.new(Store.new(audit_root.path_join("%s-slots-%d" % [route, Time.get_ticks_usec()])))
+	var world := World.new(Store.new(audit_root.path_join("%s-slots-%d-%d" % [route, OS.get_process_id(), Time.get_ticks_usec()])))
 	world.start_new(1)
 	world.grant_scaffold({"raw_wood": 300, "raw_stone": 300, "wood_plank": 60, "twig": 120,
 		"mushroom": 300, "fodder_grass": 400, "grain": 100, "clean_water": 900,

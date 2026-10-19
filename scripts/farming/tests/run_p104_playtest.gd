@@ -40,7 +40,7 @@ func run() -> void:
 		file.close()
 		all_results[route]={"checks":checks-start,"failures":failed,"days":int(closing["clock"]["total_days"])-int(opening["clock"]["total_days"])}
 		print("P104 PARTITION %s %s (%d)" % [route,"OK" if failed.is_empty() else "FAIL",checks-start])
-	var summary:=FileAccess.open(evidence_root.path_join("summary-%d.json" % Time.get_ticks_usec()),FileAccess.WRITE)
+	var summary:=FileAccess.open(evidence_root.path_join("summary-%d-%d.json" % [OS.get_process_id(), Time.get_ticks_usec()]),FileAccess.WRITE)
 	summary.store_string(JSON.stringify(all_results,"  "));summary.close()
 	print("P104 PLAYTEST %s (%d)" % ["OK" if failures.is_empty() else "FAIL",checks])
 	quit(0 if failures.is_empty() else 1)

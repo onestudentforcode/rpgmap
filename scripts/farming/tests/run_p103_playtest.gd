@@ -52,7 +52,7 @@ func _route_ab(a: String, b: String) -> void:
 	_scenario(b, func(world): _business(world, b))
 
 func fixture(extra: Dictionary) -> World:
-	var world := World.new(Store.new(audit_root.path_join("%s-slots-%d" % [route, Time.get_ticks_usec()])))
+	var world := World.new(Store.new(audit_root.path_join("%s-slots-%d-%d" % [route, OS.get_process_id(), Time.get_ticks_usec()])))
 	world.start_new(1)
 	var grant := {"raw_wood": 300, "raw_stone": 300, "wood_plank": 40,
 		"mushroom": 400, "fodder_grass": 400, "grain": 200, "clean_water": 900,

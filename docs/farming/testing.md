@@ -1,5 +1,7 @@
 # 当前农场测试与历史入口
 
+> **2026-10-19 并行执行约定（用户确认，P10.5起生效）：** 重型回放（≥10分钟的Godot套件）允许**跨套件并行**，规则如下——①并行单位是"套件"，不同套件必须写各自独立证据根（`.art-work/<suite>-playtest/`），同一套件的多个实例禁止并发；②套件内场景/路线保持串行（共享收据文件句柄）；③一切临时目录/槽名必须含`OS.get_process_id()`（P10.5已把`get_ticks_usec()`裸名全部改为`PID+ticks`：历史损坏的根因是两进程启动滴答相近导致证据目录同名互写，出现160KB截断与"无法替换正式存档"，非引擎不能并行）；④并行度取物理核数一半左右，Godot单套件单线程，Python审计器可随后并行；⑤模型/契约专项（秒级）不值得并行，照旧串行；⑥并行运行中禁止对同一证据根做归档/移动操作。快速入口：PowerShell `Start-Job`/`Start-Process` 分发各`test-p10-*.bat`，或参考`.art-work/closure_run*.py`的顺序版改造。旧"长套件必须严格串行"的口径作废，改为上述隔离规则。
+
 > **2026-10-19 P10.5草案待实施：** [阶段页§14](phase-10.5-陆生物种扩充与精养生产.md)规划三用途互斥/钢绵羊迁移、四精养工艺、六新物种/群与容量、桑叶—蚕丝、灵液交易、役使/建材和系统保存七个短分区；精养进度/付料/领取去重、疲劳递推、禁止蚕繁殖须独立审计并做篡改探针。保持≤30日模块主体，只有里程碑一条60～120日整合；整合须外部逐日保存完整库存/现金账，不能以末15日尾账冒充全程。拟新增P10.5执行入口，目前没有脚本/通过证据，本次不跑玩法测试，代码仍schema22。下方为已交付历史记录。
 
 > **显式边界前置（2026-10-18）：** `run_room_boundaries.gd`46项；`run_room_boundary_playtest.gd`固定夹具仅3日、18项；`python tools/farming/audit_room_boundaries.py .art-work/p104-boundary/scenario.json`收据及库存对账；`python -m unittest discover -s tools/farming -p test_room_boundaries_audit.py -v`诚实场景与四类篡改检查通过。证据`.art-work/p104-tests/boundary*.log`和`.art-work/p104-boundary/scenario.json`，设计见[明文规则](房间归属与连通设计.md)。当前开发schema22，后续P10.4整合只在里程碑安排一条长线冒烟，历史长回放不改。

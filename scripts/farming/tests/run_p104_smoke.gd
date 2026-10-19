@@ -48,7 +48,7 @@ func run() -> void:
 	check(w.research.start(bench,"flower_cultivation")["ok"],"smoke real research start")
 	check(w.husbandry.purchase(pond,1)["ok"],"smoke fish stocking")
 	w.end_day()
-	var store:=Store.new("res://.art-work/p104-smoke/slots-%d" % Time.get_ticks_usec())
+	var store:=Store.new("res://.art-work/p104-smoke/slots-%d-%d" % [OS.get_process_id(), Time.get_ticks_usec()])
 	check(store.create_slot(1,w.to_snapshot())["ok"],"smoke actual disk slot")
 	w._store=store
 	var opening: Dictionary=w.to_snapshot()
