@@ -69,17 +69,17 @@
   ],
   "counts": {
     "crops": 8,
-    "diets": 35,
-    "entities": 269,
+    "diets": 46,
+    "entities": 289,
     "facilities": 39,
-    "livestock": 12,
+    "livestock": 17,
     "living_mappings": 10,
     "logistics": 9,
     "parcels": 6,
-    "processes": 379,
+    "processes": 403,
     "recipes": 51,
     "research": 12,
-    "resources": 74,
+    "resources": 78,
     "rules": 19,
     "sources": 3
   },
@@ -102,9 +102,10 @@
       "solid": "固体"
     },
     "no_use_whitelist": [
-      "purifying_mat_culture"
+      "purifying_mat_culture",
+      "mussel_shell"
     ],
-    "no_use_whitelist_reason": "净水菌毯培养单位是购买代理，见purchase_proxies说明。",
+    "no_use_whitelist_reason": "净水菌毯培养单位是购买代理，见purchase_proxies说明。贝壳由采珠台取壳操作产出（P10.6.g补过程条目）。",
     "purchase_proxies": [
       {
         "resource": "purifying_mat_culture",
@@ -1442,6 +1443,11 @@
           "text": "1AP；需设施空闲；不返还材料与元石"
         },
         {
+          "key": "species",
+          "label": "接纳物种",
+          "text": "滤藻鲤"
+        },
+        {
           "key": "substitute",
           "label": "建材替代",
           "text": "普通岩石部分可用复合石板1:1或再生填料2:1整体替代（2份石）"
@@ -1450,7 +1456,13 @@
       "icon": "build",
       "id": "facility:carp_harvest_station",
       "kind": "facility",
-      "links": [],
+      "links": [
+        {
+          "entity": "species:filter_algae_carp",
+          "label": "接纳物种",
+          "name": "滤藻鲤"
+        }
+      ],
       "locks": null,
       "name": "捕鲤台",
       "related_rules": [
@@ -1641,6 +1653,11 @@
           "text": "1AP；需设施空闲；不返还材料与元石"
         },
         {
+          "key": "species",
+          "label": "接纳物种",
+          "text": "礁骨珊瑚"
+        },
+        {
           "key": "substitute",
           "label": "建材替代",
           "text": "普通岩石部分可用复合石板1:1或再生填料2:1整体替代（4份石）"
@@ -1650,6 +1667,11 @@
       "id": "facility:coral_station",
       "kind": "facility",
       "links": [
+        {
+          "entity": "species:reef_coral",
+          "label": "接纳物种",
+          "name": "礁骨珊瑚"
+        },
         {
           "entity": "research:mineral_materials",
           "label": "解锁研究",
@@ -1953,6 +1975,11 @@
           "text": "1AP；需设施空闲；不返还材料与元石"
         },
         {
+          "key": "species",
+          "label": "接纳物种",
+          "text": "凝胶水母"
+        },
+        {
           "key": "substitute",
           "label": "建材替代",
           "text": "普通岩石部分可用复合石板1:1或再生填料2:1整体替代（3份石）"
@@ -1962,6 +1989,11 @@
       "id": "facility:gel_station",
       "kind": "facility",
       "links": [
+        {
+          "entity": "species:gel_jellyfish",
+          "label": "接纳物种",
+          "name": "凝胶水母"
+        },
         {
           "entity": "research:water_recirculation",
           "label": "解锁研究",
@@ -2184,6 +2216,11 @@
           "text": "1AP；需设施空闲；不返还材料与元石"
         },
         {
+          "key": "species",
+          "label": "接纳物种",
+          "text": "油鳍鱼"
+        },
+        {
           "key": "substitute",
           "label": "建材替代",
           "text": "普通岩石部分可用复合石板1:1或再生填料2:1整体替代（3份石）"
@@ -2193,6 +2230,11 @@
       "id": "facility:oilfish_harvest_station",
       "kind": "facility",
       "links": [
+        {
+          "entity": "species:oilfin_fish",
+          "label": "接纳物种",
+          "name": "油鳍鱼"
+        },
         {
           "entity": "research:farm_preparation",
           "label": "解锁研究",
@@ -2301,6 +2343,11 @@
           "text": "1AP；需设施空闲；不返还材料与元石"
         },
         {
+          "key": "species",
+          "label": "接纳物种",
+          "text": "珍珠蚌"
+        },
+        {
           "key": "substitute",
           "label": "建材替代",
           "text": "普通岩石部分可用复合石板1:1或再生填料2:1整体替代（3份石）"
@@ -2310,6 +2357,11 @@
       "id": "facility:pearl_station",
       "kind": "facility",
       "links": [
+        {
+          "entity": "species:pearl_mussel",
+          "label": "接纳物种",
+          "name": "珍珠蚌"
+        },
         {
           "entity": "research:water_recirculation",
           "label": "解锁研究",
@@ -2773,6 +2825,11 @@
           "text": "1AP；需设施空闲；不返还材料与元石"
         },
         {
+          "key": "species",
+          "label": "接纳物种",
+          "text": "净泥鳅"
+        },
+        {
           "key": "substitute",
           "label": "建材替代",
           "text": "普通岩石部分可用复合石板1:1或再生填料2:1整体替代（2份石）"
@@ -2782,6 +2839,11 @@
       "id": "facility:silt_processing_station",
       "kind": "facility",
       "links": [
+        {
+          "entity": "species:silt_loach",
+          "label": "接纳物种",
+          "name": "净泥鳅"
+        },
         {
           "entity": "research:biofiltration",
           "label": "解锁研究",
@@ -3449,7 +3511,7 @@
         {
           "key": "facility",
           "label": "适配设施",
-          "text": "水场（容量4尾；每场单物种）"
+          "text": "捕鲤台（容量4尾；每场单物种）"
         },
         {
           "key": "growth",
@@ -3474,17 +3536,17 @@
         {
           "key": "water",
           "label": "水体依赖",
-          "text": "水场水体日降5；≤30全场暂停成长与周期，维护水体或换水恢复"
+          "text": "所属水体共享水质日降；低于30暂停成长与生产，换水或净化配套恢复"
         }
       ],
-      "icon": "fish_pond",
+      "icon": "workers",
       "id": "species:filter_algae_carp",
       "kind": "species",
       "links": [
         {
-          "entity": "facility:fish_pond",
+          "entity": "facility:carp_harvest_station",
           "label": "适配设施",
-          "name": "水场"
+          "name": "捕鲤台"
         }
       ],
       "locks": null,
@@ -3495,7 +3557,75 @@
         "rule:worker_scheduler"
       ],
       "source_id": "filter_algae_carp",
-      "summary": "水场养殖；5元石/尾；周期2日",
+      "summary": "捕鲤台养殖；5元石/尾；周期2日",
+      "tags": []
+    },
+    {
+      "category": "husbandry",
+      "fields": [
+        {
+          "key": "price",
+          "label": "购入价格",
+          "text": "12元石/群（0AP；购入即占容量，不可退回）"
+        },
+        {
+          "key": "unit",
+          "label": "计量单位",
+          "text": "群"
+        },
+        {
+          "key": "facility",
+          "label": "适配设施",
+          "text": "采胶台（容量4群；每场单物种）"
+        },
+        {
+          "key": "growth",
+          "label": "幼体成长",
+          "text": "4有效服务日（当日有基础服务才推进）"
+        },
+        {
+          "key": "cycle",
+          "label": "生产周期",
+          "text": "2有效服务日/轮（特殊食谱启动）"
+        },
+        {
+          "key": "outputs",
+          "label": "周期产物",
+          "text": "凝水胶×2/轮/群（收取时入仓）"
+        },
+        {
+          "key": "claim",
+          "label": "收取后去留",
+          "text": "保留个体（回到空闲成体）"
+        }
+      ],
+      "icon": "workers",
+      "id": "species:gel_jellyfish",
+      "kind": "species",
+      "links": [
+        {
+          "entity": "facility:gel_station",
+          "label": "适配设施",
+          "name": "采胶台"
+        },
+        {
+          "entity": "research:water_recirculation",
+          "label": "解锁研究",
+          "name": "水与藻料回流"
+        }
+      ],
+      "locks": {
+        "research": "research:water_recirculation",
+        "research_name": "水与藻料回流"
+      },
+      "name": "凝胶水母",
+      "related_rules": [
+        "rule:day_settle",
+        "rule:husbandry_service",
+        "rule:worker_scheduler"
+      ],
+      "source_id": "gel_jellyfish",
+      "summary": "采胶台养殖；12元石/群；周期2日",
       "tags": []
     },
     {
@@ -3700,6 +3830,142 @@
         {
           "key": "price",
           "label": "购入价格",
+          "text": "10元石/尾（0AP；购入即占容量，不可退回）"
+        },
+        {
+          "key": "unit",
+          "label": "计量单位",
+          "text": "尾"
+        },
+        {
+          "key": "facility",
+          "label": "适配设施",
+          "text": "取油台（容量4尾；每场单物种）"
+        },
+        {
+          "key": "growth",
+          "label": "幼体成长",
+          "text": "5有效服务日（当日有基础服务才推进）"
+        },
+        {
+          "key": "cycle",
+          "label": "生产周期",
+          "text": "3有效服务日/轮（特殊食谱启动）"
+        },
+        {
+          "key": "outputs",
+          "label": "周期产物",
+          "text": "粗油×2＋鱼肉×1/轮/尾（收取时入仓）"
+        },
+        {
+          "key": "claim",
+          "label": "收取后去留",
+          "text": "移除个体，需重新购入"
+        }
+      ],
+      "icon": "workers",
+      "id": "species:oilfin_fish",
+      "kind": "species",
+      "links": [
+        {
+          "entity": "facility:oilfish_harvest_station",
+          "label": "适配设施",
+          "name": "取油台"
+        },
+        {
+          "entity": "research:farm_preparation",
+          "label": "解锁研究",
+          "name": "农产初加工"
+        }
+      ],
+      "locks": {
+        "research": "research:farm_preparation",
+        "research_name": "农产初加工"
+      },
+      "name": "油鳍鱼",
+      "related_rules": [
+        "rule:day_settle",
+        "rule:husbandry_service",
+        "rule:worker_scheduler"
+      ],
+      "source_id": "oilfin_fish",
+      "summary": "取油台养殖；10元石/尾；周期3日",
+      "tags": []
+    },
+    {
+      "category": "husbandry",
+      "fields": [
+        {
+          "key": "price",
+          "label": "购入价格",
+          "text": "12元石/只（0AP；购入即占容量，不可退回）"
+        },
+        {
+          "key": "unit",
+          "label": "计量单位",
+          "text": "只"
+        },
+        {
+          "key": "facility",
+          "label": "适配设施",
+          "text": "采珠台（容量4只；每场单物种）"
+        },
+        {
+          "key": "growth",
+          "label": "幼体成长",
+          "text": "6有效服务日（当日有基础服务才推进）"
+        },
+        {
+          "key": "cycle",
+          "label": "生产周期",
+          "text": "4有效服务日/轮（特殊食谱启动）"
+        },
+        {
+          "key": "outputs",
+          "label": "周期产物",
+          "text": "珍珠×2/轮/只（收取时入仓）"
+        },
+        {
+          "key": "claim",
+          "label": "收取后去留",
+          "text": "保留个体（回到空闲成体）"
+        }
+      ],
+      "icon": "workers",
+      "id": "species:pearl_mussel",
+      "kind": "species",
+      "links": [
+        {
+          "entity": "facility:pearl_station",
+          "label": "适配设施",
+          "name": "采珠台"
+        },
+        {
+          "entity": "research:water_recirculation",
+          "label": "解锁研究",
+          "name": "水与藻料回流"
+        }
+      ],
+      "locks": {
+        "research": "research:water_recirculation",
+        "research_name": "水与藻料回流"
+      },
+      "name": "珍珠蚌",
+      "related_rules": [
+        "rule:day_settle",
+        "rule:husbandry_service",
+        "rule:worker_scheduler"
+      ],
+      "source_id": "pearl_mussel",
+      "summary": "采珠台养殖；12元石/只；周期4日",
+      "tags": []
+    },
+    {
+      "category": "husbandry",
+      "fields": [
+        {
+          "key": "price",
+          "label": "购入价格",
           "text": "6元石/培养单位（0AP；购入即占容量，不可退回）"
         },
         {
@@ -3760,6 +4026,74 @@
       ],
       "source_id": "purifying_mat",
       "summary": "净水菌床养殖；6元石/培养单位；周期2日",
+      "tags": []
+    },
+    {
+      "category": "husbandry",
+      "fields": [
+        {
+          "key": "price",
+          "label": "购入价格",
+          "text": "14元石/群（0AP；购入即占容量，不可退回）"
+        },
+        {
+          "key": "unit",
+          "label": "计量单位",
+          "text": "群"
+        },
+        {
+          "key": "facility",
+          "label": "适配设施",
+          "text": "采礁台（容量4群；每场单物种）"
+        },
+        {
+          "key": "growth",
+          "label": "幼体成长",
+          "text": "6有效服务日（当日有基础服务才推进）"
+        },
+        {
+          "key": "cycle",
+          "label": "生产周期",
+          "text": "6有效服务日/轮（特殊食谱启动）"
+        },
+        {
+          "key": "outputs",
+          "label": "周期产物",
+          "text": "珊瑚石×2/轮/群（收取时入仓）"
+        },
+        {
+          "key": "claim",
+          "label": "收取后去留",
+          "text": "保留个体（回到空闲成体）"
+        }
+      ],
+      "icon": "workers",
+      "id": "species:reef_coral",
+      "kind": "species",
+      "links": [
+        {
+          "entity": "facility:coral_station",
+          "label": "适配设施",
+          "name": "采礁台"
+        },
+        {
+          "entity": "research:mineral_materials",
+          "label": "解锁研究",
+          "name": "矿质材料工艺"
+        }
+      ],
+      "locks": {
+        "research": "research:mineral_materials",
+        "research_name": "矿质材料工艺"
+      },
+      "name": "礁骨珊瑚",
+      "related_rules": [
+        "rule:day_settle",
+        "rule:husbandry_service",
+        "rule:worker_scheduler"
+      ],
+      "source_id": "reef_coral",
+      "summary": "采礁台养殖；14元石/群；周期6日",
       "tags": []
     },
     {
@@ -3904,6 +4238,74 @@
         {
           "key": "price",
           "label": "购入价格",
+          "text": "8元石/尾（0AP；购入即占容量，不可退回）"
+        },
+        {
+          "key": "unit",
+          "label": "计量单位",
+          "text": "尾"
+        },
+        {
+          "key": "facility",
+          "label": "适配设施",
+          "text": "泥料处理台（容量4尾；每场单物种）"
+        },
+        {
+          "key": "growth",
+          "label": "幼体成长",
+          "text": "3有效服务日（当日有基础服务才推进）"
+        },
+        {
+          "key": "cycle",
+          "label": "生产周期",
+          "text": "1有效服务日/轮（特殊食谱启动）"
+        },
+        {
+          "key": "outputs",
+          "label": "周期产物",
+          "text": "腐殖土×3/轮/尾（收取时入仓）"
+        },
+        {
+          "key": "claim",
+          "label": "收取后去留",
+          "text": "保留个体（回到空闲成体）"
+        }
+      ],
+      "icon": "workers",
+      "id": "species:silt_loach",
+      "kind": "species",
+      "links": [
+        {
+          "entity": "facility:silt_processing_station",
+          "label": "适配设施",
+          "name": "泥料处理台"
+        },
+        {
+          "entity": "research:biofiltration",
+          "label": "解锁研究",
+          "name": "菌毯净化"
+        }
+      ],
+      "locks": {
+        "research": "research:biofiltration",
+        "research_name": "菌毯净化"
+      },
+      "name": "净泥鳅",
+      "related_rules": [
+        "rule:day_settle",
+        "rule:husbandry_service",
+        "rule:worker_scheduler"
+      ],
+      "source_id": "silt_loach",
+      "summary": "泥料处理台养殖；8元石/尾；周期1日",
+      "tags": []
+    },
+    {
+      "category": "husbandry",
+      "fields": [
+        {
+          "key": "price",
+          "label": "购入价格",
           "text": "12元石/只（0AP；购入即占容量，不可退回）"
         },
         {
@@ -4036,15 +4438,33 @@
           "category_hint": "care",
           "conditions": "",
           "crop": null,
-          "detail": "整体维护·滤藻鲤：藻料×1（每尾·每日）｜水场｜滤藻鲤｜1AP",
+          "detail": "整体维护·滤藻鲤：藻料×1（每尾·每日）｜捕鲤台｜滤藻鲤｜1AP",
           "duration": "即时",
-          "facility": "水场",
+          "facility": "捕鲤台",
           "name": "整体维护·滤藻鲤",
           "others": "复合水养料×1；高密度藻料×1；谷粒×1",
           "process": "proc:maintain:filter_algae_carp",
           "quantity": 1,
           "research": null,
           "species": "滤藻鲤",
+          "timing": "整体维护时",
+          "type": "maintain"
+        },
+        {
+          "ap": "1AP",
+          "basis": "每群·每日",
+          "category_hint": "care",
+          "conditions": "",
+          "crop": null,
+          "detail": "整体维护·凝胶水母：藻料×1（每群·每日）｜采胶台｜凝胶水母｜1AP",
+          "duration": "即时",
+          "facility": "采胶台",
+          "name": "整体维护·凝胶水母",
+          "others": "高密度藻料×1；清水×1",
+          "process": "proc:maintain:gel_jellyfish",
+          "quantity": 1,
+          "research": null,
+          "species": "凝胶水母",
           "timing": "整体维护时",
           "type": "maintain"
         },
@@ -4063,6 +4483,78 @@
           "quantity": 1,
           "research": null,
           "species": "砾甲蜗牛",
+          "timing": "整体维护时",
+          "type": "maintain"
+        },
+        {
+          "ap": "1AP",
+          "basis": "每尾·每日",
+          "category_hint": "care",
+          "conditions": "",
+          "crop": null,
+          "detail": "整体维护·油鳍鱼：藻料×1（每尾·每日）｜取油台｜油鳍鱼｜1AP",
+          "duration": "即时",
+          "facility": "取油台",
+          "name": "整体维护·油鳍鱼",
+          "others": "复合水养料×1；复合水养料×1",
+          "process": "proc:maintain:oilfin_fish",
+          "quantity": 1,
+          "research": null,
+          "species": "油鳍鱼",
+          "timing": "整体维护时",
+          "type": "maintain"
+        },
+        {
+          "ap": "1AP",
+          "basis": "每只·每日",
+          "category_hint": "care",
+          "conditions": "",
+          "crop": null,
+          "detail": "整体维护·珍珠蚌：藻料×1（每只·每日）｜采珠台｜珍珠蚌｜1AP",
+          "duration": "即时",
+          "facility": "采珠台",
+          "name": "整体维护·珍珠蚌",
+          "others": "石粉×1",
+          "process": "proc:maintain:pearl_mussel",
+          "quantity": 1,
+          "research": null,
+          "species": "珍珠蚌",
+          "timing": "整体维护时",
+          "type": "maintain"
+        },
+        {
+          "ap": "1AP",
+          "basis": "每群·每日",
+          "category_hint": "care",
+          "conditions": "",
+          "crop": null,
+          "detail": "整体维护·礁骨珊瑚：藻料×1（每群·每日）｜采礁台｜礁骨珊瑚｜1AP",
+          "duration": "即时",
+          "facility": "采礁台",
+          "name": "整体维护·礁骨珊瑚",
+          "others": "石粉×3；清水×1",
+          "process": "proc:maintain:reef_coral",
+          "quantity": 1,
+          "research": null,
+          "species": "礁骨珊瑚",
+          "timing": "整体维护时",
+          "type": "maintain"
+        },
+        {
+          "ap": "1AP",
+          "basis": "每尾·每日",
+          "category_hint": "care",
+          "conditions": "",
+          "crop": null,
+          "detail": "整体维护·净泥鳅：藻料×1（每尾·每日）｜泥料处理台｜净泥鳅｜1AP",
+          "duration": "即时",
+          "facility": "泥料处理台",
+          "name": "整体维护·净泥鳅",
+          "others": "",
+          "process": "proc:maintain:silt_loach",
+          "quantity": 1,
+          "research": null,
+          "species": "净泥鳅",
           "timing": "整体维护时",
           "type": "maintain"
         },
@@ -4169,7 +4661,7 @@
           "duration": "即时",
           "facility": "研究台",
           "name": "启动研究·饲料与蜡油精制",
-          "others": "粗植物油×1；谷粉×1；元石×8",
+          "others": "粗油×1；谷粉×1；元石×8",
           "process": "proc:research_start:advanced_feed_oil_wax",
           "quantity": 1,
           "research": null,
@@ -4466,7 +4958,7 @@
           "duration": "1自然日",
           "facility": "农产加工台",
           "name": "加工·油脂精炼",
-          "others": "粗植物油×2；精炼油×2；废滤炭×1",
+          "others": "粗油×2；精炼油×2；废滤炭×1",
           "process": "proc:batch:refine_oil",
           "quantity": 1,
           "research": "饲料与蜡油精制",
@@ -4953,6 +5445,24 @@
         },
         {
           "ap": "1AP",
+          "basis": "每群·每轮",
+          "category_hint": "care",
+          "conditions": "空闲成体启动「采胶轮投料」周期时",
+          "crop": null,
+          "detail": "整体维护·凝胶水母：清水×1（每群·每轮）｜采胶台｜凝胶水母｜1AP",
+          "duration": "即时",
+          "facility": "采胶台",
+          "name": "整体维护·凝胶水母",
+          "others": "藻料×1；高密度藻料×1",
+          "process": "proc:maintain:gel_jellyfish",
+          "quantity": 1,
+          "research": null,
+          "species": "凝胶水母",
+          "timing": "周期启动时一次付清",
+          "type": "maintain"
+        },
+        {
+          "ap": "1AP",
           "basis": "每只·每日",
           "category_hint": "care",
           "conditions": "",
@@ -5057,6 +5567,24 @@
           "research": null,
           "species": "净水菌毯",
           "timing": "整体维护时",
+          "type": "maintain"
+        },
+        {
+          "ap": "1AP",
+          "basis": "每群·每轮",
+          "category_hint": "care",
+          "conditions": "空闲成体启动「采礁轮投料」周期时",
+          "crop": null,
+          "detail": "整体维护·礁骨珊瑚：清水×1（每群·每轮）｜采礁台｜礁骨珊瑚｜1AP",
+          "duration": "即时",
+          "facility": "采礁台",
+          "name": "整体维护·礁骨珊瑚",
+          "others": "藻料×1；石粉×3",
+          "process": "proc:maintain:reef_coral",
+          "quantity": 1,
+          "research": null,
+          "species": "礁骨珊瑚",
+          "timing": "周期启动时一次付清",
           "type": "maintain"
         },
         {
@@ -5987,6 +6515,85 @@
         {
           "key": "class",
           "label": "分类",
+          "text": "土行·固体·加工品；标签：animal_product"
+        },
+        {
+          "key": "buy",
+          "label": "市集采购",
+          "text": "不可采购"
+        },
+        {
+          "key": "sell",
+          "label": "市集出售",
+          "text": "2元石/份（计入销售收入）"
+        },
+        {
+          "key": "terminal",
+          "label": "下游用途",
+          "text": "无下游配方：出售与供货是该物品的设计出口"
+        }
+      ],
+      "icon": "earth",
+      "id": "resource:coral_stone",
+      "kind": "resource",
+      "links": [],
+      "locks": null,
+      "name": "珊瑚石",
+      "related_rules": [
+        "rule:market"
+      ],
+      "source_id": "coral_stone",
+      "sources": [
+        {
+          "ap": "1AP",
+          "basis": "每群·每轮",
+          "category_hint": "production",
+          "conditions": "",
+          "crop": null,
+          "detail": "收取·礁骨珊瑚：珊瑚石×2（每群·每轮）｜采礁台｜礁骨珊瑚｜1AP",
+          "duration": "即时",
+          "facility": "采礁台",
+          "name": "收取·礁骨珊瑚",
+          "others": "",
+          "process": "proc:claim:reef_coral",
+          "quantity": 2,
+          "research": null,
+          "species": "礁骨珊瑚",
+          "timing": "收取时",
+          "type": "claim"
+        }
+      ],
+      "summary": "土行固体；生产材料",
+      "tags": [
+        "animal_product"
+      ],
+      "uses": [
+        {
+          "ap": "0AP",
+          "basis": "每份",
+          "category_hint": "trade",
+          "conditions": "",
+          "crop": null,
+          "detail": "市集出售·珊瑚石：珊瑚石×按订单/库存（每份）",
+          "duration": "即时",
+          "facility": null,
+          "name": "市集出售·珊瑚石",
+          "others": "元石×2",
+          "process": "proc:sell:coral_stone",
+          "quantity": null,
+          "research": null,
+          "species": null,
+          "timing": "交易时",
+          "type": "market_sell"
+        }
+      ]
+    },
+    {
+      "category": "items",
+      "fields": [
+        {
+          "key": "class",
+          "label": "分类",
           "text": "火行·液体·加工品；标签：processing"
         },
         {
@@ -6005,7 +6612,7 @@
       "kind": "resource",
       "links": [],
       "locks": null,
-      "name": "粗植物油",
+      "name": "粗油",
       "related_rules": [
         "rule:market"
       ],
@@ -6017,7 +6624,7 @@
           "category_hint": "production",
           "conditions": "",
           "crop": null,
-          "detail": "加工·油籽榨油：粗植物油×2（每批）｜农产加工台｜需研究「农产初加工」｜2自然日｜启动1＋收取1",
+          "detail": "加工·油籽榨油：粗油×2（每批）｜农产加工台｜需研究「农产初加工」｜2自然日｜启动1＋收取1",
           "duration": "2自然日",
           "facility": "农产加工台",
           "name": "加工·油籽榨油",
@@ -6028,6 +6635,24 @@
           "species": null,
           "timing": "收取时",
           "type": "craft"
+        },
+        {
+          "ap": "1AP",
+          "basis": "每尾·每轮",
+          "category_hint": "production",
+          "conditions": "",
+          "crop": null,
+          "detail": "收取·油鳍鱼：粗油×2（每尾·每轮）｜取油台｜油鳍鱼｜1AP",
+          "duration": "即时",
+          "facility": "取油台",
+          "name": "收取·油鳍鱼",
+          "others": "鱼肉×1",
+          "process": "proc:claim:oilfin_fish",
+          "quantity": 2,
+          "research": null,
+          "species": "油鳍鱼",
+          "timing": "收取时",
+          "type": "claim"
         }
       ],
       "summary": "火行液体；生产材料",
@@ -6041,7 +6666,7 @@
           "category_hint": "production",
           "conditions": "",
           "crop": null,
-          "detail": "加工·油脂精炼：粗植物油×2（每批）｜农产加工台｜需研究「饲料与蜡油精制」｜1自然日｜启动1＋收取1",
+          "detail": "加工·油脂精炼：粗油×2（每批）｜农产加工台｜需研究「饲料与蜡油精制」｜1自然日｜启动1＋收取1",
           "duration": "1自然日",
           "facility": "农产加工台",
           "name": "加工·油脂精炼",
@@ -6059,7 +6684,7 @@
           "category_hint": "research",
           "conditions": "",
           "crop": null,
-          "detail": "启动研究·饲料与蜡油精制：粗植物油×1（一次性）｜研究台",
+          "detail": "启动研究·饲料与蜡油精制：粗油×1（一次性）｜研究台",
           "duration": "即时",
           "facility": "研究台",
           "name": "启动研究·饲料与蜡油精制",
@@ -6077,10 +6702,10 @@
           "category_hint": "trade",
           "conditions": "",
           "crop": null,
-          "detail": "市集出售·粗植物油：粗植物油×按订单/库存（每份）",
+          "detail": "市集出售·粗油：粗油×按订单/库存（每份）",
           "duration": "即时",
           "facility": null,
-          "name": "市集出售·粗植物油",
+          "name": "市集出售·粗油",
           "others": "元石×4",
           "process": "proc:sell:crude_oil",
           "quantity": null,
@@ -6333,15 +6958,33 @@
           "category_hint": "care",
           "conditions": "基础食谱选用「高密度藻餐」时",
           "crop": null,
-          "detail": "整体维护·滤藻鲤：高密度藻料×1（每尾·每日）｜水场｜滤藻鲤｜1AP",
+          "detail": "整体维护·滤藻鲤：高密度藻料×1（每尾·每日）｜捕鲤台｜滤藻鲤｜1AP",
           "duration": "即时",
-          "facility": "水场",
+          "facility": "捕鲤台",
           "name": "整体维护·滤藻鲤",
           "others": "藻料×1；复合水养料×1；谷粒×1",
           "process": "proc:maintain:filter_algae_carp",
           "quantity": 1,
           "research": null,
           "species": "滤藻鲤",
+          "timing": "整体维护时",
+          "type": "maintain"
+        },
+        {
+          "ap": "1AP",
+          "basis": "每群·每日",
+          "category_hint": "care",
+          "conditions": "基础食谱选用「高密度藻餐」时",
+          "crop": null,
+          "detail": "整体维护·凝胶水母：高密度藻料×1（每群·每日）｜采胶台｜凝胶水母｜1AP",
+          "duration": "即时",
+          "facility": "采胶台",
+          "name": "整体维护·凝胶水母",
+          "others": "藻料×1；清水×1",
+          "process": "proc:maintain:gel_jellyfish",
+          "quantity": 1,
+          "research": null,
+          "species": "凝胶水母",
           "timing": "整体维护时",
           "type": "maintain"
         },
@@ -6967,9 +7610,9 @@
           "category_hint": "production",
           "conditions": "",
           "crop": null,
-          "detail": "收取·滤藻鲤：鱼粪×1（每尾·每轮）｜水场｜滤藻鲤｜1AP",
+          "detail": "收取·滤藻鲤：鱼粪×1（每尾·每轮）｜捕鲤台｜滤藻鲤｜1AP",
           "duration": "即时",
-          "facility": "水场",
+          "facility": "捕鲤台",
           "name": "收取·滤藻鲤",
           "others": "鱼肉×3",
           "process": "proc:claim:filter_algae_carp",
@@ -7045,7 +7688,7 @@
         {
           "key": "supply",
           "label": "五行供货",
-          "text": "可供货（木行）；供养值6：订单数量=ceil(需求/供养值)，回款=数量×卖价＋10%溢价"
+          "text": "可供货（木行）；供养值7：订单数量=ceil(需求/供养值)，回款=数量×卖价＋10%溢价"
         }
       ],
       "icon": "fish_meat",
@@ -7066,9 +7709,9 @@
           "category_hint": "production",
           "conditions": "",
           "crop": null,
-          "detail": "收取·滤藻鲤：鱼肉×3（每尾·每轮）｜水场｜滤藻鲤｜1AP",
+          "detail": "收取·滤藻鲤：鱼肉×3（每尾·每轮）｜捕鲤台｜滤藻鲤｜1AP",
           "duration": "即时",
-          "facility": "水场",
+          "facility": "捕鲤台",
           "name": "收取·滤藻鲤",
           "others": "鱼粪×1",
           "process": "proc:claim:filter_algae_carp",
@@ -7077,9 +7720,27 @@
           "species": "滤藻鲤",
           "timing": "收取时",
           "type": "claim"
+        },
+        {
+          "ap": "1AP",
+          "basis": "每尾·每轮",
+          "category_hint": "production",
+          "conditions": "",
+          "crop": null,
+          "detail": "收取·油鳍鱼：鱼肉×1（每尾·每轮）｜取油台｜油鳍鱼｜1AP",
+          "duration": "即时",
+          "facility": "取油台",
+          "name": "收取·油鳍鱼",
+          "others": "粗油×2",
+          "process": "proc:claim:oilfin_fish",
+          "quantity": 1,
+          "research": null,
+          "species": "油鳍鱼",
+          "timing": "收取时",
+          "type": "claim"
         }
       ],
-      "summary": "木行固体；可供货（供养值6）",
+      "summary": "木行固体；可供货（供养值7）",
       "tags": [
         "food",
         "animal_product"
@@ -7180,7 +7841,7 @@
         {
           "key": "supply",
           "label": "五行供货",
-          "text": "可供货（木行）；供养值12：订单数量=ceil(需求/供养值)，回款=数量×卖价＋10%溢价"
+          "text": "可供货（木行）；供养值13：订单数量=ceil(需求/供养值)，回款=数量×卖价＋10%溢价"
         },
         {
           "key": "terminal",
@@ -7219,7 +7880,7 @@
           "type": "craft"
         }
       ],
-      "summary": "木行固体；可供货（供养值12）",
+      "summary": "木行固体；可供货（供养值13）",
       "tags": [
         "food"
       ],
@@ -7961,9 +8622,9 @@
           "category_hint": "care",
           "conditions": "空闲成体启动「谷粒育肥」周期时",
           "crop": null,
-          "detail": "整体维护·滤藻鲤：谷粒×1（每尾·每轮）｜水场｜滤藻鲤｜1AP",
+          "detail": "整体维护·滤藻鲤：谷粒×1（每尾·每轮）｜捕鲤台｜滤藻鲤｜1AP",
           "duration": "即时",
-          "facility": "水场",
+          "facility": "捕鲤台",
           "name": "整体维护·滤藻鲤",
           "others": "藻料×1；复合水养料×1；高密度藻料×1",
           "process": "proc:maintain:filter_algae_carp",
@@ -8202,7 +8863,7 @@
           "duration": "即时",
           "facility": "研究台",
           "name": "启动研究·饲料与蜡油精制",
-          "others": "粗植物油×1；蜂蜡×1；元石×8",
+          "others": "粗油×1；蜂蜡×1；元石×8",
           "process": "proc:research_start:advanced_feed_oil_wax",
           "quantity": 1,
           "research": null,
@@ -9385,6 +10046,24 @@
           "quantity": 3,
           "research": null,
           "species": "堆肥鼠",
+          "timing": "收取时",
+          "type": "claim"
+        },
+        {
+          "ap": "1AP",
+          "basis": "每尾·每轮",
+          "category_hint": "production",
+          "conditions": "",
+          "crop": null,
+          "detail": "收取·净泥鳅：腐殖土×3（每尾·每轮）｜泥料处理台｜净泥鳅｜1AP",
+          "duration": "即时",
+          "facility": "泥料处理台",
+          "name": "收取·净泥鳅",
+          "others": "",
+          "process": "proc:claim:silt_loach",
+          "quantity": 3,
+          "research": null,
+          "species": "净泥鳅",
           "timing": "收取时",
           "type": "claim"
         },
@@ -10944,6 +11623,66 @@
         {
           "key": "class",
           "label": "分类",
+          "text": "土行·固体·加工品；标签：animal_product"
+        },
+        {
+          "key": "buy",
+          "label": "市集采购",
+          "text": "不可采购"
+        },
+        {
+          "key": "sell",
+          "label": "市集出售",
+          "text": "1元石/份（计入销售收入）"
+        },
+        {
+          "key": "terminal",
+          "label": "下游用途",
+          "text": "无下游配方：出售与供货是该物品的设计出口"
+        }
+      ],
+      "icon": "earth",
+      "id": "resource:mussel_shell",
+      "kind": "resource",
+      "links": [],
+      "locks": null,
+      "name": "贝壳",
+      "related_rules": [
+        "rule:market"
+      ],
+      "source_id": "mussel_shell",
+      "sources": [],
+      "summary": "土行固体；生产材料",
+      "tags": [
+        "animal_product"
+      ],
+      "uses": [
+        {
+          "ap": "0AP",
+          "basis": "每份",
+          "category_hint": "trade",
+          "conditions": "",
+          "crop": null,
+          "detail": "市集出售·贝壳：贝壳×按订单/库存（每份）",
+          "duration": "即时",
+          "facility": null,
+          "name": "市集出售·贝壳",
+          "others": "元石×1",
+          "process": "proc:sell:mussel_shell",
+          "quantity": null,
+          "research": null,
+          "species": null,
+          "timing": "交易时",
+          "type": "market_sell"
+        }
+      ]
+    },
+    {
+      "category": "items",
+      "fields": [
+        {
+          "key": "class",
+          "label": "分类",
           "text": "水行·液体·初级；标签：food"
         },
         {
@@ -11240,7 +11979,7 @@
           "duration": "2自然日",
           "facility": "农产加工台",
           "name": "加工·油籽榨油",
-          "others": "油籽×4；粗植物油×2",
+          "others": "油籽×4；粗油×2",
           "process": "proc:batch:press_oilseed",
           "quantity": 2,
           "research": "农产初加工",
@@ -11465,7 +12204,7 @@
           "duration": "2自然日",
           "facility": "农产加工台",
           "name": "加工·油籽榨油",
-          "others": "粗植物油×2；油饼×2",
+          "others": "粗油×2；油饼×2",
           "process": "proc:batch:press_oilseed",
           "quantity": 4,
           "research": "农产初加工",
@@ -11733,6 +12472,85 @@
           "name": "市集出售·富集矿砂",
           "others": "元石×5",
           "process": "proc:sell:ore_concentrate",
+          "quantity": null,
+          "research": null,
+          "species": null,
+          "timing": "交易时",
+          "type": "market_sell"
+        }
+      ]
+    },
+    {
+      "category": "items",
+      "fields": [
+        {
+          "key": "class",
+          "label": "分类",
+          "text": "金行·固体·加工品；标签：animal_product"
+        },
+        {
+          "key": "buy",
+          "label": "市集采购",
+          "text": "不可采购"
+        },
+        {
+          "key": "sell",
+          "label": "市集出售",
+          "text": "6元石/份（计入销售收入）"
+        },
+        {
+          "key": "terminal",
+          "label": "下游用途",
+          "text": "无下游配方：出售与供货是该物品的设计出口"
+        }
+      ],
+      "icon": "gold",
+      "id": "resource:pearl",
+      "kind": "resource",
+      "links": [],
+      "locks": null,
+      "name": "珍珠",
+      "related_rules": [
+        "rule:market"
+      ],
+      "source_id": "pearl",
+      "sources": [
+        {
+          "ap": "1AP",
+          "basis": "每只·每轮",
+          "category_hint": "production",
+          "conditions": "",
+          "crop": null,
+          "detail": "收取·珍珠蚌：珍珠×2（每只·每轮）｜采珠台｜珍珠蚌｜1AP",
+          "duration": "即时",
+          "facility": "采珠台",
+          "name": "收取·珍珠蚌",
+          "others": "",
+          "process": "proc:claim:pearl_mussel",
+          "quantity": 2,
+          "research": null,
+          "species": "珍珠蚌",
+          "timing": "收取时",
+          "type": "claim"
+        }
+      ],
+      "summary": "金行固体；生产材料",
+      "tags": [
+        "animal_product"
+      ],
+      "uses": [
+        {
+          "ap": "0AP",
+          "basis": "每份",
+          "category_hint": "trade",
+          "conditions": "",
+          "crop": null,
+          "detail": "市集出售·珍珠：珍珠×按订单/库存（每份）",
+          "duration": "即时",
+          "facility": null,
+          "name": "市集出售·珍珠",
+          "others": "元石×6",
+          "process": "proc:sell:pearl",
           "quantity": null,
           "research": null,
           "species": null,
@@ -13831,7 +14649,7 @@
           "duration": "1自然日",
           "facility": "农产加工台",
           "name": "加工·油脂精炼",
-          "others": "粗植物油×2；木炭×1；废滤炭×1",
+          "others": "粗油×2；木炭×1；废滤炭×1",
           "process": "proc:batch:refine_oil",
           "quantity": 2,
           "research": "饲料与蜡油精制",
@@ -15183,7 +16001,7 @@
           "duration": "1自然日",
           "facility": "农产加工台",
           "name": "加工·油脂精炼",
-          "others": "粗植物油×2；木炭×1；精炼油×2",
+          "others": "粗油×2；木炭×1；精炼油×2",
           "process": "proc:batch:refine_oil",
           "quantity": 1,
           "research": "饲料与蜡油精制",
@@ -15584,6 +16402,42 @@
           "quantity": 3,
           "research": null,
           "species": "砾甲蜗牛",
+          "timing": "周期启动时一次付清",
+          "type": "maintain"
+        },
+        {
+          "ap": "1AP",
+          "basis": "每只·每轮",
+          "category_hint": "care",
+          "conditions": "空闲成体启动「育珠轮投料」周期时",
+          "crop": null,
+          "detail": "整体维护·珍珠蚌：石粉×1（每只·每轮）｜采珠台｜珍珠蚌｜1AP",
+          "duration": "即时",
+          "facility": "采珠台",
+          "name": "整体维护·珍珠蚌",
+          "others": "藻料×1",
+          "process": "proc:maintain:pearl_mussel",
+          "quantity": 1,
+          "research": null,
+          "species": "珍珠蚌",
+          "timing": "周期启动时一次付清",
+          "type": "maintain"
+        },
+        {
+          "ap": "1AP",
+          "basis": "每群·每轮",
+          "category_hint": "care",
+          "conditions": "空闲成体启动「采礁轮投料」周期时",
+          "crop": null,
+          "detail": "整体维护·礁骨珊瑚：石粉×3（每群·每轮）｜采礁台｜礁骨珊瑚｜1AP",
+          "duration": "即时",
+          "facility": "采礁台",
+          "name": "整体维护·礁骨珊瑚",
+          "others": "藻料×1；清水×1",
+          "process": "proc:maintain:reef_coral",
+          "quantity": 3,
+          "research": null,
+          "species": "礁骨珊瑚",
           "timing": "周期启动时一次付清",
           "type": "maintain"
         },
@@ -16600,9 +17454,9 @@
           "category_hint": "care",
           "conditions": "基础食谱选用「水养复合餐」时",
           "crop": null,
-          "detail": "整体维护·滤藻鲤：复合水养料×1（每尾·每日）｜水场｜滤藻鲤｜1AP",
+          "detail": "整体维护·滤藻鲤：复合水养料×1（每尾·每日）｜捕鲤台｜滤藻鲤｜1AP",
           "duration": "即时",
-          "facility": "水场",
+          "facility": "捕鲤台",
           "name": "整体维护·滤藻鲤",
           "others": "藻料×1；高密度藻料×1；谷粒×1",
           "process": "proc:maintain:filter_algae_carp",
@@ -16610,6 +17464,42 @@
           "research": null,
           "species": "滤藻鲤",
           "timing": "整体维护时",
+          "type": "maintain"
+        },
+        {
+          "ap": "1AP",
+          "basis": "每尾·每日",
+          "category_hint": "care",
+          "conditions": "基础食谱选用「水养复合餐」时",
+          "crop": null,
+          "detail": "整体维护·油鳍鱼：复合水养料×1（每尾·每日）｜取油台｜油鳍鱼｜1AP",
+          "duration": "即时",
+          "facility": "取油台",
+          "name": "整体维护·油鳍鱼",
+          "others": "藻料×1",
+          "process": "proc:maintain:oilfin_fish",
+          "quantity": 1,
+          "research": null,
+          "species": "油鳍鱼",
+          "timing": "整体维护时",
+          "type": "maintain"
+        },
+        {
+          "ap": "1AP",
+          "basis": "每尾·每轮",
+          "category_hint": "care",
+          "conditions": "空闲成体启动「取油轮投料」周期时",
+          "crop": null,
+          "detail": "整体维护·油鳍鱼：复合水养料×1（每尾·每轮）｜取油台｜油鳍鱼｜1AP",
+          "duration": "即时",
+          "facility": "取油台",
+          "name": "整体维护·油鳍鱼",
+          "others": "藻料×1",
+          "process": "proc:maintain:oilfin_fish",
+          "quantity": 1,
+          "research": null,
+          "species": "油鳍鱼",
+          "timing": "周期启动时一次付清",
           "type": "maintain"
         },
         {
@@ -16624,6 +17514,85 @@
           "name": "市集出售·复合水养料",
           "others": "元石×3",
           "process": "proc:sell:water_feed",
+          "quantity": null,
+          "research": null,
+          "species": null,
+          "timing": "交易时",
+          "type": "market_sell"
+        }
+      ]
+    },
+    {
+      "category": "items",
+      "fields": [
+        {
+          "key": "class",
+          "label": "分类",
+          "text": "水行·固体·加工品；标签：animal_product"
+        },
+        {
+          "key": "buy",
+          "label": "市集采购",
+          "text": "不可采购"
+        },
+        {
+          "key": "sell",
+          "label": "市集出售",
+          "text": "4元石/份（计入销售收入）"
+        },
+        {
+          "key": "terminal",
+          "label": "下游用途",
+          "text": "无下游配方：出售与供货是该物品的设计出口"
+        }
+      ],
+      "icon": "water",
+      "id": "resource:water_gel",
+      "kind": "resource",
+      "links": [],
+      "locks": null,
+      "name": "凝水胶",
+      "related_rules": [
+        "rule:market"
+      ],
+      "source_id": "water_gel",
+      "sources": [
+        {
+          "ap": "1AP",
+          "basis": "每群·每轮",
+          "category_hint": "production",
+          "conditions": "",
+          "crop": null,
+          "detail": "收取·凝胶水母：凝水胶×2（每群·每轮）｜采胶台｜凝胶水母｜1AP",
+          "duration": "即时",
+          "facility": "采胶台",
+          "name": "收取·凝胶水母",
+          "others": "",
+          "process": "proc:claim:gel_jellyfish",
+          "quantity": 2,
+          "research": null,
+          "species": "凝胶水母",
+          "timing": "收取时",
+          "type": "claim"
+        }
+      ],
+      "summary": "水行固体；生产材料",
+      "tags": [
+        "animal_product"
+      ],
+      "uses": [
+        {
+          "ap": "0AP",
+          "basis": "每份",
+          "category_hint": "trade",
+          "conditions": "",
+          "crop": null,
+          "detail": "市集出售·凝水胶：凝水胶×按订单/库存（每份）",
+          "duration": "即时",
+          "facility": null,
+          "name": "市集出售·凝水胶",
+          "others": "元石×4",
+          "process": "proc:sell:water_gel",
           "quantity": null,
           "research": null,
           "species": null,
@@ -18525,7 +19494,7 @@
           "text": "藻料×1/单位/日"
         }
       ],
-      "icon": "fish_pond",
+      "icon": "fodder_grass",
       "id": "diet:filter_algae_carp/base_diets/algae_meal",
       "kind": "diet",
       "links": [
@@ -18565,7 +19534,7 @@
           "text": "高密度藻料×1/单位/日"
         }
       ],
-      "icon": "fish_pond",
+      "icon": "fodder_grass",
       "id": "diet:filter_algae_carp/base_diets/dense_meal",
       "kind": "diet",
       "links": [
@@ -18613,7 +19582,7 @@
           "text": "复合水养料×1/单位/日"
         }
       ],
-      "icon": "fish_pond",
+      "icon": "fodder_grass",
       "id": "diet:filter_algae_carp/base_diets/water_meal",
       "kind": "diet",
       "links": [
@@ -18661,7 +19630,7 @@
           "text": "谷粒×1/单位/轮"
         }
       ],
-      "icon": "fish_pond",
+      "icon": "fodder_grass",
       "id": "diet:filter_algae_carp/special_diets/grain_fatten",
       "kind": "diet",
       "links": [
@@ -18680,6 +19649,139 @@
       "summary": "特殊食谱",
       "tags": [
         "species:filter_algae_carp"
+      ]
+    },
+    {
+      "category": "recipes",
+      "fields": [
+        {
+          "key": "species",
+          "label": "所属物种",
+          "text": "凝胶水母"
+        },
+        {
+          "key": "kind",
+          "label": "类型",
+          "text": "基础食谱（维持成长与有效日；每日服务时扣投入）"
+        },
+        {
+          "key": "inputs",
+          "label": "投入",
+          "text": "藻料×1/单位/日"
+        }
+      ],
+      "icon": "fodder_grass",
+      "id": "diet:gel_jellyfish/base_diets/algae_meal",
+      "kind": "diet",
+      "links": [
+        {
+          "entity": "species:gel_jellyfish",
+          "label": "所属物种",
+          "name": "凝胶水母"
+        }
+      ],
+      "locks": null,
+      "name": "凝胶水母·藻料餐",
+      "related_rules": [
+        "rule:husbandry_service"
+      ],
+      "source_id": "gel_jellyfish/base_diets/algae_meal",
+      "summary": "基础食谱",
+      "tags": [
+        "species:gel_jellyfish"
+      ]
+    },
+    {
+      "category": "recipes",
+      "fields": [
+        {
+          "key": "species",
+          "label": "所属物种",
+          "text": "凝胶水母"
+        },
+        {
+          "key": "kind",
+          "label": "类型",
+          "text": "基础食谱（维持成长与有效日；每日服务时扣投入）"
+        },
+        {
+          "key": "inputs",
+          "label": "投入",
+          "text": "高密度藻料×1/单位/日"
+        }
+      ],
+      "icon": "fodder_grass",
+      "id": "diet:gel_jellyfish/base_diets/dense_meal",
+      "kind": "diet",
+      "links": [
+        {
+          "entity": "species:gel_jellyfish",
+          "label": "所属物种",
+          "name": "凝胶水母"
+        },
+        {
+          "entity": "research:water_recirculation",
+          "label": "解锁研究",
+          "name": "水与藻料回流"
+        }
+      ],
+      "locks": {
+        "research": "research:water_recirculation",
+        "research_name": "水与藻料回流"
+      },
+      "name": "凝胶水母·高密度藻餐",
+      "related_rules": [
+        "rule:husbandry_service"
+      ],
+      "source_id": "gel_jellyfish/base_diets/dense_meal",
+      "summary": "基础食谱",
+      "tags": [
+        "species:gel_jellyfish"
+      ]
+    },
+    {
+      "category": "recipes",
+      "fields": [
+        {
+          "key": "species",
+          "label": "所属物种",
+          "text": "凝胶水母"
+        },
+        {
+          "key": "kind",
+          "label": "类型",
+          "text": "特殊食谱（成体生产；周期启动时一次付清投入）"
+        },
+        {
+          "key": "inputs",
+          "label": "投入",
+          "text": "清水×1/单位/轮"
+        },
+        {
+          "key": "outputs",
+          "label": "周期产物",
+          "text": "凝水胶×2/轮/单位"
+        }
+      ],
+      "icon": "fodder_grass",
+      "id": "diet:gel_jellyfish/special_diets/gel_water_round",
+      "kind": "diet",
+      "links": [
+        {
+          "entity": "species:gel_jellyfish",
+          "label": "所属物种",
+          "name": "凝胶水母"
+        }
+      ],
+      "locks": null,
+      "name": "凝胶水母·采胶轮投料",
+      "related_rules": [
+        "rule:husbandry_service"
+      ],
+      "source_id": "gel_jellyfish/special_diets/gel_water_round",
+      "summary": "特殊食谱",
+      "tags": [
+        "species:gel_jellyfish"
       ]
     },
     {
@@ -18981,6 +20083,224 @@
         {
           "key": "species",
           "label": "所属物种",
+          "text": "油鳍鱼"
+        },
+        {
+          "key": "kind",
+          "label": "类型",
+          "text": "基础食谱（维持成长与有效日；每日服务时扣投入）"
+        },
+        {
+          "key": "inputs",
+          "label": "投入",
+          "text": "藻料×1/单位/日"
+        }
+      ],
+      "icon": "fodder_grass",
+      "id": "diet:oilfin_fish/base_diets/algae_meal",
+      "kind": "diet",
+      "links": [
+        {
+          "entity": "species:oilfin_fish",
+          "label": "所属物种",
+          "name": "油鳍鱼"
+        }
+      ],
+      "locks": null,
+      "name": "油鳍鱼·藻料餐",
+      "related_rules": [
+        "rule:husbandry_service"
+      ],
+      "source_id": "oilfin_fish/base_diets/algae_meal",
+      "summary": "基础食谱",
+      "tags": [
+        "species:oilfin_fish"
+      ]
+    },
+    {
+      "category": "recipes",
+      "fields": [
+        {
+          "key": "species",
+          "label": "所属物种",
+          "text": "油鳍鱼"
+        },
+        {
+          "key": "kind",
+          "label": "类型",
+          "text": "基础食谱（维持成长与有效日；每日服务时扣投入）"
+        },
+        {
+          "key": "inputs",
+          "label": "投入",
+          "text": "复合水养料×1/单位/日"
+        }
+      ],
+      "icon": "fodder_grass",
+      "id": "diet:oilfin_fish/base_diets/water_meal",
+      "kind": "diet",
+      "links": [
+        {
+          "entity": "species:oilfin_fish",
+          "label": "所属物种",
+          "name": "油鳍鱼"
+        },
+        {
+          "entity": "research:advanced_feed_oil_wax",
+          "label": "解锁研究",
+          "name": "饲料与蜡油精制"
+        }
+      ],
+      "locks": {
+        "research": "research:advanced_feed_oil_wax",
+        "research_name": "饲料与蜡油精制"
+      },
+      "name": "油鳍鱼·水养复合餐",
+      "related_rules": [
+        "rule:husbandry_service"
+      ],
+      "source_id": "oilfin_fish/base_diets/water_meal",
+      "summary": "基础食谱",
+      "tags": [
+        "species:oilfin_fish"
+      ]
+    },
+    {
+      "category": "recipes",
+      "fields": [
+        {
+          "key": "species",
+          "label": "所属物种",
+          "text": "油鳍鱼"
+        },
+        {
+          "key": "kind",
+          "label": "类型",
+          "text": "特殊食谱（成体生产；周期启动时一次付清投入）"
+        },
+        {
+          "key": "inputs",
+          "label": "投入",
+          "text": "复合水养料×1/单位/轮"
+        },
+        {
+          "key": "outputs",
+          "label": "周期产物",
+          "text": "粗油×2＋鱼肉×1/轮/单位"
+        }
+      ],
+      "icon": "fodder_grass",
+      "id": "diet:oilfin_fish/special_diets/oilfin_oil_round",
+      "kind": "diet",
+      "links": [
+        {
+          "entity": "species:oilfin_fish",
+          "label": "所属物种",
+          "name": "油鳍鱼"
+        }
+      ],
+      "locks": null,
+      "name": "油鳍鱼·取油轮投料",
+      "related_rules": [
+        "rule:husbandry_service"
+      ],
+      "source_id": "oilfin_fish/special_diets/oilfin_oil_round",
+      "summary": "特殊食谱",
+      "tags": [
+        "species:oilfin_fish"
+      ]
+    },
+    {
+      "category": "recipes",
+      "fields": [
+        {
+          "key": "species",
+          "label": "所属物种",
+          "text": "珍珠蚌"
+        },
+        {
+          "key": "kind",
+          "label": "类型",
+          "text": "基础食谱（维持成长与有效日；每日服务时扣投入）"
+        },
+        {
+          "key": "inputs",
+          "label": "投入",
+          "text": "藻料×1/单位/日"
+        }
+      ],
+      "icon": "fodder_grass",
+      "id": "diet:pearl_mussel/base_diets/algae_meal",
+      "kind": "diet",
+      "links": [
+        {
+          "entity": "species:pearl_mussel",
+          "label": "所属物种",
+          "name": "珍珠蚌"
+        }
+      ],
+      "locks": null,
+      "name": "珍珠蚌·藻料餐",
+      "related_rules": [
+        "rule:husbandry_service"
+      ],
+      "source_id": "pearl_mussel/base_diets/algae_meal",
+      "summary": "基础食谱",
+      "tags": [
+        "species:pearl_mussel"
+      ]
+    },
+    {
+      "category": "recipes",
+      "fields": [
+        {
+          "key": "species",
+          "label": "所属物种",
+          "text": "珍珠蚌"
+        },
+        {
+          "key": "kind",
+          "label": "类型",
+          "text": "特殊食谱（成体生产；周期启动时一次付清投入）"
+        },
+        {
+          "key": "inputs",
+          "label": "投入",
+          "text": "石粉×1/单位/轮"
+        },
+        {
+          "key": "outputs",
+          "label": "周期产物",
+          "text": "珍珠×2/轮/单位"
+        }
+      ],
+      "icon": "fodder_grass",
+      "id": "diet:pearl_mussel/special_diets/pearl_powder_round",
+      "kind": "diet",
+      "links": [
+        {
+          "entity": "species:pearl_mussel",
+          "label": "所属物种",
+          "name": "珍珠蚌"
+        }
+      ],
+      "locks": null,
+      "name": "珍珠蚌·育珠轮投料",
+      "related_rules": [
+        "rule:husbandry_service"
+      ],
+      "source_id": "pearl_mussel/special_diets/pearl_powder_round",
+      "summary": "特殊食谱",
+      "tags": [
+        "species:pearl_mussel"
+      ]
+    },
+    {
+      "category": "recipes",
+      "fields": [
+        {
+          "key": "species",
+          "label": "所属物种",
           "text": "净水菌毯"
         },
         {
@@ -19108,6 +20428,91 @@
       "summary": "特殊食谱",
       "tags": [
         "species:purifying_mat"
+      ]
+    },
+    {
+      "category": "recipes",
+      "fields": [
+        {
+          "key": "species",
+          "label": "所属物种",
+          "text": "礁骨珊瑚"
+        },
+        {
+          "key": "kind",
+          "label": "类型",
+          "text": "基础食谱（维持成长与有效日；每日服务时扣投入）"
+        },
+        {
+          "key": "inputs",
+          "label": "投入",
+          "text": "藻料×1/单位/日"
+        }
+      ],
+      "icon": "fodder_grass",
+      "id": "diet:reef_coral/base_diets/algae_meal",
+      "kind": "diet",
+      "links": [
+        {
+          "entity": "species:reef_coral",
+          "label": "所属物种",
+          "name": "礁骨珊瑚"
+        }
+      ],
+      "locks": null,
+      "name": "礁骨珊瑚·藻料餐",
+      "related_rules": [
+        "rule:husbandry_service"
+      ],
+      "source_id": "reef_coral/base_diets/algae_meal",
+      "summary": "基础食谱",
+      "tags": [
+        "species:reef_coral"
+      ]
+    },
+    {
+      "category": "recipes",
+      "fields": [
+        {
+          "key": "species",
+          "label": "所属物种",
+          "text": "礁骨珊瑚"
+        },
+        {
+          "key": "kind",
+          "label": "类型",
+          "text": "特殊食谱（成体生产；周期启动时一次付清投入）"
+        },
+        {
+          "key": "inputs",
+          "label": "投入",
+          "text": "石粉×3＋清水×1/单位/轮"
+        },
+        {
+          "key": "outputs",
+          "label": "周期产物",
+          "text": "珊瑚石×2/轮/单位"
+        }
+      ],
+      "icon": "fodder_grass",
+      "id": "diet:reef_coral/special_diets/coral_mineral_round",
+      "kind": "diet",
+      "links": [
+        {
+          "entity": "species:reef_coral",
+          "label": "所属物种",
+          "name": "礁骨珊瑚"
+        }
+      ],
+      "locks": null,
+      "name": "礁骨珊瑚·采礁轮投料",
+      "related_rules": [
+        "rule:husbandry_service"
+      ],
+      "source_id": "reef_coral/special_diets/coral_mineral_round",
+      "summary": "特殊食谱",
+      "tags": [
+        "species:reef_coral"
       ]
     },
     {
@@ -19371,6 +20776,46 @@
       "summary": "特殊食谱",
       "tags": [
         "species:rock_mole"
+      ]
+    },
+    {
+      "category": "recipes",
+      "fields": [
+        {
+          "key": "species",
+          "label": "所属物种",
+          "text": "净泥鳅"
+        },
+        {
+          "key": "kind",
+          "label": "类型",
+          "text": "基础食谱（维持成长与有效日；每日服务时扣投入）"
+        },
+        {
+          "key": "inputs",
+          "label": "投入",
+          "text": "藻料×1/单位/日"
+        }
+      ],
+      "icon": "fodder_grass",
+      "id": "diet:silt_loach/base_diets/algae_meal",
+      "kind": "diet",
+      "links": [
+        {
+          "entity": "species:silt_loach",
+          "label": "所属物种",
+          "name": "净泥鳅"
+        }
+      ],
+      "locks": null,
+      "name": "净泥鳅·藻料餐",
+      "related_rules": [
+        "rule:husbandry_service"
+      ],
+      "source_id": "silt_loach/base_diets/algae_meal",
+      "summary": "基础食谱",
+      "tags": [
+        "species:silt_loach"
       ]
     },
     {
@@ -21763,7 +23208,7 @@
         {
           "key": "outputs",
           "label": "产出",
-          "text": "粗植物油×2＋油饼×2（收取时入仓；完工≠入仓）"
+          "text": "粗油×2＋油饼×2（收取时入仓；完工≠入仓）"
         },
         {
           "key": "duration",
@@ -21800,7 +23245,7 @@
         "rule:auto_production"
       ],
       "source_id": "press_oilseed",
-      "summary": "农产加工台；粗植物油×2＋油饼×2；2日",
+      "summary": "农产加工台；粗油×2＋油饼×2；2日",
       "tags": []
     },
     {
@@ -21932,7 +23377,7 @@
         {
           "key": "inputs",
           "label": "投入",
-          "text": "粗植物油×2＋木炭×1（启动时一次性扣除）"
+          "text": "粗油×2＋木炭×1（启动时一次性扣除）"
         },
         {
           "key": "outputs",
@@ -22396,7 +23841,7 @@
         {
           "key": "samples",
           "label": "样本",
-          "text": "粗植物油×1＋蜂蜡×1＋谷粉×1（启动时一次性消耗）"
+          "text": "粗油×1＋蜂蜡×1＋谷粉×1（启动时一次性消耗）"
         },
         {
           "key": "fee",
@@ -22467,6 +23912,11 @@
           "entity": "diet:filter_algae_carp/base_diets/water_meal",
           "label": "解锁食谱",
           "name": "滤藻鲤·水养复合餐"
+        },
+        {
+          "entity": "diet:oilfin_fish/base_diets/water_meal",
+          "label": "解锁食谱",
+          "name": "油鳍鱼·水养复合餐"
         }
       ],
       "locks": null,
@@ -22630,7 +24080,7 @@
         {
           "key": "unlocks",
           "label": "解锁内容",
-          "text": "采购·净水菌毯培养单位、设施·净水菌床、设施·泥料处理台、配方·菌毯净水、配方·污泥堆肥、配方·残料翻肥、物种·净水菌毯"
+          "text": "采购·净水菌毯培养单位、设施·净水菌床、设施·泥料处理台、配方·菌毯净水、配方·污泥堆肥、配方·残料翻肥、物种·净水菌毯、物种·净泥鳅"
         }
       ],
       "icon": "research_bench",
@@ -22671,6 +24121,11 @@
           "entity": "species:purifying_mat",
           "label": "解锁物种",
           "name": "净水菌毯"
+        },
+        {
+          "entity": "species:silt_loach",
+          "label": "解锁物种",
+          "name": "净泥鳅"
         }
       ],
       "locks": null,
@@ -22679,7 +24134,7 @@
         "rule:research"
       ],
       "source_id": "biofiltration",
-      "summary": "第1层研究；4元石＋2有效日；解锁7项",
+      "summary": "第1层研究；4元石＋2有效日；解锁8项",
       "tags": []
     },
     {
@@ -22781,7 +24236,7 @@
         {
           "key": "unlocks",
           "label": "解锁内容",
-          "text": "设施·炭化巢、设施·农产加工台、设施·取油台、配方·木屑生物炭化、配方·树枝生物炭化、配方·油饼堆肥、配方·谷粉研磨、配方·草粉研磨、配方·稻米磨粉、配方·油籽榨油、物种·炭腹虫"
+          "text": "设施·炭化巢、设施·农产加工台、设施·取油台、配方·木屑生物炭化、配方·树枝生物炭化、配方·油饼堆肥、配方·谷粉研磨、配方·草粉研磨、配方·稻米磨粉、配方·油籽榨油、物种·炭腹虫、物种·油鳍鱼"
         }
       ],
       "icon": "research_bench",
@@ -22842,6 +24297,11 @@
           "entity": "species:carbon_belly_bug",
           "label": "解锁物种",
           "name": "炭腹虫"
+        },
+        {
+          "entity": "species:oilfin_fish",
+          "label": "解锁物种",
+          "name": "油鳍鱼"
         }
       ],
       "locks": null,
@@ -22850,7 +24310,7 @@
         "rule:research"
       ],
       "source_id": "farm_preparation",
-      "summary": "第1层研究；6元石＋2有效日；解锁11项",
+      "summary": "第1层研究；6元石＋2有效日；解锁12项",
       "tags": []
     },
     {
@@ -23005,7 +24465,7 @@
         {
           "key": "unlocks",
           "label": "解锁内容",
-          "text": "设施·采礁台、设施·补光灯、设施·养鳞台、设施·岩壳成型台、配方·黏液复合石板、配方·鳞甲复合板、配方·岩壳石板、配方·复合石板组装、配方·岩壳成型、配方·矿质补料调配、配方·再生填料回收、配方·富集矿冶炼、物种·砾甲蜗牛、物种·矿鳞蜥、食谱·mineral_supplement"
+          "text": "设施·采礁台、设施·补光灯、设施·养鳞台、设施·岩壳成型台、配方·黏液复合石板、配方·鳞甲复合板、配方·岩壳石板、配方·复合石板组装、配方·岩壳成型、配方·矿质补料调配、配方·再生填料回收、配方·富集矿冶炼、物种·砾甲蜗牛、物种·矿鳞蜥、物种·礁骨珊瑚、食谱·mineral_supplement"
         }
       ],
       "icon": "research_bench",
@@ -23083,6 +24543,11 @@
           "name": "矿鳞蜥"
         },
         {
+          "entity": "species:reef_coral",
+          "label": "解锁物种",
+          "name": "礁骨珊瑚"
+        },
+        {
           "entity": "diet:steel_sheep/special_diets/mineral_supplement",
           "label": "解锁食谱",
           "name": "钢绵羊·矿质补料餐"
@@ -23094,7 +24559,7 @@
         "rule:research"
       ],
       "source_id": "mineral_materials",
-      "summary": "第3层研究；12元石＋6有效日；解锁15项",
+      "summary": "第3层研究；12元石＋6有效日；解锁16项",
       "tags": []
     },
     {
@@ -23259,7 +24724,7 @@
         {
           "key": "unlocks",
           "label": "解锁内容",
-          "text": "设施·采胶台、设施·采珠台、配方·高密度藻培养、配方·炭砂滤料制作、配方·丝质滤材、配方·营养液回收、食谱·dense_meal"
+          "text": "设施·采胶台、设施·采珠台、配方·高密度藻培养、配方·炭砂滤料制作、配方·丝质滤材、配方·营养液回收、物种·凝胶水母、物种·珍珠蚌、食谱·dense_meal"
         }
       ],
       "icon": "research_bench",
@@ -23297,9 +24762,24 @@
           "name": "营养液回收"
         },
         {
+          "entity": "species:gel_jellyfish",
+          "label": "解锁物种",
+          "name": "凝胶水母"
+        },
+        {
+          "entity": "species:pearl_mussel",
+          "label": "解锁物种",
+          "name": "珍珠蚌"
+        },
+        {
           "entity": "diet:filter_algae_carp/base_diets/dense_meal",
           "label": "解锁食谱",
           "name": "滤藻鲤·高密度藻餐"
+        },
+        {
+          "entity": "diet:gel_jellyfish/base_diets/dense_meal",
+          "label": "解锁食谱",
+          "name": "凝胶水母·高密度藻餐"
         }
       ],
       "locks": null,
@@ -23308,7 +24788,7 @@
         "rule:research"
       ],
       "source_id": "water_recirculation",
-      "summary": "第2层研究；8元石＋4有效日；解锁7项",
+      "summary": "第2层研究；8元石＋4有效日；解锁9项",
       "tags": []
     },
     {
@@ -23771,11 +25251,11 @@
   "generated_inputs": [
     {
       "path": "content/farming/p8/production.json",
-      "sha256": "018b68f6c5fd2f7b680c57ccb40565e4e978d26c2f4f38c7622dbb48470aef61"
+      "sha256": "1265af95bdcfd3d010a304402e9544d7d8c8ee600ae86d57264de08564498bf1"
     },
     {
       "path": "content/farming/baked/p8/production.json",
-      "sha256": "a421d5063dcde4d5e761e3907ee01636d79464eb2b8dcbf1acecbecd255be546"
+      "sha256": "cf916c0b7f65b167cafb12ae44498aac6f087a4f6ad90ed78f18e57354d9e48e"
     },
     {
       "path": "content/farming/p8/expansion.json",
@@ -23787,7 +25267,7 @@
     },
     {
       "path": "content/farming/encyclopedia/encyclopedia.json",
-      "sha256": "d31d724da30a82b4f9554ffe1c2232a78a56b507682c59d11e1a6ca977eca04f"
+      "sha256": "888a27fe75fa851e2261182cb04ebd952c8e39c742b9a451445a181d220542d3"
     },
     {
       "path": "scripts/farming/v1/v1_scene.gd",
@@ -25739,7 +27219,7 @@
         {
           "basis": "每批",
           "entity": "resource:crude_oil",
-          "name": "粗植物油",
+          "name": "粗油",
           "quantity": 2,
           "timing": "收取时"
         },
@@ -25895,7 +27375,7 @@
         {
           "basis": "每批",
           "entity": "resource:crude_oil",
-          "name": "粗植物油",
+          "name": "粗油",
           "quantity": 2,
           "timing": "启动时"
         },
@@ -29593,8 +31073,8 @@
       "effects": [
         "尾占用容量，成长0"
       ],
-      "facility": "facility:fish_pond",
-      "facility_name": "水场",
+      "facility": "facility:carp_harvest_station",
+      "facility_name": "捕鲤台",
       "id": "proc:buy_juvenile:filter_algae_carp",
       "inputs": [
         {
@@ -29612,6 +31092,41 @@
       "research_name": null,
       "species": "species:filter_algae_carp",
       "species_name": "滤藻鲤",
+      "type": "buy_juvenile",
+      "worker_fee": 0
+    },
+    {
+      "ap": 0,
+      "ap_detail": "0AP",
+      "category_hint": "lifecycle",
+      "conditions": [
+        "剩余容量"
+      ],
+      "crop": null,
+      "crop_name": null,
+      "duration": "即时",
+      "effects": [
+        "群占用容量，成长0"
+      ],
+      "facility": "facility:gel_station",
+      "facility_name": "采胶台",
+      "id": "proc:buy_juvenile:gel_jellyfish",
+      "inputs": [
+        {
+          "basis": "每群",
+          "entity": "currency:primeval_stone",
+          "name": "元石",
+          "quantity": 12,
+          "timing": "购入时"
+        }
+      ],
+      "name": "购入·凝胶水母幼体",
+      "outputs": [],
+      "primeval_stones": 0,
+      "research": "research:water_recirculation",
+      "research_name": "水与藻料回流",
+      "species": "species:gel_jellyfish",
+      "species_name": "凝胶水母",
       "type": "buy_juvenile",
       "worker_fee": 0
     },
@@ -29725,6 +31240,76 @@
       "ap_detail": "0AP",
       "category_hint": "lifecycle",
       "conditions": [
+        "剩余容量"
+      ],
+      "crop": null,
+      "crop_name": null,
+      "duration": "即时",
+      "effects": [
+        "尾占用容量，成长0"
+      ],
+      "facility": "facility:oilfish_harvest_station",
+      "facility_name": "取油台",
+      "id": "proc:buy_juvenile:oilfin_fish",
+      "inputs": [
+        {
+          "basis": "每尾",
+          "entity": "currency:primeval_stone",
+          "name": "元石",
+          "quantity": 10,
+          "timing": "购入时"
+        }
+      ],
+      "name": "购入·油鳍鱼幼体",
+      "outputs": [],
+      "primeval_stones": 0,
+      "research": "research:farm_preparation",
+      "research_name": "农产初加工",
+      "species": "species:oilfin_fish",
+      "species_name": "油鳍鱼",
+      "type": "buy_juvenile",
+      "worker_fee": 0
+    },
+    {
+      "ap": 0,
+      "ap_detail": "0AP",
+      "category_hint": "lifecycle",
+      "conditions": [
+        "剩余容量"
+      ],
+      "crop": null,
+      "crop_name": null,
+      "duration": "即时",
+      "effects": [
+        "只占用容量，成长0"
+      ],
+      "facility": "facility:pearl_station",
+      "facility_name": "采珠台",
+      "id": "proc:buy_juvenile:pearl_mussel",
+      "inputs": [
+        {
+          "basis": "每只",
+          "entity": "currency:primeval_stone",
+          "name": "元石",
+          "quantity": 12,
+          "timing": "购入时"
+        }
+      ],
+      "name": "购入·珍珠蚌幼体",
+      "outputs": [],
+      "primeval_stones": 0,
+      "research": "research:water_recirculation",
+      "research_name": "水与藻料回流",
+      "species": "species:pearl_mussel",
+      "species_name": "珍珠蚌",
+      "type": "buy_juvenile",
+      "worker_fee": 0
+    },
+    {
+      "ap": 0,
+      "ap_detail": "0AP",
+      "category_hint": "lifecycle",
+      "conditions": [
         "剩余容量；市集菌种被拦截，实际走本购入流程"
       ],
       "crop": null,
@@ -29752,6 +31337,41 @@
       "research_name": "菌毯净化",
       "species": "species:purifying_mat",
       "species_name": "净水菌毯",
+      "type": "buy_juvenile",
+      "worker_fee": 0
+    },
+    {
+      "ap": 0,
+      "ap_detail": "0AP",
+      "category_hint": "lifecycle",
+      "conditions": [
+        "剩余容量"
+      ],
+      "crop": null,
+      "crop_name": null,
+      "duration": "即时",
+      "effects": [
+        "群占用容量，成长0"
+      ],
+      "facility": "facility:coral_station",
+      "facility_name": "采礁台",
+      "id": "proc:buy_juvenile:reef_coral",
+      "inputs": [
+        {
+          "basis": "每群",
+          "entity": "currency:primeval_stone",
+          "name": "元石",
+          "quantity": 14,
+          "timing": "购入时"
+        }
+      ],
+      "name": "购入·礁骨珊瑚幼体",
+      "outputs": [],
+      "primeval_stones": 0,
+      "research": "research:mineral_materials",
+      "research_name": "矿质材料工艺",
+      "species": "species:reef_coral",
+      "species_name": "礁骨珊瑚",
       "type": "buy_juvenile",
       "worker_fee": 0
     },
@@ -29822,6 +31442,41 @@
       "research_name": "岩料破碎",
       "species": "species:rock_mole",
       "species_name": "啮岩鼹",
+      "type": "buy_juvenile",
+      "worker_fee": 0
+    },
+    {
+      "ap": 0,
+      "ap_detail": "0AP",
+      "category_hint": "lifecycle",
+      "conditions": [
+        "剩余容量"
+      ],
+      "crop": null,
+      "crop_name": null,
+      "duration": "即时",
+      "effects": [
+        "尾占用容量，成长0"
+      ],
+      "facility": "facility:silt_processing_station",
+      "facility_name": "泥料处理台",
+      "id": "proc:buy_juvenile:silt_loach",
+      "inputs": [
+        {
+          "basis": "每尾",
+          "entity": "currency:primeval_stone",
+          "name": "元石",
+          "quantity": 8,
+          "timing": "购入时"
+        }
+      ],
+      "name": "购入·净泥鳅幼体",
+      "outputs": [],
+      "primeval_stones": 0,
+      "research": "research:biofiltration",
+      "research_name": "菌毯净化",
+      "species": "species:silt_loach",
+      "species_name": "净泥鳅",
       "type": "buy_juvenile",
       "worker_fee": 0
     },
@@ -30058,8 +31713,8 @@
       "effects": [
         "移除个体（需重新购入）"
       ],
-      "facility": "facility:fish_pond",
-      "facility_name": "水场",
+      "facility": "facility:carp_harvest_station",
+      "facility_name": "捕鲤台",
       "id": "proc:claim:filter_algae_carp",
       "inputs": [],
       "name": "收取·滤藻鲤",
@@ -30084,6 +31739,41 @@
       "research_name": null,
       "species": "species:filter_algae_carp",
       "species_name": "滤藻鲤",
+      "type": "claim",
+      "worker_fee": 0
+    },
+    {
+      "ap": 1,
+      "ap_detail": "1AP",
+      "category_hint": "production",
+      "conditions": [
+        "有待收周期（不受当日投喂/水体限制）"
+      ],
+      "crop": null,
+      "crop_name": null,
+      "duration": "即时",
+      "effects": [
+        "保留个体（回到空闲成体）"
+      ],
+      "facility": "facility:gel_station",
+      "facility_name": "采胶台",
+      "id": "proc:claim:gel_jellyfish",
+      "inputs": [],
+      "name": "收取·凝胶水母",
+      "outputs": [
+        {
+          "basis": "每群·每轮",
+          "entity": "resource:water_gel",
+          "name": "凝水胶",
+          "quantity": 2,
+          "timing": "收取时"
+        }
+      ],
+      "primeval_stones": 0,
+      "research": null,
+      "research_name": null,
+      "species": "species:gel_jellyfish",
+      "species_name": "凝胶水母",
       "type": "claim",
       "worker_fee": 0
     },
@@ -30217,6 +31907,83 @@
       "crop_name": null,
       "duration": "即时",
       "effects": [
+        "移除个体（需重新购入）"
+      ],
+      "facility": "facility:oilfish_harvest_station",
+      "facility_name": "取油台",
+      "id": "proc:claim:oilfin_fish",
+      "inputs": [],
+      "name": "收取·油鳍鱼",
+      "outputs": [
+        {
+          "basis": "每尾·每轮",
+          "entity": "resource:crude_oil",
+          "name": "粗油",
+          "quantity": 2,
+          "timing": "收取时"
+        },
+        {
+          "basis": "每尾·每轮",
+          "entity": "resource:fish_meat",
+          "name": "鱼肉",
+          "quantity": 1,
+          "timing": "收取时"
+        }
+      ],
+      "primeval_stones": 0,
+      "research": null,
+      "research_name": null,
+      "species": "species:oilfin_fish",
+      "species_name": "油鳍鱼",
+      "type": "claim",
+      "worker_fee": 0
+    },
+    {
+      "ap": 1,
+      "ap_detail": "1AP",
+      "category_hint": "production",
+      "conditions": [
+        "有待收周期（不受当日投喂/水体限制）"
+      ],
+      "crop": null,
+      "crop_name": null,
+      "duration": "即时",
+      "effects": [
+        "保留个体（回到空闲成体）"
+      ],
+      "facility": "facility:pearl_station",
+      "facility_name": "采珠台",
+      "id": "proc:claim:pearl_mussel",
+      "inputs": [],
+      "name": "收取·珍珠蚌",
+      "outputs": [
+        {
+          "basis": "每只·每轮",
+          "entity": "resource:pearl",
+          "name": "珍珠",
+          "quantity": 2,
+          "timing": "收取时"
+        }
+      ],
+      "primeval_stones": 0,
+      "research": null,
+      "research_name": null,
+      "species": "species:pearl_mussel",
+      "species_name": "珍珠蚌",
+      "type": "claim",
+      "worker_fee": 0
+    },
+    {
+      "ap": 1,
+      "ap_detail": "1AP",
+      "category_hint": "production",
+      "conditions": [
+        "有待收周期（不受当日投喂/水体限制）"
+      ],
+      "crop": null,
+      "crop_name": null,
+      "duration": "即时",
+      "effects": [
         "保留个体（回到空闲成体）"
       ],
       "facility": "facility:purifying_bed",
@@ -30271,6 +32038,41 @@
       "research_name": null,
       "species": "species:purifying_mat",
       "species_name": "净水菌毯",
+      "type": "claim",
+      "worker_fee": 0
+    },
+    {
+      "ap": 1,
+      "ap_detail": "1AP",
+      "category_hint": "production",
+      "conditions": [
+        "有待收周期（不受当日投喂/水体限制）"
+      ],
+      "crop": null,
+      "crop_name": null,
+      "duration": "即时",
+      "effects": [
+        "保留个体（回到空闲成体）"
+      ],
+      "facility": "facility:coral_station",
+      "facility_name": "采礁台",
+      "id": "proc:claim:reef_coral",
+      "inputs": [],
+      "name": "收取·礁骨珊瑚",
+      "outputs": [
+        {
+          "basis": "每群·每轮",
+          "entity": "resource:coral_stone",
+          "name": "珊瑚石",
+          "quantity": 2,
+          "timing": "收取时"
+        }
+      ],
+      "primeval_stones": 0,
+      "research": null,
+      "research_name": null,
+      "species": "species:reef_coral",
+      "species_name": "礁骨珊瑚",
       "type": "claim",
       "worker_fee": 0
     },
@@ -30363,6 +32165,41 @@
       "research_name": null,
       "species": "species:rock_mole",
       "species_name": "啮岩鼹",
+      "type": "claim",
+      "worker_fee": 0
+    },
+    {
+      "ap": 1,
+      "ap_detail": "1AP",
+      "category_hint": "production",
+      "conditions": [
+        "有待收周期（不受当日投喂/水体限制）"
+      ],
+      "crop": null,
+      "crop_name": null,
+      "duration": "即时",
+      "effects": [
+        "保留个体（回到空闲成体）"
+      ],
+      "facility": "facility:silt_processing_station",
+      "facility_name": "泥料处理台",
+      "id": "proc:claim:silt_loach",
+      "inputs": [],
+      "name": "收取·净泥鳅",
+      "outputs": [
+        {
+          "basis": "每尾·每轮",
+          "entity": "resource:humus",
+          "name": "腐殖土",
+          "quantity": 3,
+          "timing": "收取时"
+        }
+      ],
+      "primeval_stones": 0,
+      "research": null,
+      "research_name": null,
+      "species": "species:silt_loach",
+      "species_name": "净泥鳅",
       "type": "claim",
       "worker_fee": 0
     },
@@ -30852,8 +32689,8 @@
       "effects": [
         "移除全部个体；放弃待收与在制；不退款"
       ],
-      "facility": "facility:fish_pond",
-      "facility_name": "水场",
+      "facility": "facility:carp_harvest_station",
+      "facility_name": "捕鲤台",
       "id": "proc:cull:filter_algae_carp",
       "inputs": [],
       "name": "清退·滤藻鲤",
@@ -30863,6 +32700,33 @@
       "research_name": null,
       "species": "species:filter_algae_carp",
       "species_name": "滤藻鲤",
+      "type": "cull",
+      "worker_fee": 0
+    },
+    {
+      "ap": 1,
+      "ap_detail": "1AP",
+      "category_hint": "lifecycle",
+      "conditions": [
+        "场内有个体"
+      ],
+      "crop": null,
+      "crop_name": null,
+      "duration": "即时",
+      "effects": [
+        "移除全部个体；放弃待收与在制；不退款"
+      ],
+      "facility": "facility:gel_station",
+      "facility_name": "采胶台",
+      "id": "proc:cull:gel_jellyfish",
+      "inputs": [],
+      "name": "清退·凝胶水母",
+      "outputs": [],
+      "primeval_stones": 0,
+      "research": null,
+      "research_name": null,
+      "species": "species:gel_jellyfish",
+      "species_name": "凝胶水母",
       "type": "cull",
       "worker_fee": 0
     },
@@ -30960,6 +32824,60 @@
       "effects": [
         "移除全部个体；放弃待收与在制；不退款"
       ],
+      "facility": "facility:oilfish_harvest_station",
+      "facility_name": "取油台",
+      "id": "proc:cull:oilfin_fish",
+      "inputs": [],
+      "name": "清退·油鳍鱼",
+      "outputs": [],
+      "primeval_stones": 0,
+      "research": null,
+      "research_name": null,
+      "species": "species:oilfin_fish",
+      "species_name": "油鳍鱼",
+      "type": "cull",
+      "worker_fee": 0
+    },
+    {
+      "ap": 1,
+      "ap_detail": "1AP",
+      "category_hint": "lifecycle",
+      "conditions": [
+        "场内有个体"
+      ],
+      "crop": null,
+      "crop_name": null,
+      "duration": "即时",
+      "effects": [
+        "移除全部个体；放弃待收与在制；不退款"
+      ],
+      "facility": "facility:pearl_station",
+      "facility_name": "采珠台",
+      "id": "proc:cull:pearl_mussel",
+      "inputs": [],
+      "name": "清退·珍珠蚌",
+      "outputs": [],
+      "primeval_stones": 0,
+      "research": null,
+      "research_name": null,
+      "species": "species:pearl_mussel",
+      "species_name": "珍珠蚌",
+      "type": "cull",
+      "worker_fee": 0
+    },
+    {
+      "ap": 1,
+      "ap_detail": "1AP",
+      "category_hint": "lifecycle",
+      "conditions": [
+        "场内有个体"
+      ],
+      "crop": null,
+      "crop_name": null,
+      "duration": "即时",
+      "effects": [
+        "移除全部个体；放弃待收与在制；不退款"
+      ],
       "facility": "facility:purifying_bed",
       "facility_name": "净水菌床",
       "id": "proc:cull:purifying_mat",
@@ -30971,6 +32889,33 @@
       "research_name": null,
       "species": "species:purifying_mat",
       "species_name": "净水菌毯",
+      "type": "cull",
+      "worker_fee": 0
+    },
+    {
+      "ap": 1,
+      "ap_detail": "1AP",
+      "category_hint": "lifecycle",
+      "conditions": [
+        "场内有个体"
+      ],
+      "crop": null,
+      "crop_name": null,
+      "duration": "即时",
+      "effects": [
+        "移除全部个体；放弃待收与在制；不退款"
+      ],
+      "facility": "facility:coral_station",
+      "facility_name": "采礁台",
+      "id": "proc:cull:reef_coral",
+      "inputs": [],
+      "name": "清退·礁骨珊瑚",
+      "outputs": [],
+      "primeval_stones": 0,
+      "research": null,
+      "research_name": null,
+      "species": "species:reef_coral",
+      "species_name": "礁骨珊瑚",
       "type": "cull",
       "worker_fee": 0
     },
@@ -31025,6 +32970,33 @@
       "research_name": null,
       "species": "species:rock_mole",
       "species_name": "啮岩鼹",
+      "type": "cull",
+      "worker_fee": 0
+    },
+    {
+      "ap": 1,
+      "ap_detail": "1AP",
+      "category_hint": "lifecycle",
+      "conditions": [
+        "场内有个体"
+      ],
+      "crop": null,
+      "crop_name": null,
+      "duration": "即时",
+      "effects": [
+        "移除全部个体；放弃待收与在制；不退款"
+      ],
+      "facility": "facility:silt_processing_station",
+      "facility_name": "泥料处理台",
+      "id": "proc:cull:silt_loach",
+      "inputs": [],
+      "name": "清退·净泥鳅",
+      "outputs": [],
+      "primeval_stones": 0,
+      "research": null,
+      "research_name": null,
+      "species": "species:silt_loach",
+      "species_name": "净泥鳅",
       "type": "cull",
       "worker_fee": 0
     },
@@ -33515,8 +35487,8 @@
       "effects": [
         "登记当日基础服务；幼体+1有效日"
       ],
-      "facility": "facility:fish_pond",
-      "facility_name": "水场",
+      "facility": "facility:carp_harvest_station",
+      "facility_name": "捕鲤台",
       "id": "proc:maintain:filter_algae_carp",
       "inputs": [
         {
@@ -33558,6 +35530,57 @@
       "research_name": null,
       "species": "species:filter_algae_carp",
       "species_name": "滤藻鲤",
+      "type": "maintain",
+      "worker_fee": 0
+    },
+    {
+      "ap": 1,
+      "ap_detail": "1AP",
+      "category_hint": "care",
+      "conditions": [
+        "今日未服务个体；水场投喂要求水体预测>30；整批执行，缺料不部分投"
+      ],
+      "crop": null,
+      "crop_name": null,
+      "duration": "即时",
+      "effects": [
+        "登记当日基础服务；幼体+1有效日"
+      ],
+      "facility": "facility:gel_station",
+      "facility_name": "采胶台",
+      "id": "proc:maintain:gel_jellyfish",
+      "inputs": [
+        {
+          "basis": "每群·每日",
+          "entity": "resource:algae_feed",
+          "name": "藻料",
+          "quantity": 1,
+          "timing": "整体维护时"
+        },
+        {
+          "basis": "每群·每日",
+          "conditions": "基础食谱选用「高密度藻餐」时",
+          "entity": "resource:dense_algae",
+          "name": "高密度藻料",
+          "quantity": 1,
+          "timing": "整体维护时"
+        },
+        {
+          "basis": "每群·每轮",
+          "conditions": "空闲成体启动「采胶轮投料」周期时",
+          "entity": "resource:clean_water",
+          "name": "清水",
+          "quantity": 1,
+          "timing": "周期启动时一次付清"
+        }
+      ],
+      "name": "整体维护·凝胶水母",
+      "outputs": [],
+      "primeval_stones": 0,
+      "research": null,
+      "research_name": null,
+      "species": "species:gel_jellyfish",
+      "species_name": "凝胶水母",
       "type": "maintain",
       "worker_fee": 0
     },
@@ -33746,6 +35769,100 @@
       "crop_name": null,
       "duration": "即时",
       "effects": [
+        "登记当日基础服务；幼体+1有效日"
+      ],
+      "facility": "facility:oilfish_harvest_station",
+      "facility_name": "取油台",
+      "id": "proc:maintain:oilfin_fish",
+      "inputs": [
+        {
+          "basis": "每尾·每日",
+          "entity": "resource:algae_feed",
+          "name": "藻料",
+          "quantity": 1,
+          "timing": "整体维护时"
+        },
+        {
+          "basis": "每尾·每日",
+          "conditions": "基础食谱选用「水养复合餐」时",
+          "entity": "resource:water_feed",
+          "name": "复合水养料",
+          "quantity": 1,
+          "timing": "整体维护时"
+        },
+        {
+          "basis": "每尾·每轮",
+          "conditions": "空闲成体启动「取油轮投料」周期时",
+          "entity": "resource:water_feed",
+          "name": "复合水养料",
+          "quantity": 1,
+          "timing": "周期启动时一次付清"
+        }
+      ],
+      "name": "整体维护·油鳍鱼",
+      "outputs": [],
+      "primeval_stones": 0,
+      "research": null,
+      "research_name": null,
+      "species": "species:oilfin_fish",
+      "species_name": "油鳍鱼",
+      "type": "maintain",
+      "worker_fee": 0
+    },
+    {
+      "ap": 1,
+      "ap_detail": "1AP",
+      "category_hint": "care",
+      "conditions": [
+        "今日未服务个体；水场投喂要求水体预测>30；整批执行，缺料不部分投"
+      ],
+      "crop": null,
+      "crop_name": null,
+      "duration": "即时",
+      "effects": [
+        "登记当日基础服务；幼体+1有效日"
+      ],
+      "facility": "facility:pearl_station",
+      "facility_name": "采珠台",
+      "id": "proc:maintain:pearl_mussel",
+      "inputs": [
+        {
+          "basis": "每只·每日",
+          "entity": "resource:algae_feed",
+          "name": "藻料",
+          "quantity": 1,
+          "timing": "整体维护时"
+        },
+        {
+          "basis": "每只·每轮",
+          "conditions": "空闲成体启动「育珠轮投料」周期时",
+          "entity": "resource:stone_powder",
+          "name": "石粉",
+          "quantity": 1,
+          "timing": "周期启动时一次付清"
+        }
+      ],
+      "name": "整体维护·珍珠蚌",
+      "outputs": [],
+      "primeval_stones": 0,
+      "research": null,
+      "research_name": null,
+      "species": "species:pearl_mussel",
+      "species_name": "珍珠蚌",
+      "type": "maintain",
+      "worker_fee": 0
+    },
+    {
+      "ap": 1,
+      "ap_detail": "1AP",
+      "category_hint": "care",
+      "conditions": [
+        "今日未服务个体；水场投喂要求水体预测>30；整批执行，缺料不部分投"
+      ],
+      "crop": null,
+      "crop_name": null,
+      "duration": "即时",
+      "effects": [
         "幼体培养清水；在制批次靠盖章服务日推进"
       ],
       "facility": "facility:purifying_bed",
@@ -33799,6 +35916,57 @@
       "research_name": null,
       "species": "species:purifying_mat",
       "species_name": "净水菌毯",
+      "type": "maintain",
+      "worker_fee": 0
+    },
+    {
+      "ap": 1,
+      "ap_detail": "1AP",
+      "category_hint": "care",
+      "conditions": [
+        "今日未服务个体；水场投喂要求水体预测>30；整批执行，缺料不部分投"
+      ],
+      "crop": null,
+      "crop_name": null,
+      "duration": "即时",
+      "effects": [
+        "登记当日基础服务；幼体+1有效日"
+      ],
+      "facility": "facility:coral_station",
+      "facility_name": "采礁台",
+      "id": "proc:maintain:reef_coral",
+      "inputs": [
+        {
+          "basis": "每群·每日",
+          "entity": "resource:algae_feed",
+          "name": "藻料",
+          "quantity": 1,
+          "timing": "整体维护时"
+        },
+        {
+          "basis": "每群·每轮",
+          "conditions": "空闲成体启动「采礁轮投料」周期时",
+          "entity": "resource:stone_powder",
+          "name": "石粉",
+          "quantity": 3,
+          "timing": "周期启动时一次付清"
+        },
+        {
+          "basis": "每群·每轮",
+          "conditions": "空闲成体启动「采礁轮投料」周期时",
+          "entity": "resource:clean_water",
+          "name": "清水",
+          "quantity": 1,
+          "timing": "周期启动时一次付清"
+        }
+      ],
+      "name": "整体维护·礁骨珊瑚",
+      "outputs": [],
+      "primeval_stones": 0,
+      "research": null,
+      "research_name": null,
+      "species": "species:reef_coral",
+      "species_name": "礁骨珊瑚",
       "type": "maintain",
       "worker_fee": 0
     },
@@ -33923,6 +36091,41 @@
       "research_name": null,
       "species": "species:rock_mole",
       "species_name": "啮岩鼹",
+      "type": "maintain",
+      "worker_fee": 0
+    },
+    {
+      "ap": 1,
+      "ap_detail": "1AP",
+      "category_hint": "care",
+      "conditions": [
+        "今日未服务个体；水场投喂要求水体预测>30；整批执行，缺料不部分投"
+      ],
+      "crop": null,
+      "crop_name": null,
+      "duration": "即时",
+      "effects": [
+        "登记当日基础服务；幼体+1有效日"
+      ],
+      "facility": "facility:silt_processing_station",
+      "facility_name": "泥料处理台",
+      "id": "proc:maintain:silt_loach",
+      "inputs": [
+        {
+          "basis": "每尾·每日",
+          "entity": "resource:algae_feed",
+          "name": "藻料",
+          "quantity": 1,
+          "timing": "整体维护时"
+        }
+      ],
+      "name": "整体维护·净泥鳅",
+      "outputs": [],
+      "primeval_stones": 0,
+      "research": null,
+      "research_name": null,
+      "species": "species:silt_loach",
+      "species_name": "净泥鳅",
       "type": "maintain",
       "worker_fee": 0
     },
@@ -34356,7 +36559,7 @@
         {
           "basis": "一次性",
           "entity": "resource:crude_oil",
-          "name": "粗植物油",
+          "name": "粗油",
           "quantity": 1,
           "timing": "启动时"
         },
@@ -36195,17 +38398,58 @@
       "effects": [],
       "facility": null,
       "facility_name": null,
+      "id": "proc:sell:coral_stone",
+      "inputs": [
+        {
+          "basis": "每份",
+          "entity": "resource:coral_stone",
+          "name": "珊瑚石",
+          "quantity": null,
+          "timing": "交易时"
+        }
+      ],
+      "name": "市集出售·珊瑚石",
+      "outputs": [
+        {
+          "basis": "每份",
+          "entity": "currency:primeval_stone",
+          "name": "元石",
+          "quantity": 2,
+          "timing": "交易时"
+        }
+      ],
+      "primeval_stones": 0,
+      "research": null,
+      "research_name": null,
+      "species": null,
+      "species_name": null,
+      "type": "market_sell",
+      "worker_fee": 0
+    },
+    {
+      "ap": 0,
+      "ap_detail": "0AP",
+      "category_hint": "trade",
+      "conditions": [
+        "计入销售收入"
+      ],
+      "crop": null,
+      "crop_name": null,
+      "duration": "即时",
+      "effects": [],
+      "facility": null,
+      "facility_name": null,
       "id": "proc:sell:crude_oil",
       "inputs": [
         {
           "basis": "每份",
           "entity": "resource:crude_oil",
-          "name": "粗植物油",
+          "name": "粗油",
           "quantity": null,
           "timing": "交易时"
         }
       ],
-      "name": "市集出售·粗植物油",
+      "name": "市集出售·粗油",
       "outputs": [
         {
           "basis": "每份",
@@ -37343,6 +39587,47 @@
       "effects": [],
       "facility": null,
       "facility_name": null,
+      "id": "proc:sell:mussel_shell",
+      "inputs": [
+        {
+          "basis": "每份",
+          "entity": "resource:mussel_shell",
+          "name": "贝壳",
+          "quantity": null,
+          "timing": "交易时"
+        }
+      ],
+      "name": "市集出售·贝壳",
+      "outputs": [
+        {
+          "basis": "每份",
+          "entity": "currency:primeval_stone",
+          "name": "元石",
+          "quantity": 1,
+          "timing": "交易时"
+        }
+      ],
+      "primeval_stones": 0,
+      "research": null,
+      "research_name": null,
+      "species": null,
+      "species_name": null,
+      "type": "market_sell",
+      "worker_fee": 0
+    },
+    {
+      "ap": 0,
+      "ap_detail": "0AP",
+      "category_hint": "trade",
+      "conditions": [
+        "计入销售收入"
+      ],
+      "crop": null,
+      "crop_name": null,
+      "duration": "即时",
+      "effects": [],
+      "facility": null,
+      "facility_name": null,
       "id": "proc:sell:nectar",
       "inputs": [
         {
@@ -37524,6 +39809,47 @@
           "entity": "currency:primeval_stone",
           "name": "元石",
           "quantity": 5,
+          "timing": "交易时"
+        }
+      ],
+      "primeval_stones": 0,
+      "research": null,
+      "research_name": null,
+      "species": null,
+      "species_name": null,
+      "type": "market_sell",
+      "worker_fee": 0
+    },
+    {
+      "ap": 0,
+      "ap_detail": "0AP",
+      "category_hint": "trade",
+      "conditions": [
+        "计入销售收入"
+      ],
+      "crop": null,
+      "crop_name": null,
+      "duration": "即时",
+      "effects": [],
+      "facility": null,
+      "facility_name": null,
+      "id": "proc:sell:pearl",
+      "inputs": [
+        {
+          "basis": "每份",
+          "entity": "resource:pearl",
+          "name": "珍珠",
+          "quantity": null,
+          "timing": "交易时"
+        }
+      ],
+      "name": "市集出售·珍珠",
+      "outputs": [
+        {
+          "basis": "每份",
+          "entity": "currency:primeval_stone",
+          "name": "元石",
+          "quantity": 6,
           "timing": "交易时"
         }
       ],
@@ -38262,6 +40588,47 @@
           "entity": "currency:primeval_stone",
           "name": "元石",
           "quantity": 3,
+          "timing": "交易时"
+        }
+      ],
+      "primeval_stones": 0,
+      "research": null,
+      "research_name": null,
+      "species": null,
+      "species_name": null,
+      "type": "market_sell",
+      "worker_fee": 0
+    },
+    {
+      "ap": 0,
+      "ap_detail": "0AP",
+      "category_hint": "trade",
+      "conditions": [
+        "计入销售收入"
+      ],
+      "crop": null,
+      "crop_name": null,
+      "duration": "即时",
+      "effects": [],
+      "facility": null,
+      "facility_name": null,
+      "id": "proc:sell:water_gel",
+      "inputs": [
+        {
+          "basis": "每份",
+          "entity": "resource:water_gel",
+          "name": "凝水胶",
+          "quantity": null,
+          "timing": "交易时"
+        }
+      ],
+      "name": "市集出售·凝水胶",
+      "outputs": [
+        {
+          "basis": "每份",
+          "entity": "currency:primeval_stone",
+          "name": "元石",
+          "quantity": 4,
           "timing": "交易时"
         }
       ],

@@ -91,7 +91,7 @@ FLOWERS = SRC['flowers']
 DEVICES = SRC['devices']
 DISPLAY = CURATED['display']
 
-UNIT_DEFAULT = {'steel_sheep': '只', 'filter_algae_carp': '尾', 'bell_bee': '群', 'purifying_mat': '培养单位', 'rock_mole': '只', 'rock_belly_beast': '只', 'carbon_belly_bug': '群', 'leaf_silkworm': '群', 'dew_shell_snail': '只', 'mineral_scale_lizard': '只', 'compost_mouse': '只', 'gravel_shell_snail': '只'}
+UNIT_DEFAULT = {'steel_sheep': '只', 'filter_algae_carp': '尾', 'bell_bee': '群', 'purifying_mat': '培养单位', 'rock_mole': '只', 'rock_belly_beast': '只', 'carbon_belly_bug': '群', 'leaf_silkworm': '群', 'dew_shell_snail': '只', 'mineral_scale_lizard': '只', 'compost_mouse': '只', 'gravel_shell_snail': '只', 'oilfin_fish': '尾', 'pearl_mussel': '只', 'gel_jellyfish': '群', 'silt_loach': '尾', 'reef_coral': '群'}
 SOURCE_NAMES = {'stone_source': '采石点', 'ore_source': '采矿点', 'spring_source': '泉水点'}
 MODE_NAMES = DISPLAY['crop_mode_names']
 
@@ -234,7 +234,7 @@ for sid, row in LIVESTOCK.items():
         fields.append(field('outputs', '周期产物', f'{quantities_text(row["outputs"])}/轮/{unit}（收取时入仓）'))
     fields.append(field('claim', '收取后去留', '移除个体，需重新购入' if row['claim_removes'] else '保留个体（回到空闲成体）'))
     if sid == 'filter_algae_carp':
-        fields.append(field('water', '水体依赖', '水场水体日降5；≤30全场暂停成长与周期，维护水体或换水恢复'))
+        fields.append(field('water', '水体依赖', '所属水体共享水质日降；低于30暂停成长与生产，换水或净化配套恢复'))
     if sid == 'bell_bee':
         fields.append(field('flower', '花源依赖', '每群每日基础服务消耗1份额（与手采共享）＋清水×1；份额来自覆盖外扩2格内的当日合格花株'))
         fields.append(field('pollination', '授粉增益', '蜂群使用油籽花份额后，该株本周期待收+1油籽；多箱/多次不叠加'))

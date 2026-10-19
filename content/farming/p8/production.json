@@ -591,7 +591,7 @@
     },
     {
       "id": "crude_oil",
-      "name": "粗植物油",
+      "name": "粗油",
       "element": "fire",
       "form": "liquid",
       "stage": "intermediate",
@@ -1135,6 +1135,62 @@
       "buy_price": 0,
       "sell_price": 3,
       "cost_source": "form_rock_shell"
+    },
+    {
+      "id": "pearl",
+      "name": "珍珠",
+      "element": "gold",
+      "tags": [
+        "animal_product"
+      ],
+      "sell_price": 6,
+      "cost_source": "pearl_round",
+      "form": "solid",
+      "stage": "intermediate",
+      "supply_allowed": false,
+      "buy_price": 0
+    },
+    {
+      "id": "mussel_shell",
+      "name": "贝壳",
+      "element": "earth",
+      "tags": [
+        "animal_product"
+      ],
+      "sell_price": 1,
+      "cost_source": "mussel_shell",
+      "form": "solid",
+      "stage": "intermediate",
+      "supply_allowed": false,
+      "buy_price": 0
+    },
+    {
+      "id": "water_gel",
+      "name": "凝水胶",
+      "element": "water",
+      "tags": [
+        "animal_product"
+      ],
+      "sell_price": 4,
+      "cost_source": "gel_round",
+      "form": "solid",
+      "stage": "intermediate",
+      "supply_allowed": false,
+      "buy_price": 0
+    },
+    {
+      "id": "coral_stone",
+      "name": "珊瑚石",
+      "element": "earth",
+      "tags": [
+        "animal_product"
+      ],
+      "sell_price": 2,
+      "cost_source": "coral_round",
+      "form": "solid",
+      "stage": "intermediate",
+      "supply_allowed": false,
+      "buy_price": 0
     }
   ],
   "cost_models": [
@@ -1474,31 +1530,6 @@
         "sheep_manure": {
           "quantity": 4,
           "share": 0.1
-        }
-      }
-    },
-    {
-      "id": "fish",
-      "basis": {
-        "kind": "animal",
-        "id": "filter_algae_carp"
-      },
-      "inputs": {
-        "algae_feed": 24,
-        "grain": 4,
-        "clean_water": 2
-      },
-      "ap": 8,
-      "days": 6,
-      "cash": 20,
-      "outputs": {
-        "fish_meat": {
-          "quantity": 12,
-          "share": 0.85
-        },
-        "fish_manure": {
-          "quantity": 4,
-          "share": 0.15
         }
       }
     },
@@ -2288,6 +2319,134 @@
           "share": 0.25
         }
       }
+    },
+    {
+      "id": "fish",
+      "basis": {
+        "kind": "animal",
+        "id": "filter_algae_carp_provider"
+      },
+      "inputs": {
+        "algae_feed": 32,
+        "grain": 4
+      },
+      "ap": 8,
+      "days": 6,
+      "cash": 20,
+      "outputs": {
+        "fish_meat": {
+          "quantity": 12,
+          "share": 0.85
+        },
+        "fish_manure": {
+          "quantity": 4,
+          "share": 0.15
+        }
+      }
+    },
+    {
+      "id": "mussel_shell",
+      "basis": {
+        "kind": "animal",
+        "id": "mussel_shell_provider"
+      },
+      "inputs": {
+        "algae_feed": 24
+      },
+      "ap": 8,
+      "days": 6,
+      "cash": 48,
+      "outputs": {
+        "mussel_shell": {
+          "quantity": 8,
+          "share": 1
+        }
+      }
+    },
+    {
+      "id": "oilfin_round",
+      "basis": {
+        "kind": "animal",
+        "id": "oilfin_fish_provider"
+      },
+      "inputs": {
+        "algae_feed": 44,
+        "water_feed": 4
+      },
+      "ap": 10,
+      "days": 8,
+      "cash": 40,
+      "outputs": {
+        "crude_oil": {
+          "quantity": 8,
+          "share": 0.75
+        },
+        "fish_meat": {
+          "quantity": 4,
+          "share": 0.25
+        }
+      }
+    },
+    {
+      "id": "pearl_round",
+      "basis": {
+        "kind": "animal",
+        "id": "pearl_mussel_provider"
+      },
+      "inputs": {
+        "algae_feed": 56,
+        "stone_powder": 4
+      },
+      "ap": 12,
+      "days": 10,
+      "cash": 48,
+      "outputs": {
+        "pearl": {
+          "quantity": 8,
+          "share": 1
+        }
+      }
+    },
+    {
+      "id": "gel_round",
+      "basis": {
+        "kind": "animal",
+        "id": "gel_jellyfish_provider"
+      },
+      "inputs": {
+        "algae_feed": 32,
+        "clean_water": 4
+      },
+      "ap": 8,
+      "days": 6,
+      "cash": 48,
+      "outputs": {
+        "water_gel": {
+          "quantity": 8,
+          "share": 1
+        }
+      }
+    },
+    {
+      "id": "coral_round",
+      "basis": {
+        "kind": "animal",
+        "id": "reef_coral_provider"
+      },
+      "inputs": {
+        "algae_feed": 72,
+        "stone_powder": 12,
+        "clean_water": 4
+      },
+      "ap": 14,
+      "days": 12,
+      "cash": 56,
+      "outputs": {
+        "coral_stone": {
+          "quantity": 8,
+          "share": 1
+        }
+      }
     }
   ],
   "crops": [
@@ -3061,7 +3220,10 @@
         1,
         1
       ],
-      "kind": null
+      "kind": null,
+      "species": [
+        "filter_algae_carp"
+      ]
     },
     {
       "id": "oilfish_harvest_station",
@@ -3077,7 +3239,10 @@
         1
       ],
       "kind": null,
-      "research": "farm_preparation"
+      "research": "farm_preparation",
+      "species": [
+        "oilfin_fish"
+      ]
     },
     {
       "id": "pearl_station",
@@ -3093,7 +3258,10 @@
         1
       ],
       "kind": null,
-      "research": "water_recirculation"
+      "research": "water_recirculation",
+      "species": [
+        "pearl_mussel"
+      ]
     },
     {
       "id": "gel_station",
@@ -3109,7 +3277,10 @@
         1
       ],
       "kind": null,
-      "research": "water_recirculation"
+      "research": "water_recirculation",
+      "species": [
+        "gel_jellyfish"
+      ]
     },
     {
       "id": "coral_station",
@@ -3125,7 +3296,10 @@
         1
       ],
       "kind": null,
-      "research": "mineral_materials"
+      "research": "mineral_materials",
+      "species": [
+        "reef_coral"
+      ]
     },
     {
       "id": "silt_processing_station",
@@ -3141,7 +3315,10 @@
         1
       ],
       "kind": null,
-      "research": "biofiltration"
+      "research": "biofiltration",
+      "species": [
+        "silt_loach"
+      ]
     },
     {
       "id": "aquatic_crop_station",
@@ -4071,7 +4248,7 @@
     {
       "id": "filter_algae_carp",
       "name": "滤藻鲤",
-      "facility": "fish_pond",
+      "facility": "carp_harvest_station",
       "juvenile_price": 5,
       "growth_days": 4,
       "cycle_days": 2,
@@ -4556,6 +4733,199 @@
       },
       "claim_removes": false,
       "research": "mineral_materials"
+    },
+    {
+      "id": "oilfin_fish",
+      "name": "油鳍鱼",
+      "facility": "oilfish_harvest_station",
+      "unit": "尾",
+      "juvenile_price": 10,
+      "growth_days": 5,
+      "cycle_days": 3,
+      "base_diets": [
+        {
+          "id": "algae_meal",
+          "name": "藻料餐",
+          "inputs": {
+            "algae_feed": 1
+          }
+        },
+        {
+          "id": "water_meal",
+          "name": "水养复合餐",
+          "inputs": {
+            "water_feed": 1
+          },
+          "research": "advanced_feed_oil_wax"
+        }
+      ],
+      "default_base_diet": "algae_meal",
+      "special_diets": [
+        {
+          "id": "oilfin_oil_round",
+          "name": "取油轮投料",
+          "inputs": {
+            "water_feed": 1
+          },
+          "outputs": {
+            "crude_oil": 2,
+            "fish_meat": 1
+          }
+        }
+      ],
+      "default_special_diet": "oilfin_oil_round",
+      "outputs": {
+        "crude_oil": 2,
+        "fish_meat": 1
+      },
+      "claim_removes": true,
+      "research": "farm_preparation"
+    },
+    {
+      "id": "pearl_mussel",
+      "name": "珍珠蚌",
+      "facility": "pearl_station",
+      "unit": "只",
+      "juvenile_price": 12,
+      "growth_days": 6,
+      "cycle_days": 4,
+      "base_diets": [
+        {
+          "id": "algae_meal",
+          "name": "藻料餐",
+          "inputs": {
+            "algae_feed": 1
+          }
+        }
+      ],
+      "default_base_diet": "algae_meal",
+      "special_diets": [
+        {
+          "id": "pearl_powder_round",
+          "name": "育珠轮投料",
+          "inputs": {
+            "stone_powder": 1
+          },
+          "outputs": {
+            "pearl": 2
+          }
+        }
+      ],
+      "default_special_diet": "pearl_powder_round",
+      "outputs": {
+        "pearl": 2
+      },
+      "claim_removes": false,
+      "research": "water_recirculation"
+    },
+    {
+      "id": "gel_jellyfish",
+      "name": "凝胶水母",
+      "facility": "gel_station",
+      "unit": "群",
+      "juvenile_price": 12,
+      "growth_days": 4,
+      "cycle_days": 2,
+      "base_diets": [
+        {
+          "id": "algae_meal",
+          "name": "藻料餐",
+          "inputs": {
+            "algae_feed": 1
+          }
+        },
+        {
+          "id": "dense_meal",
+          "name": "高密度藻餐",
+          "inputs": {
+            "dense_algae": 1
+          },
+          "research": "water_recirculation"
+        }
+      ],
+      "default_base_diet": "algae_meal",
+      "special_diets": [
+        {
+          "id": "gel_water_round",
+          "name": "采胶轮投料",
+          "inputs": {
+            "clean_water": 1
+          },
+          "outputs": {
+            "water_gel": 2
+          }
+        }
+      ],
+      "default_special_diet": "gel_water_round",
+      "outputs": {
+        "water_gel": 2
+      },
+      "claim_removes": false,
+      "research": "water_recirculation"
+    },
+    {
+      "id": "silt_loach",
+      "name": "净泥鳅",
+      "facility": "silt_processing_station",
+      "unit": "尾",
+      "juvenile_price": 8,
+      "growth_days": 3,
+      "cycle_days": 1,
+      "base_diets": [
+        {
+          "id": "algae_meal",
+          "name": "藻料餐",
+          "inputs": {
+            "algae_feed": 1
+          }
+        }
+      ],
+      "default_base_diet": "algae_meal",
+      "special_diets": [],
+      "default_special_diet": "",
+      "outputs": {
+        "humus": 3
+      },
+      "claim_removes": false,
+      "research": "biofiltration"
+    },
+    {
+      "id": "reef_coral",
+      "name": "礁骨珊瑚",
+      "facility": "coral_station",
+      "unit": "群",
+      "juvenile_price": 14,
+      "growth_days": 6,
+      "cycle_days": 6,
+      "base_diets": [
+        {
+          "id": "algae_meal",
+          "name": "藻料餐",
+          "inputs": {
+            "algae_feed": 1
+          }
+        }
+      ],
+      "default_base_diet": "algae_meal",
+      "special_diets": [
+        {
+          "id": "coral_mineral_round",
+          "name": "采礁轮投料",
+          "inputs": {
+            "stone_powder": 3,
+            "clean_water": 1
+          },
+          "outputs": {
+            "coral_stone": 2
+          }
+        }
+      ],
+      "default_special_diet": "coral_mineral_round",
+      "outputs": {
+        "coral_stone": 2
+      },
+      "claim_removes": false,
+      "research": "mineral_materials"
     }
   ],
   "research": [
@@ -4642,7 +5012,8 @@
           "press_oilseed"
         ],
         "species": [
-          "carbon_belly_bug"
+          "carbon_belly_bug",
+          "oilfin_fish"
         ],
         "diets": []
       }
@@ -4673,7 +5044,8 @@
           "mouse_compost_residue"
         ],
         "species": [
-          "purifying_mat"
+          "purifying_mat",
+          "silt_loach"
         ],
         "diets": []
       }
@@ -4795,7 +5167,10 @@
           "make_silk_filter_media",
           "recover_nutrients"
         ],
-        "species": [],
+        "species": [
+          "gel_jellyfish",
+          "pearl_mussel"
+        ],
         "diets": [
           "dense_meal"
         ]
@@ -4891,7 +5266,8 @@
         ],
         "species": [
           "gravel_shell_snail",
-          "mineral_scale_lizard"
+          "mineral_scale_lizard",
+          "reef_coral"
         ],
         "diets": [
           "mineral_supplement"
@@ -5404,6 +5780,97 @@
         "bed": "medium",
         "growth_units": 3000,
         "breed_units": 8400
+      },
+      "filter_algae_carp": {
+        "medium": "water",
+        "space": 1,
+        "bed": "small",
+        "growth_units": 2400,
+        "breed_units": 7200,
+        "natural": {
+          "station": "carp_harvest_station",
+          "units": 1200,
+          "capture": true,
+          "outputs": {
+            "fish_meat": 3,
+            "fish_manure": 1
+          },
+          "default_diet": "grain_fatten"
+        }
+      },
+      "oilfin_fish": {
+        "medium": "water",
+        "space": 2,
+        "bed": "medium",
+        "growth_units": 3000,
+        "breed_units": 8400,
+        "natural": {
+          "station": "oilfish_harvest_station",
+          "units": 1800,
+          "capture": true,
+          "outputs": {
+            "crude_oil": 2,
+            "fish_meat": 1
+          },
+          "default_diet": "oilfin_oil_round"
+        }
+      },
+      "pearl_mussel": {
+        "medium": "water",
+        "space": 1,
+        "bed": "small",
+        "growth_units": 3600,
+        "breed_units": 9600,
+        "natural": {
+          "station": "pearl_station",
+          "units": 2400,
+          "capture": false,
+          "shell": true,
+          "outputs": {
+            "pearl": 2
+          },
+          "default_diet": "pearl_powder_round"
+        }
+      },
+      "gel_jellyfish": {
+        "medium": "water",
+        "space": 1,
+        "bed": "small",
+        "growth_units": 2400,
+        "breed_units": 7200,
+        "natural": {
+          "station": "gel_station",
+          "units": 1200,
+          "capture": false,
+          "outputs": {
+            "water_gel": 2
+          },
+          "default_diet": "gel_water_round"
+        }
+      },
+      "silt_loach": {
+        "medium": "water",
+        "space": 1,
+        "bed": "small",
+        "growth_units": 1800,
+        "breed_units": 6000
+      },
+      "reef_coral": {
+        "medium": "water",
+        "space": 1,
+        "bed": "",
+        "fixed": true,
+        "growth_units": 3600,
+        "breed_units": 10800,
+        "natural": {
+          "station": "coral_station",
+          "units": 3600,
+          "capture": false,
+          "outputs": {
+            "coral_stone": 2
+          },
+          "default_diet": "coral_mineral_round"
+        }
       }
     },
     "zones": {
@@ -5589,7 +6056,8 @@
         ],
         "shell_forming_station": [
           "form_rock_shell"
-        ]
+        ],
+        "silt_processing_station": []
       },
       "recipes": {
         "break_stone": {
@@ -5642,13 +6110,37 @@
       "scale_station": {
         "species": "mineral_scale_lizard",
         "capacity": 4
+      },
+      "carp_harvest_station": {
+        "species": "filter_algae_carp",
+        "capacity": 4
+      },
+      "oilfish_harvest_station": {
+        "species": "oilfin_fish",
+        "capacity": 4
+      },
+      "pearl_station": {
+        "species": "pearl_mussel",
+        "capacity": 4
+      },
+      "gel_station": {
+        "species": "gel_jellyfish",
+        "capacity": 4
+      },
+      "coral_station": {
+        "species": "reef_coral",
+        "capacity": 4
       }
     },
     "meals": {
       "nursery": 1,
       "work": 1,
       "enclosure": 2,
-      "intensive": 2
+      "intensive": 2,
+      "water_nursery": 1,
+      "water_enclosure": 2,
+      "water_production": 2,
+      "water_loach": 2
     },
     "trough_slots": 2,
     "bed_facilities": {

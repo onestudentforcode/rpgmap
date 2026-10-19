@@ -139,7 +139,10 @@ func _assign(w: World, row: Dictionary, mode: String, zone_uid: int, bed_type :=
 	w.end_day()
 
 func _registry(w: World) -> void:
-	check(w.ranch.SPECIES.size() == 9, "nine land species on the roster")
+	check(w.ranch.SPECIES.size() == 15, "nine land plus six aquatic species on the roster")
+	for sid in ["steel_sheep", "rock_mole", "rock_belly_beast", "carbon_belly_bug", "leaf_silkworm",
+			"dew_shell_snail", "mineral_scale_lizard", "compost_mouse", "gravel_shell_snail"]:
+		check(w.ranch.species_medium(sid) == "land", sid + " stays a land species")
 	for sid in ["carbon_belly_bug", "leaf_silkworm", "dew_shell_snail", "mineral_scale_lizard", "compost_mouse", "gravel_shell_snail"]:
 		check(not w.ranch.species_config(sid).is_empty(), "config carries " + sid)
 	check(w.ranch.can_breed("leaf_silkworm") == false, "silkworm cannot breed")

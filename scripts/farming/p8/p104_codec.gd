@@ -21,7 +21,7 @@ const FIELDS:={
 	"contribution_drop":["identity"],"fatigue":["animal","open","w","r","fails","toy_extra","next"],
 	"natural_wait":["animal","t"],"natural_stall":["animal","t","efficiency","station"],
 	"natural_short":["animal","t","station"],
-	"natural_progress":["identity","animal","before","points","after","target","t","efficiency","station"]}
+	"natural_progress":["identity","animal","before","points","after","target","t","efficiency","station","species"]}
 const NUMBERS:=["host","field","count","uid","animal","zone","t","rank","value","space","roll","extra","before","points","after","target","total","available","occupied","parent","child","eligible","gift","growth_target","breed_target","yard","post","batch","base","carry","overflow","system","credited","discarded","open","w","r","fails","toy_extra","next","efficiency","station"]
 
 static func fail() -> Dictionary: return S.fail("服务收据、贡献或余量不守恒")
@@ -85,8 +85,8 @@ static func validate(value: Dictionary,snapshot: Dictionary,catalog) -> Dictiona
 	var species_space:={}
 	var station_species:={}
 	var station_capacity:={}
-	for row in snapshot["world"]["ranch"]["animals"]:
-		species_space[int(row["uid"])]=int(catalog.load_data()["p103"]["species"][String(row["species_id"])]["space"])
+	for sid in catalog.load_data()["p103"]["species"]:
+		species_space[sid]=int(catalog.load_data()["p103"]["species"][sid]["space"])
 	for fid in catalog.load_data()["p103"]["stations"]:
 		station_species[fid]=String(catalog.load_data()["p103"]["stations"][fid]["species"])
 		station_capacity[fid]=int(catalog.load_data()["p103"]["stations"][fid]["capacity"])
@@ -249,16 +249,19 @@ static func validate(value: Dictionary,snapshot: Dictionary,catalog) -> Dictiona
 				var animal_row:={}
 				for row in snapshot["world"]["ranch"]["animals"]:
 					if int(row["uid"])==int(e["animal"]): animal_row=row
-				if animal_row.is_empty(): return fail()
+				# Capture rounds and deaths remove animals; their receipts stay
+				# auditable because the species rides on the receipt itself.
+				var receipt_species:=String(e["species"])
+				if not animal_row.is_empty() and String(animal_row["species_id"])!=receipt_species: return fail()
 				var station_id:=""
 				for fid in station_species:
-					if station_species[fid]==String(animal_row["species_id"]): station_id=fid
+					if station_species[fid]==receipt_species: station_id=fid
 				var facility:={}
 				for row in snapshot["world"]["facilities"]:
 					if int(row["uid"])==int(e["station"]): facility=row
 				if facility.is_empty() or String(facility["facility_id"])!=station_id: return fail()
 				var load_key:="%d:%d" % [int(e["station"]),int(e["t"])]
-				station_load[load_key]=int(station_load.get(load_key,0))+int(species_space[int(e["animal"])])
+				station_load[load_key]=int(station_load.get(load_key,0))+int(species_space[receipt_species])
 				if int(station_load[load_key])>int(station_capacity[station_id]): return fail()
 	if C._canonical(toys)!=C._canonical(value["toys"]) or C._canonical(contributions)!=C._canonical(value["contributions"]): return fail()
 	for key in pools:

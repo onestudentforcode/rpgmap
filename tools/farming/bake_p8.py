@@ -42,6 +42,7 @@ ALLOCATION = {
     'dew_round': {'spirit_liquid': Fraction(3, 4), 'mucus': Fraction(1, 4)},
     'scale_round': {'mineral_scale': Fraction(3, 4), 'shed_skin': Fraction(1, 4)},
     'form_rock_shell': {'rock_shell': Fraction(3, 4), 'mucus': Fraction(1, 4)},
+    'oilfin_round': {'crude_oil': Fraction(3, 4), 'fish_meat': Fraction(1, 4)},
 }
 
 
@@ -119,8 +120,10 @@ def providers(source):
     # roster; their rounds are derived in the dedicated blocks below.
     p105_species = ('carbon_belly_bug', 'leaf_silkworm', 'dew_shell_snail',
                     'mineral_scale_lizard', 'compost_mouse', 'gravel_shell_snail')
+    p106_species = ('filter_algae_carp', 'oilfin_fish', 'pearl_mussel', 'gel_jellyfish',
+                    'silt_loach', 'reef_coral')
     for ident, a in animals.items():
-        if ident in ('bell_bee', 'purifying_mat', 'rock_mole', 'rock_belly_beast') or ident in p105_species:
+        if ident in ('bell_bee', 'purifying_mat', 'rock_mole', 'rock_belly_beast') or ident in p105_species or ident in p106_species:
             continue
         require(common.integer(a['juvenile_price'], 1) and common.integer(a['growth_days'], 1) and common.integer(a['cycle_days'], 1) and type(a['claim_removes']) is bool, f'{ident}: lifecycle')
         f = facilities[a['facility']]
@@ -181,7 +184,7 @@ def providers(source):
                                        days=bee_days, start_ap=field_ap + bee_days, claim_ap=1, cash=POPULATION * bee['juvenile_price'])
     # --- Real water change: clean water in, wastewater stock out (T04 sample source).
     change = water['change']
-    result['water_change_provider'] = dict(facility='fish_pond', inputs=dict(change['inputs']),
+    result['water_change_provider'] = dict(independent=True, facility='', inputs=dict(change['inputs']),
                                            outputs={'wastewater': int(change['wastewater'])}, days=0,
                                            start_ap=water['maintenance_ap'], claim_ap=0, cash=0)
     # --- Purifying mats: juvenile culture water plus one living processing round x4.
@@ -238,6 +241,37 @@ def providers(source):
         result[species_id + '_provider'] = dict(facility=row['facility'], inputs=dict(inputs),
                                                 outputs=_scaled(row['outputs'], POPULATION), days=days,
                                                 start_ap=days + 1, claim_ap=1, cash=POPULATION * row['juvenile_price'])
+    # --- P10.6 aquatic species (§16.2.6): growth plus the first natural round
+    # x4 on the species station; capture species include the same round, the
+    # removal itself carries no extra cost. The loach serves facility batches
+    # (stage d recipe) and gets its provider with the recipe.
+    for species_id, round_days, round_inputs in (
+            ('filter_algae_carp', 2, {'grain': 1}),
+            ('oilfin_fish', 3, {'water_feed': 1}),
+            ('pearl_mussel', 4, {'stone_powder': 1}),
+            ('gel_jellyfish', 2, {'clean_water': 1}),
+            ('reef_coral', 6, {'stone_powder': 3, 'clean_water': 1})):
+        row = animals[species_id]
+        _check_diets(species_id, row, resources, research)
+        require(species_id in facilities[row['facility']].get('species', []), f'{species_id}: station species list')
+        require(facilities[row['facility']].get('terrain') == 'water', f'{species_id}: aquatic station on water')
+        require(row['growth_days'] + row['cycle_days'] >= 1, f'{species_id}: lifecycle')
+        diet = next(d for d in row['base_diets'] if d['id'] == row['default_base_diet'])
+        days = row['growth_days'] + round_days
+        inputs = Counter({iid: q * row['growth_days'] * POPULATION for iid, q in diet['inputs'].items()})
+        inputs.update({iid: q * round_days * 2 * POPULATION for iid, q in diet['inputs'].items()})
+        inputs.update({iid: q * POPULATION for iid, q in round_inputs.items()})
+        result[species_id + '_provider'] = dict(facility=row['facility'], inputs=dict(inputs),
+                                                outputs=_scaled(row['outputs'], POPULATION), days=days,
+                                                start_ap=days + 1, claim_ap=1, cash=POPULATION * row['juvenile_price'])
+    # Shell harvest: the alternative mussel disposal — growth meals only, no
+    # round feed, the adult is consumed at the claim.
+    row = animals['pearl_mussel']
+    diet = next(d for d in row['base_diets'] if d['id'] == row['default_base_diet'])
+    result['mussel_shell_provider'] = dict(facility=row['facility'],
+        inputs={iid: q * row['growth_days'] * POPULATION for iid, q in diet['inputs'].items()},
+        outputs={'mussel_shell': 2 * POPULATION}, days=row['growth_days'],
+        start_ap=row['growth_days'] + 1, claim_ap=1, cash=POPULATION * row['juvenile_price'])
     if 'logistics' in source:
         row = next(r for r in source['logistics']['definitions'] if r['id'] == 'rice_bag_gu')
         production = row['production']

@@ -24,6 +24,7 @@ func _initialize() -> void:
 
 func run() -> void:
 	_land_ranch()
+	_water_ranch()
 	var summary := {"checks": checks, "failures": failures}
 	print("FIXTURE LINT %s (%d)" % ["OK" if failures.is_empty() else "FAIL", checks])
 	quit(0 if failures.is_empty() else 1)
@@ -33,7 +34,7 @@ func _world(tag: String) -> World:
 	world.start_new(1)
 	world.grant_scaffold({"raw_wood": 300, "raw_stone": 300, "wood_plank": 60, "twig": 120,
 		"mushroom": 400, "fodder_grass": 400, "grain": 200, "clean_water": 900,
-		"land_feed": 100, "iron_ore": 120, "mineral_feed": 100, "algae_feed": 60, "straw": 60,
+		"land_feed": 100, "iron_ore": 120, "mineral_feed": 100, "algae_feed": 200, "straw": 60,
 		"wood_chip": 60, "sludge": 40, "oil_cake": 20, "stone_powder": 40,
 		"gravel": 40, "mulberry_leaf": 60, "charcoal": 20, "humus": 60})
 	world.primeval_stones += 3000
@@ -187,3 +188,55 @@ func _sweep_claims(world: World) -> void:
 			world.ranch.claim_workyard(int(uid))
 		elif fid == "wool_station":
 			world.ranch.claim_natural(int(uid))
+
+
+# --- reference fixture: the aquatic module (P10.6.c) ----------------------------
+## Nursery pool x2..4 y14..17, production pool x6..9 y14..17 with the carp
+## station; one carp through nursery and into its production round.
+func _water_ranch() -> void:
+	var world := _world("water-ranch")
+	var groups := {"nursery": [], "production": []}
+	for y in range(14, 18):
+		for x in range(2, 5):
+			groups["nursery"].append(Vector2i(x, y))
+		for x in range(6, 10):
+			groups["production"].append(Vector2i(x, y))
+	check(world.water.build_fence(groups["nursery"], 0)["ok"], "water fence lays")
+	world.end_day()
+	for spec in [["pen", 2, 14], ["feed_trough", 2, 16], ["small_bed", 3, 16], ["medium_bed", 4, 16]]:
+		check(world.build_facility(Vector2i(int(spec[1]), int(spec[2])), String(spec[0]))["ok"],
+			"water nursery builds %s" % String(spec[0]))
+	var nursery: Dictionary = world.ranch.create_zone("water_nursery", _texts(groups["nursery"]), "lintpool")
+	check(nursery["ok"] and world.ranch.zone_structural(world.ranch.zone(int(nursery["zone_uid"]))),
+		"water nursery structural")
+	world.end_day()
+	check(world.water.build_fence(groups["production"], 0)["ok"], "production fence lays")
+	for spec in [["pen", 6, 14], ["feed_trough", 8, 14], ["small_bed", 9, 14], ["medium_bed", 9, 15], ["carp_harvest_station", 6, 16]]:
+		check(world.build_facility(Vector2i(int(spec[1]), int(spec[2])), String(spec[0]))["ok"],
+			"water production builds %s" % String(spec[0]))
+	var production: Dictionary = world.ranch.create_zone("water_production", _texts(groups["production"]), "lintprod")
+	check(production["ok"] and world.ranch.zone_structural(world.ranch.zone(int(production["zone_uid"]))),
+		"water production structural")
+	check(world.ranch.purchase(int(nursery["zone_uid"]), "filter_algae_carp", 1)["ok"], "lint carp bought")
+	for day in range(12):
+		world.end_day()
+		check(world.daily_save_error.is_empty(), "water clean settle day %d" % day)
+		for uid in [int(nursery["zone_uid"]), int(production["zone_uid"])]:
+			check(world.ranch.zone_structural(world.ranch.zone(uid)), "water zone stays structural day %d" % day)
+		for row in world.ranch.state["animals"]:
+			check(int(row["death_streak"]) == 0 and int(row["miss_streak"]) < 3 and int(row["bad_water_streak"]) < 3,
+				"water animal stable day %d" % day)
+	var adults: Array = world.ranch.state["animals"].filter(func(a): return String(a["stage"]) == "adult")
+	check(adults.size() == 1, "lint carp adult")
+	if adults.size() == 1:
+		var beds: Array = world.ranch.free_bed_slots(world.ranch.zone(int(production["zone_uid"])), "small")
+		check(beds.size() >= 1, "lint production bed")
+		if beds.size() >= 1:
+			check(world.ranch.submit({"assign": {int(adults[0]["uid"]): {"mode": "water_production",
+				"zone_uid": int(production["zone_uid"]), "bed_uid": int(beds[0]["uid"]), "bed_slot": int(beds[0]["slot"])}}})["ok"],
+				"lint carp assigned")
+			for day in range(4):
+				world.end_day()
+				check(world.daily_save_error.is_empty(), "water production settle day %d" % day)
+			var carp: Dictionary = world.ranch.animal(int(adults[0]["uid"]))
+			check(not carp.is_empty() and int(carp["natural"]["units"]) > 0, "lint carp round advances")

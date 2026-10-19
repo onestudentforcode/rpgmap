@@ -334,13 +334,12 @@ func _e_joint_validation() -> void:
 	world.end_day()
 	var claimed_yard: Dictionary = world.ranch.claim_workyard(yard)
 	check(claimed_yard["ok"] and world.inventory.count("gravel") == 2, "real gravel from R13")
-	# Real sewage for the sludge sample.
-	check(world.build_facility(Vector2i(0, 14), "fish_pond")["ok"], "pond for real sewage")
-	var pond := uid_of(world, "fish_pond")
-	world.husbandry.purchase(pond, 1)
-	world.end_day()
-	world.collect("spring_source")
-	world.husbandry.maintain_water(pond)
+	# Real sewage for the sludge sample: the retired pond path is gone, the
+	# body water change produces the wastewater (P10.6 §16.2.12).
+	world.grant_scaffold({"twig": 4, "clean_water": 4})
+	var sewage_body: Dictionary = world.water.build_fence([Vector2i(0, 14), Vector2i(1, 14)], 0)
+	check(sewage_body["ok"], "fence for real sewage")
+	check(world.water.change_water(int(sewage_body["body"]))["ok"], "body change for real sewage")
 	# T04 on the real sewage first, then the bed it unlocks.
 	check(world.build_facility(Vector2i(4, 4), "compost_bin")["ok"], "bin for sludge")
 	var bin := uid_of(world, "compost_bin")
@@ -401,13 +400,31 @@ func _e_joint_validation() -> void:
 		else: world.end_day()
 		guard += 1
 	check(world.inventory.count("dense_algae") == 3, "real dense algae")
-	check(world.husbandry.set_diet(pond, "base_diets", "basic_diet_id", "dense_meal")["ok"], "carp takes the dense meal")
-	# The long run drained the pond metric: top it up before the dense meal.
-	world.grant_scaffold({"clean_water": 2})
-	if world.husbandry.quote_water(pond)["ok"]:
-		check(world.husbandry.maintain_water(pond)["ok"], "top up the pond before the meal")
+	# The roster carp in a fenced water nursery eats the real dense algae.
+	world.grant_scaffold({"twig": 12})
+	world.primeval_stones += 20
+	world._cash("sales_revenue", 20)
+	var nursery_fenced: Dictionary = world.water.build_fence([Vector2i(0, 15), Vector2i(1, 15), Vector2i(2, 15), Vector2i(3, 15),
+		Vector2i(0, 16), Vector2i(1, 16), Vector2i(2, 16), Vector2i(3, 16),
+		Vector2i(0, 17), Vector2i(1, 17), Vector2i(2, 17), Vector2i(3, 17)], 0)
+	check(nursery_fenced["ok"], "fence the roster nursery")
+	check(world.build_facility(Vector2i(0, 15), "pen")["ok"], "water pen builds")
+	check(world.build_facility(Vector2i(2, 15), "feed_trough")["ok"], "water trough builds")
+	check(world.build_facility(Vector2i(3, 15), "small_bed")["ok"], "water bed builds")
+	var pool_cells := []
+	for y in range(15, 18):
+		for x in range(0, 4):
+			pool_cells.append("%d,%d" % [x, y])
+	var pool_zone: Dictionary = world.ranch.create_zone("water_nursery", pool_cells, "densepool")
+	check(pool_zone["ok"], "water nursery zone")
+	check(world.ranch.purchase(int(pool_zone["zone_uid"]), "filter_algae_carp", 1)["ok"], "buy the roster carp")
+	var carps: Array = world.ranch.state["animals"].filter(func(a): return String(a["species_id"]) == "filter_algae_carp")
+	var carp_uid := int(carps[0]["uid"])
+	check(world.ranch.set_diet(carp_uid, "dense_meal")["ok"], "carp takes the dense meal")
 	world.grant_scaffold({"dense_algae": 1})
-	check(world.husbandry.maintain(pond)["ok"], "fish consume the real dense algae")
+	var algae_before := world.inventory.count("dense_algae")
+	world.end_day()
+	check(world.inventory.count("dense_algae") == algae_before - 1, "fish consume the real dense algae")
 	print("P8.f JOINT VALIDATION day ", world.clock.total_days, " stones ", world.primeval_stones)
 
 # --- 6. Snapshot contracts ------------------------------------------------------------

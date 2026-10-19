@@ -24,16 +24,16 @@ class EncyclopediaManual(unittest.TestCase):
     def test_layer_shape(self):
         self.assertEqual(BAK['encyclopedia_format'], 1)
         counts = BAK['counts']
-        self.assertEqual(counts['resources'], 65)
-        self.assertEqual(counts['crops'], 7)
-        self.assertEqual(counts['facilities'], 21)
-        self.assertEqual(counts['recipes'], 41)
-        self.assertEqual(counts['livestock'], 6)
-        self.assertEqual(counts['diets'], 20)
+        self.assertEqual(counts['resources'], 78)
+        self.assertEqual(counts['crops'], 8)
+        self.assertEqual(counts['facilities'], 39)
+        self.assertEqual(counts['recipes'], 51)
+        self.assertEqual(counts['livestock'], 17)
+        self.assertEqual(counts['diets'], 46)
         self.assertEqual(counts['research'], 12)
         self.assertEqual(counts['parcels'], 6)
-        self.assertEqual(counts['entities'], 207)
-        self.assertEqual(counts['rules'], 18)
+        self.assertEqual(counts['entities'], 289)
+        self.assertEqual(counts['rules'], 19)
 
     def test_every_entity_has_a_section(self):
         missing = []

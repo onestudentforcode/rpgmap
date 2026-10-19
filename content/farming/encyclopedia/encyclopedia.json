@@ -498,9 +498,10 @@
     ],
     "terminal_products_note": "以下物品没有下游配方，出售与五行供货是其设计出口：钢绒、灵液、蜜谷灵饼、菌鱼灵膳、藻露羹、蜜油火膏、腐土菌丸、蜜炼金食。",
     "no_use_whitelist": [
-      "purifying_mat_culture"
+      "purifying_mat_culture",
+      "mussel_shell"
     ],
-    "no_use_whitelist_reason": "净水菌毯培养单位是购买代理，见purchase_proxies说明。",
+    "no_use_whitelist_reason": "净水菌毯培养单位是购买代理，见purchase_proxies说明。贝壳由采珠台取壳操作产出（P10.6.g补过程条目）。",
     "terminal_note_overrides": {
       "spirit_liquid": "交易出口＋水产用途预留：本期仅可出售或水行供货，水产加工配方尚未实装，百科不显示任何可用配方入口。"
     }
