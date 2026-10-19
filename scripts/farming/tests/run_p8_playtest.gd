@@ -675,7 +675,9 @@ func _ranch_business(world) -> void:
 	var nursery := _ranch_zone_of(world, "nursery")
 	# Workers: two moles carry the mineral economy; one beast joins after T07.
 	var moles: Array = world.ranch.state["animals"].filter(func(a): return String(a["species_id"]) == "rock_mole")
-	if moles.size() < 1 and world.primeval_stones >= 300:
+	# The mole costs eight stones; waiting for a 300-stone cushion delayed the
+	# mineral economy past day 60 and starved route B's research chain.
+	if moles.size() < 1 and world.primeval_stones >= 60:
 		act(world, "ranch mole purchase", func(): return world.ranch.purchase(nursery, "rock_mole", 1 - moles.size()))
 	if world.research.is_completed("ore_concentration"):
 		var beasts: Array = world.ranch.state["animals"].filter(func(a): return String(a["species_id"]) == "rock_belly_beast")
