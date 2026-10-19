@@ -2522,6 +2522,68 @@
         "stage_2": "7f0cf813b9840436ff5698660a66d9faa8308d720828e67033d7d0898e765b19",
         "stage_3": "e3212a6c12b24af09fb362f3032103eaa8062239f24e723a93db9009ae1d59d3"
       }
+    },
+    "duckweed": {
+      "footprint": [
+        1,
+        1
+      ],
+      "canvas_px": [
+        512,
+        768
+      ],
+      "anchor_uv": [
+        0.49999988079071045,
+        0.9203707501292229
+      ],
+      "draw_size": [
+        115.2,
+        172.8
+      ],
+      "scale_multiplier": 1.0,
+      "stages": {
+        "stage_0": "res://assets/farming/crops/duckweed/stage_0.png",
+        "stage_1": "res://assets/farming/crops/duckweed/stage_1.png",
+        "stage_2": "res://assets/farming/crops/duckweed/stage_2.png",
+        "stage_3": "res://assets/farming/crops/duckweed/stage_3.png"
+      },
+      "sha256": {
+        "stage_0": "caf8f36f80af6de8b4022c2f0fcd2ee4a37adf2591e8c8618a63630f53e4146f",
+        "stage_1": "c821000f97f5e4be4f673fc45bbd586175c801e692f069478a7101e9ccba1d53",
+        "stage_2": "aaf66945a3455db09c1394be487d2c2e09ea684a19c8bbd59eebc35b5ec83561",
+        "stage_3": "e9a363ba721ecb8ada59ce1edc519248683462308c729adce60167e38abdaa00"
+      }
+    },
+    "reed": {
+      "footprint": [
+        1,
+        1
+      ],
+      "canvas_px": [
+        512,
+        768
+      ],
+      "anchor_uv": [
+        0.49999988079071045,
+        0.9203707501292229
+      ],
+      "draw_size": [
+        115.2,
+        172.8
+      ],
+      "scale_multiplier": 1.0,
+      "stages": {
+        "stage_0": "res://assets/farming/crops/reed/stage_0.png",
+        "stage_1": "res://assets/farming/crops/reed/stage_1.png",
+        "stage_2": "res://assets/farming/crops/reed/stage_2.png",
+        "stage_3": "res://assets/farming/crops/reed/stage_3.png"
+      },
+      "sha256": {
+        "stage_0": "2f5b898f0e6e26d32fff3283b7f1945a577d0a5c954e7038a099ca2a3525da5d",
+        "stage_1": "bbc757d993ff650e6aa94ff13b59641a8d573dcabc0a744bba8c10f2e83a49d6",
+        "stage_2": "e3969cd5220d7d387133fc6940ed584f39eb89e56df3f62de9b164f64ffba6d4",
+        "stage_3": "2913814677328a00a04b94173ea71a7d89a3f5202502ba01ce89e07ad234f3df"
+      }
     }
   },
   "visual_revision": "p86",

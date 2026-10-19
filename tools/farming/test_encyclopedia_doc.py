@@ -32,8 +32,8 @@ class EncyclopediaManual(unittest.TestCase):
         self.assertEqual(counts['diets'], 49)
         self.assertEqual(counts['research'], 13)
         self.assertEqual(counts['parcels'], 6)
-        self.assertEqual(counts['entities'], 316)
-        self.assertEqual(counts['rules'], 19)
+        self.assertEqual(counts['entities'], 317)
+        self.assertEqual(counts['rules'], 20)
 
     def test_every_entity_has_a_section(self):
         missing = []

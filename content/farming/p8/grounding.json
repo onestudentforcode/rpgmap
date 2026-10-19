@@ -398,6 +398,102 @@
           "opacity": 0.23
         }
       }
+    },
+    "duckweed": {
+      "stages": {
+        "stage_0": {
+          "size": [
+            14,
+            5
+          ],
+          "offset": [
+            0,
+            0
+          ],
+          "opacity": 0.13
+        },
+        "stage_1": {
+          "size": [
+            23,
+            8
+          ],
+          "offset": [
+            0,
+            0
+          ],
+          "opacity": 0.16
+        },
+        "stage_2": {
+          "size": [
+            40,
+            14
+          ],
+          "offset": [
+            0,
+            0
+          ],
+          "opacity": 0.2
+        },
+        "stage_3": {
+          "size": [
+            54,
+            19
+          ],
+          "offset": [
+            0,
+            0
+          ],
+          "opacity": 0.23
+        }
+      }
+    },
+    "reed": {
+      "stages": {
+        "stage_0": {
+          "size": [
+            14,
+            5
+          ],
+          "offset": [
+            0,
+            0
+          ],
+          "opacity": 0.13
+        },
+        "stage_1": {
+          "size": [
+            23,
+            8
+          ],
+          "offset": [
+            0,
+            0
+          ],
+          "opacity": 0.16
+        },
+        "stage_2": {
+          "size": [
+            40,
+            14
+          ],
+          "offset": [
+            0,
+            0
+          ],
+          "opacity": 0.2
+        },
+        "stage_3": {
+          "size": [
+            54,
+            19
+          ],
+          "offset": [
+            0,
+            0
+          ],
+          "opacity": 0.23
+        }
+      }
     }
   },
   "facilities": {
@@ -735,6 +831,86 @@
       "offset": [
         0,
         5
+      ]
+    },
+    "carp_harvest_station": {
+      "size": [
+        58.0,
+        22.0
+      ],
+      "offset": [
+        0,
+        4
+      ]
+    },
+    "oilfish_harvest_station": {
+      "size": [
+        58.0,
+        22.0
+      ],
+      "offset": [
+        0,
+        4
+      ]
+    },
+    "pearl_station": {
+      "size": [
+        58.0,
+        22.0
+      ],
+      "offset": [
+        0,
+        4
+      ]
+    },
+    "gel_station": {
+      "size": [
+        58.0,
+        22.0
+      ],
+      "offset": [
+        0,
+        4
+      ]
+    },
+    "coral_station": {
+      "size": [
+        58.0,
+        22.0
+      ],
+      "offset": [
+        0,
+        4
+      ]
+    },
+    "silt_processing_station": {
+      "size": [
+        58.0,
+        22.0
+      ],
+      "offset": [
+        0,
+        4
+      ]
+    },
+    "aquatic_crop_station": {
+      "size": [
+        58.0,
+        22.0
+      ],
+      "offset": [
+        0,
+        4
+      ]
+    },
+    "water_change_station": {
+      "size": [
+        58.0,
+        22.0
+      ],
+      "offset": [
+        0,
+        4
       ]
     }
   },

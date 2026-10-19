@@ -696,69 +696,6 @@
         "opacity": 0.17
       }
     },
-    "rock_workyard": {
-      "footprint": [
-        2,
-        2
-      ],
-      "canvas_px": [
-        512,
-        512
-      ],
-      "path": "res://assets/farming/facilities/rock_workyard/body.png",
-      "sha256": "1d5ec098dc3afa1f91f4cc2f1bd6d7d6280d434330416015966fcb229193ad95",
-      "anchor_uv": [
-        0.49999985098838806,
-        0.640792191028595
-      ],
-      "draw_size": [
-        204.8000030517578,
-        204.8000030517578
-      ],
-      "scale_multiplier": 1.0,
-      "ground_placement": "footprint_center",
-      "source_blend_sha256": "d149f985581a8671a93fe3ad3481789df801d63c53675da1223e3f88ca2a4796",
-      "source_png": "facilities/rock_workyard/rock_workyard_body_128.png",
-      "deferred_layers": [
-        "found",
-        "fx"
-      ],
-      "handoff_canvas_px": [
-        128,
-        128
-      ],
-      "runtime_variant": {
-        "method": "Blender rerender at 4x canvas; display scale unchanged",
-        "renders": {
-          "body": {
-            "source_blend": "facilities/rock_workyard/rock_workyard.blend",
-            "source_blend_sha256": "d149f985581a8671a93fe3ad3481789df801d63c53675da1223e3f88ca2a4796",
-            "scene": "Scene",
-            "canvas_px": [
-              512,
-              512
-            ],
-            "anchor_uv": [
-              0.49999985098838806,
-              0.640792191028595
-            ],
-            "samples": 128,
-            "sha256": "1d5ec098dc3afa1f91f4cc2f1bd6d7d6280d434330416015966fcb229193ad95"
-          }
-        }
-      },
-      "shadow": {
-        "size": [
-          112,
-          45
-        ],
-        "offset": [
-          0,
-          5
-        ],
-        "opacity": 0.21
-      }
-    },
     "kitchen": {
       "footprint": [
         2,
@@ -1507,6 +1444,270 @@
           5
         ],
         "opacity": 0.21
+      }
+    },
+    "carp_harvest_station": {
+      "footprint": [
+        1,
+        1
+      ],
+      "canvas_px": [
+        256,
+        256
+      ],
+      "path": "res://assets/farming/facilities/carp_harvest_station/body.png",
+      "sha256": "5b4a37c9609daedfb10081bdbf2542032826488c00875566032c0f7a44aa130c",
+      "anchor_uv": [
+        0.5,
+        0.6171875
+      ],
+      "draw_size": [
+        122.0,
+        122.0
+      ],
+      "scale_multiplier": 1.0,
+      "ground_placement": "footprint_center",
+      "shadow": {
+        "size": [
+          58.0,
+          22.0
+        ],
+        "offset": [
+          0,
+          4
+        ],
+        "opacity": 0.1
+      }
+    },
+    "oilfish_harvest_station": {
+      "footprint": [
+        1,
+        1
+      ],
+      "canvas_px": [
+        256,
+        256
+      ],
+      "path": "res://assets/farming/facilities/oilfish_harvest_station/body.png",
+      "sha256": "6d436a72557232ef529ba1417d8e9c6d517f51ce0ebf5a865a68e94959ccd3d4",
+      "anchor_uv": [
+        0.5,
+        0.6171875
+      ],
+      "draw_size": [
+        122.0,
+        122.0
+      ],
+      "scale_multiplier": 1.0,
+      "ground_placement": "footprint_center",
+      "shadow": {
+        "size": [
+          58.0,
+          22.0
+        ],
+        "offset": [
+          0,
+          4
+        ],
+        "opacity": 0.1
+      }
+    },
+    "pearl_station": {
+      "footprint": [
+        1,
+        1
+      ],
+      "canvas_px": [
+        256,
+        256
+      ],
+      "path": "res://assets/farming/facilities/pearl_station/body.png",
+      "sha256": "b20c7ad6badebea7279c81c791e1d5561ccd5ed566559467b7cd946813ee7cab",
+      "anchor_uv": [
+        0.5,
+        0.6171875
+      ],
+      "draw_size": [
+        122.0,
+        122.0
+      ],
+      "scale_multiplier": 1.0,
+      "ground_placement": "footprint_center",
+      "shadow": {
+        "size": [
+          58.0,
+          22.0
+        ],
+        "offset": [
+          0,
+          4
+        ],
+        "opacity": 0.1
+      }
+    },
+    "gel_station": {
+      "footprint": [
+        1,
+        1
+      ],
+      "canvas_px": [
+        256,
+        256
+      ],
+      "path": "res://assets/farming/facilities/gel_station/body.png",
+      "sha256": "dc51c93e9bd8b1d4f919b1d87bdd73c04b389c7584d7b85539babe37f6564e34",
+      "anchor_uv": [
+        0.5,
+        0.6171875
+      ],
+      "draw_size": [
+        122.0,
+        122.0
+      ],
+      "scale_multiplier": 1.0,
+      "ground_placement": "footprint_center",
+      "shadow": {
+        "size": [
+          58.0,
+          22.0
+        ],
+        "offset": [
+          0,
+          4
+        ],
+        "opacity": 0.1
+      }
+    },
+    "coral_station": {
+      "footprint": [
+        1,
+        1
+      ],
+      "canvas_px": [
+        256,
+        256
+      ],
+      "path": "res://assets/farming/facilities/coral_station/body.png",
+      "sha256": "d9913cafc760503095c31c7faf2ee21c317e8f5008244bf42bac66459c73648f",
+      "anchor_uv": [
+        0.5,
+        0.6171875
+      ],
+      "draw_size": [
+        122.0,
+        122.0
+      ],
+      "scale_multiplier": 1.0,
+      "ground_placement": "footprint_center",
+      "shadow": {
+        "size": [
+          58.0,
+          22.0
+        ],
+        "offset": [
+          0,
+          4
+        ],
+        "opacity": 0.1
+      }
+    },
+    "silt_processing_station": {
+      "footprint": [
+        1,
+        1
+      ],
+      "canvas_px": [
+        256,
+        256
+      ],
+      "path": "res://assets/farming/facilities/silt_processing_station/body.png",
+      "sha256": "7cf00d332073e07e7f6de1f42b5d36ae3c27adc49aacca4363c5a84d42769d1d",
+      "anchor_uv": [
+        0.5,
+        0.6171875
+      ],
+      "draw_size": [
+        122.0,
+        122.0
+      ],
+      "scale_multiplier": 1.0,
+      "ground_placement": "footprint_center",
+      "shadow": {
+        "size": [
+          58.0,
+          22.0
+        ],
+        "offset": [
+          0,
+          4
+        ],
+        "opacity": 0.1
+      }
+    },
+    "aquatic_crop_station": {
+      "footprint": [
+        1,
+        1
+      ],
+      "canvas_px": [
+        256,
+        256
+      ],
+      "path": "res://assets/farming/facilities/aquatic_crop_station/body.png",
+      "sha256": "d02638b3b448d88af0fbe33fa04a8971fbd97e07b8114721c8416654063e9728",
+      "anchor_uv": [
+        0.5,
+        0.6171875
+      ],
+      "draw_size": [
+        122.0,
+        122.0
+      ],
+      "scale_multiplier": 1.0,
+      "ground_placement": "footprint_center",
+      "shadow": {
+        "size": [
+          58.0,
+          22.0
+        ],
+        "offset": [
+          0,
+          4
+        ],
+        "opacity": 0.1
+      }
+    },
+    "water_change_station": {
+      "footprint": [
+        1,
+        1
+      ],
+      "canvas_px": [
+        256,
+        256
+      ],
+      "path": "res://assets/farming/facilities/water_change_station/body.png",
+      "sha256": "c0ca8d8c383e772115f8ef562cb5d7500390d12808224bdcc9137494ea66ab90",
+      "anchor_uv": [
+        0.5,
+        0.6171875
+      ],
+      "draw_size": [
+        122.0,
+        122.0
+      ],
+      "scale_multiplier": 1.0,
+      "ground_placement": "footprint_center",
+      "shadow": {
+        "size": [
+          58.0,
+          22.0
+        ],
+        "offset": [
+          0,
+          4
+        ],
+        "opacity": 0.18
       }
     }
   }
