@@ -1,0 +1,1274 @@
+{
+  "kind": "standard-cost-comparison-plus-separately-audited-cash",
+  "population": 4,
+  "assumptions": [
+    "满额食料、及时领取、陆地疲劳不积累、水质达标、无蛊基线；每个有效照料日6单位。",
+    "标准成本含明示AP/日权重与上游分摊；它不是实际扣款或市场售价。空间、建造、首次育幼另列。",
+    "捕鱼每轮重补；留栏购幼/初长只计首次；多产物看整批，不用分摊值证明增发环。"
+  ],
+  "source_sha256": {
+    "content/farming/p8/production.json": "afb848c1d349d116f929ac1ceb7df0cba4b72eeff754fa02f04d6ac22bdff265",
+    "content/farming/baked/p8/production.json": "d73e5cbe615e54470a0073008a0b80392462480fcf4ec160902a832e46f652a6",
+    "tools/farming/bake_p8.py": "7bcfc2c3da0cfa6b419e5946f8c471a02b99baee2a9d8bc9720510463248e32e",
+    "tools/farming/report_p107_economy.py": "a678ed077769cb0f0d854e616e6401e895e48f27ced4c554a33b08be433776b7",
+    "scripts/farming/p8/p103_ranch.gd": "8eae73d273bd68eb7a51584e2fac380999d48aa89e2f86e5fb9a4c84e2edbeca",
+    "scripts/farming/p8/p107_economy.gd": "492bf0344deb372b1da38d25029a9bc87a0ae3a6e355918913b62e7c803ae8dc",
+    "scripts/farming/tests/run_p107_playtest.gd": "9482639130b7fc7b27e69236a29a4d4e443370dfb741c2b8665312d58dc8e49d"
+  },
+  "routes": [
+    {
+      "species": "steel_sheep",
+      "name": "钢绵羊",
+      "role": "经济＋材料",
+      "purpose": "钢绒用于出售/供货，副产粪肥回流；提高主产物而不改房间倍率。",
+      "mode": "retained-steady",
+      "population": 4,
+      "growth_days": 6,
+      "production_days": 3,
+      "provider": {
+        "facility": "wool_station",
+        "inputs": {
+          "fodder_grass": 24,
+          "clean_water": 24,
+          "iron_ore": 4
+        },
+        "outputs": {
+          "steel_wool": 8,
+          "sheep_manure": 4
+        },
+        "days": 3,
+        "start_ap": 0,
+        "claim_ap": 1,
+        "cash": 0
+      },
+      "first_transfer_days": 1,
+      "first_assignment_ap": 1,
+      "total_space": 8,
+      "station_count": 2,
+      "initial_extra_inputs": {
+        "fodder_grass": 28,
+        "clean_water": 28
+      },
+      "initial_extra_cash": 48,
+      "standard_round_cost": 84.4,
+      "first_round_standard_cost": 231.86666666666667,
+      "sale_revenue": 100,
+      "direct_screening_margin": 15.6,
+      "exchange_resin": 0,
+      "exchange_remainder": {
+        "steel_wool": 8,
+        "sheep_manure": 4
+      },
+      "exchange_transactions": [],
+      "exchange_sale_revenue": 100,
+      "exchange_screening_margin": 15.6,
+      "direct_purchase_inputs_cash": 112
+    },
+    {
+      "species": "leaf_silkworm",
+      "name": "叶丝蚕",
+      "role": "经济＋滤材",
+      "purpose": "蚕丝直售、丝质滤材或特色交换；桑叶种植路线支持持续投入，本期不繁殖。",
+      "mode": "retained-steady",
+      "population": 4,
+      "growth_days": 3,
+      "production_days": 2,
+      "provider": {
+        "facility": "silkworm_rack",
+        "inputs": {
+          "mulberry_leaf": 24,
+          "clean_water": 16
+        },
+        "outputs": {
+          "silk": 16
+        },
+        "days": 2,
+        "start_ap": 0,
+        "claim_ap": 1,
+        "cash": 0
+      },
+      "first_transfer_days": 1,
+      "first_assignment_ap": 1,
+      "total_space": 4,
+      "station_count": 1,
+      "initial_extra_inputs": {
+        "mulberry_leaf": 16,
+        "clean_water": 16
+      },
+      "initial_extra_cash": 32,
+      "standard_round_cost": 60.92,
+      "first_round_standard_cost": 137.6,
+      "sale_revenue": 64,
+      "direct_screening_margin": 3.08,
+      "exchange_resin": 12,
+      "exchange_remainder": {
+        "silk": 0
+      },
+      "exchange_transactions": [
+        {
+          "offer": "silk_for_resin",
+          "batches": 4
+        }
+      ],
+      "exchange_sale_revenue": 72,
+      "exchange_screening_margin": 11.08,
+      "direct_purchase_inputs_cash": 80
+    },
+    {
+      "species": "dew_shell_snail",
+      "name": "露壳蜗牛",
+      "role": "材料＋交易",
+      "purpose": "灵液供水产变体，黏液供建材；允许低价副产物回收，灵液可换松脂。",
+      "mode": "retained-steady",
+      "population": 4,
+      "growth_days": 4,
+      "production_days": 2,
+      "provider": {
+        "facility": "spirit_liquid_collector",
+        "inputs": {
+          "fodder_grass": 16,
+          "clean_water": 24
+        },
+        "outputs": {
+          "spirit_liquid": 8,
+          "mucus": 4
+        },
+        "days": 2,
+        "start_ap": 0,
+        "claim_ap": 1,
+        "cash": 0
+      },
+      "first_transfer_days": 1,
+      "first_assignment_ap": 1,
+      "total_space": 4,
+      "station_count": 1,
+      "initial_extra_inputs": {
+        "fodder_grass": 20,
+        "clean_water": 20
+      },
+      "initial_extra_cash": 40,
+      "standard_round_cost": 56.86666666666667,
+      "first_round_standard_cost": 168.2,
+      "sale_revenue": 56,
+      "direct_screening_margin": -0.8666666666666667,
+      "exchange_resin": 6,
+      "exchange_remainder": {
+        "spirit_liquid": 2,
+        "mucus": 4
+      },
+      "exchange_transactions": [
+        {
+          "offer": "spirit_liquid_for_resin",
+          "batches": 2
+        }
+      ],
+      "exchange_sale_revenue": 56,
+      "exchange_screening_margin": -0.8666666666666667,
+      "direct_purchase_inputs_cash": 80
+    },
+    {
+      "species": "mineral_scale_lizard",
+      "name": "矿鳞蜥",
+      "role": "材料＋特色交换",
+      "purpose": "鳞片/蜕皮供鳞甲板；直售偏弱，阶段2以2鳞片换4松脂提供可用的材料/现金出口。",
+      "mode": "retained-steady",
+      "population": 4,
+      "growth_days": 6,
+      "production_days": 4,
+      "provider": {
+        "facility": "scale_station",
+        "inputs": {
+          "fodder_grass": 32,
+          "clean_water": 32,
+          "mineral_feed": 4
+        },
+        "outputs": {
+          "mineral_scale": 16,
+          "shed_skin": 4
+        },
+        "days": 4,
+        "start_ap": 0,
+        "claim_ap": 1,
+        "cash": 0
+      },
+      "first_transfer_days": 1,
+      "first_assignment_ap": 1,
+      "total_space": 8,
+      "station_count": 2,
+      "initial_extra_inputs": {
+        "fodder_grass": 28,
+        "clean_water": 28
+      },
+      "initial_extra_cash": 72,
+      "standard_round_cost": 156.87291666666667,
+      "first_round_standard_cost": 328.33958333333334,
+      "sale_revenue": 84,
+      "direct_screening_margin": -72.87291666666667,
+      "exchange_resin": 32,
+      "exchange_remainder": {
+        "mineral_scale": 0,
+        "shed_skin": 4
+      },
+      "exchange_transactions": [
+        {
+          "offer": "mineral_scale_for_resin",
+          "batches": 8
+        }
+      ],
+      "exchange_sale_revenue": 196,
+      "exchange_screening_margin": 39.12708333333333,
+      "direct_purchase_inputs_cash": null
+    },
+    {
+      "species": "filter_algae_carp",
+      "name": "滤藻鲤",
+      "role": "食材＋交易",
+      "purpose": "捕捞鱼肉接供货、鱼粉与陆地饲料替代；每轮重补动物。",
+      "mode": "capture-repeat",
+      "population": 4,
+      "growth_days": 4,
+      "production_days": 2,
+      "provider": {
+        "facility": "carp_harvest_station",
+        "inputs": {
+          "algae_feed": 36,
+          "grain": 4
+        },
+        "outputs": {
+          "fish_meat": 12,
+          "fish_manure": 4
+        },
+        "days": 7,
+        "start_ap": 1,
+        "claim_ap": 1,
+        "cash": 20
+      },
+      "first_transfer_days": 1,
+      "first_assignment_ap": 1,
+      "total_space": 4,
+      "station_count": 1,
+      "initial_extra_inputs": {
+        "algae_feed": 20
+      },
+      "initial_extra_cash": 20,
+      "standard_round_cost": 87.6,
+      "first_round_standard_cost": 87.6,
+      "sale_revenue": 112,
+      "direct_screening_margin": 24.4,
+      "exchange_resin": 0,
+      "exchange_remainder": {
+        "fish_meat": 12,
+        "fish_manure": 4
+      },
+      "exchange_transactions": [],
+      "exchange_sale_revenue": 112,
+      "exchange_screening_margin": 24.4,
+      "direct_purchase_inputs_cash": null
+    },
+    {
+      "species": "oilfin_fish",
+      "name": "油鳍鱼",
+      "role": "油料＋食材",
+      "purpose": "谷粒默认投料取粗油并附鱼肉；捕捞重计育幼和购幼。与植物油路线共享精炼终点。",
+      "mode": "capture-repeat",
+      "population": 4,
+      "growth_days": 5,
+      "production_days": 3,
+      "provider": {
+        "facility": "oilfish_harvest_station",
+        "inputs": {
+          "algae_feed": 48,
+          "grain": 8
+        },
+        "outputs": {
+          "crude_oil": 24,
+          "fish_meat": 4
+        },
+        "days": 9,
+        "start_ap": 1,
+        "claim_ap": 1,
+        "cash": 40
+      },
+      "first_transfer_days": 1,
+      "first_assignment_ap": 1,
+      "total_space": 8,
+      "station_count": 2,
+      "initial_extra_inputs": {
+        "algae_feed": 24
+      },
+      "initial_extra_cash": 40,
+      "standard_round_cost": 137.4,
+      "first_round_standard_cost": 137.4,
+      "sale_revenue": 132,
+      "direct_screening_margin": -5.4,
+      "exchange_resin": 16,
+      "exchange_remainder": {
+        "crude_oil": 0,
+        "fish_meat": 4
+      },
+      "exchange_transactions": [
+        {
+          "offer": "crude_oil_for_resin",
+          "batches": 8
+        }
+      ],
+      "exchange_sale_revenue": 132,
+      "exchange_screening_margin": -5.4,
+      "direct_purchase_inputs_cash": null
+    },
+    {
+      "species": "pearl_mussel",
+      "name": "珍珠蚌",
+      "role": "经济＋功能材料",
+      "purpose": "留栏取珠可直售/交换；珍珠用于研究、精滤，取壳是单独消耗成体的选择。",
+      "mode": "retained-steady",
+      "population": 4,
+      "growth_days": 6,
+      "production_days": 4,
+      "provider": {
+        "facility": "pearl_station",
+        "inputs": {
+          "algae_feed": 32,
+          "stone_powder": 4
+        },
+        "outputs": {
+          "pearl": 12
+        },
+        "days": 4,
+        "start_ap": 0,
+        "claim_ap": 1,
+        "cash": 0
+      },
+      "first_transfer_days": 1,
+      "first_assignment_ap": 1,
+      "total_space": 4,
+      "station_count": 1,
+      "initial_extra_inputs": {
+        "algae_feed": 28
+      },
+      "initial_extra_cash": 48,
+      "standard_round_cost": 50.44375,
+      "first_round_standard_cost": 142.37708333333333,
+      "sale_revenue": 72,
+      "direct_screening_margin": 21.55625,
+      "exchange_resin": 24,
+      "exchange_remainder": {
+        "pearl": 0
+      },
+      "exchange_transactions": [
+        {
+          "offer": "pearl_for_resin",
+          "batches": 6
+        }
+      ],
+      "exchange_sale_revenue": 144,
+      "exchange_screening_margin": 93.55625,
+      "direct_purchase_inputs_cash": null
+    },
+    {
+      "species": "gel_jellyfish",
+      "name": "凝胶水母",
+      "role": "功能材料＋交易",
+      "purpose": "凝水胶做保水基质或交换；已有正向留栏产出，不另改能力。",
+      "mode": "retained-steady",
+      "population": 4,
+      "growth_days": 4,
+      "production_days": 2,
+      "provider": {
+        "facility": "gel_station",
+        "inputs": {
+          "algae_feed": 16,
+          "clean_water": 4
+        },
+        "outputs": {
+          "water_gel": 8
+        },
+        "days": 2,
+        "start_ap": 0,
+        "claim_ap": 1,
+        "cash": 0
+      },
+      "first_transfer_days": 1,
+      "first_assignment_ap": 1,
+      "total_space": 4,
+      "station_count": 1,
+      "initial_extra_inputs": {
+        "algae_feed": 20
+      },
+      "initial_extra_cash": 48,
+      "standard_round_cost": 24.333333333333332,
+      "first_round_standard_cost": 104.0,
+      "sale_revenue": 32,
+      "direct_screening_margin": 7.666666666666667,
+      "exchange_resin": 6,
+      "exchange_remainder": {
+        "water_gel": 2
+      },
+      "exchange_transactions": [
+        {
+          "offer": "water_gel_for_resin",
+          "batches": 2
+        }
+      ],
+      "exchange_sale_revenue": 44,
+      "exchange_screening_margin": 19.666666666666668,
+      "direct_purchase_inputs_cash": null
+    },
+    {
+      "species": "reef_coral",
+      "name": "礁骨珊瑚",
+      "role": "滤材/建材＋特色交换",
+      "purpose": "珊瑚供制粉、多孔滤材和石板；直售偏弱，2珊瑚石换3松脂，3日轮减少生产等待。",
+      "mode": "retained-steady",
+      "population": 4,
+      "growth_days": 6,
+      "production_days": 3,
+      "provider": {
+        "facility": "coral_station",
+        "inputs": {
+          "algae_feed": 24,
+          "stone_powder": 12,
+          "clean_water": 4
+        },
+        "outputs": {
+          "coral_stone": 8
+        },
+        "days": 3,
+        "start_ap": 0,
+        "claim_ap": 1,
+        "cash": 0
+      },
+      "first_transfer_days": 1,
+      "first_assignment_ap": 1,
+      "total_space": 4,
+      "station_count": 1,
+      "initial_extra_inputs": {
+        "algae_feed": 28
+      },
+      "initial_extra_cash": 56,
+      "standard_round_cost": 48.73125,
+      "first_round_standard_cost": 148.66458333333333,
+      "sale_revenue": 16,
+      "direct_screening_margin": -32.73125,
+      "exchange_resin": 12,
+      "exchange_remainder": {
+        "coral_stone": 0
+      },
+      "exchange_transactions": [
+        {
+          "offer": "coral_stone_for_resin",
+          "batches": 4
+        }
+      ],
+      "exchange_sale_revenue": 72,
+      "exchange_screening_margin": 23.26875,
+      "direct_purchase_inputs_cash": null
+    }
+  ],
+  "alternatives": [
+    {
+      "id": "smelt_charcoal",
+      "inputs": {
+        "iron_ore": 3,
+        "charcoal": 1
+      },
+      "outputs": {
+        "iron_ingot": 1
+      },
+      "ap": 2,
+      "days": 2,
+      "total_standard_cost": 9.066666666666666,
+      "per_output_standard_cost": 9.066666666666666,
+      "note": "多产物按整批看待，不用混合产物的平均单价证明套利。"
+    },
+    {
+      "id": "smelt_resin",
+      "inputs": {
+        "iron_ore": 3,
+        "resin": 1
+      },
+      "outputs": {
+        "iron_ingot": 1
+      },
+      "ap": 2,
+      "days": 2,
+      "total_standard_cost": 12.7,
+      "per_output_standard_cost": 12.7,
+      "note": "多产物按整批看待，不用混合产物的平均单价证明套利。"
+    },
+    {
+      "id": "make_filter_media",
+      "inputs": {
+        "charcoal": 1,
+        "gravel": 2
+      },
+      "outputs": {
+        "filter_media": 2
+      },
+      "ap": 2,
+      "days": 1,
+      "total_standard_cost": 10.94375,
+      "per_output_standard_cost": 5.471875,
+      "note": "多产物按整批看待，不用混合产物的平均单价证明套利。"
+    },
+    {
+      "id": "smelt_concentrate",
+      "inputs": {
+        "ore_concentrate": 1,
+        "charcoal": 1
+      },
+      "outputs": {
+        "iron_ingot": 1,
+        "slag": 1
+      },
+      "ap": 2,
+      "days": 2,
+      "total_standard_cost": 16.540703125,
+      "per_output_standard_cost": 8.2703515625,
+      "note": "多产物按整批看待，不用混合产物的平均单价证明套利。"
+    },
+    {
+      "id": "assemble_stone_panel",
+      "inputs": {
+        "gravel": 2,
+        "stone_powder": 1,
+        "resin": 1
+      },
+      "outputs": {
+        "composite_stone_panel": 2
+      },
+      "ap": 2,
+      "days": 2,
+      "total_standard_cost": 16.671354166666667,
+      "per_output_standard_cost": 8.335677083333334,
+      "note": "多产物按整批看待，不用混合产物的平均单价证明套利。"
+    },
+    {
+      "id": "recover_fill",
+      "inputs": {
+        "tailings": 1,
+        "slag": 1,
+        "stone_powder": 1
+      },
+      "outputs": {
+        "reclaimed_fill": 2
+      },
+      "ap": 2,
+      "days": 1,
+      "total_standard_cost": 5.86594140625,
+      "per_output_standard_cost": 2.932970703125,
+      "note": "多产物按整批看待，不用混合产物的平均单价证明套利。"
+    },
+    {
+      "id": "make_silk_filter_media",
+      "inputs": {
+        "silk": 1,
+        "wood_chip": 1,
+        "charcoal": 1
+      },
+      "outputs": {
+        "filter_media": 3
+      },
+      "ap": 2,
+      "days": 1,
+      "total_standard_cost": 12.380416666666667,
+      "per_output_standard_cost": 4.126805555555555,
+      "note": "多产物按整批看待，不用混合产物的平均单价证明套利。"
+    },
+    {
+      "id": "assemble_mucus_panel",
+      "inputs": {
+        "gravel": 2,
+        "stone_powder": 1,
+        "mucus": 1
+      },
+      "outputs": {
+        "composite_stone_panel": 2
+      },
+      "ap": 2,
+      "days": 1,
+      "total_standard_cost": 12.025520833333333,
+      "per_output_standard_cost": 6.012760416666667,
+      "note": "多产物按整批看待，不用混合产物的平均单价证明套利。"
+    },
+    {
+      "id": "assemble_scale_panel",
+      "inputs": {
+        "mineral_scale": 2,
+        "shed_skin": 1,
+        "gravel": 1
+      },
+      "outputs": {
+        "composite_stone_panel": 3
+      },
+      "ap": 2,
+      "days": 1,
+      "total_standard_cost": 29.699934895833334,
+      "per_output_standard_cost": 9.899978298611112,
+      "note": "多产物按整批看待，不用混合产物的平均单价证明套利。"
+    },
+    {
+      "id": "assemble_shell_panel",
+      "inputs": {
+        "rock_shell": 2,
+        "mucus": 1
+      },
+      "outputs": {
+        "composite_stone_panel": 3
+      },
+      "ap": 2,
+      "days": 1,
+      "total_standard_cost": 11.953776041666666,
+      "per_output_standard_cost": 3.984592013888889,
+      "note": "多产物按整批看待，不用混合产物的平均单价证明套利。"
+    },
+    {
+      "id": "grind_shell",
+      "inputs": {
+        "mussel_shell": 2
+      },
+      "outputs": {
+        "stone_powder": 2
+      },
+      "ap": 2,
+      "days": 1,
+      "total_standard_cost": 26.2,
+      "per_output_standard_cost": 13.1,
+      "note": "多产物按整批看待，不用混合产物的平均单价证明套利。"
+    },
+    {
+      "id": "grind_coral",
+      "inputs": {
+        "coral_stone": 2
+      },
+      "outputs": {
+        "stone_powder": 2
+      },
+      "ap": 2,
+      "days": 1,
+      "total_standard_cost": 15.1828125,
+      "per_output_standard_cost": 7.59140625,
+      "note": "多产物按整批看待，不用混合产物的平均单价证明套利。"
+    },
+    {
+      "id": "make_water_retaining_matrix",
+      "inputs": {
+        "water_gel": 1,
+        "humus": 1,
+        "reed_stalk": 1
+      },
+      "outputs": {
+        "water_retaining_matrix": 4
+      },
+      "ap": 2,
+      "days": 1,
+      "total_standard_cost": 11.85,
+      "per_output_standard_cost": 2.9625,
+      "note": "多产物按整批看待，不用混合产物的平均单价证明套利。"
+    },
+    {
+      "id": "make_coral_filter_media",
+      "inputs": {
+        "coral_stone": 1,
+        "charcoal": 1
+      },
+      "outputs": {
+        "filter_media": 3
+      },
+      "ap": 2,
+      "days": 1,
+      "total_standard_cost": 12.658072916666667,
+      "per_output_standard_cost": 4.219357638888889,
+      "note": "多产物按整批看待，不用混合产物的平均单价证明套利。"
+    },
+    {
+      "id": "assemble_coral_panel",
+      "inputs": {
+        "coral_stone": 2,
+        "stone_powder": 1,
+        "mucus": 1
+      },
+      "outputs": {
+        "composite_stone_panel": 3
+      },
+      "ap": 2,
+      "days": 1,
+      "total_standard_cost": 19.83125,
+      "per_output_standard_cost": 6.610416666666667,
+      "note": "多产物按整批看待，不用混合产物的平均单价证明套利。"
+    }
+  ],
+  "resource_decisions": {
+    "water_retaining_matrix": {
+      "decision": "保留：浮萍/芦苇每轮替代腐殖土；当前单位标准成本低于腐殖土。无额外保水倍率。",
+      "uses": [
+        "proc:milestone:integrated_estate",
+        "proc:sell:water_retaining_matrix"
+      ]
+    },
+    "filter_media": {
+      "decision": "基础炭砂为通用路线；丝质与珊瑚路线每批3件，适合已有对应副产物的基地；比较等量产物和各自前置。",
+      "uses": [
+        "proc:batch:pearl_polish_water",
+        "proc:batch:recover_nutrients",
+        "proc:maintain:purifying_mat",
+        "proc:sell:filter_media"
+      ]
+    },
+    "composite_stone_panel": {
+      "decision": "保留补光灯及1:1建造替代。壳板等支路利用动物副产物；普通石板前置原料普遍、但配方耗时2日。",
+      "uses": [
+        "proc:build:algae_tank",
+        "proc:build:aquatic_crop_station",
+        "proc:build:carbonization_nest",
+        "proc:build:care_table",
+        "proc:build:carp_harvest_station",
+        "proc:build:char_kiln",
+        "proc:build:compost_bin",
+        "proc:build:compost_mouse_den",
+        "proc:build:coral_station",
+        "proc:build:dispatch_station",
+        "proc:build:farm_processor",
+        "proc:build:fish_pond",
+        "proc:build:gel_station",
+        "proc:build:growth_lamp",
+        "proc:build:kitchen",
+        "proc:build:oilfish_harvest_station",
+        "proc:build:ore_sorting_yard",
+        "proc:build:pearl_station",
+        "proc:build:pen",
+        "proc:build:purifying_bed",
+        "proc:build:research_bench",
+        "proc:build:rock_breaking_yard",
+        "proc:build:scale_station",
+        "proc:build:shell_forming_station",
+        "proc:build:silt_processing_station",
+        "proc:build:smelter",
+        "proc:build:soothing_station",
+        "proc:build:spirit_liquid_collector",
+        "proc:build:toy_station",
+        "proc:build:water_change_station",
+        "proc:build:woodshop",
+        "proc:build:wool_station",
+        "proc:milestone:integrated_estate",
+        "proc:sell:composite_stone_panel"
+      ]
+    },
+    "pollen": {
+      "decision": "保留蜂群协作一次性研究用途和低价回收。少量副产物无需强加高频盈利出口；交换花源样本可支持专精。",
+      "uses": [
+        "proc:research_start:beekeeping",
+        "proc:sell:pollen"
+      ]
+    },
+    "reclaimed_fill": {
+      "decision": "保留已有2:1替代建造用原石；不是无用途终点，也不是P10.7新增功能。按尾砂/炉渣回收场景评价。",
+      "uses": [
+        "proc:build:algae_tank",
+        "proc:build:aquatic_crop_station",
+        "proc:build:carbonization_nest",
+        "proc:build:care_table",
+        "proc:build:carp_harvest_station",
+        "proc:build:char_kiln",
+        "proc:build:compost_bin",
+        "proc:build:compost_mouse_den",
+        "proc:build:coral_station",
+        "proc:build:dispatch_station",
+        "proc:build:farm_processor",
+        "proc:build:fish_pond",
+        "proc:build:gel_station",
+        "proc:build:kitchen",
+        "proc:build:oilfish_harvest_station",
+        "proc:build:ore_sorting_yard",
+        "proc:build:pearl_station",
+        "proc:build:pen",
+        "proc:build:purifying_bed",
+        "proc:build:research_bench",
+        "proc:build:rock_breaking_yard",
+        "proc:build:scale_station",
+        "proc:build:shell_forming_station",
+        "proc:build:silt_processing_station",
+        "proc:build:smelter",
+        "proc:build:soothing_station",
+        "proc:build:spirit_liquid_collector",
+        "proc:build:toy_station",
+        "proc:build:water_change_station",
+        "proc:build:woodshop",
+        "proc:build:wool_station",
+        "proc:sell:reclaimed_fill"
+      ]
+    },
+    "coral_stone": {
+      "decision": "保留专属滤材/制粉/板材与特色交换；不要求直接出售覆盖全部成本。",
+      "uses": [
+        "proc:barter:coral_stone_for_resin",
+        "proc:batch:assemble_coral_panel",
+        "proc:batch:grind_coral",
+        "proc:batch:make_coral_filter_media",
+        "proc:sell:coral_stone"
+      ]
+    },
+    "mineral_scale": {
+      "decision": "保留材料、合法金行供货资格及特色交换；不伪造新的工业订单或提高供养值充当加价。",
+      "uses": [
+        "proc:barter:mineral_scale_for_resin",
+        "proc:batch:assemble_scale_panel",
+        "proc:sell:mineral_scale",
+        "proc:supply:mineral_scale"
+      ]
+    },
+    "pearl": {
+      "decision": "保留直售/交换、研究、精滤；取珠和取壳成本分开，不把贝壳算成每轮副产物。",
+      "uses": [
+        "proc:barter:pearl_for_resin",
+        "proc:batch:pearl_polish_water",
+        "proc:research_start:aquatic_intensive_care",
+        "proc:sell:pearl"
+      ]
+    },
+    "crude_oil": {
+      "decision": "动物取油提供高吞吐及鱼肉，植物榨油附油饼、可服务饲料链；同一精炼配方共用，捕捞另计补幼。",
+      "uses": [
+        "proc:barter:crude_oil_for_resin",
+        "proc:batch:refine_oil",
+        "proc:research_start:advanced_feed_oil_wax",
+        "proc:sell:crude_oil"
+      ]
+    }
+  },
+  "real_engine_quote_matrix": {
+    "vectors": 1200,
+    "sha256": "f7a4d18724b9d5bf1fdef191895c4c09f117eb16b797da2c1ca7048282855afd",
+    "scope": "all supply resources, five paths, ranks1-5, demand1 and normal tier demand"
+  },
+  "actual_capture_lifetimes": [
+    {
+      "assignment_ap": 1,
+      "cash": 20,
+      "claim_ap": 1,
+      "days": 7,
+      "inputs": {
+        "algae_feed": 36,
+        "grain": 4
+      },
+      "population": 4,
+      "species": "filter_algae_carp"
+    },
+    {
+      "assignment_ap": 1,
+      "cash": 40,
+      "claim_ap": 1,
+      "days": 9,
+      "inputs": {
+        "algae_feed": 48,
+        "grain": 8
+      },
+      "population": 4,
+      "species": "oilfin_fish"
+    }
+  ],
+  "normal_processing": [
+    {
+      "id": "saw_planks",
+      "cash_inputs": 12,
+      "sale_outputs": 18,
+      "cash_difference": 6,
+      "ap": 2,
+      "days": 1
+    },
+    {
+      "id": "shred_wood",
+      "cash_inputs": 6,
+      "sale_outputs": 8,
+      "cash_difference": 2,
+      "ap": 2,
+      "days": 1
+    },
+    {
+      "id": "shred_twigs",
+      "cash_inputs": 6,
+      "sale_outputs": 6,
+      "cash_difference": 0,
+      "ap": 2,
+      "days": 1
+    },
+    {
+      "id": "char_twigs",
+      "cash_inputs": 12,
+      "sale_outputs": 15,
+      "cash_difference": 3,
+      "ap": 2,
+      "days": 2
+    },
+    {
+      "id": "compost_straw",
+      "cash_inputs": 6,
+      "sale_outputs": 8,
+      "cash_difference": 2,
+      "ap": 2,
+      "days": 2
+    },
+    {
+      "id": "compost_twigs",
+      "cash_inputs": 9,
+      "sale_outputs": 8,
+      "cash_difference": -1,
+      "ap": 2,
+      "days": 2
+    },
+    {
+      "id": "compost_chips",
+      "cash_inputs": 12,
+      "sale_outputs": 8,
+      "cash_difference": -4,
+      "ap": 2,
+      "days": 2
+    },
+    {
+      "id": "culture_algae",
+      "cash_inputs": 12,
+      "sale_outputs": 12,
+      "cash_difference": 0,
+      "ap": 2,
+      "days": 2
+    },
+    {
+      "id": "compost_grass",
+      "cash_inputs": 4,
+      "sale_outputs": 8,
+      "cash_difference": 4,
+      "ap": 2,
+      "days": 2
+    },
+    {
+      "id": "mill_grain",
+      "cash_inputs": 12,
+      "sale_outputs": 6,
+      "cash_difference": -6,
+      "ap": 2,
+      "days": 1
+    },
+    {
+      "id": "mill_grass",
+      "cash_inputs": 6,
+      "sale_outputs": 2,
+      "cash_difference": -4,
+      "ap": 2,
+      "days": 1
+    },
+    {
+      "id": "make_vine_ball",
+      "cash_inputs": 12,
+      "sale_outputs": 0,
+      "cash_difference": -12,
+      "ap": 2,
+      "days": 1
+    }
+  ],
+  "growth_budget": {
+    "kind": "declared-stage2-reference-module-not-a-fresh-run",
+    "start_cash": 298,
+    "end_cash": 182,
+    "start_inventory": {
+      "fast_fir_seed": 2,
+      "golden_wheat_seed": 8,
+      "resin_tree_seed": 1,
+      "wood_decay_spawn": 4
+    },
+    "preexisting_knowledge": [
+      "flower_cultivation",
+      "farm_preparation"
+    ],
+    "ordinary_expansion_count": 2,
+    "expansion_seed_cash": 20,
+    "expansion_ap": 10,
+    "total_three_tree_tiles": 12,
+    "round_days": [
+      11,
+      14,
+      17,
+      20,
+      23,
+      26
+    ],
+    "startup_resin_sold": 12,
+    "steady_rounds_collected": 5,
+    "steady_resin": 60,
+    "event_resin_cost": 52,
+    "smelting_resin_cost": 1,
+    "remaining_resin": 7,
+    "bought_inputs": {
+      "resin_tree_seed": 2,
+      "raw_wood": 11,
+      "fodder_grass": 2,
+      "grain": 1
+    },
+    "construction_research_gu_cash": {
+      "woodshop": 8,
+      "compost_bin": 6,
+      "smelter": 20,
+      "research_bench": 8,
+      "research:field_maintenance": 8,
+      "field_service_station": 18,
+      "gu:growth_gu": 24
+    },
+    "all_cash_spent": 188,
+    "cash_sales": 72,
+    "target_package": "产业进阶交付＋田间自动维护研究＋研究台/田间维护站建造＋催生蛊购买；支撑工坊与全部原料、AP已实付"
+  },
+  "water_chain": {
+    "population": 4,
+    "production_days": 4,
+    "inputs": {
+      "algae_feed": 32,
+      "stone_powder": 4
+    },
+    "outputs": {
+      "pearl": 12
+    },
+    "upstream": "金穗麦秸秆＋清水→基础藻料；碎岩/贝壳制粉→石粉；留栏珍珠直售/交换",
+    "standard_round_cost": 50.44375,
+    "conservative_water_extra": 11.2,
+    "direct_margin_after_water_screening": 10.35625,
+    "capital_facilities": {
+      "pen": 2,
+      "feed_trough": 4,
+      "small_bed": 2,
+      "pearl_station": 1,
+      "algae_tank": 3,
+      "compost_bin": 1,
+      "woodshop": 1
+    },
+    "capital_cash": 148,
+    "capital_materials": {
+      "twig": 32,
+      "raw_wood": 22,
+      "raw_stone": 15,
+      "wood_plank": 2
+    },
+    "capital_note": "育幼/生产各16格鱼栅＋圈舍/2供食槽/小床，生产池另有采珠台；床不扣活动空间，圈舍/食槽/台体会扣，需保证净活动空间合格。清单含3藻槽、木工台与堆肥箱；作物种苗/开垦、研究和育幼另计，不伪称完整现金回本。",
+    "complete_steady_plan": {
+      "kind": "analytic-capacity-plan-not-full-runtime-replay",
+      "per_four_days": {
+        "wheat_plots": 6,
+        "resin_trees": 3,
+        "algae_tanks": 3,
+        "algae_batches": 6,
+        "algae_produced": 36,
+        "algae_used": 32,
+        "resin_used_for_powder": 16,
+        "powder_received": 4,
+        "cash_outputs": {
+          "grain": 18,
+          "pearl": 12,
+          "gravel": 12
+        },
+        "sale_revenue": 156,
+        "seed_cash": 18,
+        "fertility_points_used": 96,
+        "humus_used_ceiling": 4,
+        "compost_batches": 2,
+        "fodder_grass_bought": 4,
+        "support_cash": 8,
+        "cash_surplus_before_initial_capital": 130,
+        "water_units": 50.8,
+        "gather_ap": 11,
+        "total_ap": 72.8
+      },
+      "footprint": {
+        "wheat_land": 6,
+        "resin_land": 12,
+        "algae_tank_land": 12,
+        "compost_land": 1,
+        "woodshop_land": 4,
+        "fenced_water": 32
+      },
+      "constraints": [
+        "先准备幼体/成长食料与石粉缓冲，研究和资本已完成；不把这些首次投入当作免费。",
+        "错峰种植、培藻与采脂，维护水肥/水质；12日内3个取珠轮和4个留株采脂轮闭合，不为凑轮数缩短生物周期。",
+        "这里按实物整链算销售减购种现金，不能与分摊标准成本余量相加，也不等于已回收初建资本。"
+      ]
+    }
+  },
+  "boost_comparison": {
+    "agriculture_three_trees": {
+      "ordinary_cycle_days": 3,
+      "growth_gu_cycle_days": 2,
+      "output_per_round": 12,
+      "ordinary_sale_per_day": 24,
+      "gu_sale_per_day": 36,
+      "gu_fee_per_day": 3,
+      "net_sale_less_gu_fee_per_day": 33,
+      "gu_purchase_cash": 72,
+      "assumption": "三个宿主各完整覆盖一株2×2树，150%原能力；满水肥光，及时收获，另付站体与维护物料，不是全程实测利润。"
+    },
+    "pearl_four_adults": {
+      "ordinary_pearl_per_round": 12,
+      "yield_gu_expected_pearl": 15,
+      "yield_gu_fee_per_round": 4,
+      "direct_extra_sale_less_fee": 14,
+      "feed_gu_expected_algae_saved": 8,
+      "feed_gu_fee_per_round": 8,
+      "feed_gu_standard_saving_less_fee": 2.2666666666666666,
+      "assumption": "单采珠台可服务4空间；节粮需足够供食槽覆盖，维持窗口每槽2名额；两槽各入驻时费用为8，见容量说明，期望不是保底。"
+    }
+  },
+  "audited_cases": [
+    {
+      "case": "stage-orders",
+      "checks": 2802,
+      "commands": 153,
+      "days": 19,
+      "cash": 259
+    },
+    {
+      "case": "stage-resources",
+      "checks": 170,
+      "commands": 9,
+      "days": 1,
+      "cash": 298
+    },
+    {
+      "case": "barter",
+      "checks": 423,
+      "commands": 21,
+      "days": 1,
+      "cash": 298
+    },
+    {
+      "case": "research-access",
+      "checks": 163,
+      "commands": 8,
+      "days": 2,
+      "cash": 130
+    },
+    {
+      "case": "specialist-route",
+      "checks": 176,
+      "commands": 8,
+      "days": 1,
+      "cash": 298
+    },
+    {
+      "case": "growth-budget",
+      "checks": 6545,
+      "commands": 123,
+      "days": 25,
+      "cash": 182
+    }
+  ],
+  "cycle_certificate": {
+    "events": 3,
+    "offers": 23,
+    "market_exchange_potential": {
+      "golden_wheat_seed": "1",
+      "fast_fir_seed": "1",
+      "resin_tree_seed": "1",
+      "wood_decay_spawn": "1",
+      "grain": "4",
+      "straw": "1",
+      "raw_wood": "4",
+      "twig": "2",
+      "resin": "27/4",
+      "mushroom": "6",
+      "humus": "4",
+      "raw_stone": "1",
+      "iron_ore": "2",
+      "clean_water": "1",
+      "wood_chip": "2",
+      "wood_plank": "8",
+      "charcoal": "5",
+      "iron_ingot": "12",
+      "grass_seed": "1",
+      "fodder_grass": "1",
+      "steel_wool": "12",
+      "sheep_manure": "1",
+      "algae_feed": "2",
+      "fish_meat": "9",
+      "fish_manure": "1",
+      "honeybell_seed": "1",
+      "oilseed_flower_seed": "1",
+      "purifying_mat_culture": "1",
+      "nectar": "2",
+      "pollen": "1",
+      "honey": "6",
+      "beeswax": "3",
+      "oilseed": "2",
+      "flower_petal": "1",
+      "grain_meal": "3",
+      "grass_meal": "1",
+      "crude_oil": "9/2",
+      "oil_cake": "1",
+      "refined_oil": "7",
+      "spent_filter": "1",
+      "land_feed": "3",
+      "water_feed": "3",
+      "refined_wax": "6",
+      "mineral_feed": "4",
+      "filter_media": "2",
+      "wastewater": "1",
+      "sludge": "1",
+      "nutrient_liquid": "2",
+      "dense_algae": "4",
+      "gravel": "1",
+      "stone_powder": "1",
+      "crushed_ore": "2",
+      "ore_concentrate": "5",
+      "tailings": "1",
+      "slag": "1",
+      "composite_stone_panel": "4",
+      "reclaimed_fill": "1",
+      "honey_cake": "8",
+      "fish_spirit_meal": "12",
+      "dew_soup": "7",
+      "fire_paste": "12",
+      "earth_pill": "8",
+      "gold_food": "20",
+      "rice": "3",
+      "time_feed": "1",
+      "vine_ball": "1",
+      "mulberry_seed": "1",
+      "mulberry_leaf": "1",
+      "silk": "81/16",
+      "spirit_liquid": "27/4",
+      "mucus": "2",
+      "mineral_scale": "27/2",
+      "shed_skin": "1",
+      "rock_shell": "3",
+      "pearl": "27/2",
+      "mussel_shell": "1",
+      "water_gel": "27/4",
+      "coral_stone": "81/8",
+      "duckweed": "1",
+      "duckweed_seed": "1",
+      "reed_stalk": "1",
+      "reed_seed": "1",
+      "fish_meal": "2",
+      "water_retaining_matrix": "2"
+    },
+    "exchange_potential": {
+      "beeswax": "1/10",
+      "composite_stone_panel": "1/10",
+      "coral_stone": "3/2",
+      "crude_oil": "2/3",
+      "crushed_ore": "1/10",
+      "dense_algae": "1/10",
+      "fish_meat": "1/10",
+      "gravel": "1/10",
+      "honey": "3/4",
+      "mineral_scale": "2",
+      "nectar": "1/10",
+      "ore_concentrate": "1/10",
+      "pearl": "2",
+      "pollen": "1/10",
+      "refined_oil": "1/10",
+      "resin": "1",
+      "silk": "3/4",
+      "sludge": "1/10",
+      "spirit_liquid": "1",
+      "stone_powder": "1/10",
+      "water_gel": "1",
+      "water_retaining_matrix": "1/10"
+    }
+  }
+}
