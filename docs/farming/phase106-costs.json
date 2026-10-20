@@ -1,0 +1,421 @@
+{
+  "kind": "p106-cost-comparison",
+  "source_sha256": "0467a49441c33a4fcd76fcf8a75080c599c993079d0689a18c5fc3e9c368307c",
+  "water_capital": {
+    "carp_harvest_station": {
+      "cash": 12,
+      "materials": {
+        "wood_plank": 2,
+        "raw_stone": 2
+      },
+      "material_standard_cost": 10.4542,
+      "cash_plus_materials": 22.4542
+    },
+    "oilfish_harvest_station": {
+      "cash": 16,
+      "materials": {
+        "wood_plank": 2,
+        "raw_stone": 3
+      },
+      "material_standard_cost": 10.7875,
+      "cash_plus_materials": 26.7875
+    },
+    "pearl_station": {
+      "cash": 16,
+      "materials": {
+        "wood_plank": 2,
+        "raw_stone": 3
+      },
+      "material_standard_cost": 10.7875,
+      "cash_plus_materials": 26.7875
+    },
+    "gel_station": {
+      "cash": 16,
+      "materials": {
+        "wood_plank": 2,
+        "raw_stone": 3
+      },
+      "material_standard_cost": 10.7875,
+      "cash_plus_materials": 26.7875
+    },
+    "coral_station": {
+      "cash": 20,
+      "materials": {
+        "wood_plank": 2,
+        "raw_stone": 4
+      },
+      "material_standard_cost": 11.1208,
+      "cash_plus_materials": 31.1208
+    },
+    "silt_processing_station": {
+      "cash": 14,
+      "materials": {
+        "wood_plank": 2,
+        "raw_stone": 2
+      },
+      "material_standard_cost": 10.4542,
+      "cash_plus_materials": 24.4542
+    },
+    "aquatic_crop_station": {
+      "cash": 8,
+      "materials": {
+        "wood_plank": 1,
+        "raw_stone": 2
+      },
+      "material_standard_cost": 5.5604,
+      "cash_plus_materials": 13.5604
+    },
+    "water_change_station": {
+      "cash": 16,
+      "materials": {
+        "wood_plank": 2,
+        "raw_stone": 4
+      },
+      "material_standard_cost": 11.1208,
+      "cash_plus_materials": 27.1208
+    },
+    "soothing_station": {
+      "cash": 18,
+      "materials": {
+        "wood_plank": 2,
+        "raw_stone": 2
+      },
+      "material_standard_cost": 10.4542,
+      "cash_plus_materials": 28.4542
+    },
+    "fish_fence_per_cell": {
+      "cash": 1,
+      "materials": {
+        "twig": 1
+      },
+      "ap_per_cell": 1
+    }
+  },
+  "groups": {
+    "oil": {
+      "press_oilseed_per_batch": {
+        "inputs": {
+          "oilseed": 4
+        },
+        "input_standard_cost": 7.92,
+        "days": 2,
+        "ap": 2,
+        "cash": 0,
+        "outputs": {
+          "crude_oil": 2,
+          "oil_cake": 2
+        }
+      },
+      "oilfin_round_per_4_animals": {
+        "inputs": {
+          "algae_feed": 44,
+          "water_feed": 4
+        },
+        "input_standard_cost": 69.1087,
+        "days": 8,
+        "ap": 10,
+        "cash": 40,
+        "outputs": {
+          "crude_oil": 8,
+          "fish_meat": 4
+        }
+      },
+      "refine_oil_per_batch": {
+        "inputs": {
+          "crude_oil": 2,
+          "charcoal": 1
+        },
+        "input_standard_cost": 13.1027,
+        "outputs": {
+          "refined_oil": 2,
+          "spent_filter": 1
+        },
+        "days": 1
+      },
+      "note": "油鳍鱼路线含育幼5日与捕捞消耗成体；种植路线按每批压榨。两条产出的粗油都走同一精炼。"
+    },
+    "feeds": {
+      "mill_grass": {
+        "inputs": {
+          "fodder_grass": 3
+        },
+        "input_standard_cost": 9.2,
+        "outputs": {
+          "grass_meal": 2
+        }
+      },
+      "mill_duckweed": {
+        "inputs": {
+          "duckweed": 2
+        },
+        "input_standard_cost": 5.275,
+        "outputs": {
+          "grass_meal": 2
+        },
+        "duckweed_standard_cost": 2.6375
+      },
+      "blend_water_feed_plain": {
+        "inputs": {
+          "algae_feed": 3,
+          "grain_meal": 1,
+          "oil_cake": 1
+        },
+        "input_standard_cost": 9.642,
+        "outputs": {
+          "water_feed": 4
+        }
+      },
+      "blend_fish_water_feed": {
+        "inputs": {
+          "algae_feed": 3,
+          "grain_meal": 1,
+          "fish_meal": 1
+        },
+        "input_standard_cost": 13.5804,
+        "outputs": {
+          "water_feed": 4
+        }
+      },
+      "blend_fish_land_feed": {
+        "inputs": {
+          "fish_meal": 1,
+          "grass_meal": 2,
+          "oil_cake": 1
+        },
+        "input_standard_cost": 18.5224,
+        "outputs": {
+          "land_feed": 3
+        }
+      }
+    },
+    "filters_minerals": {
+      "make_filter_media": {
+        "inputs": {
+          "charcoal": 1,
+          "gravel": 2
+        },
+        "input_standard_cost": 26.275,
+        "outputs": {
+          "filter_media": 2
+        }
+      },
+      "make_coral_filter_media": {
+        "inputs": {
+          "coral_stone": 1,
+          "charcoal": 1
+        },
+        "input_standard_cost": 33.9823,
+        "outputs": {
+          "filter_media": 3
+        },
+        "coral_stone_standard_cost": 30.415625
+      },
+      "assemble_stone_panel": {
+        "inputs": {
+          "gravel": 2,
+          "stone_powder": 1,
+          "resin": 1
+        },
+        "input_standard_cost": 35.5854,
+        "outputs": {
+          "composite_stone_panel": 2
+        }
+      },
+      "assemble_coral_panel": {
+        "inputs": {
+          "coral_stone": 2,
+          "stone_powder": 1,
+          "mucus": 1
+        },
+        "input_standard_cost": 76.5167,
+        "outputs": {
+          "composite_stone_panel": 3
+        }
+      },
+      "grind_shell": {
+        "inputs": {
+          "mussel_shell": 2
+        },
+        "input_standard_cost": 23.2,
+        "outputs": {
+          "stone_powder": 2
+        },
+        "mussel_shell_standard_cost": 11.6
+      },
+      "grind_coral": {
+        "inputs": {
+          "coral_stone": 2
+        },
+        "input_standard_cost": 60.8312,
+        "outputs": {
+          "stone_powder": 2
+        }
+      },
+      "mineral_loop_note": "珊瑚石2制石粉2而一轮采礁消耗石粉3：基础转换有损，无外部投入不能无限增发。"
+    },
+    "compost": {
+      "compost_straw": {
+        "inputs": {
+          "straw": 2
+        },
+        "input_standard_cost": 3.1,
+        "outputs": {
+          "humus": 2
+        }
+      },
+      "compost_reed": {
+        "inputs": {
+          "reed_stalk": 2
+        },
+        "input_standard_cost": 4.5167,
+        "outputs": {
+          "humus": 2
+        },
+        "reed_stalk_standard_cost": 2.2583333333333333
+      },
+      "loach_batch": {
+        "inputs": {
+          "sludge": 2,
+          "duckweed": 1
+        },
+        "input_standard_cost": 8.12,
+        "outputs": {
+          "humus": 3
+        },
+        "plus": "每完成批次一次至多8格×8点水质改善；单条泥鳅无法抵消16格水体衰减（见回放）",
+        "humus_standard_cost": 3.55
+      }
+    },
+    "rounds_and_spirit": {
+      "carp": {
+        "inputs": {
+          "algae_feed": 32,
+          "grain": 4
+        },
+        "input_standard_cost": 53.4667,
+        "days": 6,
+        "ap": 8,
+        "cash": 20,
+        "outputs": {
+          "fish_meat": 12,
+          "fish_manure": 4
+        }
+      },
+      "oilfin": {
+        "inputs": {
+          "algae_feed": 44,
+          "water_feed": 4
+        },
+        "input_standard_cost": 69.1087,
+        "days": 8,
+        "ap": 10,
+        "cash": 40,
+        "outputs": {
+          "crude_oil": 8,
+          "fish_meat": 4
+        }
+      },
+      "pearl": {
+        "inputs": {
+          "algae_feed": 56,
+          "stone_powder": 4
+        },
+        "input_standard_cost": 94.575,
+        "days": 10,
+        "ap": 12,
+        "cash": 48,
+        "outputs": {
+          "pearl": 8
+        }
+      },
+      "gel": {
+        "inputs": {
+          "algae_feed": 32,
+          "clean_water": 4
+        },
+        "input_standard_cost": 41.8667,
+        "days": 6,
+        "ap": 8,
+        "cash": 48,
+        "outputs": {
+          "water_gel": 8
+        }
+      },
+      "coral": {
+        "inputs": {
+          "algae_feed": 72,
+          "stone_powder": 12,
+          "clean_water": 4
+        },
+        "input_standard_cost": 161.325,
+        "days": 12,
+        "ap": 14,
+        "cash": 56,
+        "outputs": {
+          "coral_stone": 8
+        }
+      },
+      "mussel_shell": {
+        "inputs": {
+          "algae_feed": 24
+        },
+        "input_standard_cost": 30.8,
+        "days": 6,
+        "ap": 8,
+        "cash": 48,
+        "outputs": {
+          "mussel_shell": 8
+        }
+      },
+      "spirit_pearl_variant": {
+        "extra_inputs": {
+          "stone_powder": 1,
+          "spirit_liquid": 1
+        },
+        "extra_standard_cost": 20.6896,
+        "extra_output": 1,
+        "spirit_liquid_sell": 6,
+        "opportunity_note": "灵液变体每轮多产1珠；直接出售灵液的机会成本按灵液售价计。"
+      },
+      "spirit_gel_variant": {
+        "extra_inputs": {
+          "clean_water": 1,
+          "spirit_liquid": 1
+        },
+        "extra_standard_cost": 15.2125,
+        "extra_output": 1,
+        "water_gel_sell": 4
+      }
+    },
+    "shared_gu": {
+      "product_yield_gu": {
+        "market_price": 32,
+        "daily_fee": 1,
+        "effect": "主产物期望+25%",
+        "break_even_note": "按物种主产物标准成本折算回本批次；小规模高维护不一定合算。"
+      },
+      "feed_saving_gu": {
+        "market_price": 32,
+        "daily_fee": 1,
+        "effect": "基础食物−25%",
+        "break_even_note": "每4份基础粮省1份；省下的是最便宜的一档，回本依赖大存栏。"
+      },
+      "voucher": {
+        "best_case": "完整育幼贡献10%首轮进度",
+        "cost": "目标区需持续运行丰养蛊（1元石/日）"
+      }
+    }
+  },
+  "standard_cost_reference": {
+    "crude_oil": "596/125",
+    "fish_meat": "1394/225",
+    "pearl": "6583/320",
+    "water_gel": "779/60",
+    "coral_stone": "9733/320",
+    "duckweed": "211/80",
+    "reed_stalk": "271/120",
+    "fish_meal": "3463/675",
+    "water_retaining_matrix": "523/96",
+    "mussel_shell": "58/5"
+  }
+}

@@ -273,6 +273,11 @@ func merge_bodies(a_uid: int, b_uid: int) -> Dictionary:
 	row_a["cells"].sort()
 	row_a["quality"] = quality_before
 	state["bodies"].erase(row_b)
+	# Rooms of the absorbed body follow the survivor, or they would dangle.
+	for zone in world.ranch.state["zones"]:
+		if int(zone.get("body_uid", 0)) == b_uid:
+			zone["body_uid"] = a_uid
+			world.ranch._record("zone", "rebody", {"zone": int(zone["uid"]), "body": a_uid})
 	world.record_operation({"kind": "water", "stage": "merge", "day": world.clock.total_days,
 		"body": a_uid, "removed": b_uid, "cells": row_a["cells"].duplicate(),
 		"quality": quality_before})
@@ -294,8 +299,17 @@ func split_body(body_uid: int, cells: Array) -> Dictionary:
 	for key in texts:
 		if not row["cells"].has(key):
 			return _error("所选格子不全在该水体内")
-		if world.grid.state_at(_cell_of(key)) in [Grid.State.OCCUPIED, Grid.State.PLANTED]:
-			return _error("格子上还有设施或作物，先安置再拆分")
+	# A standing footprint may move wholesale with its cells, but no facility
+	# or crop may be cut across the line (§16.2.4: 固定占地不可切开).
+	for uid in world.facilities:
+		var facility_cells: Array = world.ranch.facility_footprint(world.facilities[uid])
+		var inside := 0
+		for cell in facility_cells:
+			if texts.has(_key(cell)):
+				inside += 1
+		if inside > 0 and inside < facility_cells.size():
+			return _error("设施占地跨越拆分线，先重新安置设施")
+	# Water crops are 1x1 anchored: a crop cell simply moves with its body.
 	var keep: Array = []
 	for key in row["cells"]:
 		if not texts.has(key):
