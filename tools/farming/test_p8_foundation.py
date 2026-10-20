@@ -26,22 +26,22 @@ class P8FoundationTests(unittest.TestCase):
 
     def test_registry_counts(self):
         out=bake.compile_config(self.source)
-        self.assertEqual(len(out['resources']),65)
-        self.assertEqual(len(out['crops']),7)
-        self.assertEqual(len(out['facilities']),21)
-        self.assertEqual(len(out['recipes']),41)
-        self.assertEqual(len(out['livestock']),6)
+        self.assertEqual(len(out['resources']),84)
+        self.assertEqual(len(out['crops']),10)
+        self.assertEqual(len(out['facilities']),39)
+        self.assertEqual(len(out['recipes']),64)
+        self.assertEqual(len(out['livestock']),17)
         self.assertNotIn('species', self.source)
-        self.assertEqual(len(out['research']),12)
+        self.assertEqual(len(out['research']),13)
         audit=out['research_audit']
-        self.assertEqual(audit['fee'],94); self.assertEqual(audit['days'],44)
-        self.assertEqual(len(audit['order']),12)
+        self.assertEqual(audit['fee'],104); self.assertEqual(audit['days'],48)
+        self.assertEqual(len(audit['order']),13)
         self.assertEqual(out['layout_audit']['land_used']<=out['layout_audit']['land_total'],True)
 
     def test_old_supply_values_frozen(self):
         out=bake.compile_config(self.source)
         items={r['id']:r for r in out['resources']}
-        for iid,value in dict(steel_wool=11,fish_meat=6,humus=4,iron_ingot=10,charcoal=4,mushroom=5,resin=8,grain=4,clean_water=1).items():
+        for iid,value in dict(steel_wool=11,fish_meat=7,humus=4,iron_ingot=10,charcoal=4,mushroom=5,resin=8,grain=4,clean_water=1).items():
             self.assertEqual(items[iid]['supply_value'],value,iid)
 
     def test_exact_new_costs_and_values(self):
@@ -52,7 +52,7 @@ class P8FoundationTests(unittest.TestCase):
             p=items[iid]['standard_cost']
             self.assertEqual(Fraction(p['numerator'],p['denominator']),value,iid)
         for iid,value in dict(honey=10,nectar=8,refined_oil=8,gold_food=27,honey_cake=13,
-                              fish_spirit_meal=12,dew_soup=9,fire_paste=19,earth_pill=13).items():
+                              fish_spirit_meal=13,dew_soup=9,fire_paste=19,earth_pill=13).items():
             self.assertEqual(items[iid]['supply_value'],value,iid)
         self.assertFalse(items['mineral_feed']['supply_allowed'])
 

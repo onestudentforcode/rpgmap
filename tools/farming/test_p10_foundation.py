@@ -13,8 +13,8 @@ class LogisticsFoundation(unittest.TestCase):
         with self.assertRaises(ValueError): validate(self.source)
     def test_template_instance_boundary(self):
         cfg=self.source['logistics']
-        self.assertEqual(len(cfg['definitions']),7)
-        self.assertEqual(len(cfg['provision']),11)
+        self.assertEqual(len(cfg['definitions']),11)
+        self.assertEqual(len(cfg['provision']),15)
         self.assertEqual(cfg['provision'][:6],
             ['rice_bag_gu','rice_bag_gu','bright_gu','growth_gu','wisdom_gu','time_gu'])
         self.assertEqual(cfg['provision'].count('growth_gu'),2)
@@ -75,7 +75,8 @@ class LogisticsFoundation(unittest.TestCase):
     def test_scope_and_evaluator_cannot_drift(self):
         self.reject(lambda c:c['definitions'][1].update(scope='SELF'))
     def test_unsupported_fractional_research_speed_rejected(self):
-        self.reject(lambda c:c['definitions'][-1].update(value=150))
+        time_gu=lambda c: next(d for d in c['definitions'] if d['id']=='time_gu')
+        self.reject(lambda c:time_gu(c).update(value=150))
     def test_invalid_environment_and_fractional_fee(self):
         for field in ('min_water','min_light','water_use'):
             with self.subTest(field=field):
@@ -88,7 +89,8 @@ class LogisticsFoundation(unittest.TestCase):
         food=next(r for r in out['resources'] if r['id']=='time_feed')
         self.assertEqual(food['buy_price'],2)
         self.assertIn('gu_maintenance:time_gu',food['consumers'])
-        self.assertEqual(self.source['logistics']['definitions'][-1]['food'],{'time_feed':1})
+        time_gu=next(d for d in self.source['logistics']['definitions'] if d['id']=='time_gu')
+        self.assertEqual(time_gu['food'],{'time_feed':1})
     def test_rice_production_cost_and_downstream_are_real(self):
         out=bake_p8.compile_config(self.source)
         rice=next(r for r in out['resources'] if r['id']=='rice')
@@ -101,8 +103,8 @@ class LogisticsFoundation(unittest.TestCase):
         self.assertEqual(model['inputs'],{'clean_water':1})
     def test_new_recipe_reachable_without_extra_research(self):
         out=bake_p8.compile_config(self.source)
-        self.assertEqual(out['research_audit']['days'],44)
-        self.assertEqual(out['research_audit']['fee'],94)
+        self.assertEqual(out['research_audit']['days'],48)
+        self.assertEqual(out['research_audit']['fee'],104)
         project=next(r for r in out['research'] if r['id']=='farm_preparation')
         self.assertIn('mill_rice',project['unlocks']['recipes'])
 

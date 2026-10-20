@@ -102,6 +102,7 @@ func recipe_definition(facility_uid: int, recipe_id: String) -> Dictionary:
 		if habitat.is_empty(): return {}
 		return living_recipe(world.husbandry.species_def(String(habitat["species_id"])), recipe_id, world.recipe_defs)
 	var recipe: Dictionary = world.recipe_defs.get(recipe_id, {})
+	if not world.batch_block(recipe_id).is_empty(): return {}
 	return recipe if String(recipe.get("facility", "")) == String(facility["facility_id"]) else {}
 
 func available_recipes(facility_uid: int) -> Dictionary:
@@ -258,6 +259,8 @@ func auto_start_block(facility_uid: int) -> String:
 	if not facility["batch"].is_empty():
 		return "在制批次未完成"
 	var recipe: Dictionary = world.recipe_defs.get(String(strategy["recipe_id"]), {})
+	var biological: String = world.batch_block(String(strategy["recipe_id"]))
+	if not biological.is_empty(): return biological
 	if recipe.is_empty() or String(recipe["facility"]) != String(facility["facility_id"]):
 		return "策略配方不适用"
 	var blocked: String = world.research_block(String(recipe.get("research", "")))
@@ -532,6 +535,8 @@ static func normalize(value, day: int, world: Dictionary, workforce: Dictionary,
 		if definition.get("kind") == "research" or definition["id"] in ["growth_lamp", "field_service_station"]:
 			return Scalars.fail("该设施不使用持续生产策略")
 		if bool(row["enabled"]):
+			if catalog.load_data()["p103"]["work"]["recipes"].has(String(row["recipe_id"])):
+				return Scalars.fail("生物岗位不接受通用加工策略")
 			var recipe = recipe_defs.get(String(row["recipe_id"]))
 			if definition.get("kind") == "habitat":
 				recipe = null

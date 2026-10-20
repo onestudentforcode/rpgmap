@@ -591,7 +591,7 @@
     },
     {
       "id": "crude_oil",
-      "name": "粗植物油",
+      "name": "粗油",
       "element": "fire",
       "form": "liquid",
       "stage": "intermediate",
@@ -1015,6 +1015,266 @@
       "buy_price": 0,
       "sell_price": 0,
       "cost_source": "make_vine_ball"
+    },
+    {
+      "id": "mulberry_seed",
+      "name": "果桑种苗",
+      "element": "wood",
+      "form": "solid",
+      "stage": "primary",
+      "tags": [
+        "seed",
+        "cultivation"
+      ],
+      "supply_allowed": false,
+      "buy_price": 6,
+      "sell_price": 0,
+      "cost_source": "purchase"
+    },
+    {
+      "id": "mulberry_leaf",
+      "name": "桑叶",
+      "element": "wood",
+      "form": "solid",
+      "stage": "primary",
+      "tags": [
+        "animal_feed",
+        "organic"
+      ],
+      "supply_allowed": false,
+      "buy_price": 2,
+      "sell_price": 1,
+      "cost_source": "mulberry"
+    },
+    {
+      "id": "silk",
+      "name": "蚕丝",
+      "element": "wood",
+      "form": "solid",
+      "stage": "intermediate",
+      "tags": [
+        "food",
+        "animal_product"
+      ],
+      "supply_allowed": true,
+      "buy_price": 0,
+      "sell_price": 4,
+      "cost_source": "silk_round"
+    },
+    {
+      "id": "spirit_liquid",
+      "name": "灵液",
+      "element": "water",
+      "form": "liquid",
+      "stage": "intermediate",
+      "tags": [
+        "food",
+        "animal_product"
+      ],
+      "supply_allowed": true,
+      "buy_price": 0,
+      "sell_price": 6,
+      "cost_source": "dew_round"
+    },
+    {
+      "id": "mucus",
+      "name": "黏液",
+      "element": "water",
+      "form": "solid",
+      "stage": "intermediate",
+      "tags": [
+        "food",
+        "animal_product"
+      ],
+      "supply_allowed": true,
+      "buy_price": 0,
+      "sell_price": 2,
+      "cost_source": "dew_round"
+    },
+    {
+      "id": "mineral_scale",
+      "name": "矿质鳞片",
+      "element": "gold",
+      "form": "solid",
+      "stage": "intermediate",
+      "tags": [
+        "food",
+        "animal_product"
+      ],
+      "supply_allowed": true,
+      "buy_price": 0,
+      "sell_price": 5,
+      "cost_source": "scale_round"
+    },
+    {
+      "id": "shed_skin",
+      "name": "蜕皮",
+      "element": "wood",
+      "form": "solid",
+      "stage": "intermediate",
+      "tags": [
+        "food",
+        "animal_product"
+      ],
+      "supply_allowed": false,
+      "buy_price": 0,
+      "sell_price": 1,
+      "cost_source": "scale_round"
+    },
+    {
+      "id": "rock_shell",
+      "name": "岩壳片",
+      "element": "earth",
+      "form": "solid",
+      "stage": "intermediate",
+      "tags": [
+        "food",
+        "animal_product"
+      ],
+      "supply_allowed": true,
+      "buy_price": 0,
+      "sell_price": 3,
+      "cost_source": "form_rock_shell"
+    },
+    {
+      "id": "pearl",
+      "name": "珍珠",
+      "element": "gold",
+      "tags": [
+        "animal_product"
+      ],
+      "sell_price": 6,
+      "cost_source": "pearl_round",
+      "form": "solid",
+      "stage": "intermediate",
+      "supply_allowed": false,
+      "buy_price": 0
+    },
+    {
+      "id": "mussel_shell",
+      "name": "贝壳",
+      "element": "earth",
+      "tags": [
+        "animal_product"
+      ],
+      "sell_price": 1,
+      "cost_source": "mussel_shell",
+      "form": "solid",
+      "stage": "intermediate",
+      "supply_allowed": false,
+      "buy_price": 0
+    },
+    {
+      "id": "water_gel",
+      "name": "凝水胶",
+      "element": "water",
+      "tags": [
+        "animal_product"
+      ],
+      "sell_price": 4,
+      "cost_source": "gel_round",
+      "form": "solid",
+      "stage": "intermediate",
+      "supply_allowed": false,
+      "buy_price": 0
+    },
+    {
+      "id": "coral_stone",
+      "name": "珊瑚石",
+      "element": "earth",
+      "tags": [
+        "animal_product"
+      ],
+      "sell_price": 2,
+      "cost_source": "coral_round",
+      "form": "solid",
+      "stage": "intermediate",
+      "supply_allowed": false,
+      "buy_price": 0
+    },
+    {
+      "id": "duckweed",
+      "name": "浮萍",
+      "element": "water",
+      "tags": [
+        "plant_product"
+      ],
+      "sell_price": 1,
+      "cost_source": "duckweed",
+      "form": "solid",
+      "stage": "intermediate",
+      "supply_allowed": false,
+      "buy_price": 0
+    },
+    {
+      "id": "duckweed_seed",
+      "name": "浮萍种苗",
+      "element": "water",
+      "tags": [
+        "seed"
+      ],
+      "buy_price": 2,
+      "sell_price": 0,
+      "cost_source": "purchase",
+      "form": "solid",
+      "stage": "intermediate",
+      "supply_allowed": false
+    },
+    {
+      "id": "reed_stalk",
+      "name": "苇秆",
+      "element": "wood",
+      "tags": [
+        "plant_product"
+      ],
+      "sell_price": 1,
+      "cost_source": "reed",
+      "form": "solid",
+      "stage": "intermediate",
+      "supply_allowed": false,
+      "buy_price": 0
+    },
+    {
+      "id": "reed_seed",
+      "name": "芦苇种苗",
+      "element": "wood",
+      "tags": [
+        "seed"
+      ],
+      "buy_price": 3,
+      "sell_price": 0,
+      "cost_source": "purchase",
+      "form": "solid",
+      "stage": "intermediate",
+      "supply_allowed": false
+    },
+    {
+      "id": "fish_meal",
+      "name": "鱼粉",
+      "element": "wood",
+      "tags": [
+        "processing"
+      ],
+      "sell_price": 2,
+      "cost_source": "dry_fish_meal",
+      "form": "solid",
+      "stage": "intermediate",
+      "supply_allowed": false,
+      "buy_price": 0
+    },
+    {
+      "id": "water_retaining_matrix",
+      "name": "保水基质",
+      "element": "earth",
+      "tags": [
+        "processing"
+      ],
+      "sell_price": 2,
+      "cost_source": "make_water_retaining_matrix",
+      "form": "solid",
+      "stage": "intermediate",
+      "supply_allowed": false,
+      "buy_price": 0
     }
   ],
   "cost_models": [
@@ -1339,46 +1599,21 @@
         "id": "steel_sheep"
       },
       "inputs": {
-        "fodder_grass": 12,
-        "clean_water": 12,
+        "fodder_grass": 24,
+        "clean_water": 24,
         "iron_ore": 4
       },
-      "ap": 4,
+      "ap": 1,
       "days": 3,
       "cash": 0,
       "outputs": {
         "steel_wool": {
-          "quantity": 4,
+          "quantity": 8,
           "share": 0.9
         },
         "sheep_manure": {
           "quantity": 4,
           "share": 0.1
-        }
-      }
-    },
-    {
-      "id": "fish",
-      "basis": {
-        "kind": "animal",
-        "id": "filter_algae_carp"
-      },
-      "inputs": {
-        "algae_feed": 24,
-        "grain": 4,
-        "clean_water": 2
-      },
-      "ap": 8,
-      "days": 6,
-      "cash": 20,
-      "outputs": {
-        "fish_meat": {
-          "quantity": 12,
-          "share": 0.85
-        },
-        "fish_manure": {
-          "quantity": 4,
-          "share": 0.15
         }
       }
     },
@@ -1750,13 +1985,13 @@
         "id": "break_stone_provider"
       },
       "inputs": {
-        "mushroom": 16,
-        "clean_water": 16,
+        "mushroom": 4,
+        "clean_water": 4,
         "raw_stone": 8
       },
-      "ap": 6,
-      "days": 4,
-      "cash": 32,
+      "ap": 1,
+      "days": 1,
+      "cash": 0,
       "outputs": {
         "gravel": {
           "quantity": 8,
@@ -1775,13 +2010,13 @@
         "id": "break_ore_provider"
       },
       "inputs": {
-        "mushroom": 16,
-        "clean_water": 16,
+        "mushroom": 4,
+        "clean_water": 4,
         "iron_ore": 8
       },
-      "ap": 6,
-      "days": 4,
-      "cash": 32,
+      "ap": 1,
+      "days": 1,
+      "cash": 0,
       "outputs": {
         "crushed_ore": {
           "quantity": 12,
@@ -1796,13 +2031,13 @@
         "id": "concentrate_ore_provider"
       },
       "inputs": {
-        "fodder_grass": 24,
-        "clean_water": 24,
+        "fodder_grass": 8,
+        "clean_water": 8,
         "crushed_ore": 24
       },
-      "ap": 8,
-      "days": 6,
-      "cash": 48,
+      "ap": 1,
+      "days": 2,
+      "cash": 0,
       "outputs": {
         "ore_concentrate": {
           "quantity": 8,
@@ -2049,6 +2284,371 @@
         "id": "make_vine_ball"
       },
       "cash": 0
+    },
+    {
+      "id": "silk_round",
+      "basis": {
+        "kind": "animal",
+        "id": "leaf_silkworm_provider"
+      },
+      "inputs": {
+        "mulberry_leaf": 24,
+        "clean_water": 16
+      },
+      "ap": 1,
+      "days": 2,
+      "cash": 0,
+      "outputs": {
+        "silk": {
+          "quantity": 16,
+          "share": 1
+        }
+      }
+    },
+    {
+      "id": "dew_round",
+      "basis": {
+        "kind": "animal",
+        "id": "dew_shell_snail_provider"
+      },
+      "inputs": {
+        "fodder_grass": 16,
+        "clean_water": 24
+      },
+      "ap": 1,
+      "days": 2,
+      "cash": 0,
+      "outputs": {
+        "spirit_liquid": {
+          "quantity": 8,
+          "share": 0.75
+        },
+        "mucus": {
+          "quantity": 4,
+          "share": 0.25
+        }
+      }
+    },
+    {
+      "id": "scale_round",
+      "basis": {
+        "kind": "animal",
+        "id": "mineral_scale_lizard_provider"
+      },
+      "inputs": {
+        "fodder_grass": 32,
+        "clean_water": 32,
+        "mineral_feed": 4
+      },
+      "ap": 1,
+      "days": 4,
+      "cash": 0,
+      "outputs": {
+        "mineral_scale": {
+          "quantity": 16,
+          "share": 0.75
+        },
+        "shed_skin": {
+          "quantity": 4,
+          "share": 0.25
+        }
+      }
+    },
+    {
+      "id": "mulberry",
+      "basis": {
+        "kind": "crop",
+        "id": "mulberry_tree"
+      },
+      "inputs": {
+        "mulberry_seed": 1,
+        "clean_water": 4
+      },
+      "ap": 10,
+      "days": 6,
+      "cash": 0,
+      "operations": {
+        "till": 4,
+        "plant": 1,
+        "harvest": 1,
+        "irrigate": 4
+      },
+      "outputs": {
+        "mulberry_leaf": {
+          "quantity": 10,
+          "share": 1
+        }
+      }
+    },
+    {
+      "id": "form_rock_shell",
+      "basis": {
+        "kind": "animal",
+        "id": "form_rock_shell_provider"
+      },
+      "inputs": {
+        "algae_feed": 8,
+        "clean_water": 12,
+        "stone_powder": 12
+      },
+      "ap": 1,
+      "days": 2,
+      "cash": 0,
+      "outputs": {
+        "rock_shell": {
+          "quantity": 8,
+          "share": 0.75
+        },
+        "mucus": {
+          "quantity": 4,
+          "share": 0.25
+        }
+      }
+    },
+    {
+      "id": "fish",
+      "basis": {
+        "kind": "animal",
+        "id": "filter_algae_carp_provider"
+      },
+      "inputs": {
+        "algae_feed": 36,
+        "grain": 4
+      },
+      "ap": 2,
+      "days": 7,
+      "cash": 20,
+      "outputs": {
+        "fish_meat": {
+          "quantity": 12,
+          "share": 0.85
+        },
+        "fish_manure": {
+          "quantity": 4,
+          "share": 0.15
+        }
+      }
+    },
+    {
+      "id": "mussel_shell",
+      "basis": {
+        "kind": "animal",
+        "id": "mussel_shell_provider"
+      },
+      "inputs": {
+        "algae_feed": 24
+      },
+      "ap": 8,
+      "days": 6,
+      "cash": 48,
+      "outputs": {
+        "mussel_shell": {
+          "quantity": 8,
+          "share": 1
+        }
+      }
+    },
+    {
+      "id": "oilfin_round",
+      "basis": {
+        "kind": "animal",
+        "id": "oilfin_fish_provider"
+      },
+      "inputs": {
+        "algae_feed": 48,
+        "grain": 8
+      },
+      "ap": 2,
+      "days": 9,
+      "cash": 40,
+      "outputs": {
+        "crude_oil": {
+          "quantity": 24,
+          "share": 0.75
+        },
+        "fish_meat": {
+          "quantity": 4,
+          "share": 0.25
+        }
+      }
+    },
+    {
+      "id": "pearl_round",
+      "basis": {
+        "kind": "animal",
+        "id": "pearl_mussel_provider"
+      },
+      "inputs": {
+        "algae_feed": 32,
+        "stone_powder": 4
+      },
+      "ap": 1,
+      "days": 4,
+      "cash": 0,
+      "outputs": {
+        "pearl": {
+          "quantity": 12,
+          "share": 1
+        }
+      }
+    },
+    {
+      "id": "gel_round",
+      "basis": {
+        "kind": "animal",
+        "id": "gel_jellyfish_provider"
+      },
+      "inputs": {
+        "algae_feed": 16,
+        "clean_water": 4
+      },
+      "ap": 1,
+      "days": 2,
+      "cash": 0,
+      "outputs": {
+        "water_gel": {
+          "quantity": 8,
+          "share": 1
+        }
+      }
+    },
+    {
+      "id": "coral_round",
+      "basis": {
+        "kind": "animal",
+        "id": "reef_coral_provider"
+      },
+      "inputs": {
+        "algae_feed": 24,
+        "stone_powder": 12,
+        "clean_water": 4
+      },
+      "ap": 1,
+      "days": 3,
+      "cash": 0,
+      "outputs": {
+        "coral_stone": {
+          "quantity": 8,
+          "share": 1
+        }
+      }
+    },
+    {
+      "id": "duckweed",
+      "basis": {
+        "kind": "crop",
+        "id": "duckweed"
+      },
+      "inputs": {
+        "duckweed_seed": 1,
+        "humus": 1
+      },
+      "ap": 2,
+      "days": 3,
+      "cash": 0,
+      "operations": {
+        "till": 0,
+        "plant": 1,
+        "harvest": 1,
+        "irrigate": 0
+      },
+      "outputs": {
+        "duckweed": {
+          "quantity": 4,
+          "share": 1
+        }
+      }
+    },
+    {
+      "id": "reed",
+      "basis": {
+        "kind": "crop",
+        "id": "reed"
+      },
+      "inputs": {
+        "reed_seed": 1,
+        "humus": 1
+      },
+      "ap": 2,
+      "days": 5,
+      "cash": 0,
+      "operations": {
+        "till": 0,
+        "plant": 1,
+        "harvest": 1,
+        "irrigate": 0
+      },
+      "outputs": {
+        "reed_stalk": {
+          "quantity": 6,
+          "share": 1
+        }
+      }
+    },
+    {
+      "id": "dry_fish_meal",
+      "basis": {
+        "kind": "recipe",
+        "id": "dry_fish_meal"
+      },
+      "inputs": {
+        "fish_meat": 2
+      },
+      "ap": 2,
+      "days": 1,
+      "cash": 0,
+      "outputs": {
+        "fish_meal": {
+          "quantity": 3,
+          "share": 1
+        }
+      }
+    },
+    {
+      "id": "make_water_retaining_matrix",
+      "basis": {
+        "kind": "recipe",
+        "id": "make_water_retaining_matrix"
+      },
+      "inputs": {
+        "water_gel": 1,
+        "humus": 1,
+        "reed_stalk": 1
+      },
+      "ap": 2,
+      "days": 1,
+      "cash": 0,
+      "outputs": {
+        "water_retaining_matrix": {
+          "quantity": 4,
+          "share": 1
+        }
+      }
+    },
+    {
+      "id": "pearl_polish_water",
+      "basis": {
+        "kind": "recipe",
+        "id": "pearl_polish_water"
+      },
+      "inputs": {
+        "wastewater": 6,
+        "filter_media": 1,
+        "pearl": 1
+      },
+      "ap": 2,
+      "days": 1,
+      "cash": 0,
+      "outputs": {
+        "clean_water": {
+          "quantity": 4,
+          "share": 0.67
+        },
+        "sludge": {
+          "quantity": 2,
+          "share": 0.33
+        }
+      }
     }
   ],
   "crops": [
@@ -2141,6 +2741,16 @@
       "light": 30,
       "target_tags": [
         "plant_grow"
+      ],
+      "input_variants": [
+        {
+          "id": "reed_substrate",
+          "inputs": {
+            "reed_stalk": 3,
+            "clean_water": 2
+          },
+          "research": "aquatic_intensive_care"
+        }
       ]
     },
     {
@@ -2214,6 +2824,109 @@
       "research": "flower_cultivation",
       "target_tags": [
         "plant_grow"
+      ]
+    },
+    {
+      "id": "mulberry_tree",
+      "name": "果桑树",
+      "seed": "mulberry_seed",
+      "footprint": [
+        2,
+        2
+      ],
+      "days": 6,
+      "mode": "tap_or_fell",
+      "cycle_days": 2,
+      "inputs": {},
+      "outputs": {
+        "mulberry_leaf": 10
+      },
+      "fell_outputs": {
+        "raw_wood": 2,
+        "twig": 2
+      },
+      "water_use": 3,
+      "fertility_use": 1,
+      "light": 80,
+      "max_taps": 6,
+      "target_tags": [
+        "plant_grow"
+      ]
+    },
+    {
+      "id": "duckweed",
+      "name": "浮萍",
+      "seed": "duckweed_seed",
+      "footprint": [
+        1,
+        1
+      ],
+      "days": 3,
+      "cycle_days": 1,
+      "mode": "tap_or_fell",
+      "medium": "water",
+      "inputs": {},
+      "fell_outputs": {},
+      "target_tags": [],
+      "outputs": {
+        "duckweed": 4
+      },
+      "water_use": 0,
+      "fertility_use": 0,
+      "light": 60,
+      "max_taps": 6,
+      "round_inputs": [
+        {
+          "id": "humus_round",
+          "inputs": {
+            "humus": 1
+          }
+        },
+        {
+          "id": "matrix_round",
+          "inputs": {
+            "water_retaining_matrix": 1
+          },
+          "research": "aquatic_intensive_care"
+        }
+      ]
+    },
+    {
+      "id": "reed",
+      "name": "芦苇",
+      "seed": "reed_seed",
+      "footprint": [
+        1,
+        1
+      ],
+      "days": 5,
+      "cycle_days": 2,
+      "mode": "tap_or_fell",
+      "medium": "water",
+      "inputs": {},
+      "fell_outputs": {},
+      "target_tags": [],
+      "outputs": {
+        "reed_stalk": 6
+      },
+      "water_use": 0,
+      "fertility_use": 0,
+      "light": 60,
+      "max_taps": 4,
+      "round_inputs": [
+        {
+          "id": "humus_round",
+          "inputs": {
+            "humus": 1
+          }
+        },
+        {
+          "id": "matrix_round",
+          "inputs": {
+            "water_retaining_matrix": 1
+          },
+          "research": "aquatic_intensive_care"
+        }
       ]
     }
   ],
@@ -2322,6 +3035,10 @@
       "capacity": 4,
       "species": [
         "steel_sheep"
+      ],
+      "terrains": [
+        "land",
+        "water"
       ]
     },
     {
@@ -2341,7 +3058,8 @@
       "capacity": 4,
       "species": [
         "filter_algae_carp"
-      ]
+      ],
+      "retired": true
     },
     {
       "id": "algae_tank",
@@ -2427,27 +3145,6 @@
       "research": "biofiltration"
     },
     {
-      "id": "rock_workyard",
-      "name": "岩兽工作场",
-      "cash": 12,
-      "materials": {
-        "raw_wood": 2,
-        "raw_stone": 3
-      },
-      "terrain": "land",
-      "footprint": [
-        2,
-        2
-      ],
-      "kind": "habitat",
-      "capacity": 4,
-      "species": [
-        "rock_mole",
-        "rock_belly_beast"
-      ],
-      "research": "rock_handling"
-    },
-    {
       "id": "kitchen",
       "name": "厨房",
       "footprint": [
@@ -2519,7 +3216,12 @@
         1,
         1
       ],
-      "kind": null
+      "kind": null,
+      "terrains": [
+        "land",
+        "water"
+      ],
+      "gu_slot": "animal_feeding_assist"
     },
     {
       "id": "small_bed",
@@ -2533,7 +3235,11 @@
         1,
         1
       ],
-      "kind": null
+      "kind": null,
+      "terrains": [
+        "land",
+        "water"
+      ]
     },
     {
       "id": "medium_bed",
@@ -2547,7 +3253,11 @@
         1,
         1
       ],
-      "kind": null
+      "kind": null,
+      "terrains": [
+        "land",
+        "water"
+      ]
     },
     {
       "id": "large_bed",
@@ -2576,7 +3286,11 @@
         1,
         1
       ],
-      "kind": null
+      "kind": null,
+      "terrains": [
+        "land",
+        "water"
+      ]
     },
     {
       "id": "soothing_station",
@@ -2592,7 +3306,11 @@
       },
       "terrain": "land",
       "kind": "facility",
-      "gu_slot": "animal_breeding_assist"
+      "gu_slot": "animal_breeding_assist",
+      "terrains": [
+        "land",
+        "water"
+      ]
     },
     {
       "id": "toy_station",
@@ -2609,6 +3327,330 @@
       "terrain": "land",
       "kind": "facility",
       "item_slot": "animal_toy"
+    },
+    {
+      "id": "rock_breaking_yard",
+      "name": "碎岩场",
+      "cash": 12,
+      "materials": {
+        "raw_wood": 2,
+        "raw_stone": 3
+      },
+      "terrain": "land",
+      "footprint": [
+        2,
+        2
+      ],
+      "kind": "habitat",
+      "capacity": 4,
+      "species": [
+        "rock_mole"
+      ],
+      "research": "rock_handling"
+    },
+    {
+      "id": "ore_sorting_yard",
+      "name": "选矿场",
+      "cash": 12,
+      "materials": {
+        "raw_wood": 2,
+        "raw_stone": 3
+      },
+      "terrain": "land",
+      "footprint": [
+        2,
+        2
+      ],
+      "kind": "habitat",
+      "capacity": 4,
+      "species": [
+        "rock_belly_beast"
+      ],
+      "research": "ore_concentration"
+    },
+    {
+      "id": "carbonization_nest",
+      "name": "炭化巢",
+      "cash": 18,
+      "materials": {
+        "wood_plank": 2,
+        "raw_stone": 4
+      },
+      "terrain": "land",
+      "footprint": [
+        2,
+        2
+      ],
+      "kind": null,
+      "capacity": 4,
+      "species": [
+        "carbon_belly_bug"
+      ],
+      "research": "farm_preparation"
+    },
+    {
+      "id": "compost_mouse_den",
+      "name": "翻肥窝",
+      "cash": 12,
+      "materials": {
+        "raw_wood": 2,
+        "raw_stone": 2
+      },
+      "terrain": "land",
+      "footprint": [
+        2,
+        2
+      ],
+      "kind": null,
+      "capacity": 4,
+      "species": [
+        "compost_mouse"
+      ]
+    },
+    {
+      "id": "shell_forming_station",
+      "name": "岩壳成型台",
+      "cash": 18,
+      "materials": {
+        "wood_plank": 2,
+        "raw_stone": 4
+      },
+      "terrain": "land",
+      "footprint": [
+        2,
+        2
+      ],
+      "kind": null,
+      "capacity": 4,
+      "species": [
+        "gravel_shell_snail"
+      ],
+      "research": "mineral_materials"
+    },
+    {
+      "id": "wool_station",
+      "name": "采毛台",
+      "cash": 12,
+      "materials": {
+        "wood_plank": 2,
+        "raw_stone": 2
+      },
+      "terrain": "land",
+      "footprint": [
+        1,
+        1
+      ],
+      "kind": null,
+      "species": [
+        "steel_sheep"
+      ],
+      "gu_slot": "animal_product_assist"
+    },
+    {
+      "id": "silkworm_rack",
+      "name": "蚕架",
+      "cash": 10,
+      "materials": {
+        "wood_plank": 2,
+        "twig": 2
+      },
+      "terrain": "land",
+      "footprint": [
+        1,
+        1
+      ],
+      "kind": null,
+      "species": [
+        "leaf_silkworm"
+      ],
+      "gu_slot": "animal_product_assist"
+    },
+    {
+      "id": "spirit_liquid_collector",
+      "name": "集露台",
+      "cash": 12,
+      "materials": {
+        "wood_plank": 1,
+        "raw_stone": 3
+      },
+      "terrain": "land",
+      "footprint": [
+        1,
+        1
+      ],
+      "kind": null,
+      "species": [
+        "dew_shell_snail"
+      ],
+      "gu_slot": "animal_product_assist"
+    },
+    {
+      "id": "scale_station",
+      "name": "养鳞台",
+      "cash": 18,
+      "materials": {
+        "wood_plank": 2,
+        "raw_stone": 4
+      },
+      "terrain": "land",
+      "footprint": [
+        1,
+        1
+      ],
+      "kind": null,
+      "species": [
+        "mineral_scale_lizard"
+      ],
+      "research": "mineral_materials",
+      "gu_slot": "animal_product_assist"
+    },
+    {
+      "id": "carp_harvest_station",
+      "name": "捕鲤台",
+      "cash": 12,
+      "materials": {
+        "wood_plank": 2,
+        "raw_stone": 2
+      },
+      "terrain": "water",
+      "footprint": [
+        1,
+        1
+      ],
+      "kind": null,
+      "species": [
+        "filter_algae_carp"
+      ],
+      "gu_slot": "animal_product_assist"
+    },
+    {
+      "id": "oilfish_harvest_station",
+      "name": "取油台",
+      "cash": 16,
+      "materials": {
+        "wood_plank": 2,
+        "raw_stone": 3
+      },
+      "terrain": "water",
+      "footprint": [
+        1,
+        1
+      ],
+      "kind": null,
+      "research": "farm_preparation",
+      "species": [
+        "oilfin_fish"
+      ],
+      "gu_slot": "animal_product_assist"
+    },
+    {
+      "id": "pearl_station",
+      "name": "采珠台",
+      "cash": 16,
+      "materials": {
+        "wood_plank": 2,
+        "raw_stone": 3
+      },
+      "terrain": "water",
+      "footprint": [
+        1,
+        1
+      ],
+      "kind": null,
+      "research": "water_recirculation",
+      "species": [
+        "pearl_mussel"
+      ],
+      "gu_slot": "animal_product_assist"
+    },
+    {
+      "id": "gel_station",
+      "name": "采胶台",
+      "cash": 16,
+      "materials": {
+        "wood_plank": 2,
+        "raw_stone": 3
+      },
+      "terrain": "water",
+      "footprint": [
+        1,
+        1
+      ],
+      "kind": null,
+      "research": "water_recirculation",
+      "species": [
+        "gel_jellyfish"
+      ],
+      "gu_slot": "animal_product_assist"
+    },
+    {
+      "id": "coral_station",
+      "name": "采礁台",
+      "cash": 20,
+      "materials": {
+        "wood_plank": 2,
+        "raw_stone": 4
+      },
+      "terrain": "water",
+      "footprint": [
+        1,
+        1
+      ],
+      "kind": null,
+      "research": "mineral_materials",
+      "species": [
+        "reef_coral"
+      ],
+      "gu_slot": "animal_product_assist"
+    },
+    {
+      "id": "silt_processing_station",
+      "name": "泥料处理台",
+      "cash": 14,
+      "materials": {
+        "wood_plank": 2,
+        "raw_stone": 2
+      },
+      "terrain": "water",
+      "footprint": [
+        1,
+        1
+      ],
+      "kind": null,
+      "research": "biofiltration",
+      "species": [
+        "silt_loach"
+      ]
+    },
+    {
+      "id": "aquatic_crop_station",
+      "name": "水生种植台",
+      "cash": 8,
+      "materials": {
+        "wood_plank": 1,
+        "raw_stone": 2
+      },
+      "terrain": "water",
+      "footprint": [
+        1,
+        1
+      ],
+      "kind": null
+    },
+    {
+      "id": "water_change_station",
+      "name": "换水站",
+      "cash": 16,
+      "materials": {
+        "wood_plank": 2,
+        "raw_stone": 4
+      },
+      "terrain": "land",
+      "footprint": [
+        1,
+        1
+      ],
+      "kind": null
     }
   ],
   "recipes": [
@@ -2991,7 +4033,7 @@
     {
       "id": "break_stone",
       "name": "破碎石材",
-      "facility": "rock_workyard",
+      "facility": "rock_breaking_yard",
       "inputs": {
         "raw_stone": 2
       },
@@ -3008,7 +4050,7 @@
     {
       "id": "break_ore",
       "name": "破碎矿石",
-      "facility": "rock_workyard",
+      "facility": "rock_breaking_yard",
       "inputs": {
         "iron_ore": 2
       },
@@ -3024,7 +4066,7 @@
     {
       "id": "concentrate_ore",
       "name": "生物选矿",
-      "facility": "rock_workyard",
+      "facility": "ore_sorting_yard",
       "inputs": {
         "crushed_ore": 6
       },
@@ -3270,6 +4312,363 @@
       "days": 1,
       "start_ap": 1,
       "claim_ap": 1
+    },
+    {
+      "id": "bug_char_twigs",
+      "name": "树枝生物炭化",
+      "facility": "carbonization_nest",
+      "inputs": {
+        "twig": 4
+      },
+      "outputs": {
+        "charcoal": 4,
+        "humus": 1
+      },
+      "days": 1,
+      "start_ap": 1,
+      "claim_ap": 1,
+      "living": true,
+      "research": "farm_preparation"
+    },
+    {
+      "id": "bug_char_chips",
+      "name": "木屑生物炭化",
+      "facility": "carbonization_nest",
+      "inputs": {
+        "wood_chip": 4
+      },
+      "outputs": {
+        "charcoal": 2,
+        "humus": 1
+      },
+      "days": 1,
+      "start_ap": 1,
+      "claim_ap": 1,
+      "living": true,
+      "research": "farm_preparation"
+    },
+    {
+      "id": "mouse_compost_fiber",
+      "name": "秸秆翻肥",
+      "facility": "compost_mouse_den",
+      "inputs": {
+        "straw": 2,
+        "wood_chip": 1
+      },
+      "outputs": {
+        "humus": 4
+      },
+      "days": 1,
+      "start_ap": 1,
+      "claim_ap": 1,
+      "living": true
+    },
+    {
+      "id": "mouse_compost_residue",
+      "name": "残料翻肥",
+      "facility": "compost_mouse_den",
+      "inputs": {
+        "sludge": 2,
+        "oil_cake": 1
+      },
+      "outputs": {
+        "humus": 3
+      },
+      "days": 1,
+      "start_ap": 1,
+      "claim_ap": 1,
+      "living": true,
+      "research": "biofiltration"
+    },
+    {
+      "id": "form_rock_shell",
+      "name": "岩壳成型",
+      "facility": "shell_forming_station",
+      "inputs": {
+        "stone_powder": 3,
+        "clean_water": 1
+      },
+      "outputs": {
+        "rock_shell": 2,
+        "mucus": 1
+      },
+      "days": 1,
+      "start_ap": 1,
+      "claim_ap": 1,
+      "living": true,
+      "research": "mineral_materials"
+    },
+    {
+      "id": "make_silk_filter_media",
+      "name": "丝质滤材",
+      "facility": "woodshop",
+      "inputs": {
+        "silk": 1,
+        "wood_chip": 1,
+        "charcoal": 1
+      },
+      "outputs": {
+        "filter_media": 3
+      },
+      "days": 1,
+      "start_ap": 1,
+      "claim_ap": 1,
+      "research": "water_recirculation"
+    },
+    {
+      "id": "assemble_mucus_panel",
+      "name": "黏液复合石板",
+      "facility": "woodshop",
+      "inputs": {
+        "gravel": 2,
+        "stone_powder": 1,
+        "mucus": 1
+      },
+      "outputs": {
+        "composite_stone_panel": 2
+      },
+      "days": 1,
+      "start_ap": 1,
+      "claim_ap": 1,
+      "research": "mineral_materials"
+    },
+    {
+      "id": "assemble_scale_panel",
+      "name": "鳞甲复合板",
+      "facility": "woodshop",
+      "inputs": {
+        "mineral_scale": 2,
+        "shed_skin": 1,
+        "gravel": 1
+      },
+      "outputs": {
+        "composite_stone_panel": 3
+      },
+      "days": 1,
+      "start_ap": 1,
+      "claim_ap": 1,
+      "research": "mineral_materials"
+    },
+    {
+      "id": "assemble_shell_panel",
+      "name": "岩壳石板",
+      "facility": "woodshop",
+      "inputs": {
+        "rock_shell": 2,
+        "mucus": 1
+      },
+      "outputs": {
+        "composite_stone_panel": 3
+      },
+      "days": 1,
+      "start_ap": 1,
+      "claim_ap": 1,
+      "research": "mineral_materials"
+    },
+    {
+      "id": "mill_duckweed",
+      "name": "浮萍制粉",
+      "facility": "farm_processor",
+      "days": 1,
+      "start_ap": 1,
+      "claim_ap": 1,
+      "inputs": {
+        "duckweed": 2
+      },
+      "outputs": {
+        "grass_meal": 2
+      },
+      "research": "farm_preparation"
+    },
+    {
+      "id": "dry_fish_meal",
+      "name": "鱼肉制粉",
+      "facility": "farm_processor",
+      "days": 1,
+      "start_ap": 1,
+      "claim_ap": 1,
+      "inputs": {
+        "fish_meat": 2
+      },
+      "outputs": {
+        "fish_meal": 3
+      },
+      "research": "advanced_feed_oil_wax"
+    },
+    {
+      "id": "blend_fish_land_feed",
+      "name": "鱼粉陆养料",
+      "facility": "farm_processor",
+      "days": 1,
+      "start_ap": 1,
+      "claim_ap": 1,
+      "inputs": {
+        "fish_meal": 1,
+        "grass_meal": 2,
+        "oil_cake": 1
+      },
+      "outputs": {
+        "land_feed": 3
+      },
+      "research": "advanced_feed_oil_wax"
+    },
+    {
+      "id": "blend_fish_water_feed",
+      "name": "鱼粉水养料",
+      "facility": "farm_processor",
+      "days": 1,
+      "start_ap": 1,
+      "claim_ap": 1,
+      "inputs": {
+        "algae_feed": 3,
+        "grain_meal": 1,
+        "fish_meal": 1
+      },
+      "outputs": {
+        "water_feed": 4
+      },
+      "research": "advanced_feed_oil_wax"
+    },
+    {
+      "id": "grind_shell",
+      "name": "壳石制粉",
+      "facility": "farm_processor",
+      "days": 1,
+      "start_ap": 1,
+      "claim_ap": 1,
+      "inputs": {
+        "mussel_shell": 2
+      },
+      "outputs": {
+        "stone_powder": 2
+      },
+      "research": "mineral_materials"
+    },
+    {
+      "id": "grind_coral",
+      "name": "珊瑚制粉",
+      "facility": "farm_processor",
+      "days": 1,
+      "start_ap": 1,
+      "claim_ap": 1,
+      "inputs": {
+        "coral_stone": 2
+      },
+      "outputs": {
+        "stone_powder": 2
+      },
+      "research": "mineral_materials"
+    },
+    {
+      "id": "make_water_retaining_matrix",
+      "name": "保水基质",
+      "facility": "farm_processor",
+      "days": 1,
+      "start_ap": 1,
+      "claim_ap": 1,
+      "inputs": {
+        "water_gel": 1,
+        "humus": 1,
+        "reed_stalk": 1
+      },
+      "outputs": {
+        "water_retaining_matrix": 4
+      },
+      "research": "aquatic_intensive_care"
+    },
+    {
+      "id": "make_coral_filter_media",
+      "name": "多孔滤材",
+      "facility": "woodshop",
+      "days": 1,
+      "start_ap": 1,
+      "claim_ap": 1,
+      "inputs": {
+        "coral_stone": 1,
+        "charcoal": 1
+      },
+      "outputs": {
+        "filter_media": 3
+      },
+      "research": "water_recirculation"
+    },
+    {
+      "id": "assemble_coral_panel",
+      "name": "珊瑚复合石板",
+      "facility": "woodshop",
+      "days": 1,
+      "start_ap": 1,
+      "claim_ap": 1,
+      "inputs": {
+        "coral_stone": 2,
+        "stone_powder": 1,
+        "mucus": 1
+      },
+      "outputs": {
+        "composite_stone_panel": 3
+      },
+      "research": "mineral_materials"
+    },
+    {
+      "id": "compost_reed",
+      "name": "苇秆堆肥",
+      "facility": "compost_bin",
+      "days": 1,
+      "start_ap": 1,
+      "claim_ap": 1,
+      "inputs": {
+        "reed_stalk": 2
+      },
+      "outputs": {
+        "humus": 2
+      }
+    },
+    {
+      "id": "char_reed",
+      "name": "苇秆炭化",
+      "facility": "char_kiln",
+      "days": 1,
+      "start_ap": 1,
+      "claim_ap": 1,
+      "inputs": {
+        "reed_stalk": 3
+      },
+      "outputs": {
+        "charcoal": 2
+      }
+    },
+    {
+      "id": "pearl_polish_water",
+      "name": "珍珠精滤",
+      "facility": "purifying_bed",
+      "days": 1,
+      "start_ap": 1,
+      "claim_ap": 1,
+      "inputs": {
+        "wastewater": 6,
+        "filter_media": 1,
+        "pearl": 1
+      },
+      "outputs": {
+        "clean_water": 4,
+        "sludge": 2
+      },
+      "research": "aquatic_intensive_care"
+    },
+    {
+      "id": "silt_process",
+      "name": "泥料处理",
+      "facility": "silt_processing_station",
+      "days": 1,
+      "start_ap": 1,
+      "claim_ap": 1,
+      "inputs": {
+        "sludge": 2,
+        "duckweed": 1
+      },
+      "outputs": {
+        "humus": 3
+      }
     }
   ],
   "orders": {
@@ -3348,7 +4747,7 @@
       ],
       "default_special_diet": "iron_supplement",
       "outputs": {
-        "steel_wool": 1,
+        "steel_wool": 2,
         "sheep_manure": 1
       },
       "claim_removes": false
@@ -3356,7 +4755,7 @@
     {
       "id": "filter_algae_carp",
       "name": "滤藻鲤",
-      "facility": "fish_pond",
+      "facility": "carp_harvest_station",
       "juvenile_price": 5,
       "growth_days": 4,
       "cycle_days": 2,
@@ -3491,7 +4890,7 @@
     {
       "id": "rock_mole",
       "name": "啮岩鼹",
-      "facility": "rock_workyard",
+      "facility": "rock_breaking_yard",
       "unit": "只",
       "juvenile_price": 8,
       "growth_days": 3,
@@ -3541,7 +4940,7 @@
     {
       "id": "rock_belly_beast",
       "name": "岩腹兽",
-      "facility": "rock_workyard",
+      "facility": "ore_sorting_yard",
       "unit": "只",
       "juvenile_price": 12,
       "growth_days": 4,
@@ -3586,6 +4985,479 @@
       },
       "claim_removes": false,
       "research": "ore_concentration"
+    },
+    {
+      "id": "carbon_belly_bug",
+      "name": "炭腹虫",
+      "facility": "carbonization_nest",
+      "unit": "群",
+      "juvenile_price": 10,
+      "growth_days": 3,
+      "cycle_days": 1,
+      "base_diets": [
+        {
+          "id": "grass_water_meal",
+          "name": "牧草清水餐",
+          "inputs": {
+            "fodder_grass": 1,
+            "clean_water": 1
+          }
+        }
+      ],
+      "default_base_diet": "grass_water_meal",
+      "special_diets": [
+        {
+          "id": "bug_char_twigs",
+          "name": "树枝炭化轮",
+          "inputs": {
+            "twig": 4
+          },
+          "outputs": {
+            "charcoal": 4,
+            "humus": 1
+          }
+        },
+        {
+          "id": "bug_char_chips",
+          "name": "木屑炭化轮",
+          "inputs": {
+            "wood_chip": 4
+          },
+          "outputs": {
+            "charcoal": 2,
+            "humus": 1
+          }
+        }
+      ],
+      "default_special_diet": "bug_char_twigs",
+      "outputs": {
+        "charcoal": 4,
+        "humus": 1
+      },
+      "claim_removes": false,
+      "research": "farm_preparation"
+    },
+    {
+      "id": "leaf_silkworm",
+      "name": "叶丝蚕",
+      "facility": "silkworm_rack",
+      "unit": "群",
+      "juvenile_price": 8,
+      "growth_days": 3,
+      "cycle_days": 2,
+      "base_diets": [
+        {
+          "id": "mulberry_meal",
+          "name": "桑叶清水餐",
+          "inputs": {
+            "mulberry_leaf": 1,
+            "clean_water": 1
+          }
+        }
+      ],
+      "default_base_diet": "mulberry_meal",
+      "special_diets": [
+        {
+          "id": "silk_round",
+          "name": "产丝轮",
+          "inputs": {
+            "mulberry_leaf": 2
+          }
+        }
+      ],
+      "default_special_diet": "silk_round",
+      "outputs": {
+        "silk": 4
+      },
+      "claim_removes": false
+    },
+    {
+      "id": "dew_shell_snail",
+      "name": "露壳蜗牛",
+      "facility": "spirit_liquid_collector",
+      "unit": "只",
+      "juvenile_price": 10,
+      "growth_days": 4,
+      "cycle_days": 2,
+      "base_diets": [
+        {
+          "id": "grass_water_meal",
+          "name": "牧草清水餐",
+          "inputs": {
+            "fodder_grass": 1,
+            "clean_water": 1
+          }
+        }
+      ],
+      "default_base_diet": "grass_water_meal",
+      "special_diets": [
+        {
+          "id": "dew_round",
+          "name": "灵液采集轮",
+          "inputs": {
+            "clean_water": 2
+          }
+        }
+      ],
+      "default_special_diet": "dew_round",
+      "outputs": {
+        "spirit_liquid": 2,
+        "mucus": 1
+      },
+      "claim_removes": false
+    },
+    {
+      "id": "mineral_scale_lizard",
+      "name": "矿鳞蜥",
+      "facility": "scale_station",
+      "unit": "只",
+      "juvenile_price": 18,
+      "growth_days": 6,
+      "cycle_days": 4,
+      "base_diets": [
+        {
+          "id": "grass_water_meal",
+          "name": "牧草清水餐",
+          "inputs": {
+            "fodder_grass": 1,
+            "clean_water": 1
+          }
+        },
+        {
+          "id": "land_meal",
+          "name": "陆养复合餐",
+          "inputs": {
+            "land_feed": 1,
+            "clean_water": 1
+          },
+          "research": "advanced_feed_oil_wax"
+        }
+      ],
+      "default_base_diet": "grass_water_meal",
+      "special_diets": [
+        {
+          "id": "scale_round",
+          "name": "养鳞轮",
+          "inputs": {
+            "mineral_feed": 1
+          }
+        }
+      ],
+      "default_special_diet": "scale_round",
+      "outputs": {
+        "mineral_scale": 4,
+        "shed_skin": 1
+      },
+      "claim_removes": false,
+      "research": "mineral_materials"
+    },
+    {
+      "id": "compost_mouse",
+      "name": "堆肥鼠",
+      "facility": "compost_mouse_den",
+      "unit": "只",
+      "juvenile_price": 8,
+      "growth_days": 3,
+      "cycle_days": 1,
+      "base_diets": [
+        {
+          "id": "grass_water_meal",
+          "name": "牧草清水餐",
+          "inputs": {
+            "fodder_grass": 1,
+            "clean_water": 1
+          }
+        }
+      ],
+      "default_base_diet": "grass_water_meal",
+      "special_diets": [
+        {
+          "id": "mouse_compost_fiber",
+          "name": "秸秆堆肥轮",
+          "inputs": {
+            "straw": 2,
+            "wood_chip": 1
+          },
+          "outputs": {
+            "humus": 4
+          }
+        },
+        {
+          "id": "mouse_compost_residue",
+          "name": "残料堆肥轮",
+          "inputs": {
+            "sludge": 2,
+            "oil_cake": 1
+          },
+          "outputs": {
+            "humus": 3
+          }
+        }
+      ],
+      "default_special_diet": "mouse_compost_fiber",
+      "outputs": {
+        "humus": 4
+      },
+      "claim_removes": false
+    },
+    {
+      "id": "gravel_shell_snail",
+      "name": "砾甲蜗牛",
+      "facility": "shell_forming_station",
+      "unit": "只",
+      "juvenile_price": 14,
+      "growth_days": 5,
+      "cycle_days": 1,
+      "base_diets": [
+        {
+          "id": "algae_water_meal",
+          "name": "藻料清水餐",
+          "inputs": {
+            "algae_feed": 1,
+            "clean_water": 1
+          }
+        }
+      ],
+      "default_base_diet": "algae_water_meal",
+      "special_diets": [
+        {
+          "id": "form_rock_shell",
+          "name": "岩壳成型轮",
+          "inputs": {
+            "stone_powder": 3,
+            "clean_water": 1
+          },
+          "outputs": {
+            "rock_shell": 2,
+            "mucus": 1
+          }
+        }
+      ],
+      "default_special_diet": "form_rock_shell",
+      "outputs": {
+        "rock_shell": 2,
+        "mucus": 1
+      },
+      "claim_removes": false,
+      "research": "mineral_materials"
+    },
+    {
+      "id": "oilfin_fish",
+      "name": "油鳍鱼",
+      "facility": "oilfish_harvest_station",
+      "unit": "尾",
+      "juvenile_price": 10,
+      "growth_days": 5,
+      "cycle_days": 3,
+      "base_diets": [
+        {
+          "id": "algae_meal",
+          "name": "藻料餐",
+          "inputs": {
+            "algae_feed": 1
+          }
+        },
+        {
+          "id": "water_meal",
+          "name": "水养复合餐",
+          "inputs": {
+            "water_feed": 1
+          },
+          "research": "advanced_feed_oil_wax"
+        }
+      ],
+      "default_base_diet": "algae_meal",
+      "special_diets": [
+        {
+          "id": "oilfin_oil_round",
+          "name": "取油轮投料",
+          "inputs": {
+            "grain": 2
+          },
+          "outputs": {
+            "crude_oil": 6,
+            "fish_meat": 1
+          }
+        }
+      ],
+      "default_special_diet": "oilfin_oil_round",
+      "outputs": {
+        "crude_oil": 6,
+        "fish_meat": 1
+      },
+      "claim_removes": true,
+      "research": "farm_preparation"
+    },
+    {
+      "id": "pearl_mussel",
+      "name": "珍珠蚌",
+      "facility": "pearl_station",
+      "unit": "只",
+      "juvenile_price": 12,
+      "growth_days": 6,
+      "cycle_days": 4,
+      "base_diets": [
+        {
+          "id": "algae_meal",
+          "name": "藻料餐",
+          "inputs": {
+            "algae_feed": 1
+          }
+        }
+      ],
+      "default_base_diet": "algae_meal",
+      "special_diets": [
+        {
+          "id": "pearl_powder_round",
+          "name": "育珠轮投料",
+          "inputs": {
+            "stone_powder": 1
+          },
+          "outputs": {
+            "pearl": 3
+          }
+        },
+        {
+          "id": "pearl_spirit_round",
+          "name": "灵液育珠轮",
+          "inputs": {
+            "stone_powder": 1,
+            "spirit_liquid": 1
+          },
+          "research": "aquatic_intensive_care"
+        }
+      ],
+      "default_special_diet": "pearl_powder_round",
+      "outputs": {
+        "pearl": 3
+      },
+      "claim_removes": false,
+      "research": "water_recirculation"
+    },
+    {
+      "id": "gel_jellyfish",
+      "name": "凝胶水母",
+      "facility": "gel_station",
+      "unit": "群",
+      "juvenile_price": 12,
+      "growth_days": 4,
+      "cycle_days": 2,
+      "base_diets": [
+        {
+          "id": "algae_meal",
+          "name": "藻料餐",
+          "inputs": {
+            "algae_feed": 1
+          }
+        },
+        {
+          "id": "dense_meal",
+          "name": "高密度藻餐",
+          "inputs": {
+            "dense_algae": 1
+          },
+          "research": "water_recirculation"
+        }
+      ],
+      "default_base_diet": "algae_meal",
+      "special_diets": [
+        {
+          "id": "gel_water_round",
+          "name": "采胶轮投料",
+          "inputs": {
+            "clean_water": 1
+          },
+          "outputs": {
+            "water_gel": 2
+          }
+        },
+        {
+          "id": "gel_spirit_round",
+          "name": "灵液凝胶轮",
+          "inputs": {
+            "clean_water": 1,
+            "spirit_liquid": 1
+          },
+          "research": "aquatic_intensive_care"
+        }
+      ],
+      "default_special_diet": "gel_water_round",
+      "outputs": {
+        "water_gel": 2
+      },
+      "claim_removes": false,
+      "research": "water_recirculation"
+    },
+    {
+      "id": "silt_loach",
+      "name": "净泥鳅",
+      "facility": "silt_processing_station",
+      "unit": "尾",
+      "juvenile_price": 8,
+      "growth_days": 3,
+      "cycle_days": 1,
+      "base_diets": [
+        {
+          "id": "algae_meal",
+          "name": "藻料餐",
+          "inputs": {
+            "algae_feed": 1
+          }
+        },
+        {
+          "id": "duckweed_meal",
+          "name": "浮萍替代餐",
+          "inputs": {
+            "duckweed": 1
+          }
+        }
+      ],
+      "default_base_diet": "algae_meal",
+      "special_diets": [],
+      "default_special_diet": "",
+      "outputs": {
+        "humus": 3
+      },
+      "claim_removes": false,
+      "research": "biofiltration"
+    },
+    {
+      "id": "reef_coral",
+      "name": "礁骨珊瑚",
+      "facility": "coral_station",
+      "unit": "群",
+      "juvenile_price": 14,
+      "growth_days": 6,
+      "cycle_days": 3,
+      "base_diets": [
+        {
+          "id": "algae_meal",
+          "name": "藻料餐",
+          "inputs": {
+            "algae_feed": 1
+          }
+        }
+      ],
+      "default_base_diet": "algae_meal",
+      "special_diets": [
+        {
+          "id": "coral_mineral_round",
+          "name": "采礁轮投料",
+          "inputs": {
+            "stone_powder": 3,
+            "clean_water": 1
+          },
+          "outputs": {
+            "coral_stone": 2
+          }
+        }
+      ],
+      "default_special_diet": "coral_mineral_round",
+      "outputs": {
+        "coral_stone": 2
+      },
+      "claim_removes": false,
+      "research": "mineral_materials"
     }
   ],
   "research": [
@@ -3658,16 +5530,24 @@
         "purchases": [],
         "crops": [],
         "facilities": [
-          "farm_processor"
+          "carbonization_nest",
+          "farm_processor",
+          "oilfish_harvest_station"
         ],
         "recipes": [
+          "bug_char_chips",
+          "bug_char_twigs",
+          "compost_oil_cake",
+          "mill_duckweed",
           "mill_grain",
           "mill_grass",
-          "press_oilseed",
-          "compost_oil_cake",
-          "mill_rice"
+          "mill_rice",
+          "press_oilseed"
         ],
-        "species": [],
+        "species": [
+          "carbon_belly_bug",
+          "oilfin_fish"
+        ],
         "diets": []
       }
     },
@@ -3688,14 +5568,17 @@
         ],
         "crops": [],
         "facilities": [
-          "purifying_bed"
+          "purifying_bed",
+          "silt_processing_station"
         ],
         "recipes": [
           "bio_purify",
-          "compost_sludge"
+          "compost_sludge",
+          "mouse_compost_residue"
         ],
         "species": [
-          "purifying_mat"
+          "purifying_mat",
+          "silt_loach"
         ],
         "diets": []
       }
@@ -3715,7 +5598,7 @@
         "purchases": [],
         "crops": [],
         "facilities": [
-          "rock_workyard"
+          "rock_breaking_yard"
         ],
         "recipes": [
           "break_stone",
@@ -3747,11 +5630,14 @@
         "crops": [],
         "facilities": [],
         "recipes": [
-          "refine_oil",
+          "blend_fish_land_feed",
+          "blend_fish_water_feed",
           "blend_land_feed",
           "blend_water_feed",
-          "refine_wax",
-          "compost_spent_filter"
+          "compost_spent_filter",
+          "dry_fish_meal",
+          "refine_oil",
+          "refine_wax"
         ],
         "species": [],
         "diets": [
@@ -3777,7 +5663,9 @@
       "unlocks": {
         "purchases": [],
         "crops": [],
-        "facilities": [],
+        "facilities": [
+          "ore_sorting_yard"
+        ],
         "recipes": [
           "concentrate_ore"
         ],
@@ -3805,13 +5693,21 @@
       "unlocks": {
         "purchases": [],
         "crops": [],
-        "facilities": [],
-        "recipes": [
-          "make_filter_media",
-          "recover_nutrients",
-          "dense_algae_culture"
+        "facilities": [
+          "gel_station",
+          "pearl_station"
         ],
-        "species": [],
+        "recipes": [
+          "dense_algae_culture",
+          "make_coral_filter_media",
+          "make_filter_media",
+          "make_silk_filter_media",
+          "recover_nutrients"
+        ],
+        "species": [
+          "gel_jellyfish",
+          "pearl_mussel"
+        ],
         "diets": [
           "dense_meal"
         ]
@@ -3848,18 +5744,17 @@
     {
       "id": "field_maintenance",
       "name": "田间自动维护",
-      "layer": 3,
+      "layer": 1,
       "prerequisites": [
-        "advanced_feed_oil_wax",
-        "water_recirculation"
+        "farm_preparation"
       ],
       "samples": {
         "humus": 2,
         "clean_water": 4,
-        "land_feed": 1
+        "grain": 1
       },
-      "fee": 12,
-      "days": 6,
+      "fee": 8,
+      "days": 2,
       "unlocks": {
         "purchases": [],
         "crops": [],
@@ -3890,15 +5785,29 @@
         "purchases": [],
         "crops": [],
         "facilities": [
-          "growth_lamp"
+          "coral_station",
+          "growth_lamp",
+          "scale_station",
+          "shell_forming_station"
         ],
         "recipes": [
-          "mineral_feed",
-          "smelt_concentrate",
+          "assemble_coral_panel",
+          "assemble_mucus_panel",
+          "assemble_scale_panel",
+          "assemble_shell_panel",
           "assemble_stone_panel",
-          "recover_fill"
+          "form_rock_shell",
+          "grind_coral",
+          "grind_shell",
+          "mineral_feed",
+          "recover_fill",
+          "smelt_concentrate"
         ],
-        "species": [],
+        "species": [
+          "gravel_shell_snail",
+          "mineral_scale_lizard",
+          "reef_coral"
+        ],
         "diets": [
           "mineral_supplement"
         ]
@@ -3932,6 +5841,36 @@
         ],
         "species": [],
         "diets": []
+      }
+    },
+    {
+      "id": "aquatic_intensive_care",
+      "name": "水产精养",
+      "layer": 2,
+      "fee": 10,
+      "days": 4,
+      "prerequisites": [
+        "water_recirculation"
+      ],
+      "samples": {
+        "pearl": 2,
+        "water_gel": 2
+      },
+      "unlocks": {
+        "purchases": [],
+        "crops": [],
+        "facilities": [],
+        "species": [],
+        "recipes": [
+          "make_water_retaining_matrix",
+          "pearl_polish_water"
+        ],
+        "diets": [
+          "matrix_round",
+          "reed_substrate",
+          "pearl_spirit_round",
+          "gel_spirit_round"
+        ]
       }
     }
   ],
@@ -4063,7 +6002,8 @@
             1,
             1
           ]
-        }
+        },
+        "market_price": 32
       },
       {
         "id": "bright_gu",
@@ -4086,7 +6026,8 @@
         "scope": "AREA",
         "effect": "light",
         "range": 2,
-        "value": 80
+        "value": 80,
+        "market_price": 24
       },
       {
         "id": "growth_gu",
@@ -4110,7 +6051,8 @@
         "scope": "DIRECTED_AREA",
         "effect": "growth_speed",
         "range": 3,
-        "value": 150
+        "value": 150,
+        "market_price": 24
       },
       {
         "id": "water_gu",
@@ -4134,7 +6076,8 @@
         "scope": "DIRECTED_AREA",
         "effect": "water_saving",
         "range": 3,
-        "value": 50
+        "value": 50,
+        "market_price": 24
       },
       {
         "id": "fert_gu",
@@ -4158,7 +6101,8 @@
         "scope": "DIRECTED_AREA",
         "effect": "fertility_saving",
         "range": 3,
-        "value": 50
+        "value": 50,
+        "market_price": 24
       },
       {
         "id": "wisdom_gu",
@@ -4182,7 +6126,8 @@
         "scope": "HOST",
         "effect": "research_flat",
         "range": 0,
-        "value": 1
+        "value": 1,
+        "market_price": 32
       },
       {
         "id": "time_gu",
@@ -4209,7 +6154,8 @@
         "effect": "research_speed",
         "range": 0,
         "value": 200,
-        "material_percent": 150
+        "material_percent": 150,
+        "market_price": 48
       },
       {
         "id": "soothe_gu",
@@ -4223,7 +6169,7 @@
           "breed_speed"
         ],
         "target_tags": [
-          "terrestrial_animal"
+          "breed_capable_animal"
         ],
         "fee": 1,
         "food": {},
@@ -4234,7 +6180,8 @@
         "scope": "HOST",
         "effect": "breed_speed",
         "range": 0,
-        "value": 150
+        "value": 150,
+        "market_price": 32
       },
       {
         "id": "command_gu",
@@ -4248,7 +6195,7 @@
           "work_speed"
         ],
         "target_tags": [
-          "terrestrial_animal"
+          "work_capable_animal"
         ],
         "fee": 1,
         "food": {},
@@ -4259,7 +6206,62 @@
         "scope": "HOST",
         "effect": "work_speed",
         "range": 0,
-        "value": 150
+        "value": 150,
+        "market_price": 32
+      },
+      {
+        "id": "product_yield_gu",
+        "name": "丰养蛊",
+        "path": "生道",
+        "role": "logistics",
+        "rank": 1,
+        "deployment": "host",
+        "tags": [
+          "animal_product_assist",
+          "product_yield"
+        ],
+        "target_tags": [
+          "production_animal"
+        ],
+        "fee": 1,
+        "food": {},
+        "host_kinds": [
+          "facility",
+          null
+        ],
+        "slot": "animal_product_assist",
+        "scope": "HOST",
+        "effect": "product_yield",
+        "range": 0,
+        "value": 125,
+        "market_price": 32
+      },
+      {
+        "id": "feed_saving_gu",
+        "name": "节粮蛊",
+        "path": "食道",
+        "role": "logistics",
+        "rank": 1,
+        "deployment": "host",
+        "tags": [
+          "animal_feeding_assist",
+          "feed_saving"
+        ],
+        "target_tags": [
+          "fed_animal"
+        ],
+        "fee": 1,
+        "food": {},
+        "host_kinds": [
+          "facility",
+          null
+        ],
+        "slot": "animal_feeding_assist",
+        "scope": "HOST",
+        "effect": "feed_saving",
+        "range": 0,
+        "value": 25,
+        "market_price": 32
       }
     ],
     "rotate_ap": 1
@@ -4302,6 +6304,10 @@
       },
       "rice_bag_gu": {
         "claim": "rice"
+      },
+      "mulberry_tree": {
+        "harvest": "mulberry_leaf",
+        "fell": "raw_wood"
       }
     },
     "requirements": {
@@ -4316,19 +6322,23 @@
     }
   },
   "p103": {
-    "version": 1,
+    "version": 2,
     "species": {
       "steel_sheep": {
         "space": 2,
         "bed": "medium",
         "growth_units": 3600,
         "breed_units": 7200,
-        "natural_units": 1800,
-        "natural_outputs": {
-          "steel_wool": 1,
-          "sheep_manure": 1
-        },
-        "natural_diet": "iron_supplement"
+        "natural": {
+          "station": "wool_station",
+          "units": 1800,
+          "outputs": {
+            "steel_wool": 2,
+            "sheep_manure": 1
+          },
+          "default_diet": "iron_supplement",
+          "main": "steel_wool"
+        }
       },
       "rock_mole": {
         "space": 1,
@@ -4341,6 +6351,181 @@
         "bed": "small",
         "growth_units": 2400,
         "breed_units": 9600
+      },
+      "carbon_belly_bug": {
+        "space": 1,
+        "bed": "small",
+        "growth_units": 1800,
+        "breed_units": 6000
+      },
+      "leaf_silkworm": {
+        "space": 1,
+        "bed": "small",
+        "growth_units": 1800,
+        "breedable": false,
+        "natural": {
+          "station": "silkworm_rack",
+          "units": 1200,
+          "outputs": {
+            "silk": 4
+          },
+          "default_diet": "silk_round",
+          "main": "silk"
+        }
+      },
+      "dew_shell_snail": {
+        "space": 1,
+        "bed": "small",
+        "growth_units": 2400,
+        "breed_units": 7200,
+        "natural": {
+          "station": "spirit_liquid_collector",
+          "units": 1200,
+          "outputs": {
+            "spirit_liquid": 2,
+            "mucus": 1
+          },
+          "default_diet": "dew_round",
+          "main": "spirit_liquid"
+        }
+      },
+      "mineral_scale_lizard": {
+        "space": 2,
+        "bed": "medium",
+        "growth_units": 3600,
+        "breed_units": 9600,
+        "natural": {
+          "station": "scale_station",
+          "units": 2400,
+          "outputs": {
+            "mineral_scale": 4,
+            "shed_skin": 1
+          },
+          "default_diet": "scale_round",
+          "main": "mineral_scale"
+        }
+      },
+      "compost_mouse": {
+        "space": 1,
+        "bed": "small",
+        "growth_units": 1800,
+        "breed_units": 4800
+      },
+      "gravel_shell_snail": {
+        "space": 2,
+        "bed": "medium",
+        "growth_units": 3000,
+        "breed_units": 8400
+      },
+      "filter_algae_carp": {
+        "medium": "water",
+        "space": 1,
+        "bed": "small",
+        "growth_units": 2400,
+        "breed_units": 7200,
+        "natural": {
+          "station": "carp_harvest_station",
+          "units": 1200,
+          "capture": true,
+          "outputs": {
+            "fish_meat": 3,
+            "fish_manure": 1
+          },
+          "default_diet": "grain_fatten",
+          "main": "fish_meat"
+        }
+      },
+      "oilfin_fish": {
+        "medium": "water",
+        "space": 2,
+        "bed": "medium",
+        "growth_units": 3000,
+        "breed_units": 8400,
+        "natural": {
+          "station": "oilfish_harvest_station",
+          "units": 1800,
+          "capture": true,
+          "outputs": {
+            "crude_oil": 6,
+            "fish_meat": 1
+          },
+          "default_diet": "oilfin_oil_round",
+          "main": "crude_oil"
+        }
+      },
+      "pearl_mussel": {
+        "medium": "water",
+        "space": 1,
+        "bed": "small",
+        "growth_units": 3600,
+        "breed_units": 9600,
+        "natural": {
+          "station": "pearl_station",
+          "units": 2400,
+          "capture": false,
+          "shell": true,
+          "outputs": {
+            "pearl": 3
+          },
+          "default_diet": "pearl_powder_round",
+          "variants": {
+            "pearl_spirit_round": {
+              "outputs": {
+                "pearl": 4
+              }
+            }
+          },
+          "main": "pearl"
+        }
+      },
+      "gel_jellyfish": {
+        "medium": "water",
+        "space": 1,
+        "bed": "small",
+        "growth_units": 2400,
+        "breed_units": 7200,
+        "natural": {
+          "station": "gel_station",
+          "units": 1200,
+          "capture": false,
+          "outputs": {
+            "water_gel": 2
+          },
+          "default_diet": "gel_water_round",
+          "variants": {
+            "gel_spirit_round": {
+              "outputs": {
+                "water_gel": 3
+              }
+            }
+          },
+          "main": "water_gel"
+        }
+      },
+      "silt_loach": {
+        "medium": "water",
+        "space": 1,
+        "bed": "small",
+        "growth_units": 1800,
+        "breed_units": 6000
+      },
+      "reef_coral": {
+        "medium": "water",
+        "space": 1,
+        "bed": "",
+        "fixed": true,
+        "growth_units": 3600,
+        "breed_units": 10800,
+        "natural": {
+          "station": "coral_station",
+          "units": 1800,
+          "capture": false,
+          "outputs": {
+            "coral_stone": 2
+          },
+          "default_diet": "coral_mineral_round",
+          "main": "coral_stone"
+        }
       }
     },
     "zones": {
@@ -4361,11 +6546,41 @@
           "care_table"
         ]
       },
+      "intensive": {
+        "min_space": 8,
+        "structures": [
+          "pen",
+          "feed_trough",
+          "bed"
+        ],
+        "any_of": [
+          {
+            "id": "intensive_station",
+            "members": [
+              "wool_station",
+              "silkworm_rack",
+              "spirit_liquid_collector",
+              "scale_station"
+            ]
+          }
+        ]
+      },
       "work": {
         "min_space": 0,
         "structures": [
-          "dispatch_station",
-          "rock_workyard"
+          "dispatch_station"
+        ],
+        "any_of": [
+          {
+            "id": "work_yard",
+            "members": [
+              "rock_breaking_yard",
+              "ore_sorting_yard",
+              "carbonization_nest",
+              "compost_mouse_den",
+              "shell_forming_station"
+            ]
+          }
         ]
       },
       "maintenance": {
@@ -4379,6 +6594,63 @@
         "min_space": 8,
         "structures": [
           "toy_station"
+        ]
+      },
+      "water_nursery": {
+        "min_space": 4,
+        "medium": "water",
+        "structures": [
+          "pen",
+          "feed_trough",
+          "bed"
+        ]
+      },
+      "water_enclosure": {
+        "min_space": 8,
+        "medium": "water",
+        "structures": [
+          "pen",
+          "feed_trough",
+          "bed",
+          "care_table"
+        ]
+      },
+      "water_production": {
+        "min_space": 8,
+        "medium": "water",
+        "structures": [
+          "pen",
+          "feed_trough",
+          "bed"
+        ],
+        "any_of": [
+          {
+            "id": "water_station",
+            "members": [
+              "carp_harvest_station",
+              "oilfish_harvest_station",
+              "pearl_station",
+              "gel_station",
+              "coral_station"
+            ]
+          }
+        ]
+      },
+      "water_loach": {
+        "min_space": 4,
+        "medium": "water",
+        "structures": [
+          "pen",
+          "feed_trough",
+          "bed",
+          "silt_processing_station"
+        ]
+      },
+      "aqua_planting": {
+        "min_space": 1,
+        "medium": "water",
+        "structures": [
+          "aquatic_crop_station"
         ]
       }
     },
@@ -4421,6 +6693,29 @@
     "work": {
       "posts_per_yard": 4,
       "points_per_unit": 10000,
+      "facilities": {
+        "rock_breaking_yard": [
+          "break_stone",
+          "break_ore"
+        ],
+        "ore_sorting_yard": [
+          "concentrate_ore"
+        ],
+        "carbonization_nest": [
+          "bug_char_twigs",
+          "bug_char_chips"
+        ],
+        "compost_mouse_den": [
+          "mouse_compost_fiber",
+          "mouse_compost_residue"
+        ],
+        "shell_forming_station": [
+          "form_rock_shell"
+        ],
+        "silt_processing_station": [
+          "silt_process"
+        ]
+      },
       "recipes": {
         "break_stone": {
           "species": "rock_mole",
@@ -4433,14 +6728,80 @@
         "concentrate_ore": {
           "species": "rock_belly_beast",
           "target": 80000
+        },
+        "bug_char_twigs": {
+          "species": "carbon_belly_bug",
+          "target": 60000
+        },
+        "bug_char_chips": {
+          "species": "carbon_belly_bug",
+          "target": 40000
+        },
+        "mouse_compost_fiber": {
+          "species": "compost_mouse",
+          "target": 40000
+        },
+        "mouse_compost_residue": {
+          "species": "compost_mouse",
+          "target": 40000
+        },
+        "form_rock_shell": {
+          "species": "gravel_shell_snail",
+          "target": 80000
+        },
+        "silt_process": {
+          "species": "silt_loach",
+          "target": 1200
         }
+      }
+    },
+    "stations": {
+      "wool_station": {
+        "species": "steel_sheep",
+        "capacity": 4
       },
-      "default_recipe": "break_stone"
+      "silkworm_rack": {
+        "species": "leaf_silkworm",
+        "capacity": 4
+      },
+      "spirit_liquid_collector": {
+        "species": "dew_shell_snail",
+        "capacity": 4
+      },
+      "scale_station": {
+        "species": "mineral_scale_lizard",
+        "capacity": 4
+      },
+      "carp_harvest_station": {
+        "species": "filter_algae_carp",
+        "capacity": 4
+      },
+      "oilfish_harvest_station": {
+        "species": "oilfin_fish",
+        "capacity": 4
+      },
+      "pearl_station": {
+        "species": "pearl_mussel",
+        "capacity": 4
+      },
+      "gel_station": {
+        "species": "gel_jellyfish",
+        "capacity": 4
+      },
+      "coral_station": {
+        "species": "reef_coral",
+        "capacity": 4
+      }
     },
     "meals": {
       "nursery": 1,
       "work": 1,
-      "enclosure": 2
+      "enclosure": 2,
+      "intensive": 2,
+      "water_nursery": 1,
+      "water_enclosure": 2,
+      "water_production": 2,
+      "water_loach": 2
     },
     "trough_slots": 2,
     "bed_facilities": {
@@ -4513,5 +6874,373 @@
     "toy_station": "toy_station",
     "install_ap": 1,
     "system_ap": 1
+  },
+  "p106": {
+    "version": 1,
+    "fence": {
+      "cash": 1,
+      "inputs": {
+        "twig": 1
+      },
+      "ap": 1
+    },
+    "quality": {
+      "initial": 100,
+      "cap": 100,
+      "points_per_cell": 10000,
+      "pause_threshold": 30,
+      "base_decay": 2,
+      "load_factor": 6
+    },
+    "change": {
+      "inputs": {
+        "clean_water": 2
+      },
+      "wastewater": 2,
+      "gain": 40,
+      "max_cells": 8,
+      "ap": 1
+    },
+    "facilities": {
+      "change_station": "water_change_station",
+      "crop_station": "aquatic_crop_station"
+    },
+    "station_change_cells": 8
+  },
+  "p107": {
+    "version": 1,
+    "stage_names": [
+      "起步",
+      "建立基础",
+      "规模增长",
+      "体系增长"
+    ],
+    "events": [
+      {
+        "id": "first_workshop",
+        "name": "初建产业",
+        "orders": 3,
+        "inputs": {}
+      },
+      {
+        "id": "gu_partnership",
+        "name": "后勤合作",
+        "orders": 12,
+        "inputs": {}
+      },
+      {
+        "id": "integrated_estate",
+        "name": "产业进阶",
+        "orders": 0,
+        "inputs": {
+          "composite_stone_panel": 12,
+          "refined_oil": 6,
+          "water_retaining_matrix": 8
+        }
+      }
+    ],
+    "gates": {
+      "research": {
+        "flower_cultivation": 0,
+        "beekeeping": 1,
+        "farm_preparation": 0,
+        "biofiltration": 1,
+        "rock_handling": 1,
+        "advanced_feed_oil_wax": 1,
+        "ore_concentration": 1,
+        "water_recirculation": 1,
+        "basic_spirit_cooking": 2,
+        "field_maintenance": 1,
+        "mineral_materials": 2,
+        "composite_spirit_food": 3,
+        "aquatic_intensive_care": 2
+      },
+      "facility": {
+        "aquatic_crop_station": 1,
+        "carbonization_nest": 1,
+        "care_table": 1,
+        "carp_harvest_station": 1,
+        "compost_mouse_den": 1,
+        "coral_station": 1,
+        "dispatch_station": 1,
+        "feed_trough": 1,
+        "gel_station": 1,
+        "large_bed": 1,
+        "medium_bed": 1,
+        "oilfish_harvest_station": 1,
+        "ore_sorting_yard": 1,
+        "pearl_station": 1,
+        "pen": 1,
+        "rock_breaking_yard": 1,
+        "scale_station": 1,
+        "shell_forming_station": 1,
+        "silkworm_rack": 1,
+        "silt_processing_station": 1,
+        "small_bed": 1,
+        "spirit_liquid_collector": 1,
+        "toy_station": 1,
+        "water_change_station": 1,
+        "wool_station": 1,
+        "field_service_station": 1,
+        "soothing_station": 2,
+        "growth_lamp": 2,
+        "bee_hive": 1,
+        "purifying_bed": 1
+      },
+      "gu": {
+        "rice_bag_gu": 2,
+        "bright_gu": 2,
+        "growth_gu": 2,
+        "water_gu": 2,
+        "fert_gu": 2,
+        "wisdom_gu": 2,
+        "time_gu": 2,
+        "soothe_gu": 2,
+        "command_gu": 2,
+        "product_yield_gu": 2,
+        "feed_saving_gu": 2
+      },
+      "capability": {
+        "fence": 1,
+        "animals": 1,
+        "systems": 3,
+        "toy": 2,
+        "gu_provision": 2
+      }
+    },
+    "offers": [
+      {
+        "id": "silk_for_resin",
+        "stage": 1,
+        "give": {
+          "silk": 4
+        },
+        "receive": {
+          "resin": 3
+        }
+      },
+      {
+        "id": "spirit_liquid_for_resin",
+        "stage": 1,
+        "give": {
+          "spirit_liquid": 3
+        },
+        "receive": {
+          "resin": 3
+        }
+      },
+      {
+        "id": "water_gel_for_resin",
+        "stage": 2,
+        "give": {
+          "water_gel": 3
+        },
+        "receive": {
+          "resin": 3
+        }
+      },
+      {
+        "id": "pearl_for_resin",
+        "stage": 2,
+        "give": {
+          "pearl": 2
+        },
+        "receive": {
+          "resin": 4
+        }
+      },
+      {
+        "id": "coral_stone_for_resin",
+        "stage": 2,
+        "give": {
+          "coral_stone": 2
+        },
+        "receive": {
+          "resin": 3
+        }
+      },
+      {
+        "id": "honey_for_resin",
+        "stage": 1,
+        "give": {
+          "honey": 4
+        },
+        "receive": {
+          "resin": 3
+        }
+      },
+      {
+        "id": "crude_oil_for_resin",
+        "stage": 1,
+        "give": {
+          "crude_oil": 3
+        },
+        "receive": {
+          "resin": 2
+        }
+      },
+      {
+        "id": "resin_for_flower_samples",
+        "stage": 1,
+        "give": {
+          "resin": 2
+        },
+        "receive": {
+          "nectar": 2,
+          "pollen": 1
+        }
+      },
+      {
+        "id": "resin_for_beeswax",
+        "stage": 1,
+        "give": {
+          "resin": 4
+        },
+        "receive": {
+          "beeswax": 2
+        }
+      },
+      {
+        "id": "resin_for_sludge",
+        "stage": 1,
+        "give": {
+          "resin": 2
+        },
+        "receive": {
+          "sludge": 2
+        }
+      },
+      {
+        "id": "resin_for_stone_parts",
+        "stage": 1,
+        "give": {
+          "resin": 4
+        },
+        "receive": {
+          "gravel": 3,
+          "stone_powder": 1
+        }
+      },
+      {
+        "id": "resin_for_crushed_ore",
+        "stage": 1,
+        "give": {
+          "resin": 4
+        },
+        "receive": {
+          "crushed_ore": 4
+        }
+      },
+      {
+        "id": "resin_for_fish_meat",
+        "stage": 1,
+        "give": {
+          "resin": 4
+        },
+        "receive": {
+          "fish_meat": 3
+        }
+      },
+      {
+        "id": "resin_for_honey",
+        "stage": 1,
+        "give": {
+          "resin": 4
+        },
+        "receive": {
+          "honey": 2
+        }
+      },
+      {
+        "id": "resin_for_ore_concentrate",
+        "stage": 2,
+        "give": {
+          "resin": 6
+        },
+        "receive": {
+          "ore_concentrate": 2
+        }
+      },
+      {
+        "id": "resin_for_panels",
+        "stage": 2,
+        "give": {
+          "resin": 8
+        },
+        "receive": {
+          "composite_stone_panel": 4
+        }
+      },
+      {
+        "id": "resin_for_refined_oil",
+        "stage": 2,
+        "give": {
+          "resin": 6
+        },
+        "receive": {
+          "refined_oil": 3
+        }
+      },
+      {
+        "id": "resin_for_water_gel",
+        "stage": 2,
+        "give": {
+          "resin": 8
+        },
+        "receive": {
+          "water_gel": 4
+        }
+      },
+      {
+        "id": "resin_for_pearl",
+        "stage": 2,
+        "give": {
+          "resin": 8
+        },
+        "receive": {
+          "pearl": 2
+        }
+      },
+      {
+        "id": "resin_for_matrix",
+        "stage": 2,
+        "give": {
+          "resin": 8
+        },
+        "receive": {
+          "water_retaining_matrix": 4
+        }
+      },
+      {
+        "id": "resin_for_dense_algae",
+        "stage": 2,
+        "give": {
+          "resin": 4
+        },
+        "receive": {
+          "dense_algae": 3
+        }
+      },
+      {
+        "id": "mineral_scale_for_resin",
+        "stage": 2,
+        "give": {
+          "mineral_scale": 2
+        },
+        "receive": {
+          "resin": 4
+        }
+      },
+      {
+        "id": "resin_for_mineral_scale",
+        "stage": 2,
+        "give": {
+          "resin": 8
+        },
+        "receive": {
+          "mineral_scale": 2
+        }
+      }
+    ]
   }
 }

@@ -54,8 +54,8 @@ func tilled_count(world) -> int:
 func _namespace() -> void:
 	var world := P8World.new(temp_store())
 	check(world.data_source.load_data()["product"] == "farm_demo_p8", "P8 product identity")
-	check(world._items.size() == 65 and world.facility_defs.size() == 21, "65 resources and 21 facilities registered")
-	check(world.recipe_defs.size() == 41 and world.crop_defs.size() == 7, "41 recipes and 7 crops registered")
+	check(world._items.size() == 84 and world.facility_defs.size() == 39, "84 resources and 39 facilities registered")
+	check(world.recipe_defs.size() == 64 and world.crop_defs.size() == 10, "64 recipes and 10 crops registered")
 	check(P8Snapshot.fresh()["schema"] == P8Snapshot.SCHEMA, "current schema with logistics and agriculture snapshots")
 	check(not P8Snapshot.normalize(V2Snapshot.fresh())["ok"], "V2 snapshots rejected by the P8 codec")
 	check(not V2Snapshot.normalize(P8Snapshot.fresh())["ok"], "P8 snapshots rejected by the V2 codec")
@@ -74,7 +74,7 @@ func _research_lockout() -> void:
 		["bee_hive", Vector2i(7, 1)],
 		["farm_processor", Vector2i(9, 1)],
 		["purifying_bed", Vector2i(0, 1)],
-		["rock_workyard", Vector2i(3, 1)],
+		["rock_breaking_yard", Vector2i(3, 1)],
 		["kitchen", Vector2i(5, 1)],
 		["field_service_station", Vector2i(0, 3)],
 		["growth_lamp", Vector2i(6, 3)],
@@ -121,42 +121,40 @@ func _research_lockout() -> void:
 # --- 3. Real water change ---------------------------------------------------
 
 func _water_change() -> void:
+	# P10.6 §16.2.12: fish_pond is retired; the real water change now lives on
+	# explicit water bodies (fence + change_water), so this scenario follows the
+	# live module instead of the retired habitat path.
 	var world := P8World.new(temp_store())
 	world.start_new(1)
-	world.grant_scaffold({"raw_stone": 4, "raw_wood": 1, "clean_water": 12})
-	check(world.build_facility(Vector2i(0, 14), "fish_pond")["ok"], "build pond")
-	var pond := 0
-	for uid in world.facilities:
-		if world.facilities[uid]["facility_id"] == "fish_pond": pond = int(uid)
-	check(not world.husbandry.quote_water(pond)["ok"], "empty pond refuses a change")
-	check(world.husbandry.purchase(pond, 2)["ok"], "buy fry")
-	var full: Dictionary = world.husbandry.quote_water(pond)
-	check(not full["ok"] and String(full["reason"]).find("满") >= 0, "full pond refuses a change")
-	check(world.end_day()["ok"], "settle day 0")
-	check(int(world.husbandry.habitat_of(pond)["water"]) == 95, "water decays to 95")
-	var quote: Dictionary = world.husbandry.quote_water(pond)
-	check(quote["ok"] and int(quote["wastewater"]) == 2, "quote offers one change with sewage 2")
-	var change: Dictionary = world.husbandry.maintain_water(pond)
-	check(change["ok"] and int(change["water"]) == 100, "change restores water to 100")
+	world.grant_scaffold({"twig": 4, "clean_water": 12})
+	world.primeval_stones += 4
+	check(not world.water.change_water(1)["ok"], "unknown body refuses a change")
+	var fenced: Dictionary = world.water.build_fence([Vector2i(0, 14), Vector2i(1, 14)], 0)
+	check(fenced["ok"], "fence two cells")
+	var body_uid := int(fenced["body"])
+	check(int(world.water.body(body_uid)["quality"]) == 20000, "body starts full")
+	check(world.water.change_water(body_uid)["ok"], "change runs on a full body")
 	check(world.inventory.count("wastewater") == 2, "sewage enters stock")
 	check(world.inventory.count("clean_water") == 10, "clean water actually deducted")
-	var twice: Dictionary = world.husbandry.quote_water(pond)
-	check(not twice["ok"] and (String(twice["reason"]).find("一次") >= 0 or String(twice["reason"]).find("满") >= 0), "second same-day change refused")
-	check(world.end_day()["ok"], "settle day 1")
-	check(int(world.husbandry.habitat_of(pond)["water"]) == 95, "post-settle decay after change")
-	var day1: Dictionary = world.husbandry.maintain_water(pond)
-	check(day1["ok"] and world.inventory.count("wastewater") == 4, "next day allows a fresh change")
+	check(int(world.water.body(body_uid)["quality"]) == 20000, "full body stays at the cap, excess wasted")
+	check(not world.water.change_water(body_uid)["ok"], "second same-day change refused")
+	check(world.end_day()["ok"], "settle day 0")
+	check(world.water.quality(world.water.body(body_uid)) == 98, "water decays to 98")
+	var day1: Dictionary = world.water.change_water(body_uid)
+	check(day1["ok"] and int(day1["applied"]) == 400 and world.inventory.count("wastewater") == 4,
+		"next day allows a fresh change")
 	# Ledger rows carry the real flow under one reason label.
 	var flows: Dictionary = world.ledger.day_view(-1)
 	var seen_sewage := 0
 	for reason in flows.get("inflows", {}).get("wastewater", {}):
 		seen_sewage += int(flows["inflows"]["wastewater"][reason])
 	check(seen_sewage == 2, "today's ledger records the sewage inflow")
-	check(world.end_day()["ok"], "settle day 2 with conservation intact")
-	# Marker persists through save/load.
+	check(world.end_day()["ok"], "settle day 1 with conservation intact")
+	# The body and its change marker persist through save/load.
 	var restored := P8World.new()
 	restored.apply_snapshot(world.to_snapshot())
-	check(int(restored.husbandry.habitat_of(pond)["water_change_day"]) == 2, "water-change marker round trips")
+	check(int(restored.water.body(body_uid)["change_day"]) == 1, "water-change marker round trips")
+	check(restored.water.quality(restored.water.body(body_uid)) == 98, "body quality round trips")
 	check(restored.daily_save_error.is_empty(), "restored world stays playable")
 
 # --- 4. Candidate day transaction ------------------------------------------

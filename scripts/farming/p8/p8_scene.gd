@@ -24,6 +24,8 @@ const ServicesUI := preload("res://scripts/farming/p8/p104_ui.gd")
 var rooms_ui := RoomsUI.new(self)
 var ranch_ui := RanchUI.new(self)
 var services_ui := ServicesUI.new(self)
+const EconomyUI := preload("res://scripts/farming/p8/p107_ui.gd")
+var economy_ui := EconomyUI.new(self)
 
 func _new(slot: int, overwrite: bool) -> void:
 	rooms_ui.floor_tool=""
@@ -94,6 +96,19 @@ func _picture(parent: Node, ident: String, extent: int = 40) -> TextureRect:
 
 func _make_world(slot_store):
 	return P8World.new(slot_store)
+
+func _economy_link() -> void:
+	var button := _button(sidebar, "产业成长与以物换物", economy_ui.open)
+	button.set_meta("p107_navigation", true)
+	sidebar.move_child(button, 0)
+
+func _show_market() -> void:
+	super()
+	_economy_link()
+
+func _show_orders() -> void:
+	super()
+	_economy_link()
 
 func _ready() -> void:
 	super()
@@ -273,7 +288,10 @@ func _show_cell() -> void:
 		var field: Dictionary = world.rooms.field_at(selected)
 		if not field.is_empty(): _label(sidebar,"所属田块：%s（#%d）" % [field["name"],field["uid"]])
 		_button(sidebar,"农业区与地板",rooms_ui.open)
-		if not world.facility_at(selected).is_empty() and String(world.facility_at(selected)["facility_id"]) in ["pen","rock_workyard","dispatch_station","feed_trough","small_bed","medium_bed","large_bed","care_table","soothing_station","toy_station"]:
+		var ranch_here: bool = not world.facility_at(selected).is_empty() and (
+			world.ranch.is_structural(String(world.facility_at(selected)["facility_id"]))
+			or String(world.facility_at(selected)["facility_id"]) in ["dispatch_station","feed_trough","small_bed","medium_bed","large_bed","care_table","soothing_station","toy_station"])
+		if ranch_here:
 			_button(sidebar,"畜牧分区",ranch_ui.open)
 
 func _board_input(event: InputEvent) -> void:
@@ -526,12 +544,15 @@ func _show_facility(facility: Dictionary) -> void:
 	logistics_ui.host_section(int(facility["uid"]))
 	if facility["facility_id"]=="toy_station": services_ui.toy_controls(sidebar,int(facility["uid"]))
 	var definition: Dictionary = world.facility_defs[facility["facility_id"]]
-	if String(facility["facility_id"]) in ["pen","rock_workyard","soothing_station","toy_station"]:
-		_picture(sidebar,String(facility["facility_id"]),64)
+	var facility_id := String(facility["facility_id"])
+	if facility_id == "pen" or world.ranch.is_structural(facility_id) or ["soothing_station","toy_station"].has(facility_id):
+		_picture(sidebar,facility_id,64)
 		_heading(sidebar,String(definition["name"]))
-		_encyclopedia_link(sidebar,"facility:"+String(facility["facility_id"]))
-		var purpose:={"pen":"由畜牧分区统一管理动物与产出。","rock_workyard":"在畜牧管理页设置动物、日程、劳动配方与领取产出。","soothing_station":"在完整圈养区提供安抚蛊槽，提升实际繁殖进度；每单位服务4空间。","toy_station":"在额外放牧区管理耐用玩具；空槽保留基础活动，装球后提供概率恢复服务。"}
-		_label(sidebar,String(purpose[String(facility["facility_id"])]))
+		_encyclopedia_link(sidebar,"facility:"+facility_id)
+		var purpose:={"pen":"由畜牧分区统一管理动物与产出。","soothing_station":"在完整繁殖区提供安抚蛊槽，提升实际繁殖进度；每单位服务4空间。","toy_station":"在额外放牧区管理耐用玩具；空槽保留基础活动，装球后提供概率恢复服务。"}
+		if not purpose.has(facility_id):
+			purpose[facility_id] = "专属畜牧设施：在畜牧管理页安置动物、设置日程、工艺与领取产出。"
+		_label(sidebar,String(purpose[facility_id]))
 		_button(sidebar,"打开畜牧管理",ranch_ui.open)
 		_icon(sidebar,"clear","拆除（1AP，无返还）",func(): _confirm("拆除此畜牧设施？先处理动物、在制批次与工作余量。",func(): _result(world.demolish_facility(int(facility["uid"])));_show_cell()))
 		return
@@ -563,6 +584,7 @@ func _show_facility(facility: Dictionary) -> void:
 		_label(sidebar,"空闲 · 选择配方")
 		for ident in world.recipe_defs:
 			var recipe: Dictionary = world.recipe_defs[ident]
+			if not world.batch_block(String(ident)).is_empty(): continue
 			if recipe["facility"] != facility["facility_id"]:
 				continue
 			var card := _card(sidebar)
@@ -598,6 +620,7 @@ func _encyclopedia_link(parent: Node, entity_id: String) -> Button:
 	return button
 
 func _context_refresh() -> void:
+	if _context == "economy": economy_ui.open(); return
 	if _context == "rooms": rooms_ui.open(); return
 	if _context == "ranch": ranch_ui.open(); return
 	if _context == "logistics": logistics_ui.open()
@@ -905,6 +928,7 @@ func _show_worker_duties(worker: Dictionary) -> void:
 const RESEARCH_STATUS := {"locked": "锁定", "ready": "可启动", "active": "在研", "paused": "已暂停", "done": "已完成"}
 
 func _project_status(project_id: String) -> String:
+	if not world.progress.block("research", project_id).is_empty(): return "locked"
 	if world.research.is_completed(project_id):
 		return "done"
 	var active: Dictionary = world.research.project_of(project_id)
@@ -1015,6 +1039,8 @@ func _show_research() -> void:
 			for item in def["samples"]:
 				samples.append("%s %d/%d" % [world._items[String(item)]["name"], world.inventory.count(String(item)), int(def["samples"][item])])
 			_label(card,"样本：%s · 启动%d元石 · %d有效日" % ["、".join(samples) if not samples.is_empty() else "无", int(def["fee"]), int(def["days"])])
+			var stage_block: String = world.progress.block("research", String(project_id))
+			if not stage_block.is_empty(): _label(card, stage_block)
 			var unlocks := PackedStringArray()
 			var registry: Dictionary = def["unlocks"]
 			if not registry["facilities"].is_empty(): unlocks.append("设施%d座" % registry["facilities"].size())
@@ -1060,7 +1086,7 @@ func _crop_extra(crop: Dictionary) -> void:
 func _habitat_extra(habitat: Dictionary) -> void:
 	_encyclopedia_link(sidebar,"species:" + String(habitat["species_id"]))
 	_production_section(world.facilities[int(habitat["facility_uid"])], false)
-	if String(world.facility_defs[String(world.facilities[int(habitat["facility_uid"])]["facility_id"])].get("id", "")) == "rock_workyard" or world.facility_defs[String(world.facilities[int(habitat["facility_uid"])]["facility_id"])].get("species", []).size() > 1:
+	if world.facility_defs[String(world.facilities[int(habitat["facility_uid"])]["facility_id"])].get("species", []).size() > 1:
 		if habitat["individuals"].is_empty():
 			_label(sidebar,"本场只能养一种岩兽；空场可切换物种后再购入。")
 			var picker := OptionButton.new()

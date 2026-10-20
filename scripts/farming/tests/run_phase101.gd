@@ -29,8 +29,8 @@ func scaffold(w, station_cells: Array, facings: Array = []) -> Array:
 
 func _initialize() -> void:
 	var w := World.new()
-	check(w.logistics.provision()["ok"],"eleven trial instances provisioned")
-	check(w.logistics.state["instances"].size()==11,"provision grants eleven instances")
+	check(w.logistics.provision()["ok"],"fifteen trial instances provisioned")
+	check(w.logistics.state["instances"].size()==15,"provision grants fifteen instances")
 	_geometry()
 	_single_slot_and_combination()
 	_coverage_rules()

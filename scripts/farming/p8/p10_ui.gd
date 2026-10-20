@@ -35,6 +35,16 @@ func open() -> void:
 		shell._label(shell.sidebar,"领取15只试用蛊：原农业与研究11只，另加安抚蛊、驭兽蛊各两只。每档一次，0AP；获取与成长尚未连接上游。")
 		shell._icon(shell.sidebar,"claim","领取试用蛊虫",func(): shell._result(manager().provision()); open())
 		return
+	# P10.6 market: shared gu that never ride the trial provision.
+	var market_card = shell._card(shell.sidebar)
+	shell._heading(market_card, "蛊市（P10.6）")
+	for definition in gu.settings["definitions"]:
+		if not definition.has("market_price"):
+			continue
+		var ident := String(definition["id"])
+		var price := int(definition["market_price"])
+		shell._button(market_card, "购入%s（%d元石，1转）" % [String(definition["name"]), price],
+			func(): shell._result(manager().buy_gu(ident)); open())
 	var fees := 0
 	var deployed := 0
 	var sleeping := 0

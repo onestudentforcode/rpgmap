@@ -52,7 +52,7 @@ func _route_ab(a: String, b: String) -> void:
 	_scenario(b, func(world): _business(world, b))
 
 func fixture(extra: Dictionary) -> World:
-	var world := World.new(Store.new(audit_root.path_join("%s-slots-%d" % [route, Time.get_ticks_usec()])))
+	var world := World.new(Store.new(audit_root.path_join("%s-slots-%d-%d" % [route, OS.get_process_id(), Time.get_ticks_usec()])))
 	world.start_new(1)
 	var grant := {"raw_wood": 300, "raw_stone": 300, "wood_plank": 40,
 		"mushroom": 400, "fodder_grass": 400, "grain": 200, "clean_water": 900,
@@ -85,8 +85,9 @@ func build_module(world: World, with_enclosure: bool) -> Dictionary:
 				check(result["ok"], "pave %d,%d" % [x, y])
 	for spec in [["pen", 0, 10], ["feed_trough", 2, 10], ["feed_trough", 3, 10], ["feed_trough", 4, 10],
 			["small_bed", 4, 11], ["medium_bed", 3, 11],
-			["dispatch_station", 8, 10], ["rock_workyard", 9, 10], ["rock_workyard", 11, 10],
-			["feed_trough", 4, 9], ["feed_trough", 5, 9], ["small_bed", 6, 9], ["medium_bed", 7, 9]]:
+			["dispatch_station", 8, 10], ["rock_breaking_yard", 9, 10], ["rock_breaking_yard", 11, 10],
+			["feed_trough", 4, 9], ["feed_trough", 5, 9], ["small_bed", 6, 9], ["medium_bed", 7, 9],
+			["toy_station", 8, 12]]:
 		check(world.build_facility(Vector2i(spec[1], spec[2]), String(spec[0]))["ok"], "build " + String(spec[0]))
 	var zones := {}
 	for group in ["nursery", "work", "maintenance", "pasture"]:
@@ -151,7 +152,7 @@ func archive_day(world: World) -> void:
 
 func claim_yards(world: World) -> void:
 	for uid in world.facilities:
-		if String(world.facilities[uid]["facility_id"]) == "rock_workyard":
+		if String(world.facilities[uid]["facility_id"]) == "rock_breaking_yard":
 			world.ranch.claim_workyard(int(uid))
 
 # --- short scenarios ---------------------------------------------------------
@@ -242,12 +243,10 @@ func _enclosure_breeding(world: World) -> void:
 		index += 1
 	settle_days(world, 1)
 	var iron: int = world.inventory.count("iron_ore")
-	settle_days(world, 3)
-	check(world.inventory.count("iron_ore") == iron - 2, "both natural rounds paid their iron supplement")
-	settle_days(world, 9)
-	var pending: Array = world.ranch.state["animals"].filter(func(a): return bool(a["natural"]["pending"]))
-	check(pending.size() == 2, "wool rounds pending after eighteen care units")
 	settle_days(world, 12)
+	check(world.inventory.count("iron_ore") == iron, "enclosure breeders pay no body-material feed")
+	var producing: Array = world.ranch.state["animals"].filter(func(a): return int(a["natural"]["units"]) > 0)
+	check(producing.is_empty(), "no wool progress outside the intensive zone")
 	var births: Array = world.ranch.state["animals"].filter(func(a): return bool(a["breed"]["pending"]))
 	check(births.size() == 2, "breeding pending after seventy-two care units")
 	var children: int = world.ranch.state["animals"].size()
@@ -294,13 +293,8 @@ func _business(world: World, name: String) -> void:
 				world.ranch.set_recipe(yard, recipe)
 			world.ranch.claim_workyard(world.facility_at(Vector2i(11, 10))["uid"])
 		if enclosure_mode and day % 5 == 0:
-			var enclosure: Dictionary = world.ranch.zone(zones["enclosure"])
 			if world.ranch.state["animals"].any(func(a): return bool(a["breed"]["pending"])):
 				world.ranch.claim_births(zones["enclosure"])
-			if world.ranch.state["animals"].any(func(a): return bool(a["natural"]["pending"])):
-				for facility in world.ranch._facilities_in_zone(enclosure):
-					if String(facility["facility_id"]) == "pen":
-						world.ranch.claim_products(int(facility["uid"]))
 		world.end_day()
 		archive_day(world)
 	# Route acceptance: no deaths, real output, bounded fatigue.

@@ -91,7 +91,7 @@ FLOWERS = SRC['flowers']
 DEVICES = SRC['devices']
 DISPLAY = CURATED['display']
 
-UNIT_DEFAULT = {'steel_sheep': '只', 'filter_algae_carp': '尾', 'bell_bee': '群', 'purifying_mat': '培养单位', 'rock_mole': '只', 'rock_belly_beast': '只'}
+UNIT_DEFAULT = {'steel_sheep': '只', 'filter_algae_carp': '尾', 'bell_bee': '群', 'purifying_mat': '培养单位', 'rock_mole': '只', 'rock_belly_beast': '只', 'carbon_belly_bug': '群', 'leaf_silkworm': '群', 'dew_shell_snail': '只', 'mineral_scale_lizard': '只', 'compost_mouse': '只', 'gravel_shell_snail': '只', 'oilfin_fish': '尾', 'pearl_mussel': '只', 'gel_jellyfish': '群', 'silt_loach': '尾', 'reef_coral': '群'}
 SOURCE_NAMES = {'stone_source': '采石点', 'ore_source': '采矿点', 'spring_source': '泉水点'}
 MODE_NAMES = DISPLAY['crop_mode_names']
 
@@ -212,10 +212,13 @@ for cid, row in CROPS.items():
         fields.append(field('flower', '花期/花源', '成熟期间每日可产1份额' if cid == 'honeybell_bush' else f'生长进度{window[0]}~{window[1] - 1}期间为花期（{row["flower_days"]}日），每日期1份额'))
     if mode == 'culture_each_cycle':
         fields.append(field('culture', '培养水润床', '播种投入中的清水每份+30水分直接润床，不另算浇水'))
-    if SRC.get('rooms'):
+    if SRC.get('rooms') and cid in SRC['rooms']['primary']:
         primary=SRC['rooms']['primary'][cid]
         fields.append(field('room_primary','丰产主产物','；'.join(('砍伐' if m=='fell' else '采收')+'：'+rname(item) for m,item in primary.items())+'。仅本轮合格生长贡献参与25%增产，副产物不增加'))
         fields.append(field('room_seed','育种回流',f'首次成熟仅判定一次；完整合格25%概率得{rname(seed)}×1，随首次成熟收取/成熟清理领取，留株不重抽'))
+    if row.get('medium') == 'water':
+        rounds = '或'.join(v['id'] for v in row.get('round_inputs', []))
+        fields.append(field('water_crop','水生种植',f'种在鱼栅水面的水生种植区；光照≥{row["light"]}且水体水质≥30才生长，无需灌溉；每生长轮付{rounds}投料一次，采满{row.get("max_taps", 0)}轮后清理重种'))
     summary = f'{MODE_NAMES[mode].split("，")[0]}；首熟{row["days"]}日；{quantities_text(row["outputs"])}'
     add_entity(f'crop:{cid}', 'crop', cid, CROP_NAMES[cid], 'crops', [], summary, fields,
                ['rule:crop_growth', 'rule:environment', 'rule:day_settle']+(['rule:rooms'] if SRC.get('rooms') else []), lock_of(row.get('research')))
@@ -234,7 +237,7 @@ for sid, row in LIVESTOCK.items():
         fields.append(field('outputs', '周期产物', f'{quantities_text(row["outputs"])}/轮/{unit}（收取时入仓）'))
     fields.append(field('claim', '收取后去留', '移除个体，需重新购入' if row['claim_removes'] else '保留个体（回到空闲成体）'))
     if sid == 'filter_algae_carp':
-        fields.append(field('water', '水体依赖', '水场水体日降5；≤30全场暂停成长与周期，维护水体或换水恢复'))
+        fields.append(field('water', '水体依赖', '所属水体共享水质日降；低于30暂停成长与生产，换水或净化配套恢复'))
     if sid == 'bell_bee':
         fields.append(field('flower', '花源依赖', '每群每日基础服务消耗1份额（与手采共享）＋清水×1；份额来自覆盖外扩2格内的当日合格花株'))
         fields.append(field('pollination', '授粉增益', '蜂群使用油籽花份额后，该株本周期待收+1油籽；多箱/多次不叠加'))
@@ -621,7 +624,8 @@ for gid, row in GU.items():
     effect = {'production': '独立生产', 'light': '环境光照', 'growth_speed': '定向生长速度',
               'water_saving': '定向水分减耗', 'fertility_saving': '定向肥力减耗',
               'research_flat': '固定研究工作量减免', 'research_speed': '研究速度倍率',
-              'breed_speed': '实际繁殖进度倍率', 'work_speed': '实际动物劳动倍率'}[row['effect']]
+              'breed_speed': '实际繁殖进度倍率', 'work_speed': '实际动物劳动倍率',
+              'product_yield': '主产物期望增产（整数必得＋小数随机）', 'feed_saving': '基础食物消耗折扣（按次累计取整）'}[row['effect']]
     fields = [field('rank','转数',f'{row["rank"]}转原型；实例支持一至五转，升转由上游负责'),
         field('obtain','获取','每档一次试用配给共15只：饭袋草/催生/锁水/节肥/安抚/驭兽各2只，明光/智道研究/宙道研究各1只；尚未连接上游获取与成长'),
         field('deploy','部署','独立占用1格陆地，不需开垦/农田' if row['deployment']=='independent' else '入驻兼容设施：'+'、'.join(f['name'] for f in hosts)),
@@ -634,7 +638,9 @@ for gid, row in GU.items():
             'research_flat':f'研究工作量固定减少{row["value"]}，至少保留1',
             'research_speed':f'每个有效研究日推进{row["value"]/100:g}工作量',
             'breed_speed':f'实际合格繁殖进度×{row["value"]/100:g}，每单位服务4空间',
-            'work_speed':f'实际获岗劳动点×{row["value"]/100:g}，每单位服务4空间'}[row['effect']]),
+            'work_speed':f'实际获岗劳动点×{row["value"]/100:g}，每单位服务4空间',
+        'product_yield':f'主产物期望＋{(row["value"]-100)/100:g}（只登记主产物，整数必得＋小数随机一次），每单位服务4空间',
+        'feed_saving':f'基础食物−{row["value"]}%（饮水不计，按生物×资源累计取整），每单位服务4空间'}[row['effect']]),
         field('fee','维护',f'启用时{row["fee"]}元石/游戏日；闲置仍收费，休眠/未部署免维护'),
         field('food','特殊食料',quantities_text(row['food'])+'（每个成功付费服务日；与元石原子扣除）'),
         field('timing','时点','部署/撤回各1AP；启用次日生效；停用立即取消后续效果，已付不退；运行/待收任务锁定实例')]
@@ -695,6 +701,35 @@ if SRC.get('p104'):
         [io('resource:vine_ball',1,'每个玩具站','卸下槽位')],ap=1,
         facility='facility:toy_station',conditions=['槽内已装入藤球'],category_hint='construction')
     produces('vine_ball',pid)
+
+if SRC.get('p107'):
+    economy = SRC['p107']
+    stage_names = economy['stage_names']
+    for row in economy['offers']:
+        pid = proc('proc:barter:' + row['id'], 'barter',
+                   '以物换物·' + quantities_text(row['give']) + '→' + quantities_text(row['receive']),
+                   [io('resource:' + k, v, '每批', '交换时') for k, v in row['give'].items()],
+                   [io('resource:' + k, v, '每批', '交换时') for k, v in row['receive'].items()],
+                   conditions=[f'全局经济阶段≥{row["stage"]}（{stage_names[row["stage"]]}）；给出物资足额；正整数批量'],
+                   effects=['0AP，无额外元石费，不计供货次数，无每日次数限制'], category_hint='trade')
+        for item in row['give']: consumes(item, pid)
+        for item in row['receive']: produces(item, pid)
+    for level, row in enumerate(economy['events'], 1):
+        condition = (f'累计成功供货{row["orders"]}次' if row['orders'] else '交付材料足额；允许使用已兑换的普通库存')
+        pid = proc('proc:milestone:' + row['id'], 'milestone', '阶段事件·' + row['name'],
+                   [io('resource:' + k, v, '一次性', '成功提交时') for k, v in row['inputs'].items()], [],
+                   conditions=[f'当前阶段{level - 1}；事件按顺序仅完成一次', condition],
+                   effects=[f'开放阶段{level}：{stage_names[level]}；仍需研究/建造及局部房间运行条件'], category_hint='progression')
+        for item in row['inputs']: consumes(item, pid)
+    for e in entities:
+        group = {'research': 'research', 'facility': 'facility', 'gu': 'gu'}.get(e['kind'])
+        if not group: continue
+        stage = economy['gates'][group].get(e['source_id'], 0)
+        lock = e.get('locks')
+        if lock:
+            stage = max(stage, economy['gates']['research'].get(lock['research'].removeprefix('research:'), 0))
+        e['fields'].append(field('economic_stage', '经济阶段', f'阶段≥{stage}（{stage_names[stage]}）；仍须满足其他前置与运行条件'))
+        e['related_rules'] = sorted(set(e['related_rules']) | {'rule:economy-stages'})
 
 # All entities exist now; resolve display names that were built during process
 # construction before the resource entities were registered.
@@ -764,7 +799,9 @@ for rid, row in RES.items():
             if i['entity'] == f'resource:{rid}':
                 use_rows.append(_relation_row(p, i, 'use'))
     if not any(r['type'] not in ('market_sell', 'order_supply') for r in use_rows):
-        fields.append(field('terminal', '下游用途', '无下游配方：出售与供货是该物品的设计出口' if use_rows else '无任何用途（见购买代理说明）'))
+        note_text = '无下游配方：出售与供货是该物品的设计出口' if use_rows else '无任何用途（见购买代理说明）'
+        note_text = DISPLAY.get('terminal_note_overrides', {}).get(rid, note_text)
+        fields.append(field('terminal', '下游用途', note_text))
     add_entity(f'resource:{rid}', 'resource', rid, row['name'], 'items', list(row['tags']),
                f'{DISPLAY["element_names"][row["element"]]}行{DISPLAY["form_names"][row["form"]]}；' + (f'可供货（供养值{b["supply_value"]}）' if row['supply_allowed'] else '生产材料'),
                fields, ['rule:market'] + (['rule:orders'] if row['supply_allowed'] else []),
@@ -824,9 +861,16 @@ for _e in entities:
 
 # rules entities
 for rule in CURATED['rules']:
+    statements = list(rule['statements'])
+    if rule['id'] == 'rule:economy-stages':
+        economy = SRC['p107']
+        for level, event in enumerate(economy['events'], 1):
+            target = f'累计成功供货{event["orders"]}次' if event['orders'] else quantities_text(event['inputs'])
+            statements.append(f'阶段{level - 1}→{level}：「{event["name"]}」需要{target}；打开市场或订单页的“产业成长与以物换物”提交。')
+        statements.append(f'当前固定兑换共{len(economy["offers"])}条，比例由每条给出/收到配置确定。百科资源页可查看具体交换来源与用途。')
     add_entity(rule['id'], 'rule', rule['id'], rule['name'], 'rules', [],
-               rule['statements'][0][:40] + '…',
-               [field('statements', '规则说明', '\n'.join(f'{i + 1}. {s}' for i, s in enumerate(rule['statements']))),
+               statements[0][:40] + '…',
+               [field('statements', '规则说明', '\n'.join(f'{i + 1}. {s}' for i, s in enumerate(statements))),
                 field('refs', '实现依据', '；'.join(f'{r["path"]}::{r["symbol"]}' for r in rule['refs']))],
                [])
 

@@ -39,6 +39,11 @@ ALLOCATION = {
     'break_stone': {'gravel': Fraction(4, 5), 'stone_powder': Fraction(1, 5)},
     'concentrate_ore': {'ore_concentrate': Fraction(19, 20), 'tailings': Fraction(1, 20)},
     'smelt_concentrate': {'iron_ingot': Fraction(19, 20), 'slag': Fraction(1, 20)},
+    'dew_round': {'spirit_liquid': Fraction(3, 4), 'mucus': Fraction(1, 4)},
+    'scale_round': {'mineral_scale': Fraction(3, 4), 'shed_skin': Fraction(1, 4)},
+    'form_rock_shell': {'rock_shell': Fraction(3, 4), 'mucus': Fraction(1, 4)},
+    'oilfin_round': {'crude_oil': Fraction(3, 4), 'fish_meat': Fraction(1, 4)},
+    'pearl_polish_water': {'clean_water': Fraction(67, 100), 'sludge': Fraction(33, 100)},
 }
 
 
@@ -56,9 +61,32 @@ def providers(source):
     recipes = common.registry(source['recipes'], 'recipes')
     facilities = common.registry(source['facilities'], 'facilities')
     research = {row['id']: row for row in source['research']}
+    # P10.6 §16.2: the aquatic facility set may stand on water; the five shared
+    # ranch structures are dual-medium; fish_pond is retired from new builds.
+    water_facilities = {'fish_pond', 'carp_harvest_station', 'oilfish_harvest_station', 'pearl_station',
+                        'gel_station', 'coral_station', 'silt_processing_station', 'aquatic_crop_station'}
+    dual_medium = {'pen', 'feed_trough', 'small_bed', 'medium_bed', 'care_table', 'soothing_station'}
     for ident, facility in facilities.items():
         require(facility.get('terrain', 'land') in ('land', 'water'), f'{ident}: unknown build terrain')
-        require(facility.get('terrain', 'land') != 'water' or ident == 'fish_pond', f'{ident}: only water farms use water terrain')
+        require(facility.get('terrain', 'land') != 'water' or ident in water_facilities,
+                f'{ident}: water terrain is reserved for the aquatic set')
+        require('terrains' not in facility or (ident in dual_medium and facility['terrains'] == ['land', 'water']),
+                f'{ident}: only the shared ranch structures may be dual-medium')
+        require(not facility.get('retired') or ident == 'fish_pond', f'{ident}: unknown retirement')
+    p106 = source.get('p106')
+    require(isinstance(p106, dict) and p106['version'] == 1, 'p106 water section required')
+    require(p106['fence'] == dict(cash=1, inputs={'twig': 1}, ap=1), 'fence cost frozen at 1 stone + 1 twig + 1AP')
+    require(p106['quality'] == dict(initial=100, cap=100, points_per_cell=10000, pause_threshold=30,
+                                     base_decay=2, load_factor=6), 'water quality params frozen')
+    require(p106['change'] == dict(inputs={'clean_water': 2}, wastewater=2, gain=40, max_cells=8, ap=1),
+            'water change service frozen')
+    require(p106['facilities']['change_station'] == 'water_change_station'
+            and p106['facilities']['crop_station'] == 'aquatic_crop_station', 'p106 facility registry')
+    for zone_id in ('water_nursery', 'water_enclosure', 'water_production', 'water_loach', 'aqua_planting'):
+        zone = source['p103']['zones'].get(zone_id)
+        require(isinstance(zone, dict) and zone.get('medium') == 'water', f'{zone_id}: water zone required')
+        for member in [m for group in zone.get('any_of', []) for m in group['members']] + zone['structures']:
+            require(member in facilities or member == 'bed', f'{zone_id}: unknown structure {member}')
         require(facility.get('research', '') == '' or facility['research'] in research, f'{ident}: unknown research gate')
         require(facility.get('kind', '') != 'habitat' or ident in ('pen', 'fish_pond') or facility['research'] != '', f'{ident}: new habitats must be research gated')
     for ident, recipe in recipes.items():
@@ -89,8 +117,14 @@ def providers(source):
     result = {}
     # --- Old livestock: same derivation as V2, unchanged standard rounds.
     # bell_bee keeps its custom flower-field round below and is skipped here.
+    # The P10.3 rock species and the six P10.5 land species live in the ranch
+    # roster; their rounds are derived in the dedicated blocks below.
+    p105_species = ('carbon_belly_bug', 'leaf_silkworm', 'dew_shell_snail',
+                    'mineral_scale_lizard', 'compost_mouse', 'gravel_shell_snail')
+    p106_species = ('filter_algae_carp', 'oilfin_fish', 'pearl_mussel', 'gel_jellyfish',
+                    'silt_loach', 'reef_coral')
     for ident, a in animals.items():
-        if ident in ('bell_bee', 'purifying_mat', 'rock_mole', 'rock_belly_beast'):
+        if ident in ('bell_bee', 'purifying_mat', 'rock_mole', 'rock_belly_beast') or ident in p105_species or ident in p106_species:
             continue
         require(common.integer(a['juvenile_price'], 1) and common.integer(a['growth_days'], 1) and common.integer(a['cycle_days'], 1) and type(a['claim_removes']) is bool, f'{ident}: lifecycle')
         f = facilities[a['facility']]
@@ -151,7 +185,7 @@ def providers(source):
                                        days=bee_days, start_ap=field_ap + bee_days, claim_ap=1, cash=POPULATION * bee['juvenile_price'])
     # --- Real water change: clean water in, wastewater stock out (T04 sample source).
     change = water['change']
-    result['water_change_provider'] = dict(facility='fish_pond', inputs=dict(change['inputs']),
+    result['water_change_provider'] = dict(independent=True, facility='', inputs=dict(change['inputs']),
                                            outputs={'wastewater': int(change['wastewater'])}, days=0,
                                            start_ap=water['maintenance_ap'], claim_ap=0, cash=0)
     # --- Purifying mats: juvenile culture water plus one living processing round x4.
@@ -175,6 +209,7 @@ def providers(source):
         result[provider_id] = dict(facility='purifying_bed', inputs=dict(inputs), outputs=outputs, days=round_days,
                                    start_ap=round_days + 1, claim_ap=1, cash=POPULATION * mat['juvenile_price'])
     # --- Rock mole / rock belly beast: growth plus one production round x4.
+    # P10.5.a split the shared rock workyard: each species now owns one yard.
     for species_id, recipe_ids in (('rock_mole', ('break_stone', 'break_ore')), ('rock_belly_beast', ('concentrate_ore',))):
         row = animals[species_id]
         _check_species(row, facilities, resources, research)
@@ -182,12 +217,62 @@ def providers(source):
         for recipe_id in recipe_ids:
             recipe = recipes[recipe_id]
             _living_recipe(recipe_id, recipe, resources, research)
+            require(recipe['facility'] == row['facility'], f'{recipe_id}: recipe must live on the species yard')
             round_days = row['growth_days'] + recipe['days']
             inputs = Counter({iid: q * round_days * POPULATION for iid, q in diet['inputs'].items()})
             inputs.update({iid: q * POPULATION for iid, q in recipe['inputs'].items()})
             provider = recipe_id + '_provider'
-            result[provider] = dict(facility='rock_workyard', inputs=dict(inputs), outputs=_scaled(recipe['outputs'], POPULATION),
+            result[provider] = dict(facility=row['facility'], inputs=dict(inputs), outputs=_scaled(recipe['outputs'], POPULATION),
                                     days=round_days, start_ap=round_days + 1, claim_ap=1, cash=POPULATION * row['juvenile_price'])
+    # --- P10.5 intensive species: growth plus the first natural round x4.
+    # Nursery days carry one base meal per animal, intensive round days carry
+    # two (the shared ranch meal policy), and the round diet is paid once.
+    for species_id, round_days, round_inputs in (
+            ('leaf_silkworm', 2, {'mulberry_leaf': 2}),
+            ('dew_shell_snail', 2, {'clean_water': 2}),
+            ('mineral_scale_lizard', 4, {'mineral_feed': 2})):
+        row = animals[species_id]
+        _check_diets(species_id, row, resources, research)
+        require(species_id in facilities[row['facility']].get('species', []), f'{species_id}: station species list')
+        diet = next(d for d in row['base_diets'] if d['id'] == row['default_base_diet'])
+        days = row['growth_days'] + round_days
+        inputs = Counter({iid: q * row['growth_days'] * POPULATION for iid, q in diet['inputs'].items()})
+        inputs.update({iid: q * round_days * 2 * POPULATION for iid, q in diet['inputs'].items()})
+        inputs.update({iid: q * POPULATION for iid, q in round_inputs.items()})
+        result[species_id + '_provider'] = dict(facility=row['facility'], inputs=dict(inputs),
+                                                outputs=_scaled(row['outputs'], POPULATION), days=days,
+                                                start_ap=days + 1, claim_ap=1, cash=POPULATION * row['juvenile_price'])
+    # --- P10.6 aquatic species (§16.2.6): growth plus the first natural round
+    # x4 on the species station; capture species include the same round, the
+    # removal itself carries no extra cost. The loach serves facility batches
+    # (stage d recipe) and gets its provider with the recipe.
+    for species_id, round_days, round_inputs in (
+            ('filter_algae_carp', 2, {'grain': 1}),
+            ('oilfin_fish', 3, {'water_feed': 1}),
+            ('pearl_mussel', 4, {'stone_powder': 1}),
+            ('gel_jellyfish', 2, {'clean_water': 1}),
+            ('reef_coral', 6, {'stone_powder': 3, 'clean_water': 1})):
+        row = animals[species_id]
+        _check_diets(species_id, row, resources, research)
+        require(species_id in facilities[row['facility']].get('species', []), f'{species_id}: station species list')
+        require(facilities[row['facility']].get('terrain') == 'water', f'{species_id}: aquatic station on water')
+        require(row['growth_days'] + row['cycle_days'] >= 1, f'{species_id}: lifecycle')
+        diet = next(d for d in row['base_diets'] if d['id'] == row['default_base_diet'])
+        days = row['growth_days'] + round_days
+        inputs = Counter({iid: q * row['growth_days'] * POPULATION for iid, q in diet['inputs'].items()})
+        inputs.update({iid: q * round_days * 2 * POPULATION for iid, q in diet['inputs'].items()})
+        inputs.update({iid: q * POPULATION for iid, q in round_inputs.items()})
+        result[species_id + '_provider'] = dict(facility=row['facility'], inputs=dict(inputs),
+                                                outputs=_scaled(row['outputs'], POPULATION), days=days,
+                                                start_ap=days + 1, claim_ap=1, cash=POPULATION * row['juvenile_price'])
+    # Shell harvest: the alternative mussel disposal — growth meals only, no
+    # round feed, the adult is consumed at the claim.
+    row = animals['pearl_mussel']
+    diet = next(d for d in row['base_diets'] if d['id'] == row['default_base_diet'])
+    result['mussel_shell_provider'] = dict(facility=row['facility'],
+        inputs={iid: q * row['growth_days'] * POPULATION for iid, q in diet['inputs'].items()},
+        outputs={'mussel_shell': 2 * POPULATION}, days=row['growth_days'],
+        start_ap=row['growth_days'] + 1, claim_ap=1, cash=POPULATION * row['juvenile_price'])
     if 'logistics' in source:
         row = next(r for r in source['logistics']['definitions'] if r['id'] == 'rice_bag_gu')
         production = row['production']
@@ -197,7 +282,54 @@ def providers(source):
         result['rice_gu_provider'] = dict(independent=True, facility='', inputs=dict(inputs),
             outputs=production['outputs'], days=production['days'], start_ap=irrigations, claim_ap=1,
             cash=row['fee'] * production['days'])
+    if 'p107' in source:
+        _runtime_rounds(source, result)
     return result
+
+
+def _runtime_rounds(source, result):
+    """Canonical P10.7 rounds: retained stock is steady-state, captures repay
+    juveniles every round, real ranch meals replace old habitat assumptions.
+    Buildings, establishment, room services and water-body upkeep are reported
+    separately by the economic comparison, not silently charged every round.
+    """
+    animals = {a['id']: a for a in source['livestock']}
+    cfg = source['p103']
+    for sid, species in cfg['species'].items():
+        natural = species.get('natural')
+        if not natural:
+            continue
+        animal = animals[sid]
+        capture = bool(natural.get('capture', False))
+        growth_days = math.ceil(species['growth_units'] / 600) if capture else 0
+        days = math.ceil(natural['units'] / 600)
+        base = next(d for d in animal['base_diets'] if d['id'] == animal['default_base_diet'])
+        special = next(d for d in animal['special_diets'] if d['id'] == natural['default_diet'])
+        mode = 'water_production' if species.get('medium') == 'water' else 'intensive'
+        meals = cfg['meals'].get(mode, cfg['meals']['intensive'])
+        # A new adult waits one maintenance day until its submitted purpose
+        # applies. Captures repeat this day and the assignment AP every round.
+        transfer_days = 1 if capture else 0
+        inputs = Counter({i: n * POPULATION * (growth_days + transfer_days + days * meals) for i, n in base['inputs'].items()})
+        inputs.update({i: n * POPULATION for i, n in special['inputs'].items()})
+        key = sid if sid == 'steel_sheep' else sid + '_provider'
+        result[key] = dict(facility=natural['station'], inputs=dict(inputs), outputs=_scaled(natural['outputs'], POPULATION),
+                           days=growth_days + transfer_days + days,
+                           start_ap=int(cfg['ap']['submit']) if capture else 0, claim_ap=1,
+                           cash=POPULATION * animal['juvenile_price'] if capture else 0)
+    for rid, work in cfg['work']['recipes'].items():
+        sid = work['species']
+        animal = animals[sid]
+        species = cfg['species'][sid]
+        recipe = next(r for r in source['recipes'] if r['id'] == rid)
+        water = species.get('medium') == 'water'
+        days = math.ceil(work['target'] / (600 if water else cfg['work']['points_per_unit'] * 4))
+        diet = next(d for d in animal['base_diets'] if d['id'] == animal['default_base_diet'])
+        meals = cfg['meals'].get('water_loach', 2) if water else cfg['meals']['work']
+        inputs = Counter({i: n * POPULATION * days * meals for i, n in diet['inputs'].items()})
+        inputs.update({i: n * POPULATION for i, n in recipe['inputs'].items()})
+        result[rid + '_provider'] = dict(facility=recipe['facility'], inputs=dict(inputs),
+            outputs=_scaled(recipe['outputs'], POPULATION), days=days, start_ap=0, claim_ap=1, cash=0)
 
 
 def _scaled(outputs, population):
@@ -288,7 +420,7 @@ def audit_research(source, compiled, provider_rows):
     require = common.require
     resources = {row['id']: row for row in compiled['resources']}
     research = common.registry(source['research'], 'research')
-    require(len(research) == 12, 'twelve research projects')
+    require(len(research) == 13, 'thirteen research projects (P10.6 adds aquatic intensive care)')
     layers = {1: [], 2: [], 3: []}
     total_fee = 0
     total_days = 0
@@ -303,8 +435,11 @@ def audit_research(source, compiled, provider_rows):
         layers[row['layer']].append(ident)
         total_fee += row['fee']
         total_days += row['days']
-    require((len(layers[1]), len(layers[2]), len(layers[3])) == (5, 4, 3), 'layer population 5/4/3')
-    require(total_fee == 94 and total_days == 44, 'research totals 94 stones / 44 days')
+    if 'p107' not in source:
+        require((len(layers[1]), len(layers[2]), len(layers[3])) == (5, 5, 3), 'layer population 5/5/3')
+        require(total_fee == 104 and total_days == 48, 'research totals 104 stones / 48 days')
+    # P10.7 brings basic field maintenance forward. The DAG, positive costs,
+    # samples and stage ordering still validate; historic totals are not rules.
     order = _topological(research)
     # Cross-check the unlock registry against the research gates on the definitions.
     crops = common.registry(source['crops'], 'crops')
@@ -330,6 +465,11 @@ def audit_research(source, compiled, provider_rows):
             gates['species'][ident] = row['research']
     for ident, row in livestock.items():
         for diet in row['base_diets'] + row['special_diets']:
+            if diet.get('research', ''):
+                gates['diets'][diet['id']] = diet['research']
+    # P10.6 crop round inputs and substrate variants unlock like diets.
+    for ident, row in crops.items():
+        for diet in row.get('round_inputs', []) + row.get('input_variants', []):
             if diet.get('research', ''):
                 gates['diets'][diet['id']] = diet['research']
     for section, table in gates.items():
@@ -477,6 +617,9 @@ def audit_layout(source):
 
 def compile_config(source, map_data=None):
     try:
+        if 'p107' in source:
+            from validate_p107 import validate as validate_p107
+            progress_audit = validate_p107(source)
         if 'p104' in source:
             from validate_p104 import validate as validate_p104
             validate_p104(source)
@@ -487,6 +630,8 @@ def compile_config(source, map_data=None):
             validate(source)
         provider_rows = providers(source)
         out = common.compile_config(source, PRODUCT, provider_rows, map_data, extra_consumers(source))
+        if 'p107' in source:
+            out['p107_audit'] = progress_audit
         items = {i['id']: i for i in out['resources']}
         for a in out['livestock']:
             for diet in a['base_diets'] + a['special_diets']:

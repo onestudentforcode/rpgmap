@@ -73,6 +73,8 @@ func link_agriculture(uid: int, field_uid: int) -> Dictionary:
 	return {"ok":true}
 
 func install_toy(uid: int, install: bool) -> Dictionary:
+	var stage_block: String = world.progress.block("capability", "toy") if install else ""
+	if not stage_block.is_empty(): return world._error(stage_block)
 	var allowed: Dictionary=world._can_act(int(config["install_ap"]))
 	if not allowed["ok"]: return allowed
 	if not world.facilities.has(uid) or String(world.facilities[uid]["facility_id"])!="toy_station": return world._error("请选择玩具站")
@@ -96,6 +98,8 @@ func system_of(zone_uid: int) -> Dictionary:
 	return {}
 
 func set_system(uid: int, label: String, zones: Array) -> Dictionary:
+	var stage_block: String = world.progress.block("capability", "systems")
+	if not stage_block.is_empty(): return world._error(stage_block)
 	var allowed: Dictionary=world._can_act(int(config["system_ap"]))
 	if not allowed["ok"]: return allowed
 	var seen:=[]
@@ -156,6 +160,17 @@ func gu_service(row: Dictionary, kind: String, t: int) -> Dictionary:
 		record("gu_service",choice)
 		return choice
 	return {}
+
+## Level-3 gate (§16.2.11): the target zone counts as a level-2 intensive
+## configuration only while one of its stations actually runs a paid product gu.
+func product_service_ready(zone_row: Dictionary) -> bool:
+	for host in world.ranch._facilities_in_zone(zone_row):
+		var gu: Dictionary = world.logistics.in_host(int(host["uid"]))
+		if gu.is_empty() or String(world.logistics.definition(gu)["effect"]) != "product_yield":
+			continue
+		if world.logistics.active(gu, _day if _day >= 0 else world.clock.total_days):
+			return true
+	return false
 
 func toy_service(row: Dictionary, zone: Dictionary, t: int) -> void:
 	var identity:="toy:%d:%d" % [int(row["uid"]),t]
@@ -295,7 +310,7 @@ func level_of(zone: Dictionary) -> Dictionary:
 		var uid:=int(host["uid"])
 		if state["toys"].has(str(uid)): installed=true;running=true
 		var gu: Dictionary=world.logistics.in_host(uid)
-		if not gu.is_empty() and world.logistics.definition(gu)["effect"] in ["breed_speed","work_speed"]:
+		if not gu.is_empty() and world.logistics.definition(gu)["effect"] in ["breed_speed","work_speed","product_yield","feed_saving"]:
 			installed=true
 			running=running or world.logistics.active(gu,world.clock.total_days)
 	return {"level":2 if installed else 1,"active":running if installed else true}

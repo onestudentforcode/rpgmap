@@ -14,6 +14,8 @@ const Logistics := preload("res://scripts/farming/p8/p10_logistics.gd")
 const Rooms := preload("res://scripts/farming/p8/p102_rooms.gd")
 const Ranch := preload("res://scripts/farming/p8/p103_ranch.gd")
 const Services := preload("res://scripts/farming/p8/p104_services.gd")
+const Water := preload("res://scripts/farming/p8/p106_water.gd")
+const Economy := preload("res://scripts/farming/p8/p107_economy.gd")
 ## Observational receipts for external business audits; never grants resources or
 ## replays work. Day-save failures are still governed by the transaction below.
 signal operation_recorded(entry: Dictionary)
@@ -38,6 +40,8 @@ var logistics
 var rooms
 var ranch
 var services
+var water
+var progress
 
 func _init(slot_store = null) -> void:
 	land = P8Land.new(self)
@@ -49,6 +53,8 @@ func _init(slot_store = null) -> void:
 	rooms = Rooms.new(self,P8Data.load_data()["rooms"])
 	ranch = Ranch.new(self, P8Data.load_data()["p103"])
 	services = Services.new(self, P8Data.load_data()["p104"])
+	water = Water.new(self, P8Data.load_data()["p106"])
+	progress = Economy.new(self, P8Data.load_data()["p107"])
 	super(slot_store)
 
 func _catalog():
@@ -56,6 +62,123 @@ func _catalog():
 
 func _codec():
 	return P8Snapshot
+
+## Water crops (P10.6 §16.2.8): fenced water cells of one structural
+## aqua-planting zone, no grid reservation, one crop per cell, at most eight
+## planting cells per aquatic crop station in the zone.
+func _water_plant_block(cell: Vector2i, definition: Dictionary, _variant_id: String) -> String:
+	if water == null:
+		return "本产品没有水面种植"
+	var zone_row := {}
+	var body_uid := 0
+	for dy in range(int(definition["footprint"][1])):
+		for dx in range(int(definition["footprint"][0])):
+			var target := cell + Vector2i(dx, dy)
+			if not grid.in_bounds(target.x, target.y):
+				return "种植格越界"
+			var owner: Dictionary = water.body_of(target)
+			if owner.is_empty():
+				return "水生作物必须种在鱼栅水面上"
+			if body_uid == 0:
+				body_uid = int(owner["uid"])
+			elif body_uid != int(owner["uid"]):
+				return "种植格必须同属一个水体"
+			if grid.state_at(target) == Grid.State.OCCUPIED:
+				return "种植格被设施占用"
+			if not instance_at(target).is_empty():
+				return "种植格已有作物"
+			for zone in ranch.state["zones"]:
+				if String(zone["type"]) != "aqua_planting":
+					continue
+				if zone["cells"].has("%d,%d" % [target.x, target.y]):
+					zone_row = zone
+			if zone_row.is_empty() or int(zone_row.get("body_uid", 0)) != body_uid:
+				return "种植格必须位于同一水体的水生种植区"
+	if zone_row.is_empty() or not ranch.zone_structural(zone_row):
+		return "水生种植区结构缺件"
+	var stations := 0
+	for facility in ranch._facilities_in_zone(zone_row):
+		if String(facility["facility_id"]) == "aquatic_crop_station":
+			stations += 1
+	var planted := 0
+	for uid in crops:
+		var other: Dictionary = crops[uid]
+		if String(crop_defs[String(other["crop_id"])].get("medium", "land")) != "water":
+			continue
+		var origin := Vector2i(int(other["origin"][0]), int(other["origin"][1]))
+		if zone_row["cells"].has("%d,%d" % [origin.x, origin.y]):
+			planted += 1
+	if planted + 1 > stations * 8:
+		return "水生种植台管理格数已满"
+	return ""
+
+## Water-crop day: light >= 60 and shared body quality >= 30 gate growth; each
+## round pays its chosen nutrition once at the first advancing day.
+func _settle_water_crop(row: Dictionary, definition: Dictionary, day: int) -> void:
+	if String(row["state"]) == "mature":
+		return
+	var origin := Vector2i(int(row["origin"][0]), int(row["origin"][1]))
+	var body: Dictionary = water.body_of(origin)
+	if body.is_empty() or not water.quality_ok(body):
+		record_operation({"kind": "water", "stage": "crop_pause", "day": day, "crop": String(row["crop_id"]),
+			"origin": row["origin"], "quality": water.quality(body)})
+		return
+	if int(_light_at(origin)) < int(definition["light"]):
+		record_operation({"kind": "water", "stage": "crop_pause", "day": day, "crop": String(row["crop_id"]),
+			"origin": row["origin"], "quality": water.quality(body), "light": true})
+		return
+	if int(row.get("round_paid", -1)) != int(row["harvest_count"]):
+		var wanted := String(row.get("round_input_id", "humus_round"))
+		var chosen: Dictionary = {}
+		for variant in definition.get("round_inputs", []):
+			if String(variant["id"]) == wanted:
+				chosen = variant
+		if chosen.is_empty():
+			chosen = definition["round_inputs"][0]
+		var gate := String(chosen.get("research", ""))
+		var enough := true
+		for item in chosen["inputs"]:
+			if not inventory.has(String(item), int(chosen["inputs"][item])):
+				enough = false
+		if not gate.is_empty() and not research.is_completed(gate):
+			enough = false
+		if not enough:
+			record_operation({"kind": "water", "stage": "crop_short", "day": day, "crop": String(row["crop_id"]),
+				"origin": row["origin"], "wanted": wanted})
+			return
+		for item in chosen["inputs"]:
+			inventory.remove(String(item), int(chosen["inputs"][item]))
+		_record_flow({}, chosen["inputs"], "水生作物轮投料")
+		row["round_input_id"] = String(chosen["id"])
+		row["round_paid"] = int(row["harvest_count"])
+	var target := int(definition["cycle_days"] if int(row["harvest_count"]) > 0 else definition["days"]) * 100
+	var before := int(row["progress"])
+	row["progress"] = mini(target, before + 100)
+	if int(row["progress"]) == target:
+		row["state"] = "mature"
+	record_operation({"kind": "water", "stage": "crop_grow", "day": day, "crop": String(row["crop_id"]),
+		"origin": row["origin"], "before": before, "after": int(row["progress"]), "target": target,
+		"quality": water.quality(body)})
+
+## 0-AP round-nutrition choice for a water crop (humus or the matrix).
+func set_water_round_input(cell: Vector2i, round_input_id: String) -> Dictionary:
+	var crop := instance_at(cell)
+	if crop.is_empty():
+		return _error("这里没有水生作物")
+	var definition: Dictionary = crop_defs[String(crop["crop_id"])]
+	if String(definition.get("medium", "land")) != "water":
+		return _error("只有水生作物选择轮投料")
+	for variant in definition.get("round_inputs", []):
+		if String(variant["id"]) == round_input_id:
+			var blocked: String = research_block(String(variant.get("research", "")))
+			if not blocked.is_empty():
+				return _error(blocked)
+			if int(crop.get("round_paid", -1)) == int(crop["harvest_count"]):
+				return _error("本轮投料已付，选择只影响下一轮")
+			crops[int(crop["uid"])]["round_input_id"] = round_input_id
+			changed.emit()
+			return {"ok": true}
+	return _error("未知轮投料")
 
 func _make_husbandry():
 	return P8Husbandry.new(self, P8Data.load_data())
@@ -76,17 +199,20 @@ func _settle_workforce(completed_day: int) -> void:
 func _settle_husbandry(completed_day: int) -> void:
 	rooms.begin_settle(completed_day)
 	husbandry.settle(completed_day)
+	water.auto_services(completed_day)
 	ranch.settle(completed_day)
+	water.settle(completed_day)
 	logistics.settle(completed_day)
 	research.settle(completed_day)
 	flowers.settle(completed_day)
 	reports.settle(completed_day)
 
-## Pen and rock yard are structural ranch facilities now: no habitat row is
-## created for them and the three terrestrial species never enter the old path.
+## The pen, the species yards and the intensive stations are structural ranch
+## facilities: no habitat row is created for them and the ranch species never
+## enter the old path.
 func _facility_built(uid: int) -> void:
 	var facility_id := String(facilities[uid]["facility_id"])
-	if facility_id == "pen" or facility_id == Ranch.WORKYARD_ID:
+	if facility_id == "pen" or ranch.is_structural(facility_id):
 		return
 	super(uid)
 
@@ -132,6 +258,7 @@ func _facility_removed(uid: int) -> void:
 	logistics.forget_facility(uid)
 	ranch.forget_facility(uid)
 	services.forget_facility(uid)
+	water.forget_facility(uid)
 
 func to_snapshot() -> Dictionary:
 	var snapshot := super.to_snapshot()
@@ -145,6 +272,8 @@ func to_snapshot() -> Dictionary:
 	snapshot["world"]["rooms"] = rooms.to_save()
 	snapshot["world"]["ranch"] = ranch.to_save()
 	snapshot["world"]["services"] = services.to_save()
+	snapshot["world"]["water"] = water.to_save()
+	snapshot["world"]["economy_progress"] = progress.to_save()
 	return snapshot
 
 func apply_snapshot(value) -> Dictionary:
@@ -171,6 +300,9 @@ func _snapshot_applied(snapshot: Dictionary) -> void:
 	rooms.apply_save(snapshot["world"]["rooms"])
 	ranch.apply_save(snapshot["world"]["ranch"])
 	services.apply_save(snapshot["world"]["services"])
+	if snapshot["world"].has("water"):
+		water.apply_save(snapshot["world"]["water"])
+	progress.apply_save(snapshot["world"]["economy_progress"])
 
 ## Pollination bonus: one extra oilseed per pollinated cycle at harvest.
 func _harvest_bonus(instance: Dictionary) -> Dictionary:
@@ -216,6 +348,8 @@ func _research_done(research_id: String) -> bool:
 	return research.is_completed(research_id)
 
 func research_block(research_id: String) -> String:
+	var blocked: String = progress.block("research", research_id)
+	if not blocked.is_empty(): return blocked
 	if research_id.is_empty() or _research_done(research_id):
 		return ""
 	return "需先完成研究「%s」" % _research_name(research_id)
@@ -253,18 +387,34 @@ func _with_substituted(facility_id: String, action: Callable) -> Dictionary:
 	return result
 
 func can_build_facility(cell: Vector2i, facility_id: String) -> Dictionary:
+	var stage_block: String = progress.block("facility", facility_id)
+	if not stage_block.is_empty(): return _error(stage_block)
 	if facility_id=="field_service_station" and grid.state_at(cell)==Grid.State.TILLED: return _error("请先把维护站脚下耕地改为普通地板或还原，避免桥接田块")
 	if facility_defs.has(facility_id):
 		var blocked := research_block(String(facility_defs[facility_id].get("research", "")))
 		if not blocked.is_empty():
 			return _error(blocked)
-	if facility_id in Ranch.FLOOR_FACILITIES:
+	# Ranch structures stand on ordinary floor; since P10.6 the dual-medium
+	# shared structures and the aquatic facilities may instead stand on fenced
+	# water cells (§16.2.5). Water-only facilities never accept floor cells.
+	if facility_id in Ranch.FLOOR_FACILITIES or String(facility_defs[facility_id].get("terrain", "")) == "water":
 		var shape: Array = facility_defs[facility_id]["footprint"]
+		var wants_water: bool = String(facility_defs[facility_id].get("terrain", "")) == "water"
+		var dual: bool = facility_defs[facility_id].has("terrains")
 		for dy in range(int(shape[1])):
 			for dx in range(int(shape[0])):
 				var target := cell + Vector2i(dx, dy)
-				if not grid.in_bounds(target.x, target.y) or rooms.floor_kind(target) != "ordinary":
-					return _error("畜牧设施必须建在普通地板上，请先铺设")
+				if not grid.in_bounds(target.x, target.y):
+					return _error("畜牧设施必须建在普通地板或鱼栅水面上，请先铺设")
+				var on_floor: bool = rooms.floor_kind(target) == "ordinary"
+				var on_fence: bool = grid.terrain_at(target) == "water" and not water.body_of(target).is_empty()
+				if wants_water:
+					if on_fence:
+						continue
+					return _error("水产设施必须建在鱼栅水面上")
+				if on_floor or (dual and on_fence):
+					continue
+				return _error("畜牧设施必须建在普通地板上，请先铺设")
 	if facility_defs.has(facility_id):
 		var shape: Array = facility_defs[facility_id]["footprint"]
 		for dy in range(int(shape[1])):
@@ -290,15 +440,25 @@ func build_facility(cell: Vector2i, facility_id: String, facing: String = "east"
 			if not known.has(uid): logistics.attach_facing(int(uid), facing)
 	return result
 
-func plant(cell: Vector2i, crop_id: String) -> Dictionary:
+func plant(cell: Vector2i, crop_id: String, variant_id := "") -> Dictionary:
 	if crop_defs.has(crop_id):
-		var shape: Array = crop_defs[crop_id]["footprint"]
-		if not rooms.footprint_allowed(Rect2i(cell,Vector2i(int(shape[0]),int(shape[1])))):
+		var definition: Dictionary = crop_defs[crop_id]
+		var shape: Array = definition["footprint"]
+		if String(definition.get("medium", "land")) != "water" and not rooms.footprint_allowed(Rect2i(cell,Vector2i(int(shape[0]),int(shape[1])))):
 			return _error("作物完整占地不能跨越田块边界")
-		var blocked := research_block(String(crop_defs[crop_id].get("research", "")))
+		var blocked := research_block(String(definition.get("research", "")))
 		if not blocked.is_empty():
 			return _error(blocked)
-	return super(cell, crop_id)
+		if not variant_id.is_empty():
+			var gate := ""
+			for row in definition.get("input_variants", []):
+				if String(row["id"]) == variant_id:
+					gate = String(row.get("research", ""))
+			if not gate.is_empty():
+				var blocked_variant: String = research_block(gate)
+				if not blocked_variant.is_empty():
+					return _error(blocked_variant)
+	return super(cell, crop_id, variant_id)
 
 func buy(item_id: String, quantity) -> Dictionary:
 	if item_id == "purifying_mat_culture":
@@ -309,7 +469,16 @@ func buy(item_id: String, quantity) -> Dictionary:
 			return _error(blocked)
 	return super(item_id, quantity)
 
+## The biological registry is the single authority for true animal labour.
+## Filtering only the UI leaves manual/worker/model and save-forgery bypasses.
+func batch_block(recipe_id: String) -> String:
+	if ranch.settings["work"]["recipes"].has(recipe_id):
+		return "生物工艺须由实际动物岗位推进，请在专属工作场安排生产"
+	return ""
+
 func start_batch(facility_uid: int, recipe_id: String) -> Dictionary:
+	var biological: String = batch_block(recipe_id)
+	if not biological.is_empty(): return _error(biological)
 	if recipe_defs.has(recipe_id):
 		var blocked := research_block(String(recipe_defs[recipe_id].get("research", "")))
 		if not blocked.is_empty():
@@ -329,12 +498,21 @@ func start_batch(facility_uid: int, recipe_id: String) -> Dictionary:
 
 func claim_batch(facility_uid: int, expected_batch_id: int) -> Dictionary:
 	var batch: Dictionary = facilities.get(facility_uid, {}).get("batch", {}).duplicate(true)
+	var biological: String = batch_block(String(batch.get("recipe_id", "")))
+	if not biological.is_empty(): return _error(biological)
 	var day := clock.total_days - 1 if _labour_action else clock.total_days
 	var result: Dictionary = super(facility_uid, expected_batch_id)
 	if result.get("ok") and daily_save_error.is_empty():
 		record_operation({"kind": "batch", "stage": "claim", "day": day, "uid": facility_uid,
 			"batch_id": expected_batch_id, "recipe": batch["recipe_id"], "inputs": batch["inputs"], "outputs": batch["outputs"],
 			"operator": "worker" if _labour_action else "player"})
+	return result
+
+func deliver_order(order_id: int, item_id: String) -> Dictionary:
+	var result: Dictionary = super(order_id, item_id)
+	if result.get("ok"):
+		record_operation({"kind": "economy", "stage": "order", "day": clock.total_days,
+			"order": order_id, "item": item_id, "quote": result["quote"].duplicate(), "orders": progress.deliveries()})
 	return result
 
 # --- Candidate day settlement ----------------------------------------------

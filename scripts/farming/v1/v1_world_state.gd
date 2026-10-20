@@ -80,29 +80,54 @@ static func normalize(value, day: int, catalog = Data) -> Dictionary:
 	var crops := []
 	var occupied := {}
 	var uids := {}
+	var water_keys := ["uid", "crop_id", "origin", "progress", "state", "harvest_count", "round_paid", "round_input_id"]
 	for row in value["crops"]:
-		if not exact(row, ["uid", "crop_id", "origin", "progress", "state", "harvest_count"]) or not whole(row["uid"], 1, int(value["next_uid"])-1) or uids.has(row["uid"]):
+		var water_crop := false
+		if row is Dictionary and row.has("crop_id") and crop_defs.has(row["crop_id"]):
+			water_crop = String(crop_defs[row["crop_id"]].get("medium", "land")) == "water"
+		var allowed_keys: Array = ["uid", "crop_id", "origin", "progress", "state", "harvest_count"]
+		if water_crop:
+			allowed_keys = water_keys
+		if row is Dictionary and row.has("variant") and not String(row.get("variant", "")).is_empty():
+			allowed_keys = allowed_keys + ["variant"]
+		if not exact(row, allowed_keys) or not whole(row["uid"], 1, int(value["next_uid"])-1) or uids.has(row["uid"]):
 			return fail("作物序号或字段非法")
+		if water_crop and (not whole(row["round_paid"], -1, int(row["harvest_count"])) or not row["round_input_id"] is String):
+			return fail("水生作物轮投料字段非法")
 		if not row["crop_id"] is String or not crop_defs.has(row["crop_id"]) or not coordinate(row["origin"], width, height, origin_x) or not whole(row["harvest_count"]):
 			return fail("作物定义或坐标非法")
 		var definition: Dictionary = crop_defs[row["crop_id"]]
 		var repeated: bool = row["harvest_count"] > 0
 		if repeated and definition["mode"] != "tap_or_fell":
 			return fail("一次性作物不能重复采收")
+		if int(definition.get("max_taps", 0)) > 0 and int(row["harvest_count"]) > int(definition["max_taps"]):
+			return fail("有限采收次数被超出")
 		var target := int(definition["cycle_days"] if repeated else definition["days"]) * 100
 		var expected_state := "regrowing" if repeated else "growing"
 		if not whole(row["progress"], 0, target) or (row["state"] != "mature" and row["state"] != expected_state) or ((row["state"] == "mature") != (row["progress"] == target)):
 			return fail("作物成熟进度或周期非法")
 		var origin := Vector2i(int(row["origin"][0]), int(row["origin"][1]))
+		var on_water := String(definition.get("medium", "land")) == "water"
 		for dy in range(int(definition["footprint"][1])):
 			for dx in range(int(definition["footprint"][0])):
 				var cell := origin + Vector2i(dx, dy)
-				if not seen.has(cell) or occupied.has(cell):
+				# Water crops never touch the tilled grid; only their mutual
+				# exclusivity is checked here (fences validate at runtime).
+				if on_water:
+					if occupied.has(cell):
+						return fail("作物越界、重叠或未开垦")
+				elif not seen.has(cell) or occupied.has(cell):
 					return fail("作物越界、重叠或未开垦")
 				occupied[cell] = true
 		uids[row["uid"]] = true
-		crops.append({"uid": int(row["uid"]), "crop_id": row["crop_id"], "origin": [origin.x, origin.y],
-			"progress": int(row["progress"]), "state": row["state"], "harvest_count": int(row["harvest_count"])})
+		var saved_crop := {"uid": int(row["uid"]), "crop_id": row["crop_id"], "origin": [origin.x, origin.y],
+			"progress": int(row["progress"]), "state": row["state"], "harvest_count": int(row["harvest_count"])}
+		if on_water:
+			saved_crop["round_paid"] = int(row.get("round_paid", -1))
+			saved_crop["round_input_id"] = String(row.get("round_input_id", "humus_round"))
+		if row.has("variant") and not String(row.get("variant", "")).is_empty():
+			saved_crop["variant"] = String(row["variant"])
+		crops.append(saved_crop)
 	if not whole(value["next_facility_uid"], 1) or not whole(value["next_batch_uid"], 1) or not value["facilities"] is Array or value["facilities"].size() > width * height:
 		return fail("设施或批次序号非法")
 	var facility_defs = catalog.definitions("facilities")
@@ -120,7 +145,15 @@ static func normalize(value, day: int, catalog = Data) -> Dictionary:
 		for dy in range(int(definition["footprint"][1])):
 			for dx in range(int(definition["footprint"][0])):
 				var cell := origin + Vector2i(dx,dy)
-				if cell.x >= origin_x + width or cell.y >= height or occupied.has(cell) or source_cells.has(cell) or not (map["grid"][cell.y][cell.x - origin_x] == "water" if definition.get("terrain") == "water" else tillable.get(map["grid"][cell.y][cell.x - origin_x], false)):
+				var cell_terrain: String = String(map["grid"][cell.y][cell.x - origin_x])
+				# Water-only facilities need water cells; dual-medium structures
+				# (P10.6) accept water or tillable land under one footprint.
+				var terrain_ok: bool = bool(tillable.get(cell_terrain, false))
+				if definition.get("terrain") == "water":
+					terrain_ok = cell_terrain == "water"
+				elif definition.has("terrains"):
+					terrain_ok = (cell_terrain == "water" and definition["terrains"].has("water")) or bool(tillable.get(cell_terrain, false))
+				if cell.x >= origin_x + width or cell.y >= height or occupied.has(cell) or source_cells.has(cell) or not terrain_ok:
 					return fail("设施越界、重叠或覆盖不可建设地形")
 				occupied[cell] = true
 		var batch = row["batch"]

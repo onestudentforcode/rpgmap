@@ -78,6 +78,8 @@ func quote_start(bench_uid: int, project_id: String) -> Dictionary:
 	if definition.is_empty():
 		out["blockers"] = ["未知研究项目"]
 		return out
+	var stage_block: String = world.progress.block("research", project_id)
+	if not stage_block.is_empty(): out["blockers"].append(stage_block)
 	out["samples"] = definition["samples"].duplicate()
 	out["fee"] = int(definition["fee"])
 	out["days"] = int(definition["days"])

@@ -249,7 +249,7 @@ func action_quote(cell: Vector2i, kind: String) -> Dictionary:
 		if not inventory.has(iid,int(inputs[iid])): return _error("缺少投入："+_items[iid]["name"])
 	return {"ok":true,"ap":1,"inputs":inputs,"crop_uid":int(crop.get("uid",0))}
 
-func plant(cell: Vector2i, crop_id: String) -> Dictionary:
+func plant(cell: Vector2i, crop_id: String, variant_id := "") -> Dictionary:
 	var checked := _can_act()
 	if not checked["ok"]:
 		return checked
@@ -258,19 +258,40 @@ func plant(cell: Vector2i, crop_id: String) -> Dictionary:
 	var definition: Dictionary = crop_defs[crop_id]
 	var inputs: Dictionary = definition["inputs"].duplicate()
 	inputs[definition["seed"]] = int(inputs.get(definition["seed"], 0)) + 1
+	# Optional substrate variant (P10.6): replaces the base inputs wholesale.
+	if not variant_id.is_empty():
+		var variant: Dictionary = {}
+		for row in definition.get("input_variants", []):
+			if String(row["id"]) == variant_id:
+				variant = row
+		if variant.is_empty():
+			return _error("未知培养变体")
+		inputs = variant["inputs"].duplicate()
+		inputs[definition["seed"]] = int(inputs.get(definition["seed"], 0)) + 1
 	for ident in inputs:
 		if not inventory.has(ident, int(inputs[ident])):
 			return _error("缺少种植投入：" + _items[ident]["name"])
 	var footprint: Array = definition["footprint"]
-	checked = grid.reserve(cell, int(footprint[0]), int(footprint[1]), "v1_crop:%d" % _next_uid, Grid.State.PLANTED)
-	if not checked["ok"]:
-		return checked
+	if String(definition.get("medium", "land")) == "water":
+		# Water crops live on fenced water cells inside a planting zone; the
+		# product layer validates and keeps the grid untouched.
+		var blocked: String = _water_plant_block(cell, definition, variant_id)
+		if not blocked.is_empty():
+			return _error(blocked)
+	else:
+		checked = grid.reserve(cell, int(footprint[0]), int(footprint[1]), "v1_crop:%d" % _next_uid, Grid.State.PLANTED)
+		if not checked["ok"]:
+			return checked
 	for ident in inputs:
 		inventory.remove(ident, int(inputs[ident]))
 	_record_flow({}, inputs, "播种投料")
 	var uid := _next_uid
 	_next_uid += 1
 	crops[uid] = {"uid": uid, "crop_id": crop_id, "origin": [cell.x, cell.y], "progress": 0, "state": "growing", "harvest_count": 0}
+	if String(definition.get("medium", "land")) == "water":
+		crops[uid]["round_paid"] = -1
+	if not variant_id.is_empty():
+		crops[uid]["variant"] = variant_id
 	_crop_planted(crops[uid])
 	# Culture water also moistens the bed; it is not charged twice as irrigation.
 	if definition["mode"] == "culture_each_cycle":
@@ -291,6 +312,8 @@ func harvest(cell: Vector2i, mode: String = "harvest") -> Dictionary:
 	if mode not in ["harvest", "fell"] or (mode == "fell" and definition["mode"] not in ["tap_or_fell", "fell_replant"]):
 		return _error("采收方式不适用")
 	var uid := int(instance["uid"])
+	if mode == "harvest" and int(definition.get("max_taps", 0)) > 0 and int(instance["harvest_count"]) >= int(definition["max_taps"]):
+		return _error("该植物本轮采收次数已用尽，请砍伐后重种")
 	var outputs: Dictionary = (definition["fell_outputs"] if mode == "fell" and definition["mode"] == "tap_or_fell" else definition["outputs"]).duplicate()
 	# Derived products may add cycle-scoped bonuses (e.g. pollinated oilseed).
 	var bonus := _harvest_bonus(instance)
@@ -322,6 +345,11 @@ func irrigate(cell: Vector2i) -> Dictionary:
 ## Extra harvest outputs for derived products; the base harvest adds none.
 func _harvest_bonus(_instance: Dictionary) -> Dictionary:
 	return {}
+
+func _water_plant_block(_cell: Vector2i, _definition: Dictionary, _variant_id: String) -> String:
+	return "本产品没有水面种植"
+
+func _settle_water_crop(_row: Dictionary, _definition: Dictionary, _day: int) -> void: pass
 
 func _crop_planted(_row: Dictionary) -> void: pass
 
@@ -398,18 +426,36 @@ func can_build_facility(cell: Vector2i, facility_id: String) -> Dictionary:
 	if not facility_defs.has(facility_id):
 		return _error("未知设施")
 	var definition: Dictionary = facility_defs[facility_id]
+	if bool(definition.get("retired", false)):
+		return _error("该设施已退役，不再开放新建")
 	if primeval_stones < int(definition["cash"]):
 		return _error("建设元石不足")
+	var footprint: Array = definition["footprint"]
+	var required_terrain := "water" if definition.get("terrain") == "water" else ""
+	if definition.has("terrains"):
+		# Dual-medium variant (P10.6 §16.2.5): every cell must sit on one of the
+		# listed media, and the whole footprint must share a single medium.
+		var medium := ""
+		for dy in range(int(footprint[1])):
+			for dx in range(int(footprint[0])):
+				var probe := cell + Vector2i(dx, dy)
+				var here := "water" if grid.terrain_at(probe) == "water" else "land"
+				if not definition["terrains"].has(here):
+					return _error("该设施不能建在这种地面上")
+				if medium.is_empty():
+					medium = here
+				elif medium != here:
+					return _error("设施占地不能跨越水陆两种地面")
+		required_terrain = "water" if medium == "water" else ""
 	for ident in definition["materials"]:
 		if not inventory.has(ident, int(definition["materials"][ident])):
 			return _error("建设材料不足：" + _items[ident]["name"])
-	var footprint: Array = definition["footprint"]
 	for dy in range(int(footprint[1])):
 		for dx in range(int(footprint[0])):
 			var target := cell + Vector2i(dx,dy)
 			if _source_cells.has(target):
 				return _error("设施不能覆盖资源点")
-	return grid.can_reserve(cell,int(footprint[0]),int(footprint[1]),"v1_facility:%d" % _next_facility_uid, Grid.State.OCCUPIED, "water" if definition.get("terrain") == "water" else "")
+	return grid.can_reserve(cell,int(footprint[0]),int(footprint[1]),"v1_facility:%d" % _next_facility_uid, Grid.State.OCCUPIED, required_terrain)
 
 func build_facility(cell: Vector2i, facility_id: String) -> Dictionary:
 	var checked := can_build_facility(cell,facility_id)
@@ -421,7 +467,11 @@ func build_facility(cell: Vector2i, facility_id: String) -> Dictionary:
 	for target in checked["cells"]:
 		if grid.state_at(target) == Grid.State.TILLED: tilled_before.append(target)
 	var uid := _next_facility_uid
-	checked = grid.reserve(cell, int(footprint[0]), int(footprint[1]), "v1_facility:%d" % uid, Grid.State.OCCUPIED, "water" if definition.get("terrain") == "water" else "")
+	var reserve_terrain := "water" if definition.get("terrain") == "water" else ""
+	if definition.has("terrains"):
+		var any_cell := cell + Vector2i(int(footprint[0]) - 1, int(footprint[1]) - 1)
+		reserve_terrain = "water" if grid.terrain_at(any_cell) == "water" else ""
+	checked = grid.reserve(cell, int(footprint[0]), int(footprint[1]), "v1_facility:%d" % uid, Grid.State.OCCUPIED, reserve_terrain)
 	if not checked["ok"]:
 		return checked
 	for target in tilled_before:
@@ -590,6 +640,9 @@ func _on_day_changed(day: int) -> void:
 	for uid in crops:
 		var row: Dictionary = crops[uid]
 		var definition: Dictionary = crop_defs[row["crop_id"]]
+		if String(definition.get("medium", "land")) == "water":
+			_settle_water_crop(row, definition, day - 1)
+			continue
 		var cells: Array = grid.holder_cells("v1_crop:%d" % uid)
 		var water := 0
 		var fertility := 0

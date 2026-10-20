@@ -11,6 +11,7 @@ func check(ok: bool, label: String) -> void:
 	if not ok: failures.append(label); printerr(label)
 func fixture():
 	var w := World.new()
+	preload("res://scripts/farming/tests/p107_fixture.gd").unlock(w)
 	w.grant_scaffold({"raw_wood":50,"raw_stone":50,"wood_plank":20,"iron_ingot":10,"golden_wheat_seed":99,"resin_tree_seed":10,"oilseed_flower_seed":10,"clean_water":99,"humus":99})
 	w.primeval_stones=1000
 	w.research.state["completed"]=w.research.project_defs().keys()
@@ -18,8 +19,8 @@ func fixture():
 func _initialize() -> void: call_deferred("run")
 func run() -> void:
 	var w = fixture()
-	check(Codec.SCHEMA==22 and Codec.normalize(w.to_snapshot())["ok"],"schema22 fresh valid")
-	for old in [17,18,19,20,21]:
+	check(Codec.SCHEMA==25 and Codec.normalize(w.to_snapshot())["ok"],"schema25 agriculture fixture valid")
+	for old in [17,18,19,20,21,22,23,24]:
 		var bad: Dictionary=w.to_snapshot();bad["schema"]=old
 		check(not Codec.normalize(bad)["ok"],"old schema rejected "+str(old))
 	var cash_before: int=w.inventory.count("raw_wood")
@@ -387,7 +388,7 @@ func _old_disk_slots() -> void:
 	var store=Store.new(directory)
 	var w=World.new(store)
 	var before: Dictionary=w.to_snapshot()
-	for schema in [17,18,19,20,21]:
+	for schema in [17,18,19,20,21,22]:
 		var old: Dictionary=before.duplicate(true);old["schema"]=schema
 		var text:=JSON.stringify(old)
 		var envelope:=JSON.stringify({"schema":1,"slot_id":1,"saved_at":0,"snapshot_json":text,"checksum":text.sha256_text()})

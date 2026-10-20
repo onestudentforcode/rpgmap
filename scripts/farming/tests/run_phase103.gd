@@ -16,6 +16,7 @@ func check(ok: bool, label: String) -> void:
 
 func fixture() -> World:
 	var w := World.new()
+	preload("res://scripts/farming/tests/p107_fixture.gd").unlock(w)
 	w.grant_scaffold({"raw_wood": 200, "raw_stone": 200, "wood_plank": 50,
 		"mushroom": 200, "fodder_grass": 200, "grain": 200, "clean_water": 400,
 		"land_feed": 100, "iron_ore": 100})
@@ -40,9 +41,9 @@ func run() -> void:
 
 func _schema() -> void:
 	var w := fixture()
-	check(Codec.SCHEMA == 22, "schema is 21")
-	check(Codec.normalize(w.to_snapshot())["ok"], "fresh schema21 snapshot valid")
-	for old in [17, 18, 19, 20, 21]:
+	check(Codec.SCHEMA == 25, "schema is 25")
+	check(Codec.normalize(w.to_snapshot())["ok"], "schema25 rule fixture snapshot valid")
+	for old in [17, 18, 19, 20, 21, 22, 23, 24]:
 		var bad: Dictionary = w.to_snapshot()
 		bad["schema"] = old
 		check(not Codec.normalize(bad)["ok"], "old schema rejected " + str(old))
@@ -50,7 +51,7 @@ func _schema() -> void:
 ## Layout on ordinary floor (the y=6 stone wall splits the farm):
 ##   nursery     x4..7, y1..4  (16 cells; pen 2x2 + 2 troughs, small+medium bed)
 ##   enclosure   x8..10, y1..5 (15 cells; pen 2x2 + trough + small bed + care table)
-##   work        x4..6,  y7..8 (dispatch + full 2x2 workyard)
+##   work        x4..6,  y7..8 (dispatch + full 2x2 rock-breaking yard)
 ##   maintenance x7..9,  y7..8 (2 troughs + small bed group)
 ##   pasture     x4..11, y9..10
 func _zone_fixture() -> World:
@@ -75,7 +76,7 @@ func _zone_fixture() -> World:
 		for x in range(8, 11):
 			enclosure_cells.append("%d,%d" % [x, y])
 	check(w.ranch.create_zone("enclosure", enclosure_cells, "圈养一区")["ok"], "enclosure zone created")
-	for spec in [["dispatch_station", 4, 7], ["rock_workyard", 5, 7], ["feed_trough", 7, 7], ["feed_trough", 9, 7], ["small_bed", 8, 7]]:
+	for spec in [["dispatch_station", 4, 7], ["rock_breaking_yard", 5, 7], ["feed_trough", 7, 7], ["feed_trough", 9, 7], ["small_bed", 8, 7]]:
 		check(w.build_facility(Vector2i(spec[1], spec[2]), String(spec[0]))["ok"], "build work module " + String(spec[0]))
 	var work_cells := []
 	for y in range(7, 9):
