@@ -73,6 +73,8 @@ func link_agriculture(uid: int, field_uid: int) -> Dictionary:
 	return {"ok":true}
 
 func install_toy(uid: int, install: bool) -> Dictionary:
+	var stage_block: String = world.progress.block("capability", "toy") if install else ""
+	if not stage_block.is_empty(): return world._error(stage_block)
 	var allowed: Dictionary=world._can_act(int(config["install_ap"]))
 	if not allowed["ok"]: return allowed
 	if not world.facilities.has(uid) or String(world.facilities[uid]["facility_id"])!="toy_station": return world._error("请选择玩具站")
@@ -96,6 +98,8 @@ func system_of(zone_uid: int) -> Dictionary:
 	return {}
 
 func set_system(uid: int, label: String, zones: Array) -> Dictionary:
+	var stage_block: String = world.progress.block("capability", "systems")
+	if not stage_block.is_empty(): return world._error(stage_block)
 	var allowed: Dictionary=world._can_act(int(config["system_ap"]))
 	if not allowed["ok"]: return allowed
 	var seen:=[]

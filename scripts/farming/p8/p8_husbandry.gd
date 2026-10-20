@@ -121,6 +121,8 @@ func set_yard_species(facility_uid: int, species_id: String) -> Dictionary:
 	return {"ok": true, "detail": "物种已切换，请重新设置本场自动生产策略"}
 
 func quote_purchase(facility_uid: int, count: int) -> Dictionary:
+	var stage_block: String = world.progress.block("capability", "animals")
+	if not stage_block.is_empty(): return _error(stage_block)
 	var habitat := habitat_of(facility_uid)
 	if not habitat.is_empty():
 		var blocked: String = world.research_block(String(species_defs[String(habitat["species_id"])].get("research", "")))

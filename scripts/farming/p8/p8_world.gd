@@ -15,6 +15,7 @@ const Rooms := preload("res://scripts/farming/p8/p102_rooms.gd")
 const Ranch := preload("res://scripts/farming/p8/p103_ranch.gd")
 const Services := preload("res://scripts/farming/p8/p104_services.gd")
 const Water := preload("res://scripts/farming/p8/p106_water.gd")
+const Economy := preload("res://scripts/farming/p8/p107_economy.gd")
 ## Observational receipts for external business audits; never grants resources or
 ## replays work. Day-save failures are still governed by the transaction below.
 signal operation_recorded(entry: Dictionary)
@@ -40,6 +41,7 @@ var rooms
 var ranch
 var services
 var water
+var progress
 
 func _init(slot_store = null) -> void:
 	land = P8Land.new(self)
@@ -52,6 +54,7 @@ func _init(slot_store = null) -> void:
 	ranch = Ranch.new(self, P8Data.load_data()["p103"])
 	services = Services.new(self, P8Data.load_data()["p104"])
 	water = Water.new(self, P8Data.load_data()["p106"])
+	progress = Economy.new(self, P8Data.load_data()["p107"])
 	super(slot_store)
 
 func _catalog():
@@ -270,6 +273,7 @@ func to_snapshot() -> Dictionary:
 	snapshot["world"]["ranch"] = ranch.to_save()
 	snapshot["world"]["services"] = services.to_save()
 	snapshot["world"]["water"] = water.to_save()
+	snapshot["world"]["economy_progress"] = progress.to_save()
 	return snapshot
 
 func apply_snapshot(value) -> Dictionary:
@@ -298,6 +302,7 @@ func _snapshot_applied(snapshot: Dictionary) -> void:
 	services.apply_save(snapshot["world"]["services"])
 	if snapshot["world"].has("water"):
 		water.apply_save(snapshot["world"]["water"])
+	progress.apply_save(snapshot["world"]["economy_progress"])
 
 ## Pollination bonus: one extra oilseed per pollinated cycle at harvest.
 func _harvest_bonus(instance: Dictionary) -> Dictionary:
@@ -343,6 +348,8 @@ func _research_done(research_id: String) -> bool:
 	return research.is_completed(research_id)
 
 func research_block(research_id: String) -> String:
+	var blocked: String = progress.block("research", research_id)
+	if not blocked.is_empty(): return blocked
 	if research_id.is_empty() or _research_done(research_id):
 		return ""
 	return "需先完成研究「%s」" % _research_name(research_id)
@@ -380,6 +387,8 @@ func _with_substituted(facility_id: String, action: Callable) -> Dictionary:
 	return result
 
 func can_build_facility(cell: Vector2i, facility_id: String) -> Dictionary:
+	var stage_block: String = progress.block("facility", facility_id)
+	if not stage_block.is_empty(): return _error(stage_block)
 	if facility_id=="field_service_station" and grid.state_at(cell)==Grid.State.TILLED: return _error("请先把维护站脚下耕地改为普通地板或还原，避免桥接田块")
 	if facility_defs.has(facility_id):
 		var blocked := research_block(String(facility_defs[facility_id].get("research", "")))
@@ -460,7 +469,16 @@ func buy(item_id: String, quantity) -> Dictionary:
 			return _error(blocked)
 	return super(item_id, quantity)
 
+## The biological registry is the single authority for true animal labour.
+## Filtering only the UI leaves manual/worker/model and save-forgery bypasses.
+func batch_block(recipe_id: String) -> String:
+	if ranch.settings["work"]["recipes"].has(recipe_id):
+		return "生物工艺须由实际动物岗位推进，请在专属工作场安排生产"
+	return ""
+
 func start_batch(facility_uid: int, recipe_id: String) -> Dictionary:
+	var biological: String = batch_block(recipe_id)
+	if not biological.is_empty(): return _error(biological)
 	if recipe_defs.has(recipe_id):
 		var blocked := research_block(String(recipe_defs[recipe_id].get("research", "")))
 		if not blocked.is_empty():
@@ -480,12 +498,21 @@ func start_batch(facility_uid: int, recipe_id: String) -> Dictionary:
 
 func claim_batch(facility_uid: int, expected_batch_id: int) -> Dictionary:
 	var batch: Dictionary = facilities.get(facility_uid, {}).get("batch", {}).duplicate(true)
+	var biological: String = batch_block(String(batch.get("recipe_id", "")))
+	if not biological.is_empty(): return _error(biological)
 	var day := clock.total_days - 1 if _labour_action else clock.total_days
 	var result: Dictionary = super(facility_uid, expected_batch_id)
 	if result.get("ok") and daily_save_error.is_empty():
 		record_operation({"kind": "batch", "stage": "claim", "day": day, "uid": facility_uid,
 			"batch_id": expected_batch_id, "recipe": batch["recipe_id"], "inputs": batch["inputs"], "outputs": batch["outputs"],
 			"operator": "worker" if _labour_action else "player"})
+	return result
+
+func deliver_order(order_id: int, item_id: String) -> Dictionary:
+	var result: Dictionary = super(order_id, item_id)
+	if result.get("ok"):
+		record_operation({"kind": "economy", "stage": "order", "day": clock.total_days,
+			"order": order_id, "item": item_id, "quote": result["quote"].duplicate(), "orders": progress.deliveries()})
 	return result
 
 # --- Candidate day settlement ----------------------------------------------

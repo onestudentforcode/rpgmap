@@ -62,6 +62,8 @@ func available_instances(provider_rows: Array) -> Dictionary:
 ## Market purchase (P10.6 §16.2.10): the shared gu never ride the trial
 ## provision; their definitions carry a market price.
 func buy_gu(definition_id: String) -> Dictionary:
+	var stage_block: String = world.progress.block("gu", definition_id)
+	if not stage_block.is_empty(): return world._error(stage_block)
 	if not definitions.has(definition_id):
 		return world._error("未知蛊种")
 	var d: Dictionary = definitions[definition_id]
@@ -95,6 +97,8 @@ func buy_gu(definition_id: String) -> Dictionary:
 	return world._finish(0, {"ok": true, "instance_id": identity, "price": price})
 
 func provision() -> Dictionary:
+	var stage_block: String = world.progress.block("capability", "gu_provision")
+	if not stage_block.is_empty(): return world._error(stage_block)
 	var checked: Dictionary = world._can_act(0)
 	if not checked["ok"]: return checked
 	if state["provisioned"]: return world._error("本档已领取试用配给")
@@ -128,6 +132,8 @@ func compatible(row: Dictionary, uid: int) -> bool:
 func quote_deploy(id: String, cell: Vector2i = Vector2i(-1,-1), host_uid: int = 0) -> Dictionary:
 	var row := instance(id)
 	if row.is_empty(): return world._error("未知后勤蛊实例")
+	var stage_block: String = world.progress.block("gu", String(row["definition_id"]))
+	if not stage_block.is_empty(): return world._error(stage_block)
 	if deployed(row): return world._error("此实例已部署，请先撤回")
 	var d := definition(row)
 	if d["deployment"] == "host":

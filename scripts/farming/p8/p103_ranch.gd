@@ -700,6 +700,8 @@ func set_priority(animal_uid: int, priority: int) -> Dictionary:
 # --- purchase -----------------------------------------------------------------
 
 func quote_purchase(zone_uid: int, species_id: String, count: int) -> Dictionary:
+	var stage_block: String = world.progress.block("capability", "animals")
+	if not stage_block.is_empty(): return _error(stage_block)
 	var zone_row := zone(zone_uid)
 	var nursery_type := "water_nursery" if species_medium(species_id) == "water" else "nursery"
 	if zone_row.is_empty() or String(zone_row["type"]) != nursery_type:

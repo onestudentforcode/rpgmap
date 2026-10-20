@@ -395,25 +395,25 @@
     "algae_dew_soup": {
       "outputs": {
         "dew_soup": {
-          "denominator": 2400,
-          "numerator": 19477
+          "denominator": 9600,
+          "numerator": 69109
         }
       },
       "total": {
-        "denominator": 1200,
-        "numerator": 19477
+        "denominator": 4800,
+        "numerator": 69109
       }
     },
     "assemble_stone_panel": {
       "outputs": {
         "composite_stone_panel": {
-          "denominator": 960,
-          "numerator": 19001
+          "denominator": 3840,
+          "numerator": 32009
         }
       },
       "total": {
-        "denominator": 480,
-        "numerator": 19001
+        "denominator": 1920,
+        "numerator": 32009
       }
     },
     "bee_round": {
@@ -475,29 +475,29 @@
     "break_ore": {
       "outputs": {
         "crushed_ore": {
-          "denominator": 96,
-          "numerator": 919
+          "denominator": 384,
+          "numerator": 743
         }
       },
       "total": {
-        "denominator": 8,
-        "numerator": 919
+        "denominator": 32,
+        "numerator": 743
       }
     },
     "break_stone": {
       "outputs": {
         "gravel": {
-          "denominator": 48,
-          "numerator": 545
+          "denominator": 960,
+          "numerator": 2101
         },
         "stone_powder": {
-          "denominator": 96,
-          "numerator": 545
+          "denominator": 1920,
+          "numerator": 2101
         }
       },
       "total": {
-        "denominator": 24,
-        "numerator": 2725
+        "denominator": 96,
+        "numerator": 2101
       }
     },
     "char": {
@@ -527,69 +527,69 @@
     "concentrate_ore": {
       "outputs": {
         "ore_concentrate": {
-          "denominator": 3200,
-          "numerator": 140657
+          "denominator": 38400,
+          "numerator": 344603
         },
         "tailings": {
-          "denominator": 1600,
-          "numerator": 7403
+          "denominator": 19200,
+          "numerator": 18137
         }
       },
       "total": {
-        "denominator": 20,
-        "numerator": 7403
+        "denominator": 240,
+        "numerator": 18137
       }
     },
     "coral_round": {
       "outputs": {
         "coral_stone": {
-          "denominator": 320,
-          "numerator": 9733
+          "denominator": 1280,
+          "numerator": 7797
         }
       },
       "total": {
-        "denominator": 40,
-        "numerator": 9733
+        "denominator": 160,
+        "numerator": 7797
       }
     },
     "dense_algae_culture": {
       "outputs": {
         "dense_algae": {
-          "denominator": 1200,
-          "numerator": 8621
+          "denominator": 960,
+          "numerator": 5137
         }
       },
       "total": {
-        "denominator": 400,
-        "numerator": 8621
+        "denominator": 320,
+        "numerator": 5137
       }
     },
     "dew_round": {
       "outputs": {
         "mucus": {
-          "denominator": 120,
-          "numerator": 1201
+          "denominator": 240,
+          "numerator": 853
         },
         "spirit_liquid": {
-          "denominator": 80,
-          "numerator": 1201
+          "denominator": 160,
+          "numerator": 853
         }
       },
       "total": {
         "denominator": 15,
-        "numerator": 2402
+        "numerator": 853
       }
     },
     "dry_fish_meal": {
       "outputs": {
         "fish_meal": {
-          "denominator": 675,
-          "numerator": 3463
+          "denominator": 300,
+          "numerator": 1541
         }
       },
       "total": {
-        "denominator": 225,
-        "numerator": 3463
+        "denominator": 100,
+        "numerator": 1541
       }
     },
     "duckweed": {
@@ -623,57 +623,57 @@
     "fish": {
       "outputs": {
         "fish_manure": {
-          "denominator": 25,
-          "numerator": 82
+          "denominator": 200,
+          "numerator": 657
         },
         "fish_meat": {
-          "denominator": 225,
-          "numerator": 1394
+          "denominator": 200,
+          "numerator": 1241
         }
       },
       "total": {
-        "denominator": 15,
-        "numerator": 1312
+        "denominator": 5,
+        "numerator": 438
       }
     },
     "form_rock_shell": {
       "outputs": {
         "mucus": {
-          "denominator": 640,
-          "numerator": 3237
+          "denominator": 7680,
+          "numerator": 13823
         },
         "rock_shell": {
-          "denominator": 1280,
-          "numerator": 9711
+          "denominator": 5120,
+          "numerator": 13823
         }
       },
       "total": {
-        "denominator": 160,
-        "numerator": 3237
+        "denominator": 480,
+        "numerator": 13823
       }
     },
     "fungus_fish_meal": {
       "outputs": {
         "fish_spirit_meal": {
-          "denominator": 1440000,
-          "numerator": 17651287
+          "denominator": 480000,
+          "numerator": 5886029
         }
       },
       "total": {
-        "denominator": 720000,
-        "numerator": 17651287
+        "denominator": 240000,
+        "numerator": 5886029
       }
     },
     "gel_round": {
       "outputs": {
         "water_gel": {
-          "denominator": 60,
-          "numerator": 779
+          "denominator": 24,
+          "numerator": 73
         }
       },
       "total": {
-        "denominator": 15,
-        "numerator": 1558
+        "denominator": 3,
+        "numerator": 73
       }
     },
     "honey_grain_cake": {
@@ -719,13 +719,13 @@
     "make_filter_media": {
       "outputs": {
         "filter_media": {
-          "denominator": 80,
-          "numerator": 1171
+          "denominator": 320,
+          "numerator": 1751
         }
       },
       "total": {
-        "denominator": 40,
-        "numerator": 1171
+        "denominator": 160,
+        "numerator": 1751
       }
     },
     "make_vine_ball": {
@@ -743,13 +743,13 @@
     "make_water_retaining_matrix": {
       "outputs": {
         "water_retaining_matrix": {
-          "denominator": 96,
-          "numerator": 523
+          "denominator": 80,
+          "numerator": 237
         }
       },
       "total": {
-        "denominator": 24,
-        "numerator": 523
+        "denominator": 20,
+        "numerator": 237
       }
     },
     "mill_grain": {
@@ -779,13 +779,13 @@
     "mineral_feed": {
       "outputs": {
         "mineral_feed": {
-          "denominator": 480,
-          "numerator": 9347
+          "denominator": 1920,
+          "numerator": 22723
         }
       },
       "total": {
-        "denominator": 240,
-        "numerator": 9347
+        "denominator": 960,
+        "numerator": 22723
       }
     },
     "mulberry": {
@@ -891,13 +891,13 @@
     "pearl_round": {
       "outputs": {
         "pearl": {
-          "denominator": 320,
-          "numerator": 6583
+          "denominator": 1920,
+          "numerator": 8071
         }
       },
       "total": {
-        "denominator": 40,
-        "numerator": 6583
+        "denominator": 160,
+        "numerator": 8071
       }
     },
     "press_oilseed": {
@@ -919,33 +919,33 @@
     "recover_fill": {
       "outputs": {
         "reclaimed_fill": {
-          "denominator": 384000,
-          "numerator": 3048971
+          "denominator": 512000,
+          "numerator": 1501681
         }
       },
       "total": {
-        "denominator": 192000,
-        "numerator": 3048971
+        "denominator": 256000,
+        "numerator": 1501681
       }
     },
     "recover_nutrients": {
       "outputs": {
         "clean_water": {
-          "denominator": 320,
-          "numerator": 2107
+          "denominator": 256,
+          "numerator": 1099
         },
         "nutrient_liquid": {
-          "denominator": 800,
-          "numerator": 6321
+          "denominator": 640,
+          "numerator": 3297
         },
         "sludge": {
-          "denominator": 1600,
-          "numerator": 6321
+          "denominator": 1280,
+          "numerator": 3297
         }
       },
       "total": {
-        "denominator": 20,
-        "numerator": 2107
+        "denominator": 16,
+        "numerator": 1099
       }
     },
     "reed": {
@@ -1031,17 +1031,17 @@
     "scale_round": {
       "outputs": {
         "mineral_scale": {
-          "denominator": 640,
-          "numerator": 25963
+          "denominator": 10240,
+          "numerator": 75299
         },
         "shed_skin": {
-          "denominator": 960,
-          "numerator": 25963
+          "denominator": 7680,
+          "numerator": 75299
         }
       },
       "total": {
-        "denominator": 60,
-        "numerator": 25963
+        "denominator": 480,
+        "numerator": 75299
       }
     },
     "shred": {
@@ -1059,13 +1059,13 @@
     "silk_round": {
       "outputs": {
         "silk": {
-          "denominator": 100,
-          "numerator": 823
+          "denominator": 400,
+          "numerator": 1523
         }
       },
       "total": {
         "denominator": 25,
-        "numerator": 3292
+        "numerator": 1523
       }
     },
     "smelt": {
@@ -1083,17 +1083,17 @@
     "smelt_concentrate": {
       "outputs": {
         "iron_ingot": {
-          "denominator": 192000,
-          "numerator": 9397609
+          "denominator": 256000,
+          "numerator": 4022699
         },
         "slag": {
-          "denominator": 192000,
-          "numerator": 494611
+          "denominator": 256000,
+          "numerator": 211721
         }
       },
       "total": {
-        "denominator": 9600,
-        "numerator": 494611
+        "denominator": 12800,
+        "numerator": 211721
       }
     },
     "soil_spirit_pill": {
@@ -1163,17 +1163,17 @@
     "wool": {
       "outputs": {
         "sheep_manure": {
-          "denominator": 200,
-          "numerator": 241
+          "denominator": 100,
+          "numerator": 211
         },
         "steel_wool": {
           "denominator": 200,
-          "numerator": 2169
+          "numerator": 1899
         }
       },
       "total": {
         "denominator": 5,
-        "numerator": 241
+        "numerator": 422
       }
     }
   },
@@ -1493,7 +1493,7 @@
       }
     },
     {
-      "ap": 4,
+      "ap": 1,
       "basis": {
         "id": "steel_sheep",
         "kind": "animal"
@@ -1502,8 +1502,8 @@
       "days": 3,
       "id": "wool",
       "inputs": {
-        "clean_water": 12,
-        "fodder_grass": 12,
+        "clean_water": 24,
+        "fodder_grass": 24,
         "iron_ore": 4
       },
       "outputs": {
@@ -1512,7 +1512,7 @@
           "share": 0.1
         },
         "steel_wool": {
-          "quantity": 4,
+          "quantity": 8,
           "share": 0.9
         }
       }
@@ -1879,17 +1879,17 @@
       }
     },
     {
-      "ap": 6,
+      "ap": 1,
       "basis": {
         "id": "break_stone_provider",
         "kind": "animal"
       },
-      "cash": 32,
-      "days": 4,
+      "cash": 0,
+      "days": 1,
       "id": "break_stone",
       "inputs": {
-        "clean_water": 16,
-        "mushroom": 16,
+        "clean_water": 4,
+        "mushroom": 4,
         "raw_stone": 8
       },
       "outputs": {
@@ -1904,18 +1904,18 @@
       }
     },
     {
-      "ap": 6,
+      "ap": 1,
       "basis": {
         "id": "break_ore_provider",
         "kind": "animal"
       },
-      "cash": 32,
-      "days": 4,
+      "cash": 0,
+      "days": 1,
       "id": "break_ore",
       "inputs": {
-        "clean_water": 16,
+        "clean_water": 4,
         "iron_ore": 8,
-        "mushroom": 16
+        "mushroom": 4
       },
       "outputs": {
         "crushed_ore": {
@@ -1925,18 +1925,18 @@
       }
     },
     {
-      "ap": 8,
+      "ap": 1,
       "basis": {
         "id": "concentrate_ore_provider",
         "kind": "animal"
       },
-      "cash": 48,
-      "days": 6,
+      "cash": 0,
+      "days": 2,
       "id": "concentrate_ore",
       "inputs": {
-        "clean_water": 24,
+        "clean_water": 8,
         "crushed_ore": 24,
-        "fodder_grass": 24
+        "fodder_grass": 8
       },
       "outputs": {
         "ore_concentrate": {
@@ -2186,17 +2186,17 @@
       }
     },
     {
-      "ap": 7,
+      "ap": 1,
       "basis": {
         "id": "leaf_silkworm_provider",
         "kind": "animal"
       },
-      "cash": 32,
-      "days": 5,
+      "cash": 0,
+      "days": 2,
       "id": "silk_round",
       "inputs": {
-        "clean_water": 28,
-        "mulberry_leaf": 36
+        "clean_water": 16,
+        "mulberry_leaf": 24
       },
       "outputs": {
         "silk": {
@@ -2206,17 +2206,17 @@
       }
     },
     {
-      "ap": 8,
+      "ap": 1,
       "basis": {
         "id": "dew_shell_snail_provider",
         "kind": "animal"
       },
-      "cash": 40,
-      "days": 6,
+      "cash": 0,
+      "days": 2,
       "id": "dew_round",
       "inputs": {
-        "clean_water": 40,
-        "fodder_grass": 32
+        "clean_water": 24,
+        "fodder_grass": 16
       },
       "outputs": {
         "mucus": {
@@ -2230,22 +2230,22 @@
       }
     },
     {
-      "ap": 12,
+      "ap": 1,
       "basis": {
         "id": "mineral_scale_lizard_provider",
         "kind": "animal"
       },
-      "cash": 72,
-      "days": 10,
+      "cash": 0,
+      "days": 4,
       "id": "scale_round",
       "inputs": {
-        "clean_water": 56,
-        "fodder_grass": 56,
-        "mineral_feed": 8
+        "clean_water": 32,
+        "fodder_grass": 32,
+        "mineral_feed": 4
       },
       "outputs": {
         "mineral_scale": {
-          "quantity": 8,
+          "quantity": 16,
           "share": 0.75
         },
         "shed_skin": {
@@ -2281,40 +2281,41 @@
       }
     },
     {
-      "ap": 2,
+      "ap": 1,
       "basis": {
-        "id": "form_rock_shell",
-        "kind": "recipe"
+        "id": "form_rock_shell_provider",
+        "kind": "animal"
       },
       "cash": 0,
-      "days": 1,
+      "days": 2,
       "id": "form_rock_shell",
       "inputs": {
-        "clean_water": 1,
-        "stone_powder": 3
+        "algae_feed": 8,
+        "clean_water": 12,
+        "stone_powder": 12
       },
       "outputs": {
         "mucus": {
-          "quantity": 1,
+          "quantity": 4,
           "share": 0.25
         },
         "rock_shell": {
-          "quantity": 2,
+          "quantity": 8,
           "share": 0.75
         }
       }
     },
     {
-      "ap": 8,
+      "ap": 2,
       "basis": {
         "id": "filter_algae_carp_provider",
         "kind": "animal"
       },
       "cash": 20,
-      "days": 6,
+      "days": 7,
       "id": "fish",
       "inputs": {
-        "algae_feed": 32,
+        "algae_feed": 36,
         "grain": 4
       },
       "outputs": {
@@ -2348,21 +2349,21 @@
       }
     },
     {
-      "ap": 10,
+      "ap": 2,
       "basis": {
         "id": "oilfin_fish_provider",
         "kind": "animal"
       },
       "cash": 40,
-      "days": 8,
+      "days": 9,
       "id": "oilfin_round",
       "inputs": {
-        "algae_feed": 44,
-        "water_feed": 4
+        "algae_feed": 48,
+        "grain": 8
       },
       "outputs": {
         "crude_oil": {
-          "quantity": 8,
+          "quantity": 24,
           "share": 0.75
         },
         "fish_meat": {
@@ -2372,36 +2373,36 @@
       }
     },
     {
-      "ap": 12,
+      "ap": 1,
       "basis": {
         "id": "pearl_mussel_provider",
         "kind": "animal"
       },
-      "cash": 48,
-      "days": 10,
+      "cash": 0,
+      "days": 4,
       "id": "pearl_round",
       "inputs": {
-        "algae_feed": 56,
+        "algae_feed": 32,
         "stone_powder": 4
       },
       "outputs": {
         "pearl": {
-          "quantity": 8,
+          "quantity": 12,
           "share": 1
         }
       }
     },
     {
-      "ap": 8,
+      "ap": 1,
       "basis": {
         "id": "gel_jellyfish_provider",
         "kind": "animal"
       },
-      "cash": 48,
-      "days": 6,
+      "cash": 0,
+      "days": 2,
       "id": "gel_round",
       "inputs": {
-        "algae_feed": 32,
+        "algae_feed": 16,
         "clean_water": 4
       },
       "outputs": {
@@ -2412,16 +2413,16 @@
       }
     },
     {
-      "ap": 14,
+      "ap": 1,
       "basis": {
         "id": "reef_coral_provider",
         "kind": "animal"
       },
-      "cash": 56,
-      "days": 12,
+      "cash": 0,
+      "days": 3,
       "id": "coral_round",
       "inputs": {
-        "algae_feed": 72,
+        "algae_feed": 24,
         "clean_water": 4,
         "stone_powder": 12
       },
@@ -3776,7 +3777,7 @@
       "name": "钢绵羊",
       "outputs": {
         "sheep_manure": 1,
-        "steel_wool": 1
+        "steel_wool": 2
       },
       "special_diets": [
         {
@@ -4180,7 +4181,7 @@
       "juvenile_price": 18,
       "name": "矿鳞蜥",
       "outputs": {
-        "mineral_scale": 2,
+        "mineral_scale": 4,
         "shed_skin": 1
       },
       "research": "mineral_materials",
@@ -4188,7 +4189,7 @@
         {
           "id": "scale_round",
           "inputs": {
-            "mineral_feed": 2
+            "mineral_feed": 1
           },
           "name": "养鳞轮"
         }
@@ -4313,7 +4314,7 @@
       "juvenile_price": 10,
       "name": "油鳍鱼",
       "outputs": {
-        "crude_oil": 2,
+        "crude_oil": 6,
         "fish_meat": 1
       },
       "research": "farm_preparation",
@@ -4321,11 +4322,11 @@
         {
           "id": "oilfin_oil_round",
           "inputs": {
-            "water_feed": 1
+            "grain": 2
           },
           "name": "取油轮投料",
           "outputs": {
-            "crude_oil": 2,
+            "crude_oil": 6,
             "fish_meat": 1
           }
         }
@@ -4352,7 +4353,7 @@
       "juvenile_price": 12,
       "name": "珍珠蚌",
       "outputs": {
-        "pearl": 2
+        "pearl": 3
       },
       "research": "water_recirculation",
       "special_diets": [
@@ -4363,7 +4364,7 @@
           },
           "name": "育珠轮投料",
           "outputs": {
-            "pearl": 2
+            "pearl": 3
           }
         },
         {
@@ -4476,7 +4477,7 @@
         }
       ],
       "claim_removes": false,
-      "cycle_days": 6,
+      "cycle_days": 3,
       "default_base_diet": "algae_meal",
       "default_special_diet": "coral_mineral_round",
       "facility": "coral_station",
@@ -4514,6 +4515,7 @@
         "food": {},
         "host_kinds": [],
         "id": "rice_bag_gu",
+        "market_price": 32,
         "name": "饭袋草蛊",
         "production": {
           "days": 3,
@@ -4553,6 +4555,7 @@
           "facility"
         ],
         "id": "bright_gu",
+        "market_price": 24,
         "name": "明光蛊",
         "range": 2,
         "rank": 1,
@@ -4576,6 +4579,7 @@
           "facility"
         ],
         "id": "growth_gu",
+        "market_price": 24,
         "name": "催生蛊",
         "range": 3,
         "rank": 1,
@@ -4600,6 +4604,7 @@
           "facility"
         ],
         "id": "water_gu",
+        "market_price": 24,
         "name": "锁水蛊",
         "range": 3,
         "rank": 1,
@@ -4624,6 +4629,7 @@
           "facility"
         ],
         "id": "fert_gu",
+        "market_price": 24,
         "name": "节肥蛊",
         "range": 3,
         "rank": 1,
@@ -4648,6 +4654,7 @@
           "research"
         ],
         "id": "wisdom_gu",
+        "market_price": 32,
         "name": "智道研究蛊",
         "range": 0,
         "rank": 1,
@@ -4674,6 +4681,7 @@
           "research"
         ],
         "id": "time_gu",
+        "market_price": 48,
         "material_percent": 150,
         "name": "宙道研究蛊",
         "range": 0,
@@ -4699,6 +4707,7 @@
           "facility"
         ],
         "id": "soothe_gu",
+        "market_price": 32,
         "name": "安抚蛊",
         "path": "音道",
         "range": 0,
@@ -4724,6 +4733,7 @@
           "facility"
         ],
         "id": "command_gu",
+        "market_price": 32,
         "name": "驭兽蛊",
         "path": "奴道",
         "range": 0,
@@ -5037,7 +5047,7 @@
           "default_diet": "scale_round",
           "main": "mineral_scale",
           "outputs": {
-            "mineral_scale": 2,
+            "mineral_scale": 4,
             "shed_skin": 1
           },
           "station": "scale_station",
@@ -5055,7 +5065,7 @@
           "default_diet": "oilfin_oil_round",
           "main": "crude_oil",
           "outputs": {
-            "crude_oil": 2,
+            "crude_oil": 6,
             "fish_meat": 1
           },
           "station": "oilfish_harvest_station",
@@ -5073,7 +5083,7 @@
           "default_diet": "pearl_powder_round",
           "main": "pearl",
           "outputs": {
-            "pearl": 2
+            "pearl": 3
           },
           "shell": true,
           "station": "pearl_station",
@@ -5081,7 +5091,7 @@
           "variants": {
             "pearl_spirit_round": {
               "outputs": {
-                "pearl": 3
+                "pearl": 4
               }
             }
           }
@@ -5102,7 +5112,7 @@
             "coral_stone": 2
           },
           "station": "coral_station",
-          "units": 3600
+          "units": 1800
         },
         "space": 1
       },
@@ -5134,7 +5144,7 @@
           "main": "steel_wool",
           "outputs": {
             "sheep_manure": 1,
-            "steel_wool": 1
+            "steel_wool": 2
           },
           "station": "wool_station",
           "units": 1800
@@ -5424,6 +5434,456 @@
     "station_change_cells": 8,
     "version": 1
   },
+  "p107": {
+    "events": [
+      {
+        "id": "first_workshop",
+        "inputs": {},
+        "name": "初建产业",
+        "orders": 3
+      },
+      {
+        "id": "gu_partnership",
+        "inputs": {},
+        "name": "后勤合作",
+        "orders": 12
+      },
+      {
+        "id": "integrated_estate",
+        "inputs": {
+          "composite_stone_panel": 12,
+          "refined_oil": 6,
+          "water_retaining_matrix": 8
+        },
+        "name": "产业进阶",
+        "orders": 0
+      }
+    ],
+    "gates": {
+      "capability": {
+        "animals": 1,
+        "fence": 1,
+        "gu_provision": 2,
+        "systems": 3,
+        "toy": 2
+      },
+      "facility": {
+        "aquatic_crop_station": 1,
+        "bee_hive": 1,
+        "carbonization_nest": 1,
+        "care_table": 1,
+        "carp_harvest_station": 1,
+        "compost_mouse_den": 1,
+        "coral_station": 1,
+        "dispatch_station": 1,
+        "feed_trough": 1,
+        "field_service_station": 1,
+        "gel_station": 1,
+        "growth_lamp": 2,
+        "large_bed": 1,
+        "medium_bed": 1,
+        "oilfish_harvest_station": 1,
+        "ore_sorting_yard": 1,
+        "pearl_station": 1,
+        "pen": 1,
+        "purifying_bed": 1,
+        "rock_breaking_yard": 1,
+        "scale_station": 1,
+        "shell_forming_station": 1,
+        "silkworm_rack": 1,
+        "silt_processing_station": 1,
+        "small_bed": 1,
+        "soothing_station": 2,
+        "spirit_liquid_collector": 1,
+        "toy_station": 1,
+        "water_change_station": 1,
+        "wool_station": 1
+      },
+      "gu": {
+        "bright_gu": 2,
+        "command_gu": 2,
+        "feed_saving_gu": 2,
+        "fert_gu": 2,
+        "growth_gu": 2,
+        "product_yield_gu": 2,
+        "rice_bag_gu": 2,
+        "soothe_gu": 2,
+        "time_gu": 2,
+        "water_gu": 2,
+        "wisdom_gu": 2
+      },
+      "research": {
+        "advanced_feed_oil_wax": 1,
+        "aquatic_intensive_care": 2,
+        "basic_spirit_cooking": 2,
+        "beekeeping": 1,
+        "biofiltration": 1,
+        "composite_spirit_food": 3,
+        "farm_preparation": 0,
+        "field_maintenance": 1,
+        "flower_cultivation": 0,
+        "mineral_materials": 2,
+        "ore_concentration": 1,
+        "rock_handling": 1,
+        "water_recirculation": 1
+      }
+    },
+    "offers": [
+      {
+        "give": {
+          "silk": 4
+        },
+        "id": "silk_for_resin",
+        "receive": {
+          "resin": 3
+        },
+        "stage": 1
+      },
+      {
+        "give": {
+          "spirit_liquid": 3
+        },
+        "id": "spirit_liquid_for_resin",
+        "receive": {
+          "resin": 3
+        },
+        "stage": 1
+      },
+      {
+        "give": {
+          "water_gel": 3
+        },
+        "id": "water_gel_for_resin",
+        "receive": {
+          "resin": 3
+        },
+        "stage": 2
+      },
+      {
+        "give": {
+          "pearl": 2
+        },
+        "id": "pearl_for_resin",
+        "receive": {
+          "resin": 4
+        },
+        "stage": 2
+      },
+      {
+        "give": {
+          "coral_stone": 2
+        },
+        "id": "coral_stone_for_resin",
+        "receive": {
+          "resin": 3
+        },
+        "stage": 2
+      },
+      {
+        "give": {
+          "honey": 4
+        },
+        "id": "honey_for_resin",
+        "receive": {
+          "resin": 3
+        },
+        "stage": 1
+      },
+      {
+        "give": {
+          "crude_oil": 3
+        },
+        "id": "crude_oil_for_resin",
+        "receive": {
+          "resin": 2
+        },
+        "stage": 1
+      },
+      {
+        "give": {
+          "resin": 2
+        },
+        "id": "resin_for_flower_samples",
+        "receive": {
+          "nectar": 2,
+          "pollen": 1
+        },
+        "stage": 1
+      },
+      {
+        "give": {
+          "resin": 4
+        },
+        "id": "resin_for_beeswax",
+        "receive": {
+          "beeswax": 2
+        },
+        "stage": 1
+      },
+      {
+        "give": {
+          "resin": 2
+        },
+        "id": "resin_for_sludge",
+        "receive": {
+          "sludge": 2
+        },
+        "stage": 1
+      },
+      {
+        "give": {
+          "resin": 4
+        },
+        "id": "resin_for_stone_parts",
+        "receive": {
+          "gravel": 3,
+          "stone_powder": 1
+        },
+        "stage": 1
+      },
+      {
+        "give": {
+          "resin": 4
+        },
+        "id": "resin_for_crushed_ore",
+        "receive": {
+          "crushed_ore": 4
+        },
+        "stage": 1
+      },
+      {
+        "give": {
+          "resin": 4
+        },
+        "id": "resin_for_fish_meat",
+        "receive": {
+          "fish_meat": 3
+        },
+        "stage": 1
+      },
+      {
+        "give": {
+          "resin": 4
+        },
+        "id": "resin_for_honey",
+        "receive": {
+          "honey": 2
+        },
+        "stage": 1
+      },
+      {
+        "give": {
+          "resin": 6
+        },
+        "id": "resin_for_ore_concentrate",
+        "receive": {
+          "ore_concentrate": 2
+        },
+        "stage": 2
+      },
+      {
+        "give": {
+          "resin": 8
+        },
+        "id": "resin_for_panels",
+        "receive": {
+          "composite_stone_panel": 4
+        },
+        "stage": 2
+      },
+      {
+        "give": {
+          "resin": 6
+        },
+        "id": "resin_for_refined_oil",
+        "receive": {
+          "refined_oil": 3
+        },
+        "stage": 2
+      },
+      {
+        "give": {
+          "resin": 8
+        },
+        "id": "resin_for_water_gel",
+        "receive": {
+          "water_gel": 4
+        },
+        "stage": 2
+      },
+      {
+        "give": {
+          "resin": 8
+        },
+        "id": "resin_for_pearl",
+        "receive": {
+          "pearl": 2
+        },
+        "stage": 2
+      },
+      {
+        "give": {
+          "resin": 8
+        },
+        "id": "resin_for_matrix",
+        "receive": {
+          "water_retaining_matrix": 4
+        },
+        "stage": 2
+      },
+      {
+        "give": {
+          "resin": 4
+        },
+        "id": "resin_for_dense_algae",
+        "receive": {
+          "dense_algae": 3
+        },
+        "stage": 2
+      },
+      {
+        "give": {
+          "mineral_scale": 2
+        },
+        "id": "mineral_scale_for_resin",
+        "receive": {
+          "resin": 4
+        },
+        "stage": 2
+      },
+      {
+        "give": {
+          "resin": 8
+        },
+        "id": "resin_for_mineral_scale",
+        "receive": {
+          "mineral_scale": 2
+        },
+        "stage": 2
+      }
+    ],
+    "stage_names": [
+      "起步",
+      "建立基础",
+      "规模增长",
+      "体系增长"
+    ],
+    "version": 1
+  },
+  "p107_audit": {
+    "events": 3,
+    "exchange_potential": {
+      "beeswax": "1/10",
+      "composite_stone_panel": "1/10",
+      "coral_stone": "3/2",
+      "crude_oil": "2/3",
+      "crushed_ore": "1/10",
+      "dense_algae": "1/10",
+      "fish_meat": "1/10",
+      "gravel": "1/10",
+      "honey": "3/4",
+      "mineral_scale": "2",
+      "nectar": "1/10",
+      "ore_concentrate": "1/10",
+      "pearl": "2",
+      "pollen": "1/10",
+      "refined_oil": "1/10",
+      "resin": "1",
+      "silk": "3/4",
+      "sludge": "1/10",
+      "spirit_liquid": "1",
+      "stone_powder": "1/10",
+      "water_gel": "1",
+      "water_retaining_matrix": "1/10"
+    },
+    "market_exchange_potential": {
+      "algae_feed": "2",
+      "beeswax": "3",
+      "charcoal": "5",
+      "clean_water": "1",
+      "composite_stone_panel": "4",
+      "coral_stone": "81/8",
+      "crude_oil": "9/2",
+      "crushed_ore": "2",
+      "dense_algae": "4",
+      "dew_soup": "7",
+      "duckweed": "1",
+      "duckweed_seed": "1",
+      "earth_pill": "8",
+      "fast_fir_seed": "1",
+      "filter_media": "2",
+      "fire_paste": "12",
+      "fish_manure": "1",
+      "fish_meal": "2",
+      "fish_meat": "9",
+      "fish_spirit_meal": "12",
+      "flower_petal": "1",
+      "fodder_grass": "1",
+      "gold_food": "20",
+      "golden_wheat_seed": "1",
+      "grain": "4",
+      "grain_meal": "3",
+      "grass_meal": "1",
+      "grass_seed": "1",
+      "gravel": "1",
+      "honey": "6",
+      "honey_cake": "8",
+      "honeybell_seed": "1",
+      "humus": "4",
+      "iron_ingot": "12",
+      "iron_ore": "2",
+      "land_feed": "3",
+      "mineral_feed": "4",
+      "mineral_scale": "27/2",
+      "mucus": "2",
+      "mulberry_leaf": "1",
+      "mulberry_seed": "1",
+      "mushroom": "6",
+      "mussel_shell": "1",
+      "nectar": "2",
+      "nutrient_liquid": "2",
+      "oil_cake": "1",
+      "oilseed": "2",
+      "oilseed_flower_seed": "1",
+      "ore_concentrate": "5",
+      "pearl": "27/2",
+      "pollen": "1",
+      "purifying_mat_culture": "1",
+      "raw_stone": "1",
+      "raw_wood": "4",
+      "reclaimed_fill": "1",
+      "reed_seed": "1",
+      "reed_stalk": "1",
+      "refined_oil": "7",
+      "refined_wax": "6",
+      "resin": "27/4",
+      "resin_tree_seed": "1",
+      "rice": "3",
+      "rock_shell": "3",
+      "shed_skin": "1",
+      "sheep_manure": "1",
+      "silk": "81/16",
+      "slag": "1",
+      "sludge": "1",
+      "spent_filter": "1",
+      "spirit_liquid": "27/4",
+      "steel_wool": "12",
+      "stone_powder": "1",
+      "straw": "1",
+      "tailings": "1",
+      "time_feed": "1",
+      "twig": "2",
+      "vine_ball": "1",
+      "wastewater": "1",
+      "water_feed": "3",
+      "water_gel": "27/4",
+      "water_retaining_matrix": "2",
+      "wood_chip": "2",
+      "wood_decay_spawn": "1",
+      "wood_plank": "8"
+    },
+    "offers": 23
+  },
   "product": "farm_demo_p8",
   "purchase_audit": {
     "charcoal": {
@@ -5459,8 +5919,8 @@
     "dew_soup": {
       "buyable_leaves": {
         "clean_water": {
-          "denominator": 9,
-          "numerator": 85
+          "denominator": 18,
+          "numerator": 155
         },
         "oilseed_flower_seed": {
           "denominator": 1,
@@ -5479,19 +5939,19 @@
           "numerator": 14
         },
         "wood_chip": {
-          "denominator": 3,
-          "numerator": 2
+          "denominator": 6,
+          "numerator": 1
         },
         "wood_decay_spawn": {
-          "denominator": 9,
-          "numerator": 2
+          "denominator": 18,
+          "numerator": 1
         }
       },
       "payout": 15,
       "quantity": 2,
       "raw_purchase_cost": {
-        "denominator": 9,
-        "numerator": 296
+        "denominator": 18,
+        "numerator": 517
       },
       "requires_production": true
     },
@@ -5561,30 +6021,30 @@
       "buyable_leaves": {
         "clean_water": {
           "denominator": 1,
-          "numerator": 16
+          "numerator": 18
         },
         "grain": {
           "denominator": 1,
           "numerator": 4
         },
         "straw": {
-          "denominator": 3,
-          "numerator": 32
+          "denominator": 1,
+          "numerator": 12
         }
       },
       "payout": 118,
       "quantity": 12,
       "raw_purchase_cost": {
         "denominator": 1,
-        "numerator": 88
+        "numerator": 96
       },
       "requires_production": true
     },
     "fish_spirit_meal": {
       "buyable_leaves": {
         "clean_water": {
-          "denominator": 2,
-          "numerator": 7
+          "denominator": 3,
+          "numerator": 11
         },
         "grain": {
           "denominator": 3,
@@ -5595,8 +6055,8 @@
           "numerator": 1
         },
         "straw": {
-          "denominator": 9,
-          "numerator": 8
+          "denominator": 1,
+          "numerator": 1
         },
         "twig": {
           "denominator": 1,
@@ -5615,7 +6075,7 @@
       "quantity": 2,
       "raw_purchase_cost": {
         "denominator": 3,
-        "numerator": 74
+        "numerator": 76
       },
       "requires_production": true
     },
@@ -5745,34 +6205,34 @@
       "buyable_leaves": {
         "clean_water": {
           "denominator": 9,
-          "numerator": 664
+          "numerator": 308
         },
         "fodder_grass": {
           "denominator": 1,
-          "numerator": 68
+          "numerator": 38
         },
         "grain": {
           "denominator": 1,
-          "numerator": 4
+          "numerator": 2
         },
         "iron_ore": {
           "denominator": 3,
-          "numerator": 16
+          "numerator": 8
         },
         "wood_chip": {
           "denominator": 3,
-          "numerator": 32
+          "numerator": 4
         },
         "wood_decay_spawn": {
           "denominator": 9,
-          "numerator": 32
+          "numerator": 4
         }
       },
-      "payout": 44,
-      "quantity": 8,
+      "payout": 88,
+      "quantity": 16,
       "raw_purchase_cost": {
         "denominator": 9,
-        "numerator": 3440
+        "numerator": 1564
       },
       "requires_production": true
     },
@@ -5780,18 +6240,18 @@
       "buyable_leaves": {
         "clean_water": {
           "denominator": 1,
-          "numerator": 40
+          "numerator": 24
         },
         "fodder_grass": {
           "denominator": 1,
-          "numerator": 32
+          "numerator": 16
         }
       },
       "payout": 8,
       "quantity": 4,
       "raw_purchase_cost": {
         "denominator": 1,
-        "numerator": 144
+        "numerator": 80
       },
       "requires_production": true
     },
@@ -5898,11 +6358,15 @@
       "buyable_leaves": {
         "clean_water": {
           "denominator": 1,
-          "numerator": 21
+          "numerator": 36
         },
         "raw_stone": {
           "denominator": 1,
-          "numerator": 6
+          "numerator": 24
+        },
+        "straw": {
+          "denominator": 3,
+          "numerator": 8
         },
         "wood_chip": {
           "denominator": 1,
@@ -5913,11 +6377,11 @@
           "numerator": 4
         }
       },
-      "payout": 6,
-      "quantity": 2,
+      "payout": 26,
+      "quantity": 8,
       "raw_purchase_cost": {
         "denominator": 1,
-        "numerator": 120
+        "numerator": 212
       },
       "requires_production": true
     },
@@ -5925,18 +6389,18 @@
       "buyable_leaves": {
         "clean_water": {
           "denominator": 1,
-          "numerator": 28
+          "numerator": 16
         },
         "mulberry_leaf": {
           "denominator": 1,
-          "numerator": 36
+          "numerator": 24
         }
       },
       "payout": 70,
       "quantity": 16,
       "raw_purchase_cost": {
         "denominator": 1,
-        "numerator": 128
+        "numerator": 80
       },
       "requires_production": true
     },
@@ -5944,18 +6408,18 @@
       "buyable_leaves": {
         "clean_water": {
           "denominator": 1,
-          "numerator": 40
+          "numerator": 24
         },
         "fodder_grass": {
           "denominator": 1,
-          "numerator": 32
+          "numerator": 16
         }
       },
       "payout": 52,
       "quantity": 8,
       "raw_purchase_cost": {
         "denominator": 1,
-        "numerator": 144
+        "numerator": 80
       },
       "requires_production": true
     },
@@ -5963,22 +6427,22 @@
       "buyable_leaves": {
         "clean_water": {
           "denominator": 1,
-          "numerator": 12
+          "numerator": 24
         },
         "fodder_grass": {
           "denominator": 1,
-          "numerator": 12
+          "numerator": 24
         },
         "iron_ore": {
           "denominator": 1,
           "numerator": 4
         }
       },
-      "payout": 52,
-      "quantity": 4,
+      "payout": 105,
+      "quantity": 8,
       "raw_purchase_cost": {
         "denominator": 1,
-        "numerator": 64
+        "numerator": 112
       },
       "requires_production": true
     }
@@ -7283,19 +7747,18 @@
       }
     },
     {
-      "days": 6,
-      "fee": 12,
+      "days": 2,
+      "fee": 8,
       "id": "field_maintenance",
-      "layer": 3,
+      "layer": 1,
       "name": "田间自动维护",
       "prerequisites": [
-        "advanced_feed_oil_wax",
-        "water_recirculation"
+        "farm_preparation"
       ],
       "samples": {
         "clean_water": 4,
-        "humus": 2,
-        "land_feed": 1
+        "grain": 1,
+        "humus": 2
       },
       "unlocks": {
         "crops": [],
@@ -7417,8 +7880,8 @@
     }
   ],
   "research_audit": {
-    "days": 48,
-    "fee": 104,
+    "days": 44,
+    "fee": 100,
     "order": [
       "biofiltration",
       "flower_cultivation",
@@ -7429,8 +7892,8 @@
       "water_recirculation",
       "advanced_feed_oil_wax",
       "aquatic_intensive_care",
-      "basic_spirit_cooking",
       "field_maintenance",
+      "basic_spirit_cooking",
       "mineral_materials",
       "composite_spirit_food"
     ]
@@ -7556,11 +8019,15 @@
       "buy_price": 6,
       "consumers": [
         "diet:filter_algae_carp:grain_fatten",
+        "diet:oilfin_fish:oilfin_oil_round",
         "diet:steel_sheep:grain_meal",
         "filter_algae_carp",
         "filter_algae_carp_provider",
         "mill_grain",
+        "oilfin_fish",
+        "oilfin_fish_provider",
         "orders",
+        "research:field_maintenance",
         "research:flower_cultivation",
         "sale",
         "steel_sheep"
@@ -7599,6 +8066,7 @@
         "diet:compost_mouse:mouse_compost_fiber",
         "make_vine_ball",
         "mouse_compost_fiber",
+        "mouse_compost_fiber_provider",
         "research:farm_preparation",
         "sale"
       ],
@@ -7682,6 +8150,7 @@
       "buy_price": 3,
       "consumers": [
         "bug_char_twigs",
+        "bug_char_twigs_provider",
         "build:silkworm_rack",
         "carbon_belly_bug",
         "char_twigs",
@@ -7810,7 +8279,9 @@
       "sell_price": 4,
       "sources": [
         "bug_char_chips",
+        "bug_char_chips_provider",
         "bug_char_twigs",
+        "bug_char_twigs_provider",
         "compost_chips",
         "compost_fish_manure",
         "compost_grass",
@@ -7822,8 +8293,11 @@
         "compost_straw",
         "compost_twigs",
         "mouse_compost_fiber",
+        "mouse_compost_fiber_provider",
         "mouse_compost_residue",
+        "mouse_compost_residue_provider",
         "silt_process",
+        "silt_process_provider",
         "wood_decay_mushroom"
       ],
       "stage": "intermediate",
@@ -7948,6 +8422,8 @@
         "bell_bee_provider",
         "break_ore_provider",
         "break_stone_provider",
+        "bug_char_chips_provider",
+        "bug_char_twigs_provider",
         "carbon_belly_bug",
         "compost_mouse",
         "concentrate_ore_provider",
@@ -7976,6 +8452,7 @@
         "diet:steel_sheep:grass_meal",
         "diet:steel_sheep:land_meal",
         "form_rock_shell",
+        "form_rock_shell_provider",
         "gel_jellyfish",
         "gel_jellyfish_provider",
         "gravel_shell_snail",
@@ -7986,6 +8463,8 @@
         "leaf_silkworm_provider",
         "mineral_scale_lizard",
         "mineral_scale_lizard_provider",
+        "mouse_compost_fiber_provider",
+        "mouse_compost_residue_provider",
         "nutrient_mat_provider",
         "oilseed_flower_provider",
         "orders",
@@ -8038,6 +8517,7 @@
       "consumers": [
         "bio_purify",
         "bug_char_chips",
+        "bug_char_chips_provider",
         "carbon_belly_bug",
         "compost_chips",
         "compost_mouse",
@@ -8046,6 +8526,7 @@
         "diet:purifying_mat:bio_purify",
         "make_silk_filter_media",
         "mouse_compost_fiber",
+        "mouse_compost_fiber_provider",
         "purifying_mat",
         "purifying_mat_provider",
         "sale",
@@ -8158,7 +8639,9 @@
       "sell_price": 5,
       "sources": [
         "bug_char_chips",
+        "bug_char_chips_provider",
         "bug_char_twigs",
+        "bug_char_twigs_provider",
         "char_reed",
         "char_twigs"
       ],
@@ -8243,6 +8726,8 @@
     {
       "buy_price": 2,
       "consumers": [
+        "bug_char_chips_provider",
+        "bug_char_twigs_provider",
         "carbon_belly_bug",
         "compost_grass",
         "compost_mouse",
@@ -8258,6 +8743,8 @@
         "mill_grass",
         "mineral_scale_lizard",
         "mineral_scale_lizard_provider",
+        "mouse_compost_fiber_provider",
+        "mouse_compost_residue_provider",
         "research:ore_concentration",
         "rock_belly_beast",
         "sale",
@@ -8309,10 +8796,10 @@
       "stage": "intermediate",
       "standard_cost": {
         "denominator": 200,
-        "numerator": 2169
+        "numerator": 1899
       },
       "supply_allowed": true,
-      "supply_value": 11,
+      "supply_value": 10,
       "tags": [
         "food",
         "animal_product"
@@ -8338,8 +8825,8 @@
       ],
       "stage": "primary",
       "standard_cost": {
-        "denominator": 200,
-        "numerator": 241
+        "denominator": 100,
+        "numerator": 211
       },
       "supply_allowed": false,
       "supply_value": 0,
@@ -8362,6 +8849,7 @@
         "diet:silt_loach:algae_meal",
         "filter_algae_carp",
         "filter_algae_carp_provider",
+        "form_rock_shell_provider",
         "gel_jellyfish",
         "gel_jellyfish_provider",
         "gravel_shell_snail",
@@ -8373,7 +8861,8 @@
         "reef_coral",
         "reef_coral_provider",
         "sale",
-        "silt_loach"
+        "silt_loach",
+        "silt_process_provider"
       ],
       "cost_source": "algae",
       "element": "wood",
@@ -8422,8 +8911,8 @@
       ],
       "stage": "primary",
       "standard_cost": {
-        "denominator": 225,
-        "numerator": 1394
+        "denominator": 200,
+        "numerator": 1241
       },
       "supply_allowed": true,
       "supply_value": 7,
@@ -8452,8 +8941,8 @@
       ],
       "stage": "primary",
       "standard_cost": {
-        "denominator": 25,
-        "numerator": 82
+        "denominator": 200,
+        "numerator": 657
       },
       "supply_allowed": false,
       "supply_value": 0,
@@ -8854,6 +9343,7 @@
         "compost_oil_cake",
         "diet:compost_mouse:mouse_compost_residue",
         "mouse_compost_residue",
+        "mouse_compost_residue_provider",
         "sale"
       ],
       "cost_source": "press_oilseed",
@@ -8949,7 +9439,6 @@
         "diet:rock_belly_beast:land_meal",
         "diet:steel_sheep:land_meal",
         "mineral_scale_lizard",
-        "research:field_maintenance",
         "rock_belly_beast",
         "sale",
         "steel_sheep"
@@ -8982,11 +9471,9 @@
       "buy_price": 0,
       "consumers": [
         "diet:filter_algae_carp:water_meal",
-        "diet:oilfin_fish:oilfin_oil_round",
         "diet:oilfin_fish:water_meal",
         "filter_algae_carp",
         "oilfin_fish",
-        "oilfin_fish_provider",
         "sale"
       ],
       "cost_source": "blend_water_feed",
@@ -9066,8 +9553,8 @@
       ],
       "stage": "intermediate",
       "standard_cost": {
-        "denominator": 480,
-        "numerator": 9347
+        "denominator": 1920,
+        "numerator": 22723
       },
       "supply_allowed": false,
       "supply_value": 0,
@@ -9101,8 +9588,8 @@
       ],
       "stage": "intermediate",
       "standard_cost": {
-        "denominator": 80,
-        "numerator": 1171
+        "denominator": 320,
+        "numerator": 1751
       },
       "supply_allowed": false,
       "supply_value": 0,
@@ -9154,8 +9641,10 @@
         "compost_sludge",
         "diet:compost_mouse:mouse_compost_residue",
         "mouse_compost_residue",
+        "mouse_compost_residue_provider",
         "research:water_recirculation",
-        "silt_process"
+        "silt_process",
+        "silt_process_provider"
       ],
       "cost_source": "bio_purify",
       "element": "earth",
@@ -9206,8 +9695,8 @@
       ],
       "stage": "intermediate",
       "standard_cost": {
-        "denominator": 800,
-        "numerator": 6321
+        "denominator": 640,
+        "numerator": 3297
       },
       "supply_allowed": false,
       "supply_value": 0,
@@ -9240,8 +9729,8 @@
       ],
       "stage": "intermediate",
       "standard_cost": {
-        "denominator": 1200,
-        "numerator": 8621
+        "denominator": 960,
+        "numerator": 5137
       },
       "supply_allowed": false,
       "supply_value": 0,
@@ -9275,8 +9764,8 @@
       ],
       "stage": "primary",
       "standard_cost": {
-        "denominator": 48,
-        "numerator": 545
+        "denominator": 960,
+        "numerator": 2101
       },
       "supply_allowed": false,
       "supply_value": 0,
@@ -9296,6 +9785,7 @@
         "diet:pearl_mussel:pearl_spirit_round",
         "diet:reef_coral:coral_mineral_round",
         "form_rock_shell",
+        "form_rock_shell_provider",
         "gravel_shell_snail",
         "pearl_mussel",
         "pearl_mussel_provider",
@@ -9322,8 +9812,8 @@
       ],
       "stage": "primary",
       "standard_cost": {
-        "denominator": 96,
-        "numerator": 545
+        "denominator": 1920,
+        "numerator": 2101
       },
       "supply_allowed": false,
       "supply_value": 0,
@@ -9357,8 +9847,8 @@
       ],
       "stage": "intermediate",
       "standard_cost": {
-        "denominator": 96,
-        "numerator": 919
+        "denominator": 384,
+        "numerator": 743
       },
       "supply_allowed": false,
       "supply_value": 0,
@@ -9388,8 +9878,8 @@
       ],
       "stage": "intermediate",
       "standard_cost": {
-        "denominator": 3200,
-        "numerator": 140657
+        "denominator": 38400,
+        "numerator": 344603
       },
       "supply_allowed": false,
       "supply_value": 0,
@@ -9417,8 +9907,8 @@
       ],
       "stage": "intermediate",
       "standard_cost": {
-        "denominator": 1600,
-        "numerator": 7403
+        "denominator": 19200,
+        "numerator": 18137
       },
       "supply_allowed": false,
       "supply_value": 0,
@@ -9446,8 +9936,8 @@
       ],
       "stage": "intermediate",
       "standard_cost": {
-        "denominator": 192000,
-        "numerator": 494611
+        "denominator": 256000,
+        "numerator": 211721
       },
       "supply_allowed": false,
       "supply_value": 0,
@@ -9481,8 +9971,8 @@
       ],
       "stage": "intermediate",
       "standard_cost": {
-        "denominator": 960,
-        "numerator": 19001
+        "denominator": 3840,
+        "numerator": 32009
       },
       "supply_allowed": false,
       "supply_value": 0,
@@ -9510,8 +10000,8 @@
       ],
       "stage": "intermediate",
       "standard_cost": {
-        "denominator": 384000,
-        "numerator": 3048971
+        "denominator": 512000,
+        "numerator": 1501681
       },
       "supply_allowed": false,
       "supply_value": 0,
@@ -9568,8 +10058,8 @@
       ],
       "stage": "intermediate",
       "standard_cost": {
-        "denominator": 1440000,
-        "numerator": 17651287
+        "denominator": 480000,
+        "numerator": 5886029
       },
       "supply_allowed": true,
       "supply_value": 13,
@@ -9597,11 +10087,11 @@
       ],
       "stage": "intermediate",
       "standard_cost": {
-        "denominator": 2400,
-        "numerator": 19477
+        "denominator": 9600,
+        "numerator": 69109
       },
       "supply_allowed": true,
-      "supply_value": 9,
+      "supply_value": 8,
       "tags": [
         "food"
       ]
@@ -9864,11 +10354,11 @@
       ],
       "stage": "intermediate",
       "standard_cost": {
-        "denominator": 100,
-        "numerator": 823
+        "denominator": 400,
+        "numerator": 1523
       },
       "supply_allowed": true,
-      "supply_value": 9,
+      "supply_value": 4,
       "tags": [
         "food",
         "animal_product"
@@ -9898,11 +10388,11 @@
       ],
       "stage": "intermediate",
       "standard_cost": {
-        "denominator": 80,
-        "numerator": 1201
+        "denominator": 160,
+        "numerator": 853
       },
       "supply_allowed": true,
-      "supply_value": 16,
+      "supply_value": 6,
       "tags": [
         "food",
         "animal_product"
@@ -9928,15 +10418,16 @@
       "sell_price": 2,
       "sources": [
         "dew_shell_snail_provider",
-        "form_rock_shell"
+        "form_rock_shell",
+        "form_rock_shell_provider"
       ],
       "stage": "intermediate",
       "standard_cost": {
-        "denominator": 120,
-        "numerator": 1201
+        "denominator": 240,
+        "numerator": 853
       },
       "supply_allowed": true,
-      "supply_value": 11,
+      "supply_value": 4,
       "tags": [
         "food",
         "animal_product"
@@ -9963,11 +10454,11 @@
       ],
       "stage": "intermediate",
       "standard_cost": {
-        "denominator": 640,
-        "numerator": 25963
+        "denominator": 10240,
+        "numerator": 75299
       },
       "supply_allowed": true,
-      "supply_value": 41,
+      "supply_value": 8,
       "tags": [
         "food",
         "animal_product"
@@ -9993,8 +10484,8 @@
       ],
       "stage": "intermediate",
       "standard_cost": {
-        "denominator": 960,
-        "numerator": 25963
+        "denominator": 7680,
+        "numerator": 75299
       },
       "supply_allowed": false,
       "supply_value": 0,
@@ -10020,15 +10511,16 @@
       ],
       "sell_price": 3,
       "sources": [
-        "form_rock_shell"
+        "form_rock_shell",
+        "form_rock_shell_provider"
       ],
       "stage": "intermediate",
       "standard_cost": {
-        "denominator": 1280,
-        "numerator": 9711
+        "denominator": 5120,
+        "numerator": 13823
       },
       "supply_allowed": true,
-      "supply_value": 8,
+      "supply_value": 3,
       "tags": [
         "food",
         "animal_product"
@@ -10055,8 +10547,8 @@
       ],
       "stage": "intermediate",
       "standard_cost": {
-        "denominator": 320,
-        "numerator": 6583
+        "denominator": 1920,
+        "numerator": 8071
       },
       "supply_allowed": false,
       "supply_value": 0,
@@ -10114,8 +10606,8 @@
       ],
       "stage": "intermediate",
       "standard_cost": {
-        "denominator": 60,
-        "numerator": 779
+        "denominator": 24,
+        "numerator": 73
       },
       "supply_allowed": false,
       "supply_value": 0,
@@ -10145,8 +10637,8 @@
       ],
       "stage": "intermediate",
       "standard_cost": {
-        "denominator": 320,
-        "numerator": 9733
+        "denominator": 1280,
+        "numerator": 7797
       },
       "supply_allowed": false,
       "supply_value": 0,
@@ -10161,7 +10653,8 @@
         "mill_duckweed",
         "sale",
         "silt_loach",
-        "silt_process"
+        "silt_process",
+        "silt_process_provider"
       ],
       "cost_source": "duckweed",
       "element": "water",
@@ -10294,8 +10787,8 @@
       ],
       "stage": "intermediate",
       "standard_cost": {
-        "denominator": 675,
-        "numerator": 3463
+        "denominator": 300,
+        "numerator": 1541
       },
       "supply_allowed": false,
       "supply_value": 0,
@@ -10322,8 +10815,8 @@
       ],
       "stage": "intermediate",
       "standard_cost": {
-        "denominator": 96,
-        "numerator": 523
+        "denominator": 80,
+        "numerator": 237
       },
       "supply_allowed": false,
       "supply_value": 0,

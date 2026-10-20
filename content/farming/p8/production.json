@@ -1599,16 +1599,16 @@
         "id": "steel_sheep"
       },
       "inputs": {
-        "fodder_grass": 12,
-        "clean_water": 12,
+        "fodder_grass": 24,
+        "clean_water": 24,
         "iron_ore": 4
       },
-      "ap": 4,
+      "ap": 1,
       "days": 3,
       "cash": 0,
       "outputs": {
         "steel_wool": {
-          "quantity": 4,
+          "quantity": 8,
           "share": 0.9
         },
         "sheep_manure": {
@@ -1985,13 +1985,13 @@
         "id": "break_stone_provider"
       },
       "inputs": {
-        "mushroom": 16,
-        "clean_water": 16,
+        "mushroom": 4,
+        "clean_water": 4,
         "raw_stone": 8
       },
-      "ap": 6,
-      "days": 4,
-      "cash": 32,
+      "ap": 1,
+      "days": 1,
+      "cash": 0,
       "outputs": {
         "gravel": {
           "quantity": 8,
@@ -2010,13 +2010,13 @@
         "id": "break_ore_provider"
       },
       "inputs": {
-        "mushroom": 16,
-        "clean_water": 16,
+        "mushroom": 4,
+        "clean_water": 4,
         "iron_ore": 8
       },
-      "ap": 6,
-      "days": 4,
-      "cash": 32,
+      "ap": 1,
+      "days": 1,
+      "cash": 0,
       "outputs": {
         "crushed_ore": {
           "quantity": 12,
@@ -2031,13 +2031,13 @@
         "id": "concentrate_ore_provider"
       },
       "inputs": {
-        "fodder_grass": 24,
-        "clean_water": 24,
+        "fodder_grass": 8,
+        "clean_water": 8,
         "crushed_ore": 24
       },
-      "ap": 8,
-      "days": 6,
-      "cash": 48,
+      "ap": 1,
+      "days": 2,
+      "cash": 0,
       "outputs": {
         "ore_concentrate": {
           "quantity": 8,
@@ -2292,12 +2292,12 @@
         "id": "leaf_silkworm_provider"
       },
       "inputs": {
-        "mulberry_leaf": 36,
-        "clean_water": 28
+        "mulberry_leaf": 24,
+        "clean_water": 16
       },
-      "ap": 7,
-      "days": 5,
-      "cash": 32,
+      "ap": 1,
+      "days": 2,
+      "cash": 0,
       "outputs": {
         "silk": {
           "quantity": 16,
@@ -2312,12 +2312,12 @@
         "id": "dew_shell_snail_provider"
       },
       "inputs": {
-        "fodder_grass": 32,
-        "clean_water": 40
+        "fodder_grass": 16,
+        "clean_water": 24
       },
-      "ap": 8,
-      "days": 6,
-      "cash": 40,
+      "ap": 1,
+      "days": 2,
+      "cash": 0,
       "outputs": {
         "spirit_liquid": {
           "quantity": 8,
@@ -2336,16 +2336,16 @@
         "id": "mineral_scale_lizard_provider"
       },
       "inputs": {
-        "fodder_grass": 56,
-        "clean_water": 56,
-        "mineral_feed": 8
+        "fodder_grass": 32,
+        "clean_water": 32,
+        "mineral_feed": 4
       },
-      "ap": 12,
-      "days": 10,
-      "cash": 72,
+      "ap": 1,
+      "days": 4,
+      "cash": 0,
       "outputs": {
         "mineral_scale": {
-          "quantity": 8,
+          "quantity": 16,
           "share": 0.75
         },
         "shed_skin": {
@@ -2383,23 +2383,24 @@
     {
       "id": "form_rock_shell",
       "basis": {
-        "kind": "recipe",
-        "id": "form_rock_shell"
+        "kind": "animal",
+        "id": "form_rock_shell_provider"
       },
       "inputs": {
-        "stone_powder": 3,
-        "clean_water": 1
+        "algae_feed": 8,
+        "clean_water": 12,
+        "stone_powder": 12
       },
-      "ap": 2,
-      "days": 1,
+      "ap": 1,
+      "days": 2,
       "cash": 0,
       "outputs": {
         "rock_shell": {
-          "quantity": 2,
+          "quantity": 8,
           "share": 0.75
         },
         "mucus": {
-          "quantity": 1,
+          "quantity": 4,
           "share": 0.25
         }
       }
@@ -2411,11 +2412,11 @@
         "id": "filter_algae_carp_provider"
       },
       "inputs": {
-        "algae_feed": 32,
+        "algae_feed": 36,
         "grain": 4
       },
-      "ap": 8,
-      "days": 6,
+      "ap": 2,
+      "days": 7,
       "cash": 20,
       "outputs": {
         "fish_meat": {
@@ -2454,15 +2455,15 @@
         "id": "oilfin_fish_provider"
       },
       "inputs": {
-        "algae_feed": 44,
-        "water_feed": 4
+        "algae_feed": 48,
+        "grain": 8
       },
-      "ap": 10,
-      "days": 8,
+      "ap": 2,
+      "days": 9,
       "cash": 40,
       "outputs": {
         "crude_oil": {
-          "quantity": 8,
+          "quantity": 24,
           "share": 0.75
         },
         "fish_meat": {
@@ -2478,15 +2479,15 @@
         "id": "pearl_mussel_provider"
       },
       "inputs": {
-        "algae_feed": 56,
+        "algae_feed": 32,
         "stone_powder": 4
       },
-      "ap": 12,
-      "days": 10,
-      "cash": 48,
+      "ap": 1,
+      "days": 4,
+      "cash": 0,
       "outputs": {
         "pearl": {
-          "quantity": 8,
+          "quantity": 12,
           "share": 1
         }
       }
@@ -2498,12 +2499,12 @@
         "id": "gel_jellyfish_provider"
       },
       "inputs": {
-        "algae_feed": 32,
+        "algae_feed": 16,
         "clean_water": 4
       },
-      "ap": 8,
-      "days": 6,
-      "cash": 48,
+      "ap": 1,
+      "days": 2,
+      "cash": 0,
       "outputs": {
         "water_gel": {
           "quantity": 8,
@@ -2518,13 +2519,13 @@
         "id": "reef_coral_provider"
       },
       "inputs": {
-        "algae_feed": 72,
+        "algae_feed": 24,
         "stone_powder": 12,
         "clean_water": 4
       },
-      "ap": 14,
-      "days": 12,
-      "cash": 56,
+      "ap": 1,
+      "days": 3,
+      "cash": 0,
       "outputs": {
         "coral_stone": {
           "quantity": 8,
@@ -4746,7 +4747,7 @@
       ],
       "default_special_diet": "iron_supplement",
       "outputs": {
-        "steel_wool": 1,
+        "steel_wool": 2,
         "sheep_manure": 1
       },
       "claim_removes": false
@@ -5138,13 +5139,13 @@
           "id": "scale_round",
           "name": "养鳞轮",
           "inputs": {
-            "mineral_feed": 2
+            "mineral_feed": 1
           }
         }
       ],
       "default_special_diet": "scale_round",
       "outputs": {
-        "mineral_scale": 2,
+        "mineral_scale": 4,
         "shed_skin": 1
       },
       "claim_removes": false,
@@ -5271,17 +5272,17 @@
           "id": "oilfin_oil_round",
           "name": "取油轮投料",
           "inputs": {
-            "water_feed": 1
+            "grain": 2
           },
           "outputs": {
-            "crude_oil": 2,
+            "crude_oil": 6,
             "fish_meat": 1
           }
         }
       ],
       "default_special_diet": "oilfin_oil_round",
       "outputs": {
-        "crude_oil": 2,
+        "crude_oil": 6,
         "fish_meat": 1
       },
       "claim_removes": true,
@@ -5313,7 +5314,7 @@
             "stone_powder": 1
           },
           "outputs": {
-            "pearl": 2
+            "pearl": 3
           }
         },
         {
@@ -5328,7 +5329,7 @@
       ],
       "default_special_diet": "pearl_powder_round",
       "outputs": {
-        "pearl": 2
+        "pearl": 3
       },
       "claim_removes": false,
       "research": "water_recirculation"
@@ -5427,7 +5428,7 @@
       "unit": "群",
       "juvenile_price": 14,
       "growth_days": 6,
-      "cycle_days": 6,
+      "cycle_days": 3,
       "base_diets": [
         {
           "id": "algae_meal",
@@ -5743,18 +5744,17 @@
     {
       "id": "field_maintenance",
       "name": "田间自动维护",
-      "layer": 3,
+      "layer": 1,
       "prerequisites": [
-        "advanced_feed_oil_wax",
-        "water_recirculation"
+        "farm_preparation"
       ],
       "samples": {
         "humus": 2,
         "clean_water": 4,
-        "land_feed": 1
+        "grain": 1
       },
-      "fee": 12,
-      "days": 6,
+      "fee": 8,
+      "days": 2,
       "unlocks": {
         "purchases": [],
         "crops": [],
@@ -6002,7 +6002,8 @@
             1,
             1
           ]
-        }
+        },
+        "market_price": 32
       },
       {
         "id": "bright_gu",
@@ -6025,7 +6026,8 @@
         "scope": "AREA",
         "effect": "light",
         "range": 2,
-        "value": 80
+        "value": 80,
+        "market_price": 24
       },
       {
         "id": "growth_gu",
@@ -6049,7 +6051,8 @@
         "scope": "DIRECTED_AREA",
         "effect": "growth_speed",
         "range": 3,
-        "value": 150
+        "value": 150,
+        "market_price": 24
       },
       {
         "id": "water_gu",
@@ -6073,7 +6076,8 @@
         "scope": "DIRECTED_AREA",
         "effect": "water_saving",
         "range": 3,
-        "value": 50
+        "value": 50,
+        "market_price": 24
       },
       {
         "id": "fert_gu",
@@ -6097,7 +6101,8 @@
         "scope": "DIRECTED_AREA",
         "effect": "fertility_saving",
         "range": 3,
-        "value": 50
+        "value": 50,
+        "market_price": 24
       },
       {
         "id": "wisdom_gu",
@@ -6121,7 +6126,8 @@
         "scope": "HOST",
         "effect": "research_flat",
         "range": 0,
-        "value": 1
+        "value": 1,
+        "market_price": 32
       },
       {
         "id": "time_gu",
@@ -6148,7 +6154,8 @@
         "effect": "research_speed",
         "range": 0,
         "value": 200,
-        "material_percent": 150
+        "material_percent": 150,
+        "market_price": 48
       },
       {
         "id": "soothe_gu",
@@ -6173,7 +6180,8 @@
         "scope": "HOST",
         "effect": "breed_speed",
         "range": 0,
-        "value": 150
+        "value": 150,
+        "market_price": 32
       },
       {
         "id": "command_gu",
@@ -6198,7 +6206,8 @@
         "scope": "HOST",
         "effect": "work_speed",
         "range": 0,
-        "value": 150
+        "value": 150,
+        "market_price": 32
       },
       {
         "id": "product_yield_gu",
@@ -6324,7 +6333,7 @@
           "station": "wool_station",
           "units": 1800,
           "outputs": {
-            "steel_wool": 1,
+            "steel_wool": 2,
             "sheep_manure": 1
           },
           "default_diet": "iron_supplement",
@@ -6389,7 +6398,7 @@
           "station": "scale_station",
           "units": 2400,
           "outputs": {
-            "mineral_scale": 2,
+            "mineral_scale": 4,
             "shed_skin": 1
           },
           "default_diet": "scale_round",
@@ -6437,7 +6446,7 @@
           "units": 1800,
           "capture": true,
           "outputs": {
-            "crude_oil": 2,
+            "crude_oil": 6,
             "fish_meat": 1
           },
           "default_diet": "oilfin_oil_round",
@@ -6456,13 +6465,13 @@
           "capture": false,
           "shell": true,
           "outputs": {
-            "pearl": 2
+            "pearl": 3
           },
           "default_diet": "pearl_powder_round",
           "variants": {
             "pearl_spirit_round": {
               "outputs": {
-                "pearl": 3
+                "pearl": 4
               }
             }
           },
@@ -6509,7 +6518,7 @@
         "breed_units": 10800,
         "natural": {
           "station": "coral_station",
-          "units": 3600,
+          "units": 1800,
           "capture": false,
           "outputs": {
             "coral_stone": 2
@@ -6897,5 +6906,341 @@
       "crop_station": "aquatic_crop_station"
     },
     "station_change_cells": 8
+  },
+  "p107": {
+    "version": 1,
+    "stage_names": [
+      "起步",
+      "建立基础",
+      "规模增长",
+      "体系增长"
+    ],
+    "events": [
+      {
+        "id": "first_workshop",
+        "name": "初建产业",
+        "orders": 3,
+        "inputs": {}
+      },
+      {
+        "id": "gu_partnership",
+        "name": "后勤合作",
+        "orders": 12,
+        "inputs": {}
+      },
+      {
+        "id": "integrated_estate",
+        "name": "产业进阶",
+        "orders": 0,
+        "inputs": {
+          "composite_stone_panel": 12,
+          "refined_oil": 6,
+          "water_retaining_matrix": 8
+        }
+      }
+    ],
+    "gates": {
+      "research": {
+        "flower_cultivation": 0,
+        "beekeeping": 1,
+        "farm_preparation": 0,
+        "biofiltration": 1,
+        "rock_handling": 1,
+        "advanced_feed_oil_wax": 1,
+        "ore_concentration": 1,
+        "water_recirculation": 1,
+        "basic_spirit_cooking": 2,
+        "field_maintenance": 1,
+        "mineral_materials": 2,
+        "composite_spirit_food": 3,
+        "aquatic_intensive_care": 2
+      },
+      "facility": {
+        "aquatic_crop_station": 1,
+        "carbonization_nest": 1,
+        "care_table": 1,
+        "carp_harvest_station": 1,
+        "compost_mouse_den": 1,
+        "coral_station": 1,
+        "dispatch_station": 1,
+        "feed_trough": 1,
+        "gel_station": 1,
+        "large_bed": 1,
+        "medium_bed": 1,
+        "oilfish_harvest_station": 1,
+        "ore_sorting_yard": 1,
+        "pearl_station": 1,
+        "pen": 1,
+        "rock_breaking_yard": 1,
+        "scale_station": 1,
+        "shell_forming_station": 1,
+        "silkworm_rack": 1,
+        "silt_processing_station": 1,
+        "small_bed": 1,
+        "spirit_liquid_collector": 1,
+        "toy_station": 1,
+        "water_change_station": 1,
+        "wool_station": 1,
+        "field_service_station": 1,
+        "soothing_station": 2,
+        "growth_lamp": 2,
+        "bee_hive": 1,
+        "purifying_bed": 1
+      },
+      "gu": {
+        "rice_bag_gu": 2,
+        "bright_gu": 2,
+        "growth_gu": 2,
+        "water_gu": 2,
+        "fert_gu": 2,
+        "wisdom_gu": 2,
+        "time_gu": 2,
+        "soothe_gu": 2,
+        "command_gu": 2,
+        "product_yield_gu": 2,
+        "feed_saving_gu": 2
+      },
+      "capability": {
+        "fence": 1,
+        "animals": 1,
+        "systems": 3,
+        "toy": 2,
+        "gu_provision": 2
+      }
+    },
+    "offers": [
+      {
+        "id": "silk_for_resin",
+        "stage": 1,
+        "give": {
+          "silk": 4
+        },
+        "receive": {
+          "resin": 3
+        }
+      },
+      {
+        "id": "spirit_liquid_for_resin",
+        "stage": 1,
+        "give": {
+          "spirit_liquid": 3
+        },
+        "receive": {
+          "resin": 3
+        }
+      },
+      {
+        "id": "water_gel_for_resin",
+        "stage": 2,
+        "give": {
+          "water_gel": 3
+        },
+        "receive": {
+          "resin": 3
+        }
+      },
+      {
+        "id": "pearl_for_resin",
+        "stage": 2,
+        "give": {
+          "pearl": 2
+        },
+        "receive": {
+          "resin": 4
+        }
+      },
+      {
+        "id": "coral_stone_for_resin",
+        "stage": 2,
+        "give": {
+          "coral_stone": 2
+        },
+        "receive": {
+          "resin": 3
+        }
+      },
+      {
+        "id": "honey_for_resin",
+        "stage": 1,
+        "give": {
+          "honey": 4
+        },
+        "receive": {
+          "resin": 3
+        }
+      },
+      {
+        "id": "crude_oil_for_resin",
+        "stage": 1,
+        "give": {
+          "crude_oil": 3
+        },
+        "receive": {
+          "resin": 2
+        }
+      },
+      {
+        "id": "resin_for_flower_samples",
+        "stage": 1,
+        "give": {
+          "resin": 2
+        },
+        "receive": {
+          "nectar": 2,
+          "pollen": 1
+        }
+      },
+      {
+        "id": "resin_for_beeswax",
+        "stage": 1,
+        "give": {
+          "resin": 4
+        },
+        "receive": {
+          "beeswax": 2
+        }
+      },
+      {
+        "id": "resin_for_sludge",
+        "stage": 1,
+        "give": {
+          "resin": 2
+        },
+        "receive": {
+          "sludge": 2
+        }
+      },
+      {
+        "id": "resin_for_stone_parts",
+        "stage": 1,
+        "give": {
+          "resin": 4
+        },
+        "receive": {
+          "gravel": 3,
+          "stone_powder": 1
+        }
+      },
+      {
+        "id": "resin_for_crushed_ore",
+        "stage": 1,
+        "give": {
+          "resin": 4
+        },
+        "receive": {
+          "crushed_ore": 4
+        }
+      },
+      {
+        "id": "resin_for_fish_meat",
+        "stage": 1,
+        "give": {
+          "resin": 4
+        },
+        "receive": {
+          "fish_meat": 3
+        }
+      },
+      {
+        "id": "resin_for_honey",
+        "stage": 1,
+        "give": {
+          "resin": 4
+        },
+        "receive": {
+          "honey": 2
+        }
+      },
+      {
+        "id": "resin_for_ore_concentrate",
+        "stage": 2,
+        "give": {
+          "resin": 6
+        },
+        "receive": {
+          "ore_concentrate": 2
+        }
+      },
+      {
+        "id": "resin_for_panels",
+        "stage": 2,
+        "give": {
+          "resin": 8
+        },
+        "receive": {
+          "composite_stone_panel": 4
+        }
+      },
+      {
+        "id": "resin_for_refined_oil",
+        "stage": 2,
+        "give": {
+          "resin": 6
+        },
+        "receive": {
+          "refined_oil": 3
+        }
+      },
+      {
+        "id": "resin_for_water_gel",
+        "stage": 2,
+        "give": {
+          "resin": 8
+        },
+        "receive": {
+          "water_gel": 4
+        }
+      },
+      {
+        "id": "resin_for_pearl",
+        "stage": 2,
+        "give": {
+          "resin": 8
+        },
+        "receive": {
+          "pearl": 2
+        }
+      },
+      {
+        "id": "resin_for_matrix",
+        "stage": 2,
+        "give": {
+          "resin": 8
+        },
+        "receive": {
+          "water_retaining_matrix": 4
+        }
+      },
+      {
+        "id": "resin_for_dense_algae",
+        "stage": 2,
+        "give": {
+          "resin": 4
+        },
+        "receive": {
+          "dense_algae": 3
+        }
+      },
+      {
+        "id": "mineral_scale_for_resin",
+        "stage": 2,
+        "give": {
+          "mineral_scale": 2
+        },
+        "receive": {
+          "resin": 4
+        }
+      },
+      {
+        "id": "resin_for_mineral_scale",
+        "stage": 2,
+        "give": {
+          "resin": 8
+        },
+        "receive": {
+          "mineral_scale": 2
+        }
+      }
+    ]
   }
 }

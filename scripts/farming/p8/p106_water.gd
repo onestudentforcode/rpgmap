@@ -125,6 +125,8 @@ func _fence_blockers(cells: Array, target_body: int) -> String:
 	return ""
 
 func quote_fence(cells: Array, target_body := 0) -> Dictionary:
+	var stage_block: String = world.progress.block("capability", "fence")
+	if not stage_block.is_empty(): return _error(stage_block)
 	var blocked: String = _fence_blockers(cells, target_body)
 	if not blocked.is_empty():
 		return _error(blocked)

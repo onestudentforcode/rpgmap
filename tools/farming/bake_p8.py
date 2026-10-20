@@ -282,7 +282,54 @@ def providers(source):
         result['rice_gu_provider'] = dict(independent=True, facility='', inputs=dict(inputs),
             outputs=production['outputs'], days=production['days'], start_ap=irrigations, claim_ap=1,
             cash=row['fee'] * production['days'])
+    if 'p107' in source:
+        _runtime_rounds(source, result)
     return result
+
+
+def _runtime_rounds(source, result):
+    """Canonical P10.7 rounds: retained stock is steady-state, captures repay
+    juveniles every round, real ranch meals replace old habitat assumptions.
+    Buildings, establishment, room services and water-body upkeep are reported
+    separately by the economic comparison, not silently charged every round.
+    """
+    animals = {a['id']: a for a in source['livestock']}
+    cfg = source['p103']
+    for sid, species in cfg['species'].items():
+        natural = species.get('natural')
+        if not natural:
+            continue
+        animal = animals[sid]
+        capture = bool(natural.get('capture', False))
+        growth_days = math.ceil(species['growth_units'] / 600) if capture else 0
+        days = math.ceil(natural['units'] / 600)
+        base = next(d for d in animal['base_diets'] if d['id'] == animal['default_base_diet'])
+        special = next(d for d in animal['special_diets'] if d['id'] == natural['default_diet'])
+        mode = 'water_production' if species.get('medium') == 'water' else 'intensive'
+        meals = cfg['meals'].get(mode, cfg['meals']['intensive'])
+        # A new adult waits one maintenance day until its submitted purpose
+        # applies. Captures repeat this day and the assignment AP every round.
+        transfer_days = 1 if capture else 0
+        inputs = Counter({i: n * POPULATION * (growth_days + transfer_days + days * meals) for i, n in base['inputs'].items()})
+        inputs.update({i: n * POPULATION for i, n in special['inputs'].items()})
+        key = sid if sid == 'steel_sheep' else sid + '_provider'
+        result[key] = dict(facility=natural['station'], inputs=dict(inputs), outputs=_scaled(natural['outputs'], POPULATION),
+                           days=growth_days + transfer_days + days,
+                           start_ap=int(cfg['ap']['submit']) if capture else 0, claim_ap=1,
+                           cash=POPULATION * animal['juvenile_price'] if capture else 0)
+    for rid, work in cfg['work']['recipes'].items():
+        sid = work['species']
+        animal = animals[sid]
+        species = cfg['species'][sid]
+        recipe = next(r for r in source['recipes'] if r['id'] == rid)
+        water = species.get('medium') == 'water'
+        days = math.ceil(work['target'] / (600 if water else cfg['work']['points_per_unit'] * 4))
+        diet = next(d for d in animal['base_diets'] if d['id'] == animal['default_base_diet'])
+        meals = cfg['meals'].get('water_loach', 2) if water else cfg['meals']['work']
+        inputs = Counter({i: n * POPULATION * days * meals for i, n in diet['inputs'].items()})
+        inputs.update({i: n * POPULATION for i, n in recipe['inputs'].items()})
+        result[rid + '_provider'] = dict(facility=recipe['facility'], inputs=dict(inputs),
+            outputs=_scaled(recipe['outputs'], POPULATION), days=days, start_ap=0, claim_ap=1, cash=0)
 
 
 def _scaled(outputs, population):
@@ -388,8 +435,11 @@ def audit_research(source, compiled, provider_rows):
         layers[row['layer']].append(ident)
         total_fee += row['fee']
         total_days += row['days']
-    require((len(layers[1]), len(layers[2]), len(layers[3])) == (5, 5, 3), 'layer population 5/5/3')
-    require(total_fee == 104 and total_days == 48, 'research totals 104 stones / 48 days')
+    if 'p107' not in source:
+        require((len(layers[1]), len(layers[2]), len(layers[3])) == (5, 5, 3), 'layer population 5/5/3')
+        require(total_fee == 104 and total_days == 48, 'research totals 104 stones / 48 days')
+    # P10.7 brings basic field maintenance forward. The DAG, positive costs,
+    # samples and stage ordering still validate; historic totals are not rules.
     order = _topological(research)
     # Cross-check the unlock registry against the research gates on the definitions.
     crops = common.registry(source['crops'], 'crops')
@@ -567,6 +617,9 @@ def audit_layout(source):
 
 def compile_config(source, map_data=None):
     try:
+        if 'p107' in source:
+            from validate_p107 import validate as validate_p107
+            progress_audit = validate_p107(source)
         if 'p104' in source:
             from validate_p104 import validate as validate_p104
             validate_p104(source)
@@ -577,6 +630,8 @@ def compile_config(source, map_data=None):
             validate(source)
         provider_rows = providers(source)
         out = common.compile_config(source, PRODUCT, provider_rows, map_data, extra_consumers(source))
+        if 'p107' in source:
+            out['p107_audit'] = progress_audit
         items = {i['id']: i for i in out['resources']}
         for a in out['livestock']:
             for diet in a['base_diets'] + a['special_diets']:

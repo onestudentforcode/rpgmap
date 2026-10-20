@@ -20,7 +20,8 @@ const Rooms := preload("res://scripts/farming/p8/p102_rooms.gd")
 const Ranch := preload("res://scripts/farming/p8/p103_ranch.gd")
 const Services := preload("res://scripts/farming/p8/p104_services.gd")
 const Water := preload("res://scripts/farming/p8/p106_water.gd")
-const SCHEMA := 24
+const Economy := preload("res://scripts/farming/p8/p107_economy.gd")
+const SCHEMA := 25
 
 static func fresh() -> Dictionary:
 	var snapshot: Dictionary = Common.fresh(Data, SCHEMA)
@@ -46,6 +47,7 @@ static func fresh() -> Dictionary:
 	snapshot["world"]["services"] = Services.fresh()
 	snapshot["world"]["services"]["random_seed"] = snapshot["world"]["rooms"]["random_seed"]
 	snapshot["world"]["water"] = Water.fresh()
+	snapshot["world"]["economy_progress"] = Economy.fresh()
 	var workers := []
 	for worker in snapshot["workforce"]["workers"]:
 		worker["farm_duty"] = {"enabled": false, "priority": "normal"}
@@ -79,6 +81,7 @@ static func normalize(value) -> Dictionary:
 	var raw_ranch = world_section.get("ranch",null) if world_section is Dictionary else null
 	var raw_services = world_section.get("services",null) if world_section is Dictionary else null
 	var raw_water = world_section.get("water",null) if world_section is Dictionary else null
+	var raw_economy = world_section.get("economy_progress", null)
 	if body.has("ledger"):
 		body.erase("ledger")
 	if body.has("reports"):
@@ -93,6 +96,7 @@ static func normalize(value) -> Dictionary:
 		world_section.erase("ranch")
 		world_section.erase("services")
 		world_section.erase("water")
+		world_section.erase("economy_progress")
 		if world_section.has("husbandry"):
 			world_section.erase("husbandry")
 		if world_section.has("p8"):
@@ -192,6 +196,12 @@ static func normalize(value) -> Dictionary:
 	var services := Services.normalize(raw_services,checked["snapshot"],Data)
 	if not services["ok"]: return services
 	checked["snapshot"]["world"]["services"] = services["services"]
+	for facility in checked["snapshot"]["world"]["facilities"]:
+		if Data.load_data()["p103"]["work"]["recipes"].has(String(facility.get("batch", {}).get("recipe_id", ""))):
+			return fail("生物工艺不能保存在通用加工批次中")
+	var economy := Economy.normalize(raw_economy, checked["snapshot"], Data)
+	if not economy["ok"]: return economy
+	checked["snapshot"]["world"]["economy_progress"] = economy["economy"]
 	# A locked research plan must still point at its one original host instance.
 	for project in research["research"]["projects"]:
 		var id := String(project["gu"]["instance_id"])
