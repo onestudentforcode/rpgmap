@@ -302,7 +302,7 @@ func _roster_cards() -> void:
 			shell._label(card, "繁殖轮次%d：%.2f/%.2f照料单位%s（需开日疲劳0）" % [int(row["breed"]["round"]), float(row["breed"]["units"])/100.0, float(config["breed_units"])/100.0, "，待安置" if bool(row["breed"]["pending"]) else ""])
 		_diet_button(card, row)
 		if String(row["stage"]) == "adult":
-			var medium := ranch().species_medium(String(row["species_id"]))
+			var medium: String = ranch().species_medium(String(row["species_id"]))
 			var breed_mode := "water_enclosure" if medium == "water" else "enclosure"
 			var production_mode := "water_production" if medium == "water" else "intensive"
 			if String(row["mode"]) != breed_mode and ranch().can_breed(String(row["species_id"])):
@@ -444,7 +444,7 @@ func cycle_intensive_target(uid: int) -> void:
 	var row: Dictionary = ranch().animal(uid)
 	if row.is_empty():
 		return
-	var medium := ranch().species_medium(String(row["species_id"]))
+	var medium: String = ranch().species_medium(String(row["species_id"]))
 	var production_type := "water_production" if medium == "water" else "intensive"
 	var candidates := [0]
 	for zone_row in ranch().state["zones"]:

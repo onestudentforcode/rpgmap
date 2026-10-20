@@ -70,17 +70,17 @@
   "counts": {
     "crops": 10,
     "diets": 49,
-    "entities": 317,
+    "entities": 318,
     "facilities": 39,
     "livestock": 17,
     "living_mappings": 10,
     "logistics": 11,
     "parcels": 6,
-    "processes": 434,
+    "processes": 460,
     "recipes": 64,
     "research": 13,
     "resources": 84,
-    "rules": 20,
+    "rules": 21,
     "sources": 3
   },
   "display": {
@@ -1342,6 +1342,11 @@
           "key": "substitute",
           "label": "建材替代",
           "text": "普通岩石部分可用复合石板1:1或再生填料2:1整体替代（1份石）"
+        },
+        {
+          "key": "economic_stage",
+          "label": "经济阶段",
+          "text": "阶段≥0（起步）；仍须满足其他前置与运行条件"
         }
       ],
       "icon": "algae_tank",
@@ -1351,7 +1356,8 @@
       "locks": null,
       "name": "藻类培养槽",
       "related_rules": [
-        "rule:build_substitute"
+        "rule:build_substitute",
+        "rule:economy-stages"
       ],
       "source_id": "algae_tank",
       "summary": "加工设施；6元石",
@@ -1384,6 +1390,11 @@
           "key": "substitute",
           "label": "建材替代",
           "text": "普通岩石部分可用复合石板1:1或再生填料2:1整体替代（2份石）"
+        },
+        {
+          "key": "economic_stage",
+          "label": "经济阶段",
+          "text": "阶段≥1（建立基础）；仍须满足其他前置与运行条件"
         }
       ],
       "icon": "build",
@@ -1393,7 +1404,8 @@
       "locks": null,
       "name": "水生种植台",
       "related_rules": [
-        "rule:build_substitute"
+        "rule:build_substitute",
+        "rule:economy-stages"
       ],
       "source_id": "aquatic_crop_station",
       "summary": "加工设施；8元石",
@@ -1431,6 +1443,11 @@
           "key": "species",
           "label": "接纳物种",
           "text": "蜜盏蜂"
+        },
+        {
+          "key": "economic_stage",
+          "label": "经济阶段",
+          "text": "阶段≥1（建立基础）；仍须满足其他前置与运行条件"
         }
       ],
       "icon": "bee_hive",
@@ -1453,7 +1470,9 @@
         "research_name": "蜂群协作"
       },
       "name": "蜂箱",
-      "related_rules": [],
+      "related_rules": [
+        "rule:economy-stages"
+      ],
       "source_id": "bee_hive",
       "summary": "养殖栖息设施；10元石",
       "tags": []
@@ -1500,6 +1519,11 @@
           "key": "substitute",
           "label": "建材替代",
           "text": "普通岩石部分可用复合石板1:1或再生填料2:1整体替代（4份石）"
+        },
+        {
+          "key": "economic_stage",
+          "label": "经济阶段",
+          "text": "阶段≥1（建立基础）；仍须满足其他前置与运行条件"
         }
       ],
       "icon": "carbonization_nest",
@@ -1523,7 +1547,8 @@
       },
       "name": "炭化巢",
       "related_rules": [
-        "rule:build_substitute"
+        "rule:build_substitute",
+        "rule:economy-stages"
       ],
       "source_id": "carbonization_nest",
       "summary": "加工设施；18元石",
@@ -1556,6 +1581,11 @@
           "key": "substitute",
           "label": "建材替代",
           "text": "普通岩石部分可用复合石板1:1或再生填料2:1整体替代（2份石）"
+        },
+        {
+          "key": "economic_stage",
+          "label": "经济阶段",
+          "text": "阶段≥1（建立基础）；仍须满足其他前置与运行条件"
         }
       ],
       "icon": "care_table",
@@ -1565,7 +1595,8 @@
       "locks": null,
       "name": "照料台",
       "related_rules": [
-        "rule:build_substitute"
+        "rule:build_substitute",
+        "rule:economy-stages"
       ],
       "source_id": "care_table",
       "summary": "加工设施；24元石",
@@ -1603,6 +1634,11 @@
           "key": "substitute",
           "label": "建材替代",
           "text": "普通岩石部分可用复合石板1:1或再生填料2:1整体替代（2份石）"
+        },
+        {
+          "key": "economic_stage",
+          "label": "经济阶段",
+          "text": "阶段≥1（建立基础）；仍须满足其他前置与运行条件"
         }
       ],
       "icon": "build",
@@ -1623,7 +1659,8 @@
       "locks": null,
       "name": "捕鲤台",
       "related_rules": [
-        "rule:build_substitute"
+        "rule:build_substitute",
+        "rule:economy-stages"
       ],
       "source_id": "carp_harvest_station",
       "summary": "加工设施；12元石",
@@ -1661,6 +1698,11 @@
           "key": "substitute",
           "label": "建材替代",
           "text": "普通岩石部分可用复合石板1:1或再生填料2:1整体替代（3份石）"
+        },
+        {
+          "key": "economic_stage",
+          "label": "经济阶段",
+          "text": "阶段≥0（起步）；仍须满足其他前置与运行条件"
         }
       ],
       "icon": "char_kiln",
@@ -1670,7 +1712,8 @@
       "locks": null,
       "name": "炭化炉",
       "related_rules": [
-        "rule:build_substitute"
+        "rule:build_substitute",
+        "rule:economy-stages"
       ],
       "source_id": "char_kiln",
       "summary": "加工设施；12元石",
@@ -1708,6 +1751,11 @@
           "key": "substitute",
           "label": "建材替代",
           "text": "普通岩石部分可用复合石板1:1或再生填料2:1整体替代（1份石）"
+        },
+        {
+          "key": "economic_stage",
+          "label": "经济阶段",
+          "text": "阶段≥0（起步）；仍须满足其他前置与运行条件"
         }
       ],
       "icon": "compost_bin",
@@ -1717,7 +1765,8 @@
       "locks": null,
       "name": "堆肥箱",
       "related_rules": [
-        "rule:build_substitute"
+        "rule:build_substitute",
+        "rule:economy-stages"
       ],
       "source_id": "compost_bin",
       "summary": "加工设施；6元石",
@@ -1765,6 +1814,11 @@
           "key": "substitute",
           "label": "建材替代",
           "text": "普通岩石部分可用复合石板1:1或再生填料2:1整体替代（2份石）"
+        },
+        {
+          "key": "economic_stage",
+          "label": "经济阶段",
+          "text": "阶段≥1（建立基础）；仍须满足其他前置与运行条件"
         }
       ],
       "icon": "compost_mouse_den",
@@ -1780,7 +1834,8 @@
       "locks": null,
       "name": "翻肥窝",
       "related_rules": [
-        "rule:build_substitute"
+        "rule:build_substitute",
+        "rule:economy-stages"
       ],
       "source_id": "compost_mouse_den",
       "summary": "加工设施；12元石",
@@ -1818,6 +1873,11 @@
           "key": "substitute",
           "label": "建材替代",
           "text": "普通岩石部分可用复合石板1:1或再生填料2:1整体替代（4份石）"
+        },
+        {
+          "key": "economic_stage",
+          "label": "经济阶段",
+          "text": "阶段≥2（规模增长）；仍须满足其他前置与运行条件"
         }
       ],
       "icon": "build",
@@ -1846,7 +1906,8 @@
       },
       "name": "采礁台",
       "related_rules": [
-        "rule:build_substitute"
+        "rule:build_substitute",
+        "rule:economy-stages"
       ],
       "source_id": "coral_station",
       "summary": "加工设施；20元石",
@@ -1879,6 +1940,11 @@
           "key": "substitute",
           "label": "建材替代",
           "text": "普通岩石部分可用复合石板1:1或再生填料2:1整体替代（2份石）"
+        },
+        {
+          "key": "economic_stage",
+          "label": "经济阶段",
+          "text": "阶段≥1（建立基础）；仍须满足其他前置与运行条件"
         }
       ],
       "icon": "dispatch_station",
@@ -1894,7 +1960,8 @@
       "locks": null,
       "name": "调度站",
       "related_rules": [
-        "rule:build_substitute"
+        "rule:build_substitute",
+        "rule:economy-stages"
       ],
       "source_id": "dispatch_station",
       "summary": "加工设施；18元石",
@@ -1932,6 +1999,11 @@
           "key": "substitute",
           "label": "建材替代",
           "text": "普通岩石部分可用复合石板1:1或再生填料2:1整体替代（2份石）"
+        },
+        {
+          "key": "economic_stage",
+          "label": "经济阶段",
+          "text": "阶段≥0（起步）；仍须满足其他前置与运行条件"
         }
       ],
       "icon": "farm_processor",
@@ -1950,7 +2022,8 @@
       },
       "name": "农产加工台",
       "related_rules": [
-        "rule:build_substitute"
+        "rule:build_substitute",
+        "rule:economy-stages"
       ],
       "source_id": "farm_processor",
       "summary": "加工设施；12元石",
@@ -1978,6 +2051,11 @@
           "key": "demolish",
           "label": "拆除",
           "text": "1AP；需设施空闲；不返还材料与元石"
+        },
+        {
+          "key": "economic_stage",
+          "label": "经济阶段",
+          "text": "阶段≥1（建立基础）；仍须满足其他前置与运行条件"
         }
       ],
       "icon": "feed_trough",
@@ -1992,7 +2070,9 @@
       ],
       "locks": null,
       "name": "供食槽",
-      "related_rules": [],
+      "related_rules": [
+        "rule:economy-stages"
+      ],
       "source_id": "feed_trough",
       "summary": "加工设施；6元石",
       "tags": []
@@ -2024,6 +2104,11 @@
           "key": "strategy",
           "label": "持续生产策略",
           "text": "不适用（装置不使用持续生产策略）"
+        },
+        {
+          "key": "economic_stage",
+          "label": "经济阶段",
+          "text": "阶段≥1（建立基础）；仍须满足其他前置与运行条件"
         }
       ],
       "icon": "field_service_station",
@@ -2056,7 +2141,9 @@
         "research_name": "田间自动维护"
       },
       "name": "田间维护站",
-      "related_rules": [],
+      "related_rules": [
+        "rule:economy-stages"
+      ],
       "source_id": "field_service_station",
       "summary": "加工设施；18元石",
       "tags": []
@@ -2098,6 +2185,11 @@
           "key": "substitute",
           "label": "建材替代",
           "text": "普通岩石部分可用复合石板1:1或再生填料2:1整体替代（4份石）"
+        },
+        {
+          "key": "economic_stage",
+          "label": "经济阶段",
+          "text": "阶段≥0（起步）；仍须满足其他前置与运行条件"
         }
       ],
       "icon": "fish_pond",
@@ -2113,7 +2205,8 @@
       "locks": null,
       "name": "水场",
       "related_rules": [
-        "rule:build_substitute"
+        "rule:build_substitute",
+        "rule:economy-stages"
       ],
       "source_id": "fish_pond",
       "summary": "养殖栖息设施；12元石",
@@ -2151,6 +2244,11 @@
           "key": "substitute",
           "label": "建材替代",
           "text": "普通岩石部分可用复合石板1:1或再生填料2:1整体替代（3份石）"
+        },
+        {
+          "key": "economic_stage",
+          "label": "经济阶段",
+          "text": "阶段≥1（建立基础）；仍须满足其他前置与运行条件"
         }
       ],
       "icon": "build",
@@ -2179,7 +2277,8 @@
       },
       "name": "采胶台",
       "related_rules": [
-        "rule:build_substitute"
+        "rule:build_substitute",
+        "rule:economy-stages"
       ],
       "source_id": "gel_station",
       "summary": "加工设施；16元石",
@@ -2212,6 +2311,11 @@
           "key": "strategy",
           "label": "持续生产策略",
           "text": "不适用（装置不使用持续生产策略）"
+        },
+        {
+          "key": "economic_stage",
+          "label": "经济阶段",
+          "text": "阶段≥2（规模增长）；仍须满足其他前置与运行条件"
         }
       ],
       "icon": "growth_lamp",
@@ -2234,7 +2338,9 @@
         "research_name": "矿质材料工艺"
       },
       "name": "补光灯",
-      "related_rules": [],
+      "related_rules": [
+        "rule:economy-stages"
+      ],
       "source_id": "growth_lamp",
       "summary": "加工设施；12元石",
       "tags": []
@@ -2271,6 +2377,11 @@
           "key": "substitute",
           "label": "建材替代",
           "text": "普通岩石部分可用复合石板1:1或再生填料2:1整体替代（3份石）"
+        },
+        {
+          "key": "economic_stage",
+          "label": "经济阶段",
+          "text": "阶段≥2（规模增长）；仍须满足其他前置与运行条件"
         }
       ],
       "icon": "kitchen",
@@ -2289,7 +2400,8 @@
       },
       "name": "厨房",
       "related_rules": [
-        "rule:build_substitute"
+        "rule:build_substitute",
+        "rule:economy-stages"
       ],
       "source_id": "kitchen",
       "summary": "加工设施；12元石",
@@ -2317,6 +2429,11 @@
           "key": "demolish",
           "label": "拆除",
           "text": "1AP；需设施空闲；不返还材料与元石"
+        },
+        {
+          "key": "economic_stage",
+          "label": "经济阶段",
+          "text": "阶段≥1（建立基础）；仍须满足其他前置与运行条件"
         }
       ],
       "icon": "large_bed",
@@ -2325,7 +2442,9 @@
       "links": [],
       "locks": null,
       "name": "大床",
-      "related_rules": [],
+      "related_rules": [
+        "rule:economy-stages"
+      ],
       "source_id": "large_bed",
       "summary": "加工设施；14元石",
       "tags": []
@@ -2352,6 +2471,11 @@
           "key": "demolish",
           "label": "拆除",
           "text": "1AP；需设施空闲；不返还材料与元石"
+        },
+        {
+          "key": "economic_stage",
+          "label": "经济阶段",
+          "text": "阶段≥1（建立基础）；仍须满足其他前置与运行条件"
         }
       ],
       "icon": "medium_bed",
@@ -2360,7 +2484,9 @@
       "links": [],
       "locks": null,
       "name": "中床",
-      "related_rules": [],
+      "related_rules": [
+        "rule:economy-stages"
+      ],
       "source_id": "medium_bed",
       "summary": "加工设施；10元石",
       "tags": []
@@ -2397,6 +2523,11 @@
           "key": "substitute",
           "label": "建材替代",
           "text": "普通岩石部分可用复合石板1:1或再生填料2:1整体替代（3份石）"
+        },
+        {
+          "key": "economic_stage",
+          "label": "经济阶段",
+          "text": "阶段≥1（建立基础）；仍须满足其他前置与运行条件"
         }
       ],
       "icon": "build",
@@ -2425,7 +2556,8 @@
       },
       "name": "取油台",
       "related_rules": [
-        "rule:build_substitute"
+        "rule:build_substitute",
+        "rule:economy-stages"
       ],
       "source_id": "oilfish_harvest_station",
       "summary": "加工设施；16元石",
@@ -2468,6 +2600,11 @@
           "key": "substitute",
           "label": "建材替代",
           "text": "普通岩石部分可用复合石板1:1或再生填料2:1整体替代（3份石）"
+        },
+        {
+          "key": "economic_stage",
+          "label": "经济阶段",
+          "text": "阶段≥1（建立基础）；仍须满足其他前置与运行条件"
         }
       ],
       "icon": "ore_sorting_yard",
@@ -2491,7 +2628,8 @@
       },
       "name": "选矿场",
       "related_rules": [
-        "rule:build_substitute"
+        "rule:build_substitute",
+        "rule:economy-stages"
       ],
       "source_id": "ore_sorting_yard",
       "summary": "养殖栖息设施；12元石",
@@ -2529,6 +2667,11 @@
           "key": "substitute",
           "label": "建材替代",
           "text": "普通岩石部分可用复合石板1:1或再生填料2:1整体替代（3份石）"
+        },
+        {
+          "key": "economic_stage",
+          "label": "经济阶段",
+          "text": "阶段≥1（建立基础）；仍须满足其他前置与运行条件"
         }
       ],
       "icon": "build",
@@ -2557,7 +2700,8 @@
       },
       "name": "采珠台",
       "related_rules": [
-        "rule:build_substitute"
+        "rule:build_substitute",
+        "rule:economy-stages"
       ],
       "source_id": "pearl_station",
       "summary": "加工设施；16元石",
@@ -2600,6 +2744,11 @@
           "key": "substitute",
           "label": "建材替代",
           "text": "普通岩石部分可用复合石板1:1或再生填料2:1整体替代（3份石）"
+        },
+        {
+          "key": "economic_stage",
+          "label": "经济阶段",
+          "text": "阶段≥1（建立基础）；仍须满足其他前置与运行条件"
         }
       ],
       "icon": "pen",
@@ -2615,7 +2764,8 @@
       "locks": null,
       "name": "圈舍",
       "related_rules": [
-        "rule:build_substitute"
+        "rule:build_substitute",
+        "rule:economy-stages"
       ],
       "source_id": "pen",
       "summary": "养殖栖息设施；16元石",
@@ -2658,6 +2808,11 @@
           "key": "substitute",
           "label": "建材替代",
           "text": "普通岩石部分可用复合石板1:1或再生填料2:1整体替代（2份石）"
+        },
+        {
+          "key": "economic_stage",
+          "label": "经济阶段",
+          "text": "阶段≥1（建立基础）；仍须满足其他前置与运行条件"
         }
       ],
       "icon": "purifying_bed",
@@ -2681,7 +2836,8 @@
       },
       "name": "净水菌床",
       "related_rules": [
-        "rule:build_substitute"
+        "rule:build_substitute",
+        "rule:economy-stages"
       ],
       "source_id": "purifying_bed",
       "summary": "养殖栖息设施；10元石",
@@ -2714,6 +2870,11 @@
           "key": "substitute",
           "label": "建材替代",
           "text": "普通岩石部分可用复合石板1:1或再生填料2:1整体替代（2份石）"
+        },
+        {
+          "key": "economic_stage",
+          "label": "经济阶段",
+          "text": "阶段≥0（起步）；仍须满足其他前置与运行条件"
         }
       ],
       "icon": "research_bench",
@@ -2734,7 +2895,8 @@
       "locks": null,
       "name": "研究台",
       "related_rules": [
-        "rule:build_substitute"
+        "rule:build_substitute",
+        "rule:economy-stages"
       ],
       "source_id": "research_bench",
       "summary": "研究设施；8元石",
@@ -2777,6 +2939,11 @@
           "key": "substitute",
           "label": "建材替代",
           "text": "普通岩石部分可用复合石板1:1或再生填料2:1整体替代（3份石）"
+        },
+        {
+          "key": "economic_stage",
+          "label": "经济阶段",
+          "text": "阶段≥1（建立基础）；仍须满足其他前置与运行条件"
         }
       ],
       "icon": "rock_breaking_yard",
@@ -2800,7 +2967,8 @@
       },
       "name": "碎岩场",
       "related_rules": [
-        "rule:build_substitute"
+        "rule:build_substitute",
+        "rule:economy-stages"
       ],
       "source_id": "rock_breaking_yard",
       "summary": "养殖栖息设施；12元石",
@@ -2838,6 +3006,11 @@
           "key": "substitute",
           "label": "建材替代",
           "text": "普通岩石部分可用复合石板1:1或再生填料2:1整体替代（4份石）"
+        },
+        {
+          "key": "economic_stage",
+          "label": "经济阶段",
+          "text": "阶段≥2（规模增长）；仍须满足其他前置与运行条件"
         }
       ],
       "icon": "scale_station",
@@ -2866,7 +3039,8 @@
       },
       "name": "养鳞台",
       "related_rules": [
-        "rule:build_substitute"
+        "rule:build_substitute",
+        "rule:economy-stages"
       ],
       "source_id": "scale_station",
       "summary": "加工设施；18元石",
@@ -2914,6 +3088,11 @@
           "key": "substitute",
           "label": "建材替代",
           "text": "普通岩石部分可用复合石板1:1或再生填料2:1整体替代（4份石）"
+        },
+        {
+          "key": "economic_stage",
+          "label": "经济阶段",
+          "text": "阶段≥2（规模增长）；仍须满足其他前置与运行条件"
         }
       ],
       "icon": "shell_forming_station",
@@ -2937,7 +3116,8 @@
       },
       "name": "岩壳成型台",
       "related_rules": [
-        "rule:build_substitute"
+        "rule:build_substitute",
+        "rule:economy-stages"
       ],
       "source_id": "shell_forming_station",
       "summary": "加工设施；18元石",
@@ -2970,6 +3150,11 @@
           "key": "species",
           "label": "接纳物种",
           "text": "叶丝蚕"
+        },
+        {
+          "key": "economic_stage",
+          "label": "经济阶段",
+          "text": "阶段≥1（建立基础）；仍须满足其他前置与运行条件"
         }
       ],
       "icon": "silkworm_rack",
@@ -2989,7 +3174,9 @@
       ],
       "locks": null,
       "name": "蚕架",
-      "related_rules": [],
+      "related_rules": [
+        "rule:economy-stages"
+      ],
       "source_id": "silkworm_rack",
       "summary": "加工设施；10元石",
       "tags": []
@@ -3031,6 +3218,11 @@
           "key": "substitute",
           "label": "建材替代",
           "text": "普通岩石部分可用复合石板1:1或再生填料2:1整体替代（2份石）"
+        },
+        {
+          "key": "economic_stage",
+          "label": "经济阶段",
+          "text": "阶段≥1（建立基础）；仍须满足其他前置与运行条件"
         }
       ],
       "icon": "build",
@@ -3054,7 +3246,8 @@
       },
       "name": "泥料处理台",
       "related_rules": [
-        "rule:build_substitute"
+        "rule:build_substitute",
+        "rule:economy-stages"
       ],
       "source_id": "silt_processing_station",
       "summary": "加工设施；14元石",
@@ -3082,6 +3275,11 @@
           "key": "demolish",
           "label": "拆除",
           "text": "1AP；需设施空闲；不返还材料与元石"
+        },
+        {
+          "key": "economic_stage",
+          "label": "经济阶段",
+          "text": "阶段≥1（建立基础）；仍须满足其他前置与运行条件"
         }
       ],
       "icon": "small_bed",
@@ -3090,7 +3288,9 @@
       "links": [],
       "locks": null,
       "name": "小床",
-      "related_rules": [],
+      "related_rules": [
+        "rule:economy-stages"
+      ],
       "source_id": "small_bed",
       "summary": "加工设施；6元石",
       "tags": []
@@ -3127,6 +3327,11 @@
           "key": "substitute",
           "label": "建材替代",
           "text": "普通岩石部分可用复合石板1:1或再生填料2:1整体替代（6份石）"
+        },
+        {
+          "key": "economic_stage",
+          "label": "经济阶段",
+          "text": "阶段≥0（起步）；仍须满足其他前置与运行条件"
         }
       ],
       "icon": "smelter",
@@ -3136,7 +3341,8 @@
       "locks": null,
       "name": "小型冶炼炉",
       "related_rules": [
-        "rule:build_substitute"
+        "rule:build_substitute",
+        "rule:economy-stages"
       ],
       "source_id": "smelter",
       "summary": "加工设施；20元石",
@@ -3169,6 +3375,11 @@
           "key": "substitute",
           "label": "建材替代",
           "text": "普通岩石部分可用复合石板1:1或再生填料2:1整体替代（2份石）"
+        },
+        {
+          "key": "economic_stage",
+          "label": "经济阶段",
+          "text": "阶段≥2（规模增长）；仍须满足其他前置与运行条件"
         }
       ],
       "icon": "soothing_station",
@@ -3184,7 +3395,8 @@
       "locks": null,
       "name": "安抚台",
       "related_rules": [
-        "rule:build_substitute"
+        "rule:build_substitute",
+        "rule:economy-stages"
       ],
       "source_id": "soothing_station",
       "summary": "加工设施；18元石",
@@ -3222,6 +3434,11 @@
           "key": "substitute",
           "label": "建材替代",
           "text": "普通岩石部分可用复合石板1:1或再生填料2:1整体替代（3份石）"
+        },
+        {
+          "key": "economic_stage",
+          "label": "经济阶段",
+          "text": "阶段≥1（建立基础）；仍须满足其他前置与运行条件"
         }
       ],
       "icon": "spirit_liquid_collector",
@@ -3242,7 +3459,8 @@
       "locks": null,
       "name": "集露台",
       "related_rules": [
-        "rule:build_substitute"
+        "rule:build_substitute",
+        "rule:economy-stages"
       ],
       "source_id": "spirit_liquid_collector",
       "summary": "加工设施；12元石",
@@ -3275,6 +3493,11 @@
           "key": "substitute",
           "label": "建材替代",
           "text": "普通岩石部分可用复合石板1:1或再生填料2:1整体替代（2份石）"
+        },
+        {
+          "key": "economic_stage",
+          "label": "经济阶段",
+          "text": "阶段≥1（建立基础）；仍须满足其他前置与运行条件"
         }
       ],
       "icon": "toy_station",
@@ -3284,7 +3507,8 @@
       "locks": null,
       "name": "玩具站",
       "related_rules": [
-        "rule:build_substitute"
+        "rule:build_substitute",
+        "rule:economy-stages"
       ],
       "source_id": "toy_station",
       "summary": "加工设施；12元石",
@@ -3317,6 +3541,11 @@
           "key": "substitute",
           "label": "建材替代",
           "text": "普通岩石部分可用复合石板1:1或再生填料2:1整体替代（4份石）"
+        },
+        {
+          "key": "economic_stage",
+          "label": "经济阶段",
+          "text": "阶段≥1（建立基础）；仍须满足其他前置与运行条件"
         }
       ],
       "icon": "build",
@@ -3326,7 +3555,8 @@
       "locks": null,
       "name": "换水站",
       "related_rules": [
-        "rule:build_substitute"
+        "rule:build_substitute",
+        "rule:economy-stages"
       ],
       "source_id": "water_change_station",
       "summary": "加工设施；16元石",
@@ -3364,6 +3594,11 @@
           "key": "substitute",
           "label": "建材替代",
           "text": "普通岩石部分可用复合石板1:1或再生填料2:1整体替代（2份石）"
+        },
+        {
+          "key": "economic_stage",
+          "label": "经济阶段",
+          "text": "阶段≥0（起步）；仍须满足其他前置与运行条件"
         }
       ],
       "icon": "woodshop",
@@ -3373,7 +3608,8 @@
       "locks": null,
       "name": "木工台",
       "related_rules": [
-        "rule:build_substitute"
+        "rule:build_substitute",
+        "rule:economy-stages"
       ],
       "source_id": "woodshop",
       "summary": "加工设施；8元石",
@@ -3411,6 +3647,11 @@
           "key": "substitute",
           "label": "建材替代",
           "text": "普通岩石部分可用复合石板1:1或再生填料2:1整体替代（2份石）"
+        },
+        {
+          "key": "economic_stage",
+          "label": "经济阶段",
+          "text": "阶段≥1（建立基础）；仍须满足其他前置与运行条件"
         }
       ],
       "icon": "wool_station",
@@ -3431,7 +3672,8 @@
       "locks": null,
       "name": "采毛台",
       "related_rules": [
-        "rule:build_substitute"
+        "rule:build_substitute",
+        "rule:economy-stages"
       ],
       "source_id": "wool_station",
       "summary": "加工设施；12元石",
@@ -3995,7 +4237,7 @@
         {
           "key": "outputs",
           "label": "周期产物",
-          "text": "矿质鳞片×2＋蜕皮×1/轮/只（收取时入仓）"
+          "text": "矿质鳞片×4＋蜕皮×1/轮/只（收取时入仓）"
         },
         {
           "key": "claim",
@@ -4063,7 +4305,7 @@
         {
           "key": "outputs",
           "label": "周期产物",
-          "text": "粗油×2＋鱼肉×1/轮/尾（收取时入仓）"
+          "text": "粗油×6＋鱼肉×1/轮/尾（收取时入仓）"
         },
         {
           "key": "claim",
@@ -4131,7 +4373,7 @@
         {
           "key": "outputs",
           "label": "周期产物",
-          "text": "珍珠×2/轮/只（收取时入仓）"
+          "text": "珍珠×3/轮/只（收取时入仓）"
         },
         {
           "key": "claim",
@@ -4262,7 +4504,7 @@
         {
           "key": "cycle",
           "label": "生产周期",
-          "text": "6有效服务日/轮（特殊食谱启动）"
+          "text": "3有效服务日/轮（特殊食谱启动）"
         },
         {
           "key": "outputs",
@@ -4301,7 +4543,7 @@
         "rule:worker_scheduler"
       ],
       "source_id": "reef_coral",
-      "summary": "采礁台养殖；14元石/群；周期6日",
+      "summary": "采礁台养殖；14元石/群；周期3日",
       "tags": []
     },
     {
@@ -4539,7 +4781,7 @@
         {
           "key": "outputs",
           "label": "周期产物",
-          "text": "钢绒×1＋羊粪肥×1/轮/只（收取时入仓）"
+          "text": "钢绒×2＋羊粪肥×1/轮/只（收取时入仓）"
         },
         {
           "key": "claim",
@@ -4722,7 +4964,7 @@
           "duration": "即时",
           "facility": "取油台",
           "name": "整体维护·油鳍鱼",
-          "others": "复合水养料×1；复合水养料×1",
+          "others": "复合水养料×1；谷粒×2",
           "process": "proc:maintain:oilfin_fish",
           "quantity": 1,
           "research": null,
@@ -4834,6 +5076,24 @@
       ],
       "source_id": "beeswax",
       "sources": [
+        {
+          "ap": "0AP",
+          "basis": "每批",
+          "category_hint": "trade",
+          "conditions": "",
+          "crop": null,
+          "detail": "以物换物·松脂×4→蜂蜡×2：蜂蜡×2（每批）",
+          "duration": "即时",
+          "facility": null,
+          "name": "以物换物·松脂×4→蜂蜡×2",
+          "others": "松脂×4",
+          "process": "proc:barter:resin_for_beeswax",
+          "quantity": 2,
+          "research": null,
+          "species": null,
+          "timing": "交换时",
+          "type": "barter"
+        },
         {
           "ap": "1AP",
           "basis": "每群·每轮",
@@ -5823,7 +6083,7 @@
           "duration": "即时",
           "facility": "养鳞台",
           "name": "整体维护·矿鳞蜥",
-          "others": "牧草×1；复合陆养料×1；矿质补料×2",
+          "others": "牧草×1；复合陆养料×1；矿质补料×1",
           "process": "proc:maintain:mineral_scale_lizard",
           "quantity": 1,
           "research": null,
@@ -5841,7 +6101,7 @@
           "duration": "即时",
           "facility": "养鳞台",
           "name": "整体维护·矿鳞蜥",
-          "others": "牧草×1；复合陆养料×1；矿质补料×2",
+          "others": "牧草×1；复合陆养料×1；矿质补料×1",
           "process": "proc:maintain:mineral_scale_lizard",
           "quantity": 1,
           "research": null,
@@ -6021,7 +6281,7 @@
           "duration": "即时",
           "facility": "研究台",
           "name": "启动研究·田间自动维护",
-          "others": "腐殖土×2；复合陆养料×1；元石×12",
+          "others": "腐殖土×2；谷粒×1；元石×8",
           "process": "proc:research_start:field_maintenance",
           "quantity": 4,
           "research": null,
@@ -6133,6 +6393,24 @@
       ],
       "source_id": "composite_stone_panel",
       "sources": [
+        {
+          "ap": "0AP",
+          "basis": "每批",
+          "category_hint": "trade",
+          "conditions": "",
+          "crop": null,
+          "detail": "以物换物·松脂×8→复合石板×4：复合石板×4（每批）",
+          "duration": "即时",
+          "facility": null,
+          "name": "以物换物·松脂×8→复合石板×4",
+          "others": "松脂×8",
+          "process": "proc:barter:resin_for_panels",
+          "quantity": 4,
+          "research": null,
+          "species": null,
+          "timing": "交换时",
+          "type": "barter"
+        },
         {
           "ap": "启动1＋收取1",
           "basis": "每批",
@@ -6807,6 +7085,24 @@
         },
         {
           "ap": "0AP",
+          "basis": "一次性",
+          "category_hint": "progression",
+          "conditions": "",
+          "crop": null,
+          "detail": "阶段事件·产业进阶：复合石板×12（一次性）",
+          "duration": "即时",
+          "facility": null,
+          "name": "阶段事件·产业进阶",
+          "others": "精炼油×6；保水基质×8",
+          "process": "proc:milestone:integrated_estate",
+          "quantity": 12,
+          "research": null,
+          "species": null,
+          "timing": "成功提交时",
+          "type": "milestone"
+        },
+        {
+          "ap": "0AP",
           "basis": "每份",
           "category_hint": "trade",
           "conditions": "",
@@ -6879,6 +7175,24 @@
         "animal_product"
       ],
       "uses": [
+        {
+          "ap": "0AP",
+          "basis": "每批",
+          "category_hint": "trade",
+          "conditions": "",
+          "crop": null,
+          "detail": "以物换物·珊瑚石×2→松脂×3：珊瑚石×2（每批）",
+          "duration": "即时",
+          "facility": null,
+          "name": "以物换物·珊瑚石×2→松脂×3",
+          "others": "松脂×3",
+          "process": "proc:barter:coral_stone_for_resin",
+          "quantity": 2,
+          "research": null,
+          "species": null,
+          "timing": "交换时",
+          "type": "barter"
+        },
         {
           "ap": "启动1＋收取1",
           "basis": "每批",
@@ -7007,13 +7321,13 @@
           "category_hint": "production",
           "conditions": "",
           "crop": null,
-          "detail": "收取·油鳍鱼：粗油×2（每尾·每轮）｜取油台｜油鳍鱼｜1AP",
+          "detail": "收取·油鳍鱼：粗油×6（每尾·每轮）｜取油台｜油鳍鱼｜1AP",
           "duration": "即时",
           "facility": "取油台",
           "name": "收取·油鳍鱼",
           "others": "鱼肉×1",
           "process": "proc:claim:oilfin_fish",
-          "quantity": 2,
+          "quantity": 6,
           "research": null,
           "species": "油鳍鱼",
           "timing": "收取时",
@@ -7025,6 +7339,24 @@
         "processing"
       ],
       "uses": [
+        {
+          "ap": "0AP",
+          "basis": "每批",
+          "category_hint": "trade",
+          "conditions": "",
+          "crop": null,
+          "detail": "以物换物·粗油×3→松脂×2：粗油×3（每批）",
+          "duration": "即时",
+          "facility": null,
+          "name": "以物换物·粗油×3→松脂×2",
+          "others": "松脂×2",
+          "process": "proc:barter:crude_oil_for_resin",
+          "quantity": 3,
+          "research": null,
+          "species": null,
+          "timing": "交换时",
+          "type": "barter"
+        },
         {
           "ap": "启动1＋收取1",
           "basis": "每批",
@@ -7111,6 +7443,24 @@
       ],
       "source_id": "crushed_ore",
       "sources": [
+        {
+          "ap": "0AP",
+          "basis": "每批",
+          "category_hint": "trade",
+          "conditions": "",
+          "crop": null,
+          "detail": "以物换物·松脂×4→碎铁矿×4：碎铁矿×4（每批）",
+          "duration": "即时",
+          "facility": null,
+          "name": "以物换物·松脂×4→碎铁矿×4",
+          "others": "松脂×4",
+          "process": "proc:barter:resin_for_crushed_ore",
+          "quantity": 4,
+          "research": null,
+          "species": null,
+          "timing": "交换时",
+          "type": "barter"
+        },
         {
           "ap": "启动1＋收取1",
           "basis": "每批",
@@ -7276,6 +7626,24 @@
       "source_id": "dense_algae",
       "sources": [
         {
+          "ap": "0AP",
+          "basis": "每批",
+          "category_hint": "trade",
+          "conditions": "",
+          "crop": null,
+          "detail": "以物换物·松脂×4→高密度藻料×3：高密度藻料×3（每批）",
+          "duration": "即时",
+          "facility": null,
+          "name": "以物换物·松脂×4→高密度藻料×3",
+          "others": "松脂×4",
+          "process": "proc:barter:resin_for_dense_algae",
+          "quantity": 3,
+          "research": null,
+          "species": null,
+          "timing": "交换时",
+          "type": "barter"
+        },
+        {
           "ap": "启动1＋收取1",
           "basis": "每批",
           "category_hint": "production",
@@ -7412,7 +7780,7 @@
         {
           "key": "supply",
           "label": "五行供货",
-          "text": "可供货（水行）；供养值9：订单数量=ceil(需求/供养值)，回款=数量×卖价＋10%溢价"
+          "text": "可供货（水行）；供养值8：订单数量=ceil(需求/供养值)，回款=数量×卖价＋10%溢价"
         },
         {
           "key": "terminal",
@@ -7451,7 +7819,7 @@
           "type": "craft"
         }
       ],
-      "summary": "水行液体；可供货（供养值9）",
+      "summary": "水行液体；可供货（供养值8）",
       "tags": [
         "food"
       ],
@@ -8435,6 +8803,24 @@
       "source_id": "fish_meat",
       "sources": [
         {
+          "ap": "0AP",
+          "basis": "每批",
+          "category_hint": "trade",
+          "conditions": "",
+          "crop": null,
+          "detail": "以物换物·松脂×4→鱼肉×3：鱼肉×3（每批）",
+          "duration": "即时",
+          "facility": null,
+          "name": "以物换物·松脂×4→鱼肉×3",
+          "others": "松脂×4",
+          "process": "proc:barter:resin_for_fish_meat",
+          "quantity": 3,
+          "research": null,
+          "species": null,
+          "timing": "交换时",
+          "type": "barter"
+        },
+        {
           "ap": "1AP",
           "basis": "每尾·每轮",
           "category_hint": "production",
@@ -8462,7 +8848,7 @@
           "duration": "即时",
           "facility": "取油台",
           "name": "收取·油鳍鱼",
-          "others": "粗油×2",
+          "others": "粗油×6",
           "process": "proc:claim:oilfin_fish",
           "quantity": 1,
           "research": null,
@@ -8955,7 +9341,7 @@
           "duration": "即时",
           "facility": "养鳞台",
           "name": "整体维护·矿鳞蜥",
-          "others": "清水×1；复合陆养料×1；清水×1；矿质补料×2",
+          "others": "清水×1；复合陆养料×1；清水×1；矿质补料×1",
           "process": "proc:maintain:mineral_scale_lizard",
           "quantity": 1,
           "research": null,
@@ -9385,6 +9771,24 @@
         },
         {
           "ap": "1AP",
+          "basis": "每尾·每轮",
+          "category_hint": "care",
+          "conditions": "空闲成体启动「取油轮投料」周期时",
+          "crop": null,
+          "detail": "整体维护·油鳍鱼：谷粒×2（每尾·每轮）｜取油台｜油鳍鱼｜1AP",
+          "duration": "即时",
+          "facility": "取油台",
+          "name": "整体维护·油鳍鱼",
+          "others": "藻料×1；复合水养料×1",
+          "process": "proc:maintain:oilfin_fish",
+          "quantity": 2,
+          "research": null,
+          "species": "油鳍鱼",
+          "timing": "周期启动时一次付清",
+          "type": "maintain"
+        },
+        {
+          "ap": "1AP",
           "basis": "每只·每日",
           "category_hint": "care",
           "conditions": "基础食谱选用「谷粒餐」时",
@@ -9400,6 +9804,24 @@
           "species": "钢绵羊",
           "timing": "整体维护时",
           "type": "maintain"
+        },
+        {
+          "ap": "0AP",
+          "basis": "一次性",
+          "category_hint": "research",
+          "conditions": "",
+          "crop": null,
+          "detail": "启动研究·田间自动维护：谷粒×1（一次性）｜研究台",
+          "duration": "即时",
+          "facility": "研究台",
+          "name": "启动研究·田间自动维护",
+          "others": "腐殖土×2；清水×4；元石×8",
+          "process": "proc:research_start:field_maintenance",
+          "quantity": 1,
+          "research": null,
+          "species": null,
+          "timing": "启动时",
+          "type": "research_start"
         },
         {
           "ap": "0AP",
@@ -9964,6 +10386,24 @@
       "source_id": "gravel",
       "sources": [
         {
+          "ap": "0AP",
+          "basis": "每批",
+          "category_hint": "trade",
+          "conditions": "",
+          "crop": null,
+          "detail": "以物换物·松脂×4→砂砾×3＋石粉×1：砂砾×3（每批）",
+          "duration": "即时",
+          "facility": null,
+          "name": "以物换物·松脂×4→砂砾×3＋石粉×1",
+          "others": "松脂×4；石粉×1",
+          "process": "proc:barter:resin_for_stone_parts",
+          "quantity": 3,
+          "research": null,
+          "species": null,
+          "timing": "交换时",
+          "type": "barter"
+        },
+        {
           "ap": "启动1＋收取1",
           "basis": "每批",
           "category_hint": "production",
@@ -10171,6 +10611,24 @@
       "source_id": "honey",
       "sources": [
         {
+          "ap": "0AP",
+          "basis": "每批",
+          "category_hint": "trade",
+          "conditions": "",
+          "crop": null,
+          "detail": "以物换物·松脂×4→蜂蜜×2：蜂蜜×2（每批）",
+          "duration": "即时",
+          "facility": null,
+          "name": "以物换物·松脂×4→蜂蜜×2",
+          "others": "松脂×4",
+          "process": "proc:barter:resin_for_honey",
+          "quantity": 2,
+          "research": null,
+          "species": null,
+          "timing": "交换时",
+          "type": "barter"
+        },
+        {
           "ap": "1AP",
           "basis": "每群·每轮",
           "category_hint": "production",
@@ -10195,6 +10653,24 @@
         "animal_product"
       ],
       "uses": [
+        {
+          "ap": "0AP",
+          "basis": "每批",
+          "category_hint": "trade",
+          "conditions": "",
+          "crop": null,
+          "detail": "以物换物·蜂蜜×4→松脂×3：蜂蜜×4（每批）",
+          "duration": "即时",
+          "facility": null,
+          "name": "以物换物·蜂蜜×4→松脂×3",
+          "others": "松脂×3",
+          "process": "proc:barter:honey_for_resin",
+          "quantity": 4,
+          "research": null,
+          "species": null,
+          "timing": "交换时",
+          "type": "barter"
+        },
         {
           "ap": "启动1＋收取1",
           "basis": "每批",
@@ -10995,7 +11471,7 @@
           "duration": "即时",
           "facility": "研究台",
           "name": "启动研究·田间自动维护",
-          "others": "清水×4；复合陆养料×1；元石×12",
+          "others": "清水×4；谷粒×1；元石×8",
           "process": "proc:research_start:field_maintenance",
           "quantity": 2,
           "research": null,
@@ -11566,7 +12042,7 @@
           "duration": "即时",
           "facility": "养鳞台",
           "name": "整体维护·矿鳞蜥",
-          "others": "牧草×1；清水×1；清水×1；矿质补料×2",
+          "others": "牧草×1；清水×1；清水×1；矿质补料×1",
           "process": "proc:maintain:mineral_scale_lizard",
           "quantity": 1,
           "research": null,
@@ -11609,24 +12085,6 @@
           "species": "钢绵羊",
           "timing": "整体维护时",
           "type": "maintain"
-        },
-        {
-          "ap": "0AP",
-          "basis": "一次性",
-          "category_hint": "research",
-          "conditions": "",
-          "crop": null,
-          "detail": "启动研究·田间自动维护：复合陆养料×1（一次性）｜研究台",
-          "duration": "即时",
-          "facility": "研究台",
-          "name": "启动研究·田间自动维护",
-          "others": "腐殖土×2；清水×4；元石×12",
-          "process": "proc:research_start:field_maintenance",
-          "quantity": 1,
-          "research": null,
-          "species": null,
-          "timing": "启动时",
-          "type": "research_start"
         },
         {
           "ap": "0AP",
@@ -11708,13 +12166,13 @@
           "category_hint": "care",
           "conditions": "空闲成体启动「养鳞轮」周期时",
           "crop": null,
-          "detail": "整体维护·矿鳞蜥：矿质补料×2（每只·每轮）｜养鳞台｜矿鳞蜥｜1AP",
+          "detail": "整体维护·矿鳞蜥：矿质补料×1（每只·每轮）｜养鳞台｜矿鳞蜥｜1AP",
           "duration": "即时",
           "facility": "养鳞台",
           "name": "整体维护·矿鳞蜥",
           "others": "牧草×1；清水×1；复合陆养料×1；清水×1",
           "process": "proc:maintain:mineral_scale_lizard",
-          "quantity": 2,
+          "quantity": 1,
           "research": null,
           "species": "矿鳞蜥",
           "timing": "周期启动时一次付清",
@@ -11779,7 +12237,7 @@
         {
           "key": "supply",
           "label": "五行供货",
-          "text": "可供货（金行）；供养值41：订单数量=ceil(需求/供养值)，回款=数量×卖价＋10%溢价"
+          "text": "可供货（金行）；供养值8：订单数量=ceil(需求/供养值)，回款=数量×卖价＋10%溢价"
         }
       ],
       "icon": "mineral_scale",
@@ -11795,30 +12253,66 @@
       "source_id": "mineral_scale",
       "sources": [
         {
+          "ap": "0AP",
+          "basis": "每批",
+          "category_hint": "trade",
+          "conditions": "",
+          "crop": null,
+          "detail": "以物换物·松脂×8→矿质鳞片×2：矿质鳞片×2（每批）",
+          "duration": "即时",
+          "facility": null,
+          "name": "以物换物·松脂×8→矿质鳞片×2",
+          "others": "松脂×8",
+          "process": "proc:barter:resin_for_mineral_scale",
+          "quantity": 2,
+          "research": null,
+          "species": null,
+          "timing": "交换时",
+          "type": "barter"
+        },
+        {
           "ap": "1AP",
           "basis": "每只·每轮",
           "category_hint": "production",
           "conditions": "",
           "crop": null,
-          "detail": "收取·矿鳞蜥：矿质鳞片×2（每只·每轮）｜养鳞台｜矿鳞蜥｜1AP",
+          "detail": "收取·矿鳞蜥：矿质鳞片×4（每只·每轮）｜养鳞台｜矿鳞蜥｜1AP",
           "duration": "即时",
           "facility": "养鳞台",
           "name": "收取·矿鳞蜥",
           "others": "蜕皮×1",
           "process": "proc:claim:mineral_scale_lizard",
-          "quantity": 2,
+          "quantity": 4,
           "research": null,
           "species": "矿鳞蜥",
           "timing": "收取时",
           "type": "claim"
         }
       ],
-      "summary": "金行固体；可供货（供养值41）",
+      "summary": "金行固体；可供货（供养值8）",
       "tags": [
         "food",
         "animal_product"
       ],
       "uses": [
+        {
+          "ap": "0AP",
+          "basis": "每批",
+          "category_hint": "trade",
+          "conditions": "",
+          "crop": null,
+          "detail": "以物换物·矿质鳞片×2→松脂×4：矿质鳞片×2（每批）",
+          "duration": "即时",
+          "facility": null,
+          "name": "以物换物·矿质鳞片×2→松脂×4",
+          "others": "松脂×4",
+          "process": "proc:barter:mineral_scale_for_resin",
+          "quantity": 2,
+          "research": null,
+          "species": null,
+          "timing": "交换时",
+          "type": "barter"
+        },
         {
           "ap": "启动1＋收取1",
           "basis": "每批",
@@ -11896,7 +12390,7 @@
         {
           "key": "supply",
           "label": "五行供货",
-          "text": "可供货（水行）；供养值11：订单数量=ceil(需求/供养值)，回款=数量×卖价＋10%溢价"
+          "text": "可供货（水行）；供养值4：订单数量=ceil(需求/供养值)，回款=数量×卖价＋10%溢价"
         }
       ],
       "icon": "mucus",
@@ -11966,7 +12460,7 @@
           "type": "claim"
         }
       ],
-      "summary": "水行固体；可供货（供养值11）",
+      "summary": "水行固体；可供货（供养值4）",
       "tags": [
         "food",
         "animal_product"
@@ -12619,6 +13113,24 @@
       ],
       "source_id": "nectar",
       "sources": [
+        {
+          "ap": "0AP",
+          "basis": "每批",
+          "category_hint": "trade",
+          "conditions": "",
+          "crop": null,
+          "detail": "以物换物·松脂×2→花蜜×2＋花粉×1：花蜜×2（每批）",
+          "duration": "即时",
+          "facility": null,
+          "name": "以物换物·松脂×2→花蜜×2＋花粉×1",
+          "others": "松脂×2；花粉×1",
+          "process": "proc:barter:resin_for_flower_samples",
+          "quantity": 2,
+          "research": null,
+          "species": null,
+          "timing": "交换时",
+          "type": "barter"
+        },
         {
           "ap": "1AP",
           "basis": "每次收获",
@@ -13307,6 +13819,24 @@
       "source_id": "ore_concentrate",
       "sources": [
         {
+          "ap": "0AP",
+          "basis": "每批",
+          "category_hint": "trade",
+          "conditions": "",
+          "crop": null,
+          "detail": "以物换物·松脂×6→富集矿砂×2：富集矿砂×2（每批）",
+          "duration": "即时",
+          "facility": null,
+          "name": "以物换物·松脂×6→富集矿砂×2",
+          "others": "松脂×6",
+          "process": "proc:barter:resin_for_ore_concentrate",
+          "quantity": 2,
+          "research": null,
+          "species": null,
+          "timing": "交换时",
+          "type": "barter"
+        },
+        {
           "ap": "启动1＋收取1",
           "basis": "每批",
           "category_hint": "production",
@@ -13435,18 +13965,36 @@
       "source_id": "pearl",
       "sources": [
         {
+          "ap": "0AP",
+          "basis": "每批",
+          "category_hint": "trade",
+          "conditions": "",
+          "crop": null,
+          "detail": "以物换物·松脂×8→珍珠×2：珍珠×2（每批）",
+          "duration": "即时",
+          "facility": null,
+          "name": "以物换物·松脂×8→珍珠×2",
+          "others": "松脂×8",
+          "process": "proc:barter:resin_for_pearl",
+          "quantity": 2,
+          "research": null,
+          "species": null,
+          "timing": "交换时",
+          "type": "barter"
+        },
+        {
           "ap": "1AP",
           "basis": "每只·每轮",
           "category_hint": "production",
           "conditions": "",
           "crop": null,
-          "detail": "收取·珍珠蚌：珍珠×2（每只·每轮）｜采珠台｜珍珠蚌｜1AP",
+          "detail": "收取·珍珠蚌：珍珠×3（每只·每轮）｜采珠台｜珍珠蚌｜1AP",
           "duration": "即时",
           "facility": "采珠台",
           "name": "收取·珍珠蚌",
           "others": "",
           "process": "proc:claim:pearl_mussel",
-          "quantity": 2,
+          "quantity": 3,
           "research": null,
           "species": "珍珠蚌",
           "timing": "收取时",
@@ -13458,6 +14006,24 @@
         "animal_product"
       ],
       "uses": [
+        {
+          "ap": "0AP",
+          "basis": "每批",
+          "category_hint": "trade",
+          "conditions": "",
+          "crop": null,
+          "detail": "以物换物·珍珠×2→松脂×4：珍珠×2（每批）",
+          "duration": "即时",
+          "facility": null,
+          "name": "以物换物·珍珠×2→松脂×4",
+          "others": "松脂×4",
+          "process": "proc:barter:pearl_for_resin",
+          "quantity": 2,
+          "research": null,
+          "species": null,
+          "timing": "交换时",
+          "type": "barter"
+        },
         {
           "ap": "启动1＋收取1",
           "basis": "每批",
@@ -13544,6 +14110,24 @@
       ],
       "source_id": "pollen",
       "sources": [
+        {
+          "ap": "0AP",
+          "basis": "每批",
+          "category_hint": "trade",
+          "conditions": "",
+          "crop": null,
+          "detail": "以物换物·松脂×2→花蜜×2＋花粉×1：花粉×1（每批）",
+          "duration": "即时",
+          "facility": null,
+          "name": "以物换物·松脂×2→花蜜×2＋花粉×1",
+          "others": "松脂×2；花蜜×2",
+          "process": "proc:barter:resin_for_flower_samples",
+          "quantity": 1,
+          "research": null,
+          "species": null,
+          "timing": "交换时",
+          "type": "barter"
+        },
         {
           "ap": "1AP",
           "basis": "每次收获",
@@ -15815,6 +16399,24 @@
       "source_id": "refined_oil",
       "sources": [
         {
+          "ap": "0AP",
+          "basis": "每批",
+          "category_hint": "trade",
+          "conditions": "",
+          "crop": null,
+          "detail": "以物换物·松脂×6→精炼油×3：精炼油×3（每批）",
+          "duration": "即时",
+          "facility": null,
+          "name": "以物换物·松脂×6→精炼油×3",
+          "others": "松脂×6",
+          "process": "proc:barter:resin_for_refined_oil",
+          "quantity": 3,
+          "research": null,
+          "species": null,
+          "timing": "交换时",
+          "type": "barter"
+        },
+        {
           "ap": "启动1＋收取1",
           "basis": "每批",
           "category_hint": "production",
@@ -15892,6 +16494,24 @@
           "species": null,
           "timing": "开日（次日开日事务内）",
           "type": "device_fuel"
+        },
+        {
+          "ap": "0AP",
+          "basis": "一次性",
+          "category_hint": "progression",
+          "conditions": "",
+          "crop": null,
+          "detail": "阶段事件·产业进阶：精炼油×6（一次性）",
+          "duration": "即时",
+          "facility": null,
+          "name": "阶段事件·产业进阶",
+          "others": "复合石板×12；保水基质×8",
+          "process": "proc:milestone:integrated_estate",
+          "quantity": 6,
+          "research": null,
+          "species": null,
+          "timing": "成功提交时",
+          "type": "milestone"
         },
         {
           "ap": "0AP",
@@ -16078,6 +16698,150 @@
       "source_id": "resin",
       "sources": [
         {
+          "ap": "0AP",
+          "basis": "每批",
+          "category_hint": "trade",
+          "conditions": "",
+          "crop": null,
+          "detail": "以物换物·珊瑚石×2→松脂×3：松脂×3（每批）",
+          "duration": "即时",
+          "facility": null,
+          "name": "以物换物·珊瑚石×2→松脂×3",
+          "others": "珊瑚石×2",
+          "process": "proc:barter:coral_stone_for_resin",
+          "quantity": 3,
+          "research": null,
+          "species": null,
+          "timing": "交换时",
+          "type": "barter"
+        },
+        {
+          "ap": "0AP",
+          "basis": "每批",
+          "category_hint": "trade",
+          "conditions": "",
+          "crop": null,
+          "detail": "以物换物·粗油×3→松脂×2：松脂×2（每批）",
+          "duration": "即时",
+          "facility": null,
+          "name": "以物换物·粗油×3→松脂×2",
+          "others": "粗油×3",
+          "process": "proc:barter:crude_oil_for_resin",
+          "quantity": 2,
+          "research": null,
+          "species": null,
+          "timing": "交换时",
+          "type": "barter"
+        },
+        {
+          "ap": "0AP",
+          "basis": "每批",
+          "category_hint": "trade",
+          "conditions": "",
+          "crop": null,
+          "detail": "以物换物·蜂蜜×4→松脂×3：松脂×3（每批）",
+          "duration": "即时",
+          "facility": null,
+          "name": "以物换物·蜂蜜×4→松脂×3",
+          "others": "蜂蜜×4",
+          "process": "proc:barter:honey_for_resin",
+          "quantity": 3,
+          "research": null,
+          "species": null,
+          "timing": "交换时",
+          "type": "barter"
+        },
+        {
+          "ap": "0AP",
+          "basis": "每批",
+          "category_hint": "trade",
+          "conditions": "",
+          "crop": null,
+          "detail": "以物换物·矿质鳞片×2→松脂×4：松脂×4（每批）",
+          "duration": "即时",
+          "facility": null,
+          "name": "以物换物·矿质鳞片×2→松脂×4",
+          "others": "矿质鳞片×2",
+          "process": "proc:barter:mineral_scale_for_resin",
+          "quantity": 4,
+          "research": null,
+          "species": null,
+          "timing": "交换时",
+          "type": "barter"
+        },
+        {
+          "ap": "0AP",
+          "basis": "每批",
+          "category_hint": "trade",
+          "conditions": "",
+          "crop": null,
+          "detail": "以物换物·珍珠×2→松脂×4：松脂×4（每批）",
+          "duration": "即时",
+          "facility": null,
+          "name": "以物换物·珍珠×2→松脂×4",
+          "others": "珍珠×2",
+          "process": "proc:barter:pearl_for_resin",
+          "quantity": 4,
+          "research": null,
+          "species": null,
+          "timing": "交换时",
+          "type": "barter"
+        },
+        {
+          "ap": "0AP",
+          "basis": "每批",
+          "category_hint": "trade",
+          "conditions": "",
+          "crop": null,
+          "detail": "以物换物·蚕丝×4→松脂×3：松脂×3（每批）",
+          "duration": "即时",
+          "facility": null,
+          "name": "以物换物·蚕丝×4→松脂×3",
+          "others": "蚕丝×4",
+          "process": "proc:barter:silk_for_resin",
+          "quantity": 3,
+          "research": null,
+          "species": null,
+          "timing": "交换时",
+          "type": "barter"
+        },
+        {
+          "ap": "0AP",
+          "basis": "每批",
+          "category_hint": "trade",
+          "conditions": "",
+          "crop": null,
+          "detail": "以物换物·灵液×3→松脂×3：松脂×3（每批）",
+          "duration": "即时",
+          "facility": null,
+          "name": "以物换物·灵液×3→松脂×3",
+          "others": "灵液×3",
+          "process": "proc:barter:spirit_liquid_for_resin",
+          "quantity": 3,
+          "research": null,
+          "species": null,
+          "timing": "交换时",
+          "type": "barter"
+        },
+        {
+          "ap": "0AP",
+          "basis": "每批",
+          "category_hint": "trade",
+          "conditions": "",
+          "crop": null,
+          "detail": "以物换物·凝水胶×3→松脂×3：松脂×3（每批）",
+          "duration": "即时",
+          "facility": null,
+          "name": "以物换物·凝水胶×3→松脂×3",
+          "others": "凝水胶×3",
+          "process": "proc:barter:water_gel_for_resin",
+          "quantity": 3,
+          "research": null,
+          "species": null,
+          "timing": "交换时",
+          "type": "barter"
+        },
+        {
           "ap": "1AP",
           "basis": "每次收获",
           "category_hint": "production",
@@ -16120,6 +16884,276 @@
         "fuel"
       ],
       "uses": [
+        {
+          "ap": "0AP",
+          "basis": "每批",
+          "category_hint": "trade",
+          "conditions": "",
+          "crop": null,
+          "detail": "以物换物·松脂×4→蜂蜡×2：松脂×4（每批）",
+          "duration": "即时",
+          "facility": null,
+          "name": "以物换物·松脂×4→蜂蜡×2",
+          "others": "蜂蜡×2",
+          "process": "proc:barter:resin_for_beeswax",
+          "quantity": 4,
+          "research": null,
+          "species": null,
+          "timing": "交换时",
+          "type": "barter"
+        },
+        {
+          "ap": "0AP",
+          "basis": "每批",
+          "category_hint": "trade",
+          "conditions": "",
+          "crop": null,
+          "detail": "以物换物·松脂×4→碎铁矿×4：松脂×4（每批）",
+          "duration": "即时",
+          "facility": null,
+          "name": "以物换物·松脂×4→碎铁矿×4",
+          "others": "碎铁矿×4",
+          "process": "proc:barter:resin_for_crushed_ore",
+          "quantity": 4,
+          "research": null,
+          "species": null,
+          "timing": "交换时",
+          "type": "barter"
+        },
+        {
+          "ap": "0AP",
+          "basis": "每批",
+          "category_hint": "trade",
+          "conditions": "",
+          "crop": null,
+          "detail": "以物换物·松脂×4→高密度藻料×3：松脂×4（每批）",
+          "duration": "即时",
+          "facility": null,
+          "name": "以物换物·松脂×4→高密度藻料×3",
+          "others": "高密度藻料×3",
+          "process": "proc:barter:resin_for_dense_algae",
+          "quantity": 4,
+          "research": null,
+          "species": null,
+          "timing": "交换时",
+          "type": "barter"
+        },
+        {
+          "ap": "0AP",
+          "basis": "每批",
+          "category_hint": "trade",
+          "conditions": "",
+          "crop": null,
+          "detail": "以物换物·松脂×4→鱼肉×3：松脂×4（每批）",
+          "duration": "即时",
+          "facility": null,
+          "name": "以物换物·松脂×4→鱼肉×3",
+          "others": "鱼肉×3",
+          "process": "proc:barter:resin_for_fish_meat",
+          "quantity": 4,
+          "research": null,
+          "species": null,
+          "timing": "交换时",
+          "type": "barter"
+        },
+        {
+          "ap": "0AP",
+          "basis": "每批",
+          "category_hint": "trade",
+          "conditions": "",
+          "crop": null,
+          "detail": "以物换物·松脂×2→花蜜×2＋花粉×1：松脂×2（每批）",
+          "duration": "即时",
+          "facility": null,
+          "name": "以物换物·松脂×2→花蜜×2＋花粉×1",
+          "others": "花蜜×2；花粉×1",
+          "process": "proc:barter:resin_for_flower_samples",
+          "quantity": 2,
+          "research": null,
+          "species": null,
+          "timing": "交换时",
+          "type": "barter"
+        },
+        {
+          "ap": "0AP",
+          "basis": "每批",
+          "category_hint": "trade",
+          "conditions": "",
+          "crop": null,
+          "detail": "以物换物·松脂×4→蜂蜜×2：松脂×4（每批）",
+          "duration": "即时",
+          "facility": null,
+          "name": "以物换物·松脂×4→蜂蜜×2",
+          "others": "蜂蜜×2",
+          "process": "proc:barter:resin_for_honey",
+          "quantity": 4,
+          "research": null,
+          "species": null,
+          "timing": "交换时",
+          "type": "barter"
+        },
+        {
+          "ap": "0AP",
+          "basis": "每批",
+          "category_hint": "trade",
+          "conditions": "",
+          "crop": null,
+          "detail": "以物换物·松脂×8→保水基质×4：松脂×8（每批）",
+          "duration": "即时",
+          "facility": null,
+          "name": "以物换物·松脂×8→保水基质×4",
+          "others": "保水基质×4",
+          "process": "proc:barter:resin_for_matrix",
+          "quantity": 8,
+          "research": null,
+          "species": null,
+          "timing": "交换时",
+          "type": "barter"
+        },
+        {
+          "ap": "0AP",
+          "basis": "每批",
+          "category_hint": "trade",
+          "conditions": "",
+          "crop": null,
+          "detail": "以物换物·松脂×8→矿质鳞片×2：松脂×8（每批）",
+          "duration": "即时",
+          "facility": null,
+          "name": "以物换物·松脂×8→矿质鳞片×2",
+          "others": "矿质鳞片×2",
+          "process": "proc:barter:resin_for_mineral_scale",
+          "quantity": 8,
+          "research": null,
+          "species": null,
+          "timing": "交换时",
+          "type": "barter"
+        },
+        {
+          "ap": "0AP",
+          "basis": "每批",
+          "category_hint": "trade",
+          "conditions": "",
+          "crop": null,
+          "detail": "以物换物·松脂×6→富集矿砂×2：松脂×6（每批）",
+          "duration": "即时",
+          "facility": null,
+          "name": "以物换物·松脂×6→富集矿砂×2",
+          "others": "富集矿砂×2",
+          "process": "proc:barter:resin_for_ore_concentrate",
+          "quantity": 6,
+          "research": null,
+          "species": null,
+          "timing": "交换时",
+          "type": "barter"
+        },
+        {
+          "ap": "0AP",
+          "basis": "每批",
+          "category_hint": "trade",
+          "conditions": "",
+          "crop": null,
+          "detail": "以物换物·松脂×8→复合石板×4：松脂×8（每批）",
+          "duration": "即时",
+          "facility": null,
+          "name": "以物换物·松脂×8→复合石板×4",
+          "others": "复合石板×4",
+          "process": "proc:barter:resin_for_panels",
+          "quantity": 8,
+          "research": null,
+          "species": null,
+          "timing": "交换时",
+          "type": "barter"
+        },
+        {
+          "ap": "0AP",
+          "basis": "每批",
+          "category_hint": "trade",
+          "conditions": "",
+          "crop": null,
+          "detail": "以物换物·松脂×8→珍珠×2：松脂×8（每批）",
+          "duration": "即时",
+          "facility": null,
+          "name": "以物换物·松脂×8→珍珠×2",
+          "others": "珍珠×2",
+          "process": "proc:barter:resin_for_pearl",
+          "quantity": 8,
+          "research": null,
+          "species": null,
+          "timing": "交换时",
+          "type": "barter"
+        },
+        {
+          "ap": "0AP",
+          "basis": "每批",
+          "category_hint": "trade",
+          "conditions": "",
+          "crop": null,
+          "detail": "以物换物·松脂×6→精炼油×3：松脂×6（每批）",
+          "duration": "即时",
+          "facility": null,
+          "name": "以物换物·松脂×6→精炼油×3",
+          "others": "精炼油×3",
+          "process": "proc:barter:resin_for_refined_oil",
+          "quantity": 6,
+          "research": null,
+          "species": null,
+          "timing": "交换时",
+          "type": "barter"
+        },
+        {
+          "ap": "0AP",
+          "basis": "每批",
+          "category_hint": "trade",
+          "conditions": "",
+          "crop": null,
+          "detail": "以物换物·松脂×2→污泥×2：松脂×2（每批）",
+          "duration": "即时",
+          "facility": null,
+          "name": "以物换物·松脂×2→污泥×2",
+          "others": "污泥×2",
+          "process": "proc:barter:resin_for_sludge",
+          "quantity": 2,
+          "research": null,
+          "species": null,
+          "timing": "交换时",
+          "type": "barter"
+        },
+        {
+          "ap": "0AP",
+          "basis": "每批",
+          "category_hint": "trade",
+          "conditions": "",
+          "crop": null,
+          "detail": "以物换物·松脂×4→砂砾×3＋石粉×1：松脂×4（每批）",
+          "duration": "即时",
+          "facility": null,
+          "name": "以物换物·松脂×4→砂砾×3＋石粉×1",
+          "others": "砂砾×3；石粉×1",
+          "process": "proc:barter:resin_for_stone_parts",
+          "quantity": 4,
+          "research": null,
+          "species": null,
+          "timing": "交换时",
+          "type": "barter"
+        },
+        {
+          "ap": "0AP",
+          "basis": "每批",
+          "category_hint": "trade",
+          "conditions": "",
+          "crop": null,
+          "detail": "以物换物·松脂×8→凝水胶×4：松脂×8（每批）",
+          "duration": "即时",
+          "facility": null,
+          "name": "以物换物·松脂×8→凝水胶×4",
+          "others": "凝水胶×4",
+          "process": "proc:barter:resin_for_water_gel",
+          "quantity": 8,
+          "research": null,
+          "species": null,
+          "timing": "交换时",
+          "type": "barter"
+        },
         {
           "ap": "启动1＋收取1",
           "basis": "每批",
@@ -16461,7 +17495,7 @@
         {
           "key": "supply",
           "label": "五行供货",
-          "text": "可供货（土行）；供养值8：订单数量=ceil(需求/供养值)，回款=数量×卖价＋10%溢价"
+          "text": "可供货（土行）；供养值3：订单数量=ceil(需求/供养值)，回款=数量×卖价＋10%溢价"
         }
       ],
       "icon": "rock_shell",
@@ -16513,7 +17547,7 @@
           "type": "claim"
         }
       ],
-      "summary": "土行固体；可供货（供养值8）",
+      "summary": "土行固体；可供货（供养值3）",
       "tags": [
         "food",
         "animal_product"
@@ -16615,7 +17649,7 @@
           "duration": "即时",
           "facility": "养鳞台",
           "name": "收取·矿鳞蜥",
-          "others": "矿质鳞片×2",
+          "others": "矿质鳞片×4",
           "process": "proc:claim:mineral_scale_lizard",
           "quantity": 1,
           "research": null,
@@ -16708,7 +17742,7 @@
           "duration": "即时",
           "facility": "圈舍",
           "name": "收取·钢绵羊",
-          "others": "钢绒×1",
+          "others": "钢绒×2",
           "process": "proc:claim:steel_sheep",
           "quantity": 1,
           "research": null,
@@ -16782,7 +17816,7 @@
         {
           "key": "supply",
           "label": "五行供货",
-          "text": "可供货（木行）；供养值9：订单数量=ceil(需求/供养值)，回款=数量×卖价＋10%溢价"
+          "text": "可供货（木行）；供养值4：订单数量=ceil(需求/供养值)，回款=数量×卖价＋10%溢价"
         }
       ],
       "icon": "silk",
@@ -16816,12 +17850,30 @@
           "type": "claim"
         }
       ],
-      "summary": "木行固体；可供货（供养值9）",
+      "summary": "木行固体；可供货（供养值4）",
       "tags": [
         "food",
         "animal_product"
       ],
       "uses": [
+        {
+          "ap": "0AP",
+          "basis": "每批",
+          "category_hint": "trade",
+          "conditions": "",
+          "crop": null,
+          "detail": "以物换物·蚕丝×4→松脂×3：蚕丝×4（每批）",
+          "duration": "即时",
+          "facility": null,
+          "name": "以物换物·蚕丝×4→松脂×3",
+          "others": "松脂×3",
+          "process": "proc:barter:silk_for_resin",
+          "quantity": 4,
+          "research": null,
+          "species": null,
+          "timing": "交换时",
+          "type": "barter"
+        },
         {
           "ap": "启动1＋收取1",
           "basis": "每批",
@@ -16983,6 +18035,24 @@
       ],
       "source_id": "sludge",
       "sources": [
+        {
+          "ap": "0AP",
+          "basis": "每批",
+          "category_hint": "trade",
+          "conditions": "",
+          "crop": null,
+          "detail": "以物换物·松脂×2→污泥×2：污泥×2（每批）",
+          "duration": "即时",
+          "facility": null,
+          "name": "以物换物·松脂×2→污泥×2",
+          "others": "松脂×2",
+          "process": "proc:barter:resin_for_sludge",
+          "quantity": 2,
+          "research": null,
+          "species": null,
+          "timing": "交换时",
+          "type": "barter"
+        },
         {
           "ap": "启动1＋收取1",
           "basis": "每批",
@@ -17267,7 +18337,7 @@
         {
           "key": "supply",
           "label": "五行供货",
-          "text": "可供货（水行）；供养值16：订单数量=ceil(需求/供养值)，回款=数量×卖价＋10%溢价"
+          "text": "可供货（水行）；供养值6：订单数量=ceil(需求/供养值)，回款=数量×卖价＋10%溢价"
         }
       ],
       "icon": "spirit_liquid",
@@ -17301,12 +18371,30 @@
           "type": "claim"
         }
       ],
-      "summary": "水行液体；可供货（供养值16）",
+      "summary": "水行液体；可供货（供养值6）",
       "tags": [
         "food",
         "animal_product"
       ],
       "uses": [
+        {
+          "ap": "0AP",
+          "basis": "每批",
+          "category_hint": "trade",
+          "conditions": "",
+          "crop": null,
+          "detail": "以物换物·灵液×3→松脂×3：灵液×3（每批）",
+          "duration": "即时",
+          "facility": null,
+          "name": "以物换物·灵液×3→松脂×3",
+          "others": "松脂×3",
+          "process": "proc:barter:spirit_liquid_for_resin",
+          "quantity": 3,
+          "research": null,
+          "species": null,
+          "timing": "交换时",
+          "type": "barter"
+        },
         {
           "ap": "1AP",
           "basis": "每群·每轮",
@@ -17402,7 +18490,7 @@
         {
           "key": "supply",
           "label": "五行供货",
-          "text": "可供货（金行）；供养值11：订单数量=ceil(需求/供养值)，回款=数量×卖价＋10%溢价"
+          "text": "可供货（金行）；供养值10：订单数量=ceil(需求/供养值)，回款=数量×卖价＋10%溢价"
         },
         {
           "key": "terminal",
@@ -17428,20 +18516,20 @@
           "category_hint": "production",
           "conditions": "",
           "crop": null,
-          "detail": "收取·钢绵羊：钢绒×1（每只·每轮）｜圈舍｜钢绵羊｜1AP",
+          "detail": "收取·钢绵羊：钢绒×2（每只·每轮）｜圈舍｜钢绵羊｜1AP",
           "duration": "即时",
           "facility": "圈舍",
           "name": "收取·钢绵羊",
           "others": "羊粪肥×1",
           "process": "proc:claim:steel_sheep",
-          "quantity": 1,
+          "quantity": 2,
           "research": null,
           "species": "钢绵羊",
           "timing": "收取时",
           "type": "claim"
         }
       ],
-      "summary": "金行固体；可供货（供养值11）",
+      "summary": "金行固体；可供货（供养值10）",
       "tags": [
         "food",
         "animal_product"
@@ -17515,6 +18603,24 @@
       ],
       "source_id": "stone_powder",
       "sources": [
+        {
+          "ap": "0AP",
+          "basis": "每批",
+          "category_hint": "trade",
+          "conditions": "",
+          "crop": null,
+          "detail": "以物换物·松脂×4→砂砾×3＋石粉×1：石粉×1（每批）",
+          "duration": "即时",
+          "facility": null,
+          "name": "以物换物·松脂×4→砂砾×3＋石粉×1",
+          "others": "松脂×4；砂砾×3",
+          "process": "proc:barter:resin_for_stone_parts",
+          "quantity": 1,
+          "research": null,
+          "species": null,
+          "timing": "交换时",
+          "type": "barter"
+        },
         {
           "ap": "启动1＋收取1",
           "basis": "每批",
@@ -18826,30 +19932,12 @@
           "duration": "即时",
           "facility": "取油台",
           "name": "整体维护·油鳍鱼",
-          "others": "藻料×1",
+          "others": "藻料×1；谷粒×2",
           "process": "proc:maintain:oilfin_fish",
           "quantity": 1,
           "research": null,
           "species": "油鳍鱼",
           "timing": "整体维护时",
-          "type": "maintain"
-        },
-        {
-          "ap": "1AP",
-          "basis": "每尾·每轮",
-          "category_hint": "care",
-          "conditions": "空闲成体启动「取油轮投料」周期时",
-          "crop": null,
-          "detail": "整体维护·油鳍鱼：复合水养料×1（每尾·每轮）｜取油台｜油鳍鱼｜1AP",
-          "duration": "即时",
-          "facility": "取油台",
-          "name": "整体维护·油鳍鱼",
-          "others": "藻料×1",
-          "process": "proc:maintain:oilfin_fish",
-          "quantity": 1,
-          "research": null,
-          "species": "油鳍鱼",
-          "timing": "周期启动时一次付清",
           "type": "maintain"
         },
         {
@@ -18903,6 +19991,24 @@
       "source_id": "water_gel",
       "sources": [
         {
+          "ap": "0AP",
+          "basis": "每批",
+          "category_hint": "trade",
+          "conditions": "",
+          "crop": null,
+          "detail": "以物换物·松脂×8→凝水胶×4：凝水胶×4（每批）",
+          "duration": "即时",
+          "facility": null,
+          "name": "以物换物·松脂×8→凝水胶×4",
+          "others": "松脂×8",
+          "process": "proc:barter:resin_for_water_gel",
+          "quantity": 4,
+          "research": null,
+          "species": null,
+          "timing": "交换时",
+          "type": "barter"
+        },
+        {
           "ap": "1AP",
           "basis": "每群·每轮",
           "category_hint": "production",
@@ -18926,6 +20032,24 @@
         "animal_product"
       ],
       "uses": [
+        {
+          "ap": "0AP",
+          "basis": "每批",
+          "category_hint": "trade",
+          "conditions": "",
+          "crop": null,
+          "detail": "以物换物·凝水胶×3→松脂×3：凝水胶×3（每批）",
+          "duration": "即时",
+          "facility": null,
+          "name": "以物换物·凝水胶×3→松脂×3",
+          "others": "松脂×3",
+          "process": "proc:barter:water_gel_for_resin",
+          "quantity": 3,
+          "research": null,
+          "species": null,
+          "timing": "交换时",
+          "type": "barter"
+        },
         {
           "ap": "启动1＋收取1",
           "basis": "每批",
@@ -18999,11 +20123,6 @@
           "key": "sell",
           "label": "市集出售",
           "text": "2元石/份（计入销售收入）"
-        },
-        {
-          "key": "terminal",
-          "label": "下游用途",
-          "text": "无下游配方：出售与供货是该物品的设计出口"
         }
       ],
       "icon": "earth",
@@ -19017,6 +20136,24 @@
       ],
       "source_id": "water_retaining_matrix",
       "sources": [
+        {
+          "ap": "0AP",
+          "basis": "每批",
+          "category_hint": "trade",
+          "conditions": "",
+          "crop": null,
+          "detail": "以物换物·松脂×8→保水基质×4：保水基质×4（每批）",
+          "duration": "即时",
+          "facility": null,
+          "name": "以物换物·松脂×8→保水基质×4",
+          "others": "松脂×8",
+          "process": "proc:barter:resin_for_matrix",
+          "quantity": 4,
+          "research": null,
+          "species": null,
+          "timing": "交换时",
+          "type": "barter"
+        },
         {
           "ap": "启动1＋收取1",
           "basis": "每批",
@@ -19041,6 +20178,24 @@
         "processing"
       ],
       "uses": [
+        {
+          "ap": "0AP",
+          "basis": "一次性",
+          "category_hint": "progression",
+          "conditions": "",
+          "crop": null,
+          "detail": "阶段事件·产业进阶：保水基质×8（一次性）",
+          "duration": "即时",
+          "facility": null,
+          "name": "阶段事件·产业进阶",
+          "others": "复合石板×12；精炼油×6",
+          "process": "proc:milestone:integrated_estate",
+          "quantity": 8,
+          "research": null,
+          "species": null,
+          "timing": "成功提交时",
+          "type": "milestone"
+        },
         {
           "ap": "0AP",
           "basis": "每份",
@@ -19975,6 +21130,11 @@
           "key": "fuel",
           "label": "灯光模式",
           "text": "入驻补光灯后替代精炼油供能；休眠不自动回退燃油；自然光/灯/蛊取最大值，喜阴作物可能降效"
+        },
+        {
+          "key": "economic_stage",
+          "label": "经济阶段",
+          "text": "阶段≥2（规模增长）；仍须满足其他前置与运行条件"
         }
       ],
       "icon": "bright_gu",
@@ -19990,6 +21150,7 @@
       "locks": null,
       "name": "明光蛊",
       "related_rules": [
+        "rule:economy-stages",
         "rule:logistics"
       ],
       "source_id": "bright_gu",
@@ -20035,6 +21196,11 @@
           "key": "timing",
           "label": "时点",
           "text": "部署/撤回各1AP；启用次日生效；停用立即取消后续效果，已付不退；运行/待收任务锁定实例"
+        },
+        {
+          "key": "economic_stage",
+          "label": "经济阶段",
+          "text": "阶段≥2（规模增长）；仍须满足其他前置与运行条件"
         }
       ],
       "icon": "command_gu",
@@ -20050,6 +21216,7 @@
       "locks": null,
       "name": "驭兽蛊",
       "related_rules": [
+        "rule:economy-stages",
         "rule:logistics"
       ],
       "source_id": "command_gu",
@@ -20096,6 +21263,11 @@
           "key": "timing",
           "label": "时点",
           "text": "部署/撤回各1AP；启用次日生效；停用立即取消后续效果，已付不退；运行/待收任务锁定实例"
+        },
+        {
+          "key": "economic_stage",
+          "label": "经济阶段",
+          "text": "阶段≥2（规模增长）；仍须满足其他前置与运行条件"
         }
       ],
       "icon": "help",
@@ -20111,6 +21283,7 @@
       "locks": null,
       "name": "节粮蛊",
       "related_rules": [
+        "rule:economy-stages",
         "rule:logistics"
       ],
       "source_id": "feed_saving_gu",
@@ -20157,6 +21330,11 @@
           "key": "timing",
           "label": "时点",
           "text": "部署/撤回各1AP；启用次日生效；停用立即取消后续效果，已付不退；运行/待收任务锁定实例"
+        },
+        {
+          "key": "economic_stage",
+          "label": "经济阶段",
+          "text": "阶段≥2（规模增长）；仍须满足其他前置与运行条件"
         }
       ],
       "icon": "fert_gu",
@@ -20172,6 +21350,7 @@
       "locks": null,
       "name": "节肥蛊",
       "related_rules": [
+        "rule:economy-stages",
         "rule:logistics"
       ],
       "source_id": "fert_gu",
@@ -20218,6 +21397,11 @@
           "key": "timing",
           "label": "时点",
           "text": "部署/撤回各1AP；启用次日生效；停用立即取消后续效果，已付不退；运行/待收任务锁定实例"
+        },
+        {
+          "key": "economic_stage",
+          "label": "经济阶段",
+          "text": "阶段≥2（规模增长）；仍须满足其他前置与运行条件"
         }
       ],
       "icon": "growth_gu",
@@ -20233,6 +21417,7 @@
       "locks": null,
       "name": "催生蛊",
       "related_rules": [
+        "rule:economy-stages",
         "rule:logistics"
       ],
       "source_id": "growth_gu",
@@ -20279,6 +21464,11 @@
           "key": "timing",
           "label": "时点",
           "text": "部署/撤回各1AP；启用次日生效；停用立即取消后续效果，已付不退；运行/待收任务锁定实例"
+        },
+        {
+          "key": "economic_stage",
+          "label": "经济阶段",
+          "text": "阶段≥2（规模增长）；仍须满足其他前置与运行条件"
         }
       ],
       "icon": "help",
@@ -20334,6 +21524,7 @@
       "locks": null,
       "name": "丰养蛊",
       "related_rules": [
+        "rule:economy-stages",
         "rule:logistics"
       ],
       "source_id": "product_yield_gu",
@@ -20390,6 +21581,11 @@
           "key": "environment",
           "label": "环境",
           "text": "光照≥60、水分≥30，不足暂停保留进度；每推进日扣水分8，不扣肥力；清水浇水或田间站可补水"
+        },
+        {
+          "key": "economic_stage",
+          "label": "经济阶段",
+          "text": "阶段≥2（规模增长）；仍须满足其他前置与运行条件"
         }
       ],
       "icon": "rice_bag_gu",
@@ -20405,6 +21601,7 @@
       "locks": null,
       "name": "饭袋草蛊",
       "related_rules": [
+        "rule:economy-stages",
         "rule:logistics"
       ],
       "source_id": "rice_bag_gu",
@@ -20450,6 +21647,11 @@
           "key": "timing",
           "label": "时点",
           "text": "部署/撤回各1AP；启用次日生效；停用立即取消后续效果，已付不退；运行/待收任务锁定实例"
+        },
+        {
+          "key": "economic_stage",
+          "label": "经济阶段",
+          "text": "阶段≥2（规模增长）；仍须满足其他前置与运行条件"
         }
       ],
       "icon": "soothe_gu",
@@ -20465,6 +21667,7 @@
       "locks": null,
       "name": "安抚蛊",
       "related_rules": [
+        "rule:economy-stages",
         "rule:logistics"
       ],
       "source_id": "soothe_gu",
@@ -20516,6 +21719,11 @@
           "key": "materials",
           "label": "研究样本",
           "text": "基础样本逐项×1.5向上取整；一次性启动费不变"
+        },
+        {
+          "key": "economic_stage",
+          "label": "经济阶段",
+          "text": "阶段≥2（规模增长）；仍须满足其他前置与运行条件"
         }
       ],
       "icon": "time_gu",
@@ -20536,6 +21744,7 @@
       "locks": null,
       "name": "宙道研究蛊",
       "related_rules": [
+        "rule:economy-stages",
         "rule:logistics"
       ],
       "source_id": "time_gu",
@@ -20582,6 +21791,11 @@
           "key": "timing",
           "label": "时点",
           "text": "部署/撤回各1AP；启用次日生效；停用立即取消后续效果，已付不退；运行/待收任务锁定实例"
+        },
+        {
+          "key": "economic_stage",
+          "label": "经济阶段",
+          "text": "阶段≥2（规模增长）；仍须满足其他前置与运行条件"
         }
       ],
       "icon": "water_gu",
@@ -20597,6 +21811,7 @@
       "locks": null,
       "name": "锁水蛊",
       "related_rules": [
+        "rule:economy-stages",
         "rule:logistics"
       ],
       "source_id": "water_gu",
@@ -20643,6 +21858,11 @@
           "key": "timing",
           "label": "时点",
           "text": "部署/撤回各1AP；启用次日生效；停用立即取消后续效果，已付不退；运行/待收任务锁定实例"
+        },
+        {
+          "key": "economic_stage",
+          "label": "经济阶段",
+          "text": "阶段≥2（规模增长）；仍须满足其他前置与运行条件"
         }
       ],
       "icon": "wisdom_gu",
@@ -20658,6 +21878,7 @@
       "locks": null,
       "name": "智道研究蛊",
       "related_rules": [
+        "rule:economy-stages",
         "rule:logistics"
       ],
       "source_id": "wisdom_gu",
@@ -21723,7 +22944,7 @@
         {
           "key": "inputs",
           "label": "投入",
-          "text": "矿质补料×2/单位/轮"
+          "text": "矿质补料×1/单位/轮"
         }
       ],
       "icon": "scale_station",
@@ -21851,12 +23072,12 @@
         {
           "key": "inputs",
           "label": "投入",
-          "text": "复合水养料×1/单位/轮"
+          "text": "谷粒×2/单位/轮"
         },
         {
           "key": "outputs",
           "label": "周期产物",
-          "text": "粗油×2＋鱼肉×1/轮/单位"
+          "text": "粗油×6＋鱼肉×1/轮/单位"
         }
       ],
       "icon": "fodder_grass",
@@ -21941,7 +23162,7 @@
         {
           "key": "outputs",
           "label": "周期产物",
-          "text": "珍珠×2/轮/单位"
+          "text": "珍珠×3/轮/单位"
         }
       ],
       "icon": "fodder_grass",
@@ -26324,6 +27545,11 @@
           "key": "unlocks",
           "label": "解锁内容",
           "text": "配方·鱼粉陆养料、配方·鱼粉水养料、配方·陆养料调配、配方·水养料调配、配方·废滤炭堆肥、配方·鱼肉制粉、配方·油脂精炼、配方·蜂蜡精炼、食谱·land_meal、食谱·water_meal"
+        },
+        {
+          "key": "economic_stage",
+          "label": "经济阶段",
+          "text": "阶段≥1（建立基础）；仍须满足其他前置与运行条件"
         }
       ],
       "icon": "research_bench",
@@ -26399,6 +27625,7 @@
       "locks": null,
       "name": "饲料与蜡油精制",
       "related_rules": [
+        "rule:economy-stages",
         "rule:research"
       ],
       "source_id": "advanced_feed_oil_wax",
@@ -26437,6 +27664,11 @@
           "key": "unlocks",
           "label": "解锁内容",
           "text": "配方·保水基质、配方·珍珠精滤、食谱·matrix_round、食谱·reed_substrate、食谱·pearl_spirit_round、食谱·gel_spirit_round"
+        },
+        {
+          "key": "economic_stage",
+          "label": "经济阶段",
+          "text": "阶段≥2（规模增长）；仍须满足其他前置与运行条件"
         }
       ],
       "icon": "research_bench",
@@ -26467,6 +27699,7 @@
       "locks": null,
       "name": "水产精养",
       "related_rules": [
+        "rule:economy-stages",
         "rule:research"
       ],
       "source_id": "aquatic_intensive_care",
@@ -26505,6 +27738,11 @@
           "key": "unlocks",
           "label": "解锁内容",
           "text": "设施·厨房、配方·蜜谷灵饼烘焙、配方·菌鱼灵膳烹制"
+        },
+        {
+          "key": "economic_stage",
+          "label": "经济阶段",
+          "text": "阶段≥2（规模增长）；仍须满足其他前置与运行条件"
         }
       ],
       "icon": "research_bench",
@@ -26530,6 +27768,7 @@
       "locks": null,
       "name": "灵食初制",
       "related_rules": [
+        "rule:economy-stages",
         "rule:research"
       ],
       "source_id": "basic_spirit_cooking",
@@ -26568,6 +27807,11 @@
           "key": "unlocks",
           "label": "解锁内容",
           "text": "设施·蜂箱、物种·蜜盏蜂"
+        },
+        {
+          "key": "economic_stage",
+          "label": "经济阶段",
+          "text": "阶段≥1（建立基础）；仍须满足其他前置与运行条件"
         }
       ],
       "icon": "research_bench",
@@ -26588,6 +27832,7 @@
       "locks": null,
       "name": "蜂群协作",
       "related_rules": [
+        "rule:economy-stages",
         "rule:research"
       ],
       "source_id": "beekeeping",
@@ -26626,6 +27871,11 @@
           "key": "unlocks",
           "label": "解锁内容",
           "text": "采购·净水菌毯培养单位、设施·净水菌床、设施·泥料处理台、配方·菌毯净水、配方·污泥堆肥、配方·残料翻肥、物种·净水菌毯、物种·净泥鳅"
+        },
+        {
+          "key": "economic_stage",
+          "label": "经济阶段",
+          "text": "阶段≥1（建立基础）；仍须满足其他前置与运行条件"
         }
       ],
       "icon": "research_bench",
@@ -26676,6 +27926,7 @@
       "locks": null,
       "name": "菌毯净化",
       "related_rules": [
+        "rule:economy-stages",
         "rule:research"
       ],
       "source_id": "biofiltration",
@@ -26714,6 +27965,11 @@
           "key": "unlocks",
           "label": "解锁内容",
           "text": "配方·藻露羹熬制、配方·蜜油火膏熬制、配方·腐土菌丸炼制、配方·蜜炼金食炼制"
+        },
+        {
+          "key": "economic_stage",
+          "label": "经济阶段",
+          "text": "阶段≥3（体系增长）；仍须满足其他前置与运行条件"
         }
       ],
       "icon": "research_bench",
@@ -26744,6 +28000,7 @@
       "locks": null,
       "name": "复合灵食",
       "related_rules": [
+        "rule:economy-stages",
         "rule:research"
       ],
       "source_id": "composite_spirit_food",
@@ -26782,6 +28039,11 @@
           "key": "unlocks",
           "label": "解锁内容",
           "text": "设施·炭化巢、设施·农产加工台、设施·取油台、配方·木屑生物炭化、配方·树枝生物炭化、配方·油饼堆肥、配方·浮萍制粉、配方·谷粉研磨、配方·草粉研磨、配方·稻米磨粉、配方·油籽榨油、物种·炭腹虫、物种·油鳍鱼"
+        },
+        {
+          "key": "economic_stage",
+          "label": "经济阶段",
+          "text": "阶段≥0（起步）；仍须满足其他前置与运行条件"
         }
       ],
       "icon": "research_bench",
@@ -26857,6 +28119,7 @@
       "locks": null,
       "name": "农产初加工",
       "related_rules": [
+        "rule:economy-stages",
         "rule:research"
       ],
       "source_id": "farm_preparation",
@@ -26869,22 +28132,22 @@
         {
           "key": "layer",
           "label": "层级与前置",
-          "text": "第3层；前置：饲料与蜡油精制、水与藻料回流"
+          "text": "第1层；前置：农产初加工"
         },
         {
           "key": "samples",
           "label": "样本",
-          "text": "腐殖土×2＋清水×4＋复合陆养料×1（启动时一次性消耗）"
+          "text": "腐殖土×2＋清水×4＋谷粒×1（启动时一次性消耗）"
         },
         {
           "key": "fee",
           "label": "启动费",
-          "text": "12元石（一次性；暂停不退款）"
+          "text": "8元石（一次性；暂停不退款）"
         },
         {
           "key": "days",
           "label": "有效研究日",
-          "text": "6个（每台每日最多登记1次研究工作：手动1AP或负责人1元石；只等日子不推进）"
+          "text": "2个（每台每日最多登记1次研究工作：手动1AP或负责人1元石；只等日子不推进）"
         },
         {
           "key": "bench",
@@ -26895,6 +28158,11 @@
           "key": "unlocks",
           "label": "解锁内容",
           "text": "设施·田间维护站"
+        },
+        {
+          "key": "economic_stage",
+          "label": "经济阶段",
+          "text": "阶段≥1（建立基础）；仍须满足其他前置与运行条件"
         }
       ],
       "icon": "research_bench",
@@ -26910,10 +28178,11 @@
       "locks": null,
       "name": "田间自动维护",
       "related_rules": [
+        "rule:economy-stages",
         "rule:research"
       ],
       "source_id": "field_maintenance",
-      "summary": "第3层研究；12元石＋6有效日；解锁1项",
+      "summary": "第1层研究；8元石＋2有效日；解锁1项",
       "tags": []
     },
     {
@@ -26948,6 +28217,11 @@
           "key": "unlocks",
           "label": "解锁内容",
           "text": "采购·蜜铃苗、采购·油籽花种子、种植·蜜铃灌木、种植·油籽花"
+        },
+        {
+          "key": "economic_stage",
+          "label": "经济阶段",
+          "text": "阶段≥0（起步）；仍须满足其他前置与运行条件"
         }
       ],
       "icon": "research_bench",
@@ -26978,6 +28252,7 @@
       "locks": null,
       "name": "花源栽培",
       "related_rules": [
+        "rule:economy-stages",
         "rule:research"
       ],
       "source_id": "flower_cultivation",
@@ -27016,6 +28291,11 @@
           "key": "unlocks",
           "label": "解锁内容",
           "text": "设施·采礁台、设施·补光灯、设施·养鳞台、设施·岩壳成型台、配方·珊瑚复合石板、配方·黏液复合石板、配方·鳞甲复合板、配方·岩壳石板、配方·复合石板组装、配方·岩壳成型、配方·珊瑚制粉、配方·壳石制粉、配方·矿质补料调配、配方·再生填料回收、配方·富集矿冶炼、物种·砾甲蜗牛、物种·矿鳞蜥、物种·礁骨珊瑚、食谱·mineral_supplement"
+        },
+        {
+          "key": "economic_stage",
+          "label": "经济阶段",
+          "text": "阶段≥2（规模增长）；仍须满足其他前置与运行条件"
         }
       ],
       "icon": "research_bench",
@@ -27121,6 +28401,7 @@
       "locks": null,
       "name": "矿质材料工艺",
       "related_rules": [
+        "rule:economy-stages",
         "rule:research"
       ],
       "source_id": "mineral_materials",
@@ -27159,6 +28440,11 @@
           "key": "unlocks",
           "label": "解锁内容",
           "text": "设施·选矿场、配方·生物选矿、物种·岩腹兽"
+        },
+        {
+          "key": "economic_stage",
+          "label": "经济阶段",
+          "text": "阶段≥1（建立基础）；仍须满足其他前置与运行条件"
         }
       ],
       "icon": "research_bench",
@@ -27184,6 +28470,7 @@
       "locks": null,
       "name": "生物选矿",
       "related_rules": [
+        "rule:economy-stages",
         "rule:research"
       ],
       "source_id": "ore_concentration",
@@ -27222,6 +28509,11 @@
           "key": "unlocks",
           "label": "解锁内容",
           "text": "设施·碎岩场、配方·破碎石材、配方·破碎矿石、物种·啮岩鼹"
+        },
+        {
+          "key": "economic_stage",
+          "label": "经济阶段",
+          "text": "阶段≥1（建立基础）；仍须满足其他前置与运行条件"
         }
       ],
       "icon": "research_bench",
@@ -27252,6 +28544,7 @@
       "locks": null,
       "name": "岩料破碎",
       "related_rules": [
+        "rule:economy-stages",
         "rule:research"
       ],
       "source_id": "rock_handling",
@@ -27290,6 +28583,11 @@
           "key": "unlocks",
           "label": "解锁内容",
           "text": "设施·采胶台、设施·采珠台、配方·高密度藻培养、配方·多孔滤材、配方·炭砂滤料制作、配方·丝质滤材、配方·营养液回收、物种·凝胶水母、物种·珍珠蚌、食谱·dense_meal"
+        },
+        {
+          "key": "economic_stage",
+          "label": "经济阶段",
+          "text": "阶段≥1（建立基础）；仍须满足其他前置与运行条件"
         }
       ],
       "icon": "research_bench",
@@ -27355,6 +28653,7 @@
       "locks": null,
       "name": "水与藻料回流",
       "related_rules": [
+        "rule:economy-stages",
         "rule:research"
       ],
       "source_id": "water_recirculation",
@@ -27527,6 +28826,30 @@
       "related_rules": [],
       "source_id": "rule:day_settle",
       "summary": "AP耗尽或点“结束当天”进入日结；顺序：统一调度器（设施收取→必要换水→整体维护…",
+      "tags": []
+    },
+    {
+      "category": "rules",
+      "fields": [
+        {
+          "key": "statements",
+          "label": "规则说明",
+          "text": "1. 本模块偏向轻松养成，稳定生产元石和资源。全局经济阶段0～3与各产业房间等级独立：阶段事件开放研究/设施/蛊获取目录，房间仍须满足自己的结构、服务与供给条件。拆房、欠费或暂停不会撤销已经完成的阶段事件。\n2. 阶段0保留基础种植、采集与普通加工；阶段0、1以解锁积累为主，阶段2、3可通过重复建设形成规模。约两次普通扩建后再经营4～6轮是平衡目标，不是必须执行的任务次数或强制等待天数。\n3. 供货成功一次计一次，按全局完整订单结算记录累计，阶段之间不清零；普通出售、兑换和阶段交付不增加次数。供养值只是抵扣供养需求，订单收入按实际交付量×卖价，再加向下取整的10%溢价。\n4. 常驻以物换物随阶段增加条目，给出/收到均为共享仓库中的实物。松脂是已有作物产物，不是新增货币；交换0AP、无额外元石费、无每日次数限制，支持正整数批量，报价不扣料，执行时重验完整库存与阶段。\n5. 允许产业专精；合法换来的材料可用于阶段交付、研究、建造和加工，不要求所有材料自产。事件开放目录不等于研究已经完成，得到样本也不直接掌握工艺。后勤蛊取得与试用需阶段2，三级系统需阶段3，蛊的原有效果和房间收益不额外改倍率。\n6. 留栏的初次购幼/成长与后续生产轮分开计算；捕捞每轮重新补充动物，生物役使必须走实际岗位和劳动。标准成本是对照指标，不是现金净利润；低卖价材料可以承担建材、研究或替代用途，再生填料可按2份替代建造用原石1份。\n7. 阶段0→1：「初建产业」需要累计成功供货3次；打开市场或订单页的“产业成长与以物换物”提交。\n8. 阶段1→2：「后勤合作」需要累计成功供货12次；打开市场或订单页的“产业成长与以物换物”提交。\n9. 阶段2→3：「产业进阶」需要复合石板×12＋精炼油×6＋保水基质×8；打开市场或订单页的“产业成长与以物换物”提交。\n10. 当前固定兑换共23条，比例由每条给出/收到配置确定。百科资源页可查看具体交换来源与用途。"
+        },
+        {
+          "key": "refs",
+          "label": "实现依据",
+          "text": "scripts/farming/p8/p107_economy.gd::complete_event；scripts/farming/p8/p107_economy.gd::exchange；scripts/farming/p8/p107_economy.gd::order_count；scripts/farming/p8/p8_world.gd::batch_block"
+        }
+      ],
+      "icon": "help",
+      "id": "rule:economy-stages",
+      "kind": "rule",
+      "locks": null,
+      "name": "经济阶段、成长与以物换物",
+      "related_rules": [],
+      "source_id": "rule:economy-stages",
+      "summary": "本模块偏向轻松养成，稳定生产元石和资源。全局经济阶段0～3与各产业房间等级独立：…",
       "tags": []
     },
     {
@@ -27845,11 +29168,11 @@
   "generated_inputs": [
     {
       "path": "content/farming/p8/production.json",
-      "sha256": "0467a49441c33a4fcd76fcf8a75080c599c993079d0689a18c5fc3e9c368307c"
+      "sha256": "afb848c1d349d116f929ac1ceb7df0cba4b72eeff754fa02f04d6ac22bdff265"
     },
     {
       "path": "content/farming/baked/p8/production.json",
-      "sha256": "19675d0130bbe5b6899457ebb9b2b1427c49773b3c24b27b68595dd4b05d7a37"
+      "sha256": "d73e5cbe615e54470a0073008a0b80392462480fcf4ec160902a832e46f652a6"
     },
     {
       "path": "content/farming/p8/expansion.json",
@@ -27861,7 +29184,7 @@
     },
     {
       "path": "content/farming/encyclopedia/encyclopedia.json",
-      "sha256": "b3ec091316a648e0d75000f1a61e147fc991eb7b20c61b0616c78fbeb69dea58"
+      "sha256": "252754eb883d23c0e6544bffd792e50587ee1e8bd1a5837be4c1ebf8a43c43f4"
     },
     {
       "path": "scripts/farming/v1/v1_scene.gd",
@@ -27869,6 +29192,1009 @@
     }
   ],
   "processes": [
+    {
+      "ap": 0,
+      "ap_detail": "0AP",
+      "category_hint": "trade",
+      "conditions": [
+        "全局经济阶段≥2（规模增长）；给出物资足额；正整数批量"
+      ],
+      "crop": null,
+      "crop_name": null,
+      "duration": "即时",
+      "effects": [
+        "0AP，无额外元石费，不计供货次数，无每日次数限制"
+      ],
+      "facility": null,
+      "facility_name": null,
+      "id": "proc:barter:coral_stone_for_resin",
+      "inputs": [
+        {
+          "basis": "每批",
+          "entity": "resource:coral_stone",
+          "name": "珊瑚石",
+          "quantity": 2,
+          "timing": "交换时"
+        }
+      ],
+      "name": "以物换物·珊瑚石×2→松脂×3",
+      "outputs": [
+        {
+          "basis": "每批",
+          "entity": "resource:resin",
+          "name": "松脂",
+          "quantity": 3,
+          "timing": "交换时"
+        }
+      ],
+      "primeval_stones": 0,
+      "research": null,
+      "research_name": null,
+      "species": null,
+      "species_name": null,
+      "type": "barter",
+      "worker_fee": 0
+    },
+    {
+      "ap": 0,
+      "ap_detail": "0AP",
+      "category_hint": "trade",
+      "conditions": [
+        "全局经济阶段≥1（建立基础）；给出物资足额；正整数批量"
+      ],
+      "crop": null,
+      "crop_name": null,
+      "duration": "即时",
+      "effects": [
+        "0AP，无额外元石费，不计供货次数，无每日次数限制"
+      ],
+      "facility": null,
+      "facility_name": null,
+      "id": "proc:barter:crude_oil_for_resin",
+      "inputs": [
+        {
+          "basis": "每批",
+          "entity": "resource:crude_oil",
+          "name": "粗油",
+          "quantity": 3,
+          "timing": "交换时"
+        }
+      ],
+      "name": "以物换物·粗油×3→松脂×2",
+      "outputs": [
+        {
+          "basis": "每批",
+          "entity": "resource:resin",
+          "name": "松脂",
+          "quantity": 2,
+          "timing": "交换时"
+        }
+      ],
+      "primeval_stones": 0,
+      "research": null,
+      "research_name": null,
+      "species": null,
+      "species_name": null,
+      "type": "barter",
+      "worker_fee": 0
+    },
+    {
+      "ap": 0,
+      "ap_detail": "0AP",
+      "category_hint": "trade",
+      "conditions": [
+        "全局经济阶段≥1（建立基础）；给出物资足额；正整数批量"
+      ],
+      "crop": null,
+      "crop_name": null,
+      "duration": "即时",
+      "effects": [
+        "0AP，无额外元石费，不计供货次数，无每日次数限制"
+      ],
+      "facility": null,
+      "facility_name": null,
+      "id": "proc:barter:honey_for_resin",
+      "inputs": [
+        {
+          "basis": "每批",
+          "entity": "resource:honey",
+          "name": "蜂蜜",
+          "quantity": 4,
+          "timing": "交换时"
+        }
+      ],
+      "name": "以物换物·蜂蜜×4→松脂×3",
+      "outputs": [
+        {
+          "basis": "每批",
+          "entity": "resource:resin",
+          "name": "松脂",
+          "quantity": 3,
+          "timing": "交换时"
+        }
+      ],
+      "primeval_stones": 0,
+      "research": null,
+      "research_name": null,
+      "species": null,
+      "species_name": null,
+      "type": "barter",
+      "worker_fee": 0
+    },
+    {
+      "ap": 0,
+      "ap_detail": "0AP",
+      "category_hint": "trade",
+      "conditions": [
+        "全局经济阶段≥2（规模增长）；给出物资足额；正整数批量"
+      ],
+      "crop": null,
+      "crop_name": null,
+      "duration": "即时",
+      "effects": [
+        "0AP，无额外元石费，不计供货次数，无每日次数限制"
+      ],
+      "facility": null,
+      "facility_name": null,
+      "id": "proc:barter:mineral_scale_for_resin",
+      "inputs": [
+        {
+          "basis": "每批",
+          "entity": "resource:mineral_scale",
+          "name": "矿质鳞片",
+          "quantity": 2,
+          "timing": "交换时"
+        }
+      ],
+      "name": "以物换物·矿质鳞片×2→松脂×4",
+      "outputs": [
+        {
+          "basis": "每批",
+          "entity": "resource:resin",
+          "name": "松脂",
+          "quantity": 4,
+          "timing": "交换时"
+        }
+      ],
+      "primeval_stones": 0,
+      "research": null,
+      "research_name": null,
+      "species": null,
+      "species_name": null,
+      "type": "barter",
+      "worker_fee": 0
+    },
+    {
+      "ap": 0,
+      "ap_detail": "0AP",
+      "category_hint": "trade",
+      "conditions": [
+        "全局经济阶段≥2（规模增长）；给出物资足额；正整数批量"
+      ],
+      "crop": null,
+      "crop_name": null,
+      "duration": "即时",
+      "effects": [
+        "0AP，无额外元石费，不计供货次数，无每日次数限制"
+      ],
+      "facility": null,
+      "facility_name": null,
+      "id": "proc:barter:pearl_for_resin",
+      "inputs": [
+        {
+          "basis": "每批",
+          "entity": "resource:pearl",
+          "name": "珍珠",
+          "quantity": 2,
+          "timing": "交换时"
+        }
+      ],
+      "name": "以物换物·珍珠×2→松脂×4",
+      "outputs": [
+        {
+          "basis": "每批",
+          "entity": "resource:resin",
+          "name": "松脂",
+          "quantity": 4,
+          "timing": "交换时"
+        }
+      ],
+      "primeval_stones": 0,
+      "research": null,
+      "research_name": null,
+      "species": null,
+      "species_name": null,
+      "type": "barter",
+      "worker_fee": 0
+    },
+    {
+      "ap": 0,
+      "ap_detail": "0AP",
+      "category_hint": "trade",
+      "conditions": [
+        "全局经济阶段≥1（建立基础）；给出物资足额；正整数批量"
+      ],
+      "crop": null,
+      "crop_name": null,
+      "duration": "即时",
+      "effects": [
+        "0AP，无额外元石费，不计供货次数，无每日次数限制"
+      ],
+      "facility": null,
+      "facility_name": null,
+      "id": "proc:barter:resin_for_beeswax",
+      "inputs": [
+        {
+          "basis": "每批",
+          "entity": "resource:resin",
+          "name": "松脂",
+          "quantity": 4,
+          "timing": "交换时"
+        }
+      ],
+      "name": "以物换物·松脂×4→蜂蜡×2",
+      "outputs": [
+        {
+          "basis": "每批",
+          "entity": "resource:beeswax",
+          "name": "蜂蜡",
+          "quantity": 2,
+          "timing": "交换时"
+        }
+      ],
+      "primeval_stones": 0,
+      "research": null,
+      "research_name": null,
+      "species": null,
+      "species_name": null,
+      "type": "barter",
+      "worker_fee": 0
+    },
+    {
+      "ap": 0,
+      "ap_detail": "0AP",
+      "category_hint": "trade",
+      "conditions": [
+        "全局经济阶段≥1（建立基础）；给出物资足额；正整数批量"
+      ],
+      "crop": null,
+      "crop_name": null,
+      "duration": "即时",
+      "effects": [
+        "0AP，无额外元石费，不计供货次数，无每日次数限制"
+      ],
+      "facility": null,
+      "facility_name": null,
+      "id": "proc:barter:resin_for_crushed_ore",
+      "inputs": [
+        {
+          "basis": "每批",
+          "entity": "resource:resin",
+          "name": "松脂",
+          "quantity": 4,
+          "timing": "交换时"
+        }
+      ],
+      "name": "以物换物·松脂×4→碎铁矿×4",
+      "outputs": [
+        {
+          "basis": "每批",
+          "entity": "resource:crushed_ore",
+          "name": "碎铁矿",
+          "quantity": 4,
+          "timing": "交换时"
+        }
+      ],
+      "primeval_stones": 0,
+      "research": null,
+      "research_name": null,
+      "species": null,
+      "species_name": null,
+      "type": "barter",
+      "worker_fee": 0
+    },
+    {
+      "ap": 0,
+      "ap_detail": "0AP",
+      "category_hint": "trade",
+      "conditions": [
+        "全局经济阶段≥2（规模增长）；给出物资足额；正整数批量"
+      ],
+      "crop": null,
+      "crop_name": null,
+      "duration": "即时",
+      "effects": [
+        "0AP，无额外元石费，不计供货次数，无每日次数限制"
+      ],
+      "facility": null,
+      "facility_name": null,
+      "id": "proc:barter:resin_for_dense_algae",
+      "inputs": [
+        {
+          "basis": "每批",
+          "entity": "resource:resin",
+          "name": "松脂",
+          "quantity": 4,
+          "timing": "交换时"
+        }
+      ],
+      "name": "以物换物·松脂×4→高密度藻料×3",
+      "outputs": [
+        {
+          "basis": "每批",
+          "entity": "resource:dense_algae",
+          "name": "高密度藻料",
+          "quantity": 3,
+          "timing": "交换时"
+        }
+      ],
+      "primeval_stones": 0,
+      "research": null,
+      "research_name": null,
+      "species": null,
+      "species_name": null,
+      "type": "barter",
+      "worker_fee": 0
+    },
+    {
+      "ap": 0,
+      "ap_detail": "0AP",
+      "category_hint": "trade",
+      "conditions": [
+        "全局经济阶段≥1（建立基础）；给出物资足额；正整数批量"
+      ],
+      "crop": null,
+      "crop_name": null,
+      "duration": "即时",
+      "effects": [
+        "0AP，无额外元石费，不计供货次数，无每日次数限制"
+      ],
+      "facility": null,
+      "facility_name": null,
+      "id": "proc:barter:resin_for_fish_meat",
+      "inputs": [
+        {
+          "basis": "每批",
+          "entity": "resource:resin",
+          "name": "松脂",
+          "quantity": 4,
+          "timing": "交换时"
+        }
+      ],
+      "name": "以物换物·松脂×4→鱼肉×3",
+      "outputs": [
+        {
+          "basis": "每批",
+          "entity": "resource:fish_meat",
+          "name": "鱼肉",
+          "quantity": 3,
+          "timing": "交换时"
+        }
+      ],
+      "primeval_stones": 0,
+      "research": null,
+      "research_name": null,
+      "species": null,
+      "species_name": null,
+      "type": "barter",
+      "worker_fee": 0
+    },
+    {
+      "ap": 0,
+      "ap_detail": "0AP",
+      "category_hint": "trade",
+      "conditions": [
+        "全局经济阶段≥1（建立基础）；给出物资足额；正整数批量"
+      ],
+      "crop": null,
+      "crop_name": null,
+      "duration": "即时",
+      "effects": [
+        "0AP，无额外元石费，不计供货次数，无每日次数限制"
+      ],
+      "facility": null,
+      "facility_name": null,
+      "id": "proc:barter:resin_for_flower_samples",
+      "inputs": [
+        {
+          "basis": "每批",
+          "entity": "resource:resin",
+          "name": "松脂",
+          "quantity": 2,
+          "timing": "交换时"
+        }
+      ],
+      "name": "以物换物·松脂×2→花蜜×2＋花粉×1",
+      "outputs": [
+        {
+          "basis": "每批",
+          "entity": "resource:nectar",
+          "name": "花蜜",
+          "quantity": 2,
+          "timing": "交换时"
+        },
+        {
+          "basis": "每批",
+          "entity": "resource:pollen",
+          "name": "花粉",
+          "quantity": 1,
+          "timing": "交换时"
+        }
+      ],
+      "primeval_stones": 0,
+      "research": null,
+      "research_name": null,
+      "species": null,
+      "species_name": null,
+      "type": "barter",
+      "worker_fee": 0
+    },
+    {
+      "ap": 0,
+      "ap_detail": "0AP",
+      "category_hint": "trade",
+      "conditions": [
+        "全局经济阶段≥1（建立基础）；给出物资足额；正整数批量"
+      ],
+      "crop": null,
+      "crop_name": null,
+      "duration": "即时",
+      "effects": [
+        "0AP，无额外元石费，不计供货次数，无每日次数限制"
+      ],
+      "facility": null,
+      "facility_name": null,
+      "id": "proc:barter:resin_for_honey",
+      "inputs": [
+        {
+          "basis": "每批",
+          "entity": "resource:resin",
+          "name": "松脂",
+          "quantity": 4,
+          "timing": "交换时"
+        }
+      ],
+      "name": "以物换物·松脂×4→蜂蜜×2",
+      "outputs": [
+        {
+          "basis": "每批",
+          "entity": "resource:honey",
+          "name": "蜂蜜",
+          "quantity": 2,
+          "timing": "交换时"
+        }
+      ],
+      "primeval_stones": 0,
+      "research": null,
+      "research_name": null,
+      "species": null,
+      "species_name": null,
+      "type": "barter",
+      "worker_fee": 0
+    },
+    {
+      "ap": 0,
+      "ap_detail": "0AP",
+      "category_hint": "trade",
+      "conditions": [
+        "全局经济阶段≥2（规模增长）；给出物资足额；正整数批量"
+      ],
+      "crop": null,
+      "crop_name": null,
+      "duration": "即时",
+      "effects": [
+        "0AP，无额外元石费，不计供货次数，无每日次数限制"
+      ],
+      "facility": null,
+      "facility_name": null,
+      "id": "proc:barter:resin_for_matrix",
+      "inputs": [
+        {
+          "basis": "每批",
+          "entity": "resource:resin",
+          "name": "松脂",
+          "quantity": 8,
+          "timing": "交换时"
+        }
+      ],
+      "name": "以物换物·松脂×8→保水基质×4",
+      "outputs": [
+        {
+          "basis": "每批",
+          "entity": "resource:water_retaining_matrix",
+          "name": "保水基质",
+          "quantity": 4,
+          "timing": "交换时"
+        }
+      ],
+      "primeval_stones": 0,
+      "research": null,
+      "research_name": null,
+      "species": null,
+      "species_name": null,
+      "type": "barter",
+      "worker_fee": 0
+    },
+    {
+      "ap": 0,
+      "ap_detail": "0AP",
+      "category_hint": "trade",
+      "conditions": [
+        "全局经济阶段≥2（规模增长）；给出物资足额；正整数批量"
+      ],
+      "crop": null,
+      "crop_name": null,
+      "duration": "即时",
+      "effects": [
+        "0AP，无额外元石费，不计供货次数，无每日次数限制"
+      ],
+      "facility": null,
+      "facility_name": null,
+      "id": "proc:barter:resin_for_mineral_scale",
+      "inputs": [
+        {
+          "basis": "每批",
+          "entity": "resource:resin",
+          "name": "松脂",
+          "quantity": 8,
+          "timing": "交换时"
+        }
+      ],
+      "name": "以物换物·松脂×8→矿质鳞片×2",
+      "outputs": [
+        {
+          "basis": "每批",
+          "entity": "resource:mineral_scale",
+          "name": "矿质鳞片",
+          "quantity": 2,
+          "timing": "交换时"
+        }
+      ],
+      "primeval_stones": 0,
+      "research": null,
+      "research_name": null,
+      "species": null,
+      "species_name": null,
+      "type": "barter",
+      "worker_fee": 0
+    },
+    {
+      "ap": 0,
+      "ap_detail": "0AP",
+      "category_hint": "trade",
+      "conditions": [
+        "全局经济阶段≥2（规模增长）；给出物资足额；正整数批量"
+      ],
+      "crop": null,
+      "crop_name": null,
+      "duration": "即时",
+      "effects": [
+        "0AP，无额外元石费，不计供货次数，无每日次数限制"
+      ],
+      "facility": null,
+      "facility_name": null,
+      "id": "proc:barter:resin_for_ore_concentrate",
+      "inputs": [
+        {
+          "basis": "每批",
+          "entity": "resource:resin",
+          "name": "松脂",
+          "quantity": 6,
+          "timing": "交换时"
+        }
+      ],
+      "name": "以物换物·松脂×6→富集矿砂×2",
+      "outputs": [
+        {
+          "basis": "每批",
+          "entity": "resource:ore_concentrate",
+          "name": "富集矿砂",
+          "quantity": 2,
+          "timing": "交换时"
+        }
+      ],
+      "primeval_stones": 0,
+      "research": null,
+      "research_name": null,
+      "species": null,
+      "species_name": null,
+      "type": "barter",
+      "worker_fee": 0
+    },
+    {
+      "ap": 0,
+      "ap_detail": "0AP",
+      "category_hint": "trade",
+      "conditions": [
+        "全局经济阶段≥2（规模增长）；给出物资足额；正整数批量"
+      ],
+      "crop": null,
+      "crop_name": null,
+      "duration": "即时",
+      "effects": [
+        "0AP，无额外元石费，不计供货次数，无每日次数限制"
+      ],
+      "facility": null,
+      "facility_name": null,
+      "id": "proc:barter:resin_for_panels",
+      "inputs": [
+        {
+          "basis": "每批",
+          "entity": "resource:resin",
+          "name": "松脂",
+          "quantity": 8,
+          "timing": "交换时"
+        }
+      ],
+      "name": "以物换物·松脂×8→复合石板×4",
+      "outputs": [
+        {
+          "basis": "每批",
+          "entity": "resource:composite_stone_panel",
+          "name": "复合石板",
+          "quantity": 4,
+          "timing": "交换时"
+        }
+      ],
+      "primeval_stones": 0,
+      "research": null,
+      "research_name": null,
+      "species": null,
+      "species_name": null,
+      "type": "barter",
+      "worker_fee": 0
+    },
+    {
+      "ap": 0,
+      "ap_detail": "0AP",
+      "category_hint": "trade",
+      "conditions": [
+        "全局经济阶段≥2（规模增长）；给出物资足额；正整数批量"
+      ],
+      "crop": null,
+      "crop_name": null,
+      "duration": "即时",
+      "effects": [
+        "0AP，无额外元石费，不计供货次数，无每日次数限制"
+      ],
+      "facility": null,
+      "facility_name": null,
+      "id": "proc:barter:resin_for_pearl",
+      "inputs": [
+        {
+          "basis": "每批",
+          "entity": "resource:resin",
+          "name": "松脂",
+          "quantity": 8,
+          "timing": "交换时"
+        }
+      ],
+      "name": "以物换物·松脂×8→珍珠×2",
+      "outputs": [
+        {
+          "basis": "每批",
+          "entity": "resource:pearl",
+          "name": "珍珠",
+          "quantity": 2,
+          "timing": "交换时"
+        }
+      ],
+      "primeval_stones": 0,
+      "research": null,
+      "research_name": null,
+      "species": null,
+      "species_name": null,
+      "type": "barter",
+      "worker_fee": 0
+    },
+    {
+      "ap": 0,
+      "ap_detail": "0AP",
+      "category_hint": "trade",
+      "conditions": [
+        "全局经济阶段≥2（规模增长）；给出物资足额；正整数批量"
+      ],
+      "crop": null,
+      "crop_name": null,
+      "duration": "即时",
+      "effects": [
+        "0AP，无额外元石费，不计供货次数，无每日次数限制"
+      ],
+      "facility": null,
+      "facility_name": null,
+      "id": "proc:barter:resin_for_refined_oil",
+      "inputs": [
+        {
+          "basis": "每批",
+          "entity": "resource:resin",
+          "name": "松脂",
+          "quantity": 6,
+          "timing": "交换时"
+        }
+      ],
+      "name": "以物换物·松脂×6→精炼油×3",
+      "outputs": [
+        {
+          "basis": "每批",
+          "entity": "resource:refined_oil",
+          "name": "精炼油",
+          "quantity": 3,
+          "timing": "交换时"
+        }
+      ],
+      "primeval_stones": 0,
+      "research": null,
+      "research_name": null,
+      "species": null,
+      "species_name": null,
+      "type": "barter",
+      "worker_fee": 0
+    },
+    {
+      "ap": 0,
+      "ap_detail": "0AP",
+      "category_hint": "trade",
+      "conditions": [
+        "全局经济阶段≥1（建立基础）；给出物资足额；正整数批量"
+      ],
+      "crop": null,
+      "crop_name": null,
+      "duration": "即时",
+      "effects": [
+        "0AP，无额外元石费，不计供货次数，无每日次数限制"
+      ],
+      "facility": null,
+      "facility_name": null,
+      "id": "proc:barter:resin_for_sludge",
+      "inputs": [
+        {
+          "basis": "每批",
+          "entity": "resource:resin",
+          "name": "松脂",
+          "quantity": 2,
+          "timing": "交换时"
+        }
+      ],
+      "name": "以物换物·松脂×2→污泥×2",
+      "outputs": [
+        {
+          "basis": "每批",
+          "entity": "resource:sludge",
+          "name": "污泥",
+          "quantity": 2,
+          "timing": "交换时"
+        }
+      ],
+      "primeval_stones": 0,
+      "research": null,
+      "research_name": null,
+      "species": null,
+      "species_name": null,
+      "type": "barter",
+      "worker_fee": 0
+    },
+    {
+      "ap": 0,
+      "ap_detail": "0AP",
+      "category_hint": "trade",
+      "conditions": [
+        "全局经济阶段≥1（建立基础）；给出物资足额；正整数批量"
+      ],
+      "crop": null,
+      "crop_name": null,
+      "duration": "即时",
+      "effects": [
+        "0AP，无额外元石费，不计供货次数，无每日次数限制"
+      ],
+      "facility": null,
+      "facility_name": null,
+      "id": "proc:barter:resin_for_stone_parts",
+      "inputs": [
+        {
+          "basis": "每批",
+          "entity": "resource:resin",
+          "name": "松脂",
+          "quantity": 4,
+          "timing": "交换时"
+        }
+      ],
+      "name": "以物换物·松脂×4→砂砾×3＋石粉×1",
+      "outputs": [
+        {
+          "basis": "每批",
+          "entity": "resource:gravel",
+          "name": "砂砾",
+          "quantity": 3,
+          "timing": "交换时"
+        },
+        {
+          "basis": "每批",
+          "entity": "resource:stone_powder",
+          "name": "石粉",
+          "quantity": 1,
+          "timing": "交换时"
+        }
+      ],
+      "primeval_stones": 0,
+      "research": null,
+      "research_name": null,
+      "species": null,
+      "species_name": null,
+      "type": "barter",
+      "worker_fee": 0
+    },
+    {
+      "ap": 0,
+      "ap_detail": "0AP",
+      "category_hint": "trade",
+      "conditions": [
+        "全局经济阶段≥2（规模增长）；给出物资足额；正整数批量"
+      ],
+      "crop": null,
+      "crop_name": null,
+      "duration": "即时",
+      "effects": [
+        "0AP，无额外元石费，不计供货次数，无每日次数限制"
+      ],
+      "facility": null,
+      "facility_name": null,
+      "id": "proc:barter:resin_for_water_gel",
+      "inputs": [
+        {
+          "basis": "每批",
+          "entity": "resource:resin",
+          "name": "松脂",
+          "quantity": 8,
+          "timing": "交换时"
+        }
+      ],
+      "name": "以物换物·松脂×8→凝水胶×4",
+      "outputs": [
+        {
+          "basis": "每批",
+          "entity": "resource:water_gel",
+          "name": "凝水胶",
+          "quantity": 4,
+          "timing": "交换时"
+        }
+      ],
+      "primeval_stones": 0,
+      "research": null,
+      "research_name": null,
+      "species": null,
+      "species_name": null,
+      "type": "barter",
+      "worker_fee": 0
+    },
+    {
+      "ap": 0,
+      "ap_detail": "0AP",
+      "category_hint": "trade",
+      "conditions": [
+        "全局经济阶段≥1（建立基础）；给出物资足额；正整数批量"
+      ],
+      "crop": null,
+      "crop_name": null,
+      "duration": "即时",
+      "effects": [
+        "0AP，无额外元石费，不计供货次数，无每日次数限制"
+      ],
+      "facility": null,
+      "facility_name": null,
+      "id": "proc:barter:silk_for_resin",
+      "inputs": [
+        {
+          "basis": "每批",
+          "entity": "resource:silk",
+          "name": "蚕丝",
+          "quantity": 4,
+          "timing": "交换时"
+        }
+      ],
+      "name": "以物换物·蚕丝×4→松脂×3",
+      "outputs": [
+        {
+          "basis": "每批",
+          "entity": "resource:resin",
+          "name": "松脂",
+          "quantity": 3,
+          "timing": "交换时"
+        }
+      ],
+      "primeval_stones": 0,
+      "research": null,
+      "research_name": null,
+      "species": null,
+      "species_name": null,
+      "type": "barter",
+      "worker_fee": 0
+    },
+    {
+      "ap": 0,
+      "ap_detail": "0AP",
+      "category_hint": "trade",
+      "conditions": [
+        "全局经济阶段≥1（建立基础）；给出物资足额；正整数批量"
+      ],
+      "crop": null,
+      "crop_name": null,
+      "duration": "即时",
+      "effects": [
+        "0AP，无额外元石费，不计供货次数，无每日次数限制"
+      ],
+      "facility": null,
+      "facility_name": null,
+      "id": "proc:barter:spirit_liquid_for_resin",
+      "inputs": [
+        {
+          "basis": "每批",
+          "entity": "resource:spirit_liquid",
+          "name": "灵液",
+          "quantity": 3,
+          "timing": "交换时"
+        }
+      ],
+      "name": "以物换物·灵液×3→松脂×3",
+      "outputs": [
+        {
+          "basis": "每批",
+          "entity": "resource:resin",
+          "name": "松脂",
+          "quantity": 3,
+          "timing": "交换时"
+        }
+      ],
+      "primeval_stones": 0,
+      "research": null,
+      "research_name": null,
+      "species": null,
+      "species_name": null,
+      "type": "barter",
+      "worker_fee": 0
+    },
+    {
+      "ap": 0,
+      "ap_detail": "0AP",
+      "category_hint": "trade",
+      "conditions": [
+        "全局经济阶段≥2（规模增长）；给出物资足额；正整数批量"
+      ],
+      "crop": null,
+      "crop_name": null,
+      "duration": "即时",
+      "effects": [
+        "0AP，无额外元石费，不计供货次数，无每日次数限制"
+      ],
+      "facility": null,
+      "facility_name": null,
+      "id": "proc:barter:water_gel_for_resin",
+      "inputs": [
+        {
+          "basis": "每批",
+          "entity": "resource:water_gel",
+          "name": "凝水胶",
+          "quantity": 3,
+          "timing": "交换时"
+        }
+      ],
+      "name": "以物换物·凝水胶×3→松脂×3",
+      "outputs": [
+        {
+          "basis": "每批",
+          "entity": "resource:resin",
+          "name": "松脂",
+          "quantity": 3,
+          "timing": "交换时"
+        }
+      ],
+      "primeval_stones": 0,
+      "research": null,
+      "research_name": null,
+      "species": null,
+      "species_name": null,
+      "type": "barter",
+      "worker_fee": 0
+    },
     {
       "ap": 2,
       "ap_detail": "启动1＋收取1",
@@ -35173,7 +37499,7 @@
           "basis": "每只·每轮",
           "entity": "resource:mineral_scale",
           "name": "矿质鳞片",
-          "quantity": 2,
+          "quantity": 4,
           "timing": "收取时"
         },
         {
@@ -35215,7 +37541,7 @@
           "basis": "每尾·每轮",
           "entity": "resource:crude_oil",
           "name": "粗油",
-          "quantity": 2,
+          "quantity": 6,
           "timing": "收取时"
         },
         {
@@ -35257,7 +37583,7 @@
           "basis": "每只·每轮",
           "entity": "resource:pearl",
           "name": "珍珠",
-          "quantity": 2,
+          "quantity": 3,
           "timing": "收取时"
         }
       ],
@@ -35522,7 +37848,7 @@
           "basis": "每只·每轮",
           "entity": "resource:steel_wool",
           "name": "钢绒",
-          "quantity": 1,
+          "quantity": 2,
           "timing": "收取时"
         },
         {
@@ -39254,7 +41580,7 @@
           "conditions": "空闲成体启动「养鳞轮」周期时",
           "entity": "resource:mineral_feed",
           "name": "矿质补料",
-          "quantity": 2,
+          "quantity": 1,
           "timing": "周期启动时一次付清"
         }
       ],
@@ -39303,9 +41629,9 @@
         {
           "basis": "每尾·每轮",
           "conditions": "空闲成体启动「取油轮投料」周期时",
-          "entity": "resource:water_feed",
-          "name": "复合水养料",
-          "quantity": 1,
+          "entity": "resource:grain",
+          "name": "谷粒",
+          "quantity": 2,
           "timing": "周期启动时一次付清"
         }
       ],
@@ -39751,6 +42077,112 @@
       "species": "species:steel_sheep",
       "species_name": "钢绵羊",
       "type": "maintain",
+      "worker_fee": 0
+    },
+    {
+      "ap": 0,
+      "ap_detail": "0AP",
+      "category_hint": "progression",
+      "conditions": [
+        "当前阶段0；事件按顺序仅完成一次",
+        "累计成功供货3次"
+      ],
+      "crop": null,
+      "crop_name": null,
+      "duration": "即时",
+      "effects": [
+        "开放阶段1：建立基础；仍需研究/建造及局部房间运行条件"
+      ],
+      "facility": null,
+      "facility_name": null,
+      "id": "proc:milestone:first_workshop",
+      "inputs": [],
+      "name": "阶段事件·初建产业",
+      "outputs": [],
+      "primeval_stones": 0,
+      "research": null,
+      "research_name": null,
+      "species": null,
+      "species_name": null,
+      "type": "milestone",
+      "worker_fee": 0
+    },
+    {
+      "ap": 0,
+      "ap_detail": "0AP",
+      "category_hint": "progression",
+      "conditions": [
+        "当前阶段1；事件按顺序仅完成一次",
+        "累计成功供货12次"
+      ],
+      "crop": null,
+      "crop_name": null,
+      "duration": "即时",
+      "effects": [
+        "开放阶段2：规模增长；仍需研究/建造及局部房间运行条件"
+      ],
+      "facility": null,
+      "facility_name": null,
+      "id": "proc:milestone:gu_partnership",
+      "inputs": [],
+      "name": "阶段事件·后勤合作",
+      "outputs": [],
+      "primeval_stones": 0,
+      "research": null,
+      "research_name": null,
+      "species": null,
+      "species_name": null,
+      "type": "milestone",
+      "worker_fee": 0
+    },
+    {
+      "ap": 0,
+      "ap_detail": "0AP",
+      "category_hint": "progression",
+      "conditions": [
+        "当前阶段2；事件按顺序仅完成一次",
+        "交付材料足额；允许使用已兑换的普通库存"
+      ],
+      "crop": null,
+      "crop_name": null,
+      "duration": "即时",
+      "effects": [
+        "开放阶段3：体系增长；仍需研究/建造及局部房间运行条件"
+      ],
+      "facility": null,
+      "facility_name": null,
+      "id": "proc:milestone:integrated_estate",
+      "inputs": [
+        {
+          "basis": "一次性",
+          "entity": "resource:composite_stone_panel",
+          "name": "复合石板",
+          "quantity": 12,
+          "timing": "成功提交时"
+        },
+        {
+          "basis": "一次性",
+          "entity": "resource:refined_oil",
+          "name": "精炼油",
+          "quantity": 6,
+          "timing": "成功提交时"
+        },
+        {
+          "basis": "一次性",
+          "entity": "resource:water_retaining_matrix",
+          "name": "保水基质",
+          "quantity": 8,
+          "timing": "成功提交时"
+        }
+      ],
+      "name": "阶段事件·产业进阶",
+      "outputs": [],
+      "primeval_stones": 0,
+      "research": null,
+      "research_name": null,
+      "species": null,
+      "species_name": null,
+      "type": "milestone",
       "worker_fee": 0
     },
     {
@@ -40509,7 +42941,7 @@
       "category_hint": "research",
       "conditions": [
         "研究台空闲",
-        "前置研究：饲料与蜡油精制、水与藻料回流",
+        "前置研究：农产初加工",
         "全场未完成该项目"
       ],
       "crop": null,
@@ -40536,8 +42968,8 @@
         },
         {
           "basis": "一次性",
-          "entity": "resource:land_feed",
-          "name": "复合陆养料",
+          "entity": "resource:grain",
+          "name": "谷粒",
           "quantity": 1,
           "timing": "启动时"
         },
@@ -40545,7 +42977,7 @@
           "basis": "一次性",
           "entity": "currency:primeval_stone",
           "name": "元石",
-          "quantity": 12,
+          "quantity": 8,
           "timing": "启动时"
         }
       ],
@@ -41023,7 +43455,7 @@
       ],
       "crop": null,
       "crop_name": null,
-      "duration": "6有效研究日",
+      "duration": "2有效研究日",
       "effects": [
         "每登记1次+1有效日；完成即全农场解锁"
       ],

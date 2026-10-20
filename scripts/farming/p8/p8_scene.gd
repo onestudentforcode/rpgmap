@@ -24,6 +24,8 @@ const ServicesUI := preload("res://scripts/farming/p8/p104_ui.gd")
 var rooms_ui := RoomsUI.new(self)
 var ranch_ui := RanchUI.new(self)
 var services_ui := ServicesUI.new(self)
+const EconomyUI := preload("res://scripts/farming/p8/p107_ui.gd")
+var economy_ui := EconomyUI.new(self)
 
 func _new(slot: int, overwrite: bool) -> void:
 	rooms_ui.floor_tool=""
@@ -94,6 +96,19 @@ func _picture(parent: Node, ident: String, extent: int = 40) -> TextureRect:
 
 func _make_world(slot_store):
 	return P8World.new(slot_store)
+
+func _economy_link() -> void:
+	var button := _button(sidebar, "产业成长与以物换物", economy_ui.open)
+	button.set_meta("p107_navigation", true)
+	sidebar.move_child(button, 0)
+
+func _show_market() -> void:
+	super()
+	_economy_link()
+
+func _show_orders() -> void:
+	super()
+	_economy_link()
 
 func _ready() -> void:
 	super()
@@ -569,6 +584,7 @@ func _show_facility(facility: Dictionary) -> void:
 		_label(sidebar,"空闲 · 选择配方")
 		for ident in world.recipe_defs:
 			var recipe: Dictionary = world.recipe_defs[ident]
+			if not world.batch_block(String(ident)).is_empty(): continue
 			if recipe["facility"] != facility["facility_id"]:
 				continue
 			var card := _card(sidebar)
@@ -604,6 +620,7 @@ func _encyclopedia_link(parent: Node, entity_id: String) -> Button:
 	return button
 
 func _context_refresh() -> void:
+	if _context == "economy": economy_ui.open(); return
 	if _context == "rooms": rooms_ui.open(); return
 	if _context == "ranch": ranch_ui.open(); return
 	if _context == "logistics": logistics_ui.open()
@@ -911,6 +928,7 @@ func _show_worker_duties(worker: Dictionary) -> void:
 const RESEARCH_STATUS := {"locked": "锁定", "ready": "可启动", "active": "在研", "paused": "已暂停", "done": "已完成"}
 
 func _project_status(project_id: String) -> String:
+	if not world.progress.block("research", project_id).is_empty(): return "locked"
 	if world.research.is_completed(project_id):
 		return "done"
 	var active: Dictionary = world.research.project_of(project_id)
@@ -1021,6 +1039,8 @@ func _show_research() -> void:
 			for item in def["samples"]:
 				samples.append("%s %d/%d" % [world._items[String(item)]["name"], world.inventory.count(String(item)), int(def["samples"][item])])
 			_label(card,"样本：%s · 启动%d元石 · %d有效日" % ["、".join(samples) if not samples.is_empty() else "无", int(def["fee"]), int(def["days"])])
+			var stage_block: String = world.progress.block("research", String(project_id))
+			if not stage_block.is_empty(): _label(card, stage_block)
 			var unlocks := PackedStringArray()
 			var registry: Dictionary = def["unlocks"]
 			if not registry["facilities"].is_empty(): unlocks.append("设施%d座" % registry["facilities"].size())

@@ -702,6 +702,35 @@ if SRC.get('p104'):
         facility='facility:toy_station',conditions=['槽内已装入藤球'],category_hint='construction')
     produces('vine_ball',pid)
 
+if SRC.get('p107'):
+    economy = SRC['p107']
+    stage_names = economy['stage_names']
+    for row in economy['offers']:
+        pid = proc('proc:barter:' + row['id'], 'barter',
+                   '以物换物·' + quantities_text(row['give']) + '→' + quantities_text(row['receive']),
+                   [io('resource:' + k, v, '每批', '交换时') for k, v in row['give'].items()],
+                   [io('resource:' + k, v, '每批', '交换时') for k, v in row['receive'].items()],
+                   conditions=[f'全局经济阶段≥{row["stage"]}（{stage_names[row["stage"]]}）；给出物资足额；正整数批量'],
+                   effects=['0AP，无额外元石费，不计供货次数，无每日次数限制'], category_hint='trade')
+        for item in row['give']: consumes(item, pid)
+        for item in row['receive']: produces(item, pid)
+    for level, row in enumerate(economy['events'], 1):
+        condition = (f'累计成功供货{row["orders"]}次' if row['orders'] else '交付材料足额；允许使用已兑换的普通库存')
+        pid = proc('proc:milestone:' + row['id'], 'milestone', '阶段事件·' + row['name'],
+                   [io('resource:' + k, v, '一次性', '成功提交时') for k, v in row['inputs'].items()], [],
+                   conditions=[f'当前阶段{level - 1}；事件按顺序仅完成一次', condition],
+                   effects=[f'开放阶段{level}：{stage_names[level]}；仍需研究/建造及局部房间运行条件'], category_hint='progression')
+        for item in row['inputs']: consumes(item, pid)
+    for e in entities:
+        group = {'research': 'research', 'facility': 'facility', 'gu': 'gu'}.get(e['kind'])
+        if not group: continue
+        stage = economy['gates'][group].get(e['source_id'], 0)
+        lock = e.get('locks')
+        if lock:
+            stage = max(stage, economy['gates']['research'].get(lock['research'].removeprefix('research:'), 0))
+        e['fields'].append(field('economic_stage', '经济阶段', f'阶段≥{stage}（{stage_names[stage]}）；仍须满足其他前置与运行条件'))
+        e['related_rules'] = sorted(set(e['related_rules']) | {'rule:economy-stages'})
+
 # All entities exist now; resolve display names that were built during process
 # construction before the resource entities were registered.
 for _p in processes:
@@ -832,9 +861,16 @@ for _e in entities:
 
 # rules entities
 for rule in CURATED['rules']:
+    statements = list(rule['statements'])
+    if rule['id'] == 'rule:economy-stages':
+        economy = SRC['p107']
+        for level, event in enumerate(economy['events'], 1):
+            target = f'累计成功供货{event["orders"]}次' if event['orders'] else quantities_text(event['inputs'])
+            statements.append(f'阶段{level - 1}→{level}：「{event["name"]}」需要{target}；打开市场或订单页的“产业成长与以物换物”提交。')
+        statements.append(f'当前固定兑换共{len(economy["offers"])}条，比例由每条给出/收到配置确定。百科资源页可查看具体交换来源与用途。')
     add_entity(rule['id'], 'rule', rule['id'], rule['name'], 'rules', [],
-               rule['statements'][0][:40] + '…',
-               [field('statements', '规则说明', '\n'.join(f'{i + 1}. {s}' for i, s in enumerate(rule['statements']))),
+               statements[0][:40] + '…',
+               [field('statements', '规则说明', '\n'.join(f'{i + 1}. {s}' for i, s in enumerate(statements))),
                 field('refs', '实现依据', '；'.join(f'{r["path"]}::{r["symbol"]}' for r in rule['refs']))],
                [])
 
