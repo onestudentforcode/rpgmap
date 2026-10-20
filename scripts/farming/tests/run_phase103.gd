@@ -16,6 +16,7 @@ func check(ok: bool, label: String) -> void:
 
 func fixture() -> World:
 	var w := World.new()
+	preload("res://scripts/farming/tests/p107_fixture.gd").unlock(w)
 	w.grant_scaffold({"raw_wood": 200, "raw_stone": 200, "wood_plank": 50,
 		"mushroom": 200, "fodder_grass": 200, "grain": 200, "clean_water": 400,
 		"land_feed": 100, "iron_ore": 100})
@@ -40,9 +41,9 @@ func run() -> void:
 
 func _schema() -> void:
 	var w := fixture()
-	check(Codec.SCHEMA == 24, "schema is 24")
-	check(Codec.normalize(w.to_snapshot())["ok"], "fresh schema23 snapshot valid")
-	for old in [17, 18, 19, 20, 21, 22]:
+	check(Codec.SCHEMA == 25, "schema is 25")
+	check(Codec.normalize(w.to_snapshot())["ok"], "schema25 rule fixture snapshot valid")
+	for old in [17, 18, 19, 20, 21, 22, 23, 24]:
 		var bad: Dictionary = w.to_snapshot()
 		bad["schema"] = old
 		check(not Codec.normalize(bad)["ok"], "old schema rejected " + str(old))

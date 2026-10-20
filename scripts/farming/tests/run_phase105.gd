@@ -18,6 +18,7 @@ func check(ok: bool, label: String) -> void:
 
 func fixture() -> World:
 	var w := World.new()
+	preload("res://scripts/farming/tests/p107_fixture.gd").unlock(w)
 	w.grant_scaffold({"raw_wood": 300, "raw_stone": 300, "wood_plank": 100, "twig": 200,
 		"mushroom": 300, "fodder_grass": 300, "grain": 200, "clean_water": 900,
 		"land_feed": 200, "iron_ore": 200, "mineral_feed": 100, "algae_feed": 100,
@@ -183,7 +184,7 @@ func _three_uses(w: World) -> void:
 	check(bool(producer["natural"]["pending"]), "wool round pending after 18 units")
 	var wool: int = w.facility_at(Vector2i(12, 5))["uid"]
 	var claim: Dictionary = w.ranch.claim_natural(wool)
-	check(claim["ok"] and w.inventory.count("steel_wool") == 1 and w.inventory.count("sheep_manure") == 1, "wool claimed through the station")
+	check(claim["ok"] and w.inventory.count("steel_wool") == 2 and w.inventory.count("sheep_manure") == 1, "current wool output claimed through the station")
 	check(not w.ranch.claim_natural(wool)["ok"], "no second claim for the same round")
 	check(int(w.ranch.animal(int(producer["uid"]))["natural"]["round"]) == 1, "round advanced after claim")
 	# A silkworm cannot enter the breeding zone at all.

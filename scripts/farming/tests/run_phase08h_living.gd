@@ -14,6 +14,7 @@ func check(value: bool, label: String) -> void:
 func fresh():
 	var world := World.new(Store.new("res://.art-work/p8h-unit/living_%d" % Time.get_ticks_usec()))
 	check(world.start_new(1)["ok"], "isolated slot")
+	preload("res://scripts/farming/tests/p107_fixture.gd").unlock(world)
 	world.grant_scaffold({"raw_wood": 40, "raw_stone": 40, "wood_plank": 10, "clean_water": 80,
 		"mushroom": 40, "iron_ore": 20, "fodder_grass": 40, "wood_chip": 20, "wastewater": 40})
 	world.primeval_stones += 500

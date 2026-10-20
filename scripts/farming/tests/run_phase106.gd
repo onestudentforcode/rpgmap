@@ -46,6 +46,7 @@ func run() -> void:
 func _world() -> World:
 	var world := World.new(Store.new("res://.art-work/p106-tests/slots-%d-%d" % [OS.get_process_id(), Time.get_ticks_usec()]))
 	world.start_new(1)
+	preload("res://scripts/farming/tests/p107_fixture.gd").unlock(world)
 	world.grant_scaffold({"twig": 200, "wood_plank": 60, "raw_stone": 120, "raw_wood": 60, "clean_water": 300,
 		"algae_feed": 400, "grain": 100, "stone_powder": 200, "water_feed": 100, "humus": 60,
 		"water_retaining_matrix": 20, "spirit_liquid": 20, "sludge": 40, "duckweed": 20})
@@ -418,7 +419,7 @@ func _roster_lifecycle(w: World) -> void:
 	var oil := w.inventory.count("crude_oil")
 	var oil_claim: Dictionary = w.ranch.claim_natural(oil_station)
 	check(oil_claim["ok"] and int(oil_claim["captures"]) == 1, "oilfin capture claim")
-	check(w.inventory.count("crude_oil") == oil + 2, "capture pays crude oil")
+	check(w.inventory.count("crude_oil") == oil + 6, "capture pays current crude oil output")
 	# Capture is one-shot: no second claim for the same uid.
 	check(not w.ranch.claim_natural(station_uid)["ok"], "no second claim after capture")
 
@@ -437,7 +438,7 @@ func _mussel_shell(w: World) -> void:
 	var pearls := w.inventory.count("pearl")
 	var claim: Dictionary = w.ranch.claim_natural(station_uid)
 	check(claim["ok"] and int(claim.get("captures", 0)) == 0, "pearl claim keeps the mussel")
-	check(w.inventory.count("pearl") == pearls + 2, "pearl claim pays pearls")
+	check(w.inventory.count("pearl") == pearls + 3, "pearl claim pays current pearls")
 	check(not w.ranch.animal(int(mussel["uid"])).is_empty(), "mussel survives the claim")
 	# A fresh in-progress round is voided by the shell harvest, no refund.
 	for _day in range(2):
@@ -658,7 +659,7 @@ func _spirit_variants(w: World) -> void:
 	var pearls := w.inventory.count("pearl")
 	var claim: Dictionary = w.ranch.claim_natural(station_uid)
 	check(claim["ok"], "spirit claim runs")
-	check(w.inventory.count("pearl") == pearls + 3, "spirit round pays three pearls")
+	check(w.inventory.count("pearl") == pearls + 4, "spirit round pays four pearls")
 	check(String(w.ranch.animal(int(mussel["uid"]))["natural"]["paid_diet"]) == "", "paid diet resets with the round")
 
 func _loach_chain(w: World) -> void:

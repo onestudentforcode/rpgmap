@@ -73,6 +73,7 @@ var capture_log: Array = []
 func _world() -> World:
 	var world := World.new(Store.new(audit_root.path_join("smoke-%d-%d" % [OS.get_process_id(), Time.get_ticks_usec()])))
 	world.start_new(1)
+	preload("res://scripts/farming/tests/p107_fixture.gd").unlock(world)
 	world.operation_recorded.connect(func(entry: Dictionary):
 		if entry.get("kind") == "ranch:animal" and entry.get("stage") == "death":
 			death_log.append(entry)

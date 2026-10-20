@@ -32,6 +32,7 @@ func run() -> void:
 func _world(tag: String) -> World:
 	var world := World.new(Store.new("res://.art-work/fixture-lint/%s-%d-%d" % [tag, OS.get_process_id(), Time.get_ticks_usec()]))
 	world.start_new(1)
+	preload("res://scripts/farming/tests/p107_fixture.gd").unlock(world)
 	world.grant_scaffold({"raw_wood": 300, "raw_stone": 300, "wood_plank": 60, "twig": 120,
 		"mushroom": 400, "fodder_grass": 400, "grain": 200, "clean_water": 900,
 		"land_feed": 100, "iron_ore": 120, "mineral_feed": 100, "algae_feed": 200, "straw": 60,

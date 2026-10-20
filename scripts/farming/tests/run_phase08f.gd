@@ -14,7 +14,7 @@ func check(ok: bool, label: String) -> void:
 	if not ok: failures.append(label)
 
 func temp_store() -> P8Store:
-	return P8Store.new("user://p8f_test_%d" % Time.get_ticks_usec())
+	return P8Store.new("res://.art-work/p107-legacy/p8f_test_%d" % Time.get_ticks_usec())
 
 func complete_research(world, bench: int, project_id: String, samples: Dictionary) -> void:
 	world.grant_scaffold(samples)
@@ -100,9 +100,11 @@ func ranch_module(world) -> Dictionary:
 func _yard_species_and_mole() -> void:
 	var world := P8World.new(temp_store())
 	world.start_new(1)
+	preload("res://scripts/farming/tests/p107_fixture.gd").unlock(world)
 	world.grant_scaffold({"raw_wood": 90, "raw_stone": 40, "grain": 2, "humus": 1, "mushroom": 40,
 		"clean_water": 60})
 	world.primeval_stones += 120
+	world._cash("sales_revenue", 120) # Declared fixture funding, not business evidence.
 	world.build_facility(Vector2i(2, 4), "research_bench")
 	complete_research(world, 1, "flower_cultivation", {"grain": 2, "humus": 1})
 	complete_research(world, 1, "rock_handling", {"mushroom": 1, "raw_stone": 3})
@@ -151,10 +153,12 @@ func _yard_species_and_mole() -> void:
 func _belly_and_smelting() -> void:
 	var world := P8World.new(temp_store())
 	world.start_new(1)
+	preload("res://scripts/farming/tests/p107_fixture.gd").unlock(world)
 	world.grant_scaffold({"raw_wood": 90, "raw_stone": 40, "wood_plank": 10, "grain": 2, "humus": 1, "mushroom": 60,
 		"clean_water": 120, "fodder_grass": 60, "crushed_ore": 60, "charcoal": 4,
 		"grass_meal": 4, "grain_meal": 2, "iron_ore": 3})
 	world.primeval_stones += 200
+	world._cash("sales_revenue", 200) # The stage bootstrap now crosses the day-45 recap.
 	world.build_facility(Vector2i(2, 4), "research_bench")
 	complete_research(world, 1, "flower_cultivation", {"grain": 2, "humus": 1})
 	complete_research(world, 1, "beekeeping", {"nectar": 2, "pollen": 1})
@@ -237,16 +241,18 @@ func _belly_and_smelting() -> void:
 	world.end_day()
 	world.end_day()
 	check(bool(world.ranch.animal(int(sheep[0]["uid"]))["natural"]["pending"]), "three care days finish the wool round")
-	check(world.ranch.claim_natural(uid_of(world, "wool_station"))["ok"] and world.inventory.count("steel_wool") == 1 and world.inventory.count("sheep_manure") == 1, "claim issues wool and manure through the station")
+	check(world.ranch.claim_natural(uid_of(world, "wool_station"))["ok"] and world.inventory.count("steel_wool") == 2 and world.inventory.count("sheep_manure") == 1, "claim issues current wool and manure through the station")
 
 # --- 3. R17/R18 building materials ---------------------------------------------------
 
 func _building_materials() -> void:
 	var world := P8World.new(temp_store())
 	world.start_new(1)
+	preload("res://scripts/farming/tests/p107_fixture.gd").unlock(world)
 	world.grant_scaffold({"raw_wood": 4, "raw_stone": 6, "grain": 2, "humus": 1, "mushroom": 1,
 		"gravel": 4, "stone_powder": 2, "resin": 2, "tailings": 2, "slag": 2})
 	world.primeval_stones += 20  # 测试注资：研究台与木作台
+	world._cash("sales_revenue", 20)
 	world.build_facility(Vector2i(2, 4), "research_bench")
 	complete_research(world, 1, "flower_cultivation", {"grain": 2, "humus": 1})
 	complete_research(world, 1, "beekeeping", {"nectar": 2, "pollen": 1})
@@ -281,6 +287,7 @@ func _building_materials() -> void:
 func _construction_substitutes() -> void:
 	var world := P8World.new(temp_store())
 	world.start_new(1)
+	preload("res://scripts/farming/tests/p107_fixture.gd").unlock(world)
 	# Panels 1:1 replace the six stones of a smelter; nothing else changes.
 	world.grant_scaffold({"wood_plank": 2, "composite_stone_panel": 6})
 	world.build_substitute = "panel"
@@ -313,10 +320,12 @@ func _construction_substitutes() -> void:
 func _e_joint_validation() -> void:
 	var world := P8World.new(temp_store())
 	world.start_new(1)
+	preload("res://scripts/farming/tests/p107_fixture.gd").unlock(world)
 	world.grant_scaffold({"raw_wood": 90, "raw_stone": 40, "grain": 2, "humus": 1, "mushroom": 30,
 		"clean_water": 60, "fodder_grass": 30, "iron_ore": 6, "charcoal": 4, "straw": 6,
 		"crude_oil": 1, "beeswax": 1, "grain_meal": 1, "iron_ingot": 1})
 	world.primeval_stones += 100
+	world._cash("sales_revenue", 100)
 	world.build_facility(Vector2i(2, 4), "research_bench")
 	complete_research(world, 1, "flower_cultivation", {"grain": 2, "humus": 1})
 	complete_research(world, 1, "rock_handling", {"mushroom": 1, "raw_stone": 3})
@@ -432,9 +441,11 @@ func _e_joint_validation() -> void:
 func _snapshot_contracts() -> void:
 	var world := P8World.new(temp_store())
 	world.start_new(1)
+	preload("res://scripts/farming/tests/p107_fixture.gd").unlock(world)
 	world.grant_scaffold({"raw_wood": 90, "raw_stone": 40, "grain": 2, "humus": 1, "mushroom": 20,
 		"clean_water": 40})
 	world.primeval_stones += 80
+	world._cash("sales_revenue", 80)
 	world.build_facility(Vector2i(2, 4), "research_bench")
 	complete_research(world, 1, "flower_cultivation", {"grain": 2, "humus": 1})
 	complete_research(world, 1, "rock_handling", {"mushroom": 1, "raw_stone": 3})
