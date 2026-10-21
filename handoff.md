@@ -1,6 +1,10 @@
 # handoff — 跨机器开发交接
 
-> **2026-10-21 P10.8验收进展：** [阶段文档](docs/farming/phase-10.8-批量操作与新手指引.md)已完成批量农务/直接选种、三类配置复制、面板避让、手册阅读模式与事实驱动的新手指引。90日无注入路线在第68日完成农业蛊实际生长效果，逐日路线及独立审计通过；模型42、UI40、P102/P103/P107回归、手册导出检查通过。GPU最终审阅与验收哈希报告待本轮结束后写入[验证记录](docs/farming/phase108-validation.json)。常规P8 90日经济目标仍有8项未完成，单独披露，不作为P10.8教程门槛；不改写历史阶段证据。
+> **2026-10-21 P10.8技术验收完成：** 当前开发存档schema26，默认`play.bat`/F5仍进入P8。已交付批量农务/直接选种、三类配置复制、面板避让、手册/百科阅读模式与可折叠、取消、恢复的事实驱动新手指引，见[阶段文档](docs/farming/phase-10.8-批量操作与新手指引.md)。90日无注入路线在第68日取得农业蛊实际加速生长凭证，独立路线审计覆盖90/90日。基线模型42、UI102、GPU122、P102/P103/P107回归324/558/54及同源手册检查通过，Accept在当时确认必需分区与输入/产物哈希匹配；详见[验证记录](docs/farming/phase108-validation.json)。
+
+> **P10.8验收后热修复与验证边界：** 教程中的作物/物品ID已映射为中文显示名；无可执行农务的点击立即刷新右侧选中栏；查看工具独立直达地格详情，不走批量农务逻辑、不消耗AP，包含点击采石点的回归。三项修复后聚焦UI分区106项通过；按用户快速修复要求未重跑GPU矩阵、Accept或全量长测，基线验收不能视为这些热修复后的全链哈希确认。常规P8 90日回放另有8项后期经济目标未完成，已单独披露，不作为教程里程碑失败；主观试玩、正式美术与发行包另排。
+
+> **P10.8提交与接手入口：** 功能及UI修复`c331b5a`、真实教学回放/路线审计工具`766aba7`、阶段文档及验收记录`4583de8`，三批提交后工作区已核对干净。入口为`python tools/farming/test_p108.py --stage Plan`；局部UI复测用`--stage UI`，其他分区见阶段文档§10。本机证据在`.art-work/p108-tests/runner/`及`.art-work/p108-playthrough/`，不随Git提交，跨机器需另行复制；缺失时不能把历史记录当作本机已复验。下一阶段范围尚未确定，继续收集试玩反馈；本次仅更新交接文档，不重新运行游戏测试。下方公告按历史阅读。
 
 > **2026-10-20 P10.7本轮技术验收完成：** 产品定位为轻松养成、稳定产出；全局0～3经济阶段与局部房间等级独立。当前schema25：低阶事件累计成功供货3/12次，高阶交付复合石板12＋精炼油6＋保水基质8；23条常驻固定阶段兑换，0AP、无额外元石费、不刷供货数、暂不限日次数，换得材料可交事件。阶段门槛、生物工艺入口约束、成本重算、局部生产、保存/UI及知识内容已交付；原房间/蛊能力与三级收益保留。参数见[P10.7§11](docs/farming/phase-10.7-经济口径修正与生产路线再平衡.md#11-当前实现与验收记录2026-10-20)，验证见[需求对照](docs/farming/phase107-completion-audit.md)、[经济报告](docs/farming/phase107-economy.md)及[总验收记录](docs/farming/phase107-validation.json)。旧开发档显式拒绝，需新建schema25存档；旧阶段证据保留历史状态。
 
@@ -92,6 +96,8 @@
 
 ## 3. 当前状态
 
+- **现行开发进度（2026-10-21）：P10.8技术验收完成，schema26。** 三项后续UI热修复已通过聚焦106项检查；完整GPU/Accept仍为热修复前的验收基线。最新提交、验证边界与已知经济缺口见本文顶部，下一阶段待用户确定。
+- 以下P0～P8条目保留历史背景，历史schema、内容数量与发行包不代表当前开发版。
 - **P0–P4 全部完成**（阶段详情与验收记录见 [docs/demo-phases.md](docs/demo-phases.md) §3）：
   - P0 内核 MVP（网格地图/行走精灵/对话/双图切换）
   - P1 数据外置 + 烘焙管线（JSON 源数据 → bake 校验/规范化/manifest → 运行时只读）
@@ -132,6 +138,9 @@
 | 文档 | 内容 | 何时读 |
 |------|------|--------|
 | [docs/farming/master-plan.md](docs/farming/master-plan.md) | **灵植经营模块总 Phase 规划（现行主线）** | **开工先读** |
+| [docs/farming/phase-10.8-批量操作与新手指引.md](docs/farming/phase-10.8-批量操作与新手指引.md) | P10.8批量农务、配置复制、界面与真实路线教学的实现和补跑入口 | 调整当前交互与指引前 |
+| [docs/farming/phase108-validation.json](docs/farming/phase108-validation.json) | P10.8基线验收、后续UI热修复复测范围及8项经济缺口 | 核对当前验证结论时 |
+| [docs/farming/testing.md](docs/farming/testing.md) | 分层验证、局部补跑与证据规则 | 选择测试范围前 |
 | [docs/farming/phase-08.7-相机机位与地面投影统一.md](docs/farming/phase-08.7-相机机位与地面投影统一.md) | **P8.7已完成：35°投影、阴影、交互/相机及Windows交付** | 当前画面与交付先读 |
 | [docs/farming/phase-08.6-场景美术统一与可读性整改.md](docs/farming/phase-08.6-场景美术统一与可读性整改.md) | **P8.6已完成：场景统一、全场检查及Windows独立包交付** | 当前美术与交付先读 |
 | [docs/farming/phase-08.5-建模素材接入与场景美术.md](docs/farming/phase-08.5-建模素材接入与场景美术.md) | **P8.5已完成：Blender渲染2D、植物/设施接入与发布管线** | 追溯素材管线时 |
@@ -193,6 +202,8 @@ play.bat --shots=DIR            # P8隔离预览截图
 play.bat demo wilds             # 旧商场/野外演示，显式入口
 play.bat demo --selftest         # 旧演示测试，按需单独运行
 test-p8.bat                      # P8配数/模型/手册一致性/源码冒烟
+python tools/farming/test_p108.py --stage Plan # P10.8分区证据状态
+python tools/farming/test_p108.py --stage UI   # P10.8局部交互回归；不等于GPU/Accept
 
 python tools/bake_maps.py               # 烘焙（改 content/ 后必跑；校验失败即退出）
 python tools/gen_placeholder_assets.py  # 重新生成占位美术（读 themes/*.json 色板）
