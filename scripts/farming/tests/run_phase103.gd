@@ -41,8 +41,8 @@ func run() -> void:
 
 func _schema() -> void:
 	var w := fixture()
-	check(Codec.SCHEMA == 25, "schema is 25")
-	check(Codec.normalize(w.to_snapshot())["ok"], "schema25 rule fixture snapshot valid")
+	check(Codec.SCHEMA == 26, "schema is 26")
+	check(Codec.normalize(w.to_snapshot())["ok"], "schema26 rule fixture snapshot valid")
 	for old in [17, 18, 19, 20, 21, 22, 23, 24]:
 		var bad: Dictionary = w.to_snapshot()
 		bad["schema"] = old

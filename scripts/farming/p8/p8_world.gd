@@ -16,6 +16,7 @@ const Ranch := preload("res://scripts/farming/p8/p103_ranch.gd")
 const Services := preload("res://scripts/farming/p8/p104_services.gd")
 const Water := preload("res://scripts/farming/p8/p106_water.gd")
 const Economy := preload("res://scripts/farming/p8/p107_economy.gd")
+const Tutorial := preload("res://scripts/farming/p8/p108_tutorial.gd")
 ## Observational receipts for external business audits; never grants resources or
 ## replays work. Day-save failures are still governed by the transaction below.
 signal operation_recorded(entry: Dictionary)
@@ -42,6 +43,10 @@ var ranch
 var services
 var water
 var progress
+## Set only around an explicit manual sowing action. The hook writes the seed
+## plan before the AP/day transaction commits, so a failed final save rolls
+## the planting and its remembered plan back together.
+var _manual_plant_crop := ""
 
 func _init(slot_store = null) -> void:
 	land = P8Land.new(self)
@@ -204,6 +209,8 @@ func _settle_husbandry(completed_day: int) -> void:
 	water.settle(completed_day)
 	logistics.settle(completed_day)
 	research.settle(completed_day)
+	if not research.state["completed"].is_empty(): _tutorial_complete("first_research")
+	if progress.stage()>0: _tutorial_complete("first_milestone")
 	flowers.settle(completed_day)
 	reports.settle(completed_day)
 
@@ -460,6 +467,56 @@ func plant(cell: Vector2i, crop_id: String, variant_id := "") -> Dictionary:
 					return _error(blocked_variant)
 	return super(cell, crop_id, variant_id)
 
+func plant_manual(cell: Vector2i, crop_id: String, variant_id := "") -> Dictionary:
+	var quote: Dictionary=plant_quote(cell,crop_id,variant_id)
+	if not quote["ok"]: return quote
+	if crop_defs.has(crop_id) and String(crop_defs[crop_id].get("medium", "land")) != "water":
+		_manual_plant_crop = crop_id
+	var result: Dictionary = plant(cell, crop_id, variant_id)
+	_manual_plant_crop = ""
+	return result
+
+## Pure preflight for a direct planting tool and batch preview. It mirrors the
+## existing plant checks without reserving cells or consuming inventory.
+func plant_quote(cell: Vector2i, crop_id: String, variant_id := "") -> Dictionary:
+	var ready := _can_act(0)
+	if not ready["ok"]: return ready
+	if not grid.in_bounds(cell.x, cell.y): return _error("地格越界")
+	if not crop_defs.has(crop_id): return _error("未知植物")
+	var definition: Dictionary = crop_defs[crop_id]
+	var shape: Array = definition["footprint"]
+	var inputs: Dictionary = definition["inputs"].duplicate()
+	if not variant_id.is_empty():
+		var found := false
+		for variant in definition.get("input_variants", []):
+			if String(variant["id"]) == variant_id:
+				inputs = variant["inputs"].duplicate()
+				found = true
+				var gate := research_block(String(variant.get("research", "")))
+				if not gate.is_empty(): return _error(gate)
+		if not found: return _error("未知培养变体")
+	var blocked := research_block(String(definition.get("research", "")))
+	if not blocked.is_empty(): return _error(blocked)
+	inputs[definition["seed"]] = int(inputs.get(definition["seed"], 0)) + 1
+	if String(definition.get("medium", "land")) == "water":
+		var water_block := _water_plant_block(cell, definition, variant_id)
+		if not water_block.is_empty(): return _error(water_block)
+	else:
+		var reservation := grid.can_reserve(cell, int(shape[0]), int(shape[1]), "p108_quote", Grid.State.PLANTED)
+		if not reservation["ok"]: return reservation
+		if not rooms.footprint_allowed(Rect2i(cell, Vector2i(int(shape[0]), int(shape[1])))):
+			return _error("作物完整占地不能跨越田块边界")
+		var requested:=Rect2i(cell,Vector2i(int(shape[0]),int(shape[1])))
+		for plan in workforce.state["seed_plans"]:
+			if plan["cell"]==[cell.x,cell.y]: continue
+			var other: Dictionary=crop_defs[String(plan["crop_id"])]
+			var other_rect:=Rect2i(Vector2i(int(plan["cell"][0]),int(plan["cell"][1])),Vector2i(int(other["footprint"][0]),int(other["footprint"][1])))
+			if requested.intersects(other_rect): return _error("种植占地与已有选种计划重叠")
+	for item in inputs:
+		if inventory.count(String(item)) < int(inputs[item]):
+			return _error("缺少种植投入：" + String(_items[String(item)]["name"]))
+	return {"ok": true, "ap": 1, "inputs": inputs, "footprint": [int(shape[0]), int(shape[1])]}
+
 func buy(item_id: String, quantity) -> Dictionary:
 	if item_id == "purifying_mat_culture":
 		return _error("培养单位请在净水菌床面板直接购入：扣款即占位，不入仓库")
@@ -583,9 +640,17 @@ func action_quote(cell: Vector2i, kind: String) -> Dictionary:
 	if kind=="till" and rooms.state["floors"].has(Rooms.key(cell)): return _error("普通地板不能直接开垦")
 	return super(cell,kind)
 
-func _crop_planted(row: Dictionary) -> void: rooms.plant_started(row)
+func _crop_planted(row: Dictionary) -> void:
+	rooms.plant_started(row)
+	_tutorial_complete("first_field")
+	if not _manual_plant_crop.is_empty() and String(crop_defs[String(row["crop_id"])].get("medium", "land")) != "water":
+		var origin: Array = row["origin"]
+		workforce.set_seed(Vector2i(int(origin[0]), int(origin[1])), _manual_plant_crop)
 
-func _crop_grew(row: Dictionary, delta: int, day: int) -> void: rooms.crop_grew(row,delta,day)
+func _crop_grew(row: Dictionary, delta: int, day: int) -> void:
+	rooms.crop_grew(row,delta,day)
+	if delta>0 and _crop_growth_percent(row,day)>100:
+		_tutorial_complete("active_field_gu")
 
 func _crop_clearing(row: Dictionary) -> Dictionary:
 	# Cleanup belongs to the removal/seed candidate, before _finish can roll back.
@@ -593,7 +658,50 @@ func _crop_clearing(row: Dictionary) -> Dictionary:
 	return rooms.clear_crop(row)
 
 func _crop_room_rewards(row: Dictionary, mode: String, base: Dictionary, removed: bool) -> Dictionary:
+	_tutorial_complete("first_harvest")
 	return rooms.claim_crop(row,mode,base,removed)
+
+func _batch_claimed(_batch: Dictionary) -> void:
+	_tutorial_complete("first_processing")
+
+func _tutorial_complete(step_id: String) -> void:
+	if not preferences.has("tutorial"): preferences["tutorial"]={"enabled":true,"collapsed":false,"dismissed":false,"completed":[],"skipped":[]}
+	var state: Dictionary=preferences["tutorial"]
+	if step_id not in state["completed"] and step_id not in state["skipped"]:
+		state["completed"].append(step_id)
+
+## Persist presentation preferences without committing unsaved gameplay state.
+## Read the last committed snapshot, patch only the whitelisted tutorial flags,
+## and write it through the active slot's normal atomic commit path.
+func set_tutorial_preference(field: String, value: bool) -> Dictionary:
+	if field not in ["enabled", "collapsed", "dismissed"]:
+		return _error("不允许修改该新手指引字段")
+	if not daily_save_error.is_empty():
+		return _error("日存档待处理时不能保存指引偏好")
+	if not preferences.has("tutorial"):
+		preferences["tutorial"] = Tutorial.fresh()
+	var state: Dictionary = preferences["tutorial"]
+	var defaults: Dictionary = Tutorial.fresh()
+	var previous: bool = bool(state.get(field, defaults[field]))
+	if previous == value:
+		return {"ok": true, "saved": _store != null and _store.active_slot() != 0, "unchanged": true}
+	state[field] = value
+	if _store == null or _store.active_slot() == 0:
+		return {"ok": true, "saved": false}
+	var stored: Dictionary = _store.read_slot(_store.active_slot())
+	if not stored.get("ok", false):
+		state[field] = previous
+		return _error("读取当前存档失败：" + String(stored.get("reason", "未知错误")))
+	var candidate: Dictionary = stored["snapshot"]
+	if not candidate.get("preferences", {}).has("tutorial"):
+		state[field] = previous
+		return _error("当前存档缺少新手指引设置")
+	candidate["preferences"]["tutorial"][field] = value
+	var saved: Dictionary = _store.commit(candidate)
+	if not saved.get("ok", false):
+		state[field] = previous
+		return _error("保存指引偏好失败：" + String(saved.get("reason", "未知错误")))
+	return {"ok": true, "saved": true}
 
 func irrigate(cell: Vector2i) -> Dictionary:
 	if logistics.at(cell).is_empty(): return super(cell)

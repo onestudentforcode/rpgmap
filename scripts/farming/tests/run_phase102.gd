@@ -19,7 +19,7 @@ func fixture():
 func _initialize() -> void: call_deferred("run")
 func run() -> void:
 	var w = fixture()
-	check(Codec.SCHEMA==25 and Codec.normalize(w.to_snapshot())["ok"],"schema25 agriculture fixture valid")
+	check(Codec.SCHEMA==26 and Codec.normalize(w.to_snapshot())["ok"],"schema26 agriculture fixture valid")
 	for old in [17,18,19,20,21,22,23,24]:
 		var bad: Dictionary=w.to_snapshot();bad["schema"]=old
 		check(not Codec.normalize(bad)["ok"],"old schema rejected "+str(old))

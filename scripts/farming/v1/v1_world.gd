@@ -550,7 +550,13 @@ func claim_batch(facility_uid: int, expected_batch_id: int) -> Dictionary:
 	_record_flow(outputs, {}, "加工收取")
 	facilities[facility_uid]["batch"] = {}
 	for ident in outputs: _count("processed",ident,int(outputs[ident]))
+	_batch_claimed(batch)
 	return _finish(int(recipe["claim_ap"]), {"ok": true, "batch_id": expected_batch_id, "items": outputs})
+
+## Product seam for persistent learning/progression observers. Called before
+## the action transaction commits so the receipt shares its rollback boundary.
+func _batch_claimed(_batch: Dictionary) -> void:
+	pass
 
 func gross_revenue() -> int:
 	return _sales_revenue + _order_revenue
