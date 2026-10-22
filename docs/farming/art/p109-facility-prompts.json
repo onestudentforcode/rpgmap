@@ -1,0 +1,708 @@
+{
+  "schema": 1,
+  "date": "2026-10-22",
+  "scope": "25 active placeholder facilities, 30 land/water briefs",
+  "production_file": "content/farming/p8/production.json",
+  "production_sha256": "afb848c1d349d116f929ac1ceb7df0cba4b72eeff754fa02f04d6ac22bdff265",
+  "status": "prompts_only_no_images_models_or_runtime_changes",
+  "counts": {
+    "active_facilities": 39,
+    "existing_model_entries": 14,
+    "placeholder_facilities": 25,
+    "dual_medium_facilities": 5,
+    "prompt_pairs": 30
+  },
+  "excluded_existing_model_ids": [
+    "woodshop",
+    "char_kiln",
+    "compost_bin",
+    "smelter",
+    "pen",
+    "fish_pond",
+    "algae_tank",
+    "research_bench",
+    "bee_hive",
+    "farm_processor",
+    "purifying_bed",
+    "kitchen",
+    "field_service_station",
+    "growth_lamp"
+  ],
+  "assets": [
+    {
+      "id": "dispatch_station",
+      "name": "调度站",
+      "variant": "land",
+      "footprint": [
+        1,
+        1
+      ],
+      "medium": "陆地",
+      "status": "prompts_ready_not_generated",
+      "scope_evidence": "tools/farming/gen_p103_facility_art.py",
+      "legacy_runtime_file": "res://assets/farming/facilities/dispatch_station/body.png",
+      "legacy_runtime_sha256": "f6898e15e2fc1b8d9d5a21a994db62ad097bbb7a51c377bbd9bf6a62ba29adfe",
+      "planned_paths": {
+        "design": "assets/farming/p109/source/facilities/dispatch_station/dispatch_station_land_design_view35_v001.png",
+        "model": "facilities/p109/dispatch_station/land/dispatch_station_land_v001.glb",
+        "blend": "facilities/p109/dispatch_station/land/dispatch_station_land_v001.blend",
+        "render": "assets/farming/p109/runtime/facilities/dispatch_station/land/body.png"
+      },
+      "image_prompt": "为《灵田》制作一件独立设施设计图，用于后续图生3D。清淡雅致的仙侠生态游戏风，柔和三维体积、概括形块和少量手绘感，与已选植物画风统一。浅木、暖米、青灰石为主，只选一种低饱和点色。结构约3～5组，重复脚架可简化；花纹0～1处，材质不超过3类。不用写实微纹理、密集雕花符文、复杂齿轮管线或强发光。\n\n对象：调度站（dispatch_station），陆地1×1占地。矮木柜连接一个简洁的立式调度板，板上有三块素色木牌，顶部一面短小灰绿旗。浅木和青灰石脚为主，一处玉青扣件；无文字、钟表阵列或复杂机械。\n\n正交相机沿设施正面中轴俯看35°，主体绕竖直轴偏转0°。矩形横边水平、纵深边和立柱竖直，附件同轴；只见顶面与正面，不露大侧面，不用等距菱形或透视展示角。圆口投影为长轴水平的椭圆；真实斜撑、筛盘倾角可保留。\n\n左上柔光，完整单体，透明背景，四周留白。只画空载静态本体，不画文字、人物、动物、地面、水面、大投影、粒子或多视角拼图；不附加棚屋和庭院。",
+      "image_to_model_prompt": "对象：调度站（dispatch_station），陆地1×1占地。依据附上的已选设计图生成同一件完整静态3D设施。保留轮廓、比例与色块，合理补足背面，不另加装饰。用低至中等复杂度表达大形，薄件有厚度、构件连接可靠，纹理概括；不要求骨骼、动画或内部精密机构。木、石、陶、金属等按实际使用分区；不把受光高光和投影烘焙成固定黑白斑。\n\n保留矮柜、调度板和短旗三部分；木牌固定在板面，旗布有厚度，不做独立飘散布片。\n\n只生成设施本体，不带背景、地面、水体或大影子。保留可检查的材质和贴图，使用服务实际支持的模型格式。后续在Blender用正面中轴35°正交相机渲染，主体偏转0°，矩形横边水平、纵深边竖直。占地中心为放置原点，地面或水面接触高度明确，不随透明边框居中。"
+    },
+    {
+      "id": "feed_trough",
+      "name": "供食槽",
+      "variant": "land",
+      "footprint": [
+        1,
+        1
+      ],
+      "medium": "陆地",
+      "status": "prompts_ready_not_generated",
+      "scope_evidence": "tools/farming/gen_p103_facility_art.py",
+      "legacy_runtime_file": "res://assets/farming/facilities/feed_trough/body.png",
+      "legacy_runtime_sha256": "8fe2b8d60ad80f76b6b383a78094c6a541378f0edef42fa91b7672602591b1cf",
+      "planned_paths": {
+        "design": "assets/farming/p109/source/facilities/feed_trough/feed_trough_land_design_view35_v001.png",
+        "model": "facilities/p109/feed_trough/land/feed_trough_land_v001.glb",
+        "blend": "facilities/p109/feed_trough/land/feed_trough_land_v001.blend",
+        "render": "assets/farming/p109/runtime/facilities/feed_trough/land/body.png"
+      },
+      "image_prompt": "为《灵田》制作一件独立设施设计图，用于后续图生3D。清淡雅致的仙侠生态游戏风，柔和三维体积、概括形块和少量手绘感，与已选植物画风统一。浅木、暖米、青灰石为主，只选一种低饱和点色。结构约3～5组，重复脚架可简化；花纹0～1处，材质不超过3类。不用写实微纹理、密集雕花符文、复杂齿轮管线或强发光。\n\n对象：供食槽（feed_trough），陆地1×1占地。一只横向长浅木食槽，四角短支脚，两格宽浅槽口，内壁暖米色，边缘一小段玉青包边。空槽，不画饲料或动物；轮廓宽矮。\n\n正交相机沿设施正面中轴俯看35°，主体绕竖直轴偏转0°。矩形横边水平、纵深边和立柱竖直，附件同轴；只见顶面与正面，不露大侧面，不用等距菱形或透视展示角。圆口投影为长轴水平的椭圆；真实斜撑、筛盘倾角可保留。\n\n左上柔光，完整单体，透明背景，四周留白。只画空载静态本体，不画文字、人物、动物、地面、水面、大投影、粒子或多视角拼图；不附加棚屋和庭院。",
+      "image_to_model_prompt": "对象：供食槽（feed_trough），陆地1×1占地。依据附上的已选设计图生成同一件完整静态3D设施。保留轮廓、比例与色块，合理补足背面，不另加装饰。用低至中等复杂度表达大形，薄件有厚度、构件连接可靠，纹理概括；不要求骨骼、动画或内部精密机构。木、石、陶、金属等按实际使用分区；不把受光高光和投影烘焙成固定黑白斑。\n\n槽口真实内凹，保留槽壁和底板厚度；两格可辨，横向支脚与槽体连接。\n\n只生成设施本体，不带背景、地面、水体或大影子。保留可检查的材质和贴图，使用服务实际支持的模型格式。后续在Blender用正面中轴35°正交相机渲染，主体偏转0°，矩形横边水平、纵深边竖直。占地中心为放置原点，地面或水面接触高度明确，不随透明边框居中。"
+    },
+    {
+      "id": "feed_trough",
+      "name": "供食槽",
+      "variant": "water",
+      "footprint": [
+        1,
+        1
+      ],
+      "medium": "水上",
+      "status": "prompts_ready_not_generated",
+      "scope_evidence": "tools/farming/gen_p103_facility_art.py",
+      "legacy_runtime_file": "res://assets/farming/facilities/feed_trough/body.png",
+      "legacy_runtime_sha256": "8fe2b8d60ad80f76b6b383a78094c6a541378f0edef42fa91b7672602591b1cf",
+      "planned_paths": {
+        "design": "assets/farming/p109/source/facilities/feed_trough/feed_trough_water_design_view35_v001.png",
+        "model": "facilities/p109/feed_trough/water/feed_trough_water_v001.glb",
+        "blend": "facilities/p109/feed_trough/water/feed_trough_water_v001.blend",
+        "render": "assets/farming/p109/runtime/facilities/feed_trough/water/body.png"
+      },
+      "image_prompt": "为《灵田》制作一件独立设施设计图，用于后续图生3D。清淡雅致的仙侠生态游戏风，柔和三维体积、概括形块和少量手绘感，与已选植物画风统一。浅木、暖米、青灰石为主，只选一种低饱和点色。结构约3～5组，重复脚架可简化；花纹0～1处，材质不超过3类。不用写实微纹理、密集雕花符文、复杂齿轮管线或强发光。\n\n对象：供食槽（feed_trough），水上1×1占地。保留同款两格食槽，改为低矮投饵盒和两侧短浮木承托；槽口仍向上，暖米槽壁配玉青边。无饵料、鱼或水面。\n\n正交相机沿设施正面中轴俯看35°，主体绕竖直轴偏转0°。矩形横边水平、纵深边和立柱竖直，附件同轴；只见顶面与正面，不露大侧面，不用等距菱形或透视展示角。圆口投影为长轴水平的椭圆；真实斜撑、筛盘倾角可保留。\n\n左上柔光，完整单体，透明背景，四周留白。只画空载静态本体，不画文字、人物、动物、地面、水面、大投影、粒子或多视角拼图；不附加棚屋和庭院。",
+      "image_to_model_prompt": "对象：供食槽（feed_trough），水上1×1占地。依据附上的已选设计图生成同一件完整静态3D设施。保留轮廓、比例与色块，合理补足背面，不另加装饰。用低至中等复杂度表达大形，薄件有厚度、构件连接可靠，纹理概括；不要求骨骼、动画或内部精密机构。木、石、陶、金属等按实际使用分区；不把受光高光和投影烘焙成固定黑白斑。\n\n投饵盒与短浮木连成整体，保持两个宽浅槽口；不增加锚链、长支柱和池框。\n\n只生成设施本体，不带背景、地面、水体或大影子。保留可检查的材质和贴图，使用服务实际支持的模型格式。后续在Blender用正面中轴35°正交相机渲染，主体偏转0°，矩形横边水平、纵深边竖直。占地中心为放置原点，地面或水面接触高度明确，不随透明边框居中。"
+    },
+    {
+      "id": "small_bed",
+      "name": "小床",
+      "variant": "land",
+      "footprint": [
+        1,
+        1
+      ],
+      "medium": "陆地",
+      "status": "prompts_ready_not_generated",
+      "scope_evidence": "tools/farming/gen_p103_facility_art.py",
+      "legacy_runtime_file": "res://assets/farming/facilities/small_bed/body.png",
+      "legacy_runtime_sha256": "656df5fa2e20a3dcff8f625f268b4b408fd7e07a48f9374d7fa3950e61831e48",
+      "planned_paths": {
+        "design": "assets/farming/p109/source/facilities/small_bed/small_bed_land_design_view35_v001.png",
+        "model": "facilities/p109/small_bed/land/small_bed_land_v001.glb",
+        "blend": "facilities/p109/small_bed/land/small_bed_land_v001.blend",
+        "render": "assets/farming/p109/runtime/facilities/small_bed/land/body.png"
+      },
+      "image_prompt": "为《灵田》制作一件独立设施设计图，用于后续图生3D。清淡雅致的仙侠生态游戏风，柔和三维体积、概括形块和少量手绘感，与已选植物画风统一。浅木、暖米、青灰石为主，只选一种低饱和点色。结构约3～5组，重复脚架可简化；花纹0～1处，材质不超过3类。不用写实微纹理、密集雕花符文、复杂齿轮管线或强发光。\n\n对象：小床（small_bed），陆地1×1占地。一张低矮浅木小动物床架，内部四个紧凑的暖米色软垫窝，按两行两列排列。窄边框、短脚、一处灰绿布边；无床幔、屋顶或枕头堆。\n\n正交相机沿设施正面中轴俯看35°，主体绕竖直轴偏转0°。矩形横边水平、纵深边和立柱竖直，附件同轴；只见顶面与正面，不露大侧面，不用等距菱形或透视展示角。圆口投影为长轴水平的椭圆；真实斜撑、筛盘倾角可保留。\n\n左上柔光，完整单体，透明背景，四周留白。只画空载静态本体，不画文字、人物、动物、地面、水面、大投影、粒子或多视角拼图；不附加棚屋和庭院。",
+      "image_to_model_prompt": "对象：小床（small_bed），陆地1×1占地。依据附上的已选设计图生成同一件完整静态3D设施。保留轮廓、比例与色块，合理补足背面，不另加装饰。用低至中等复杂度表达大形，薄件有厚度、构件连接可靠，纹理概括；不要求骨骼、动画或内部精密机构。木、石、陶、金属等按实际使用分区；不把受光高光和投影烘焙成固定黑白斑。\n\n四个软垫窝共享同一床框与底座，窝沿圆润、软垫概括，保持四槽结构和1×1总占地。\n\n只生成设施本体，不带背景、地面、水体或大影子。保留可检查的材质和贴图，使用服务实际支持的模型格式。后续在Blender用正面中轴35°正交相机渲染，主体偏转0°，矩形横边水平、纵深边竖直。占地中心为放置原点，地面或水面接触高度明确，不随透明边框居中。",
+      "runtime_bed_slots": 4,
+      "design_bed_slots": 4,
+      "capacity_alignment": "aligned"
+    },
+    {
+      "id": "small_bed",
+      "name": "小床",
+      "variant": "water",
+      "footprint": [
+        1,
+        1
+      ],
+      "medium": "水上",
+      "status": "prompts_ready_not_generated",
+      "scope_evidence": "tools/farming/gen_p103_facility_art.py",
+      "legacy_runtime_file": "res://assets/farming/facilities/small_bed/body.png",
+      "legacy_runtime_sha256": "656df5fa2e20a3dcff8f625f268b4b408fd7e07a48f9374d7fa3950e61831e48",
+      "planned_paths": {
+        "design": "assets/farming/p109/source/facilities/small_bed/small_bed_water_design_view35_v001.png",
+        "model": "facilities/p109/small_bed/water/small_bed_water_v001.glb",
+        "blend": "facilities/p109/small_bed/water/small_bed_water_v001.blend",
+        "render": "assets/farming/p109/runtime/facilities/small_bed/water/body.png"
+      },
+      "image_prompt": "为《灵田》制作一件独立设施设计图，用于后续图生3D。清淡雅致的仙侠生态游戏风，柔和三维体积、概括形块和少量手绘感，与已选植物画风统一。浅木、暖米、青灰石为主，只选一种低饱和点色。结构约3～5组，重复脚架可简化；花纹0～1处，材质不超过3类。不用写实微纹理、密集雕花符文、复杂齿轮管线或强发光。\n\n对象：小床（small_bed），水上1×1占地。保留同款床框配色，改为低矮水生栖息浮台，内部两行两列四个小浅窝，窝面为灰绿平滑湿石垫。无枕被、鱼或水面；1×1总占地。\n\n正交相机沿设施正面中轴俯看35°，主体绕竖直轴偏转0°。矩形横边水平、纵深边和立柱竖直，附件同轴；只见顶面与正面，不露大侧面，不用等距菱形或透视展示角。圆口投影为长轴水平的椭圆；真实斜撑、筛盘倾角可保留。\n\n左上柔光，完整单体，透明背景，四周留白。只画空载静态本体，不画文字、人物、动物、地面、水面、大投影、粒子或多视角拼图；不附加棚屋和庭院。",
+      "image_to_model_prompt": "对象：小床（small_bed），水上1×1占地。依据附上的已选设计图生成同一件完整静态3D设施。保留轮廓、比例与色块，合理补足背面，不另加装饰。用低至中等复杂度表达大形，薄件有厚度、构件连接可靠，纹理概括；不要求骨骼、动画或内部精密机构。木、石、陶、金属等按实际使用分区；不把受光高光和投影烘焙成固定黑白斑。\n\n四个栖息窝共享一个短浮托底座，石垫平滑而有厚度；不建水池、床幔或海底地面。\n\n只生成设施本体，不带背景、地面、水体或大影子。保留可检查的材质和贴图，使用服务实际支持的模型格式。后续在Blender用正面中轴35°正交相机渲染，主体偏转0°，矩形横边水平、纵深边竖直。占地中心为放置原点，地面或水面接触高度明确，不随透明边框居中。",
+      "runtime_bed_slots": 4,
+      "design_bed_slots": 4,
+      "capacity_alignment": "aligned"
+    },
+    {
+      "id": "medium_bed",
+      "name": "中床",
+      "variant": "land",
+      "footprint": [
+        1,
+        1
+      ],
+      "medium": "陆地",
+      "status": "prompts_ready_not_generated",
+      "scope_evidence": "tools/farming/gen_p103_facility_art.py",
+      "legacy_runtime_file": "res://assets/farming/facilities/medium_bed/body.png",
+      "legacy_runtime_sha256": "4439bb61e8c27910103c364ccee7be7a7f0f4eee250e47e889b56338df48309f",
+      "planned_paths": {
+        "design": "assets/farming/p109/source/facilities/medium_bed/medium_bed_land_design_view35_v001.png",
+        "model": "facilities/p109/medium_bed/land/medium_bed_land_v001.glb",
+        "blend": "facilities/p109/medium_bed/land/medium_bed_land_v001.blend",
+        "render": "assets/farming/p109/runtime/facilities/medium_bed/land/body.png"
+      },
+      "image_prompt": "为《灵田》制作一件独立设施设计图，用于后续图生3D。清淡雅致的仙侠生态游戏风，柔和三维体积、概括形块和少量手绘感，与已选植物画风统一。浅木、暖米、青灰石为主，只选一种低饱和点色。结构约3～5组，重复脚架可简化；花纹0～1处，材质不超过3类。不用写实微纹理、密集雕花符文、复杂齿轮管线或强发光。\n\n对象：中床（medium_bed），陆地1×1占地。一张浅木中型动物床架，同一框内左右并排两个较宽的浅凹软垫窝。边框比小床更厚实，暖米垫配灰茶绿内沿；保持1×1总占地，两窝清楚，无床幔。\n\n正交相机沿设施正面中轴俯看35°，主体绕竖直轴偏转0°。矩形横边水平、纵深边和立柱竖直，附件同轴；只见顶面与正面，不露大侧面，不用等距菱形或透视展示角。圆口投影为长轴水平的椭圆；真实斜撑、筛盘倾角可保留。\n\n左上柔光，完整单体，透明背景，四周留白。只画空载静态本体，不画文字、人物、动物、地面、水面、大投影、粒子或多视角拼图；不附加棚屋和庭院。",
+      "image_to_model_prompt": "对象：中床（medium_bed），陆地1×1占地。依据附上的已选设计图生成同一件完整静态3D设施。保留轮廓、比例与色块，合理补足背面，不另加装饰。用低至中等复杂度表达大形，薄件有厚度、构件连接可靠，纹理概括；不要求骨骼、动画或内部精密机构。木、石、陶、金属等按实际使用分区；不把受光高光和投影烘焙成固定黑白斑。\n\n保留同框两个卧位，左右并排，床框稳固，窝垫使用较大平滑形块；不做四窝，不扩大地图占地。\n\n只生成设施本体，不带背景、地面、水体或大影子。保留可检查的材质和贴图，使用服务实际支持的模型格式。后续在Blender用正面中轴35°正交相机渲染，主体偏转0°，矩形横边水平、纵深边竖直。占地中心为放置原点，地面或水面接触高度明确，不随透明边框居中。",
+      "runtime_bed_slots": 4,
+      "design_bed_slots": 2,
+      "capacity_alignment": "runtime_revision_pending"
+    },
+    {
+      "id": "medium_bed",
+      "name": "中床",
+      "variant": "water",
+      "footprint": [
+        1,
+        1
+      ],
+      "medium": "水上",
+      "status": "prompts_ready_not_generated",
+      "scope_evidence": "tools/farming/gen_p103_facility_art.py",
+      "legacy_runtime_file": "res://assets/farming/facilities/medium_bed/body.png",
+      "legacy_runtime_sha256": "4439bb61e8c27910103c364ccee7be7a7f0f4eee250e47e889b56338df48309f",
+      "planned_paths": {
+        "design": "assets/farming/p109/source/facilities/medium_bed/medium_bed_water_design_view35_v001.png",
+        "model": "facilities/p109/medium_bed/water/medium_bed_water_v001.glb",
+        "blend": "facilities/p109/medium_bed/water/medium_bed_water_v001.blend",
+        "render": "assets/farming/p109/runtime/facilities/medium_bed/water/body.png"
+      },
+      "image_prompt": "为《灵田》制作一件独立设施设计图，用于后续图生3D。清淡雅致的仙侠生态游戏风，柔和三维体积、概括形块和少量手绘感，与已选植物画风统一。浅木、暖米、青灰石为主，只选一种低饱和点色。结构约3～5组，重复脚架可简化；花纹0～1处，材质不超过3类。不用写实微纹理、密集雕花符文、复杂齿轮管线或强发光。\n\n对象：中床（medium_bed），水上1×1占地。保留同款较厚床框，改为水生栖息浮台，内部左右并排两个较宽浅窝，灰茶绿湿石垫配暖米边框。无织物床褥或水面；1×1总占地。\n\n正交相机沿设施正面中轴俯看35°，主体绕竖直轴偏转0°。矩形横边水平、纵深边和立柱竖直，附件同轴；只见顶面与正面，不露大侧面，不用等距菱形或透视展示角。圆口投影为长轴水平的椭圆；真实斜撑、筛盘倾角可保留。\n\n左上柔光，完整单体，透明背景，四周留白。只画空载静态本体，不画文字、人物、动物、地面、水面、大投影、粒子或多视角拼图；不附加棚屋和庭院。",
+      "image_to_model_prompt": "对象：中床（medium_bed），水上1×1占地。依据附上的已选设计图生成同一件完整静态3D设施。保留轮廓、比例与色块，合理补足背面，不另加装饰。用低至中等复杂度表达大形，薄件有厚度、构件连接可靠，纹理概括；不要求骨骼、动画或内部精密机构。木、石、陶、金属等按实际使用分区；不把受光高光和投影烘焙成固定黑白斑。\n\n保留两个栖息窝、厚边框和紧凑浮托，左右并排，用宽浅凹面表达；不做四窝，不扩占地或增加池水。\n\n只生成设施本体，不带背景、地面、水体或大影子。保留可检查的材质和贴图，使用服务实际支持的模型格式。后续在Blender用正面中轴35°正交相机渲染，主体偏转0°，矩形横边水平、纵深边竖直。占地中心为放置原点，地面或水面接触高度明确，不随透明边框居中。",
+      "runtime_bed_slots": 4,
+      "design_bed_slots": 2,
+      "capacity_alignment": "runtime_revision_pending"
+    },
+    {
+      "id": "large_bed",
+      "name": "大床",
+      "variant": "land",
+      "footprint": [
+        1,
+        1
+      ],
+      "medium": "陆地",
+      "status": "prompts_ready_not_generated",
+      "scope_evidence": "tools/farming/gen_p103_facility_art.py",
+      "legacy_runtime_file": "res://assets/farming/facilities/large_bed/body.png",
+      "legacy_runtime_sha256": "c7dc7d1ace2b1462ad4c15abfd4261e236971dff1f43d5e7c2085733b2dedbf6",
+      "planned_paths": {
+        "design": "assets/farming/p109/source/facilities/large_bed/large_bed_land_design_view35_v001.png",
+        "model": "facilities/p109/large_bed/land/large_bed_land_v001.glb",
+        "blend": "facilities/p109/large_bed/land/large_bed_land_v001.blend",
+        "render": "assets/farming/p109/runtime/facilities/large_bed/land/body.png"
+      },
+      "image_prompt": "为《灵田》制作一件独立设施设计图，用于后续图生3D。清淡雅致的仙侠生态游戏风，柔和三维体积、概括形块和少量手绘感，与已选植物画风统一。浅木、暖米、青灰石为主，只选一种低饱和点色。结构约3～5组，重复脚架可简化；花纹0～1处，材质不超过3类。不用写实微纹理、密集雕花符文、复杂齿轮管线或强发光。\n\n对象：大床（large_bed），陆地1×1占地。一张宽厚的浅木大型动物卧床，只有一个完整的大椭圆暖米软垫窝，两条低护边与短脚。少量灰绿布边，重心低；仍为1×1设施，不画成四床或人用双人床。\n\n正交相机沿设施正面中轴俯看35°，主体绕竖直轴偏转0°。矩形横边水平、纵深边和立柱竖直，附件同轴；只见顶面与正面，不露大侧面，不用等距菱形或透视展示角。圆口投影为长轴水平的椭圆；真实斜撑、筛盘倾角可保留。\n\n左上柔光，完整单体，透明背景，四周留白。只画空载静态本体，不画文字、人物、动物、地面、水面、大投影、粒子或多视角拼图；不附加棚屋和庭院。",
+      "image_to_model_prompt": "对象：大床（large_bed），陆地1×1占地。依据附上的已选设计图生成同一件完整静态3D设施。保留轮廓、比例与色块，合理补足背面，不另加装饰。用低至中等复杂度表达大形，薄件有厚度、构件连接可靠，纹理概括；不要求骨骼、动画或内部精密机构。木、石、陶、金属等按实际使用分区；不把受光高光和投影烘焙成固定黑白斑。\n\n同一床框里只保留一个大卧位，软垫有适度厚度和凹面；不增加床组或把占地扩成2×2。\n\n只生成设施本体，不带背景、地面、水体或大影子。保留可检查的材质和贴图，使用服务实际支持的模型格式。后续在Blender用正面中轴35°正交相机渲染，主体偏转0°，矩形横边水平、纵深边竖直。占地中心为放置原点，地面或水面接触高度明确，不随透明边框居中。",
+      "runtime_bed_slots": 1,
+      "design_bed_slots": 1,
+      "capacity_alignment": "aligned"
+    },
+    {
+      "id": "care_table",
+      "name": "照料台",
+      "variant": "land",
+      "footprint": [
+        1,
+        1
+      ],
+      "medium": "陆地",
+      "status": "prompts_ready_not_generated",
+      "scope_evidence": "tools/farming/gen_p103_facility_art.py",
+      "legacy_runtime_file": "res://assets/farming/facilities/care_table/body.png",
+      "legacy_runtime_sha256": "56430e755b9ac24ad55b50c25363caff04c61b058ad439d18d1f3f36c523ffad",
+      "planned_paths": {
+        "design": "assets/farming/p109/source/facilities/care_table/care_table_land_design_view35_v001.png",
+        "model": "facilities/p109/care_table/land/care_table_land_v001.glb",
+        "blend": "facilities/p109/care_table/land/care_table_land_v001.blend",
+        "render": "assets/farming/p109/runtime/facilities/care_table/land/body.png"
+      },
+      "image_prompt": "为《灵田》制作一件独立设施设计图，用于后续图生3D。清淡雅致的仙侠生态游戏风，柔和三维体积、概括形块和少量手绘感，与已选植物画风统一。浅木、暖米、青灰石为主，只选一种低饱和点色。结构约3～5组，重复脚架可简化；花纹0～1处，材质不超过3类。不用写实微纹理、密集雕花符文、复杂齿轮管线或强发光。\n\n对象：照料台（care_table），陆地1×1占地。一张矮浅木照料台，台面一块暖米软垫，后缘固定一个短工具架，只挂一把宽齿刷和一个浅碗。青灰石脚、少量玉青夹件；无医疗仪器、动物或杂物。\n\n正交相机沿设施正面中轴俯看35°，主体绕竖直轴偏转0°。矩形横边水平、纵深边和立柱竖直，附件同轴；只见顶面与正面，不露大侧面，不用等距菱形或透视展示角。圆口投影为长轴水平的椭圆；真实斜撑、筛盘倾角可保留。\n\n左上柔光，完整单体，透明背景，四周留白。只画空载静态本体，不画文字、人物、动物、地面、水面、大投影、粒子或多视角拼图；不附加棚屋和庭院。",
+      "image_to_model_prompt": "对象：照料台（care_table），陆地1×1占地。依据附上的已选设计图生成同一件完整静态3D设施。保留轮廓、比例与色块，合理补足背面，不另加装饰。用低至中等复杂度表达大形，薄件有厚度、构件连接可靠，纹理概括；不要求骨骼、动画或内部精密机构。木、石、陶、金属等按实际使用分区；不把受光高光和投影烘焙成固定黑白斑。\n\n台面、软垫、短工具架明确分层，刷和碗与托架可靠连接；保留空操作区，不增加成排小工具。\n\n只生成设施本体，不带背景、地面、水体或大影子。保留可检查的材质和贴图，使用服务实际支持的模型格式。后续在Blender用正面中轴35°正交相机渲染，主体偏转0°，矩形横边水平、纵深边竖直。占地中心为放置原点，地面或水面接触高度明确，不随透明边框居中。"
+    },
+    {
+      "id": "care_table",
+      "name": "照料台",
+      "variant": "water",
+      "footprint": [
+        1,
+        1
+      ],
+      "medium": "水上",
+      "status": "prompts_ready_not_generated",
+      "scope_evidence": "tools/farming/gen_p103_facility_art.py",
+      "legacy_runtime_file": "res://assets/farming/facilities/care_table/body.png",
+      "legacy_runtime_sha256": "56430e755b9ac24ad55b50c25363caff04c61b058ad439d18d1f3f36c523ffad",
+      "planned_paths": {
+        "design": "assets/farming/p109/source/facilities/care_table/care_table_water_design_view35_v001.png",
+        "model": "facilities/p109/care_table/water/care_table_water_v001.glb",
+        "blend": "facilities/p109/care_table/water/care_table_water_v001.blend",
+        "render": "assets/farming/p109/runtime/facilities/care_table/water/body.png"
+      },
+      "image_prompt": "为《灵田》制作一件独立设施设计图，用于后续图生3D。清淡雅致的仙侠生态游戏风，柔和三维体积、概括形块和少量手绘感，与已选植物画风统一。浅木、暖米、青灰石为主，只选一种低饱和点色。结构约3～5组，重复脚架可简化；花纹0～1处，材质不超过3类。不用写实微纹理、密集雕花符文、复杂齿轮管线或强发光。\n\n对象：照料台（care_table），水上1×1占地。保留同款短工具架、宽齿刷和浅碗，软垫改为暖米色浅托盘，底部改为短浮木支撑。玉青夹件不变；无动物、鱼、药瓶阵列或水面。\n\n正交相机沿设施正面中轴俯看35°，主体绕竖直轴偏转0°。矩形横边水平、纵深边和立柱竖直，附件同轴；只见顶面与正面，不露大侧面，不用等距菱形或透视展示角。圆口投影为长轴水平的椭圆；真实斜撑、筛盘倾角可保留。\n\n左上柔光，完整单体，透明背景，四周留白。只画空载静态本体，不画文字、人物、动物、地面、水面、大投影、粒子或多视角拼图；不附加棚屋和庭院。",
+      "image_to_model_prompt": "对象：照料台（care_table），水上1×1占地。依据附上的已选设计图生成同一件完整静态3D设施。保留轮廓、比例与色块，合理补足背面，不另加装饰。用低至中等复杂度表达大形，薄件有厚度、构件连接可靠，纹理概括；不要求骨骼、动画或内部精密机构。木、石、陶、金属等按实际使用分区；不把受光高光和投影烘焙成固定黑白斑。\n\n工具架连接浮台，浅托盘有完整内腔；不增加细网、水下长腿或流体。\n\n只生成设施本体，不带背景、地面、水体或大影子。保留可检查的材质和贴图，使用服务实际支持的模型格式。后续在Blender用正面中轴35°正交相机渲染，主体偏转0°，矩形横边水平、纵深边竖直。占地中心为放置原点，地面或水面接触高度明确，不随透明边框居中。"
+    },
+    {
+      "id": "soothing_station",
+      "name": "安抚台",
+      "variant": "land",
+      "footprint": [
+        1,
+        1
+      ],
+      "medium": "陆地",
+      "status": "prompts_ready_not_generated",
+      "scope_evidence": "tools/farming/gen_p104_facility_art.py",
+      "legacy_runtime_file": "res://assets/farming/facilities/soothing_station/body.png",
+      "legacy_runtime_sha256": "7c6b810cfd03f47a867001b4512f6790dad40e5a474323c2594bed36af8fcb73",
+      "planned_paths": {
+        "design": "assets/farming/p109/source/facilities/soothing_station/soothing_station_land_design_view35_v001.png",
+        "model": "facilities/p109/soothing_station/land/soothing_station_land_v001.glb",
+        "blend": "facilities/p109/soothing_station/land/soothing_station_land_v001.blend",
+        "render": "assets/farming/p109/runtime/facilities/soothing_station/land/body.png"
+      },
+      "image_prompt": "为《灵田》制作一件独立设施设计图，用于后续图生3D。清淡雅致的仙侠生态游戏风，柔和三维体积、概括形块和少量手绘感，与已选植物画风统一。浅木、暖米、青灰石为主，只选一种低饱和点色。结构约3～5组，重复脚架可简化；花纹0～1处，材质不超过3类。不用写实微纹理、密集雕花符文、复杂齿轮管线或强发光。\n\n对象：安抚台（soothing_station），陆地1×1占地。一个矮浅木安抚音箱台，正面两个大而简洁的圆形共鸣口，顶部中央固定一枚矮玉青调音晶体。暖米包边、青灰石脚；无声波图案、悬浮晶体或舞台。\n\n正交相机沿设施正面中轴俯看35°，主体绕竖直轴偏转0°。矩形横边水平、纵深边和立柱竖直，附件同轴；只见顶面与正面，不露大侧面，不用等距菱形或透视展示角。圆口投影为长轴水平的椭圆；真实斜撑、筛盘倾角可保留。\n\n左上柔光，完整单体，透明背景，四周留白。只画空载静态本体，不画文字、人物、动物、地面、水面、大投影、粒子或多视角拼图；不附加棚屋和庭院。",
+      "image_to_model_prompt": "对象：安抚台（soothing_station），陆地1×1占地。依据附上的已选设计图生成同一件完整静态3D设施。保留轮廓、比例与色块，合理补足背面，不另加装饰。用低至中等复杂度表达大形，薄件有厚度、构件连接可靠，纹理概括；不要求骨骼、动画或内部精密机构。木、石、陶、金属等按实际使用分区；不把受光高光和投影烘焙成固定黑白斑。\n\n保留双圆形共鸣口和一枚固定晶体；音箱口用浅凹结构，无密集网孔，晶体连接底座。\n\n只生成设施本体，不带背景、地面、水体或大影子。保留可检查的材质和贴图，使用服务实际支持的模型格式。后续在Blender用正面中轴35°正交相机渲染，主体偏转0°，矩形横边水平、纵深边竖直。占地中心为放置原点，地面或水面接触高度明确，不随透明边框居中。"
+    },
+    {
+      "id": "soothing_station",
+      "name": "安抚台",
+      "variant": "water",
+      "footprint": [
+        1,
+        1
+      ],
+      "medium": "水上",
+      "status": "prompts_ready_not_generated",
+      "scope_evidence": "tools/farming/gen_p104_facility_art.py",
+      "legacy_runtime_file": "res://assets/farming/facilities/soothing_station/body.png",
+      "legacy_runtime_sha256": "7c6b810cfd03f47a867001b4512f6790dad40e5a474323c2594bed36af8fcb73",
+      "planned_paths": {
+        "design": "assets/farming/p109/source/facilities/soothing_station/soothing_station_water_design_view35_v001.png",
+        "model": "facilities/p109/soothing_station/water/soothing_station_water_v001.glb",
+        "blend": "facilities/p109/soothing_station/water/soothing_station_water_v001.blend",
+        "render": "assets/farming/p109/runtime/facilities/soothing_station/water/body.png"
+      },
+      "image_prompt": "为《灵田》制作一件独立设施设计图，用于后续图生3D。清淡雅致的仙侠生态游戏风，柔和三维体积、概括形块和少量手绘感，与已选植物画风统一。浅木、暖米、青灰石为主，只选一种低饱和点色。结构约3～5组，重复脚架可简化；花纹0～1处，材质不超过3类。不用写实微纹理、密集雕花符文、复杂齿轮管线或强发光。\n\n对象：安抚台（soothing_station），水上1×1占地。保留同款双共鸣口和单枚矮玉青晶体，底部改为两条短浮木承托，箱体更低。晶体固定、配色一致；无水纹、声波或水面。\n\n正交相机沿设施正面中轴俯看35°，主体绕竖直轴偏转0°。矩形横边水平、纵深边和立柱竖直，附件同轴；只见顶面与正面，不露大侧面，不用等距菱形或透视展示角。圆口投影为长轴水平的椭圆；真实斜撑、筛盘倾角可保留。\n\n左上柔光，完整单体，透明背景，四周留白。只画空载静态本体，不画文字、人物、动物、地面、水面、大投影、粒子或多视角拼图；不附加棚屋和庭院。",
+      "image_to_model_prompt": "对象：安抚台（soothing_station），水上1×1占地。依据附上的已选设计图生成同一件完整静态3D设施。保留轮廓、比例与色块，合理补足背面，不另加装饰。用低至中等复杂度表达大形，薄件有厚度、构件连接可靠，纹理概括；不要求骨骼、动画或内部精密机构。木、石、陶、金属等按实际使用分区；不把受光高光和投影烘焙成固定黑白斑。\n\n双共鸣口、固定晶体和短浮托连成一个模型；不生成声波环、悬浮碎片或池框。\n\n只生成设施本体，不带背景、地面、水体或大影子。保留可检查的材质和贴图，使用服务实际支持的模型格式。后续在Blender用正面中轴35°正交相机渲染，主体偏转0°，矩形横边水平、纵深边竖直。占地中心为放置原点，地面或水面接触高度明确，不随透明边框居中。"
+    },
+    {
+      "id": "toy_station",
+      "name": "玩具站",
+      "variant": "land",
+      "footprint": [
+        1,
+        1
+      ],
+      "medium": "陆地",
+      "status": "prompts_ready_not_generated",
+      "scope_evidence": "tools/farming/gen_p104_facility_art.py",
+      "legacy_runtime_file": "res://assets/farming/facilities/toy_station/body.png",
+      "legacy_runtime_sha256": "1dcdf8b5b2c707a20833d8d6da1b74df01d1ef143b5bcb129e9fc86422772ae3",
+      "planned_paths": {
+        "design": "assets/farming/p109/source/facilities/toy_station/toy_station_land_design_view35_v001.png",
+        "model": "facilities/p109/toy_station/land/toy_station_land_v001.glb",
+        "blend": "facilities/p109/toy_station/land/toy_station_land_v001.blend",
+        "render": "assets/farming/p109/runtime/facilities/toy_station/land/body.png"
+      },
+      "image_prompt": "为《灵田》制作一件独立设施设计图，用于后续图生3D。清淡雅致的仙侠生态游戏风，柔和三维体积、概括形块和少量手绘感，与已选植物画风统一。浅木、暖米、青灰石为主，只选一种低饱和点色。结构约3～5组，重复脚架可简化；花纹0～1处，材质不超过3类。不用写实微纹理、密集雕花符文、复杂齿轮管线或强发光。\n\n对象：玩具站（toy_station），陆地1×1占地。一台仙侠木作风格的抓娃娃机：浅木直立柜框，前方一块淡青玻璃窗，顶部单个短机械爪，底部三个概括的藤球，前侧一个操作杆和一个按钮。整体圆润素净，无灯带、文字或雕花。\n\n正交相机沿设施正面中轴俯看35°，主体绕竖直轴偏转0°。矩形横边水平、纵深边和立柱竖直，附件同轴；只见顶面与正面，不露大侧面，不用等距菱形或透视展示角。圆口投影为长轴水平的椭圆；真实斜撑、筛盘倾角可保留。\n\n左上柔光，完整单体，透明背景，四周留白。只画空载静态本体，不画文字、人物、动物、地面、水面、大投影、粒子或多视角拼图；不附加棚屋和庭院。",
+      "image_to_model_prompt": "对象：玩具站（toy_station），陆地1×1占地。依据附上的已选设计图生成同一件完整静态3D设施。保留轮廓、比例与色块，合理补足背面，不另加装饰。用低至中等复杂度表达大形，薄件有厚度、构件连接可靠，纹理概括；不要求骨骼、动画或内部精密机构。木、石、陶、金属等按实际使用分区；不把受光高光和投影烘焙成固定黑白斑。\n\n保留柜框、可辨内腔、机械爪、三个藤球和简单控制面板；玻璃可独立调材质，爪与顶部支架相连，不生成满柜玩具或密集导轨。\n\n只生成设施本体，不带背景、地面、水体或大影子。保留可检查的材质和贴图，使用服务实际支持的模型格式。后续在Blender用正面中轴35°正交相机渲染，主体偏转0°，矩形横边水平、纵深边竖直。占地中心为放置原点，地面或水面接触高度明确，不随透明边框居中。"
+    },
+    {
+      "id": "wool_station",
+      "name": "采毛台",
+      "variant": "land",
+      "footprint": [
+        1,
+        1
+      ],
+      "medium": "陆地",
+      "status": "prompts_ready_not_generated",
+      "scope_evidence": "tools/farming/gen_p105_facility_art.py",
+      "legacy_runtime_file": "res://assets/farming/facilities/wool_station/body.png",
+      "legacy_runtime_sha256": "828c6feacc38ad6d1c3b60c7d4f7e7df813394b9cd80ba87116e18bb74382255",
+      "planned_paths": {
+        "design": "assets/farming/p109/source/facilities/wool_station/wool_station_land_design_view35_v001.png",
+        "model": "facilities/p109/wool_station/land/wool_station_land_v001.glb",
+        "blend": "facilities/p109/wool_station/land/wool_station_land_v001.blend",
+        "render": "assets/farming/p109/runtime/facilities/wool_station/land/body.png"
+      },
+      "image_prompt": "为《灵田》制作一件独立设施设计图，用于后续图生3D。清淡雅致的仙侠生态游戏风，柔和三维体积、概括形块和少量手绘感，与已选植物画风统一。浅木、暖米、青灰石为主，只选一种低饱和点色。结构约3～5组，重复脚架可简化；花纹0～1处，材质不超过3类。不用写实微纹理、密集雕花符文、复杂齿轮管线或强发光。\n\n对象：采毛台（wool_station），陆地1×1占地。一张低矮浅木采毛台，后侧固定一排六枚宽厚弧形云梳齿，右侧一只短浅收纳槽，青灰石脚。云梳是唯一奇幻形状，少量玉青连接件；无细雕、羊或毛堆。\n\n正交相机沿设施正面中轴俯看35°，主体绕竖直轴偏转0°。矩形横边水平、纵深边和立柱竖直，附件同轴；只见顶面与正面，不露大侧面，不用等距菱形或透视展示角。圆口投影为长轴水平的椭圆；真实斜撑、筛盘倾角可保留。\n\n左上柔光，完整单体，透明背景，四周留白。只画空载静态本体，不画文字、人物、动物、地面、水面、大投影、粒子或多视角拼图；不附加棚屋和庭院。",
+      "image_to_model_prompt": "对象：采毛台（wool_station），陆地1×1占地。依据附上的已选设计图生成同一件完整静态3D设施。保留轮廓、比例与色块，合理补足背面，不另加装饰。用低至中等复杂度表达大形，薄件有厚度、构件连接可靠，纹理概括；不要求骨骼、动画或内部精密机构。木、石、陶、金属等按实际使用分区；不把受光高光和投影烘焙成固定黑白斑。\n\n保留云梳齿、台面、短槽三部分；梳齿有厚度并连接后梁，右槽不悬空，不增加刀片或繁密卷纹。\n\n只生成设施本体，不带背景、地面、水体或大影子。保留可检查的材质和贴图，使用服务实际支持的模型格式。后续在Blender用正面中轴35°正交相机渲染，主体偏转0°，矩形横边水平、纵深边竖直。占地中心为放置原点，地面或水面接触高度明确，不随透明边框居中。"
+    },
+    {
+      "id": "silkworm_rack",
+      "name": "蚕架",
+      "variant": "land",
+      "footprint": [
+        1,
+        1
+      ],
+      "medium": "陆地",
+      "status": "prompts_ready_not_generated",
+      "scope_evidence": "tools/farming/gen_p105_facility_art.py",
+      "legacy_runtime_file": "res://assets/farming/facilities/silkworm_rack/body.png",
+      "legacy_runtime_sha256": "e9f13ecc0fcfe74bc8fca481850630d3a0c69ab659ea260fb90e5a45926bfdf4",
+      "planned_paths": {
+        "design": "assets/farming/p109/source/facilities/silkworm_rack/silkworm_rack_land_design_view35_v001.png",
+        "model": "facilities/p109/silkworm_rack/land/silkworm_rack_land_v001.glb",
+        "blend": "facilities/p109/silkworm_rack/land/silkworm_rack_land_v001.blend",
+        "render": "assets/farming/p109/runtime/facilities/silkworm_rack/land/body.png"
+      },
+      "image_prompt": "为《灵田》制作一件独立设施设计图，用于后续图生3D。清淡雅致的仙侠生态游戏风，柔和三维体积、概括形块和少量手绘感，与已选植物画风统一。浅木、暖米、青灰石为主，只选一种低饱和点色。结构约3～5组，重复脚架可简化；花纹0～1处，材质不超过3类。不用写实微纹理、密集雕花符文、复杂齿轮管线或强发光。\n\n对象：蚕架（silkworm_rack），陆地1×1占地。一座矮而通透的浅木蚕架，三层宽浅托盘、四根短立柱，每层有清楚间距。盘沿灰茶绿，顶部仅一个轻微叶形弧度；空架，无蚕、桑叶、蚕茧或细密编织纹。\n\n正交相机沿设施正面中轴俯看35°，主体绕竖直轴偏转0°。矩形横边水平、纵深边和立柱竖直，附件同轴；只见顶面与正面，不露大侧面，不用等距菱形或透视展示角。圆口投影为长轴水平的椭圆；真实斜撑、筛盘倾角可保留。\n\n左上柔光，完整单体，透明背景，四周留白。只画空载静态本体，不画文字、人物、动物、地面、水面、大投影、粒子或多视角拼图；不附加棚屋和庭院。",
+      "image_to_model_prompt": "对象：蚕架（silkworm_rack），陆地1×1占地。依据附上的已选设计图生成同一件完整静态3D设施。保留轮廓、比例与色块，合理补足背面，不另加装饰。用低至中等复杂度表达大形，薄件有厚度、构件连接可靠，纹理概括；不要求骨骼、动画或内部精密机构。木、石、陶、金属等按实际使用分区；不把受光高光和投影烘焙成固定黑白斑。\n\n三层托盘与立柱连成稳固框架，托盘边缘有厚度，层间留空；不逐根生成筛网或编织纤维。\n\n只生成设施本体，不带背景、地面、水体或大影子。保留可检查的材质和贴图，使用服务实际支持的模型格式。后续在Blender用正面中轴35°正交相机渲染，主体偏转0°，矩形横边水平、纵深边竖直。占地中心为放置原点，地面或水面接触高度明确，不随透明边框居中。"
+    },
+    {
+      "id": "spirit_liquid_collector",
+      "name": "集露台",
+      "variant": "land",
+      "footprint": [
+        1,
+        1
+      ],
+      "medium": "陆地",
+      "status": "prompts_ready_not_generated",
+      "scope_evidence": "tools/farming/gen_p105_facility_art.py",
+      "legacy_runtime_file": "res://assets/farming/facilities/spirit_liquid_collector/body.png",
+      "legacy_runtime_sha256": "48157b97aa222ab8806ec85b7caf5fd09586af3a5a92394d61e05abd33a9a34e",
+      "planned_paths": {
+        "design": "assets/farming/p109/source/facilities/spirit_liquid_collector/spirit_liquid_collector_land_design_view35_v001.png",
+        "model": "facilities/p109/spirit_liquid_collector/land/spirit_liquid_collector_land_v001.glb",
+        "blend": "facilities/p109/spirit_liquid_collector/land/spirit_liquid_collector_land_v001.blend",
+        "render": "assets/farming/p109/runtime/facilities/spirit_liquid_collector/land/body.png"
+      },
+      "image_prompt": "为《灵田》制作一件独立设施设计图，用于后续图生3D。清淡雅致的仙侠生态游戏风，柔和三维体积、概括形块和少量手绘感，与已选植物画风统一。浅木、暖米、青灰石为主，只选一种低饱和点色。结构约3～5组，重复脚架可简化；花纹0～1处，材质不超过3类。不用写实微纹理、密集雕花符文、复杂齿轮管线或强发光。\n\n对象：集露台（spirit_liquid_collector），陆地1×1占地。一座青灰石脚的浅木集露台，顶部一片宽厚的玉青叶形导流盘，盘尖朝前，下方固定一个暖米陶罐。叶盘、短支架、陶罐三部分清楚；无液滴、细管网或发光。\n\n正交相机沿设施正面中轴俯看35°，主体绕竖直轴偏转0°。矩形横边水平、纵深边和立柱竖直，附件同轴；只见顶面与正面，不露大侧面，不用等距菱形或透视展示角。圆口投影为长轴水平的椭圆；真实斜撑、筛盘倾角可保留。\n\n左上柔光，完整单体，透明背景，四周留白。只画空载静态本体，不画文字、人物、动物、地面、水面、大投影、粒子或多视角拼图；不附加棚屋和庭院。",
+      "image_to_model_prompt": "对象：集露台（spirit_liquid_collector），陆地1×1占地。依据附上的已选设计图生成同一件完整静态3D设施。保留轮廓、比例与色块，合理补足背面，不另加装饰。用低至中等复杂度表达大形，薄件有厚度、构件连接可靠，纹理概括；不要求骨骼、动画或内部精密机构。木、石、陶、金属等按实际使用分区；不把受光高光和投影烘焙成固定黑白斑。\n\n叶盘采用实心厚曲面，中央一条浅导槽；陶罐置于台面，盘尖与罐口关系明确，不增加真实流体。\n\n只生成设施本体，不带背景、地面、水体或大影子。保留可检查的材质和贴图，使用服务实际支持的模型格式。后续在Blender用正面中轴35°正交相机渲染，主体偏转0°，矩形横边水平、纵深边竖直。占地中心为放置原点，地面或水面接触高度明确，不随透明边框居中。"
+    },
+    {
+      "id": "scale_station",
+      "name": "养鳞台",
+      "variant": "land",
+      "footprint": [
+        1,
+        1
+      ],
+      "medium": "陆地",
+      "status": "prompts_ready_not_generated",
+      "scope_evidence": "tools/farming/gen_p105_facility_art.py",
+      "legacy_runtime_file": "res://assets/farming/facilities/scale_station/body.png",
+      "legacy_runtime_sha256": "fa12f531907968a377a865207b557fdbaf239800004893227fceaa6cf7648467",
+      "planned_paths": {
+        "design": "assets/farming/p109/source/facilities/scale_station/scale_station_land_design_view35_v001.png",
+        "model": "facilities/p109/scale_station/land/scale_station_land_v001.glb",
+        "blend": "facilities/p109/scale_station/land/scale_station_land_v001.blend",
+        "render": "assets/farming/p109/runtime/facilities/scale_station/land/body.png"
+      },
+      "image_prompt": "为《灵田》制作一件独立设施设计图，用于后续图生3D。清淡雅致的仙侠生态游戏风，柔和三维体积、概括形块和少量手绘感，与已选植物画风统一。浅木、暖米、青灰石为主，只选一种低饱和点色。结构约3～5组，重复脚架可简化；花纹0～1处，材质不超过3类。不用写实微纹理、密集雕花符文、复杂齿轮管线或强发光。\n\n对象：养鳞台（scale_station），陆地1×1占地。一张宽矮青灰石面养鳞台，浅木框脚，台面两块圆润的灰金矿质养护板，前缘一只浅收纳槽。板面各用一两条宽色带表达矿层；无蜥蜴、鳞片堆或密集宝石。\n\n正交相机沿设施正面中轴俯看35°，主体绕竖直轴偏转0°。矩形横边水平、纵深边和立柱竖直，附件同轴；只见顶面与正面，不露大侧面，不用等距菱形或透视展示角。圆口投影为长轴水平的椭圆；真实斜撑、筛盘倾角可保留。\n\n左上柔光，完整单体，透明背景，四周留白。只画空载静态本体，不画文字、人物、动物、地面、水面、大投影、粒子或多视角拼图；不附加棚屋和庭院。",
+      "image_to_model_prompt": "对象：养鳞台（scale_station），陆地1×1占地。依据附上的已选设计图生成同一件完整静态3D设施。保留轮廓、比例与色块，合理补足背面，不另加装饰。用低至中等复杂度表达大形，薄件有厚度、构件连接可靠，纹理概括；不要求骨骼、动画或内部精密机构。木、石、陶、金属等按实际使用分区；不把受光高光和投影烘焙成固定黑白斑。\n\n保留石台、两块大养护板和浅槽；矿层用材质色面表达，避免大量独立鳞片和微小矿晶。\n\n只生成设施本体，不带背景、地面、水体或大影子。保留可检查的材质和贴图，使用服务实际支持的模型格式。后续在Blender用正面中轴35°正交相机渲染，主体偏转0°，矩形横边水平、纵深边竖直。占地中心为放置原点，地面或水面接触高度明确，不随透明边框居中。"
+    },
+    {
+      "id": "rock_breaking_yard",
+      "name": "碎岩场",
+      "variant": "land",
+      "footprint": [
+        2,
+        2
+      ],
+      "medium": "陆地",
+      "status": "prompts_ready_not_generated",
+      "scope_evidence": "tools/farming/gen_p105_facility_art.py",
+      "legacy_runtime_file": "res://assets/farming/facilities/rock_breaking_yard/body.png",
+      "legacy_runtime_sha256": "d9a43bd14428a77d546fe639716109be51f6c29a0c0d553dea758bd70e88d809",
+      "planned_paths": {
+        "design": "assets/farming/p109/source/facilities/rock_breaking_yard/rock_breaking_yard_land_design_view35_v001.png",
+        "model": "facilities/p109/rock_breaking_yard/land/rock_breaking_yard_land_v001.glb",
+        "blend": "facilities/p109/rock_breaking_yard/land/rock_breaking_yard_land_v001.blend",
+        "render": "assets/farming/p109/runtime/facilities/rock_breaking_yard/land/body.png"
+      },
+      "image_prompt": "为《灵田》制作一件独立设施设计图，用于后续图生3D。清淡雅致的仙侠生态游戏风，柔和三维体积、概括形块和少量手绘感，与已选植物画风统一。浅木、暖米、青灰石为主，只选一种低饱和点色。结构约3～5组，重复脚架可简化；花纹0～1处，材质不超过3类。不用写实微纹理、密集雕花符文、复杂齿轮管线或强发光。\n\n对象：碎岩场（rock_breaking_yard），陆地2×2占地。一个2×2低矮碎岩作业场，青灰石边界与浅木加固梁，中央一块宽厚承岩砧，两侧少量矮挡板。最多两块大岩料示意结构，入口朝前；无高棚、矿洞、动物或碎石堆。\n\n正交相机沿设施正面中轴俯看35°，主体绕竖直轴偏转0°。矩形横边水平、纵深边和立柱竖直，附件同轴；只见顶面与正面，不露大侧面，不用等距菱形或透视展示角。圆口投影为长轴水平的椭圆；真实斜撑、筛盘倾角可保留。\n\n左上柔光，完整单体，透明背景，四周留白。只画空载静态本体，不画文字、人物、动物、地面、水面、大投影、粒子或多视角拼图；不附加棚屋和庭院。",
+      "image_to_model_prompt": "对象：碎岩场（rock_breaking_yard），陆地2×2占地。依据附上的已选设计图生成同一件完整静态3D设施。保留轮廓、比例与色块，合理补足背面，不另加装饰。用低至中等复杂度表达大形，薄件有厚度、构件连接可靠，纹理概括；不要求骨骼、动画或内部精密机构。木、石、陶、金属等按实际使用分区；不把受光高光和投影烘焙成固定黑白斑。\n\n承岩砧和矮挡板落在2×2基础内，保留前方开口；岩料仅概括大体积，可分离，不建碎片粒子或锤击动画。\n\n只生成设施本体，不带背景、地面、水体或大影子。保留可检查的材质和贴图，使用服务实际支持的模型格式。后续在Blender用正面中轴35°正交相机渲染，主体偏转0°，矩形横边水平、纵深边竖直。占地中心为放置原点，地面或水面接触高度明确，不随透明边框居中。"
+    },
+    {
+      "id": "ore_sorting_yard",
+      "name": "选矿场",
+      "variant": "land",
+      "footprint": [
+        2,
+        2
+      ],
+      "medium": "陆地",
+      "status": "prompts_ready_not_generated",
+      "scope_evidence": "tools/farming/gen_p105_facility_art.py",
+      "legacy_runtime_file": "res://assets/farming/facilities/ore_sorting_yard/body.png",
+      "legacy_runtime_sha256": "971fd4d9a0b73d03ae7be49bd6e6dc70e4142c21bf9663625f62ebeff27348f7",
+      "planned_paths": {
+        "design": "assets/farming/p109/source/facilities/ore_sorting_yard/ore_sorting_yard_land_design_view35_v001.png",
+        "model": "facilities/p109/ore_sorting_yard/land/ore_sorting_yard_land_v001.glb",
+        "blend": "facilities/p109/ore_sorting_yard/land/ore_sorting_yard_land_v001.blend",
+        "render": "assets/farming/p109/runtime/facilities/ore_sorting_yard/land/body.png"
+      },
+      "image_prompt": "为《灵田》制作一件独立设施设计图，用于后续图生3D。清淡雅致的仙侠生态游戏风，柔和三维体积、概括形块和少量手绘感，与已选植物画风统一。浅木、暖米、青灰石为主，只选一种低饱和点色。结构约3～5组，重复脚架可简化；花纹0～1处，材质不超过3类。不用写实微纹理、密集雕花符文、复杂齿轮管线或强发光。\n\n对象：选矿场（ore_sorting_yard），陆地2×2占地。一个2×2低矮选矿作业场，浅木分选架配青灰石脚，一块略倾斜的宽筛盘和两个并排的接料槽。灰金只点在筛盘包边；筛面用粗疏分隔表现，无细网、传送带或矿石堆。\n\n正交相机沿设施正面中轴俯看35°，主体绕竖直轴偏转0°。矩形横边水平、纵深边和立柱竖直，附件同轴；只见顶面与正面，不露大侧面，不用等距菱形或透视展示角。圆口投影为长轴水平的椭圆；真实斜撑、筛盘倾角可保留。\n\n左上柔光，完整单体，透明背景，四周留白。只画空载静态本体，不画文字、人物、动物、地面、水面、大投影、粒子或多视角拼图；不附加棚屋和庭院。",
+      "image_to_model_prompt": "对象：选矿场（ore_sorting_yard），陆地2×2占地。依据附上的已选设计图生成同一件完整静态3D设施。保留轮廓、比例与色块，合理补足背面，不另加装饰。用低至中等复杂度表达大形，薄件有厚度、构件连接可靠，纹理概括；不要求骨骼、动画或内部精密机构。木、石、陶、金属等按实际使用分区；不把受光高光和投影烘焙成固定黑白斑。\n\n宽筛盘、支架和双接料槽连成一个设施，筛盘可向前倾斜但底座保持轴对齐；筛孔用少量大分隔或贴图暗示。\n\n只生成设施本体，不带背景、地面、水体或大影子。保留可检查的材质和贴图，使用服务实际支持的模型格式。后续在Blender用正面中轴35°正交相机渲染，主体偏转0°，矩形横边水平、纵深边竖直。占地中心为放置原点，地面或水面接触高度明确，不随透明边框居中。"
+    },
+    {
+      "id": "carbonization_nest",
+      "name": "炭化巢",
+      "variant": "land",
+      "footprint": [
+        2,
+        2
+      ],
+      "medium": "陆地",
+      "status": "prompts_ready_not_generated",
+      "scope_evidence": "tools/farming/gen_p105_facility_art.py",
+      "legacy_runtime_file": "res://assets/farming/facilities/carbonization_nest/body.png",
+      "legacy_runtime_sha256": "4b705986590bddf794ec8d0c5d854bf30e6d1d1463395387b5881d49ea3ae199",
+      "planned_paths": {
+        "design": "assets/farming/p109/source/facilities/carbonization_nest/carbonization_nest_land_design_view35_v001.png",
+        "model": "facilities/p109/carbonization_nest/land/carbonization_nest_land_v001.glb",
+        "blend": "facilities/p109/carbonization_nest/land/carbonization_nest_land_v001.blend",
+        "render": "assets/farming/p109/runtime/facilities/carbonization_nest/land/body.png"
+      },
+      "image_prompt": "为《灵田》制作一件独立设施设计图，用于后续图生3D。清淡雅致的仙侠生态游戏风，柔和三维体积、概括形块和少量手绘感，与已选植物画风统一。浅木、暖米、青灰石为主，只选一种低饱和点色。结构约3～5组，重复脚架可简化；花纹0～1处，材质不超过3类。不用写实微纹理、密集雕花符文、复杂齿轮管线或强发光。\n\n对象：炭化巢（carbonization_nest），陆地2×2占地。一座2×2低圆拱炭化巢，暖灰石壳，正面单个宽矮巢口，下缘浅木托料槽，顶部一只短通气帽。巢口内侧暗暖褐，少量陶土色包边；无火焰、烟雾、炭腹虫或复杂炉管。\n\n正交相机沿设施正面中轴俯看35°，主体绕竖直轴偏转0°。矩形横边水平、纵深边和立柱竖直，附件同轴；只见顶面与正面，不露大侧面，不用等距菱形或透视展示角。圆口投影为长轴水平的椭圆；真实斜撑、筛盘倾角可保留。\n\n左上柔光，完整单体，透明背景，四周留白。只画空载静态本体，不画文字、人物、动物、地面、水面、大投影、粒子或多视角拼图；不附加棚屋和庭院。",
+      "image_to_model_prompt": "对象：炭化巢（carbonization_nest），陆地2×2占地。依据附上的已选设计图生成同一件完整静态3D设施。保留轮廓、比例与色块，合理补足背面，不另加装饰。用低至中等复杂度表达大形，薄件有厚度、构件连接可靠，纹理概括；不要求骨骼、动画或内部精密机构。木、石、陶、金属等按实际使用分区；不把受光高光和投影烘焙成固定黑白斑。\n\n拱壳、巢口、短通气帽有完整厚度，内部只补基本腔体；不建火焰和烟，也不增加烟囱阵列。\n\n只生成设施本体，不带背景、地面、水体或大影子。保留可检查的材质和贴图，使用服务实际支持的模型格式。后续在Blender用正面中轴35°正交相机渲染，主体偏转0°，矩形横边水平、纵深边竖直。占地中心为放置原点，地面或水面接触高度明确，不随透明边框居中。"
+    },
+    {
+      "id": "compost_mouse_den",
+      "name": "翻肥窝",
+      "variant": "land",
+      "footprint": [
+        2,
+        2
+      ],
+      "medium": "陆地",
+      "status": "prompts_ready_not_generated",
+      "scope_evidence": "tools/farming/gen_p105_facility_art.py",
+      "legacy_runtime_file": "res://assets/farming/facilities/compost_mouse_den/body.png",
+      "legacy_runtime_sha256": "2871eb8a91cc840113fd9d3b68d3fd687978dee3242103cc18343857f1e92bbe",
+      "planned_paths": {
+        "design": "assets/farming/p109/source/facilities/compost_mouse_den/compost_mouse_den_land_design_view35_v001.png",
+        "model": "facilities/p109/compost_mouse_den/land/compost_mouse_den_land_v001.glb",
+        "blend": "facilities/p109/compost_mouse_den/land/compost_mouse_den_land_v001.blend",
+        "render": "assets/farming/p109/runtime/facilities/compost_mouse_den/land/body.png"
+      },
+      "image_prompt": "为《灵田》制作一件独立设施设计图，用于后续图生3D。清淡雅致的仙侠生态游戏风，柔和三维体积、概括形块和少量手绘感，与已选植物画风统一。浅木、暖米、青灰石为主，只选一种低饱和点色。结构约3～5组，重复脚架可简化；花纹0～1处，材质不超过3类。不用写实微纹理、密集雕花符文、复杂齿轮管线或强发光。\n\n对象：翻肥窝（compost_mouse_den），陆地2×2占地。一座2×2宽矮翻肥窝，浅木围框和青灰石角脚，中央一层概括的暖褐翻肥床，后缘一个圆拱小窝口。灰绿边条呼应叶形；无鼠、散土颗粒、杂草或满地工具。\n\n正交相机沿设施正面中轴俯看35°，主体绕竖直轴偏转0°。矩形横边水平、纵深边和立柱竖直，附件同轴；只见顶面与正面，不露大侧面，不用等距菱形或透视展示角。圆口投影为长轴水平的椭圆；真实斜撑、筛盘倾角可保留。\n\n左上柔光，完整单体，透明背景，四周留白。只画空载静态本体，不画文字、人物、动物、地面、水面、大投影、粒子或多视角拼图；不附加棚屋和庭院。",
+      "image_to_model_prompt": "对象：翻肥窝（compost_mouse_den），陆地2×2占地。依据附上的已选设计图生成同一件完整静态3D设施。保留轮廓、比例与色块，合理补足背面，不另加装饰。用低至中等复杂度表达大形，薄件有厚度、构件连接可靠，纹理概括；不要求骨骼、动画或内部精密机构。木、石、陶、金属等按实际使用分区；不把受光高光和投影烘焙成固定黑白斑。\n\n围框、低肥床、单个窝口构成稳定整体；肥床仅用几块圆润起伏表现，窝口有厚度，不建粒状土壤。\n\n只生成设施本体，不带背景、地面、水体或大影子。保留可检查的材质和贴图，使用服务实际支持的模型格式。后续在Blender用正面中轴35°正交相机渲染，主体偏转0°，矩形横边水平、纵深边竖直。占地中心为放置原点，地面或水面接触高度明确，不随透明边框居中。"
+    },
+    {
+      "id": "shell_forming_station",
+      "name": "岩壳成型台",
+      "variant": "land",
+      "footprint": [
+        2,
+        2
+      ],
+      "medium": "陆地",
+      "status": "prompts_ready_not_generated",
+      "scope_evidence": "tools/farming/gen_p105_facility_art.py",
+      "legacy_runtime_file": "res://assets/farming/facilities/shell_forming_station/body.png",
+      "legacy_runtime_sha256": "374efb584729e3cbf51c5fd1ddff793bf6a3797a2f5efb3da7b1ae943b60f93f",
+      "planned_paths": {
+        "design": "assets/farming/p109/source/facilities/shell_forming_station/shell_forming_station_land_design_view35_v001.png",
+        "model": "facilities/p109/shell_forming_station/land/shell_forming_station_land_v001.glb",
+        "blend": "facilities/p109/shell_forming_station/land/shell_forming_station_land_v001.blend",
+        "render": "assets/farming/p109/runtime/facilities/shell_forming_station/land/body.png"
+      },
+      "image_prompt": "为《灵田》制作一件独立设施设计图，用于后续图生3D。清淡雅致的仙侠生态游戏风，柔和三维体积、概括形块和少量手绘感，与已选植物画风统一。浅木、暖米、青灰石为主，只选一种低饱和点色。结构约3～5组，重复脚架可简化；花纹0～1处，材质不超过3类。不用写实微纹理、密集雕花符文、复杂齿轮管线或强发光。\n\n对象：岩壳成型台（shell_forming_station），陆地2×2占地。一座2×2岩壳成型台，厚青灰石台面、浅木下架，台上两只宽浅的螺旋壳形凹模并排固定，前缘小接料槽。淡玉青仅点在模沿；螺旋各一圈主形，无细纹或蜗牛。\n\n正交相机沿设施正面中轴俯看35°，主体绕竖直轴偏转0°。矩形横边水平、纵深边和立柱竖直，附件同轴；只见顶面与正面，不露大侧面，不用等距菱形或透视展示角。圆口投影为长轴水平的椭圆；真实斜撑、筛盘倾角可保留。\n\n左上柔光，完整单体，透明背景，四周留白。只画空载静态本体，不画文字、人物、动物、地面、水面、大投影、粒子或多视角拼图；不附加棚屋和庭院。",
+      "image_to_model_prompt": "对象：岩壳成型台（shell_forming_station），陆地2×2占地。依据附上的已选设计图生成同一件完整静态3D设施。保留轮廓、比例与色块，合理补足背面，不另加装饰。用低至中等复杂度表达大形，薄件有厚度、构件连接可靠，纹理概括；不要求骨骼、动画或内部精密机构。木、石、陶、金属等按实际使用分区；不把受光高光和投影烘焙成固定黑白斑。\n\n壳形凹模使用宽厚圆弧和浅凹，不做薄螺旋片；两模固定在石台，底架连通，保留2×2比例。\n\n只生成设施本体，不带背景、地面、水体或大影子。保留可检查的材质和贴图，使用服务实际支持的模型格式。后续在Blender用正面中轴35°正交相机渲染，主体偏转0°，矩形横边水平、纵深边竖直。占地中心为放置原点，地面或水面接触高度明确，不随透明边框居中。"
+    },
+    {
+      "id": "carp_harvest_station",
+      "name": "捕鲤台",
+      "variant": "water",
+      "footprint": [
+        1,
+        1
+      ],
+      "medium": "水上",
+      "status": "prompts_ready_not_generated",
+      "scope_evidence": "tools/farming/gen_p106_facility_art.py",
+      "legacy_runtime_file": "res://assets/farming/facilities/carp_harvest_station/body.png",
+      "legacy_runtime_sha256": "5b4a37c9609daedfb10081bdbf2542032826488c00875566032c0f7a44aa130c",
+      "planned_paths": {
+        "design": "assets/farming/p109/source/facilities/carp_harvest_station/carp_harvest_station_water_design_view35_v001.png",
+        "model": "facilities/p109/carp_harvest_station/water/carp_harvest_station_water_v001.glb",
+        "blend": "facilities/p109/carp_harvest_station/water/carp_harvest_station_water_v001.blend",
+        "render": "assets/farming/p109/runtime/facilities/carp_harvest_station/water/body.png"
+      },
+      "image_prompt": "为《灵田》制作一件独立设施设计图，用于后续图生3D。清淡雅致的仙侠生态游戏风，柔和三维体积、概括形块和少量手绘感，与已选植物画风统一。浅木、暖米、青灰石为主，只选一种低饱和点色。结构约3～5组，重复脚架可简化；花纹0～1处，材质不超过3类。不用写实微纹理、密集雕花符文、复杂齿轮管线或强发光。\n\n对象：捕鲤台（carp_harvest_station），水上1×1占地。一座1×1浅木水上捕鲤台，低方平台、短支架、横向宽口捞框和一个浅接鱼槽。捞框以粗框及少量交叉带示意，玉青包边；无鱼、细网丝、长码头或吊臂。\n\n正交相机沿设施正面中轴俯看35°，主体绕竖直轴偏转0°。矩形横边水平、纵深边和立柱竖直，附件同轴；只见顶面与正面，不露大侧面，不用等距菱形或透视展示角。圆口投影为长轴水平的椭圆；真实斜撑、筛盘倾角可保留。\n\n左上柔光，完整单体，透明背景，四周留白。只画空载静态本体，不画文字、人物、动物、地面、水面、大投影、粒子或多视角拼图；不附加棚屋和庭院。",
+      "image_to_model_prompt": "对象：捕鲤台（carp_harvest_station），水上1×1占地。依据附上的已选设计图生成同一件完整静态3D设施。保留轮廓、比例与色块，合理补足背面，不另加装饰。用低至中等复杂度表达大形，薄件有厚度、构件连接可靠，纹理概括；不要求骨骼、动画或内部精密机构。木、石、陶、金属等按实际使用分区；不把受光高光和投影烘焙成固定黑白斑。\n\n保留低平台、短架、宽捞框和接鱼槽；捞框连接支架，网面用粗格或材质简化，不生成薄丝和背景水。\n\n只生成设施本体，不带背景、地面、水体或大影子。保留可检查的材质和贴图，使用服务实际支持的模型格式。后续在Blender用正面中轴35°正交相机渲染，主体偏转0°，矩形横边水平、纵深边竖直。占地中心为放置原点，地面或水面接触高度明确，不随透明边框居中。"
+    },
+    {
+      "id": "oilfish_harvest_station",
+      "name": "取油台",
+      "variant": "water",
+      "footprint": [
+        1,
+        1
+      ],
+      "medium": "水上",
+      "status": "prompts_ready_not_generated",
+      "scope_evidence": "tools/farming/gen_p106_facility_art.py",
+      "legacy_runtime_file": "res://assets/farming/facilities/oilfish_harvest_station/body.png",
+      "legacy_runtime_sha256": "6d436a72557232ef529ba1417d8e9c6d517f51ce0ebf5a865a68e94959ccd3d4",
+      "planned_paths": {
+        "design": "assets/farming/p109/source/facilities/oilfish_harvest_station/oilfish_harvest_station_water_design_view35_v001.png",
+        "model": "facilities/p109/oilfish_harvest_station/water/oilfish_harvest_station_water_v001.glb",
+        "blend": "facilities/p109/oilfish_harvest_station/water/oilfish_harvest_station_water_v001.blend",
+        "render": "assets/farming/p109/runtime/facilities/oilfish_harvest_station/water/body.png"
+      },
+      "image_prompt": "为《灵田》制作一件独立设施设计图，用于后续图生3D。清淡雅致的仙侠生态游戏风，柔和三维体积、概括形块和少量手绘感，与已选植物画风统一。浅木、暖米、青灰石为主，只选一种低饱和点色。结构约3～5组，重复脚架可简化；花纹0～1处，材质不超过3类。不用写实微纹理、密集雕花符文、复杂齿轮管线或强发光。\n\n对象：取油台（oilfish_harvest_station），水上1×1占地。一座1×1浅木水上取油台，青灰石工作面，一只小型圆腹陶质处理罐、短手柄和正前方接油碗，罐与碗间只有一个短嘴。暖米配少量柔金；无鱼、油流、管线阵列或现代工厂。\n\n正交相机沿设施正面中轴俯看35°，主体绕竖直轴偏转0°。矩形横边水平、纵深边和立柱竖直，附件同轴；只见顶面与正面，不露大侧面，不用等距菱形或透视展示角。圆口投影为长轴水平的椭圆；真实斜撑、筛盘倾角可保留。\n\n左上柔光，完整单体，透明背景，四周留白。只画空载静态本体，不画文字、人物、动物、地面、水面、大投影、粒子或多视角拼图；不附加棚屋和庭院。",
+      "image_to_model_prompt": "对象：取油台（oilfish_harvest_station），水上1×1占地。依据附上的已选设计图生成同一件完整静态3D设施。保留轮廓、比例与色块，合理补足背面，不另加装饰。用低至中等复杂度表达大形，薄件有厚度、构件连接可靠，纹理概括；不要求骨骼、动画或内部精密机构。木、石、陶、金属等按实际使用分区；不把受光高光和投影烘焙成固定黑白斑。\n\n处理罐、短嘴和接油碗是主要识别构件；罐放稳在台面，保留嘴部厚度，不建液体或复杂内部机构。\n\n只生成设施本体，不带背景、地面、水体或大影子。保留可检查的材质和贴图，使用服务实际支持的模型格式。后续在Blender用正面中轴35°正交相机渲染，主体偏转0°，矩形横边水平、纵深边竖直。占地中心为放置原点，地面或水面接触高度明确，不随透明边框居中。"
+    },
+    {
+      "id": "pearl_station",
+      "name": "采珠台",
+      "variant": "water",
+      "footprint": [
+        1,
+        1
+      ],
+      "medium": "水上",
+      "status": "prompts_ready_not_generated",
+      "scope_evidence": "tools/farming/gen_p106_facility_art.py",
+      "legacy_runtime_file": "res://assets/farming/facilities/pearl_station/body.png",
+      "legacy_runtime_sha256": "b20c7ad6badebea7279c81c791e1d5561ccd5ed566559467b7cd946813ee7cab",
+      "planned_paths": {
+        "design": "assets/farming/p109/source/facilities/pearl_station/pearl_station_water_design_view35_v001.png",
+        "model": "facilities/p109/pearl_station/water/pearl_station_water_v001.glb",
+        "blend": "facilities/p109/pearl_station/water/pearl_station_water_v001.blend",
+        "render": "assets/farming/p109/runtime/facilities/pearl_station/water/body.png"
+      },
+      "image_prompt": "为《灵田》制作一件独立设施设计图，用于后续图生3D。清淡雅致的仙侠生态游戏风，柔和三维体积、概括形块和少量手绘感，与已选植物画风统一。浅木、暖米、青灰石为主，只选一种低饱和点色。结构约3～5组，重复脚架可简化；花纹0～1处，材质不超过3类。不用写实微纹理、密集雕花符文、复杂齿轮管线或强发光。\n\n对象：采珠台（pearl_station），水上1×1占地。一座1×1水上采珠台，浅木方台、青灰石脚，台面一只宽浅贝壳形托座和一个小圆收纳碗。托座暖米白，少量淡藕紫边色；无蚌、珍珠堆、金饰或密集贝壳纹。\n\n正交相机沿设施正面中轴俯看35°，主体绕竖直轴偏转0°。矩形横边水平、纵深边和立柱竖直，附件同轴；只见顶面与正面，不露大侧面，不用等距菱形或透视展示角。圆口投影为长轴水平的椭圆；真实斜撑、筛盘倾角可保留。\n\n左上柔光，完整单体，透明背景，四周留白。只画空载静态本体，不画文字、人物、动物、地面、水面、大投影、粒子或多视角拼图；不附加棚屋和庭院。",
+      "image_to_model_prompt": "对象：采珠台（pearl_station），水上1×1占地。依据附上的已选设计图生成同一件完整静态3D设施。保留轮廓、比例与色块，合理补足背面，不另加装饰。用低至中等复杂度表达大形，薄件有厚度、构件连接可靠，纹理概括；不要求骨骼、动画或内部精密机构。木、石、陶、金属等按实际使用分区；不把受光高光和投影烘焙成固定黑白斑。\n\n贝壳形托座属于工具，不生成活体贝；托座用两三块大弧面概括，小碗独立固定，无珍珠颗粒。\n\n只生成设施本体，不带背景、地面、水体或大影子。保留可检查的材质和贴图，使用服务实际支持的模型格式。后续在Blender用正面中轴35°正交相机渲染，主体偏转0°，矩形横边水平、纵深边竖直。占地中心为放置原点，地面或水面接触高度明确，不随透明边框居中。"
+    },
+    {
+      "id": "gel_station",
+      "name": "采胶台",
+      "variant": "water",
+      "footprint": [
+        1,
+        1
+      ],
+      "medium": "水上",
+      "status": "prompts_ready_not_generated",
+      "scope_evidence": "tools/farming/gen_p106_facility_art.py",
+      "legacy_runtime_file": "res://assets/farming/facilities/gel_station/body.png",
+      "legacy_runtime_sha256": "dc51c93e9bd8b1d4f919b1d87bdd73c04b389c7584d7b85539babe37f6564e34",
+      "planned_paths": {
+        "design": "assets/farming/p109/source/facilities/gel_station/gel_station_water_design_view35_v001.png",
+        "model": "facilities/p109/gel_station/water/gel_station_water_v001.glb",
+        "blend": "facilities/p109/gel_station/water/gel_station_water_v001.blend",
+        "render": "assets/farming/p109/runtime/facilities/gel_station/water/body.png"
+      },
+      "image_prompt": "为《灵田》制作一件独立设施设计图，用于后续图生3D。清淡雅致的仙侠生态游戏风，柔和三维体积、概括形块和少量手绘感，与已选植物画风统一。浅木、暖米、青灰石为主，只选一种低饱和点色。结构约3～5组，重复脚架可简化；花纹0～1处，材质不超过3类。不用写实微纹理、密集雕花符文、复杂齿轮管线或强发光。\n\n对象：采胶台（gel_station），水上1×1占地。一座1×1水上采胶台，浅木低平台，固定一只宽浅青灰陶盆，盆上一个短弧架托住厚叶形导胶片，前缘小出口。淡藕紫局部点色；无水母、胶液拉丝、细管或透明气泡。\n\n正交相机沿设施正面中轴俯看35°，主体绕竖直轴偏转0°。矩形横边水平、纵深边和立柱竖直，附件同轴；只见顶面与正面，不露大侧面，不用等距菱形或透视展示角。圆口投影为长轴水平的椭圆；真实斜撑、筛盘倾角可保留。\n\n左上柔光，完整单体，透明背景，四周留白。只画空载静态本体，不画文字、人物、动物、地面、水面、大投影、粒子或多视角拼图；不附加棚屋和庭院。",
+      "image_to_model_prompt": "对象：采胶台（gel_station），水上1×1占地。依据附上的已选设计图生成同一件完整静态3D设施。保留轮廓、比例与色块，合理补足背面，不另加装饰。用低至中等复杂度表达大形，薄件有厚度、构件连接可靠，纹理概括；不要求骨骼、动画或内部精密机构。木、石、陶、金属等按实际使用分区；不把受光高光和投影烘焙成固定黑白斑。\n\n盆、短架和厚导胶片三者连接清楚；盆有壁厚和内腔，不建液体、胶丝或透明薄膜。\n\n只生成设施本体，不带背景、地面、水体或大影子。保留可检查的材质和贴图，使用服务实际支持的模型格式。后续在Blender用正面中轴35°正交相机渲染，主体偏转0°，矩形横边水平、纵深边竖直。占地中心为放置原点，地面或水面接触高度明确，不随透明边框居中。"
+    },
+    {
+      "id": "coral_station",
+      "name": "采礁台",
+      "variant": "water",
+      "footprint": [
+        1,
+        1
+      ],
+      "medium": "水上",
+      "status": "prompts_ready_not_generated",
+      "scope_evidence": "tools/farming/gen_p106_facility_art.py",
+      "legacy_runtime_file": "res://assets/farming/facilities/coral_station/body.png",
+      "legacy_runtime_sha256": "d9913cafc760503095c31c7faf2ee21c317e8f5008244bf42bac66459c73648f",
+      "planned_paths": {
+        "design": "assets/farming/p109/source/facilities/coral_station/coral_station_water_design_view35_v001.png",
+        "model": "facilities/p109/coral_station/water/coral_station_water_v001.glb",
+        "blend": "facilities/p109/coral_station/water/coral_station_water_v001.blend",
+        "render": "assets/farming/p109/runtime/facilities/coral_station/water/body.png"
+      },
+      "image_prompt": "为《灵田》制作一件独立设施设计图，用于后续图生3D。清淡雅致的仙侠生态游戏风，柔和三维体积、概括形块和少量手绘感，与已选植物画风统一。浅木、暖米、青灰石为主，只选一种低饱和点色。结构约3～5组，重复脚架可简化；花纹0～1处，材质不超过3类。不用写实微纹理、密集雕花符文、复杂齿轮管线或强发光。\n\n对象：采礁台（coral_station），水上1×1占地。一座1×1水上采礁台，青灰石台面和浅木低架，后方一个两叉粗枝形工具座，前方一只宽浅接料盘。灰粉只点在工具座端部；无活珊瑚、礁石堆、锯齿密枝或锤击效果。\n\n正交相机沿设施正面中轴俯看35°，主体绕竖直轴偏转0°。矩形横边水平、纵深边和立柱竖直，附件同轴；只见顶面与正面，不露大侧面，不用等距菱形或透视展示角。圆口投影为长轴水平的椭圆；真实斜撑、筛盘倾角可保留。\n\n左上柔光，完整单体，透明背景，四周留白。只画空载静态本体，不画文字、人物、动物、地面、水面、大投影、粒子或多视角拼图；不附加棚屋和庭院。",
+      "image_to_model_prompt": "对象：采礁台（coral_station），水上1×1占地。依据附上的已选设计图生成同一件完整静态3D设施。保留轮廓、比例与色块，合理补足背面，不另加装饰。用低至中等复杂度表达大形，薄件有厚度、构件连接可靠，纹理概括；不要求骨骼、动画或内部精密机构。木、石、陶、金属等按实际使用分区；不把受光高光和投影烘焙成固定黑白斑。\n\n两叉工具座以粗圆枝概括并固定在台面，浅盘保留厚度；不扩展成珊瑚丛或细密分枝。\n\n只生成设施本体，不带背景、地面、水体或大影子。保留可检查的材质和贴图，使用服务实际支持的模型格式。后续在Blender用正面中轴35°正交相机渲染，主体偏转0°，矩形横边水平、纵深边竖直。占地中心为放置原点，地面或水面接触高度明确，不随透明边框居中。"
+    },
+    {
+      "id": "silt_processing_station",
+      "name": "泥料处理台",
+      "variant": "water",
+      "footprint": [
+        1,
+        1
+      ],
+      "medium": "水上",
+      "status": "prompts_ready_not_generated",
+      "scope_evidence": "tools/farming/gen_p106_facility_art.py",
+      "legacy_runtime_file": "res://assets/farming/facilities/silt_processing_station/body.png",
+      "legacy_runtime_sha256": "7cf00d332073e07e7f6de1f42b5d36ae3c27adc49aacca4363c5a84d42769d1d",
+      "planned_paths": {
+        "design": "assets/farming/p109/source/facilities/silt_processing_station/silt_processing_station_water_design_view35_v001.png",
+        "model": "facilities/p109/silt_processing_station/water/silt_processing_station_water_v001.glb",
+        "blend": "facilities/p109/silt_processing_station/water/silt_processing_station_water_v001.blend",
+        "render": "assets/farming/p109/runtime/facilities/silt_processing_station/water/body.png"
+      },
+      "image_prompt": "为《灵田》制作一件独立设施设计图，用于后续图生3D。清淡雅致的仙侠生态游戏风，柔和三维体积、概括形块和少量手绘感，与已选植物画风统一。浅木、暖米、青灰石为主，只选一种低饱和点色。结构约3～5组，重复脚架可简化；花纹0～1处，材质不超过3类。不用写实微纹理、密集雕花符文、复杂齿轮管线或强发光。\n\n对象：泥料处理台（silt_processing_station），水上1×1占地。一座1×1水上泥料处理台，青灰石脚的浅木台体，左右两个宽浅沉泥盆，中央一块短平隔板，前侧一只可见出料嘴。泥褐与玉青小面积点色；无泥鳅、泥浆、水流或管网。\n\n正交相机沿设施正面中轴俯看35°，主体绕竖直轴偏转0°。矩形横边水平、纵深边和立柱竖直，附件同轴；只见顶面与正面，不露大侧面，不用等距菱形或透视展示角。圆口投影为长轴水平的椭圆；真实斜撑、筛盘倾角可保留。\n\n左上柔光，完整单体，透明背景，四周留白。只画空载静态本体，不画文字、人物、动物、地面、水面、大投影、粒子或多视角拼图；不附加棚屋和庭院。",
+      "image_to_model_prompt": "对象：泥料处理台（silt_processing_station），水上1×1占地。依据附上的已选设计图生成同一件完整静态3D设施。保留轮廓、比例与色块，合理补足背面，不另加装饰。用低至中等复杂度表达大形，薄件有厚度、构件连接可靠，纹理概括；不要求骨骼、动画或内部精密机构。木、石、陶、金属等按实际使用分区；不把受光高光和投影烘焙成固定黑白斑。\n\n双盆、隔板、短出料嘴形成清楚路径，保持盆壁厚度；不建流体和真实细筛，结构收在单格内。\n\n只生成设施本体，不带背景、地面、水体或大影子。保留可检查的材质和贴图，使用服务实际支持的模型格式。后续在Blender用正面中轴35°正交相机渲染，主体偏转0°，矩形横边水平、纵深边竖直。占地中心为放置原点，地面或水面接触高度明确，不随透明边框居中。"
+    },
+    {
+      "id": "aquatic_crop_station",
+      "name": "水生种植台",
+      "variant": "water",
+      "footprint": [
+        1,
+        1
+      ],
+      "medium": "水上",
+      "status": "prompts_ready_not_generated",
+      "scope_evidence": "tools/farming/gen_p106_facility_art.py",
+      "legacy_runtime_file": "res://assets/farming/facilities/aquatic_crop_station/body.png",
+      "legacy_runtime_sha256": "d02638b3b448d88af0fbe33fa04a8971fbd97e07b8114721c8416654063e9728",
+      "planned_paths": {
+        "design": "assets/farming/p109/source/facilities/aquatic_crop_station/aquatic_crop_station_water_design_view35_v001.png",
+        "model": "facilities/p109/aquatic_crop_station/water/aquatic_crop_station_water_v001.glb",
+        "blend": "facilities/p109/aquatic_crop_station/water/aquatic_crop_station_water_v001.blend",
+        "render": "assets/farming/p109/runtime/facilities/aquatic_crop_station/water/body.png"
+      },
+      "image_prompt": "为《灵田》制作一件独立设施设计图，用于后续图生3D。清淡雅致的仙侠生态游戏风，柔和三维体积、概括形块和少量手绘感，与已选植物画风统一。浅木、暖米、青灰石为主，只选一种低饱和点色。结构约3～5组，重复脚架可简化；花纹0～1处，材质不超过3类。不用写实微纹理、密集雕花符文、复杂齿轮管线或强发光。\n\n对象：水生种植台（aquatic_crop_station），水上1×1占地。一座1×1水生种植台，低矮浅木方形浮台，一侧固定宽口投料盒，另一侧一把短柄叶形耙放在卡座上。暖米盒体配灰茶绿边沿；空载，无植物、水面切片、长栈桥或花盆阵列。\n\n正交相机沿设施正面中轴俯看35°，主体绕竖直轴偏转0°。矩形横边水平、纵深边和立柱竖直，附件同轴；只见顶面与正面，不露大侧面，不用等距菱形或透视展示角。圆口投影为长轴水平的椭圆；真实斜撑、筛盘倾角可保留。\n\n左上柔光，完整单体，透明背景，四周留白。只画空载静态本体，不画文字、人物、动物、地面、水面、大投影、粒子或多视角拼图；不附加棚屋和庭院。",
+      "image_to_model_prompt": "对象：水生种植台（aquatic_crop_station），水上1×1占地。依据附上的已选设计图生成同一件完整静态3D设施。保留轮廓、比例与色块，合理补足背面，不另加装饰。用低至中等复杂度表达大形，薄件有厚度、构件连接可靠，纹理概括；不要求骨骼、动画或内部精密机构。木、石、陶、金属等按实际使用分区；不把受光高光和投影烘焙成固定黑白斑。\n\n浮台、投料盒、短耙共用紧凑底架，耙齿只做少量粗齿；不把设施做成整块种植田或水池。\n\n只生成设施本体，不带背景、地面、水体或大影子。保留可检查的材质和贴图，使用服务实际支持的模型格式。后续在Blender用正面中轴35°正交相机渲染，主体偏转0°，矩形横边水平、纵深边竖直。占地中心为放置原点，地面或水面接触高度明确，不随透明边框居中。"
+    },
+    {
+      "id": "water_change_station",
+      "name": "换水站",
+      "variant": "land",
+      "footprint": [
+        1,
+        1
+      ],
+      "medium": "岸上陆地",
+      "status": "prompts_ready_not_generated",
+      "scope_evidence": "tools/farming/gen_p106_facility_art.py",
+      "legacy_runtime_file": "res://assets/farming/facilities/water_change_station/body.png",
+      "legacy_runtime_sha256": "c0ca8d8c383e772115f8ef562cb5d7500390d12808224bdcc9137494ea66ab90",
+      "planned_paths": {
+        "design": "assets/farming/p109/source/facilities/water_change_station/water_change_station_land_design_view35_v001.png",
+        "model": "facilities/p109/water_change_station/land/water_change_station_land_v001.glb",
+        "blend": "facilities/p109/water_change_station/land/water_change_station_land_v001.blend",
+        "render": "assets/farming/p109/runtime/facilities/water_change_station/land/body.png"
+      },
+      "image_prompt": "为《灵田》制作一件独立设施设计图，用于后续图生3D。清淡雅致的仙侠生态游戏风，柔和三维体积、概括形块和少量手绘感，与已选植物画风统一。浅木、暖米、青灰石为主，只选一种低饱和点色。结构约3～5组，重复脚架可简化；花纹0～1处，材质不超过3类。不用写实微纹理、密集雕花符文、复杂齿轮管线或强发光。\n\n对象：换水站（water_change_station），岸上陆地1×1占地。一座放在岸上陆地的1×1换水站，青灰石底座，浅木短支架托住两只并排暖米陶罐，前侧一个简洁手摇轮和两个短接口。少量玉青环带；无长水管、水流、池塘或大型水车。\n\n正交相机沿设施正面中轴俯看35°，主体绕竖直轴偏转0°。矩形横边水平、纵深边和立柱竖直，附件同轴；只见顶面与正面，不露大侧面，不用等距菱形或透视展示角。圆口投影为长轴水平的椭圆；真实斜撑、筛盘倾角可保留。\n\n左上柔光，完整单体，透明背景，四周留白。只画空载静态本体，不画文字、人物、动物、地面、水面、大投影、粒子或多视角拼图；不附加棚屋和庭院。",
+      "image_to_model_prompt": "对象：换水站（water_change_station），岸上陆地1×1占地。依据附上的已选设计图生成同一件完整静态3D设施。保留轮廓、比例与色块，合理补足背面，不另加装饰。用低至中等复杂度表达大形，薄件有厚度、构件连接可靠，纹理概括；不要求骨骼、动画或内部精密机构。木、石、陶、金属等按实际使用分区；不把受光高光和投影烘焙成固定黑白斑。\n\n双罐、支架和手摇轮连接稳固，短接口作为可接管端口；本体位于岸上，不生成固定朝向的长入水管或背景岸线。\n\n只生成设施本体，不带背景、地面、水体或大影子。保留可检查的材质和贴图，使用服务实际支持的模型格式。后续在Blender用正面中轴35°正交相机渲染，主体偏转0°，矩形横边水平、纵深边竖直。占地中心为放置原点，地面或水面接触高度明确，不随透明边框居中。"
+    }
+  ]
+}
