@@ -1,0 +1,1603 @@
+{
+  "route_id": "p8_a_replay_90d_v1",
+  "title": "A路线前45日参考安排",
+  "source_kind": "fresh_no_injection_replay",
+  "source_run": "run_p8_playtest.gd --days=90 --route=A",
+  "reference_days": 90,
+  "replay_days": 90,
+  "initial_currency": 90,
+  "effective_field_gu_day": 68,
+  "source_hashes": {
+    "content/farming/baked/maps/farm_02.json": "e339076b592f24f060a0c0620494ea231df3cb68dff114bc775f03300de4837e",
+    "content/farming/baked/p8/expansion.json": "65c274ce6e62021345e6cf93c6bdfe1bd1f8d0b57ddd8968a064c28222d35076",
+    "content/farming/baked/p8/production.json": "d73e5cbe615e54470a0073008a0b80392462480fcf4ec160902a832e46f652a6",
+    "content/farming/p8/expansion.json": "4ef4c760b53b2d6a103e7a97524fae3431d8470a6e0a1a4529d84d3077fc3b76",
+    "content/farming/p8/production.json": "afb848c1d349d116f929ac1ceb7df0cba4b72eeff754fa02f04d6ac22bdff265",
+    "scripts/farming/core/grid/land_grid.gd": "e24c80851df8452158f52cfd0e147d79c26be9d3064c3bb0ca3910fbf8bdc762",
+    "scripts/farming/p8/p10_logistics.gd": "b2467ed8ec4f60aeb6eb6739986d000af95b330519826e93902dd32bb550fa26",
+    "scripts/farming/p8/p10_ui.gd": "39f21e965e8159b3c7ab029f9d8c00d40a821c61e331f2cfc16e45b69199f706",
+    "scripts/farming/p8/p8_data.gd": "b22c0cf3550c6b24b676c9cdfcf4418a395748ede8374b1b60bbad15b5ace6b7",
+    "scripts/farming/p8/p8_devices.gd": "412750985cd3d92fee61f24301730005142aefa46c198e003cd7d68937184ca8",
+    "scripts/farming/p8/p8_flowers.gd": "534e3fe0a28a2e8efd5911304ffff0e81651ff83c1bcc57523bac3a44af2a62c",
+    "scripts/farming/p8/p8_husbandry.gd": "9b00c06dad8ac8d052fd9f56cc4ebfbb3edf473cd5db17109d54139c6bd9ef46",
+    "scripts/farming/p8/p8_land.gd": "b8256fae73f308ad906375920ab7d332fb49c9932ab6b7b0ed8d553c88036873",
+    "scripts/farming/p8/p8_operations.gd": "925389c5c62b84ae8c15e4aba4db6620b5c07781c32b8e9b6abcfa8d7affc050",
+    "scripts/farming/p8/p8_research.gd": "5c198c74f718f4ae43cad6155750a50a976c0ccc1cd85b2636a3cdae043da28b",
+    "scripts/farming/p8/p8_snapshot.gd": "3b9fbce56a306483b541e9616db617b64bf21188d2b893a838280fb8e7c0af9e",
+    "scripts/farming/p8/p8_workforce.gd": "2a7bac85fc99d3016862b379bf71e21e67b6b90166065b744c1de73a18e5efd6",
+    "scripts/farming/p8/p8_world.gd": "42b87d8383d84b42310c16622d2bd5f3c8106288d7953ba50471b5e85f541fca",
+    "scripts/farming/tests/run_p8_playtest.gd": "d48a071f13f8e5a67e2af26468c412753cfa1a9dd866c836a7f8ddb92ea3282c",
+    "scripts/farming/v1/v1_world.gd": "8f09b7a7b8c08857a085feffc7aa2e4d14326e24d8114b20a56f1552e95cf88a",
+    "scripts/farming/v1/v1_world_state.gd": "79320182d29e1f6ecb2703b807264eb4c025a38c2a57d64a310c6b68ba10bf41",
+    "scripts/farming/v2/v2_husbandry.gd": "7641039529798a22f183fe36c8784b6fc823cbcaaafdb47d8dab527f61b7a024",
+    "scripts/farming/v2/v2_resource_ledger.gd": "4dec130b159e404f390526c4126d9dabb05e8772c1d7bf8c0292c60cb9340578"
+  },
+  "timeline": [
+    {
+      "day": 1,
+      "advice": [
+        "开垦可用耕地或整理下一块生产空间，不必一次铺满。",
+        "补种golden_wheat、pasture_grass；按地块空间和现有种子安排。",
+        "按当前阶段条件扩建所需设施，建造前核对材料。"
+      ],
+      "evidence_codes": [
+        "build",
+        "collect",
+        "expand",
+        "market",
+        "order",
+        "plant"
+      ],
+      "action_count": 29
+    },
+    {
+      "day": 2,
+      "advice": [
+        "补种pasture_grass；按地块空间和现有种子安排。",
+        "按当前阶段条件扩建所需设施，建造前核对材料。",
+        "按需采集水、石料或矿物，先留足订单和建设用量。"
+      ],
+      "evidence_codes": [
+        "build",
+        "collect",
+        "market",
+        "plant"
+      ],
+      "action_count": 46
+    },
+    {
+      "day": 3,
+      "advice": [
+        "按当前阶段条件扩建所需设施，建造前核对材料。",
+        "查看订单；留足经营库存后再交付余量。",
+        "按需采集水、石料或矿物，先留足订单和建设用量。"
+      ],
+      "evidence_codes": [
+        "build",
+        "collect",
+        "market",
+        "order"
+      ],
+      "action_count": 7
+    },
+    {
+      "day": 4,
+      "advice": [
+        "补种pasture_grass；按地块空间和现有种子安排。",
+        "检查成熟作物并收获，核对入库后再决定是否补种。",
+        "按需采集水、石料或矿物，先留足订单和建设用量。"
+      ],
+      "evidence_codes": [
+        "collect",
+        "harvest",
+        "plant"
+      ],
+      "action_count": 10
+    },
+    {
+      "day": 5,
+      "advice": [
+        "补种golden_wheat；按地块空间和现有种子安排。",
+        "检查成熟作物并收获，核对入库后再决定是否补种。",
+        "查看原料库存，启动当前可负担的加工批次。"
+      ],
+      "evidence_codes": [
+        "batch_start",
+        "collect",
+        "harvest",
+        "market",
+        "order",
+        "plant",
+        "stage_submit"
+      ],
+      "action_count": 18
+    },
+    {
+      "day": 6,
+      "advice": [
+        "开垦可用耕地或整理下一块生产空间，不必一次铺满。",
+        "按当前阶段条件扩建所需设施，建造前核对材料。",
+        "检查加工设施，领取已完成批次。"
+      ],
+      "evidence_codes": [
+        "batch_claim",
+        "build",
+        "collect",
+        "expand",
+        "market",
+        "order"
+      ],
+      "action_count": 13
+    },
+    {
+      "day": 7,
+      "advice": [
+        "开垦可用耕地或整理下一块生产空间，不必一次铺满。",
+        "补种wood_decay_mushroom；按地块空间和现有种子安排。",
+        "检查成熟作物并收获，核对入库后再决定是否补种。"
+      ],
+      "evidence_codes": [
+        "batch_claim",
+        "batch_start",
+        "collect",
+        "expand",
+        "harvest",
+        "market",
+        "order",
+        "plant"
+      ],
+      "action_count": 17
+    },
+    {
+      "day": 8,
+      "advice": [
+        "查看研究前置与样本；条件满足时启动研究并投入有效工时。",
+        "检查加工设施，领取已完成批次。",
+        "查看原料库存，启动当前可负担的加工批次。"
+      ],
+      "evidence_codes": [
+        "batch_claim",
+        "batch_start",
+        "field_care",
+        "market",
+        "order",
+        "research_start"
+      ],
+      "action_count": 11
+    },
+    {
+      "day": 9,
+      "advice": [
+        "开垦可用耕地或整理下一块生产空间，不必一次铺满。",
+        "补种golden_wheat、wood_decay_mushroom；按地块空间和现有种子安排。",
+        "检查成熟作物并收获，核对入库后再决定是否补种。"
+      ],
+      "evidence_codes": [
+        "collect",
+        "expand",
+        "harvest",
+        "market",
+        "order",
+        "plant",
+        "research_work"
+      ],
+      "action_count": 16
+    },
+    {
+      "day": 10,
+      "advice": [
+        "开垦可用耕地或整理下一块生产空间，不必一次铺满。",
+        "查看研究前置与样本；条件满足时启动研究并投入有效工时。",
+        "检查加工设施，领取已完成批次。"
+      ],
+      "evidence_codes": [
+        "batch_claim",
+        "batch_start",
+        "collect",
+        "expand",
+        "market",
+        "order",
+        "research_work"
+      ],
+      "action_count": 14
+    },
+    {
+      "day": 11,
+      "advice": [
+        "开垦可用耕地或整理下一块生产空间，不必一次铺满。",
+        "补种honeybell_bush、oilseed_flower；按地块空间和现有种子安排。",
+        "检查成熟作物并收获，核对入库后再决定是否补种。"
+      ],
+      "evidence_codes": [
+        "batch_claim",
+        "batch_start",
+        "collect",
+        "expand",
+        "field_care",
+        "harvest",
+        "market",
+        "order",
+        "plant"
+      ],
+      "action_count": 21
+    },
+    {
+      "day": 12,
+      "advice": [
+        "补种honeybell_bush、oilseed_flower、wood_decay_mushroom；按地块空间和现有种子安排。",
+        "按当前阶段条件扩建所需设施，建造前核对材料。",
+        "查看研究前置与样本；条件满足时启动研究并投入有效工时。"
+      ],
+      "evidence_codes": [
+        "build",
+        "field_care",
+        "market",
+        "order",
+        "plant",
+        "research_start"
+      ],
+      "action_count": 10
+    },
+    {
+      "day": 13,
+      "advice": [
+        "补种golden_wheat、honeybell_bush、oilseed_flower；按地块空间和现有种子安排。",
+        "检查成熟作物并收获，核对入库后再决定是否补种。",
+        "查看研究前置与样本；条件满足时启动研究并投入有效工时。"
+      ],
+      "evidence_codes": [
+        "batch_claim",
+        "collect",
+        "harvest",
+        "market",
+        "order",
+        "plant",
+        "research_work",
+        "stage_submit"
+      ],
+      "action_count": 23
+    },
+    {
+      "day": 14,
+      "advice": [
+        "开垦可用耕地或整理下一块生产空间，不必一次铺满。",
+        "按当前阶段条件扩建所需设施，建造前核对材料。",
+        "查看研究前置与样本；条件满足时启动研究并投入有效工时。"
+      ],
+      "evidence_codes": [
+        "batch_start",
+        "build",
+        "collect",
+        "expand",
+        "market",
+        "order",
+        "research_work"
+      ],
+      "action_count": 17
+    },
+    {
+      "day": 15,
+      "advice": [
+        "查看原料库存，启动当前可负担的加工批次。",
+        "查看作物水肥状态，只在确有需要时维护。",
+        "查看订单；留足经营库存后再交付余量。"
+      ],
+      "evidence_codes": [
+        "batch_start",
+        "collect",
+        "field_care",
+        "market",
+        "order"
+      ],
+      "action_count": 9
+    },
+    {
+      "day": 16,
+      "advice": [
+        "补种oilseed_flower；按地块空间和现有种子安排。",
+        "检查成熟作物并收获，核对入库后再决定是否补种。",
+        "按当前阶段条件扩建所需设施，建造前核对材料。"
+      ],
+      "evidence_codes": [
+        "batch_claim",
+        "build",
+        "collect",
+        "field_care",
+        "harvest",
+        "market",
+        "order",
+        "plant"
+      ],
+      "action_count": 16
+    },
+    {
+      "day": 17,
+      "advice": [
+        "补种golden_wheat、oilseed_flower、wood_decay_mushroom；按地块空间和现有种子安排。",
+        "检查成熟作物并收获，核对入库后再决定是否补种。",
+        "按当前阶段条件扩建所需设施，建造前核对材料。"
+      ],
+      "evidence_codes": [
+        "build",
+        "collect",
+        "field_care",
+        "harvest",
+        "market",
+        "order",
+        "plant",
+        "research_start"
+      ],
+      "action_count": 28
+    },
+    {
+      "day": 18,
+      "advice": [
+        "开垦可用耕地或整理下一块生产空间，不必一次铺满。",
+        "补种oilseed_flower；按地块空间和现有种子安排。",
+        "检查成熟作物并收获，核对入库后再决定是否补种。"
+      ],
+      "evidence_codes": [
+        "batch_start",
+        "collect",
+        "expand",
+        "field_care",
+        "harvest",
+        "market",
+        "plant",
+        "research_start",
+        "research_work"
+      ],
+      "action_count": 17
+    },
+    {
+      "day": 19,
+      "advice": [
+        "查看研究前置与样本；条件满足时启动研究并投入有效工时。",
+        "查看原料库存，启动当前可负担的加工批次。",
+        "查看作物水肥状态，只在确有需要时维护。"
+      ],
+      "evidence_codes": [
+        "batch_start",
+        "field_care",
+        "market",
+        "order",
+        "research_work"
+      ],
+      "action_count": 9
+    },
+    {
+      "day": 20,
+      "advice": [
+        "查看研究前置与样本；条件满足时启动研究并投入有效工时。",
+        "检查加工设施，领取已完成批次。",
+        "查看作物水肥状态，只在确有需要时维护。"
+      ],
+      "evidence_codes": [
+        "batch_claim",
+        "field_care",
+        "market",
+        "order",
+        "research_start",
+        "research_work"
+      ],
+      "action_count": 10
+    },
+    {
+      "day": 21,
+      "advice": [
+        "补种oilseed_flower、wood_decay_mushroom；按地块空间和现有种子安排。",
+        "检查成熟作物并收获，核对入库后再决定是否补种。",
+        "按当前阶段条件扩建所需设施，建造前核对材料。"
+      ],
+      "evidence_codes": [
+        "batch_claim",
+        "build",
+        "collect",
+        "field_care",
+        "harvest",
+        "market",
+        "order",
+        "plant",
+        "research_work"
+      ],
+      "action_count": 15
+    },
+    {
+      "day": 22,
+      "advice": [
+        "开垦可用耕地或整理下一块生产空间，不必一次铺满。",
+        "补种oilseed_flower；按地块空间和现有种子安排。",
+        "检查成熟作物并收获，核对入库后再决定是否补种。"
+      ],
+      "evidence_codes": [
+        "batch_start",
+        "collect",
+        "expand",
+        "field_care",
+        "harvest",
+        "market",
+        "order",
+        "plant",
+        "research_work"
+      ],
+      "action_count": 17
+    },
+    {
+      "day": 23,
+      "advice": [
+        "开垦可用耕地或整理下一块生产空间，不必一次铺满。",
+        "补种golden_wheat、oilseed_flower；按地块空间和现有种子安排。",
+        "检查成熟作物并收获，核对入库后再决定是否补种。"
+      ],
+      "evidence_codes": [
+        "batch_claim",
+        "expand",
+        "field_care",
+        "harvest",
+        "market",
+        "order",
+        "plant"
+      ],
+      "action_count": 29
+    },
+    {
+      "day": 24,
+      "advice": [
+        "开垦可用耕地或整理下一块生产空间，不必一次铺满。",
+        "补种wood_decay_mushroom；按地块空间和现有种子安排。",
+        "按当前阶段条件扩建所需设施，建造前核对材料。"
+      ],
+      "evidence_codes": [
+        "batch_claim",
+        "batch_start",
+        "build",
+        "collect",
+        "expand",
+        "field_care",
+        "market",
+        "plant"
+      ],
+      "action_count": 17
+    },
+    {
+      "day": 25,
+      "advice": [
+        "检查成熟作物并收获，核对入库后再决定是否补种。",
+        "按当前阶段条件扩建所需设施，建造前核对材料。",
+        "检查加工设施，领取已完成批次。"
+      ],
+      "evidence_codes": [
+        "batch_claim",
+        "batch_start",
+        "build",
+        "collect",
+        "field_care",
+        "harvest",
+        "market",
+        "order"
+      ],
+      "action_count": 11
+    },
+    {
+      "day": 26,
+      "advice": [
+        "补种oilseed_flower；按地块空间和现有种子安排。",
+        "检查成熟作物并收获，核对入库后再决定是否补种。",
+        "按当前阶段条件扩建所需设施，建造前核对材料。"
+      ],
+      "evidence_codes": [
+        "batch_start",
+        "build",
+        "collect",
+        "harvest",
+        "market",
+        "order",
+        "plant"
+      ],
+      "action_count": 8
+    },
+    {
+      "day": 27,
+      "advice": [
+        "补种oilseed_flower；按地块空间和现有种子安排。",
+        "检查成熟作物并收获，核对入库后再决定是否补种。",
+        "按当前阶段条件扩建所需设施，建造前核对材料。"
+      ],
+      "evidence_codes": [
+        "batch_claim",
+        "batch_start",
+        "build",
+        "field_care",
+        "harvest",
+        "market",
+        "order",
+        "plant"
+      ],
+      "action_count": 11
+    },
+    {
+      "day": 28,
+      "advice": [
+        "开垦可用耕地或整理下一块生产空间，不必一次铺满。",
+        "补种oilseed_flower；按地块空间和现有种子安排。",
+        "检查成熟作物并收获，核对入库后再决定是否补种。"
+      ],
+      "evidence_codes": [
+        "batch_claim",
+        "batch_start",
+        "collect",
+        "expand",
+        "field_care",
+        "harvest",
+        "market",
+        "plant"
+      ],
+      "action_count": 14
+    },
+    {
+      "day": 29,
+      "advice": [
+        "补种golden_wheat；按地块空间和现有种子安排。",
+        "检查成熟作物并收获，核对入库后再决定是否补种。",
+        "按当前阶段条件扩建所需设施，建造前核对材料。"
+      ],
+      "evidence_codes": [
+        "batch_claim",
+        "batch_start",
+        "build",
+        "field_care",
+        "harvest",
+        "market",
+        "order",
+        "plant"
+      ],
+      "action_count": 18
+    },
+    {
+      "day": 30,
+      "advice": [
+        "开垦可用耕地或整理下一块生产空间，不必一次铺满。",
+        "检查加工设施，领取已完成批次。",
+        "查看原料库存，启动当前可负担的加工批次。"
+      ],
+      "evidence_codes": [
+        "batch_claim",
+        "batch_start",
+        "collect",
+        "expand",
+        "field_care",
+        "market",
+        "order"
+      ],
+      "action_count": 15
+    },
+    {
+      "day": 31,
+      "advice": [
+        "补种oilseed_flower；按地块空间和现有种子安排。",
+        "检查成熟作物并收获，核对入库后再决定是否补种。",
+        "按当前阶段条件扩建所需设施，建造前核对材料。"
+      ],
+      "evidence_codes": [
+        "batch_claim",
+        "batch_start",
+        "build",
+        "collect",
+        "field_care",
+        "harvest",
+        "market",
+        "order",
+        "plant"
+      ],
+      "action_count": 13
+    },
+    {
+      "day": 32,
+      "advice": [
+        "补种oilseed_flower、wood_decay_mushroom；按地块空间和现有种子安排。",
+        "检查成熟作物并收获，核对入库后再决定是否补种。",
+        "查看原料库存，启动当前可负担的加工批次。"
+      ],
+      "evidence_codes": [
+        "batch_start",
+        "collect",
+        "field_care",
+        "harvest",
+        "market",
+        "order",
+        "plant"
+      ],
+      "action_count": 9
+    },
+    {
+      "day": 33,
+      "advice": [
+        "补种oilseed_flower；按地块空间和现有种子安排。",
+        "检查成熟作物并收获，核对入库后再决定是否补种。",
+        "检查加工设施，领取已完成批次。"
+      ],
+      "evidence_codes": [
+        "batch_claim",
+        "field_care",
+        "harvest",
+        "plant"
+      ],
+      "action_count": 5
+    },
+    {
+      "day": 34,
+      "advice": [
+        "按当前阶段条件扩建所需设施，建造前核对材料。",
+        "查看原料库存，启动当前可负担的加工批次。",
+        "查看作物水肥状态，只在确有需要时维护。"
+      ],
+      "evidence_codes": [
+        "batch_start",
+        "build",
+        "collect",
+        "field_care",
+        "market",
+        "order"
+      ],
+      "action_count": 10
+    },
+    {
+      "day": 35,
+      "advice": [
+        "补种golden_wheat；按地块空间和现有种子安排。",
+        "检查成熟作物并收获，核对入库后再决定是否补种。",
+        "按当前阶段条件扩建所需设施，建造前核对材料。"
+      ],
+      "evidence_codes": [
+        "build",
+        "field_care",
+        "harvest",
+        "market",
+        "order",
+        "plant"
+      ],
+      "action_count": 14
+    },
+    {
+      "day": 36,
+      "advice": [
+        "开垦可用耕地或整理下一块生产空间，不必一次铺满。",
+        "补种oilseed_flower；按地块空间和现有种子安排。",
+        "检查成熟作物并收获，核对入库后再决定是否补种。"
+      ],
+      "evidence_codes": [
+        "batch_claim",
+        "batch_start",
+        "collect",
+        "expand",
+        "field_care",
+        "harvest",
+        "market",
+        "order",
+        "plant"
+      ],
+      "action_count": 21
+    },
+    {
+      "day": 37,
+      "advice": [
+        "补种oilseed_flower；按地块空间和现有种子安排。",
+        "检查成熟作物并收获，核对入库后再决定是否补种。",
+        "按当前阶段条件扩建所需设施，建造前核对材料。"
+      ],
+      "evidence_codes": [
+        "batch_claim",
+        "batch_start",
+        "build",
+        "field_care",
+        "harvest",
+        "market",
+        "order",
+        "plant"
+      ],
+      "action_count": 11
+    },
+    {
+      "day": 38,
+      "advice": [
+        "开垦可用耕地或整理下一块生产空间，不必一次铺满。",
+        "补种oilseed_flower、wood_decay_mushroom；按地块空间和现有种子安排。",
+        "检查成熟作物并收获，核对入库后再决定是否补种。"
+      ],
+      "evidence_codes": [
+        "batch_start",
+        "expand",
+        "field_care",
+        "harvest",
+        "market",
+        "order",
+        "plant"
+      ],
+      "action_count": 19
+    },
+    {
+      "day": 39,
+      "advice": [
+        "开垦可用耕地或整理下一块生产空间，不必一次铺满。",
+        "检查加工设施，领取已完成批次。",
+        "查看作物水肥状态，只在确有需要时维护。"
+      ],
+      "evidence_codes": [
+        "batch_claim",
+        "collect",
+        "expand",
+        "field_care",
+        "market",
+        "order"
+      ],
+      "action_count": 13
+    },
+    {
+      "day": 40,
+      "advice": [
+        "开垦可用耕地或整理下一块生产空间，不必一次铺满。",
+        "补种wood_decay_mushroom；按地块空间和现有种子安排。",
+        "按当前阶段条件扩建所需设施，建造前核对材料。"
+      ],
+      "evidence_codes": [
+        "batch_start",
+        "build",
+        "expand",
+        "field_care",
+        "market",
+        "order",
+        "plant"
+      ],
+      "action_count": 13
+    },
+    {
+      "day": 41,
+      "advice": [
+        "补种golden_wheat、oilseed_flower；按地块空间和现有种子安排。",
+        "检查成熟作物并收获，核对入库后再决定是否补种。",
+        "检查加工设施，领取已完成批次。"
+      ],
+      "evidence_codes": [
+        "batch_claim",
+        "batch_start",
+        "collect",
+        "field_care",
+        "harvest",
+        "market",
+        "order",
+        "plant"
+      ],
+      "action_count": 23
+    },
+    {
+      "day": 42,
+      "advice": [
+        "开垦可用耕地或整理下一块生产空间，不必一次铺满。",
+        "补种oilseed_flower、wood_decay_mushroom；按地块空间和现有种子安排。",
+        "检查成熟作物并收获，核对入库后再决定是否补种。"
+      ],
+      "evidence_codes": [
+        "batch_claim",
+        "build",
+        "collect",
+        "expand",
+        "harvest",
+        "market",
+        "order",
+        "plant"
+      ],
+      "action_count": 20
+    },
+    {
+      "day": 43,
+      "advice": [
+        "补种oilseed_flower；按地块空间和现有种子安排。",
+        "检查成熟作物并收获，核对入库后再决定是否补种。",
+        "检查加工设施，领取已完成批次。"
+      ],
+      "evidence_codes": [
+        "batch_claim",
+        "batch_start",
+        "collect",
+        "harvest",
+        "order",
+        "plant"
+      ],
+      "action_count": 9
+    },
+    {
+      "day": 44,
+      "advice": [
+        "检查成熟作物并收获，核对入库后再决定是否补种。",
+        "查看原料库存，启动当前可负担的加工批次。",
+        "查看订单；留足经营库存后再交付余量。"
+      ],
+      "evidence_codes": [
+        "batch_start",
+        "collect",
+        "harvest",
+        "market",
+        "order"
+      ],
+      "action_count": 9
+    },
+    {
+      "day": 45,
+      "advice": [
+        "按当前阶段条件扩建所需设施，建造前核对材料。",
+        "检查加工设施，领取已完成批次。",
+        "查看作物水肥状态，只在确有需要时维护。"
+      ],
+      "evidence_codes": [
+        "batch_claim",
+        "build",
+        "field_care",
+        "market",
+        "order"
+      ],
+      "action_count": 13
+    },
+    {
+      "day": 46,
+      "advice": [
+        "开垦可用耕地或整理下一块生产空间，不必一次铺满。",
+        "补种oilseed_flower；按地块空间和现有种子安排。",
+        "检查成熟作物并收获，核对入库后再决定是否补种。"
+      ],
+      "evidence_codes": [
+        "batch_claim",
+        "batch_start",
+        "collect",
+        "expand",
+        "field_care",
+        "harvest",
+        "market",
+        "order",
+        "plant"
+      ],
+      "action_count": 16
+    },
+    {
+      "day": 47,
+      "advice": [
+        "开垦可用耕地或整理下一块生产空间，不必一次铺满。",
+        "补种golden_wheat、oilseed_flower；按地块空间和现有种子安排。",
+        "检查成熟作物并收获，核对入库后再决定是否补种。"
+      ],
+      "evidence_codes": [
+        "batch_claim",
+        "collect",
+        "expand",
+        "field_care",
+        "harvest",
+        "market",
+        "order",
+        "plant"
+      ],
+      "action_count": 27
+    },
+    {
+      "day": 48,
+      "advice": [
+        "开垦可用耕地或整理下一块生产空间，不必一次铺满。",
+        "补种oilseed_flower；按地块空间和现有种子安排。",
+        "检查成熟作物并收获，核对入库后再决定是否补种。"
+      ],
+      "evidence_codes": [
+        "batch_start",
+        "build",
+        "collect",
+        "expand",
+        "field_care",
+        "harvest",
+        "market",
+        "order",
+        "plant"
+      ],
+      "action_count": 18
+    },
+    {
+      "day": 49,
+      "advice": [
+        "开垦可用耕地或整理下一块生产空间，不必一次铺满。",
+        "按当前阶段条件扩建所需设施，建造前核对材料。",
+        "查看原料库存，启动当前可负担的加工批次。"
+      ],
+      "evidence_codes": [
+        "batch_start",
+        "build",
+        "collect",
+        "expand",
+        "field_care",
+        "market",
+        "order"
+      ],
+      "action_count": 19
+    },
+    {
+      "day": 50,
+      "advice": [
+        "开垦可用耕地或整理下一块生产空间，不必一次铺满。",
+        "检查加工设施，领取已完成批次。",
+        "查看原料库存，启动当前可负担的加工批次。"
+      ],
+      "evidence_codes": [
+        "batch_claim",
+        "batch_start",
+        "collect",
+        "expand",
+        "field_care",
+        "market",
+        "order"
+      ],
+      "action_count": 13
+    },
+    {
+      "day": 51,
+      "advice": [
+        "开垦可用耕地或整理下一块生产空间，不必一次铺满。",
+        "补种oilseed_flower；按地块空间和现有种子安排。",
+        "检查成熟作物并收获，核对入库后再决定是否补种。"
+      ],
+      "evidence_codes": [
+        "batch_claim",
+        "collect",
+        "expand",
+        "field_care",
+        "harvest",
+        "market",
+        "order",
+        "plant"
+      ],
+      "action_count": 15
+    },
+    {
+      "day": 52,
+      "advice": [
+        "开垦可用耕地或整理下一块生产空间，不必一次铺满。",
+        "补种oilseed_flower、wood_decay_mushroom；按地块空间和现有种子安排。",
+        "检查成熟作物并收获，核对入库后再决定是否补种。"
+      ],
+      "evidence_codes": [
+        "batch_start",
+        "expand",
+        "harvest",
+        "market",
+        "order",
+        "plant"
+      ],
+      "action_count": 13
+    },
+    {
+      "day": 53,
+      "advice": [
+        "补种golden_wheat、oilseed_flower；按地块空间和现有种子安排。",
+        "检查成熟作物并收获，核对入库后再决定是否补种。",
+        "检查加工设施，领取已完成批次。"
+      ],
+      "evidence_codes": [
+        "batch_claim",
+        "collect",
+        "field_care",
+        "harvest",
+        "market",
+        "plant"
+      ],
+      "action_count": 20
+    },
+    {
+      "day": 54,
+      "advice": [
+        "开垦可用耕地或整理下一块生产空间，不必一次铺满。",
+        "补种wood_decay_mushroom；按地块空间和现有种子安排。",
+        "检查加工设施，领取已完成批次。"
+      ],
+      "evidence_codes": [
+        "batch_claim",
+        "batch_start",
+        "collect",
+        "expand",
+        "field_care",
+        "market",
+        "order",
+        "plant"
+      ],
+      "action_count": 18
+    },
+    {
+      "day": 55,
+      "advice": [
+        "查看研究前置与样本；条件满足时启动研究并投入有效工时。",
+        "查看原料库存，启动当前可负担的加工批次。",
+        "查看作物水肥状态，只在确有需要时维护。"
+      ],
+      "evidence_codes": [
+        "batch_start",
+        "collect",
+        "field_care",
+        "market",
+        "order",
+        "research_start"
+      ],
+      "action_count": 12
+    },
+    {
+      "day": 56,
+      "advice": [
+        "补种oilseed_flower；按地块空间和现有种子安排。",
+        "检查成熟作物并收获，核对入库后再决定是否补种。",
+        "检查加工设施，领取已完成批次。"
+      ],
+      "evidence_codes": [
+        "batch_claim",
+        "batch_start",
+        "collect",
+        "harvest",
+        "market",
+        "order",
+        "plant"
+      ],
+      "action_count": 15
+    },
+    {
+      "day": 57,
+      "advice": [
+        "开垦可用耕地或整理下一块生产空间，不必一次铺满。",
+        "补种oilseed_flower；按地块空间和现有种子安排。",
+        "检查成熟作物并收获，核对入库后再决定是否补种。"
+      ],
+      "evidence_codes": [
+        "batch_claim",
+        "batch_start",
+        "expand",
+        "field_care",
+        "harvest",
+        "market",
+        "order",
+        "plant"
+      ],
+      "action_count": 14
+    },
+    {
+      "day": 58,
+      "advice": [
+        "补种oilseed_flower、wood_decay_mushroom；按地块空间和现有种子安排。",
+        "检查成熟作物并收获，核对入库后再决定是否补种。",
+        "查看原料库存，启动当前可负担的加工批次。"
+      ],
+      "evidence_codes": [
+        "batch_start",
+        "collect",
+        "field_care",
+        "harvest",
+        "market",
+        "order",
+        "plant"
+      ],
+      "action_count": 13
+    },
+    {
+      "day": 59,
+      "advice": [
+        "补种golden_wheat；按地块空间和现有种子安排。",
+        "检查成熟作物并收获，核对入库后再决定是否补种。",
+        "检查加工设施，领取已完成批次。"
+      ],
+      "evidence_codes": [
+        "batch_claim",
+        "batch_start",
+        "collect",
+        "field_care",
+        "harvest",
+        "market",
+        "order",
+        "plant"
+      ],
+      "action_count": 25
+    },
+    {
+      "day": 60,
+      "advice": [
+        "补种wood_decay_mushroom；按地块空间和现有种子安排。",
+        "按当前阶段条件扩建所需设施，建造前核对材料。",
+        "查看原料库存，启动当前可负担的加工批次。"
+      ],
+      "evidence_codes": [
+        "batch_start",
+        "build",
+        "collect",
+        "field_care",
+        "market",
+        "order",
+        "plant"
+      ],
+      "action_count": 18
+    },
+    {
+      "day": 61,
+      "advice": [
+        "补种oilseed_flower；按地块空间和现有种子安排。",
+        "检查成熟作物并收获，核对入库后再决定是否补种。",
+        "检查加工设施，领取已完成批次。"
+      ],
+      "evidence_codes": [
+        "batch_claim",
+        "collect",
+        "field_care",
+        "harvest",
+        "market",
+        "order",
+        "plant"
+      ],
+      "action_count": 19
+    },
+    {
+      "day": 62,
+      "advice": [
+        "补种oilseed_flower；按地块空间和现有种子安排。",
+        "检查成熟作物并收获，核对入库后再决定是否补种。",
+        "按当前阶段条件扩建所需设施，建造前核对材料。"
+      ],
+      "evidence_codes": [
+        "batch_claim",
+        "batch_start",
+        "build",
+        "collect",
+        "field_care",
+        "harvest",
+        "market",
+        "order",
+        "plant"
+      ],
+      "action_count": 15
+    },
+    {
+      "day": 63,
+      "advice": [
+        "补种oilseed_flower；按地块空间和现有种子安排。",
+        "检查成熟作物并收获，核对入库后再决定是否补种。",
+        "检查加工设施，领取已完成批次。"
+      ],
+      "evidence_codes": [
+        "batch_claim",
+        "batch_start",
+        "collect",
+        "harvest",
+        "market",
+        "order",
+        "plant"
+      ],
+      "action_count": 13
+    },
+    {
+      "day": 64,
+      "advice": [
+        "检查成熟作物并收获，核对入库后再决定是否补种。",
+        "查看作物水肥状态，只在确有需要时维护。",
+        "查看订单；留足经营库存后再交付余量。"
+      ],
+      "evidence_codes": [
+        "field_care",
+        "harvest",
+        "market",
+        "order"
+      ],
+      "action_count": 40
+    },
+    {
+      "day": 65,
+      "advice": [
+        "补种golden_wheat；按地块空间和现有种子安排。",
+        "检查成熟作物并收获，核对入库后再决定是否补种。",
+        "查看作物水肥状态，只在确有需要时维护。"
+      ],
+      "evidence_codes": [
+        "field_care",
+        "harvest",
+        "market",
+        "order",
+        "plant"
+      ],
+      "action_count": 25
+    },
+    {
+      "day": 66,
+      "advice": [
+        "补种oilseed_flower；按地块空间和现有种子安排。",
+        "检查成熟作物并收获，核对入库后再决定是否补种。",
+        "查看作物水肥状态，只在确有需要时维护。"
+      ],
+      "evidence_codes": [
+        "field_care",
+        "harvest",
+        "market",
+        "order",
+        "plant"
+      ],
+      "action_count": 18
+    },
+    {
+      "day": 67,
+      "advice": [
+        "补种oilseed_flower、wood_decay_mushroom；按地块空间和现有种子安排。",
+        "检查成熟作物并收获，核对入库后再决定是否补种。",
+        "按当前阶段条件扩建所需设施，建造前核对材料。"
+      ],
+      "evidence_codes": [
+        "build",
+        "field_care",
+        "harvest",
+        "market",
+        "order",
+        "plant"
+      ],
+      "action_count": 20
+    },
+    {
+      "day": 68,
+      "advice": [
+        "补种oilseed_flower；按地块空间和现有种子安排。",
+        "检查成熟作物并收获，核对入库后再决定是否补种。",
+        "查看作物水肥状态，只在确有需要时维护。"
+      ],
+      "evidence_codes": [
+        "collect",
+        "field_care",
+        "field_gu_effect",
+        "harvest",
+        "market",
+        "order",
+        "plant"
+      ],
+      "action_count": 19
+    },
+    {
+      "day": 69,
+      "advice": [
+        "补种wood_decay_mushroom；按地块空间和现有种子安排。",
+        "查看作物水肥状态，只在确有需要时维护。",
+        "按需采集水、石料或矿物，先留足订单和建设用量。"
+      ],
+      "evidence_codes": [
+        "collect",
+        "field_care",
+        "market",
+        "plant"
+      ],
+      "action_count": 18
+    },
+    {
+      "day": 70,
+      "advice": [
+        "补种golden_wheat；按地块空间和现有种子安排。",
+        "检查成熟作物并收获，核对入库后再决定是否补种。",
+        "查看作物水肥状态，只在确有需要时维护。"
+      ],
+      "evidence_codes": [
+        "field_care",
+        "harvest",
+        "market",
+        "order",
+        "plant"
+      ],
+      "action_count": 29
+    },
+    {
+      "day": 71,
+      "advice": [
+        "补种oilseed_flower；按地块空间和现有种子安排。",
+        "检查成熟作物并收获，核对入库后再决定是否补种。",
+        "查看作物水肥状态，只在确有需要时维护。"
+      ],
+      "evidence_codes": [
+        "collect",
+        "field_care",
+        "harvest",
+        "market",
+        "order",
+        "plant"
+      ],
+      "action_count": 19
+    },
+    {
+      "day": 72,
+      "advice": [
+        "补种oilseed_flower；按地块空间和现有种子安排。",
+        "检查成熟作物并收获，核对入库后再决定是否补种。",
+        "查看研究前置与样本；条件满足时启动研究并投入有效工时。"
+      ],
+      "evidence_codes": [
+        "collect",
+        "harvest",
+        "market",
+        "order",
+        "plant",
+        "research_start"
+      ],
+      "action_count": 21
+    },
+    {
+      "day": 73,
+      "advice": [
+        "补种oilseed_flower、pasture_grass、wood_decay_mushroom；按地块空间和现有种子安排。",
+        "检查成熟作物并收获，核对入库后再决定是否补种。",
+        "查看订单；留足经营库存后再交付余量。"
+      ],
+      "evidence_codes": [
+        "collect",
+        "harvest",
+        "order",
+        "plant"
+      ],
+      "action_count": 20
+    },
+    {
+      "day": 74,
+      "advice": [
+        "补种golden_wheat、pasture_grass；按地块空间和现有种子安排。",
+        "检查成熟作物并收获，核对入库后再决定是否补种。",
+        "查看订单；留足经营库存后再交付余量。"
+      ],
+      "evidence_codes": [
+        "harvest",
+        "market",
+        "order",
+        "plant"
+      ],
+      "action_count": 21
+    },
+    {
+      "day": 75,
+      "advice": [
+        "补种golden_wheat、wood_decay_mushroom；按地块空间和现有种子安排。",
+        "检查成熟作物并收获，核对入库后再决定是否补种。",
+        "查看作物水肥状态，只在确有需要时维护。"
+      ],
+      "evidence_codes": [
+        "field_care",
+        "harvest",
+        "market",
+        "order",
+        "plant"
+      ],
+      "action_count": 22
+    },
+    {
+      "day": 76,
+      "advice": [
+        "补种oilseed_flower；按地块空间和现有种子安排。",
+        "检查成熟作物并收获，核对入库后再决定是否补种。",
+        "按当前阶段条件扩建所需设施，建造前核对材料。"
+      ],
+      "evidence_codes": [
+        "build",
+        "field_care",
+        "harvest",
+        "market",
+        "order",
+        "plant"
+      ],
+      "action_count": 22
+    },
+    {
+      "day": 77,
+      "advice": [
+        "补种golden_wheat、oilseed_flower、wood_decay_mushroom；按地块空间和现有种子安排。",
+        "检查成熟作物并收获，核对入库后再决定是否补种。",
+        "查看作物水肥状态，只在确有需要时维护。"
+      ],
+      "evidence_codes": [
+        "collect",
+        "field_care",
+        "harvest",
+        "market",
+        "order",
+        "plant"
+      ],
+      "action_count": 25
+    },
+    {
+      "day": 78,
+      "advice": [
+        "补种oilseed_flower；按地块空间和现有种子安排。",
+        "检查成熟作物并收获，核对入库后再决定是否补种。",
+        "查看作物水肥状态，只在确有需要时维护。"
+      ],
+      "evidence_codes": [
+        "field_care",
+        "harvest",
+        "market",
+        "order",
+        "plant"
+      ],
+      "action_count": 17
+    },
+    {
+      "day": 79,
+      "advice": [
+        "补种golden_wheat、wood_decay_mushroom；按地块空间和现有种子安排。",
+        "检查成熟作物并收获，核对入库后再决定是否补种。",
+        "查看作物水肥状态，只在确有需要时维护。"
+      ],
+      "evidence_codes": [
+        "field_care",
+        "harvest",
+        "market",
+        "order",
+        "plant"
+      ],
+      "action_count": 22
+    },
+    {
+      "day": 80,
+      "advice": [
+        "补种golden_wheat；按地块空间和现有种子安排。",
+        "检查成熟作物并收获，核对入库后再决定是否补种。",
+        "查看作物水肥状态，只在确有需要时维护。"
+      ],
+      "evidence_codes": [
+        "field_care",
+        "harvest",
+        "market",
+        "order",
+        "plant"
+      ],
+      "action_count": 22
+    },
+    {
+      "day": 81,
+      "advice": [
+        "补种oilseed_flower；按地块空间和现有种子安排。",
+        "检查成熟作物并收获，核对入库后再决定是否补种。",
+        "查看订单；留足经营库存后再交付余量。"
+      ],
+      "evidence_codes": [
+        "harvest",
+        "market",
+        "order",
+        "plant"
+      ],
+      "action_count": 16
+    },
+    {
+      "day": 82,
+      "advice": [
+        "补种oilseed_flower、wood_decay_mushroom；按地块空间和现有种子安排。",
+        "检查成熟作物并收获，核对入库后再决定是否补种。",
+        "查看作物水肥状态，只在确有需要时维护。"
+      ],
+      "evidence_codes": [
+        "field_care",
+        "harvest",
+        "market",
+        "order",
+        "plant"
+      ],
+      "action_count": 16
+    },
+    {
+      "day": 83,
+      "advice": [
+        "补种golden_wheat、oilseed_flower；按地块空间和现有种子安排。",
+        "检查成熟作物并收获，核对入库后再决定是否补种。",
+        "查看作物水肥状态，只在确有需要时维护。"
+      ],
+      "evidence_codes": [
+        "field_care",
+        "harvest",
+        "market",
+        "order",
+        "plant"
+      ],
+      "action_count": 28
+    },
+    {
+      "day": 84,
+      "advice": [
+        "补种wood_decay_mushroom；按地块空间和现有种子安排。",
+        "查看作物水肥状态，只在确有需要时维护。",
+        "查看订单；留足经营库存后再交付余量。"
+      ],
+      "evidence_codes": [
+        "field_care",
+        "market",
+        "order",
+        "plant"
+      ],
+      "action_count": 13
+    },
+    {
+      "day": 85,
+      "advice": [
+        "查看作物水肥状态，只在确有需要时维护。",
+        "查看订单；留足经营库存后再交付余量。",
+        "检查买卖价格与经营所需库存，再决定是否交易。"
+      ],
+      "evidence_codes": [
+        "field_care",
+        "market",
+        "order"
+      ],
+      "action_count": 11
+    },
+    {
+      "day": 86,
+      "advice": [
+        "补种golden_wheat、oilseed_flower、wood_decay_mushroom；按地块空间和现有种子安排。",
+        "检查成熟作物并收获，核对入库后再决定是否补种。",
+        "查看订单；留足经营库存后再交付余量。"
+      ],
+      "evidence_codes": [
+        "harvest",
+        "market",
+        "order",
+        "plant"
+      ],
+      "action_count": 21
+    },
+    {
+      "day": 87,
+      "advice": [
+        "补种golden_wheat、oilseed_flower；按地块空间和现有种子安排。",
+        "检查成熟作物并收获，核对入库后再决定是否补种。",
+        "查看作物水肥状态，只在确有需要时维护。"
+      ],
+      "evidence_codes": [
+        "field_care",
+        "harvest",
+        "market",
+        "order",
+        "plant"
+      ],
+      "action_count": 22
+    },
+    {
+      "day": 88,
+      "advice": [
+        "补种oilseed_flower；按地块空间和现有种子安排。",
+        "检查成熟作物并收获，核对入库后再决定是否补种。",
+        "查看作物水肥状态，只在确有需要时维护。"
+      ],
+      "evidence_codes": [
+        "field_care",
+        "harvest",
+        "market",
+        "order",
+        "plant"
+      ],
+      "action_count": 17
+    },
+    {
+      "day": 89,
+      "advice": [
+        "补种golden_wheat、wood_decay_mushroom；按地块空间和现有种子安排。",
+        "检查成熟作物并收获，核对入库后再决定是否补种。",
+        "查看作物水肥状态，只在确有需要时维护。"
+      ],
+      "evidence_codes": [
+        "field_care",
+        "harvest",
+        "market",
+        "order",
+        "plant"
+      ],
+      "action_count": 21
+    },
+    {
+      "day": 90,
+      "advice": [
+        "检查成熟作物并收获，核对入库后再决定是否补种。",
+        "查看作物水肥状态，只在确有需要时维护。",
+        "查看订单；留足经营库存后再交付余量。"
+      ],
+      "evidence_codes": [
+        "field_care",
+        "harvest",
+        "market",
+        "order"
+      ],
+      "action_count": 19
+    }
+  ],
+  "note": "来自真实公开动作回放；这是可顺延的参考节奏。长线回放尚有未通过的目标，不作为新手目标或验收结论。"
+}

@@ -1,0 +1,1655 @@
+{
+  "schema_version": 1,
+  "profile": "p109",
+  "logical_cell_size": 64,
+  "texture_filter": "linear_with_mipmaps",
+  "pixels_per_view_unit": 4,
+  "camera_calibrated": false,
+  "visual_acceptance": "in_game_preview_pending",
+  "plants": {
+    "golden_wheat": {
+      "footprint": [
+        1,
+        1
+      ],
+      "canvas_px": [
+        352,
+        352
+      ],
+      "anchor_uv": [
+        0.5,
+        0.9090909090909091
+      ],
+      "draw_size": [
+        88,
+        88
+      ],
+      "scale_multiplier": 1.0,
+      "stages": {
+        "stage_0": "res://assets/farming/p109/runtime/plants/golden_wheat/stage_0.png",
+        "stage_1": "res://assets/farming/p109/runtime/plants/golden_wheat/stage_1.png",
+        "stage_2": "res://assets/farming/p109/runtime/plants/golden_wheat/stage_2.png",
+        "stage_3": "res://assets/farming/p109/runtime/plants/golden_wheat/stage_3.png"
+      },
+      "sha256": {
+        "stage_0": "087211d81978129b93046f205c612a60bc647956eddcd8ac49e0beab62d25a6a",
+        "stage_1": "89307766352688efeada7186ecd0f394b251763b40e247f7fa0dc6118efde8f7",
+        "stage_2": "790982ad0c44f9a3a708175ee83fbc0c20914d6c036673eb0be1063f696e27bb",
+        "stage_3": "5d00118491beb413a1d74a364bba67c99c5afc28a1c679e4e6ec329785785265"
+      },
+      "exports": {
+        "stage_0": {
+          "source_file": "assets/farming/p109/source/plants/golden_wheat/golden_wheat_stage_0_view35_v001.png",
+          "source_sha256": "4de426d9a961847468fb8b50dd93b196a3806adbe6edba1fbcd88db4c00dd7c2",
+          "source_root_uv": [
+            0.51,
+            0.82
+          ],
+          "root_annotation": "root_crown",
+          "source_crop_px": [
+            107,
+            167,
+            1068,
+            1265
+          ],
+          "resized_px": [
+            40,
+            46
+          ],
+          "paste_px": [
+            156,
+            280,
+            196,
+            326
+          ],
+          "root_error_px": [
+            -0.14776274713838689,
+            0.2051730418943407
+          ],
+          "size_axis": "height_above_root",
+          "target_view_units": 10,
+          "source_acceptance": "growth_state_review_pending"
+        },
+        "stage_1": {
+          "source_file": "assets/farming/p109/source/plants/golden_wheat/golden_wheat_stage_1_view35_v001.png",
+          "source_sha256": "3df037c400c1dde339394e6b299c321a0922d55e410bb01578665fe524aedc06",
+          "source_root_uv": [
+            0.52,
+            0.86
+          ],
+          "root_annotation": "root_crown",
+          "source_crop_px": [
+            64,
+            169,
+            976,
+            1338
+          ],
+          "resized_px": [
+            76,
+            98
+          ],
+          "paste_px": [
+            137,
+            223,
+            213,
+            321
+          ],
+          "root_error_px": [
+            0.03999999999999204,
+            -0.42850299401197844
+          ],
+          "size_axis": "height_above_root",
+          "target_view_units": 24,
+          "source_acceptance": "growth_state_review_pending"
+        },
+        "stage_2": {
+          "source_file": "assets/farming/p109/source/plants/golden_wheat/golden_wheat_stage_2_view35_v001.png",
+          "source_sha256": "05db7ed9a0f66e3ca198129c1dd753e644c673ea61376a887b4b46f8f2eebcf9",
+          "source_root_uv": [
+            0.52,
+            0.925
+          ],
+          "root_annotation": "root_crown",
+          "source_crop_px": [
+            50,
+            78,
+            991,
+            1438
+          ],
+          "resized_px": [
+            118,
+            171
+          ],
+          "paste_px": [
+            115,
+            151,
+            233,
+            322
+          ],
+          "root_error_px": [
+            -0.49772582359190665,
+            -0.16264705882349517
+          ],
+          "size_axis": "height_above_root",
+          "target_view_units": 42,
+          "source_acceptance": "growth_state_review_pending"
+        },
+        "stage_3": {
+          "source_file": "assets/farming/p109/source/plants/golden_wheat/golden_wheat_mature_view35_v001.png",
+          "source_sha256": "8bcaa6704c6b67765fbcc1b2caa1a7ea43fe27387fbcaf7e61aa14494b31ceda",
+          "source_root_uv": [
+            0.5,
+            0.94
+          ],
+          "root_annotation": "root_crown",
+          "source_crop_px": [
+            31,
+            62,
+            1008,
+            1470
+          ],
+          "resized_px": [
+            170,
+            245
+          ],
+          "paste_px": [
+            92,
+            80,
+            262,
+            325
+          ],
+          "root_error_px": [
+            -0.30501535312180295,
+            0.4480113636363967
+          ],
+          "size_axis": "height_above_root",
+          "target_view_units": 60,
+          "source_acceptance": "mature_user_accepted"
+        }
+      }
+    },
+    "fast_fir": {
+      "footprint": [
+        2,
+        2
+      ],
+      "canvas_px": [
+        704,
+        768
+      ],
+      "anchor_uv": [
+        0.5,
+        0.9166666666666666
+      ],
+      "draw_size": [
+        176,
+        192
+      ],
+      "scale_multiplier": 1.0,
+      "stages": {
+        "stage_0": "res://assets/farming/p109/runtime/plants/fast_fir/stage_0.png",
+        "stage_1": "res://assets/farming/p109/runtime/plants/fast_fir/stage_1.png",
+        "stage_2": "res://assets/farming/p109/runtime/plants/fast_fir/stage_2.png",
+        "stage_3": "res://assets/farming/p109/runtime/plants/fast_fir/stage_3.png"
+      },
+      "sha256": {
+        "stage_0": "691d624a7ef1add7cbff379121f8524a8c4274ce7e7678f1b56acee87ad34b03",
+        "stage_1": "661f397b9199e657a8d35de9ce08e59fb6f267120e8f11ec4e0c9ae98732f388",
+        "stage_2": "138f87e01e286d59a6ee9a5ed60f95352bf48c98ef8163b4113b64e13a340821",
+        "stage_3": "a9019b5712075e942efeacde1abb1312b63eaded5b3ee7063fc234e6a067c4fd"
+      },
+      "exports": {
+        "stage_0": {
+          "source_file": "assets/farming/p109/source/plants/fast_fir/fast_fir_stage_0_view35_v001.png",
+          "source_sha256": "22f73b0493cff997addd57addd64de5afd28e111d208086caf3fb5ea00e81e4d",
+          "source_root_uv": [
+            0.52,
+            0.8
+          ],
+          "root_annotation": "root_crown",
+          "source_crop_px": [
+            236,
+            335,
+            850,
+            1277
+          ],
+          "resized_px": [
+            39,
+            59
+          ],
+          "paste_px": [
+            333,
+            648,
+            372,
+            707
+          ],
+          "root_error_px": [
+            -0.1682084690553438,
+            -0.018895966029731426
+          ],
+          "size_axis": "height_above_root",
+          "target_view_units": 14,
+          "source_acceptance": "growth_state_review_pending"
+        },
+        "stage_1": {
+          "source_file": "assets/farming/p109/source/plants/fast_fir/fast_fir_stage_1_view35_v001.png",
+          "source_sha256": "ca4ad9ea365b09ff78b300effba4645189a096fe2e79b37dc6acbf04df7d6653",
+          "source_root_uv": [
+            0.5,
+            0.88
+          ],
+          "root_annotation": "root_crown",
+          "source_crop_px": [
+            164,
+            187,
+            939,
+            1385
+          ],
+          "resized_px": [
+            123,
+            190
+          ],
+          "paste_px": [
+            297,
+            519,
+            420,
+            709
+          ],
+          "root_error_px": [
+            0.23096774193550118,
+            -0.2844741235392121
+          ],
+          "size_axis": "height_above_root",
+          "target_view_units": 46,
+          "source_acceptance": "growth_state_review_pending"
+        },
+        "stage_2": {
+          "source_file": "assets/farming/p109/source/plants/fast_fir/fast_fir_stage_2_view35_v001.png",
+          "source_sha256": "51d2f6801fcbc8ee1877a83037bcd3ef4598265169d77f7451c5481219b011af",
+          "source_root_uv": [
+            0.51,
+            0.95
+          ],
+          "root_annotation": "root_crown",
+          "source_crop_px": [
+            115,
+            76,
+            962,
+            1494
+          ],
+          "resized_px": [
+            228,
+            382
+          ],
+          "paste_px": [
+            242,
+            331,
+            470,
+            713
+          ],
+          "root_error_px": [
+            -0.37695395513577523,
+            -0.3748942172073839
+          ],
+          "size_axis": "height_above_root",
+          "target_view_units": 93,
+          "source_acceptance": "growth_state_review_pending"
+        },
+        "stage_3": {
+          "source_file": "assets/farming/p109/source/plants/fast_fir/fast_fir_mature_view35_v001.png",
+          "source_sha256": "ae7e8a6afcb171b8bcc1a8d0c331599330ebb3833bd3e8a14a421752f4b89bb7",
+          "source_root_uv": [
+            0.52,
+            0.95
+          ],
+          "root_annotation": "root_crown",
+          "source_crop_px": [
+            38,
+            8,
+            1014,
+            1511
+          ],
+          "resized_px": [
+            377,
+            581
+          ],
+          "paste_px": [
+            161,
+            143,
+            538,
+            724
+          ],
+          "root_error_px": [
+            0.0030327868852282336,
+            -0.02381902860952323
+          ],
+          "size_axis": "height_above_root",
+          "target_view_units": 140,
+          "source_acceptance": "mature_user_accepted"
+        }
+      }
+    },
+    "resin_tree": {
+      "footprint": [
+        2,
+        2
+      ],
+      "canvas_px": [
+        704,
+        768
+      ],
+      "anchor_uv": [
+        0.5,
+        0.9166666666666666
+      ],
+      "draw_size": [
+        176,
+        192
+      ],
+      "scale_multiplier": 1.0,
+      "stages": {
+        "stage_0": "res://assets/farming/p109/runtime/plants/resin_tree/stage_0.png",
+        "stage_1": "res://assets/farming/p109/runtime/plants/resin_tree/stage_1.png",
+        "stage_2": "res://assets/farming/p109/runtime/plants/resin_tree/stage_2.png",
+        "stage_3": "res://assets/farming/p109/runtime/plants/resin_tree/stage_3.png"
+      },
+      "sha256": {
+        "stage_0": "3ad7b8438d70b286a7eb4faaa1e7f21e19a376103d2c656f022d9a83cf219527",
+        "stage_1": "76b4f8935c2239b7d7da659b868db4a0852f6d8f9b525973a0fd041070fdc6e1",
+        "stage_2": "1a6ee59b48daec39c2a0f8d6a6b2199244e7dd4ac7aee396f9f65a8d3d9b3bfe",
+        "stage_3": "46703fdc7b18b8e7bd24f677b883375d7add3a07478edc044811ccf45b33f0b4"
+      },
+      "exports": {
+        "stage_0": {
+          "source_file": "assets/farming/p109/source/plants/resin_tree/resin_tree_stage_0_view35_v001.png",
+          "source_sha256": "4852d341c48bbae80465b4e986d390076059189c0ddcbd70402a956dbe75fad1",
+          "source_root_uv": [
+            0.54,
+            0.86
+          ],
+          "root_annotation": "root_crown",
+          "source_crop_px": [
+            355,
+            112,
+            999,
+            1211
+          ],
+          "resized_px": [
+            36,
+            61
+          ],
+          "paste_px": [
+            335,
+            648,
+            371,
+            709
+          ],
+          "root_error_px": [
+            -0.34944099378878946,
+            -0.16196542311195117
+          ],
+          "size_axis": "height_above_root",
+          "target_view_units": 14,
+          "source_acceptance": "growth_state_review_pending"
+        },
+        "stage_1": {
+          "source_file": "assets/farming/p109/source/plants/resin_tree/resin_tree_stage_1_view35_v001.png",
+          "source_sha256": "c7cf772eb5ee9474192e6e3f58cedd9a23ec9a79430f120ef9cb8cc9c635bf78",
+          "source_root_uv": [
+            0.54,
+            0.855
+          ],
+          "root_annotation": "root_crown",
+          "source_crop_px": [
+            237,
+            251,
+            1068,
+            1167
+          ],
+          "resized_px": [
+            163,
+            179
+          ],
+          "paste_px": [
+            270,
+            536,
+            433,
+            715
+          ],
+          "root_error_px": [
+            -0.4293862815884495,
+            0.15447598253274464
+          ],
+          "size_axis": "height_above_root",
+          "target_view_units": 42,
+          "source_acceptance": "growth_state_review_pending"
+        },
+        "stage_2": {
+          "source_file": "assets/farming/p109/source/plants/resin_tree/resin_tree_stage_2_view35_v001.png",
+          "source_sha256": "131a99b7f0e1688fe8dc2253dcda74e338df353dfa41281274180f088ea8c94e",
+          "source_root_uv": [
+            0.52,
+            0.925
+          ],
+          "root_annotation": "root_crown",
+          "source_crop_px": [
+            71,
+            40,
+            1165,
+            1272
+          ],
+          "resized_px": [
+            317,
+            357
+          ],
+          "paste_px": [
+            190,
+            367,
+            507,
+            724
+          ],
+          "root_error_px": [
+            -0.4053382084094892,
+            -0.1392045454545041
+          ],
+          "size_axis": "height_above_root",
+          "target_view_units": 84,
+          "source_acceptance": "growth_state_review_pending"
+        },
+        "stage_3": {
+          "source_file": "assets/farming/p109/source/plants/resin_tree/resin_tree_mature_view35_v001.png",
+          "source_sha256": "e8a7a78cd2b2d0d649d4a77db68541a8e2e17fe7857bc2ae452f2f6400b502ea",
+          "source_root_uv": [
+            0.51,
+            0.94
+          ],
+          "root_annotation": "root_crown",
+          "source_crop_px": [
+            15,
+            19,
+            1195,
+            1283
+          ],
+          "resized_px": [
+            531,
+            569
+          ],
+          "paste_px": [
+            81,
+            162,
+            612,
+            731
+          ],
+          "root_error_px": [
+            -0.28449999999998,
+            -0.4596518987341369
+          ],
+          "size_axis": "height_above_root",
+          "target_view_units": 135,
+          "source_acceptance": "mature_user_accepted"
+        }
+      }
+    },
+    "wood_decay_mushroom": {
+      "footprint": [
+        1,
+        1
+      ],
+      "canvas_px": [
+        320,
+        288
+      ],
+      "anchor_uv": [
+        0.5,
+        0.9027777777777778
+      ],
+      "draw_size": [
+        80,
+        72
+      ],
+      "scale_multiplier": 1.0,
+      "stages": {
+        "stage_0": "res://assets/farming/p109/runtime/plants/wood_decay_mushroom/stage_0.png",
+        "stage_1": "res://assets/farming/p109/runtime/plants/wood_decay_mushroom/stage_1.png",
+        "stage_2": "res://assets/farming/p109/runtime/plants/wood_decay_mushroom/stage_2.png",
+        "stage_3": "res://assets/farming/p109/runtime/plants/wood_decay_mushroom/stage_3.png"
+      },
+      "sha256": {
+        "stage_0": "753ee0b9bec2c0692e6d044d214372ec2a897e2dcb0852e5506f4b90da51a9a6",
+        "stage_1": "2dca0782d27e5ea58f1697abe72a74b62abee4b4a7095d33f46d059f374b15d3",
+        "stage_2": "31efcf401fa10e0bc0f9d68be5e037e0790cf39ad9a960c173f90517775c22a0",
+        "stage_3": "3568bd5f6aad2b01b765d2f9915eb368d1ddcbcd4838a0d0e78facd64e51b3dd"
+      },
+      "exports": {
+        "stage_0": {
+          "source_file": "assets/farming/p109/source/plants/wood_decay_mushroom/wood_decay_mushroom_stage_0_view35_v001.png",
+          "source_sha256": "a22e7fc4ce7bc143b409265bab7b2d675d3216943be476d56cbc3f05cc6bc606",
+          "source_root_uv": [
+            0.51,
+            0.8
+          ],
+          "root_annotation": "root_crown",
+          "source_crop_px": [
+            304,
+            313,
+            920,
+            1047
+          ],
+          "resized_px": [
+            31,
+            37
+          ],
+          "paste_px": [
+            144,
+            224,
+            175,
+            261
+          ],
+          "root_error_px": [
+            0.2699675324675468,
+            -0.24005449591277284
+          ],
+          "size_axis": "height_above_root",
+          "target_view_units": 9,
+          "source_acceptance": "growth_state_review_pending"
+        },
+        "stage_1": {
+          "source_file": "assets/farming/p109/source/plants/wood_decay_mushroom/wood_decay_mushroom_stage_1_view35_v001.png",
+          "source_sha256": "b403ce37def3848469d463bde2f45fd1e6006b2a0da95f810e06eb0ee13b70ff",
+          "source_root_uv": [
+            0.51,
+            0.86
+          ],
+          "root_annotation": "root_crown",
+          "source_crop_px": [
+            219,
+            300,
+            1049,
+            1122
+          ],
+          "resized_px": [
+            75,
+            74
+          ],
+          "paste_px": [
+            123,
+            188,
+            198,
+            262
+          ],
+          "root_error_px": [
+            -0.10542168674697905,
+            -0.06335766423359246
+          ],
+          "size_axis": "height_above_root",
+          "target_view_units": 18,
+          "source_acceptance": "growth_state_review_pending"
+        },
+        "stage_2": {
+          "source_file": "assets/farming/p109/source/plants/wood_decay_mushroom/wood_decay_mushroom_stage_2_view35_v001.png",
+          "source_sha256": "390ff2964da8e86763a9b46bd31e4ac6f0a3beae4bf26c9885fcdf14bd3dbecb",
+          "source_root_uv": [
+            0.51,
+            0.92
+          ],
+          "root_annotation": "root_crown",
+          "source_crop_px": [
+            98,
+            161,
+            1162,
+            1197
+          ],
+          "resized_px": [
+            122,
+            119
+          ],
+          "paste_px": [
+            99,
+            143,
+            221,
+            262
+          ],
+          "root_error_px": [
+            -0.3095864661654275,
+            -0.43972972972972
+          ],
+          "size_axis": "height_above_root",
+          "target_view_units": 29,
+          "source_acceptance": "growth_state_review_pending"
+        },
+        "stage_3": {
+          "source_file": "assets/farming/p109/source/plants/wood_decay_mushroom/wood_decay_mushroom_mature_view35_v001.png",
+          "source_sha256": "e058d9c3ee1224dad71f85ff9e63039e34ea3bd06502e761707a26982ea7a530",
+          "source_root_uv": [
+            0.51,
+            0.93
+          ],
+          "root_annotation": "root_crown",
+          "source_crop_px": [
+            42,
+            63,
+            1191,
+            1211
+          ],
+          "resized_px": [
+            172,
+            172
+          ],
+          "paste_px": [
+            72,
+            91,
+            244,
+            263
+          ],
+          "root_error_px": [
+            -0.3832898172323951,
+            -0.365087108013995
+          ],
+          "size_axis": "height_above_root",
+          "target_view_units": 42,
+          "source_acceptance": "mature_user_accepted"
+        }
+      }
+    },
+    "pasture_grass": {
+      "footprint": [
+        1,
+        1
+      ],
+      "canvas_px": [
+        352,
+        288
+      ],
+      "anchor_uv": [
+        0.5,
+        0.9027777777777778
+      ],
+      "draw_size": [
+        88,
+        72
+      ],
+      "scale_multiplier": 1.0,
+      "stages": {
+        "stage_0": "res://assets/farming/p109/runtime/plants/pasture_grass/stage_0.png",
+        "stage_1": "res://assets/farming/p109/runtime/plants/pasture_grass/stage_1.png",
+        "stage_2": "res://assets/farming/p109/runtime/plants/pasture_grass/stage_2.png",
+        "stage_3": "res://assets/farming/p109/runtime/plants/pasture_grass/stage_3.png"
+      },
+      "sha256": {
+        "stage_0": "3317ca127a0909b87f62e4180ff38dd5fdd11ef1913f098423b5b8012823d8c4",
+        "stage_1": "2e617d15353862582a5c5e86521f90b8b1807c9b3062c888970c2e911b0b465e",
+        "stage_2": "039f1637803b584d25977b9ccd3dec3183e7eff5049c6719f21ce08a65ef26ab",
+        "stage_3": "57d0dab28fcfe4a1498a7f72dd6f832605900228c217574e3f7f2cd44b229778"
+      },
+      "exports": {
+        "stage_0": {
+          "source_file": "assets/farming/p109/source/plants/pasture_grass/pasture_grass_stage_0_view35_v001.png",
+          "source_sha256": "1dfb976e8feff9d4fb7a23d25884a36fa4e94e8dc339d7f4e5be77274143a19a",
+          "source_root_uv": [
+            0.5,
+            0.735
+          ],
+          "root_annotation": "root_crown",
+          "source_crop_px": [
+            248,
+            392,
+            972,
+            978
+          ],
+          "resized_px": [
+            41,
+            33
+          ],
+          "paste_px": [
+            156,
+            228,
+            197,
+            261
+          ],
+          "root_error_px": [
+            -0.09461325966850609,
+            0.22962457337882825
+          ],
+          "size_axis": "height_above_root",
+          "target_view_units": 8,
+          "source_acceptance": "growth_state_review_pending"
+        },
+        "stage_1": {
+          "source_file": "assets/farming/p109/source/plants/pasture_grass/pasture_grass_stage_1_view35_v001.png",
+          "source_sha256": "dc88c7562707ff8157a6a156fa8054206b5f5096b6c8b1c93f6847eb5bfc57d3",
+          "source_root_uv": [
+            0.5,
+            0.865
+          ],
+          "root_annotation": "root_crown",
+          "source_crop_px": [
+            171,
+            382,
+            1069,
+            1163
+          ],
+          "resized_px": [
+            81,
+            71
+          ],
+          "paste_px": [
+            137,
+            192,
+            218,
+            263
+          ],
+          "root_error_px": [
+            -0.34910913140311095,
+            0.44363636363635806
+          ],
+          "size_axis": "height_above_root",
+          "target_view_units": 17,
+          "source_acceptance": "growth_state_review_pending"
+        },
+        "stage_2": {
+          "source_file": "assets/farming/p109/source/plants/pasture_grass/pasture_grass_stage_2_view35_v001.png",
+          "source_sha256": "4e00e5da2f2b13bba5127ddb9bd54e387c984a3130c0d0bfd1d73eb2f6d95305",
+          "source_root_uv": [
+            0.5,
+            0.88
+          ],
+          "root_annotation": "root_crown",
+          "source_crop_px": [
+            130,
+            221,
+            1119,
+            1179
+          ],
+          "resized_px": [
+            128,
+            124
+          ],
+          "paste_px": [
+            115,
+            139,
+            243,
+            263
+          ],
+          "root_error_px": [
+            -0.2355915065722911,
+            -0.16342379958246056
+          ],
+          "size_axis": "height_above_root",
+          "target_view_units": 30,
+          "source_acceptance": "growth_state_review_pending"
+        },
+        "stage_3": {
+          "source_file": "assets/farming/p109/source/plants/pasture_grass/pasture_grass_mature_view35_v001.png",
+          "source_sha256": "24ec03828142808eb160604518c1f4c673b5fa95a6cd43ed9dfb5503d3ca242d",
+          "source_root_uv": [
+            0.5,
+            0.9
+          ],
+          "root_annotation": "root_crown",
+          "source_crop_px": [
+            34,
+            151,
+            1177,
+            1209
+          ],
+          "resized_px": [
+            187,
+            173
+          ],
+          "paste_px": [
+            83,
+            92,
+            270,
+            265
+          ],
+          "root_error_px": [
+            -0.4816272965879307,
+            0.3888468809074084
+          ],
+          "size_axis": "height_above_root",
+          "target_view_units": 42,
+          "source_acceptance": "mature_user_accepted"
+        }
+      }
+    },
+    "honeybell_bush": {
+      "footprint": [
+        1,
+        1
+      ],
+      "canvas_px": [
+        352,
+        352
+      ],
+      "anchor_uv": [
+        0.5,
+        0.9090909090909091
+      ],
+      "draw_size": [
+        88,
+        88
+      ],
+      "scale_multiplier": 1.0,
+      "stages": {
+        "stage_0": "res://assets/farming/p109/runtime/plants/honeybell_bush/stage_0.png",
+        "stage_1": "res://assets/farming/p109/runtime/plants/honeybell_bush/stage_1.png",
+        "stage_2": "res://assets/farming/p109/runtime/plants/honeybell_bush/stage_2.png",
+        "stage_3": "res://assets/farming/p109/runtime/plants/honeybell_bush/stage_3.png"
+      },
+      "sha256": {
+        "stage_0": "ffdcec0afd276385ff87b31ecfe5cf488d6b3e05156514f1f4c0dcfca4c767eb",
+        "stage_1": "5ea70627dac2c67ecf3632df7802f18731e190b584016e39cecf1dd5e42bc649",
+        "stage_2": "3d5f2d8458445d350873cd050a640f8aa7c25bdfd972416b9ea054aec6241c68",
+        "stage_3": "69b7b495150d0687fc4176e04a53028c7c921c07f6e274d57aa23a8899e6208b"
+      },
+      "exports": {
+        "stage_0": {
+          "source_file": "assets/farming/p109/source/plants/honeybell_bush/honeybell_bush_stage_0_view35_v001.png",
+          "source_sha256": "25f13b4f74c1b97423b1809b1f848f068b2873ea7c9120f2da017b37ce5d5076",
+          "source_root_uv": [
+            0.51,
+            0.79
+          ],
+          "root_annotation": "root_crown",
+          "source_crop_px": [
+            218,
+            328,
+            1071,
+            1190
+          ],
+          "resized_px": [
+            48,
+            49
+          ],
+          "paste_px": [
+            154,
+            280,
+            202,
+            329
+          ],
+          "root_error_px": [
+            0.14246189917938068,
+            0.27322505800464114
+          ],
+          "size_axis": "height_above_root",
+          "target_view_units": 10,
+          "source_acceptance": "growth_state_review_pending"
+        },
+        "stage_1": {
+          "source_file": "assets/farming/p109/source/plants/honeybell_bush/honeybell_bush_stage_1_view35_v001.png",
+          "source_sha256": "3f206775729f9c13c49f7c9c8a90f6e3d3e252d1c18d763346658413b1206473",
+          "source_root_uv": [
+            0.51,
+            0.85
+          ],
+          "root_annotation": "root_crown",
+          "source_crop_px": [
+            162,
+            125,
+            1088,
+            1133
+          ],
+          "resized_px": [
+            83,
+            90
+          ],
+          "paste_px": [
+            136,
+            232,
+            219,
+            322
+          ],
+          "root_error_px": [
+            0.28906047516198896,
+            0.4107142857142776
+          ],
+          "size_axis": "height_above_root",
+          "target_view_units": 22,
+          "source_acceptance": "growth_state_review_pending"
+        },
+        "stage_2": {
+          "source_file": "assets/farming/p109/source/plants/honeybell_bush/honeybell_bush_stage_2_view35_v001.png",
+          "source_sha256": "36f51e73c45f1579b98687e0bd9d7c80a53fc4edf675924d203d0e9ab77c4a6f",
+          "source_root_uv": [
+            0.5,
+            0.935
+          ],
+          "root_annotation": "root_crown",
+          "source_crop_px": [
+            105,
+            62,
+            1154,
+            1249
+          ],
+          "resized_px": [
+            137,
+            155
+          ],
+          "paste_px": [
+            111,
+            168,
+            248,
+            323
+          ],
+          "root_error_px": [
+            -0.41801715919922344,
+            0.09064869418705257
+          ],
+          "size_axis": "height_above_root",
+          "target_view_units": 38,
+          "source_acceptance": "growth_state_review_pending"
+        },
+        "stage_3": {
+          "source_file": "assets/farming/p109/source/plants/honeybell_bush/honeybell_bush_mature_view35_v001.png",
+          "source_sha256": "a520d1c00acc24509da369b9122e5c000d063e1caa1fae6202463d9f7f4bf62b",
+          "source_root_uv": [
+            0.5,
+            0.95
+          ],
+          "root_annotation": "root_crown",
+          "source_crop_px": [
+            53,
+            33,
+            1180,
+            1273
+          ],
+          "resized_px": [
+            209,
+            229
+          ],
+          "paste_px": [
+            75,
+            96,
+            284,
+            325
+          ],
+          "root_error_px": [
+            0.3473824312333704,
+            0.08758064516126751
+          ],
+          "size_axis": "height_above_root",
+          "target_view_units": 56,
+          "source_acceptance": "mature_user_accepted"
+        }
+      }
+    },
+    "oilseed_flower": {
+      "footprint": [
+        1,
+        1
+      ],
+      "canvas_px": [
+        352,
+        384
+      ],
+      "anchor_uv": [
+        0.5,
+        0.9166666666666666
+      ],
+      "draw_size": [
+        88,
+        96
+      ],
+      "scale_multiplier": 1.0,
+      "stages": {
+        "stage_0": "res://assets/farming/p109/runtime/plants/oilseed_flower/stage_0.png",
+        "stage_1": "res://assets/farming/p109/runtime/plants/oilseed_flower/stage_1.png",
+        "stage_2": "res://assets/farming/p109/runtime/plants/oilseed_flower/stage_2.png",
+        "stage_3": "res://assets/farming/p109/runtime/plants/oilseed_flower/stage_3.png",
+        "flowering": "res://assets/farming/p109/runtime/plants/oilseed_flower/flowering.png"
+      },
+      "sha256": {
+        "stage_0": "d06710efd706bb869d4b78f3e99990ea10263126e9077f9c142c4c43bcfd482a",
+        "stage_1": "63f521f35e070e81ce7a348ebdd8993405c17f150c3e0ff8d49273ccf140291c",
+        "stage_2": "0abec464bd4ad86764cffff9393bbd66dbf0ab600ab07c9b5e1143eb8396771f",
+        "stage_3": "c22938fd82b52e05164137d2fbd8a833b8c91407f24a5a9446e6e978de5bb18e",
+        "flowering": "677cbdab98ac03c6014ece8ca0d469f429236a2f04277241b080c28664bd9669"
+      },
+      "exports": {
+        "stage_0": {
+          "source_file": "assets/farming/p109/source/plants/oilseed_flower/oilseed_flower_stage_0_view35_v001.png",
+          "source_sha256": "9489e32cf478cb6f0888e5234fbc9329af0f4ca2e35edd012eaba18cf73d263f",
+          "source_root_uv": [
+            0.5,
+            0.68
+          ],
+          "root_annotation": "root_crown",
+          "source_crop_px": [
+            51,
+            376,
+            976,
+            1062
+          ],
+          "resized_px": [
+            56,
+            41
+          ],
+          "paste_px": [
+            148,
+            312,
+            204,
+            353
+          ],
+          "root_error_px": [
+            -0.0908108108108081,
+            -0.047113702623903464
+          ],
+          "size_axis": "height_above_root",
+          "target_view_units": 10,
+          "source_acceptance": "growth_state_review_pending"
+        },
+        "stage_1": {
+          "source_file": "assets/farming/p109/source/plants/oilseed_flower/oilseed_flower_stage_1_view35_v001.png",
+          "source_sha256": "437a5d7d7bf2135c928e2abda594e90c5d2a856e80f308ba65c1f2b449e59c87",
+          "source_root_uv": [
+            0.52,
+            0.79
+          ],
+          "root_annotation": "root_crown",
+          "source_crop_px": [
+            75,
+            239,
+            964,
+            1228
+          ],
+          "resized_px": [
+            81,
+            90
+          ],
+          "paste_px": [
+            134,
+            263,
+            215,
+            353
+          ],
+          "root_error_px": [
+            -0.31734533183350777,
+            -0.3249747219413166
+          ],
+          "size_axis": "height_above_root",
+          "target_view_units": 22,
+          "source_acceptance": "growth_state_review_pending"
+        },
+        "stage_2": {
+          "source_file": "assets/farming/p109/source/plants/oilseed_flower/oilseed_flower_stage_2_view35_v001.png",
+          "source_sha256": "01ea31b70a2bae185b74d4e130c67f31d3dfa2a0ad463ef828fafa13dd5ea22c",
+          "source_root_uv": [
+            0.5,
+            0.915
+          ],
+          "root_annotation": "root_crown",
+          "source_crop_px": [
+            36,
+            73,
+            992,
+            1425
+          ],
+          "resized_px": [
+            121,
+            171
+          ],
+          "paste_px": [
+            116,
+            183,
+            237,
+            354
+          ],
+          "root_error_px": [
+            0.24686192468618628,
+            -0.47393491124262255
+          ],
+          "size_axis": "height_above_root",
+          "target_view_units": 42,
+          "source_acceptance": "growth_state_review_pending"
+        },
+        "stage_3": {
+          "source_file": "assets/farming/p109/source/plants/oilseed_flower/oilseed_flower_mature_view35_v001.png",
+          "source_sha256": "7b59d93ba4dae7883b3809c9b49b358b661fc7e0b0bfa8a5728a06e34aec5945",
+          "source_root_uv": [
+            0.5,
+            0.885
+          ],
+          "root_annotation": "root_crown",
+          "source_crop_px": [
+            16,
+            100,
+            1009,
+            1383
+          ],
+          "resized_px": [
+            193,
+            249
+          ],
+          "paste_px": [
+            80,
+            108,
+            273,
+            357
+          ],
+          "root_error_px": [
+            0.40281973816718164,
+            0.41203429462200347
+          ],
+          "size_axis": "height_above_root",
+          "target_view_units": 61,
+          "source_acceptance": "mature_user_accepted"
+        },
+        "flowering": {
+          "source_file": "assets/farming/p109/source/plants/oilseed_flower/oilseed_flower_flowering_view35_v001.png",
+          "source_sha256": "82979b8539d432406c03e631fe3dd21564b447588222b5939a9a25e2251823eb",
+          "source_root_uv": [
+            0.5,
+            0.915
+          ],
+          "root_annotation": "root_crown",
+          "source_crop_px": [
+            17,
+            40,
+            1007,
+            1427
+          ],
+          "resized_px": [
+            177,
+            248
+          ],
+          "paste_px": [
+            88,
+            108,
+            265,
+            356
+          ],
+          "root_error_px": [
+            0.5,
+            0.14500360490262665
+          ],
+          "size_axis": "height_above_root",
+          "target_view_units": 61,
+          "source_acceptance": "growth_state_review_pending"
+        }
+      }
+    },
+    "mulberry_tree": {
+      "footprint": [
+        2,
+        2
+      ],
+      "canvas_px": [
+        704,
+        768
+      ],
+      "anchor_uv": [
+        0.5,
+        0.9166666666666666
+      ],
+      "draw_size": [
+        176,
+        192
+      ],
+      "scale_multiplier": 1.0,
+      "stages": {
+        "stage_0": "res://assets/farming/p109/runtime/plants/mulberry_tree/stage_0.png",
+        "stage_1": "res://assets/farming/p109/runtime/plants/mulberry_tree/stage_1.png",
+        "stage_2": "res://assets/farming/p109/runtime/plants/mulberry_tree/stage_2.png",
+        "stage_3": "res://assets/farming/p109/runtime/plants/mulberry_tree/stage_3.png"
+      },
+      "sha256": {
+        "stage_0": "554a0df524f88e18e71fc52c482f4795ce9cc658c34c47ea6f465a966c87746c",
+        "stage_1": "72cbd0d254deb65bf5865022ebd07a81b66d1d28713592ae58211089c6ce9458",
+        "stage_2": "4703633eb2530292a1a1b9083d5f3b7f9f773dd155e3730c1461a73095f1008f",
+        "stage_3": "3263bcc646c4062c2888c22fe315c12c4e46dc83e495e474bbba6f6a3688e2ee"
+      },
+      "exports": {
+        "stage_0": {
+          "source_file": "assets/farming/p109/source/plants/mulberry_tree/mulberry_tree_stage_0_view35_v001.png",
+          "source_sha256": "915bb34621b0c01ed51cafdf292a386c57bdcd14cd309be385de034560c09435",
+          "source_root_uv": [
+            0.51,
+            0.78
+          ],
+          "root_annotation": "root_crown",
+          "source_crop_px": [
+            95,
+            293,
+            935,
+            1260
+          ],
+          "resized_px": [
+            52,
+            60
+          ],
+          "paste_px": [
+            326,
+            648,
+            378,
+            708
+          ],
+          "root_error_px": [
+            0.4481904761904616,
+            0.15801447776630084
+          ],
+          "size_axis": "height_above_root",
+          "target_view_units": 14,
+          "source_acceptance": "growth_state_review_pending"
+        },
+        "stage_1": {
+          "source_file": "assets/farming/p109/source/plants/mulberry_tree/mulberry_tree_stage_1_view35_v001.png",
+          "source_sha256": "19777dd8ac00fe0ac3aa9caa32371b8f54719014eddff3d9c0c1250f15bc1a1e",
+          "source_root_uv": [
+            0.51,
+            0.84
+          ],
+          "root_annotation": "root_crown",
+          "source_crop_px": [
+            90,
+            257,
+            948,
+            1340
+          ],
+          "resized_px": [
+            147,
+            185
+          ],
+          "paste_px": [
+            278,
+            528,
+            425,
+            713
+          ],
+          "root_error_px": [
+            0.055104895104875595,
+            0.4999076638965789
+          ],
+          "size_axis": "height_above_root",
+          "target_view_units": 44,
+          "source_acceptance": "growth_state_review_pending"
+        },
+        "stage_2": {
+          "source_file": "assets/farming/p109/source/plants/mulberry_tree/mulberry_tree_stage_2_view35_v001.png",
+          "source_sha256": "ec19969486e2c4e9f531c6eb1e130559d689aa2df19bea742981f3ed1cbb80bd",
+          "source_root_uv": [
+            0.5,
+            0.925
+          ],
+          "root_annotation": "root_crown",
+          "source_crop_px": [
+            42,
+            87,
+            1003,
+            1472
+          ],
+          "resized_px": [
+            254,
+            366
+          ],
+          "paste_px": [
+            228,
+            352,
+            482,
+            718
+          ],
+          "root_error_px": [
+            0.22476586888660677,
+            0.46989169675089215
+          ],
+          "size_axis": "height_above_root",
+          "target_view_units": 88,
+          "source_acceptance": "growth_state_review_pending"
+        },
+        "stage_3": {
+          "source_file": "assets/farming/p109/source/plants/mulberry_tree/mulberry_tree_mature_view35_v001.png",
+          "source_sha256": "69c32b77784d51a945a1675e087ccfbcd32bdd50fb94a9256d955c596ca741e3",
+          "source_root_uv": [
+            0.5,
+            0.92
+          ],
+          "root_annotation": "root_crown",
+          "source_crop_px": [
+            21,
+            99,
+            1006,
+            1456
+          ],
+          "resized_px": [
+            406,
+            559
+          ],
+          "paste_px": [
+            150,
+            163,
+            556,
+            722
+          ],
+          "root_error_px": [
+            0.3817258883249224,
+            0.3360943257184772
+          ],
+          "size_axis": "height_above_root",
+          "target_view_units": 135,
+          "source_acceptance": "mature_user_accepted"
+        }
+      }
+    },
+    "duckweed": {
+      "footprint": [
+        1,
+        1
+      ],
+      "canvas_px": [
+        320,
+        256
+      ],
+      "anchor_uv": [
+        0.5,
+        0.40625
+      ],
+      "draw_size": [
+        80,
+        64
+      ],
+      "scale_multiplier": 1.0,
+      "stages": {
+        "stage_0": "res://assets/farming/p109/runtime/plants/duckweed/stage_0.png",
+        "stage_1": "res://assets/farming/p109/runtime/plants/duckweed/stage_1.png",
+        "stage_2": "res://assets/farming/p109/runtime/plants/duckweed/stage_2.png",
+        "stage_3": "res://assets/farming/p109/runtime/plants/duckweed/stage_3.png"
+      },
+      "sha256": {
+        "stage_0": "6778ccaab651647b45cf04bc556a74a65d76c127c0f5006a070fe2505b4e9468",
+        "stage_1": "a25c1d76c179671a762ddc85e2e97f1b1f3b584c98ce4c400ddb4f0ad86309f0",
+        "stage_2": "4b659b047245169cb8dd990e1a1eee6929b0f87171c131dbaade7e6a5b7f5c31",
+        "stage_3": "41fb2e062afdc6d30d625521a6c7cbc2ae1f068c94088c911c72dcf9eef6bc2f"
+      },
+      "exports": {
+        "stage_0": {
+          "source_file": "assets/farming/p109/source/plants/duckweed/duckweed_stage_0_view35_v001.png",
+          "source_sha256": "4db0159d20316fe03b6eae64e5bf2671069073889a7f0ca537892dd868f37de3",
+          "source_root_uv": [
+            0.5,
+            0.47
+          ],
+          "root_annotation": "floating_leaf_plane",
+          "source_crop_px": [
+            337,
+            132,
+            1216,
+            908
+          ],
+          "resized_px": [
+            60,
+            53
+          ],
+          "paste_px": [
+            131,
+            80,
+            191,
+            133
+          ],
+          "root_error_px": [
+            0.4197952218430032,
+            -0.14453608247423233
+          ],
+          "size_axis": "width",
+          "target_view_units": 15,
+          "source_acceptance": "growth_state_review_pending"
+        },
+        "stage_1": {
+          "source_file": "assets/farming/p109/source/plants/duckweed/duckweed_stage_1_view35_v001.png",
+          "source_sha256": "088275b32aa39ae4016683832e81ae1d54d495d28449b7d38547fe8ca76d96d5",
+          "source_root_uv": [
+            0.5,
+            0.46
+          ],
+          "root_annotation": "floating_leaf_plane",
+          "source_crop_px": [
+            190,
+            124,
+            1350,
+            940
+          ],
+          "resized_px": [
+            113,
+            79
+          ],
+          "paste_px": [
+            104,
+            70,
+            217,
+            149
+          ],
+          "root_error_px": [
+            0.305172413793116,
+            -0.401764705882357
+          ],
+          "size_axis": "width",
+          "target_view_units": 28,
+          "source_acceptance": "growth_state_review_pending"
+        },
+        "stage_2": {
+          "source_file": "assets/farming/p109/source/plants/duckweed/duckweed_stage_2_view35_v001.png",
+          "source_sha256": "c2de69828702491227d9e0d48e0531262f86f3f85e4914ee6398414f9a363478",
+          "source_root_uv": [
+            0.5,
+            0.45
+          ],
+          "root_annotation": "floating_leaf_plane",
+          "source_crop_px": [
+            83,
+            48,
+            1483,
+            989
+          ],
+          "resized_px": [
+            177,
+            119
+          ],
+          "paste_px": [
+            73,
+            52,
+            250,
+            171
+          ],
+          "root_error_px": [
+            -0.39642857142857224,
+            0.2031880977683329
+          ],
+          "size_axis": "width",
+          "target_view_units": 44,
+          "source_acceptance": "growth_state_review_pending"
+        },
+        "stage_3": {
+          "source_file": "assets/farming/p109/source/plants/duckweed/duckweed_mature_view35_v001.png",
+          "source_sha256": "c88fbbcc10aee66d297930b8ffbebed71d77614e00350f6ae24faec032a0b52a",
+          "source_root_uv": [
+            0.5,
+            0.43
+          ],
+          "root_annotation": "floating_leaf_plane",
+          "source_crop_px": [
+            90,
+            45,
+            1464,
+            977
+          ],
+          "resized_px": [
+            237,
+            161
+          ],
+          "paste_px": [
+            43,
+            36,
+            280,
+            197
+          ],
+          "root_error_px": [
+            -0.052401746724882514,
+            0.29025751072960304
+          ],
+          "size_axis": "width",
+          "target_view_units": 59,
+          "source_acceptance": "mature_user_accepted"
+        }
+      }
+    },
+    "reed": {
+      "footprint": [
+        1,
+        1
+      ],
+      "canvas_px": [
+        384,
+        448
+      ],
+      "anchor_uv": [
+        0.5,
+        0.9285714285714286
+      ],
+      "draw_size": [
+        96,
+        112
+      ],
+      "scale_multiplier": 1.0,
+      "stages": {
+        "stage_0": "res://assets/farming/p109/runtime/plants/reed/stage_0.png",
+        "stage_1": "res://assets/farming/p109/runtime/plants/reed/stage_1.png",
+        "stage_2": "res://assets/farming/p109/runtime/plants/reed/stage_2.png",
+        "stage_3": "res://assets/farming/p109/runtime/plants/reed/stage_3.png"
+      },
+      "sha256": {
+        "stage_0": "daf8d1b0e936b74edffedeed6978a2bb8dee60ae2e345fadf2ba551338a7648c",
+        "stage_1": "efef028ebf9fd135778869adb94c61fb423e6fa26c8e2a61e2e053683987b9a2",
+        "stage_2": "54e0adce8584dfca2f944b89d1ae81a9b349b0bc722483714181d418ebb089bf",
+        "stage_3": "5ec3fc32ec61dc905e41bf132e90068db0aac0f0a73d5f97f2fa9cbf3da9e83b"
+      },
+      "exports": {
+        "stage_0": {
+          "source_file": "assets/farming/p109/source/plants/reed/reed_stage_0_view35_v001.png",
+          "source_sha256": "fcee0f2fd0782de2c14f207e9b5cdbe82a4ae5eed7e1fafe0f1b337780d5c984",
+          "source_root_uv": [
+            0.5,
+            0.79
+          ],
+          "root_annotation": "root_crown",
+          "source_crop_px": [
+            94,
+            245,
+            946,
+            1228
+          ],
+          "resized_px": [
+            42,
+            49
+          ],
+          "paste_px": [
+            171,
+            368,
+            213,
+            417
+          ],
+          "root_error_px": [
+            -0.3943661971831034,
+            0.27422177009157167
+          ],
+          "size_axis": "height_above_root",
+          "target_view_units": 12,
+          "source_acceptance": "growth_state_review_pending"
+        },
+        "stage_1": {
+          "source_file": "assets/farming/p109/source/plants/reed/reed_stage_1_view35_v001.png",
+          "source_sha256": "674813e5def31391e3f64842762686b3c5f0a0087e5dd757527b6f691c384292",
+          "source_root_uv": [
+            0.5,
+            0.84
+          ],
+          "root_annotation": "root_crown",
+          "source_crop_px": [
+            56,
+            190,
+            996,
+            1303
+          ],
+          "resized_px": [
+            93,
+            110
+          ],
+          "paste_px": [
+            147,
+            307,
+            240,
+            417
+          ],
+          "root_error_px": [
+            0.11489361702126644,
+            -0.2610961365678577
+          ],
+          "size_axis": "height_above_root",
+          "target_view_units": 27,
+          "source_acceptance": "growth_state_review_pending"
+        },
+        "stage_2": {
+          "source_file": "assets/farming/p109/source/plants/reed/reed_stage_2_view35_v001.png",
+          "source_sha256": "aa0914f08a5343f7510ec3b87b09159611c1abad65346a398d8f5e41d863812d",
+          "source_root_uv": [
+            0.5,
+            0.92
+          ],
+          "root_annotation": "root_crown",
+          "source_crop_px": [
+            29,
+            95,
+            1010,
+            1438
+          ],
+          "resized_px": [
+            140,
+            192
+          ],
+          "paste_px": [
+            123,
+            228,
+            263,
+            420
+          ],
+          "root_error_px": [
+            -0.07033639143730852,
+            0.44306775874906634
+          ],
+          "size_axis": "height_above_root",
+          "target_view_units": 47,
+          "source_acceptance": "growth_state_review_pending"
+        },
+        "stage_3": {
+          "source_file": "assets/farming/p109/source/plants/reed/reed_mature_view35_v001.png",
+          "source_sha256": "cfd6abb3a41d6da89cc994d7a27a48594c82f93f377810231820b2dbf3b28382",
+          "source_root_uv": [
+            0.5,
+            0.93
+          ],
+          "root_annotation": "root_crown",
+          "source_crop_px": [
+            21,
+            66,
+            1012,
+            1449
+          ],
+          "resized_px": [
+            195,
+            273
+          ],
+          "paste_px": [
+            95,
+            147,
+            290,
+            420
+          ],
+          "root_error_px": [
+            -0.3854692230070782,
+            -0.050585683297185824
+          ],
+          "size_axis": "height_above_root",
+          "target_view_units": 67,
+          "source_acceptance": "mature_user_accepted"
+        }
+      }
+    }
+  }
+}

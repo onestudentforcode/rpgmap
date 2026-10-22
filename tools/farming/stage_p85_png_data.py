@@ -7,8 +7,12 @@ from import_p8_plants import ROOT, encoded, safe_path
 
 def stage_pngs(stage):
     count = 0
-    for kind,filename in [('plants','assets/farming/crops/plant_manifest.json'),
-                          ('facilities','assets/farming/facilities/facility_manifest.json')]:
+    manifests = [('plants','assets/farming/crops/plant_manifest.json'),
+                 ('facilities','assets/farming/facilities/facility_manifest.json')]
+    # Dynamic PNG-byte loaders need raw bytes in a PCK, not imported .ctex only.
+    p109 = 'assets/farming/p109/runtime/plant_manifest.json'
+    if (ROOT/p109).exists(): manifests.append(('plants',p109))
+    for kind,filename in manifests:
         manifest = json.loads((ROOT/filename).read_text(encoding='utf-8'))
         for visual in manifest[kind].values():
             paths = visual['stages'] if kind == 'plants' else {'body':visual['path']}

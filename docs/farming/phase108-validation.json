@@ -1,0 +1,61 @@
+{
+  "phase": "P10.8",
+  "schema": 26,
+  "technical_gates_passed": true,
+  "required_partitions": [
+    "model",
+    "ui",
+    "gpu",
+    "route-replay",
+    "route-generate",
+    "route-audit",
+    "p102",
+    "p103",
+    "p107",
+    "handbook-export",
+    "handbook-check"
+  ],
+  "evidence_directory": ".art-work/p108-tests/runner",
+  "route_replay": {
+    "partition_passed": true,
+    "tutorial_only": true,
+    "days": 90,
+    "effective_field_gu_day": 68,
+    "tutorial_milestone_failures": 0,
+    "full_p8_economy_run": {
+      "passed": false,
+      "failure_count": 8,
+      "failures": [
+        "A research biofiltration",
+        "A research water_recirculation",
+        "A research basic_spirit_cooking",
+        "A research mineral_materials",
+        "A research composite_spirit_food",
+        "A purification and sludge reuse produced real batches",
+        "A supplied element gold",
+        "A actually claimed T12 spirit food"
+      ],
+      "log": ".art-work/p108-tests/runner/p8-economy-long-run.log",
+      "sha256": "06521e8b2fb15b4db5bf44190d1d08ba0aa9be5207d98865ed08f911dc4f5873",
+      "scope": "P8 late-horizon economic objectives are outside the P10.8 tutorial contract and remain visible here."
+    }
+  },
+  "post_accept_hotfix": {
+    "scope": "Localize crop and item IDs embedded in daily tutorial advice at display time, refresh the selected-cell sidebar when a manual batch click has no executable action, and route inspect-tool clicks directly to cell viewing; retain canonical IDs in the route data for auditability.",
+    "changed_files": [
+      "scripts/farming/p8/p8_scene.gd",
+      "scripts/farming/tests/run_phase108_ui.gd"
+    ],
+    "focused_ui_passed": true,
+    "focused_ui_checks": 106,
+    "assertions": [
+      "golden_wheat, pasture_grass, wood_decay_mushroom, honeybell_bush and oilseed_flower render with Chinese display names",
+      "clicking an invalid action target immediately refreshes the selected-cell sidebar",
+      "inspect click on a quarry opens source details directly without batch work or AP cost"
+    ],
+    "gpu_matrix_rerun": false,
+    "accept_hash_gate_rerun": false,
+    "reason": "User requested a quick fix without full testing; the earlier full P10.8 acceptance remains the baseline, while this follow-up is covered by the focused UI partition only."
+  },
+  "note": "The original P10.8 technical acceptance partitions passed and their source/output hashes matched at acceptance time. A later tutorial-name display hotfix passed the focused UI partition (103 checks); the GPU matrix and Accept hash gate were not rerun for that patch. The separate full P8 economic long run retains eight failed economic objectives; they are disclosed and are not counted as tutorial-route failures."
+}

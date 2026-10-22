@@ -150,6 +150,25 @@ func set_production(facility_uid: int, enabled: bool, recipe_id: String, target_
 	world.changed.emit()
 	return {"ok": true}
 
+## Exact settings-only copy. Disabled strategies retain their last recipe and
+## target in the save; preserve those values without starting production.
+func copy_production(facility_uid: int, source: Dictionary) -> Dictionary:
+	if not source is Dictionary or not Scalars.exact(source,["enabled","recipe_id","target_item","target_qty"]):
+		return _error("生产配置快照非法")
+	var checked: Dictionary=world._can_act(0)
+	if not checked["ok"]: return checked
+	if not world.facilities.has(facility_uid): return _error("未知设施")
+	var facility: Dictionary=world.facilities[facility_uid]
+	var definition: Dictionary=world.facility_defs[String(facility["facility_id"])]
+	if definition.get("kind")=="research" or String(facility["facility_id"]) in ["growth_lamp","field_service_station"]:
+		return _error("该设施不使用持续生产策略")
+	if bool(source["enabled"]):
+		return set_production(facility_uid,true,String(source["recipe_id"]),String(source["target_item"]),int(source["target_qty"]))
+	if not Scalars.whole(source["target_qty"]): return _error("目标数量非法")
+	state["production"][facility_uid]=source.duplicate(true)
+	world.changed.emit()
+	return {"ok":true}
+
 ## Reserves only gate automatic batch starts; manual work, trades, building,
 ## research and base husbandry never consult them.
 func set_reserve(item_id: String, quantity: int) -> Dictionary:

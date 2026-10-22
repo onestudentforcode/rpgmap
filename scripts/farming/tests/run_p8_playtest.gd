@@ -6,6 +6,7 @@ extends SceneTree
 const P8World := preload("res://scripts/farming/p8/p8_world.gd")
 const P8Store := preload("res://scripts/farming/p8/p8_slot_store.gd")
 const Journal := preload("res://scripts/farming/v1/v1_journal.gd")
+const Tutorial := preload("res://scripts/farming/p8/p108_tutorial.gd")
 
 var failures: Array[String] = []
 var checks := 0
@@ -21,6 +22,7 @@ var audit_root := "res://.art-work/p8-playtest"
 var horizon := 120
 var selected_routes := ["A", "B"]
 var with_expansion := false
+var tutorial_only := false
 var receipts: FileAccess
 var claimed := {}
 var claimed_days := {}
@@ -138,7 +140,8 @@ func archive_day(world, day: int) -> void:
 		"ledger": world.ledger.day_view(day - 1), "workers": world.workforce.state["report"],
 		"research": world.research.to_save(), "facilities": world.to_snapshot()["world"]["facilities"],
 		"husbandry": world.husbandry.to_save(), "devices": world.devices.to_save(), "report": world.reports.to_save(),
-		"opening": world.ledger.day_view(-1), "opening_cash":world.journal["pending"].duplicate(true), "crops": world.to_snapshot()["world"]["crops"], "operations": world.operations.to_save(), "land": world.land.to_save()}))
+		"opening": world.ledger.day_view(-1), "opening_cash":world.journal["pending"].duplicate(true), "crops": world.to_snapshot()["world"]["crops"], "operations": world.operations.to_save(), "land": world.land.to_save(),
+		"tutorial_completed": world.preferences.get("tutorial",{}).get("completed",[]).duplicate(true)}))
 	if day == 45:
 		frozen_recap = world.reports.state["recap"].duplicate(true)
 		write_json(active_route + "-recap45.json", frozen_recap)
@@ -174,6 +177,7 @@ func _initialize() -> void:
 		if argument.begins_with("--days="): horizon = int(argument.trim_prefix("--days="))
 		if argument.begins_with("--route="): selected_routes = [argument.trim_prefix("--route=")]
 		if argument == "--with-expansion": with_expansion = true
+		if argument == "--tutorial-only": tutorial_only = true
 	check(horizon >= 90 and horizon <= 180, "经营跨度在90至180日内")
 	DirAccess.make_dir_recursive_absolute(ProjectSettings.globalize_path(audit_root))
 	var manifest := {}
@@ -190,9 +194,9 @@ func _initialize() -> void:
 	if selected_routes.size() == 2:
 		check(route_summaries["A"]["research_order"] != route_summaries["B"]["research_order"], "routes have different research histories")
 	var summary := FileAccess.open(audit_root.path_join("summary.json"), FileAccess.WRITE)
-	summary.store_string(JSON.stringify({"settings": {"days": horizon, "expansion": with_expansion, "initial_currency": int(P8World.P8Data.load_data()["config"]["initial_primeval_stones"])}, "routes": route_summaries, "failures": failures, "checks": checks}, "\t"))
+	summary.store_string(JSON.stringify({"settings": {"days": horizon, "expansion": with_expansion, "tutorial_only": tutorial_only, "initial_currency": int(P8World.P8Data.load_data()["config"]["initial_primeval_stones"])}, "routes": route_summaries, "failures": failures, "checks": checks}, "\t"))
 	for failure in failures: printerr(failure)
-	print("P8 OPERATIONS PLAYTEST %s · %d days · %d checks" % ["OK" if failures.is_empty() else "FAIL", horizon, checks])
+	print("P8 TUTORIAL PLAYTEST %s · %d days · %d checks" % ["OK" if failures.is_empty() else "FAIL", horizon, checks] if tutorial_only else "P8 OPERATIONS PLAYTEST %s · %d days · %d checks" % ["OK" if failures.is_empty() else "FAIL", horizon, checks])
 	quit(0 if failures.is_empty() else 1)
 
 # --- Research -----------------------------------------------------------------------
@@ -289,8 +293,12 @@ func _farm_wheat(world) -> void:
 		if String(crop["crop_id"]) == "golden_wheat" and String(crop["state"]) == "mature":
 			act(world, "world.harvest(Vector2i(int(crop[\"origin\"][0]), int(crop[\"origin\"][1])), \"harvest\")", func(): return world.harvest(Vector2i(int(crop["origin"][0]), int(crop["origin"][1])), "harvest"))
 	for cell in WHEAT:
-		if world.grid.state_at(cell) == 0 and world.source_at(cell).is_empty() and world.facility_at(cell).is_empty():
-			act(world, "world.till(cell)", func(): return world.till(cell))
+		if world.rooms.floor_kind(cell)!="farmland" and world.grid.state_at(cell)==0 and world.source_at(cell).is_empty() and world.facility_at(cell).is_empty():
+			act(world,"world.rooms.set_floor(cell,\"farmland\")",func(): return world.rooms.set_floor(cell,"farmland"))
+	var keys:=[]
+	for cell in WHEAT: keys.append(world.rooms.key(cell))
+	if world.rooms.field_at(WHEAT[0]).is_empty() and world.rooms.preview_field(keys)["ok"]:
+		world.rooms.create_field(keys,"教学麦田")
 	for cell in WHEAT:
 		if world.grid.state_at(cell) == 1 and world.inventory.count("golden_wheat_seed") > 0:
 			act(world, "world.plant(cell, \"golden_wheat\")", func(): return world.plant(cell, "golden_wheat"))
@@ -773,6 +781,40 @@ func _deliver_orders(world) -> void:
 		if not best.is_empty():
 			act(world, "world.deliver_order(int(order[\"id\"]), best)", func(): return world.deliver_order(int(order["id"]), best))
 
+func _submit_stage_event(world) -> void:
+	var quote: Dictionary=world.progress.event_quote()
+	if quote.get("ok",false):
+		var event_id:=String(quote["id"])
+		act(world,"world.progress.complete_event(\"%s\")"%event_id,func(): return world.progress.complete_event(event_id))
+
+func _activate_field_gu(world) -> void:
+	if world.progress.stage()<2: return
+	if not bool(world.logistics.state["provisioned"]):
+		act(world,"world.logistics.provision()",func(): return world.logistics.provision())
+	var station:=uid_of(world,"field_service_station")
+	if station==0: return
+	var linked_field: Dictionary=world.rooms.field_at(WHEAT[0])
+	if linked_field.is_empty(): return
+	if int(world.services.state["agriculture"].get(str(station),0))!=int(linked_field["uid"]):
+		act(world,"world.services.link_agriculture(%d,%d)"%[station,int(linked_field["uid"])],
+			func(): return world.services.link_agriculture(station,int(linked_field["uid"])))
+	if not world.services.host_ready(station): return
+	if not world.logistics.in_host(station).is_empty(): return
+	for row in world.logistics.state["instances"]:
+		if String(row["definition_id"])!="growth_gu" or world.logistics.deployed(row): continue
+		var instance_id:=String(row["instance_id"])
+		if world.logistics.quote_deploy(instance_id,Vector2i(-1,-1),station)["ok"]:
+			act(world,"world.logistics.deploy(\"%s\",Vector2i(-1,-1),%d)"%[instance_id,station],
+				func(): return world.logistics.deploy(instance_id,Vector2i(-1,-1),station))
+			return
+
+func _prepare_field_station_floor(world) -> void:
+	if not world.research.is_completed("field_maintenance"): return
+	var cell:=Vector2i(7,9)
+	if world.facility_at(cell).is_empty() and world.rooms.floor_kind(cell)!="ordinary":
+		if world.rooms.quote_floor(cell,"ordinary")["ok"]:
+			act(world,"world.rooms.set_floor(Vector2i(7,9),\"ordinary\")",func(): return world.rooms.set_floor(cell,"ordinary"))
+
 func sample_reserve(world, item: String) -> int:
 	var needed := 0
 	for project in world.data_source.load_data()["research"]:
@@ -846,6 +888,7 @@ func _run_route(route: String) -> void:
 		_source_topups(world)
 		_sell_surplus(world)
 		_deliver_orders(world)
+		_submit_stage_event(world)
 		if with_expansion: _expand_business(world)
 		if world.inventory.count("golden_wheat_seed") < 4:
 			act(world, "wheat seed purchase", func(): return world.buy("golden_wheat_seed", mini(4 - world.inventory.count("golden_wheat_seed"), world.primeval_stones / 3)))
@@ -862,7 +905,9 @@ func _run_route(route: String) -> void:
 		if world.research.is_completed("flower_cultivation"):
 			_farm_flowers(world)
 		_buy_build_materials(world, build_plan)
+		_prepare_field_station_floor(world)
 		_build_plan_step(world, build_plan)
+		_activate_field_gu(world)
 		_stock_plan_step(world, stock_plan)
 		_delegate(world)
 		_farm_wheat(world)
@@ -917,6 +962,7 @@ func _run_route(route: String) -> void:
 		_process_batches(world, process_plan)
 		_sell_surplus(world)
 		_deliver_orders(world)
+		_submit_stage_event(world)
 		if day == 40 or day == 60 or day == 80:
 			var t6: Dictionary = world.research.quote_start(uid_of(world, "research_bench"), "advanced_feed_oil_wax")
 			print("DBG ", route, " d", day, " stones=", world.primeval_stones,
@@ -955,25 +1001,38 @@ func _run_route(route: String) -> void:
 	for project in ["flower_cultivation", "beekeeping", "farm_preparation", "biofiltration", "rock_handling",
 			"advanced_feed_oil_wax", "ore_concentration", "water_recirculation", "basic_spirit_cooking",
 			"field_maintenance", "mineral_materials", "composite_spirit_food"]:
-		check(world.research.is_completed(project), route + " research " + project)
+		if not tutorial_only: check(world.research.is_completed(project), route + " research " + project)
 	check(world.inventory.count("honey") > 0 or world.inventory.count("honey_cake") > 0, route + " honey economy ran")
+	var serviced_field_gu:=false
+	for receipt in world.logistics.state["history"]:
+		for instance_id in receipt.get("services",[]):
+			var instance: Dictionary=world.logistics.instance(String(instance_id))
+			if instance.is_empty(): continue
+			var definition: Dictionary=world.logistics.definition(instance)
+			if String(definition.get("effect",""))=="growth_speed": serviced_field_gu=true
+	check(serviced_field_gu,route+" agricultural gu generated a real service receipt")
+	if tutorial_only:
+		var tutorial_state: Dictionary=Tutorial.progress(world,world.preferences.get("tutorial",{}))
+		for step in ["first_field","first_harvest","first_processing","first_research","first_order","first_milestone","active_field_gu"]:
+			check(step in tutorial_state.get("done",[]),route+" tutorial milestone actually completed: "+step)
 	# Closing stock may be zero after legitimate farming and compost reuse.
 	# Successful production receipts prove the loop ran; purchased humus does not.
-	check(int(claimed.get("bio_purify", 0)) > 0 and int(claimed.get("compost_sludge", 0)) > 0, route + " purification and sludge reuse produced real batches")
+	if not tutorial_only: check(int(claimed.get("bio_purify", 0)) > 0 and int(claimed.get("compost_sludge", 0)) > 0, route + " purification and sludge reuse produced real batches")
 	# Closing stock may land at zero once the panels, feed and smelter consume
 	# everything; claimed batches prove the loop actually ran.
-	check(int(claimed.get("break_stone", 0)) + int(claimed.get("break_ore", 0)) + int(claimed.get("concentrate_ore", 0)) > 0, route + " rock economy ran")
+	if not tutorial_only: check(int(claimed.get("break_stone", 0)) + int(claimed.get("break_ore", 0)) + int(claimed.get("concentrate_ore", 0)) > 0, route + " rock economy ran")
 	var supplied_elements := {}
 	var delivered: Dictionary = totals["delivered_items"]
 	for item in delivered:
 		supplied_elements[String(world._items[String(item)]["element"])] = true
-	for element in ["wood", "fire", "earth", "water", "gold"]:
-		check(supplied_elements.has(element), route + " supplied element " + element)
+	if not tutorial_only:
+		for element in ["wood", "fire", "earth", "water", "gold"]:
+			check(supplied_elements.has(element), route + " supplied element " + element)
 	var cooked := false
 	for food in ["dew_soup", "fire_paste", "earth_pill", "gold_food"]:
 		if int(totals["processed"].get(String(food), 0)) > 0:
 			cooked = true
-	check(cooked, route + " actually claimed T12 spirit food")
+	if not tutorial_only: check(cooked, route + " actually claimed T12 spirit food")
 	check(int(world.workforce.state["spent"]) > 0 and int(totals["labour_spend"]) == int(world.workforce.state["spent"]), route + " real paid delegation")
 	check(not world.workforce.state["workers"].is_empty() and world.operations.facilities_of(1).size() >= 2, route + " one owner multiple facilities")
 	check(world.journal["frozen"], route + " 45-day recap frozen")

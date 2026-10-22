@@ -1520,9 +1520,11 @@ func draw_map(target: Node2D) -> void:
 	if manual_mode and tool != "inspect" and build_tool.is_empty() and world.grid.in_bounds(_hover.x,_hover.y):
 		var valid: bool = world.action_quote(_hover,tool)["ok"]
 		target.draw_rect(Rect2(Vector2(_hover)*64,Vector2(64,64)),UI.JADE if valid else UI.ERROR,false,2*readable)
-	if _drag and not manual_mode:
+	if _drag:
 		var rect := _rect(_drag_start,_drag_end)
-		if tool not in ["inspect","area","cancel"]:
+		if manual_mode and has_method("_draw_batch_preview"):
+			call("_draw_batch_preview",target,rect,readable)
+		elif not manual_mode and tool not in ["inspect","area","cancel"]:
 			var preview := world.workforce.preview(rect,tool)
 			for cell in preview["valid"]: target.draw_rect(Rect2(Vector2(cell)*64,Vector2(64,64)),Color(0.35,0.65,0.4,0.3))
 			for cell in preview["invalid"]: target.draw_rect(Rect2(Vector2(cell)*64,Vector2(64,64)),Color(0.7,0.25,0.2,0.28))

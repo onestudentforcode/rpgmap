@@ -21,7 +21,8 @@ const Ranch := preload("res://scripts/farming/p8/p103_ranch.gd")
 const Services := preload("res://scripts/farming/p8/p104_services.gd")
 const Water := preload("res://scripts/farming/p8/p106_water.gd")
 const Economy := preload("res://scripts/farming/p8/p107_economy.gd")
-const SCHEMA := 25
+const Tutorial := preload("res://scripts/farming/p8/p108_tutorial.gd")
+const SCHEMA := 26
 
 static func fresh() -> Dictionary:
 	var snapshot: Dictionary = Common.fresh(Data, SCHEMA)
@@ -33,6 +34,7 @@ static func fresh() -> Dictionary:
 	snapshot["ledger"] = {"pending": {"day": 0, "opening": opening, "inflows": {}, "outflows": {}}, "history": []}
 	snapshot["reports"] = Reports.fresh(0)
 	snapshot["preferences"] = {"watched": []}
+	snapshot["preferences"]["tutorial"] = Tutorial.fresh()
 	snapshot["world"]["husbandry"] = {"habitats": [], "next_animal_uid": 1, "next_cycle_uid": 1}
 	snapshot["world"]["land"] = {"purchased": []}
 	snapshot["world"]["p8"] = {"facilities": [], "production": [], "reserves": [], "waiting": []}
@@ -162,6 +164,8 @@ static func normalize(value) -> Dictionary:
 		if not items.has(item) or item in watched:
 			return fail("关注资源非法或重复")
 		watched.append(item)
+	var tutorial := Tutorial.normalize(raw_preferences.get("tutorial"))
+	if not tutorial["ok"]: return tutorial
 	checked["snapshot"]["world"]["husbandry"] = husbandry["husbandry"]
 	checked["snapshot"]["world"]["p8"] = operations["operations"]
 	checked["snapshot"]["world"]["research"] = research["research"]
@@ -216,7 +220,7 @@ static func normalize(value) -> Dictionary:
 		if not found: return fail("研究方案与锁定蛊实例不符")
 	checked["snapshot"]["ledger"] = ledger["ledger"]
 	checked["snapshot"]["reports"] = reports["reports"]
-	checked["snapshot"]["preferences"] = {"watched": watched}
+	checked["snapshot"]["preferences"] = {"watched": watched, "tutorial": tutorial["state"]}
 	return checked
 
 ## P8 water habitats carry a per-habitat water-change day (-1 = never). Strip the

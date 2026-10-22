@@ -15,7 +15,7 @@ func check(ok: bool, label: String) -> void:
 
 func run() -> void:
 	var w := World.new()
-	check(Codec.normalize(w.to_snapshot())["ok"], "fresh schema25 normalizes")
+	check(Codec.normalize(w.to_snapshot())["ok"], "fresh schema26 normalizes")
 	check(w.progress.stage() == 0 and w.progress.deliveries() == 0, "starts at global stage0")
 	check(not w.progress.complete_event("first_workshop")["ok"], "orders required")
 	check(not w.logistics.provision()["ok"], "trial gu acquisition event gate")

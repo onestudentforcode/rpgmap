@@ -6,6 +6,12 @@ const P8Store := preload("res://scripts/farming/p8/p8_slot_store.gd")
 const Handbook := preload("res://scripts/farming/p8/p8_handbook.gd")
 const PlantVisuals := preload("res://scripts/farming/p8/p8_plant_visuals.gd")
 var plant_visuals := PlantVisuals.new()
+var plant_profile := "legacy"
+var _plant_profiles: Dictionary = {}
+const PLANT_PROFILES := {
+	"legacy":"res://assets/farming/crops/plant_manifest.json",
+	"p109":"res://assets/farming/p109/runtime/plant_manifest.json",
+}
 const FacilityVisuals := preload("res://scripts/farming/p8/p8_facility_visuals.gd")
 var facility_visuals := FacilityVisuals.new()
 const TerrainSoften := preload("res://assets/farming/shaders/p8_terrain_soften.gdshader")
@@ -26,8 +32,22 @@ var ranch_ui := RanchUI.new(self)
 var services_ui := ServicesUI.new(self)
 const EconomyUI := preload("res://scripts/farming/p8/p107_ui.gd")
 var economy_ui := EconomyUI.new(self)
+const BatchUI := preload("res://scripts/farming/p8/p108_batch.gd")
+const Tutorial := preload("res://scripts/farming/p8/p108_tutorial.gd")
+const P8Workforce := preload("res://scripts/farming/p8/p8_workforce.gd")
+var selected_crop := "golden_wheat"
+var crop_picker: OptionButton
+var copy_config: Dictionary = {}
+var tutorial_panel: PanelContainer
+var tutorial_scroll: ScrollContainer
+var tutorial_body: VBoxContainer
+var reading_expanded := false
+var reading_font := 1
+var _help_scroll_anchor := 0
+var _tutorial_compact_mode := false
 
 func _new(slot: int, overwrite: bool) -> void:
+	copy_config.clear()
 	rooms_ui.floor_tool=""
 	rooms_ui.field_tool=false
 	logistics_ui.placing=""
@@ -37,6 +57,7 @@ func _select_tool(kind: String) -> void:
 	rooms_ui.floor_tool=""
 	rooms_ui.field_tool=false
 	super(kind)
+	if crop_picker != null: crop_picker.visible = kind == "plant" and manual_mode and _started and not shade.visible
 var production_visuals := true
 var _facility_thumbnails: Dictionary = {}
 var visual_trial_profile := "baseline"
@@ -114,7 +135,13 @@ func _ready() -> void:
 	super()
 	overlay.texture_filter = CanvasItem.TEXTURE_FILTER_LINEAR_WITH_MIPMAPS
 	board.mouse_exited.connect(func(): _map_pan = false)
+	_load_reading_preferences()
 	var style: Dictionary = JSON.parse_string(FileAccess.get_file_as_string("res://content/farming/p8/world_visuals.json"))
+	var requested_plants := String(style.get("plant_profile", "legacy"))
+	for argument in OS.get_cmdline_user_args():
+		if argument.begins_with("--plants="): requested_plants = argument.trim_prefix("--plants=")
+	var plant_result := configure_plant_profile(requested_plants)
+	if not plant_result["ok"]: push_error("Plant profile retained: %s" % plant_result["diagnostics"])
 	for ident in style["terrain_tones"]:
 		if not terrain.layers.has(ident): continue
 		var material := ShaderMaterial.new()
@@ -137,6 +164,43 @@ func _ready() -> void:
 		probe.shell = self
 		add_child(probe)
 		probe.run.call_deferred()
+
+func configure_plant_profile(profile: String) -> Dictionary:
+	if not PLANT_PROFILES.has(profile):
+		return {"ok":false,"profile":plant_profile,"diagnostics":["unknown plant profile: " + profile]}
+	if _plant_profiles.is_empty(): _plant_profiles[plant_profile] = plant_visuals
+	var candidate = _plant_profiles.get(profile)
+	if candidate == null: candidate = PlantVisuals.new(PLANT_PROFILES[profile])
+	# Full species/stage sets must load before replacing any live visuals.
+	var problems: Array = candidate.diagnostics.values()
+	if candidate.plants.keys().size() != plant_visuals.plants.keys().size(): problems.append("plant species count mismatch")
+	for ident in plant_visuals.plants:
+		if not candidate.plants.has(ident):
+			problems.append("missing plant: " + ident)
+			continue
+		for key in plant_visuals.plants[ident]["stages"]:
+			if not candidate.plants[ident]["stages"].has(key): problems.append("missing plant stage: %s/%s" % [ident,key])
+	if not problems.is_empty(): return {"ok":false,"profile":plant_profile,"diagnostics":problems}
+	_plant_profiles[profile] = candidate
+	plant_visuals = candidate
+	plant_profile = profile
+	if is_instance_valid(overlay): overlay.queue_redraw()
+	if has_method("invalidate_projection_bounds"): call("invalidate_projection_bounds")
+	return {"ok":true,"profile":plant_profile,"diagnostics":[]}
+
+func _show_settings() -> void:
+	super()
+	_label(sidebar,"植物美术预览（本次运行生效）")
+	var picker := OptionButton.new()
+	picker.add_item("P10.9 新植物")
+	picker.add_item("旧版植物")
+	picker.select(0 if plant_profile == "p109" else 1)
+	picker.item_selected.connect(func(index):
+		var result := configure_plant_profile("p109" if index == 0 else "legacy")
+		if not result["ok"]:
+			picker.select(0 if plant_profile == "p109" else 1)
+			_result(result))
+	sidebar.add_child(picker)
 
 func configure_visual_trial(profile: String, runtime_dir: String = "") -> Dictionary:
 	if profile not in ["baseline","grounding","integrated"]:
@@ -193,6 +257,8 @@ func _draw_resource_points(target: Node2D, readable: float) -> void:
 
 func _refresh() -> void:
 	super()
+	if tutorial_panel != null: _refresh_tutorial()
+	if crop_picker != null: crop_picker.visible = tool == "plant" and manual_mode and _started and not shade.visible
 	guide_hint.text = guide_hint.text.replace("WASD平移","WASD/中键平移")
 	var stamp := ",".join(PackedStringArray(world.land.to_save()["purchased"]))
 	if stamp != _land_stamp:
@@ -268,6 +334,11 @@ func _apply_manual(cell: Vector2i) -> void:
 		selected = cell
 		_show_land(parcel)
 		return
+	if manual_mode and tool=="plant":
+		selected=cell
+		_result(world.plant_manual(cell,selected_crop))
+		_show_cell()
+		return
 	super(cell)
 
 func _show_cell() -> void:
@@ -293,6 +364,12 @@ func _show_cell() -> void:
 			or String(world.facility_at(selected)["facility_id"]) in ["dispatch_station","feed_trough","small_bed","medium_bed","large_bed","care_table","soothing_station","toy_station"])
 		if ranch_here:
 			_button(sidebar,"畜牧分区",ranch_ui.open)
+	if _started and world.grid.in_bounds(selected.x,selected.y):
+		var crop := world.instance_at(selected)
+		var facility := world.facility_at(selected)
+		var copy := _button(sidebar,"复制此处配置",func(): _copy_from_cell(selected))
+		copy.tooltip_text = "仅复制首版白名单中的选种计划、通用加工策略或田间维护站开关"
+		if crop.is_empty() and facility.is_empty() and world.rooms.floor_kind(selected) != "farmland": copy.disabled = true
 
 func _board_input(event: InputEvent) -> void:
 	if _started and not shade.visible and not is_instance_valid(confirmation) and rooms_ui.field_tool and _context == "rooms":
@@ -303,6 +380,10 @@ func _board_input(event: InputEvent) -> void:
 			rooms_ui.click_field(_cell(event.position))
 			return
 	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_RIGHT and event.pressed:
+		if not copy_config.is_empty():
+			copy_config.clear()
+			notice.text="已取消配置粘贴"
+			return
 		rooms_ui.floor_tool=""
 		ranch_ui.toggle_erase()
 	if _started and not shade.visible and not is_instance_valid(confirmation) and not rooms_ui.floor_tool.is_empty() and event is InputEventMouseMotion and not _map_pan:
@@ -321,6 +402,33 @@ func _board_input(event: InputEvent) -> void:
 			overlay.queue_redraw()
 		return
 	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_RIGHT and event.pressed: logistics_ui.placing = ""
+	if _started and not shade.visible and not is_instance_valid(confirmation) and event is InputEventMouseButton \
+			and event.button_index == MOUSE_BUTTON_LEFT and not event.pressed and _drag and not _text_focus():
+		var end_cell := _cell(event.position)
+		var drag_rect := _rect(_drag_start,end_cell)
+		_drag = false
+		selected = end_cell
+		if not copy_config.is_empty():
+			_run_copy_rectangle(drag_rect)
+			return
+		if manual_mode and tool in ["till","plant","irrigate","fertilize","harvest","fell","clear"]:
+			if tool in ["fell","clear"] and drag_rect.get_area() > 1:
+				var count := _batch_candidate_count(drag_rect,tool)
+				_confirm("批量%s %d株？该操作会移除作物；每株仍消耗1AP。" % [NAMES[tool],count],func(): _run_manual_rectangle(drag_rect))
+			else: _run_manual_rectangle(drag_rect)
+			return
+	# Inspection is navigation, not an agricultural action: bypass batch planning
+	# and the inherited manual-action path so even resource points refresh at once.
+	if _started and not shade.visible and not is_instance_valid(confirmation) and not _text_focus() \
+			and event is InputEventMouseButton and event.button_index==MOUSE_BUTTON_LEFT and not event.pressed \
+			and not _map_pan and tool=="inspect" and copy_config.is_empty() and logistics_ui.placing.is_empty():
+		_drag=false
+		selected=_cell(event.position)
+		_side_open=true
+		_show_cell()
+		_layout()
+		overlay.queue_redraw()
+		return
 	if _started and not shade.visible and not is_instance_valid(confirmation) and event is InputEventMouseButton and event.button_index==MOUSE_BUTTON_LEFT and not event.pressed 			and (not ranch_ui.zone_tool.is_empty() or ranch_ui.paint_zone > 0) and not _text_focus():
 		selected=_cell(event.position)
 		ranch_ui.click_cell(selected)
@@ -355,9 +463,321 @@ func _board_input(event: InputEvent) -> void:
 	super(event)
 	if event is InputEventMouseMotion and _started and not shade.visible:
 		var cell := _cell(event.position)
+		if _drag and manual_mode and tool in ["till","plant","irrigate","fertilize","harvest","fell","clear"]:
+			var plan: Dictionary=BatchUI.preview(world,_rect(_drag_start,_drag_end),tool,selected_crop)
+			hover_hint.text="%s · 可执行%d · 无效%d · 预算%d AP · %s%s" % [NAMES[tool],plan["targets"],plan["invalid"].size(),plan["ap"],String(plan["blocked"]) if not String(plan["blocked"]).is_empty() else "按地格顺序",(" · 投入 "+_materials(plan["inputs"])) if not plan["inputs"].is_empty() else ""]
+			hover_hint.tooltip_text=hover_hint.text
+			overlay.queue_redraw()
 		var id: String = world.land.at(cell)
 		if not id.is_empty() and not world.land.contains(cell):
 			hover_hint.text = "%s · %d元石 · 点击查看购买条件" % [world.land.parcels[id]["name"],world.land.parcels[id]["price"]]
+
+func _draw_batch_preview(target: Node2D, rect: Rect2i, readable: float) -> void:
+	var plan: Dictionary=BatchUI.preview(world,rect,tool,selected_crop)
+	for action in plan["actions"]:
+		var cell: Vector2i=action["cell"]
+		var shape: Array=world.crop_defs[selected_crop]["footprint"] if tool=="plant" else [1,1]
+		target.draw_rect(Rect2(Vector2(cell)*64,Vector2(float(shape[0]),float(shape[1]))*64),Color(0.35,0.65,0.4,0.32))
+	for invalid in plan["invalid"]:
+		var cell: Vector2i=invalid["cell"]
+		target.draw_rect(Rect2(Vector2(cell)*64,Vector2(64,64)),Color(0.7,0.25,0.2,0.26))
+	if tool=="plant" and world.crop_defs.has(selected_crop):
+		for cell in BatchUI.cells(rect):
+			var shape: Array=world.crop_defs[selected_crop]["footprint"]
+			var rect_crop:=Rect2i(cell,Vector2i(int(shape[0]),int(shape[1])))
+			if rect.get_area()>1 and not rect.encloses(rect_crop): target.draw_rect(Rect2(Vector2(cell)*64,Vector2(64,64)),Color(0.7,0.25,0.2,0.22))
+
+func _extra_hud() -> void:
+	super()
+	crop_picker = OptionButton.new()
+	crop_picker.custom_minimum_size = Vector2(210,34)
+	for ident in world.crop_defs:
+		var definition: Dictionary = world.crop_defs[ident]
+		if String(definition.get("medium","land")) == "water": continue
+		var crop_name := String(definition.get("name", String(CROPS.get(String(ident), String(ident)))))
+		crop_picker.add_item(crop_name)
+		crop_picker.set_item_metadata(crop_picker.item_count-1,String(ident))
+		if String(ident) == selected_crop: crop_picker.select(crop_picker.item_count-1)
+	crop_picker.item_selected.connect(func(index): selected_crop=String(crop_picker.get_item_metadata(index)); _update_hover())
+	ui_root.add_child(crop_picker)
+	tutorial_panel = PanelContainer.new()
+	tutorial_panel.visible = false
+	ui_root.add_child(tutorial_panel)
+	tutorial_scroll = ScrollContainer.new()
+	tutorial_scroll.size_flags_vertical = Control.SIZE_EXPAND_FILL
+	tutorial_scroll.custom_minimum_size.y = 48
+	tutorial_panel.add_child(tutorial_scroll)
+	tutorial_body = VBoxContainer.new()
+	tutorial_body.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	tutorial_scroll.add_child(tutorial_body)
+	_refresh_tutorial()
+
+func _layout_extra() -> void:
+	super()
+	if crop_picker != null:
+		crop_picker.position=Vector2(toolbar_panel.position.x,toolbar_panel.position.y-40)
+		crop_picker.visible=_started and not shade.visible and manual_mode and tool=="plant"
+	if tutorial_panel != null:
+		var margin := 24.0 if ui_root.size.x >= 1600 else 12.0
+		var available_width := maxf(220.0, minf(340.0,board.size.x*0.42))
+		var compact_guidance := ui_root.size.x < 1100.0 or ui_root.size.y < 650.0
+		if compact_guidance != _tutorial_compact_mode:
+			_tutorial_compact_mode=compact_guidance
+			_refresh_tutorial()
+		tutorial_scroll.custom_minimum_size.y=48.0
+		tutorial_panel.reset_size()
+		var resource_bottom := 124.0
+		if watch_panel != null and watch_panel.visible:
+			resource_bottom = maxf(resource_bottom,watch_panel.position.y+maxf(watch_panel.size.y,watch_panel.get_combined_minimum_size().y))
+		tutorial_panel.position=Vector2(margin+8,resource_bottom+8)
+		tutorial_panel.custom_minimum_size.x=available_width
+		tutorial_body.custom_minimum_size.x=maxf(180.0,available_width-24.0)
+		var bottom_limit := toolbar_panel.position.y-8
+		if crop_picker!=null and crop_picker.visible:
+			bottom_limit=minf(bottom_limit,crop_picker.position.y-8)
+		var available_height:=maxf(64.0,bottom_limit-tutorial_panel.position.y)
+		var minimum_height:=tutorial_panel.get_combined_minimum_size().y
+		var header_height:=maxf(0.0,minimum_height-tutorial_scroll.custom_minimum_size.y)
+		var content_height:=tutorial_body.get_combined_minimum_size().y
+		var collapsed:=bool(world.preferences.get("tutorial",{}).get("collapsed",false))
+		var desired_height:=minimum_height if collapsed else header_height+maxf(48.0,content_height)
+		var panel_height:=minf(desired_height,available_height)
+		tutorial_panel.size=Vector2(available_width,panel_height)
+		tutorial_scroll.custom_minimum_size=Vector2(available_width-24.0,maxf(48.0,panel_height-header_height))
+		tutorial_panel.visible=_started and not shade.visible and bool(world.preferences.get("tutorial",{}).get("enabled",true))
+	if digest!=null and digest.visible:
+		digest.reset_size()
+		var right_edge:=board.position.x+board.size.x-8
+		var digest_width:=minf(320.0,maxf(220.0,board.size.x*0.38))
+		digest.position=Vector2(maxf(board.position.x+8,right_edge-digest_width),board.position.y+8)
+		digest.custom_minimum_size.x=digest_width
+		if watch_panel!=null and watch_panel.visible and digest.position.x<watch_panel.position.x+watch_panel.size.x+8:
+			# On compact layouts the daily digest is represented by the notice strip;
+			# the full record remains available from the history page.
+			digest.visible=false
+
+func _layout() -> void:
+	super()
+	if window_panel==null or ui_root==null: return
+	if reading_expanded and shade.visible and _context=="help":
+		var margin:=12.0
+		window_panel.reset_size()
+		window_panel.position=Vector2(margin,100)
+		window_panel.size=Vector2(maxf(320,ui_root.size.x-2*margin),maxf(240,ui_root.size.y-112))
+		window_panel.add_theme_font_size_override("font_size",16+2*reading_font)
+	else:
+		window_panel.remove_theme_font_size_override("font_size")
+	_layout_extra()
+
+func _load_reading_preferences() -> void:
+	var config:=ConfigFile.new()
+	if config.load(settings.path+".reading")!=OK: return
+	reading_expanded=bool(config.get_value("reading","expanded",false))
+	reading_font=clampi(int(config.get_value("reading","font",1)),0,2)
+
+func _save_reading_preferences() -> void:
+	var config:=ConfigFile.new()
+	config.set_value("reading","schema",1)
+	config.set_value("reading","expanded",reading_expanded)
+	config.set_value("reading","font",reading_font)
+	var error:=config.save(settings.path+".reading")
+	if error!=OK: notice.text="无法保存阅读偏好"
+
+func _set_reading(expanded_value: bool, font_value: int) -> void:
+	_help_scroll_anchor=window_scroll.scroll_vertical
+	reading_expanded=expanded_value
+	reading_font=clampi(font_value,0,2)
+	_save_reading_preferences()
+	_show_help()
+	window_scroll.set_deferred("scroll_vertical",_help_scroll_anchor)
+	_layout()
+
+func _refresh_tutorial() -> void:
+	if tutorial_body==null or world==null or not _started: return
+	var compact_guidance := ui_root.size.x < 1100.0 or ui_root.size.y < 650.0
+	for child in tutorial_body.get_children(): tutorial_body.remove_child(child);child.queue_free()
+	var saved: Dictionary=world.preferences.get("tutorial",Tutorial.fresh())
+	var state: Dictionary=Tutorial.progress(world,saved)
+	var plan: Dictionary=Tutorial.today(world,saved)
+	var header_row:=HBoxContainer.new()
+	tutorial_body.add_child(header_row)
+	var next: Dictionary=state["next"]
+	var caption:="新手指引"
+	if bool(saved.get("collapsed",false)) and not next.is_empty(): caption+=" · "+String(next["title"])
+	if compact_guidance and not next.is_empty(): caption+=" · 第%d天%s"%[int(plan["day"]),"·等待" if bool(plan["waiting"]) else ""]
+	_heading(header_row,caption)
+	var fold:=_button(header_row,"展开" if bool(saved.get("collapsed",false)) else "收起",func(): _tutorial_pref("collapsed",not bool(saved.get("collapsed",false))))
+	_icon(header_row,"close","取消指引",func(): _tutorial_pref("enabled",false))
+	if not next.is_empty(): _icon(header_row,"locate","打开当前建议",func(): _open_tutorial_target(String(next["kind"])))
+	if bool(saved.get("collapsed",false)): return
+	if bool(state["complete"]):
+		_label(tutorial_body,"主线指引已完成。你可以自由經營，或在手册中回顾路线。")
+		return
+	if compact_guidance:
+		if not plan["items"].is_empty(): _label(tutorial_body,_tutorial_display_text(String(plan["items"][0])))
+	else:
+		var reference_suffix := " · 参考路线第%d天（可顺延）"%int(plan["reference_day"]) if plan.has("reference_day") else ""
+		_label(tutorial_body,"第%d天%s%s" % [int(plan["day"]),reference_suffix," · 等待条件" if bool(plan["waiting"]) else " · 今日建议"])
+		for item in plan["items"]: _label(tutorial_body,_tutorial_display_text(String(item)))
+		_label(tutorial_body,"路线进度 %d/%d" % [state["done"].size(),Tutorial.STEPS.size()])
+
+func _tutorial_display_text(value: String) -> String:
+	var result:=value
+	var ids: Array=[]
+	for crop_id in CROPS: ids.append(String(crop_id))
+	for item_id in world._items: ids.append(String(item_id))
+	ids.sort_custom(func(a,b): return String(a).length()>String(b).length())
+	for ident in ids:
+		var display:=String(CROPS.get(ident,world._items.get(ident,{}).get("name",ident)))
+		if display!=ident: result=result.replace(ident,display)
+	return result
+
+func _tutorial_pref(field: String,value: bool) -> void:
+	var result: Dictionary=world.set_tutorial_preference(field,value)
+	if not result.get("ok",false):
+		notice.text="指引设置未保存："+String(result.get("reason","未知错误"))
+		return
+	world.changed.emit()
+	_layout()
+
+func _open_tutorial_target(kind: String) -> void:
+	match kind:
+		"planting": _select_tool("till")
+		"harvest": _select_tool("harvest")
+		"processing": _show_build()
+		"research": _show_research()
+		"order": _show_orders()
+		"stage": economy_ui.open()
+		"active_gu": logistics_ui.open()
+
+func _run_manual_rectangle(rect: Rect2i) -> void:
+	if rect.size.x<=0 or rect.size.y<=0: return
+	var plan: Dictionary=BatchUI.preview(world,rect,tool,selected_crop)
+	if plan["actions"].is_empty():
+		notice.text="没有可执行目标"+ (" · "+String(plan["blocked"]) if not String(plan["blocked"]).is_empty() else "")
+		_show_cell()
+		_layout()
+		overlay.queue_redraw()
+		return
+	var start_day:=int(world.clock.total_days)
+	var completed:=0
+	var failures: Array=[]
+	for action in plan["actions"]:
+		if int(world.clock.total_days)!=start_day or not world.daily_save_error.is_empty(): break
+		var cell: Vector2i=action["cell"]
+		var result: Dictionary=_execute_manual_action(cell,tool,action)
+		if not result.get("ok",false):
+			failures.append(String(result.get("reason","操作失败")))
+			break
+		if not world.daily_save_error.is_empty() or result.has("save_error"):
+			failures.append("日存档失败，本次末项已回滚")
+			break
+		completed+=1
+		if int(world.clock.total_days)!=start_day or not world.daily_save_error.is_empty(): break
+	_last_cash=world.primeval_stones
+	_last_ap=world.clock.ap
+	_last_inventory=world.inventory.to_save()
+	_refresh()
+	var not_run:=maxi(0,plan["actions"].size()-completed)+int(plan["unplanned"])
+	var line:="%s完成%d项" % [NAMES[tool],completed]
+	if not_run>0: line+=" · 未执行%d项" % not_run
+	if not String(plan["blocked"]).is_empty(): line+=" · "+String(plan["blocked"])
+	if not failures.is_empty(): line+=" · "+failures[0]
+	if not plan["invalid"].is_empty(): line+=" · 跳过%d个无效目标" % plan["invalid"].size()
+	if not world.daily_save_error.is_empty(): line+=" · 日存档失败，请到经营记录重试"
+	notice.text=line
+	notice.tooltip_text=line
+	_show_cell()
+	_layout()
+
+func _execute_manual_action(cell: Vector2i, kind: String, action: Dictionary={}) -> Dictionary:
+	match kind:
+		"till": return world.till(cell)
+		"plant": return world.plant_manual(cell,String(action.get("crop_id",selected_crop)),String(action.get("variant_id","")))
+		"harvest": return world.harvest(cell)
+		"fell": return world.harvest(cell,"fell")
+		"clear": return world.clear_crop(cell)
+		"irrigate": return world.irrigate(cell)
+		"fertilize": return world.fertilize(cell)
+	return {"ok":false,"reason":"未知农务工具"}
+
+func _batch_candidate_count(rect: Rect2i,kind: String) -> int:
+	return int(BatchUI.preview(world,rect,kind,selected_crop)["targets"])
+
+func _copy_from_cell(cell: Vector2i) -> void:
+	var crop:=world.instance_at(cell)
+	var facility:=world.facility_at(cell)
+	if not facility.is_empty():
+		var ident:=String(facility["facility_id"])
+		if ident=="field_service_station":
+			var device: Dictionary=world.devices.device_of(int(facility["uid"]))
+			copy_config={"kind":"station","facility_id":ident,"irrigate":bool(device.get("irrigate",true)),"fertilize":bool(device.get("fertilize",true)),"threshold":int(device.get("threshold",world.devices.settings["station"]["threshold"]))}
+		elif world.facility_defs[ident].get("kind","facility")=="facility":
+			var strategy: Dictionary=world.operations.strategy_of(int(facility["uid"]))
+			copy_config={"kind":"production","facility_id":ident,"strategy":strategy}
+		else:
+			notice.text="此设施不在首版配置复制范围内";return
+	elif not crop.is_empty():
+		var plan: Dictionary=world.workforce.seed_plan(Vector2i(int(crop["origin"][0]),int(crop["origin"][1])))
+		copy_config={"kind":"seed","crop_id":String(plan.get("crop_id",""))}
+	elif world.rooms.floor_kind(cell)=="farmland":
+		var plan: Dictionary=world.workforce.seed_plan(cell)
+		copy_config={"kind":"seed","crop_id":String(plan.get("crop_id",""))}
+	else:
+		notice.text="这里没有可复制的配置";return
+	notice.text="已取样配置；拖动或点击目标地格粘贴。右键取消。"
+
+func _run_copy_rectangle(rect: Rect2i) -> void:
+	var succeeded:=0
+	var skipped:=0
+	var reason:=""
+	var pasted_footprints: Array[Rect2i]=[]
+	for cell in BatchUI.cells(rect):
+		var candidate_footprint:=Rect2i()
+		if String(copy_config.get("kind",""))=="seed" and not String(copy_config.get("crop_id","")).is_empty():
+			var crop_shape: Array=world.crop_defs[String(copy_config["crop_id"])]["footprint"]
+			candidate_footprint=Rect2i(cell,Vector2i(int(crop_shape[0]),int(crop_shape[1])))
+			var duplicate_anchor:=false
+			for placed in pasted_footprints:
+				if placed.has_point(cell): duplicate_anchor=true;break
+			if duplicate_anchor: continue
+		var result: Dictionary={"ok":false,"reason":"目标类型不兼容"}
+		match String(copy_config.get("kind","")):
+			"seed":
+				var crop_id:=String(copy_config["crop_id"])
+				if crop_id.is_empty():
+					if world.rooms.floor_kind(cell)=="farmland": result=world.workforce.set_seed(cell,"")
+					else: result={"ok":false,"reason":"目标不是耕地"}
+				else:
+					var definition: Dictionary=world.crop_defs[crop_id]
+					var shape: Array=definition["footprint"]
+					var footprint:=Rect2i(cell,Vector2i(int(shape[0]),int(shape[1])))
+					if rect.get_area()>1 and not rect.encloses(footprint): result={"ok":false,"reason":"完整占地超出框选范围"}
+					else:
+						var field_uid:=int(world.rooms.field_at(cell).get("uid",-1))
+						var compatible:=field_uid>0
+						for point in P8Workforce.footprint(footprint):
+							if world.rooms.floor_kind(point)!="farmland" or int(world.rooms.field_at(point).get("uid",-2))!=field_uid: compatible=false
+						if compatible: result=world.workforce.set_seed(cell,crop_id)
+						else: result={"ok":false,"reason":"完整占地必须位于同一耕地田块"}
+			"station", "production":
+				var facility: Dictionary=world.facility_at(cell)
+				if not facility.is_empty() and String(facility["facility_id"])==String(copy_config["facility_id"]):
+					if copy_config["kind"]=="station":
+						result=world.devices.configure_station(int(facility["uid"]),bool(copy_config["irrigate"]),bool(copy_config["fertilize"]),int(copy_config["threshold"]))
+					else:
+						var strategy: Dictionary=copy_config["strategy"]
+						result=world.operations.copy_production(int(facility["uid"]),strategy)
+		if result.get("ok",false):
+			succeeded+=1
+			if String(copy_config.get("kind",""))=="seed" and not String(copy_config.get("crop_id","")).is_empty(): pasted_footprints.append(candidate_footprint)
+		else:
+			skipped+=1
+			if reason.is_empty(): reason=String(result.get("reason","目标类型不兼容"))
+	copy_config.clear()
+	notice.text="配置粘贴完成：成功%d处，跳过%d处%s" % [succeeded,skipped," · "+reason if not reason.is_empty() else ""]
+	_show_cell()
+	_layout()
 
 func _draw_world_entities(target: Node2D, readable: float) -> void:
 	rooms_ui.draw_ground(target,false)
@@ -660,6 +1080,15 @@ func _show_help() -> void:
 	var wiki_tab := _button(tabs,"百科目录",func(): _help_mode = "encyclopedia"; _show_help())
 	wiki_tab.toggle_mode = true
 	wiki_tab.button_pressed = _help_mode == "encyclopedia"
+	var reading:=HBoxContainer.new()
+	sidebar.add_child(reading)
+	var expand:=_button(reading,"恢复窗口" if reading_expanded else "展开阅读",func(): _set_reading(not reading_expanded,reading_font))
+	expand.tooltip_text="阅读模式只改变手册/百科弹窗布局，不切换游戏窗口"
+	var fonts:=OptionButton.new()
+	for title in ["默认字号","较大字号","大字号"]: fonts.add_item(title)
+	fonts.select(reading_font)
+	fonts.item_selected.connect(func(index): _set_reading(reading_expanded,index))
+	reading.add_child(fonts)
 	if _help_mode == "encyclopedia":
 		encyclopedia.render_into(sidebar)
 		return
@@ -692,6 +1121,17 @@ func _show_help() -> void:
 		for index in range(card["steps"].size()):
 			_label(body,"%d. %s" % [index + 1, card["steps"][index]])
 	if _started:
+		var saved_tutorial: Dictionary=world.preferences.get("tutorial",Tutorial.fresh())
+		var tutorial_row:=_card(sidebar)
+		_heading(tutorial_row,"逐日新手指引")
+		var progress: Dictionary=Tutorial.progress(world,saved_tutorial)
+		if bool(saved_tutorial.get("enabled",true)):
+			var next: Dictionary=progress["next"]
+			_label(tutorial_row,"%d/%d步 · %s" % [progress["done"].size(),Tutorial.STEPS.size(),"已完成" if bool(progress["complete"]) else String(next["title"])])
+			_icon(tutorial_row,"close","取消指引（进度保留）",func(): _tutorial_pref("enabled",false);_show_help())
+		else:
+			_label(tutorial_row,"指引已取消，进度保留；不会自动弹出。")
+			_icon(tutorial_row,"play","恢复指引",func(): _tutorial_pref("enabled",true);_tutorial_pref("dismissed",false);_show_help())
 		var hints := HBoxContainer.new()
 		sidebar.add_child(hints)
 		_icon(hints,"cancel","跳过底栏操作提示",func(): _result(world.guide_dismiss(true)); _show_help())

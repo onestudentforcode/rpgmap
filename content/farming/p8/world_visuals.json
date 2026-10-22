@@ -1,5 +1,6 @@
 {
   "schema_version": 1,
+  "plant_profile": "p109",
   "terrain_detail_strength": 0.0,
   "terrain_surface_detail": 1.0,
   "terrain_surface_kinds": {

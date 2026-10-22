@@ -1,5 +1,5 @@
 extends RefCounted
-## Offline Blender renders: persistent textures, projected roots and fixed canvases.
+## Manifest-driven plant art: persistent textures, projected roots and fixed canvases.
 const Grounding := preload("res://scripts/farming/p8/p8_grounding.gd")
 var plants: Dictionary = {}
 var textures: Dictionary = {}
@@ -22,6 +22,10 @@ func _init(manifest_path: String = "res://assets/farming/crops/plant_manifest.js
 			var error := image.load_png_from_buffer(FileAccess.get_file_as_bytes(data_path)) if FileAccess.file_exists(data_path) else ERR_FILE_NOT_FOUND
 			if error != OK or image.is_empty():
 				_diagnose("%s/%s" % [ident, key], "cannot load %s (%d)" % [path, error])
+				continue
+			var canvas: Array = plants[ident]["canvas_px"]
+			if image.get_size() != Vector2i(int(canvas[0]),int(canvas[1])):
+				_diagnose("%s/%s" % [ident,key], "canvas mismatch: " + path)
 				continue
 			image.fix_alpha_edges()
 			image.generate_mipmaps()
