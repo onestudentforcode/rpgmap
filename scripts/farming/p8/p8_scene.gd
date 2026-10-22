@@ -6,6 +6,12 @@ const P8Store := preload("res://scripts/farming/p8/p8_slot_store.gd")
 const Handbook := preload("res://scripts/farming/p8/p8_handbook.gd")
 const PlantVisuals := preload("res://scripts/farming/p8/p8_plant_visuals.gd")
 var plant_visuals := PlantVisuals.new()
+var plant_profile := "legacy"
+var _plant_profiles: Dictionary = {}
+const PLANT_PROFILES := {
+	"legacy":"res://assets/farming/crops/plant_manifest.json",
+	"p109":"res://assets/farming/p109/runtime/plant_manifest.json",
+}
 const FacilityVisuals := preload("res://scripts/farming/p8/p8_facility_visuals.gd")
 var facility_visuals := FacilityVisuals.new()
 const TerrainSoften := preload("res://assets/farming/shaders/p8_terrain_soften.gdshader")
@@ -131,6 +137,11 @@ func _ready() -> void:
 	board.mouse_exited.connect(func(): _map_pan = false)
 	_load_reading_preferences()
 	var style: Dictionary = JSON.parse_string(FileAccess.get_file_as_string("res://content/farming/p8/world_visuals.json"))
+	var requested_plants := String(style.get("plant_profile", "legacy"))
+	for argument in OS.get_cmdline_user_args():
+		if argument.begins_with("--plants="): requested_plants = argument.trim_prefix("--plants=")
+	var plant_result := configure_plant_profile(requested_plants)
+	if not plant_result["ok"]: push_error("Plant profile retained: %s" % plant_result["diagnostics"])
 	for ident in style["terrain_tones"]:
 		if not terrain.layers.has(ident): continue
 		var material := ShaderMaterial.new()
@@ -153,6 +164,43 @@ func _ready() -> void:
 		probe.shell = self
 		add_child(probe)
 		probe.run.call_deferred()
+
+func configure_plant_profile(profile: String) -> Dictionary:
+	if not PLANT_PROFILES.has(profile):
+		return {"ok":false,"profile":plant_profile,"diagnostics":["unknown plant profile: " + profile]}
+	if _plant_profiles.is_empty(): _plant_profiles[plant_profile] = plant_visuals
+	var candidate = _plant_profiles.get(profile)
+	if candidate == null: candidate = PlantVisuals.new(PLANT_PROFILES[profile])
+	# Full species/stage sets must load before replacing any live visuals.
+	var problems: Array = candidate.diagnostics.values()
+	if candidate.plants.keys().size() != plant_visuals.plants.keys().size(): problems.append("plant species count mismatch")
+	for ident in plant_visuals.plants:
+		if not candidate.plants.has(ident):
+			problems.append("missing plant: " + ident)
+			continue
+		for key in plant_visuals.plants[ident]["stages"]:
+			if not candidate.plants[ident]["stages"].has(key): problems.append("missing plant stage: %s/%s" % [ident,key])
+	if not problems.is_empty(): return {"ok":false,"profile":plant_profile,"diagnostics":problems}
+	_plant_profiles[profile] = candidate
+	plant_visuals = candidate
+	plant_profile = profile
+	if is_instance_valid(overlay): overlay.queue_redraw()
+	if has_method("invalidate_projection_bounds"): call("invalidate_projection_bounds")
+	return {"ok":true,"profile":plant_profile,"diagnostics":[]}
+
+func _show_settings() -> void:
+	super()
+	_label(sidebar,"植物美术预览（本次运行生效）")
+	var picker := OptionButton.new()
+	picker.add_item("P10.9 新植物")
+	picker.add_item("旧版植物")
+	picker.select(0 if plant_profile == "p109" else 1)
+	picker.item_selected.connect(func(index):
+		var result := configure_plant_profile("p109" if index == 0 else "legacy")
+		if not result["ok"]:
+			picker.select(0 if plant_profile == "p109" else 1)
+			_result(result))
+	sidebar.add_child(picker)
 
 func configure_visual_trial(profile: String, runtime_dir: String = "") -> Dictionary:
 	if profile not in ["baseline","grounding","integrated"]:
