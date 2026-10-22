@@ -1,0 +1,2632 @@
+{
+  "schema": 1,
+  "date": "2026-10-22",
+  "kind": "planning_inventory_not_runtime_manifest",
+  "baseline_commit": "d1931f7",
+  "runtime_changes_made": false,
+  "historical_revisions_excluded": true,
+  "summary": {
+    "unique_species": 27,
+    "active_source_images": 75,
+    "plant_images": 41,
+    "living_images": 34,
+    "pilot_species": 5,
+    "pilot_images": 16,
+    "remaining_plant_images": 29,
+    "remaining_living_images": 30,
+    "R0": "complete",
+    "R1": "next"
+  },
+  "source_manifests": [
+    "assets/farming/p109/source/manifest.json",
+    "assets/farming/p109/source/states_manifest.json"
+  ],
+  "pilot_ids": [
+    "filter_algae_carp",
+    "golden_wheat",
+    "mulberry_tree",
+    "reed",
+    "steel_sheep"
+  ],
+  "assets": [
+    {
+      "id": "steel_sheep",
+      "name": "钢绵羊",
+      "category": "animals",
+      "source_state": "adult",
+      "runtime_state_key": "adult",
+      "source_file": "assets/farming/p109/source/animals/steel_sheep/steel_sheep_adult_source_v001.png",
+      "source_sha256": "c25c55ff8b94184503a3bd37fc540fb83bdc738f82e87b392b2065af35850ca3",
+      "source_canvas_px": [
+        1254,
+        1254
+      ],
+      "source_mode": "RGB",
+      "source_visual_status": "adult_user_accepted",
+      "proposed_runtime_file": "assets/farming/p109/runtime/animals/steel_sheep/adult.png",
+      "work_package": "R1",
+      "status": "source_selected_runtime_preparation_pending",
+      "runtime_integrated": false,
+      "requires_alpha_extraction": true,
+      "runtime_metadata": {
+        "canvas_px": null,
+        "anchor_uv": null,
+        "draw_size": null,
+        "camera_verified": false
+      },
+      "legacy_plant_display_contract": {}
+    },
+    {
+      "id": "steel_sheep",
+      "name": "钢绵羊",
+      "category": "animals",
+      "source_state": "juvenile",
+      "runtime_state_key": "juvenile",
+      "source_file": "assets/farming/p109/source/animals/steel_sheep/steel_sheep_juvenile_view35_v002.png",
+      "source_sha256": "85737d0d3f7f5f38699625460556342af14406d547ce4886b777152fddf423ec",
+      "source_canvas_px": [
+        1254,
+        1254
+      ],
+      "source_mode": "RGBA",
+      "source_visual_status": "steel_sheep_v002_specification_basis",
+      "proposed_runtime_file": "assets/farming/p109/runtime/animals/steel_sheep/juvenile.png",
+      "work_package": "R1",
+      "status": "source_selected_runtime_preparation_pending",
+      "runtime_integrated": false,
+      "requires_alpha_extraction": false,
+      "runtime_metadata": {
+        "canvas_px": null,
+        "anchor_uv": null,
+        "draw_size": null,
+        "camera_verified": false
+      },
+      "legacy_plant_display_contract": {}
+    },
+    {
+      "id": "filter_algae_carp",
+      "name": "滤藻鲤",
+      "category": "aquatic",
+      "source_state": "adult",
+      "runtime_state_key": "adult",
+      "source_file": "assets/farming/p109/source/aquatic/filter_algae_carp/filter_algae_carp_adult_view35_v001.png",
+      "source_sha256": "dea322647ff0f6b5072b6f0d7ebe36d32dfbd34312e3a5d516a03f5ce57b79eb",
+      "source_canvas_px": [
+        1536,
+        1024
+      ],
+      "source_mode": "RGBA",
+      "source_visual_status": "adult_user_accepted",
+      "proposed_runtime_file": "assets/farming/p109/runtime/aquatic/filter_algae_carp/adult.png",
+      "work_package": "R1",
+      "status": "source_selected_runtime_preparation_pending",
+      "runtime_integrated": false,
+      "requires_alpha_extraction": false,
+      "runtime_metadata": {
+        "canvas_px": null,
+        "anchor_uv": null,
+        "draw_size": null,
+        "camera_verified": false
+      },
+      "legacy_plant_display_contract": {}
+    },
+    {
+      "id": "filter_algae_carp",
+      "name": "滤藻鲤",
+      "category": "aquatic",
+      "source_state": "juvenile",
+      "runtime_state_key": "juvenile",
+      "source_file": "assets/farming/p109/source/aquatic/filter_algae_carp/filter_algae_carp_juvenile_view35_v002.png",
+      "source_sha256": "0b0062b32e2c085ce422de0feed5719d80fc3650ad555314f8f41e094831d505",
+      "source_canvas_px": [
+        1536,
+        1024
+      ],
+      "source_mode": "RGBA",
+      "source_visual_status": "pending_user_visual_review",
+      "proposed_runtime_file": "assets/farming/p109/runtime/aquatic/filter_algae_carp/juvenile.png",
+      "work_package": "R1",
+      "status": "source_selected_runtime_preparation_pending",
+      "runtime_integrated": false,
+      "requires_alpha_extraction": false,
+      "runtime_metadata": {
+        "canvas_px": null,
+        "anchor_uv": null,
+        "draw_size": null,
+        "camera_verified": false
+      },
+      "legacy_plant_display_contract": {}
+    },
+    {
+      "id": "golden_wheat",
+      "name": "金穗麦",
+      "category": "plants",
+      "source_state": "stage_0",
+      "runtime_state_key": "stage_0",
+      "source_file": "assets/farming/p109/source/plants/golden_wheat/golden_wheat_stage_0_view35_v001.png",
+      "source_sha256": "4de426d9a961847468fb8b50dd93b196a3806adbe6edba1fbcd88db4c00dd7c2",
+      "source_canvas_px": [
+        1145,
+        1374
+      ],
+      "source_mode": "RGBA",
+      "source_visual_status": "pending_user_visual_review",
+      "proposed_runtime_file": "assets/farming/p109/runtime/plants/golden_wheat/stage_0.png",
+      "work_package": "R1",
+      "status": "source_selected_runtime_preparation_pending",
+      "runtime_integrated": false,
+      "requires_alpha_extraction": false,
+      "runtime_metadata": {
+        "canvas_px": null,
+        "anchor_uv": null,
+        "draw_size": null,
+        "camera_verified": false
+      },
+      "legacy_plant_display_contract": {
+        "canvas_px": [
+          256,
+          256
+        ],
+        "anchor_uv": [
+          0.4999997019767761,
+          0.9276604503393173
+        ],
+        "draw_size": [
+          75.19999694824219,
+          75.19999694824219
+        ],
+        "scale_multiplier": 1.0
+      }
+    },
+    {
+      "id": "golden_wheat",
+      "name": "金穗麦",
+      "category": "plants",
+      "source_state": "stage_1",
+      "runtime_state_key": "stage_1",
+      "source_file": "assets/farming/p109/source/plants/golden_wheat/golden_wheat_stage_1_view35_v001.png",
+      "source_sha256": "3df037c400c1dde339394e6b299c321a0922d55e410bb01578665fe524aedc06",
+      "source_canvas_px": [
+        1024,
+        1536
+      ],
+      "source_mode": "RGBA",
+      "source_visual_status": "pending_user_visual_review",
+      "proposed_runtime_file": "assets/farming/p109/runtime/plants/golden_wheat/stage_1.png",
+      "work_package": "R1",
+      "status": "source_selected_runtime_preparation_pending",
+      "runtime_integrated": false,
+      "requires_alpha_extraction": false,
+      "runtime_metadata": {
+        "canvas_px": null,
+        "anchor_uv": null,
+        "draw_size": null,
+        "camera_verified": false
+      },
+      "legacy_plant_display_contract": {
+        "canvas_px": [
+          256,
+          256
+        ],
+        "anchor_uv": [
+          0.4999997019767761,
+          0.9276604503393173
+        ],
+        "draw_size": [
+          75.19999694824219,
+          75.19999694824219
+        ],
+        "scale_multiplier": 1.0
+      }
+    },
+    {
+      "id": "golden_wheat",
+      "name": "金穗麦",
+      "category": "plants",
+      "source_state": "stage_2",
+      "runtime_state_key": "stage_2",
+      "source_file": "assets/farming/p109/source/plants/golden_wheat/golden_wheat_stage_2_view35_v001.png",
+      "source_sha256": "05db7ed9a0f66e3ca198129c1dd753e644c673ea61376a887b4b46f8f2eebcf9",
+      "source_canvas_px": [
+        1024,
+        1536
+      ],
+      "source_mode": "RGBA",
+      "source_visual_status": "pending_user_visual_review",
+      "proposed_runtime_file": "assets/farming/p109/runtime/plants/golden_wheat/stage_2.png",
+      "work_package": "R1",
+      "status": "source_selected_runtime_preparation_pending",
+      "runtime_integrated": false,
+      "requires_alpha_extraction": false,
+      "runtime_metadata": {
+        "canvas_px": null,
+        "anchor_uv": null,
+        "draw_size": null,
+        "camera_verified": false
+      },
+      "legacy_plant_display_contract": {
+        "canvas_px": [
+          256,
+          256
+        ],
+        "anchor_uv": [
+          0.4999997019767761,
+          0.9276604503393173
+        ],
+        "draw_size": [
+          75.19999694824219,
+          75.19999694824219
+        ],
+        "scale_multiplier": 1.0
+      }
+    },
+    {
+      "id": "golden_wheat",
+      "name": "金穗麦",
+      "category": "plants",
+      "source_state": "mature",
+      "runtime_state_key": "stage_3",
+      "source_file": "assets/farming/p109/source/plants/golden_wheat/golden_wheat_mature_view35_v001.png",
+      "source_sha256": "8bcaa6704c6b67765fbcc1b2caa1a7ea43fe27387fbcaf7e61aa14494b31ceda",
+      "source_canvas_px": [
+        1024,
+        1536
+      ],
+      "source_mode": "RGBA",
+      "source_visual_status": "adult_user_accepted",
+      "proposed_runtime_file": "assets/farming/p109/runtime/plants/golden_wheat/stage_3.png",
+      "work_package": "R1",
+      "status": "source_selected_runtime_preparation_pending",
+      "runtime_integrated": false,
+      "requires_alpha_extraction": false,
+      "runtime_metadata": {
+        "canvas_px": null,
+        "anchor_uv": null,
+        "draw_size": null,
+        "camera_verified": false
+      },
+      "legacy_plant_display_contract": {
+        "canvas_px": [
+          256,
+          256
+        ],
+        "anchor_uv": [
+          0.4999997019767761,
+          0.9276604503393173
+        ],
+        "draw_size": [
+          75.19999694824219,
+          75.19999694824219
+        ],
+        "scale_multiplier": 1.0
+      }
+    },
+    {
+      "id": "mulberry_tree",
+      "name": "果桑树",
+      "category": "plants",
+      "source_state": "stage_0",
+      "runtime_state_key": "stage_0",
+      "source_file": "assets/farming/p109/source/plants/mulberry_tree/mulberry_tree_stage_0_view35_v001.png",
+      "source_sha256": "915bb34621b0c01ed51cafdf292a386c57bdcd14cd309be385de034560c09435",
+      "source_canvas_px": [
+        1024,
+        1536
+      ],
+      "source_mode": "RGBA",
+      "source_visual_status": "pending_user_visual_review",
+      "proposed_runtime_file": "assets/farming/p109/runtime/plants/mulberry_tree/stage_0.png",
+      "work_package": "R1",
+      "status": "source_selected_runtime_preparation_pending",
+      "runtime_integrated": false,
+      "requires_alpha_extraction": false,
+      "runtime_metadata": {
+        "canvas_px": null,
+        "anchor_uv": null,
+        "draw_size": null,
+        "camera_verified": false
+      },
+      "legacy_plant_display_contract": {
+        "canvas_px": [
+          512,
+          768
+        ],
+        "anchor_uv": [
+          0.49999988079071045,
+          0.9203707501292229
+        ],
+        "draw_size": [
+          115.2,
+          172.8
+        ],
+        "scale_multiplier": 1.0
+      }
+    },
+    {
+      "id": "mulberry_tree",
+      "name": "果桑树",
+      "category": "plants",
+      "source_state": "stage_1",
+      "runtime_state_key": "stage_1",
+      "source_file": "assets/farming/p109/source/plants/mulberry_tree/mulberry_tree_stage_1_view35_v001.png",
+      "source_sha256": "19777dd8ac00fe0ac3aa9caa32371b8f54719014eddff3d9c0c1250f15bc1a1e",
+      "source_canvas_px": [
+        1024,
+        1536
+      ],
+      "source_mode": "RGBA",
+      "source_visual_status": "pending_user_visual_review",
+      "proposed_runtime_file": "assets/farming/p109/runtime/plants/mulberry_tree/stage_1.png",
+      "work_package": "R1",
+      "status": "source_selected_runtime_preparation_pending",
+      "runtime_integrated": false,
+      "requires_alpha_extraction": false,
+      "runtime_metadata": {
+        "canvas_px": null,
+        "anchor_uv": null,
+        "draw_size": null,
+        "camera_verified": false
+      },
+      "legacy_plant_display_contract": {
+        "canvas_px": [
+          512,
+          768
+        ],
+        "anchor_uv": [
+          0.49999988079071045,
+          0.9203707501292229
+        ],
+        "draw_size": [
+          115.2,
+          172.8
+        ],
+        "scale_multiplier": 1.0
+      }
+    },
+    {
+      "id": "mulberry_tree",
+      "name": "果桑树",
+      "category": "plants",
+      "source_state": "stage_2",
+      "runtime_state_key": "stage_2",
+      "source_file": "assets/farming/p109/source/plants/mulberry_tree/mulberry_tree_stage_2_view35_v001.png",
+      "source_sha256": "ec19969486e2c4e9f531c6eb1e130559d689aa2df19bea742981f3ed1cbb80bd",
+      "source_canvas_px": [
+        1024,
+        1536
+      ],
+      "source_mode": "RGBA",
+      "source_visual_status": "pending_user_visual_review",
+      "proposed_runtime_file": "assets/farming/p109/runtime/plants/mulberry_tree/stage_2.png",
+      "work_package": "R1",
+      "status": "source_selected_runtime_preparation_pending",
+      "runtime_integrated": false,
+      "requires_alpha_extraction": false,
+      "runtime_metadata": {
+        "canvas_px": null,
+        "anchor_uv": null,
+        "draw_size": null,
+        "camera_verified": false
+      },
+      "legacy_plant_display_contract": {
+        "canvas_px": [
+          512,
+          768
+        ],
+        "anchor_uv": [
+          0.49999988079071045,
+          0.9203707501292229
+        ],
+        "draw_size": [
+          115.2,
+          172.8
+        ],
+        "scale_multiplier": 1.0
+      }
+    },
+    {
+      "id": "mulberry_tree",
+      "name": "果桑树",
+      "category": "plants",
+      "source_state": "mature",
+      "runtime_state_key": "stage_3",
+      "source_file": "assets/farming/p109/source/plants/mulberry_tree/mulberry_tree_mature_view35_v001.png",
+      "source_sha256": "69c32b77784d51a945a1675e087ccfbcd32bdd50fb94a9256d955c596ca741e3",
+      "source_canvas_px": [
+        1024,
+        1536
+      ],
+      "source_mode": "RGBA",
+      "source_visual_status": "adult_user_accepted",
+      "proposed_runtime_file": "assets/farming/p109/runtime/plants/mulberry_tree/stage_3.png",
+      "work_package": "R1",
+      "status": "source_selected_runtime_preparation_pending",
+      "runtime_integrated": false,
+      "requires_alpha_extraction": false,
+      "runtime_metadata": {
+        "canvas_px": null,
+        "anchor_uv": null,
+        "draw_size": null,
+        "camera_verified": false
+      },
+      "legacy_plant_display_contract": {
+        "canvas_px": [
+          512,
+          768
+        ],
+        "anchor_uv": [
+          0.49999988079071045,
+          0.9203707501292229
+        ],
+        "draw_size": [
+          115.2,
+          172.8
+        ],
+        "scale_multiplier": 1.0
+      }
+    },
+    {
+      "id": "reed",
+      "name": "芦苇",
+      "category": "plants",
+      "source_state": "stage_0",
+      "runtime_state_key": "stage_0",
+      "source_file": "assets/farming/p109/source/plants/reed/reed_stage_0_view35_v001.png",
+      "source_sha256": "fcee0f2fd0782de2c14f207e9b5cdbe82a4ae5eed7e1fafe0f1b337780d5c984",
+      "source_canvas_px": [
+        1024,
+        1536
+      ],
+      "source_mode": "RGBA",
+      "source_visual_status": "pending_user_visual_review",
+      "proposed_runtime_file": "assets/farming/p109/runtime/plants/reed/stage_0.png",
+      "work_package": "R1",
+      "status": "source_selected_runtime_preparation_pending",
+      "runtime_integrated": false,
+      "requires_alpha_extraction": false,
+      "runtime_metadata": {
+        "canvas_px": null,
+        "anchor_uv": null,
+        "draw_size": null,
+        "camera_verified": false
+      },
+      "legacy_plant_display_contract": {
+        "canvas_px": [
+          512,
+          768
+        ],
+        "anchor_uv": [
+          0.49999988079071045,
+          0.9203707501292229
+        ],
+        "draw_size": [
+          115.2,
+          172.8
+        ],
+        "scale_multiplier": 1.0
+      }
+    },
+    {
+      "id": "reed",
+      "name": "芦苇",
+      "category": "plants",
+      "source_state": "stage_1",
+      "runtime_state_key": "stage_1",
+      "source_file": "assets/farming/p109/source/plants/reed/reed_stage_1_view35_v001.png",
+      "source_sha256": "674813e5def31391e3f64842762686b3c5f0a0087e5dd757527b6f691c384292",
+      "source_canvas_px": [
+        1024,
+        1536
+      ],
+      "source_mode": "RGBA",
+      "source_visual_status": "pending_user_visual_review",
+      "proposed_runtime_file": "assets/farming/p109/runtime/plants/reed/stage_1.png",
+      "work_package": "R1",
+      "status": "source_selected_runtime_preparation_pending",
+      "runtime_integrated": false,
+      "requires_alpha_extraction": false,
+      "runtime_metadata": {
+        "canvas_px": null,
+        "anchor_uv": null,
+        "draw_size": null,
+        "camera_verified": false
+      },
+      "legacy_plant_display_contract": {
+        "canvas_px": [
+          512,
+          768
+        ],
+        "anchor_uv": [
+          0.49999988079071045,
+          0.9203707501292229
+        ],
+        "draw_size": [
+          115.2,
+          172.8
+        ],
+        "scale_multiplier": 1.0
+      }
+    },
+    {
+      "id": "reed",
+      "name": "芦苇",
+      "category": "plants",
+      "source_state": "stage_2",
+      "runtime_state_key": "stage_2",
+      "source_file": "assets/farming/p109/source/plants/reed/reed_stage_2_view35_v001.png",
+      "source_sha256": "aa0914f08a5343f7510ec3b87b09159611c1abad65346a398d8f5e41d863812d",
+      "source_canvas_px": [
+        1024,
+        1536
+      ],
+      "source_mode": "RGBA",
+      "source_visual_status": "pending_user_visual_review",
+      "proposed_runtime_file": "assets/farming/p109/runtime/plants/reed/stage_2.png",
+      "work_package": "R1",
+      "status": "source_selected_runtime_preparation_pending",
+      "runtime_integrated": false,
+      "requires_alpha_extraction": false,
+      "runtime_metadata": {
+        "canvas_px": null,
+        "anchor_uv": null,
+        "draw_size": null,
+        "camera_verified": false
+      },
+      "legacy_plant_display_contract": {
+        "canvas_px": [
+          512,
+          768
+        ],
+        "anchor_uv": [
+          0.49999988079071045,
+          0.9203707501292229
+        ],
+        "draw_size": [
+          115.2,
+          172.8
+        ],
+        "scale_multiplier": 1.0
+      }
+    },
+    {
+      "id": "reed",
+      "name": "芦苇",
+      "category": "plants",
+      "source_state": "mature",
+      "runtime_state_key": "stage_3",
+      "source_file": "assets/farming/p109/source/plants/reed/reed_mature_view35_v001.png",
+      "source_sha256": "cfd6abb3a41d6da89cc994d7a27a48594c82f93f377810231820b2dbf3b28382",
+      "source_canvas_px": [
+        1024,
+        1536
+      ],
+      "source_mode": "RGBA",
+      "source_visual_status": "adult_user_accepted",
+      "proposed_runtime_file": "assets/farming/p109/runtime/plants/reed/stage_3.png",
+      "work_package": "R1",
+      "status": "source_selected_runtime_preparation_pending",
+      "runtime_integrated": false,
+      "requires_alpha_extraction": false,
+      "runtime_metadata": {
+        "canvas_px": null,
+        "anchor_uv": null,
+        "draw_size": null,
+        "camera_verified": false
+      },
+      "legacy_plant_display_contract": {
+        "canvas_px": [
+          512,
+          768
+        ],
+        "anchor_uv": [
+          0.49999988079071045,
+          0.9203707501292229
+        ],
+        "draw_size": [
+          115.2,
+          172.8
+        ],
+        "scale_multiplier": 1.0
+      }
+    },
+    {
+      "id": "duckweed",
+      "name": "浮萍",
+      "category": "plants",
+      "source_state": "stage_0",
+      "runtime_state_key": "stage_0",
+      "source_file": "assets/farming/p109/source/plants/duckweed/duckweed_stage_0_view35_v001.png",
+      "source_sha256": "4db0159d20316fe03b6eae64e5bf2671069073889a7f0ca537892dd868f37de3",
+      "source_canvas_px": [
+        1536,
+        1024
+      ],
+      "source_mode": "RGBA",
+      "source_visual_status": "pending_user_visual_review",
+      "proposed_runtime_file": "assets/farming/p109/runtime/plants/duckweed/stage_0.png",
+      "work_package": "R4",
+      "status": "source_selected_runtime_preparation_pending",
+      "runtime_integrated": false,
+      "requires_alpha_extraction": false,
+      "runtime_metadata": {
+        "canvas_px": null,
+        "anchor_uv": null,
+        "draw_size": null,
+        "camera_verified": false
+      },
+      "legacy_plant_display_contract": {
+        "canvas_px": [
+          512,
+          768
+        ],
+        "anchor_uv": [
+          0.49999988079071045,
+          0.9203707501292229
+        ],
+        "draw_size": [
+          115.2,
+          172.8
+        ],
+        "scale_multiplier": 1.0
+      }
+    },
+    {
+      "id": "duckweed",
+      "name": "浮萍",
+      "category": "plants",
+      "source_state": "stage_1",
+      "runtime_state_key": "stage_1",
+      "source_file": "assets/farming/p109/source/plants/duckweed/duckweed_stage_1_view35_v001.png",
+      "source_sha256": "088275b32aa39ae4016683832e81ae1d54d495d28449b7d38547fe8ca76d96d5",
+      "source_canvas_px": [
+        1536,
+        1024
+      ],
+      "source_mode": "RGBA",
+      "source_visual_status": "pending_user_visual_review",
+      "proposed_runtime_file": "assets/farming/p109/runtime/plants/duckweed/stage_1.png",
+      "work_package": "R4",
+      "status": "source_selected_runtime_preparation_pending",
+      "runtime_integrated": false,
+      "requires_alpha_extraction": false,
+      "runtime_metadata": {
+        "canvas_px": null,
+        "anchor_uv": null,
+        "draw_size": null,
+        "camera_verified": false
+      },
+      "legacy_plant_display_contract": {
+        "canvas_px": [
+          512,
+          768
+        ],
+        "anchor_uv": [
+          0.49999988079071045,
+          0.9203707501292229
+        ],
+        "draw_size": [
+          115.2,
+          172.8
+        ],
+        "scale_multiplier": 1.0
+      }
+    },
+    {
+      "id": "duckweed",
+      "name": "浮萍",
+      "category": "plants",
+      "source_state": "stage_2",
+      "runtime_state_key": "stage_2",
+      "source_file": "assets/farming/p109/source/plants/duckweed/duckweed_stage_2_view35_v001.png",
+      "source_sha256": "c2de69828702491227d9e0d48e0531262f86f3f85e4914ee6398414f9a363478",
+      "source_canvas_px": [
+        1536,
+        1024
+      ],
+      "source_mode": "RGBA",
+      "source_visual_status": "pending_user_visual_review",
+      "proposed_runtime_file": "assets/farming/p109/runtime/plants/duckweed/stage_2.png",
+      "work_package": "R4",
+      "status": "source_selected_runtime_preparation_pending",
+      "runtime_integrated": false,
+      "requires_alpha_extraction": false,
+      "runtime_metadata": {
+        "canvas_px": null,
+        "anchor_uv": null,
+        "draw_size": null,
+        "camera_verified": false
+      },
+      "legacy_plant_display_contract": {
+        "canvas_px": [
+          512,
+          768
+        ],
+        "anchor_uv": [
+          0.49999988079071045,
+          0.9203707501292229
+        ],
+        "draw_size": [
+          115.2,
+          172.8
+        ],
+        "scale_multiplier": 1.0
+      }
+    },
+    {
+      "id": "duckweed",
+      "name": "浮萍",
+      "category": "plants",
+      "source_state": "mature",
+      "runtime_state_key": "stage_3",
+      "source_file": "assets/farming/p109/source/plants/duckweed/duckweed_mature_view35_v001.png",
+      "source_sha256": "c88fbbcc10aee66d297930b8ffbebed71d77614e00350f6ae24faec032a0b52a",
+      "source_canvas_px": [
+        1536,
+        1024
+      ],
+      "source_mode": "RGBA",
+      "source_visual_status": "adult_user_accepted",
+      "proposed_runtime_file": "assets/farming/p109/runtime/plants/duckweed/stage_3.png",
+      "work_package": "R4",
+      "status": "source_selected_runtime_preparation_pending",
+      "runtime_integrated": false,
+      "requires_alpha_extraction": false,
+      "runtime_metadata": {
+        "canvas_px": null,
+        "anchor_uv": null,
+        "draw_size": null,
+        "camera_verified": false
+      },
+      "legacy_plant_display_contract": {
+        "canvas_px": [
+          512,
+          768
+        ],
+        "anchor_uv": [
+          0.49999988079071045,
+          0.9203707501292229
+        ],
+        "draw_size": [
+          115.2,
+          172.8
+        ],
+        "scale_multiplier": 1.0
+      }
+    },
+    {
+      "id": "fast_fir",
+      "name": "速生杉",
+      "category": "plants",
+      "source_state": "stage_0",
+      "runtime_state_key": "stage_0",
+      "source_file": "assets/farming/p109/source/plants/fast_fir/fast_fir_stage_0_view35_v001.png",
+      "source_sha256": "22f73b0493cff997addd57addd64de5afd28e111d208086caf3fb5ea00e81e4d",
+      "source_canvas_px": [
+        1024,
+        1536
+      ],
+      "source_mode": "RGBA",
+      "source_visual_status": "pending_user_visual_review",
+      "proposed_runtime_file": "assets/farming/p109/runtime/plants/fast_fir/stage_0.png",
+      "work_package": "R4",
+      "status": "source_selected_runtime_preparation_pending",
+      "runtime_integrated": false,
+      "requires_alpha_extraction": false,
+      "runtime_metadata": {
+        "canvas_px": null,
+        "anchor_uv": null,
+        "draw_size": null,
+        "camera_verified": false
+      },
+      "legacy_plant_display_contract": {
+        "canvas_px": [
+          512,
+          768
+        ],
+        "anchor_uv": [
+          0.49999988079071045,
+          0.8753251135349274
+        ],
+        "draw_size": [
+          123.19999694824219,
+          184.79999542236328
+        ],
+        "scale_multiplier": 1.0
+      }
+    },
+    {
+      "id": "fast_fir",
+      "name": "速生杉",
+      "category": "plants",
+      "source_state": "stage_1",
+      "runtime_state_key": "stage_1",
+      "source_file": "assets/farming/p109/source/plants/fast_fir/fast_fir_stage_1_view35_v001.png",
+      "source_sha256": "ca4ad9ea365b09ff78b300effba4645189a096fe2e79b37dc6acbf04df7d6653",
+      "source_canvas_px": [
+        1024,
+        1536
+      ],
+      "source_mode": "RGBA",
+      "source_visual_status": "pending_user_visual_review",
+      "proposed_runtime_file": "assets/farming/p109/runtime/plants/fast_fir/stage_1.png",
+      "work_package": "R4",
+      "status": "source_selected_runtime_preparation_pending",
+      "runtime_integrated": false,
+      "requires_alpha_extraction": false,
+      "runtime_metadata": {
+        "canvas_px": null,
+        "anchor_uv": null,
+        "draw_size": null,
+        "camera_verified": false
+      },
+      "legacy_plant_display_contract": {
+        "canvas_px": [
+          512,
+          768
+        ],
+        "anchor_uv": [
+          0.49999988079071045,
+          0.8753251135349274
+        ],
+        "draw_size": [
+          123.19999694824219,
+          184.79999542236328
+        ],
+        "scale_multiplier": 1.0
+      }
+    },
+    {
+      "id": "fast_fir",
+      "name": "速生杉",
+      "category": "plants",
+      "source_state": "stage_2",
+      "runtime_state_key": "stage_2",
+      "source_file": "assets/farming/p109/source/plants/fast_fir/fast_fir_stage_2_view35_v001.png",
+      "source_sha256": "51d2f6801fcbc8ee1877a83037bcd3ef4598265169d77f7451c5481219b011af",
+      "source_canvas_px": [
+        1024,
+        1536
+      ],
+      "source_mode": "RGBA",
+      "source_visual_status": "pending_user_visual_review",
+      "proposed_runtime_file": "assets/farming/p109/runtime/plants/fast_fir/stage_2.png",
+      "work_package": "R4",
+      "status": "source_selected_runtime_preparation_pending",
+      "runtime_integrated": false,
+      "requires_alpha_extraction": false,
+      "runtime_metadata": {
+        "canvas_px": null,
+        "anchor_uv": null,
+        "draw_size": null,
+        "camera_verified": false
+      },
+      "legacy_plant_display_contract": {
+        "canvas_px": [
+          512,
+          768
+        ],
+        "anchor_uv": [
+          0.49999988079071045,
+          0.8753251135349274
+        ],
+        "draw_size": [
+          123.19999694824219,
+          184.79999542236328
+        ],
+        "scale_multiplier": 1.0
+      }
+    },
+    {
+      "id": "fast_fir",
+      "name": "速生杉",
+      "category": "plants",
+      "source_state": "mature",
+      "runtime_state_key": "stage_3",
+      "source_file": "assets/farming/p109/source/plants/fast_fir/fast_fir_mature_view35_v001.png",
+      "source_sha256": "ae7e8a6afcb171b8bcc1a8d0c331599330ebb3833bd3e8a14a421752f4b89bb7",
+      "source_canvas_px": [
+        1024,
+        1536
+      ],
+      "source_mode": "RGBA",
+      "source_visual_status": "adult_user_accepted",
+      "proposed_runtime_file": "assets/farming/p109/runtime/plants/fast_fir/stage_3.png",
+      "work_package": "R4",
+      "status": "source_selected_runtime_preparation_pending",
+      "runtime_integrated": false,
+      "requires_alpha_extraction": false,
+      "runtime_metadata": {
+        "canvas_px": null,
+        "anchor_uv": null,
+        "draw_size": null,
+        "camera_verified": false
+      },
+      "legacy_plant_display_contract": {
+        "canvas_px": [
+          512,
+          768
+        ],
+        "anchor_uv": [
+          0.49999988079071045,
+          0.8753251135349274
+        ],
+        "draw_size": [
+          123.19999694824219,
+          184.79999542236328
+        ],
+        "scale_multiplier": 1.0
+      }
+    },
+    {
+      "id": "honeybell_bush",
+      "name": "蜜铃灌木",
+      "category": "plants",
+      "source_state": "stage_0",
+      "runtime_state_key": "stage_0",
+      "source_file": "assets/farming/p109/source/plants/honeybell_bush/honeybell_bush_stage_0_view35_v001.png",
+      "source_sha256": "25f13b4f74c1b97423b1809b1f848f068b2873ea7c9120f2da017b37ce5d5076",
+      "source_canvas_px": [
+        1199,
+        1312
+      ],
+      "source_mode": "RGBA",
+      "source_visual_status": "pending_user_visual_review",
+      "proposed_runtime_file": "assets/farming/p109/runtime/plants/honeybell_bush/stage_0.png",
+      "work_package": "R4",
+      "status": "source_selected_runtime_preparation_pending",
+      "runtime_integrated": false,
+      "requires_alpha_extraction": false,
+      "runtime_metadata": {
+        "canvas_px": null,
+        "anchor_uv": null,
+        "draw_size": null,
+        "camera_verified": false
+      },
+      "legacy_plant_display_contract": {
+        "canvas_px": [
+          256,
+          256
+        ],
+        "anchor_uv": [
+          0.4999997019767761,
+          0.9200009256601334
+        ],
+        "draw_size": [
+          72.0,
+          72.0
+        ],
+        "scale_multiplier": 1.0
+      }
+    },
+    {
+      "id": "honeybell_bush",
+      "name": "蜜铃灌木",
+      "category": "plants",
+      "source_state": "stage_1",
+      "runtime_state_key": "stage_1",
+      "source_file": "assets/farming/p109/source/plants/honeybell_bush/honeybell_bush_stage_1_view35_v001.png",
+      "source_sha256": "3f206775729f9c13c49f7c9c8a90f6e3d3e252d1c18d763346658413b1206473",
+      "source_canvas_px": [
+        1199,
+        1312
+      ],
+      "source_mode": "RGBA",
+      "source_visual_status": "pending_user_visual_review",
+      "proposed_runtime_file": "assets/farming/p109/runtime/plants/honeybell_bush/stage_1.png",
+      "work_package": "R4",
+      "status": "source_selected_runtime_preparation_pending",
+      "runtime_integrated": false,
+      "requires_alpha_extraction": false,
+      "runtime_metadata": {
+        "canvas_px": null,
+        "anchor_uv": null,
+        "draw_size": null,
+        "camera_verified": false
+      },
+      "legacy_plant_display_contract": {
+        "canvas_px": [
+          256,
+          256
+        ],
+        "anchor_uv": [
+          0.4999997019767761,
+          0.9200009256601334
+        ],
+        "draw_size": [
+          72.0,
+          72.0
+        ],
+        "scale_multiplier": 1.0
+      }
+    },
+    {
+      "id": "honeybell_bush",
+      "name": "蜜铃灌木",
+      "category": "plants",
+      "source_state": "stage_2",
+      "runtime_state_key": "stage_2",
+      "source_file": "assets/farming/p109/source/plants/honeybell_bush/honeybell_bush_stage_2_view35_v001.png",
+      "source_sha256": "36f51e73c45f1579b98687e0bd9d7c80a53fc4edf675924d203d0e9ab77c4a6f",
+      "source_canvas_px": [
+        1199,
+        1312
+      ],
+      "source_mode": "RGBA",
+      "source_visual_status": "pending_user_visual_review",
+      "proposed_runtime_file": "assets/farming/p109/runtime/plants/honeybell_bush/stage_2.png",
+      "work_package": "R4",
+      "status": "source_selected_runtime_preparation_pending",
+      "runtime_integrated": false,
+      "requires_alpha_extraction": false,
+      "runtime_metadata": {
+        "canvas_px": null,
+        "anchor_uv": null,
+        "draw_size": null,
+        "camera_verified": false
+      },
+      "legacy_plant_display_contract": {
+        "canvas_px": [
+          256,
+          256
+        ],
+        "anchor_uv": [
+          0.4999997019767761,
+          0.9200009256601334
+        ],
+        "draw_size": [
+          72.0,
+          72.0
+        ],
+        "scale_multiplier": 1.0
+      }
+    },
+    {
+      "id": "honeybell_bush",
+      "name": "蜜铃灌木",
+      "category": "plants",
+      "source_state": "mature",
+      "runtime_state_key": "stage_3",
+      "source_file": "assets/farming/p109/source/plants/honeybell_bush/honeybell_bush_mature_view35_v001.png",
+      "source_sha256": "a520d1c00acc24509da369b9122e5c000d063e1caa1fae6202463d9f7f4bf62b",
+      "source_canvas_px": [
+        1199,
+        1312
+      ],
+      "source_mode": "RGBA",
+      "source_visual_status": "adult_user_accepted",
+      "proposed_runtime_file": "assets/farming/p109/runtime/plants/honeybell_bush/stage_3.png",
+      "work_package": "R4",
+      "status": "source_selected_runtime_preparation_pending",
+      "runtime_integrated": false,
+      "requires_alpha_extraction": false,
+      "runtime_metadata": {
+        "canvas_px": null,
+        "anchor_uv": null,
+        "draw_size": null,
+        "camera_verified": false
+      },
+      "legacy_plant_display_contract": {
+        "canvas_px": [
+          256,
+          256
+        ],
+        "anchor_uv": [
+          0.4999997019767761,
+          0.9200009256601334
+        ],
+        "draw_size": [
+          72.0,
+          72.0
+        ],
+        "scale_multiplier": 1.0
+      }
+    },
+    {
+      "id": "oilseed_flower",
+      "name": "油籽花",
+      "category": "plants",
+      "source_state": "flowering",
+      "runtime_state_key": "flowering",
+      "source_file": "assets/farming/p109/source/plants/oilseed_flower/oilseed_flower_flowering_view35_v001.png",
+      "source_sha256": "82979b8539d432406c03e631fe3dd21564b447588222b5939a9a25e2251823eb",
+      "source_canvas_px": [
+        1024,
+        1536
+      ],
+      "source_mode": "RGBA",
+      "source_visual_status": "pending_user_visual_review",
+      "proposed_runtime_file": "assets/farming/p109/runtime/plants/oilseed_flower/flowering.png",
+      "work_package": "R4",
+      "status": "source_selected_runtime_preparation_pending",
+      "runtime_integrated": false,
+      "requires_alpha_extraction": false,
+      "runtime_metadata": {
+        "canvas_px": null,
+        "anchor_uv": null,
+        "draw_size": null,
+        "camera_verified": false
+      },
+      "legacy_plant_display_contract": {
+        "canvas_px": [
+          256,
+          256
+        ],
+        "anchor_uv": [
+          0.4999997019767761,
+          0.9234050363302231
+        ],
+        "draw_size": [
+          75.19999694824219,
+          75.19999694824219
+        ],
+        "scale_multiplier": 1.0
+      }
+    },
+    {
+      "id": "oilseed_flower",
+      "name": "油籽花",
+      "category": "plants",
+      "source_state": "stage_0",
+      "runtime_state_key": "stage_0",
+      "source_file": "assets/farming/p109/source/plants/oilseed_flower/oilseed_flower_stage_0_view35_v001.png",
+      "source_sha256": "9489e32cf478cb6f0888e5234fbc9329af0f4ca2e35edd012eaba18cf73d263f",
+      "source_canvas_px": [
+        1024,
+        1536
+      ],
+      "source_mode": "RGBA",
+      "source_visual_status": "pending_user_visual_review",
+      "proposed_runtime_file": "assets/farming/p109/runtime/plants/oilseed_flower/stage_0.png",
+      "work_package": "R4",
+      "status": "source_selected_runtime_preparation_pending",
+      "runtime_integrated": false,
+      "requires_alpha_extraction": false,
+      "runtime_metadata": {
+        "canvas_px": null,
+        "anchor_uv": null,
+        "draw_size": null,
+        "camera_verified": false
+      },
+      "legacy_plant_display_contract": {
+        "canvas_px": [
+          256,
+          256
+        ],
+        "anchor_uv": [
+          0.4999997019767761,
+          0.9234050363302231
+        ],
+        "draw_size": [
+          75.19999694824219,
+          75.19999694824219
+        ],
+        "scale_multiplier": 1.0
+      }
+    },
+    {
+      "id": "oilseed_flower",
+      "name": "油籽花",
+      "category": "plants",
+      "source_state": "stage_1",
+      "runtime_state_key": "stage_1",
+      "source_file": "assets/farming/p109/source/plants/oilseed_flower/oilseed_flower_stage_1_view35_v001.png",
+      "source_sha256": "437a5d7d7bf2135c928e2abda594e90c5d2a856e80f308ba65c1f2b449e59c87",
+      "source_canvas_px": [
+        1024,
+        1536
+      ],
+      "source_mode": "RGBA",
+      "source_visual_status": "pending_user_visual_review",
+      "proposed_runtime_file": "assets/farming/p109/runtime/plants/oilseed_flower/stage_1.png",
+      "work_package": "R4",
+      "status": "source_selected_runtime_preparation_pending",
+      "runtime_integrated": false,
+      "requires_alpha_extraction": false,
+      "runtime_metadata": {
+        "canvas_px": null,
+        "anchor_uv": null,
+        "draw_size": null,
+        "camera_verified": false
+      },
+      "legacy_plant_display_contract": {
+        "canvas_px": [
+          256,
+          256
+        ],
+        "anchor_uv": [
+          0.4999997019767761,
+          0.9234050363302231
+        ],
+        "draw_size": [
+          75.19999694824219,
+          75.19999694824219
+        ],
+        "scale_multiplier": 1.0
+      }
+    },
+    {
+      "id": "oilseed_flower",
+      "name": "油籽花",
+      "category": "plants",
+      "source_state": "stage_2",
+      "runtime_state_key": "stage_2",
+      "source_file": "assets/farming/p109/source/plants/oilseed_flower/oilseed_flower_stage_2_view35_v001.png",
+      "source_sha256": "01ea31b70a2bae185b74d4e130c67f31d3dfa2a0ad463ef828fafa13dd5ea22c",
+      "source_canvas_px": [
+        1024,
+        1536
+      ],
+      "source_mode": "RGBA",
+      "source_visual_status": "pending_user_visual_review",
+      "proposed_runtime_file": "assets/farming/p109/runtime/plants/oilseed_flower/stage_2.png",
+      "work_package": "R4",
+      "status": "source_selected_runtime_preparation_pending",
+      "runtime_integrated": false,
+      "requires_alpha_extraction": false,
+      "runtime_metadata": {
+        "canvas_px": null,
+        "anchor_uv": null,
+        "draw_size": null,
+        "camera_verified": false
+      },
+      "legacy_plant_display_contract": {
+        "canvas_px": [
+          256,
+          256
+        ],
+        "anchor_uv": [
+          0.4999997019767761,
+          0.9234050363302231
+        ],
+        "draw_size": [
+          75.19999694824219,
+          75.19999694824219
+        ],
+        "scale_multiplier": 1.0
+      }
+    },
+    {
+      "id": "oilseed_flower",
+      "name": "油籽花",
+      "category": "plants",
+      "source_state": "mature",
+      "runtime_state_key": "stage_3",
+      "source_file": "assets/farming/p109/source/plants/oilseed_flower/oilseed_flower_mature_view35_v001.png",
+      "source_sha256": "7b59d93ba4dae7883b3809c9b49b358b661fc7e0b0bfa8a5728a06e34aec5945",
+      "source_canvas_px": [
+        1024,
+        1536
+      ],
+      "source_mode": "RGBA",
+      "source_visual_status": "adult_user_accepted",
+      "proposed_runtime_file": "assets/farming/p109/runtime/plants/oilseed_flower/stage_3.png",
+      "work_package": "R4",
+      "status": "source_selected_runtime_preparation_pending",
+      "runtime_integrated": false,
+      "requires_alpha_extraction": false,
+      "runtime_metadata": {
+        "canvas_px": null,
+        "anchor_uv": null,
+        "draw_size": null,
+        "camera_verified": false
+      },
+      "legacy_plant_display_contract": {
+        "canvas_px": [
+          256,
+          256
+        ],
+        "anchor_uv": [
+          0.4999997019767761,
+          0.9234050363302231
+        ],
+        "draw_size": [
+          75.19999694824219,
+          75.19999694824219
+        ],
+        "scale_multiplier": 1.0
+      }
+    },
+    {
+      "id": "pasture_grass",
+      "name": "青牧草",
+      "category": "plants",
+      "source_state": "stage_0",
+      "runtime_state_key": "stage_0",
+      "source_file": "assets/farming/p109/source/plants/pasture_grass/pasture_grass_stage_0_view35_v001.png",
+      "source_sha256": "1dfb976e8feff9d4fb7a23d25884a36fa4e94e8dc339d7f4e5be77274143a19a",
+      "source_canvas_px": [
+        1199,
+        1312
+      ],
+      "source_mode": "RGBA",
+      "source_visual_status": "pending_user_visual_review",
+      "proposed_runtime_file": "assets/farming/p109/runtime/plants/pasture_grass/stage_0.png",
+      "work_package": "R4",
+      "status": "source_selected_runtime_preparation_pending",
+      "runtime_integrated": false,
+      "requires_alpha_extraction": false,
+      "runtime_metadata": {
+        "canvas_px": null,
+        "anchor_uv": null,
+        "draw_size": null,
+        "camera_verified": false
+      },
+      "legacy_plant_display_contract": {
+        "canvas_px": [
+          256,
+          256
+        ],
+        "anchor_uv": [
+          0.49999964237213135,
+          0.8095247745513916
+        ],
+        "draw_size": [
+          67.19999694824219,
+          67.19999694824219
+        ],
+        "scale_multiplier": 1.0
+      }
+    },
+    {
+      "id": "pasture_grass",
+      "name": "青牧草",
+      "category": "plants",
+      "source_state": "stage_1",
+      "runtime_state_key": "stage_1",
+      "source_file": "assets/farming/p109/source/plants/pasture_grass/pasture_grass_stage_1_view35_v001.png",
+      "source_sha256": "dc88c7562707ff8157a6a156fa8054206b5f5096b6c8b1c93f6847eb5bfc57d3",
+      "source_canvas_px": [
+        1199,
+        1312
+      ],
+      "source_mode": "RGBA",
+      "source_visual_status": "pending_user_visual_review",
+      "proposed_runtime_file": "assets/farming/p109/runtime/plants/pasture_grass/stage_1.png",
+      "work_package": "R4",
+      "status": "source_selected_runtime_preparation_pending",
+      "runtime_integrated": false,
+      "requires_alpha_extraction": false,
+      "runtime_metadata": {
+        "canvas_px": null,
+        "anchor_uv": null,
+        "draw_size": null,
+        "camera_verified": false
+      },
+      "legacy_plant_display_contract": {
+        "canvas_px": [
+          256,
+          256
+        ],
+        "anchor_uv": [
+          0.49999964237213135,
+          0.8095247745513916
+        ],
+        "draw_size": [
+          67.19999694824219,
+          67.19999694824219
+        ],
+        "scale_multiplier": 1.0
+      }
+    },
+    {
+      "id": "pasture_grass",
+      "name": "青牧草",
+      "category": "plants",
+      "source_state": "stage_2",
+      "runtime_state_key": "stage_2",
+      "source_file": "assets/farming/p109/source/plants/pasture_grass/pasture_grass_stage_2_view35_v001.png",
+      "source_sha256": "4e00e5da2f2b13bba5127ddb9bd54e387c984a3130c0d0bfd1d73eb2f6d95305",
+      "source_canvas_px": [
+        1199,
+        1312
+      ],
+      "source_mode": "RGBA",
+      "source_visual_status": "pending_user_visual_review",
+      "proposed_runtime_file": "assets/farming/p109/runtime/plants/pasture_grass/stage_2.png",
+      "work_package": "R4",
+      "status": "source_selected_runtime_preparation_pending",
+      "runtime_integrated": false,
+      "requires_alpha_extraction": false,
+      "runtime_metadata": {
+        "canvas_px": null,
+        "anchor_uv": null,
+        "draw_size": null,
+        "camera_verified": false
+      },
+      "legacy_plant_display_contract": {
+        "canvas_px": [
+          256,
+          256
+        ],
+        "anchor_uv": [
+          0.49999964237213135,
+          0.8095247745513916
+        ],
+        "draw_size": [
+          67.19999694824219,
+          67.19999694824219
+        ],
+        "scale_multiplier": 1.0
+      }
+    },
+    {
+      "id": "pasture_grass",
+      "name": "青牧草",
+      "category": "plants",
+      "source_state": "mature",
+      "runtime_state_key": "stage_3",
+      "source_file": "assets/farming/p109/source/plants/pasture_grass/pasture_grass_mature_view35_v001.png",
+      "source_sha256": "24ec03828142808eb160604518c1f4c673b5fa95a6cd43ed9dfb5503d3ca242d",
+      "source_canvas_px": [
+        1199,
+        1312
+      ],
+      "source_mode": "RGBA",
+      "source_visual_status": "adult_user_accepted",
+      "proposed_runtime_file": "assets/farming/p109/runtime/plants/pasture_grass/stage_3.png",
+      "work_package": "R4",
+      "status": "source_selected_runtime_preparation_pending",
+      "runtime_integrated": false,
+      "requires_alpha_extraction": false,
+      "runtime_metadata": {
+        "canvas_px": null,
+        "anchor_uv": null,
+        "draw_size": null,
+        "camera_verified": false
+      },
+      "legacy_plant_display_contract": {
+        "canvas_px": [
+          256,
+          256
+        ],
+        "anchor_uv": [
+          0.49999964237213135,
+          0.8095247745513916
+        ],
+        "draw_size": [
+          67.19999694824219,
+          67.19999694824219
+        ],
+        "scale_multiplier": 1.0
+      }
+    },
+    {
+      "id": "resin_tree",
+      "name": "脂树",
+      "category": "plants",
+      "source_state": "stage_0",
+      "runtime_state_key": "stage_0",
+      "source_file": "assets/farming/p109/source/plants/resin_tree/resin_tree_stage_0_view35_v001.png",
+      "source_sha256": "4852d341c48bbae80465b4e986d390076059189c0ddcbd70402a956dbe75fad1",
+      "source_canvas_px": [
+        1209,
+        1300
+      ],
+      "source_mode": "RGBA",
+      "source_visual_status": "pending_user_visual_review",
+      "proposed_runtime_file": "assets/farming/p109/runtime/plants/resin_tree/stage_0.png",
+      "work_package": "R4",
+      "status": "source_selected_runtime_preparation_pending",
+      "runtime_integrated": false,
+      "requires_alpha_extraction": false,
+      "runtime_metadata": {
+        "canvas_px": null,
+        "anchor_uv": null,
+        "draw_size": null,
+        "camera_verified": false
+      },
+      "legacy_plant_display_contract": {
+        "canvas_px": [
+          512,
+          768
+        ],
+        "anchor_uv": [
+          0.49999988079071045,
+          0.9203707501292229
+        ],
+        "draw_size": [
+          115.2,
+          172.8
+        ],
+        "scale_multiplier": 1.0
+      }
+    },
+    {
+      "id": "resin_tree",
+      "name": "脂树",
+      "category": "plants",
+      "source_state": "stage_1",
+      "runtime_state_key": "stage_1",
+      "source_file": "assets/farming/p109/source/plants/resin_tree/resin_tree_stage_1_view35_v001.png",
+      "source_sha256": "c7cf772eb5ee9474192e6e3f58cedd9a23ec9a79430f120ef9cb8cc9c635bf78",
+      "source_canvas_px": [
+        1209,
+        1300
+      ],
+      "source_mode": "RGBA",
+      "source_visual_status": "pending_user_visual_review",
+      "proposed_runtime_file": "assets/farming/p109/runtime/plants/resin_tree/stage_1.png",
+      "work_package": "R4",
+      "status": "source_selected_runtime_preparation_pending",
+      "runtime_integrated": false,
+      "requires_alpha_extraction": false,
+      "runtime_metadata": {
+        "canvas_px": null,
+        "anchor_uv": null,
+        "draw_size": null,
+        "camera_verified": false
+      },
+      "legacy_plant_display_contract": {
+        "canvas_px": [
+          512,
+          768
+        ],
+        "anchor_uv": [
+          0.49999988079071045,
+          0.9203707501292229
+        ],
+        "draw_size": [
+          115.2,
+          172.8
+        ],
+        "scale_multiplier": 1.0
+      }
+    },
+    {
+      "id": "resin_tree",
+      "name": "脂树",
+      "category": "plants",
+      "source_state": "stage_2",
+      "runtime_state_key": "stage_2",
+      "source_file": "assets/farming/p109/source/plants/resin_tree/resin_tree_stage_2_view35_v001.png",
+      "source_sha256": "131a99b7f0e1688fe8dc2253dcda74e338df353dfa41281274180f088ea8c94e",
+      "source_canvas_px": [
+        1209,
+        1300
+      ],
+      "source_mode": "RGBA",
+      "source_visual_status": "pending_user_visual_review",
+      "proposed_runtime_file": "assets/farming/p109/runtime/plants/resin_tree/stage_2.png",
+      "work_package": "R4",
+      "status": "source_selected_runtime_preparation_pending",
+      "runtime_integrated": false,
+      "requires_alpha_extraction": false,
+      "runtime_metadata": {
+        "canvas_px": null,
+        "anchor_uv": null,
+        "draw_size": null,
+        "camera_verified": false
+      },
+      "legacy_plant_display_contract": {
+        "canvas_px": [
+          512,
+          768
+        ],
+        "anchor_uv": [
+          0.49999988079071045,
+          0.9203707501292229
+        ],
+        "draw_size": [
+          115.2,
+          172.8
+        ],
+        "scale_multiplier": 1.0
+      }
+    },
+    {
+      "id": "resin_tree",
+      "name": "脂树",
+      "category": "plants",
+      "source_state": "mature",
+      "runtime_state_key": "stage_3",
+      "source_file": "assets/farming/p109/source/plants/resin_tree/resin_tree_mature_view35_v001.png",
+      "source_sha256": "e8a7a78cd2b2d0d649d4a77db68541a8e2e17fe7857bc2ae452f2f6400b502ea",
+      "source_canvas_px": [
+        1209,
+        1300
+      ],
+      "source_mode": "RGBA",
+      "source_visual_status": "adult_user_accepted",
+      "proposed_runtime_file": "assets/farming/p109/runtime/plants/resin_tree/stage_3.png",
+      "work_package": "R4",
+      "status": "source_selected_runtime_preparation_pending",
+      "runtime_integrated": false,
+      "requires_alpha_extraction": false,
+      "runtime_metadata": {
+        "canvas_px": null,
+        "anchor_uv": null,
+        "draw_size": null,
+        "camera_verified": false
+      },
+      "legacy_plant_display_contract": {
+        "canvas_px": [
+          512,
+          768
+        ],
+        "anchor_uv": [
+          0.49999988079071045,
+          0.9203707501292229
+        ],
+        "draw_size": [
+          115.2,
+          172.8
+        ],
+        "scale_multiplier": 1.0
+      }
+    },
+    {
+      "id": "wood_decay_mushroom",
+      "name": "木腐菌",
+      "category": "plants",
+      "source_state": "stage_0",
+      "runtime_state_key": "stage_0",
+      "source_file": "assets/farming/p109/source/plants/wood_decay_mushroom/wood_decay_mushroom_stage_0_view35_v001.png",
+      "source_sha256": "a22e7fc4ce7bc143b409265bab7b2d675d3216943be476d56cbc3f05cc6bc606",
+      "source_canvas_px": [
+        1230,
+        1278
+      ],
+      "source_mode": "RGBA",
+      "source_visual_status": "pending_user_visual_review",
+      "proposed_runtime_file": "assets/farming/p109/runtime/plants/wood_decay_mushroom/stage_0.png",
+      "work_package": "R4",
+      "status": "source_selected_runtime_preparation_pending",
+      "runtime_integrated": false,
+      "requires_alpha_extraction": false,
+      "runtime_metadata": {
+        "canvas_px": null,
+        "anchor_uv": null,
+        "draw_size": null,
+        "camera_verified": false
+      },
+      "legacy_plant_display_contract": {
+        "canvas_px": [
+          256,
+          256
+        ],
+        "anchor_uv": [
+          0.49999967217445374,
+          0.9090920239686966
+        ],
+        "draw_size": [
+          70.4000015258789,
+          70.4000015258789
+        ],
+        "scale_multiplier": 1.0
+      }
+    },
+    {
+      "id": "wood_decay_mushroom",
+      "name": "木腐菌",
+      "category": "plants",
+      "source_state": "stage_1",
+      "runtime_state_key": "stage_1",
+      "source_file": "assets/farming/p109/source/plants/wood_decay_mushroom/wood_decay_mushroom_stage_1_view35_v001.png",
+      "source_sha256": "b403ce37def3848469d463bde2f45fd1e6006b2a0da95f810e06eb0ee13b70ff",
+      "source_canvas_px": [
+        1230,
+        1278
+      ],
+      "source_mode": "RGBA",
+      "source_visual_status": "pending_user_visual_review",
+      "proposed_runtime_file": "assets/farming/p109/runtime/plants/wood_decay_mushroom/stage_1.png",
+      "work_package": "R4",
+      "status": "source_selected_runtime_preparation_pending",
+      "runtime_integrated": false,
+      "requires_alpha_extraction": false,
+      "runtime_metadata": {
+        "canvas_px": null,
+        "anchor_uv": null,
+        "draw_size": null,
+        "camera_verified": false
+      },
+      "legacy_plant_display_contract": {
+        "canvas_px": [
+          256,
+          256
+        ],
+        "anchor_uv": [
+          0.49999967217445374,
+          0.9090920239686966
+        ],
+        "draw_size": [
+          70.4000015258789,
+          70.4000015258789
+        ],
+        "scale_multiplier": 1.0
+      }
+    },
+    {
+      "id": "wood_decay_mushroom",
+      "name": "木腐菌",
+      "category": "plants",
+      "source_state": "stage_2",
+      "runtime_state_key": "stage_2",
+      "source_file": "assets/farming/p109/source/plants/wood_decay_mushroom/wood_decay_mushroom_stage_2_view35_v001.png",
+      "source_sha256": "390ff2964da8e86763a9b46bd31e4ac6f0a3beae4bf26c9885fcdf14bd3dbecb",
+      "source_canvas_px": [
+        1230,
+        1278
+      ],
+      "source_mode": "RGBA",
+      "source_visual_status": "pending_user_visual_review",
+      "proposed_runtime_file": "assets/farming/p109/runtime/plants/wood_decay_mushroom/stage_2.png",
+      "work_package": "R4",
+      "status": "source_selected_runtime_preparation_pending",
+      "runtime_integrated": false,
+      "requires_alpha_extraction": false,
+      "runtime_metadata": {
+        "canvas_px": null,
+        "anchor_uv": null,
+        "draw_size": null,
+        "camera_verified": false
+      },
+      "legacy_plant_display_contract": {
+        "canvas_px": [
+          256,
+          256
+        ],
+        "anchor_uv": [
+          0.49999967217445374,
+          0.9090920239686966
+        ],
+        "draw_size": [
+          70.4000015258789,
+          70.4000015258789
+        ],
+        "scale_multiplier": 1.0
+      }
+    },
+    {
+      "id": "wood_decay_mushroom",
+      "name": "木腐菌",
+      "category": "plants",
+      "source_state": "mature",
+      "runtime_state_key": "stage_3",
+      "source_file": "assets/farming/p109/source/plants/wood_decay_mushroom/wood_decay_mushroom_mature_view35_v001.png",
+      "source_sha256": "e058d9c3ee1224dad71f85ff9e63039e34ea3bd06502e761707a26982ea7a530",
+      "source_canvas_px": [
+        1230,
+        1278
+      ],
+      "source_mode": "RGBA",
+      "source_visual_status": "adult_user_accepted",
+      "proposed_runtime_file": "assets/farming/p109/runtime/plants/wood_decay_mushroom/stage_3.png",
+      "work_package": "R4",
+      "status": "source_selected_runtime_preparation_pending",
+      "runtime_integrated": false,
+      "requires_alpha_extraction": false,
+      "runtime_metadata": {
+        "canvas_px": null,
+        "anchor_uv": null,
+        "draw_size": null,
+        "camera_verified": false
+      },
+      "legacy_plant_display_contract": {
+        "canvas_px": [
+          256,
+          256
+        ],
+        "anchor_uv": [
+          0.49999967217445374,
+          0.9090920239686966
+        ],
+        "draw_size": [
+          70.4000015258789,
+          70.4000015258789
+        ],
+        "scale_multiplier": 1.0
+      }
+    },
+    {
+      "id": "carbon_belly_bug",
+      "name": "炭腹虫",
+      "category": "animals",
+      "source_state": "adult",
+      "runtime_state_key": "adult",
+      "source_file": "assets/farming/p109/source/animals/carbon_belly_bug/carbon_belly_bug_adult_view35_v001.png",
+      "source_sha256": "9398a11b093d5e79bf3af3070160e43b42e7259cb6abcea36b3a5d64347b63b3",
+      "source_canvas_px": [
+        1536,
+        1024
+      ],
+      "source_mode": "RGBA",
+      "source_visual_status": "adult_user_accepted",
+      "proposed_runtime_file": "assets/farming/p109/runtime/animals/carbon_belly_bug/adult.png",
+      "work_package": "R5",
+      "status": "source_selected_runtime_preparation_pending",
+      "runtime_integrated": false,
+      "requires_alpha_extraction": false,
+      "runtime_metadata": {
+        "canvas_px": null,
+        "anchor_uv": null,
+        "draw_size": null,
+        "camera_verified": false
+      },
+      "legacy_plant_display_contract": {}
+    },
+    {
+      "id": "carbon_belly_bug",
+      "name": "炭腹虫",
+      "category": "animals",
+      "source_state": "juvenile",
+      "runtime_state_key": "juvenile",
+      "source_file": "assets/farming/p109/source/animals/carbon_belly_bug/carbon_belly_bug_juvenile_view35_v002.png",
+      "source_sha256": "0d43eac59589bf36d758f95446f165606eb88f828701ccb4be8501bbf6e6c8b1",
+      "source_canvas_px": [
+        1536,
+        1024
+      ],
+      "source_mode": "RGBA",
+      "source_visual_status": "pending_user_visual_review",
+      "proposed_runtime_file": "assets/farming/p109/runtime/animals/carbon_belly_bug/juvenile.png",
+      "work_package": "R5",
+      "status": "source_selected_runtime_preparation_pending",
+      "runtime_integrated": false,
+      "requires_alpha_extraction": false,
+      "runtime_metadata": {
+        "canvas_px": null,
+        "anchor_uv": null,
+        "draw_size": null,
+        "camera_verified": false
+      },
+      "legacy_plant_display_contract": {}
+    },
+    {
+      "id": "compost_mouse",
+      "name": "堆肥鼠",
+      "category": "animals",
+      "source_state": "adult",
+      "runtime_state_key": "adult",
+      "source_file": "assets/farming/p109/source/animals/compost_mouse/compost_mouse_adult_view35_v001.png",
+      "source_sha256": "dc9f5027f7e52c1ce3941d726c6cb4480538a7e50efe83e72e8e6361d6a1a162",
+      "source_canvas_px": [
+        1536,
+        1024
+      ],
+      "source_mode": "RGBA",
+      "source_visual_status": "adult_user_accepted",
+      "proposed_runtime_file": "assets/farming/p109/runtime/animals/compost_mouse/adult.png",
+      "work_package": "R5",
+      "status": "source_selected_runtime_preparation_pending",
+      "runtime_integrated": false,
+      "requires_alpha_extraction": false,
+      "runtime_metadata": {
+        "canvas_px": null,
+        "anchor_uv": null,
+        "draw_size": null,
+        "camera_verified": false
+      },
+      "legacy_plant_display_contract": {}
+    },
+    {
+      "id": "compost_mouse",
+      "name": "堆肥鼠",
+      "category": "animals",
+      "source_state": "juvenile",
+      "runtime_state_key": "juvenile",
+      "source_file": "assets/farming/p109/source/animals/compost_mouse/compost_mouse_juvenile_view35_v002.png",
+      "source_sha256": "325f954de6e054c2063001460b239fb03d9f2f067fb6039a22c180a9ac835eb5",
+      "source_canvas_px": [
+        1536,
+        1024
+      ],
+      "source_mode": "RGBA",
+      "source_visual_status": "pending_user_visual_review",
+      "proposed_runtime_file": "assets/farming/p109/runtime/animals/compost_mouse/juvenile.png",
+      "work_package": "R5",
+      "status": "source_selected_runtime_preparation_pending",
+      "runtime_integrated": false,
+      "requires_alpha_extraction": false,
+      "runtime_metadata": {
+        "canvas_px": null,
+        "anchor_uv": null,
+        "draw_size": null,
+        "camera_verified": false
+      },
+      "legacy_plant_display_contract": {}
+    },
+    {
+      "id": "dew_shell_snail",
+      "name": "露壳蜗牛",
+      "category": "animals",
+      "source_state": "adult",
+      "runtime_state_key": "adult",
+      "source_file": "assets/farming/p109/source/animals/dew_shell_snail/dew_shell_snail_adult_view35_v001.png",
+      "source_sha256": "ee2df90b8a4b274f04fe1b703adbbc24e03bb5257e6da679d7dec7ff3520391f",
+      "source_canvas_px": [
+        1536,
+        1024
+      ],
+      "source_mode": "RGBA",
+      "source_visual_status": "adult_user_accepted",
+      "proposed_runtime_file": "assets/farming/p109/runtime/animals/dew_shell_snail/adult.png",
+      "work_package": "R5",
+      "status": "source_selected_runtime_preparation_pending",
+      "runtime_integrated": false,
+      "requires_alpha_extraction": false,
+      "runtime_metadata": {
+        "canvas_px": null,
+        "anchor_uv": null,
+        "draw_size": null,
+        "camera_verified": false
+      },
+      "legacy_plant_display_contract": {}
+    },
+    {
+      "id": "dew_shell_snail",
+      "name": "露壳蜗牛",
+      "category": "animals",
+      "source_state": "juvenile",
+      "runtime_state_key": "juvenile",
+      "source_file": "assets/farming/p109/source/animals/dew_shell_snail/dew_shell_snail_juvenile_view35_v002.png",
+      "source_sha256": "c973ccf294b1880969d22831f285d5aca15cbedf7f8e1501550aa7021b38018d",
+      "source_canvas_px": [
+        1536,
+        1024
+      ],
+      "source_mode": "RGBA",
+      "source_visual_status": "pending_user_visual_review",
+      "proposed_runtime_file": "assets/farming/p109/runtime/animals/dew_shell_snail/juvenile.png",
+      "work_package": "R5",
+      "status": "source_selected_runtime_preparation_pending",
+      "runtime_integrated": false,
+      "requires_alpha_extraction": false,
+      "runtime_metadata": {
+        "canvas_px": null,
+        "anchor_uv": null,
+        "draw_size": null,
+        "camera_verified": false
+      },
+      "legacy_plant_display_contract": {}
+    },
+    {
+      "id": "gravel_shell_snail",
+      "name": "砾甲蜗牛",
+      "category": "animals",
+      "source_state": "adult",
+      "runtime_state_key": "adult",
+      "source_file": "assets/farming/p109/source/animals/gravel_shell_snail/gravel_shell_snail_adult_view35_v001.png",
+      "source_sha256": "77d1f6220ab2b5eea3ac211ace179eab7bd4f4f8361bf5c4ed3ac5962d2f5d7e",
+      "source_canvas_px": [
+        1536,
+        1024
+      ],
+      "source_mode": "RGBA",
+      "source_visual_status": "adult_user_accepted",
+      "proposed_runtime_file": "assets/farming/p109/runtime/animals/gravel_shell_snail/adult.png",
+      "work_package": "R5",
+      "status": "source_selected_runtime_preparation_pending",
+      "runtime_integrated": false,
+      "requires_alpha_extraction": false,
+      "runtime_metadata": {
+        "canvas_px": null,
+        "anchor_uv": null,
+        "draw_size": null,
+        "camera_verified": false
+      },
+      "legacy_plant_display_contract": {}
+    },
+    {
+      "id": "gravel_shell_snail",
+      "name": "砾甲蜗牛",
+      "category": "animals",
+      "source_state": "juvenile",
+      "runtime_state_key": "juvenile",
+      "source_file": "assets/farming/p109/source/animals/gravel_shell_snail/gravel_shell_snail_juvenile_view35_v002.png",
+      "source_sha256": "138612f7acae165e8430efefe94d976de6141784225cf81277bf532ae4e2d1f1",
+      "source_canvas_px": [
+        1536,
+        1024
+      ],
+      "source_mode": "RGBA",
+      "source_visual_status": "pending_user_visual_review",
+      "proposed_runtime_file": "assets/farming/p109/runtime/animals/gravel_shell_snail/juvenile.png",
+      "work_package": "R5",
+      "status": "source_selected_runtime_preparation_pending",
+      "runtime_integrated": false,
+      "requires_alpha_extraction": false,
+      "runtime_metadata": {
+        "canvas_px": null,
+        "anchor_uv": null,
+        "draw_size": null,
+        "camera_verified": false
+      },
+      "legacy_plant_display_contract": {}
+    },
+    {
+      "id": "leaf_silkworm",
+      "name": "叶丝蚕",
+      "category": "animals",
+      "source_state": "adult",
+      "runtime_state_key": "adult",
+      "source_file": "assets/farming/p109/source/animals/leaf_silkworm/leaf_silkworm_adult_view35_v001.png",
+      "source_sha256": "5810b692b3ca8e65defe1293be58f9274a0406db06be622f95e3cf486f3e279a",
+      "source_canvas_px": [
+        1536,
+        1024
+      ],
+      "source_mode": "RGBA",
+      "source_visual_status": "adult_user_accepted",
+      "proposed_runtime_file": "assets/farming/p109/runtime/animals/leaf_silkworm/adult.png",
+      "work_package": "R5",
+      "status": "source_selected_runtime_preparation_pending",
+      "runtime_integrated": false,
+      "requires_alpha_extraction": false,
+      "runtime_metadata": {
+        "canvas_px": null,
+        "anchor_uv": null,
+        "draw_size": null,
+        "camera_verified": false
+      },
+      "legacy_plant_display_contract": {}
+    },
+    {
+      "id": "leaf_silkworm",
+      "name": "叶丝蚕",
+      "category": "animals",
+      "source_state": "juvenile",
+      "runtime_state_key": "juvenile",
+      "source_file": "assets/farming/p109/source/animals/leaf_silkworm/leaf_silkworm_juvenile_view35_v002.png",
+      "source_sha256": "14c268e077bec43d1e51a418497e7241b00f16820e73c0cbef1c8886258d5c3c",
+      "source_canvas_px": [
+        1536,
+        1024
+      ],
+      "source_mode": "RGBA",
+      "source_visual_status": "pending_user_visual_review",
+      "proposed_runtime_file": "assets/farming/p109/runtime/animals/leaf_silkworm/juvenile.png",
+      "work_package": "R5",
+      "status": "source_selected_runtime_preparation_pending",
+      "runtime_integrated": false,
+      "requires_alpha_extraction": false,
+      "runtime_metadata": {
+        "canvas_px": null,
+        "anchor_uv": null,
+        "draw_size": null,
+        "camera_verified": false
+      },
+      "legacy_plant_display_contract": {}
+    },
+    {
+      "id": "mineral_scale_lizard",
+      "name": "矿鳞蜥",
+      "category": "animals",
+      "source_state": "adult",
+      "runtime_state_key": "adult",
+      "source_file": "assets/farming/p109/source/animals/mineral_scale_lizard/mineral_scale_lizard_adult_view35_v001.png",
+      "source_sha256": "72d17b60f9d34446497eaac1f463ca83804540d2008e28bc8fb2af63602392b0",
+      "source_canvas_px": [
+        1536,
+        1024
+      ],
+      "source_mode": "RGBA",
+      "source_visual_status": "adult_user_accepted",
+      "proposed_runtime_file": "assets/farming/p109/runtime/animals/mineral_scale_lizard/adult.png",
+      "work_package": "R5",
+      "status": "source_selected_runtime_preparation_pending",
+      "runtime_integrated": false,
+      "requires_alpha_extraction": false,
+      "runtime_metadata": {
+        "canvas_px": null,
+        "anchor_uv": null,
+        "draw_size": null,
+        "camera_verified": false
+      },
+      "legacy_plant_display_contract": {}
+    },
+    {
+      "id": "mineral_scale_lizard",
+      "name": "矿鳞蜥",
+      "category": "animals",
+      "source_state": "juvenile",
+      "runtime_state_key": "juvenile",
+      "source_file": "assets/farming/p109/source/animals/mineral_scale_lizard/mineral_scale_lizard_juvenile_view35_v002.png",
+      "source_sha256": "b75a087c28d1cdb91bf011d69ac9edcaa59d75b77fa01bb683d453553db7bd48",
+      "source_canvas_px": [
+        1536,
+        1024
+      ],
+      "source_mode": "RGBA",
+      "source_visual_status": "pending_user_visual_review",
+      "proposed_runtime_file": "assets/farming/p109/runtime/animals/mineral_scale_lizard/juvenile.png",
+      "work_package": "R5",
+      "status": "source_selected_runtime_preparation_pending",
+      "runtime_integrated": false,
+      "requires_alpha_extraction": false,
+      "runtime_metadata": {
+        "canvas_px": null,
+        "anchor_uv": null,
+        "draw_size": null,
+        "camera_verified": false
+      },
+      "legacy_plant_display_contract": {}
+    },
+    {
+      "id": "rock_belly_beast",
+      "name": "岩腹兽",
+      "category": "animals",
+      "source_state": "adult",
+      "runtime_state_key": "adult",
+      "source_file": "assets/farming/p109/source/animals/rock_belly_beast/rock_belly_beast_adult_view35_v001.png",
+      "source_sha256": "ea491d6d76e6bae53992a83acf1678cf9540c0f465c69ab4e1ecce0bd3c7d9ea",
+      "source_canvas_px": [
+        1536,
+        1024
+      ],
+      "source_mode": "RGBA",
+      "source_visual_status": "adult_user_accepted",
+      "proposed_runtime_file": "assets/farming/p109/runtime/animals/rock_belly_beast/adult.png",
+      "work_package": "R5",
+      "status": "source_selected_runtime_preparation_pending",
+      "runtime_integrated": false,
+      "requires_alpha_extraction": false,
+      "runtime_metadata": {
+        "canvas_px": null,
+        "anchor_uv": null,
+        "draw_size": null,
+        "camera_verified": false
+      },
+      "legacy_plant_display_contract": {}
+    },
+    {
+      "id": "rock_belly_beast",
+      "name": "岩腹兽",
+      "category": "animals",
+      "source_state": "juvenile",
+      "runtime_state_key": "juvenile",
+      "source_file": "assets/farming/p109/source/animals/rock_belly_beast/rock_belly_beast_juvenile_view35_v002.png",
+      "source_sha256": "685a302a11bd29243136fd9b037edbd824b03a7744c2279cecd0e248c11bcbe6",
+      "source_canvas_px": [
+        1536,
+        1024
+      ],
+      "source_mode": "RGBA",
+      "source_visual_status": "pending_user_visual_review",
+      "proposed_runtime_file": "assets/farming/p109/runtime/animals/rock_belly_beast/juvenile.png",
+      "work_package": "R5",
+      "status": "source_selected_runtime_preparation_pending",
+      "runtime_integrated": false,
+      "requires_alpha_extraction": false,
+      "runtime_metadata": {
+        "canvas_px": null,
+        "anchor_uv": null,
+        "draw_size": null,
+        "camera_verified": false
+      },
+      "legacy_plant_display_contract": {}
+    },
+    {
+      "id": "rock_mole",
+      "name": "啮岩鼹",
+      "category": "animals",
+      "source_state": "adult",
+      "runtime_state_key": "adult",
+      "source_file": "assets/farming/p109/source/animals/rock_mole/rock_mole_adult_view35_v001.png",
+      "source_sha256": "4496a7021974ee1ab86c399b4b99907c6b5ed244f3f058fd2eca66a6e17fc266",
+      "source_canvas_px": [
+        1536,
+        1024
+      ],
+      "source_mode": "RGBA",
+      "source_visual_status": "adult_user_accepted",
+      "proposed_runtime_file": "assets/farming/p109/runtime/animals/rock_mole/adult.png",
+      "work_package": "R5",
+      "status": "source_selected_runtime_preparation_pending",
+      "runtime_integrated": false,
+      "requires_alpha_extraction": false,
+      "runtime_metadata": {
+        "canvas_px": null,
+        "anchor_uv": null,
+        "draw_size": null,
+        "camera_verified": false
+      },
+      "legacy_plant_display_contract": {}
+    },
+    {
+      "id": "rock_mole",
+      "name": "啮岩鼹",
+      "category": "animals",
+      "source_state": "juvenile",
+      "runtime_state_key": "juvenile",
+      "source_file": "assets/farming/p109/source/animals/rock_mole/rock_mole_juvenile_view35_v002.png",
+      "source_sha256": "4ec6ea87c6d8c2ed228bc729df3ebee16a4a549d9a3f8d88944f2e767c8f55da",
+      "source_canvas_px": [
+        1536,
+        1024
+      ],
+      "source_mode": "RGBA",
+      "source_visual_status": "pending_user_visual_review",
+      "proposed_runtime_file": "assets/farming/p109/runtime/animals/rock_mole/juvenile.png",
+      "work_package": "R5",
+      "status": "source_selected_runtime_preparation_pending",
+      "runtime_integrated": false,
+      "requires_alpha_extraction": false,
+      "runtime_metadata": {
+        "canvas_px": null,
+        "anchor_uv": null,
+        "draw_size": null,
+        "camera_verified": false
+      },
+      "legacy_plant_display_contract": {}
+    },
+    {
+      "id": "gel_jellyfish",
+      "name": "凝胶水母",
+      "category": "aquatic",
+      "source_state": "adult",
+      "runtime_state_key": "adult",
+      "source_file": "assets/farming/p109/source/aquatic/gel_jellyfish/gel_jellyfish_adult_view35_v001.png",
+      "source_sha256": "0a62fb1efce589cac595346f022bf929a8e3fe144822732c418717cc163a1458",
+      "source_canvas_px": [
+        1024,
+        1536
+      ],
+      "source_mode": "RGBA",
+      "source_visual_status": "adult_user_accepted",
+      "proposed_runtime_file": "assets/farming/p109/runtime/aquatic/gel_jellyfish/adult.png",
+      "work_package": "R5",
+      "status": "source_selected_runtime_preparation_pending",
+      "runtime_integrated": false,
+      "requires_alpha_extraction": false,
+      "runtime_metadata": {
+        "canvas_px": null,
+        "anchor_uv": null,
+        "draw_size": null,
+        "camera_verified": false
+      },
+      "legacy_plant_display_contract": {}
+    },
+    {
+      "id": "gel_jellyfish",
+      "name": "凝胶水母",
+      "category": "aquatic",
+      "source_state": "juvenile",
+      "runtime_state_key": "juvenile",
+      "source_file": "assets/farming/p109/source/aquatic/gel_jellyfish/gel_jellyfish_juvenile_view35_v001.png",
+      "source_sha256": "7799b7c8bc34f498f985f47e137b1e56fb19509af92a122dc29a3f259725dd03",
+      "source_canvas_px": [
+        1226,
+        1283
+      ],
+      "source_mode": "RGBA",
+      "source_visual_status": "pending_user_visual_review",
+      "proposed_runtime_file": "assets/farming/p109/runtime/aquatic/gel_jellyfish/juvenile.png",
+      "work_package": "R5",
+      "status": "source_selected_runtime_preparation_pending",
+      "runtime_integrated": false,
+      "requires_alpha_extraction": false,
+      "runtime_metadata": {
+        "canvas_px": null,
+        "anchor_uv": null,
+        "draw_size": null,
+        "camera_verified": false
+      },
+      "legacy_plant_display_contract": {}
+    },
+    {
+      "id": "oilfin_fish",
+      "name": "油鳍鱼",
+      "category": "aquatic",
+      "source_state": "adult",
+      "runtime_state_key": "adult",
+      "source_file": "assets/farming/p109/source/aquatic/oilfin_fish/oilfin_fish_adult_view35_v001.png",
+      "source_sha256": "21bace8efc342e67c426c88fedb13444bd53efc5b3b2d53c3fe7f80102958d8b",
+      "source_canvas_px": [
+        1536,
+        1024
+      ],
+      "source_mode": "RGBA",
+      "source_visual_status": "adult_user_accepted",
+      "proposed_runtime_file": "assets/farming/p109/runtime/aquatic/oilfin_fish/adult.png",
+      "work_package": "R5",
+      "status": "source_selected_runtime_preparation_pending",
+      "runtime_integrated": false,
+      "requires_alpha_extraction": false,
+      "runtime_metadata": {
+        "canvas_px": null,
+        "anchor_uv": null,
+        "draw_size": null,
+        "camera_verified": false
+      },
+      "legacy_plant_display_contract": {}
+    },
+    {
+      "id": "oilfin_fish",
+      "name": "油鳍鱼",
+      "category": "aquatic",
+      "source_state": "juvenile",
+      "runtime_state_key": "juvenile",
+      "source_file": "assets/farming/p109/source/aquatic/oilfin_fish/oilfin_fish_juvenile_view35_v002.png",
+      "source_sha256": "36bea07c4b022f1be4174c07a20737b343b7b41a05884a90d39c2c3415062d09",
+      "source_canvas_px": [
+        1536,
+        1024
+      ],
+      "source_mode": "RGBA",
+      "source_visual_status": "pending_user_visual_review",
+      "proposed_runtime_file": "assets/farming/p109/runtime/aquatic/oilfin_fish/juvenile.png",
+      "work_package": "R5",
+      "status": "source_selected_runtime_preparation_pending",
+      "runtime_integrated": false,
+      "requires_alpha_extraction": false,
+      "runtime_metadata": {
+        "canvas_px": null,
+        "anchor_uv": null,
+        "draw_size": null,
+        "camera_verified": false
+      },
+      "legacy_plant_display_contract": {}
+    },
+    {
+      "id": "pearl_mussel",
+      "name": "珍珠蚌",
+      "category": "aquatic",
+      "source_state": "adult",
+      "runtime_state_key": "adult",
+      "source_file": "assets/farming/p109/source/aquatic/pearl_mussel/pearl_mussel_adult_view35_v001.png",
+      "source_sha256": "b8f484d48702cd0036845f8a4419f9461611b6968922b69d70893fc09ad6cca7",
+      "source_canvas_px": [
+        1536,
+        1024
+      ],
+      "source_mode": "RGBA",
+      "source_visual_status": "adult_user_accepted",
+      "proposed_runtime_file": "assets/farming/p109/runtime/aquatic/pearl_mussel/adult.png",
+      "work_package": "R5",
+      "status": "source_selected_runtime_preparation_pending",
+      "runtime_integrated": false,
+      "requires_alpha_extraction": false,
+      "runtime_metadata": {
+        "canvas_px": null,
+        "anchor_uv": null,
+        "draw_size": null,
+        "camera_verified": false
+      },
+      "legacy_plant_display_contract": {}
+    },
+    {
+      "id": "pearl_mussel",
+      "name": "珍珠蚌",
+      "category": "aquatic",
+      "source_state": "juvenile",
+      "runtime_state_key": "juvenile",
+      "source_file": "assets/farming/p109/source/aquatic/pearl_mussel/pearl_mussel_juvenile_view35_v001.png",
+      "source_sha256": "007dd2540e736a44d218b079aec5089f0ad5bdeda4e8cc5362c6a94cf0192a86",
+      "source_canvas_px": [
+        1536,
+        1024
+      ],
+      "source_mode": "RGBA",
+      "source_visual_status": "pending_user_visual_review",
+      "proposed_runtime_file": "assets/farming/p109/runtime/aquatic/pearl_mussel/juvenile.png",
+      "work_package": "R5",
+      "status": "source_selected_runtime_preparation_pending",
+      "runtime_integrated": false,
+      "requires_alpha_extraction": false,
+      "runtime_metadata": {
+        "canvas_px": null,
+        "anchor_uv": null,
+        "draw_size": null,
+        "camera_verified": false
+      },
+      "legacy_plant_display_contract": {}
+    },
+    {
+      "id": "reef_coral",
+      "name": "礁骨珊瑚",
+      "category": "aquatic",
+      "source_state": "adult",
+      "runtime_state_key": "adult",
+      "source_file": "assets/farming/p109/source/aquatic/reef_coral/reef_coral_adult_view35_v001.png",
+      "source_sha256": "9b28323e1e03805f229cd61412a627ddebc8285d34dbd5e3f9d52eb1bce6e292",
+      "source_canvas_px": [
+        1312,
+        1199
+      ],
+      "source_mode": "RGBA",
+      "source_visual_status": "adult_user_accepted",
+      "proposed_runtime_file": "assets/farming/p109/runtime/aquatic/reef_coral/adult.png",
+      "work_package": "R5",
+      "status": "source_selected_runtime_preparation_pending",
+      "runtime_integrated": false,
+      "requires_alpha_extraction": false,
+      "runtime_metadata": {
+        "canvas_px": null,
+        "anchor_uv": null,
+        "draw_size": null,
+        "camera_verified": false
+      },
+      "legacy_plant_display_contract": {}
+    },
+    {
+      "id": "reef_coral",
+      "name": "礁骨珊瑚",
+      "category": "aquatic",
+      "source_state": "juvenile",
+      "runtime_state_key": "juvenile",
+      "source_file": "assets/farming/p109/source/aquatic/reef_coral/reef_coral_juvenile_view35_v001.png",
+      "source_sha256": "ef8f51f07597dac8688ecaba6a29b409ebf42b5ee05a3323d176e842c60ce59f",
+      "source_canvas_px": [
+        1312,
+        1199
+      ],
+      "source_mode": "RGBA",
+      "source_visual_status": "pending_user_visual_review",
+      "proposed_runtime_file": "assets/farming/p109/runtime/aquatic/reef_coral/juvenile.png",
+      "work_package": "R5",
+      "status": "source_selected_runtime_preparation_pending",
+      "runtime_integrated": false,
+      "requires_alpha_extraction": false,
+      "runtime_metadata": {
+        "canvas_px": null,
+        "anchor_uv": null,
+        "draw_size": null,
+        "camera_verified": false
+      },
+      "legacy_plant_display_contract": {}
+    },
+    {
+      "id": "silt_loach",
+      "name": "净泥鳅",
+      "category": "aquatic",
+      "source_state": "adult",
+      "runtime_state_key": "adult",
+      "source_file": "assets/farming/p109/source/aquatic/silt_loach/silt_loach_adult_view35_v001.png",
+      "source_sha256": "2aa23564186da299e2b39834013cf26d1c71e347745dd2bca77ad1457b8da15c",
+      "source_canvas_px": [
+        1536,
+        1024
+      ],
+      "source_mode": "RGBA",
+      "source_visual_status": "adult_user_accepted",
+      "proposed_runtime_file": "assets/farming/p109/runtime/aquatic/silt_loach/adult.png",
+      "work_package": "R5",
+      "status": "source_selected_runtime_preparation_pending",
+      "runtime_integrated": false,
+      "requires_alpha_extraction": false,
+      "runtime_metadata": {
+        "canvas_px": null,
+        "anchor_uv": null,
+        "draw_size": null,
+        "camera_verified": false
+      },
+      "legacy_plant_display_contract": {}
+    },
+    {
+      "id": "silt_loach",
+      "name": "净泥鳅",
+      "category": "aquatic",
+      "source_state": "juvenile",
+      "runtime_state_key": "juvenile",
+      "source_file": "assets/farming/p109/source/aquatic/silt_loach/silt_loach_juvenile_view35_v001.png",
+      "source_sha256": "de0fe7142585880301b48e05d2be67f0fd7e5db469809c559c70e06e426577eb",
+      "source_canvas_px": [
+        1536,
+        1024
+      ],
+      "source_mode": "RGBA",
+      "source_visual_status": "pending_user_visual_review",
+      "proposed_runtime_file": "assets/farming/p109/runtime/aquatic/silt_loach/juvenile.png",
+      "work_package": "R5",
+      "status": "source_selected_runtime_preparation_pending",
+      "runtime_integrated": false,
+      "requires_alpha_extraction": false,
+      "runtime_metadata": {
+        "canvas_px": null,
+        "anchor_uv": null,
+        "draw_size": null,
+        "camera_verified": false
+      },
+      "legacy_plant_display_contract": {}
+    },
+    {
+      "id": "bell_bee",
+      "name": "蜜盏蜂",
+      "category": "living",
+      "source_state": "adult",
+      "runtime_state_key": "adult",
+      "source_file": "assets/farming/p109/source/living/bell_bee/bell_bee_adult_view35_v001.png",
+      "source_sha256": "277676f1115af1d783dbf245c460588f735f771f91fa642a001d3ef88f590cb3",
+      "source_canvas_px": [
+        1536,
+        1024
+      ],
+      "source_mode": "RGBA",
+      "source_visual_status": "adult_user_accepted",
+      "proposed_runtime_file": "assets/farming/p109/runtime/living/bell_bee/adult.png",
+      "work_package": "R5",
+      "status": "source_selected_runtime_preparation_pending",
+      "runtime_integrated": false,
+      "requires_alpha_extraction": false,
+      "runtime_metadata": {
+        "canvas_px": null,
+        "anchor_uv": null,
+        "draw_size": null,
+        "camera_verified": false
+      },
+      "legacy_plant_display_contract": {}
+    },
+    {
+      "id": "bell_bee",
+      "name": "蜜盏蜂",
+      "category": "living",
+      "source_state": "juvenile",
+      "runtime_state_key": "juvenile",
+      "source_file": "assets/farming/p109/source/living/bell_bee/bell_bee_juvenile_view35_v001.png",
+      "source_sha256": "24df6b346c6efbe7de3e679d0eae4435bc91ec7faca17c2fa2262f45f460ac98",
+      "source_canvas_px": [
+        1536,
+        1024
+      ],
+      "source_mode": "RGBA",
+      "source_visual_status": "pending_user_visual_review",
+      "proposed_runtime_file": "assets/farming/p109/runtime/living/bell_bee/juvenile.png",
+      "work_package": "R5",
+      "status": "source_selected_runtime_preparation_pending",
+      "runtime_integrated": false,
+      "requires_alpha_extraction": false,
+      "runtime_metadata": {
+        "canvas_px": null,
+        "anchor_uv": null,
+        "draw_size": null,
+        "camera_verified": false
+      },
+      "legacy_plant_display_contract": {}
+    },
+    {
+      "id": "purifying_mat",
+      "name": "净水菌毯",
+      "category": "living",
+      "source_state": "adult",
+      "runtime_state_key": "adult",
+      "source_file": "assets/farming/p109/source/living/purifying_mat/purifying_mat_adult_view35_v001.png",
+      "source_sha256": "6dd40a8125df562f444c8f4c1652cc146013d07a7942110fd94ed69309d9b4bb",
+      "source_canvas_px": [
+        1536,
+        1024
+      ],
+      "source_mode": "RGBA",
+      "source_visual_status": "adult_user_accepted",
+      "proposed_runtime_file": "assets/farming/p109/runtime/living/purifying_mat/adult.png",
+      "work_package": "R5",
+      "status": "source_selected_runtime_preparation_pending",
+      "runtime_integrated": false,
+      "requires_alpha_extraction": false,
+      "runtime_metadata": {
+        "canvas_px": null,
+        "anchor_uv": null,
+        "draw_size": null,
+        "camera_verified": false
+      },
+      "legacy_plant_display_contract": {}
+    },
+    {
+      "id": "purifying_mat",
+      "name": "净水菌毯",
+      "category": "living",
+      "source_state": "juvenile",
+      "runtime_state_key": "juvenile",
+      "source_file": "assets/farming/p109/source/living/purifying_mat/purifying_mat_juvenile_view35_v001.png",
+      "source_sha256": "b1efd05179446facc3e13cda9c2e68c26236efe8feb143f4fdeea7a08b2cefda",
+      "source_canvas_px": [
+        1536,
+        1024
+      ],
+      "source_mode": "RGBA",
+      "source_visual_status": "pending_user_visual_review",
+      "proposed_runtime_file": "assets/farming/p109/runtime/living/purifying_mat/juvenile.png",
+      "work_package": "R5",
+      "status": "source_selected_runtime_preparation_pending",
+      "runtime_integrated": false,
+      "requires_alpha_extraction": false,
+      "runtime_metadata": {
+        "canvas_px": null,
+        "anchor_uv": null,
+        "draw_size": null,
+        "camera_verified": false
+      },
+      "legacy_plant_display_contract": {}
+    }
+  ]
+}
