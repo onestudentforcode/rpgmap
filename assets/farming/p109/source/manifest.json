@@ -1,0 +1,995 @@
+{
+  "date": "2026-10-22",
+  "batch": "p109-adult-production-01",
+  "scope": "10 crops + 17 registered living types, mature/normal production state only; buildings deferred; no alternative candidates or other states",
+  "style": "User approved prior reed, carp and mulberry on 2026-10-22; keep accepted steel sheep unchanged",
+  "style_approved": true,
+  "tool": "built-in image_gen",
+  "runtime_integrated": false,
+  "assets": [
+    {
+      "id": "rock_mole",
+      "name": "啮岩鼹",
+      "category": "animals",
+      "state": "adult",
+      "file": "animals/rock_mole/rock_mole_adult_view35_v001.png",
+      "status": "produced_adult_source",
+      "individual_visual_acceptance": "user_accepted_2026-10-22",
+      "other_states_authorized": true,
+      "sha256": "4496a7021974ee1ab86c399b4b99907c6b5ed244f3f058fd2eca66a6e17fc266",
+      "canvas_px": [
+        1536,
+        1024
+      ],
+      "mode": "RGBA",
+      "alpha_extrema": [
+        0,
+        254
+      ],
+      "main_bbox_alpha_ge_16": [
+        98,
+        82,
+        1476,
+        952
+      ],
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "main_subject_within_canvas": true,
+      "source_file": "C:\\Users\\88445\\.codex\\generated_images\\01a15ef2-67bc-7673-b278-97b92008c893\\exec-114fac18-5d10-49dd-83f0-3c66e0f16667.png",
+      "camera_calibrated": false,
+      "runtime_integrated": false
+    },
+    {
+      "id": "rock_belly_beast",
+      "name": "岩腹兽",
+      "category": "animals",
+      "state": "adult",
+      "file": "animals/rock_belly_beast/rock_belly_beast_adult_view35_v001.png",
+      "status": "produced_adult_source",
+      "individual_visual_acceptance": "user_accepted_2026-10-22",
+      "other_states_authorized": true,
+      "sha256": "ea491d6d76e6bae53992a83acf1678cf9540c0f465c69ab4e1ecce0bd3c7d9ea",
+      "canvas_px": [
+        1536,
+        1024
+      ],
+      "mode": "RGBA",
+      "alpha_extrema": [
+        0,
+        254
+      ],
+      "main_bbox_alpha_ge_16": [
+        84,
+        91,
+        1468,
+        940
+      ],
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "main_subject_within_canvas": true,
+      "source_file": "C:\\Users\\88445\\.codex\\generated_images\\01a15ef2-67bc-7673-b278-97b92008c893\\exec-65cb9c6c-48c9-4de5-bb38-5beb91e13670.png",
+      "camera_calibrated": false,
+      "runtime_integrated": false
+    },
+    {
+      "id": "carbon_belly_bug",
+      "name": "炭腹虫",
+      "category": "animals",
+      "state": "adult",
+      "file": "animals/carbon_belly_bug/carbon_belly_bug_adult_view35_v001.png",
+      "status": "produced_adult_source",
+      "individual_visual_acceptance": "user_accepted_2026-10-22",
+      "other_states_authorized": true,
+      "sha256": "9398a11b093d5e79bf3af3070160e43b42e7259cb6abcea36b3a5d64347b63b3",
+      "canvas_px": [
+        1536,
+        1024
+      ],
+      "mode": "RGBA",
+      "alpha_extrema": [
+        0,
+        254
+      ],
+      "main_bbox_alpha_ge_16": [
+        94,
+        120,
+        1484,
+        952
+      ],
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "main_subject_within_canvas": true,
+      "source_file": "C:\\Users\\88445\\.codex\\generated_images\\01a15ef2-67bc-7673-b278-97b92008c893\\exec-9dc0b3d2-483a-46e5-b8c9-40f7d2b9802a.png",
+      "camera_calibrated": false,
+      "runtime_integrated": false
+    },
+    {
+      "id": "leaf_silkworm",
+      "name": "叶丝蚕",
+      "category": "animals",
+      "state": "adult",
+      "file": "animals/leaf_silkworm/leaf_silkworm_adult_view35_v001.png",
+      "status": "produced_adult_source",
+      "individual_visual_acceptance": "user_accepted_2026-10-22",
+      "other_states_authorized": true,
+      "sha256": "5810b692b3ca8e65defe1293be58f9274a0406db06be622f95e3cf486f3e279a",
+      "canvas_px": [
+        1536,
+        1024
+      ],
+      "mode": "RGBA",
+      "alpha_extrema": [
+        0,
+        254
+      ],
+      "main_bbox_alpha_ge_16": [
+        29,
+        91,
+        1500,
+        916
+      ],
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "main_subject_within_canvas": true,
+      "source_file": "C:\\Users\\88445\\.codex\\generated_images\\01a15ef2-67bc-7673-b278-97b92008c893\\exec-7044f28c-065a-4f76-8183-d72a55d8e6b1.png",
+      "camera_calibrated": false,
+      "runtime_integrated": false
+    },
+    {
+      "id": "dew_shell_snail",
+      "name": "露壳蜗牛",
+      "category": "animals",
+      "state": "adult",
+      "file": "animals/dew_shell_snail/dew_shell_snail_adult_view35_v001.png",
+      "status": "produced_adult_source",
+      "individual_visual_acceptance": "user_accepted_2026-10-22",
+      "other_states_authorized": true,
+      "sha256": "ee2df90b8a4b274f04fe1b703adbbc24e03bb5257e6da679d7dec7ff3520391f",
+      "canvas_px": [
+        1536,
+        1024
+      ],
+      "mode": "RGBA",
+      "alpha_extrema": [
+        0,
+        254
+      ],
+      "main_bbox_alpha_ge_16": [
+        111,
+        102,
+        1466,
+        890
+      ],
+      "corner_alpha": [
+        1,
+        0,
+        0,
+        0
+      ],
+      "main_subject_within_canvas": true,
+      "source_file": "C:\\Users\\88445\\.codex\\generated_images\\01a15ef2-67bc-7673-b278-97b92008c893\\exec-b24a148e-1df2-4dbc-bbb4-580f40492eb1.png",
+      "camera_calibrated": false,
+      "runtime_integrated": false
+    },
+    {
+      "id": "mineral_scale_lizard",
+      "name": "矿鳞蜥",
+      "category": "animals",
+      "state": "adult",
+      "file": "animals/mineral_scale_lizard/mineral_scale_lizard_adult_view35_v001.png",
+      "status": "produced_adult_source",
+      "individual_visual_acceptance": "user_accepted_2026-10-22",
+      "other_states_authorized": true,
+      "sha256": "72d17b60f9d34446497eaac1f463ca83804540d2008e28bc8fb2af63602392b0",
+      "canvas_px": [
+        1536,
+        1024
+      ],
+      "mode": "RGBA",
+      "alpha_extrema": [
+        0,
+        254
+      ],
+      "main_bbox_alpha_ge_16": [
+        38,
+        75,
+        1506,
+        978
+      ],
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "main_subject_within_canvas": true,
+      "source_file": "C:\\Users\\88445\\.codex\\generated_images\\01a15ef2-67bc-7673-b278-97b92008c893\\exec-456b0839-8ac2-428f-9203-e407d0fdba65.png",
+      "camera_calibrated": false,
+      "runtime_integrated": false
+    },
+    {
+      "id": "compost_mouse",
+      "name": "堆肥鼠",
+      "category": "animals",
+      "state": "adult",
+      "file": "animals/compost_mouse/compost_mouse_adult_view35_v001.png",
+      "status": "produced_adult_source",
+      "individual_visual_acceptance": "user_accepted_2026-10-22",
+      "other_states_authorized": true,
+      "sha256": "dc9f5027f7e52c1ce3941d726c6cb4480538a7e50efe83e72e8e6361d6a1a162",
+      "canvas_px": [
+        1536,
+        1024
+      ],
+      "mode": "RGBA",
+      "alpha_extrema": [
+        0,
+        254
+      ],
+      "main_bbox_alpha_ge_16": [
+        29,
+        127,
+        1516,
+        916
+      ],
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "main_subject_within_canvas": true,
+      "source_file": "C:\\Users\\88445\\.codex\\generated_images\\01a15ef2-67bc-7673-b278-97b92008c893\\exec-cbaf8063-e4a5-424f-8663-931cce891364.png",
+      "camera_calibrated": false,
+      "runtime_integrated": false
+    },
+    {
+      "id": "gravel_shell_snail",
+      "name": "砾甲蜗牛",
+      "category": "animals",
+      "state": "adult",
+      "file": "animals/gravel_shell_snail/gravel_shell_snail_adult_view35_v001.png",
+      "status": "produced_adult_source",
+      "individual_visual_acceptance": "user_accepted_2026-10-22",
+      "other_states_authorized": true,
+      "sha256": "77d1f6220ab2b5eea3ac211ace179eab7bd4f4f8361bf5c4ed3ac5962d2f5d7e",
+      "canvas_px": [
+        1536,
+        1024
+      ],
+      "mode": "RGBA",
+      "alpha_extrema": [
+        0,
+        254
+      ],
+      "main_bbox_alpha_ge_16": [
+        86,
+        81,
+        1496,
+        948
+      ],
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "main_subject_within_canvas": true,
+      "source_file": "C:\\Users\\88445\\.codex\\generated_images\\01a15ef2-67bc-7673-b278-97b92008c893\\exec-d911a8f1-b049-49e0-a646-f8e5fb3c8a7b.png",
+      "camera_calibrated": false,
+      "runtime_integrated": false
+    },
+    {
+      "id": "bell_bee",
+      "name": "蜜盏蜂",
+      "category": "living",
+      "state": "adult",
+      "file": "living/bell_bee/bell_bee_adult_view35_v001.png",
+      "status": "produced_adult_source",
+      "individual_visual_acceptance": "user_accepted_2026-10-22",
+      "other_states_authorized": true,
+      "sha256": "277676f1115af1d783dbf245c460588f735f771f91fa642a001d3ef88f590cb3",
+      "canvas_px": [
+        1536,
+        1024
+      ],
+      "mode": "RGBA",
+      "alpha_extrema": [
+        0,
+        254
+      ],
+      "main_bbox_alpha_ge_16": [
+        114,
+        33,
+        1442,
+        996
+      ],
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "main_subject_within_canvas": true,
+      "source_file": "C:\\Users\\88445\\.codex\\generated_images\\01a15ef2-67bc-7673-b278-97b92008c893\\exec-3514631b-5215-4184-86bb-852f5b5876da.png",
+      "camera_calibrated": false,
+      "runtime_integrated": false
+    },
+    {
+      "id": "purifying_mat",
+      "name": "净水菌毯",
+      "category": "living",
+      "state": "adult",
+      "file": "living/purifying_mat/purifying_mat_adult_view35_v001.png",
+      "status": "produced_adult_source",
+      "individual_visual_acceptance": "user_accepted_2026-10-22",
+      "other_states_authorized": true,
+      "sha256": "6dd40a8125df562f444c8f4c1652cc146013d07a7942110fd94ed69309d9b4bb",
+      "canvas_px": [
+        1536,
+        1024
+      ],
+      "mode": "RGBA",
+      "alpha_extrema": [
+        0,
+        254
+      ],
+      "main_bbox_alpha_ge_16": [
+        67,
+        108,
+        1496,
+        921
+      ],
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "main_subject_within_canvas": true,
+      "source_file": "C:\\Users\\88445\\.codex\\generated_images\\01a15ef2-67bc-7673-b278-97b92008c893\\exec-4108b9c1-d6c0-4a23-bc34-894bf4d3a412.png",
+      "camera_calibrated": false,
+      "runtime_integrated": false
+    },
+    {
+      "id": "oilfin_fish",
+      "name": "油鳍鱼",
+      "category": "aquatic",
+      "state": "adult",
+      "file": "aquatic/oilfin_fish/oilfin_fish_adult_view35_v001.png",
+      "status": "produced_adult_source",
+      "individual_visual_acceptance": "user_accepted_2026-10-22",
+      "other_states_authorized": true,
+      "sha256": "21bace8efc342e67c426c88fedb13444bd53efc5b3b2d53c3fe7f80102958d8b",
+      "canvas_px": [
+        1536,
+        1024
+      ],
+      "mode": "RGBA",
+      "alpha_extrema": [
+        0,
+        254
+      ],
+      "main_bbox_alpha_ge_16": [
+        38,
+        45,
+        1500,
+        977
+      ],
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "main_subject_within_canvas": true,
+      "source_file": "C:\\Users\\88445\\.codex\\generated_images\\01a15ef2-67bc-7673-b278-97b92008c893\\exec-d06d8316-07e2-4bfe-9ed9-b1c729a45092.png",
+      "camera_calibrated": false,
+      "runtime_integrated": false
+    },
+    {
+      "id": "pearl_mussel",
+      "name": "珍珠蚌",
+      "category": "aquatic",
+      "state": "adult",
+      "file": "aquatic/pearl_mussel/pearl_mussel_adult_view35_v001.png",
+      "status": "produced_adult_source",
+      "individual_visual_acceptance": "user_accepted_2026-10-22",
+      "other_states_authorized": true,
+      "sha256": "b8f484d48702cd0036845f8a4419f9461611b6968922b69d70893fc09ad6cca7",
+      "canvas_px": [
+        1536,
+        1024
+      ],
+      "mode": "RGBA",
+      "alpha_extrema": [
+        0,
+        254
+      ],
+      "main_bbox_alpha_ge_16": [
+        185,
+        56,
+        1364,
+        947
+      ],
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "main_subject_within_canvas": true,
+      "source_file": "C:\\Users\\88445\\.codex\\generated_images\\01a15ef2-67bc-7673-b278-97b92008c893\\exec-4edc37b2-d2ce-45e6-b2c6-1bd2d8c84fa9.png",
+      "camera_calibrated": false,
+      "runtime_integrated": false
+    },
+    {
+      "id": "gel_jellyfish",
+      "name": "凝胶水母",
+      "category": "aquatic",
+      "state": "adult",
+      "file": "aquatic/gel_jellyfish/gel_jellyfish_adult_view35_v001.png",
+      "status": "produced_adult_source",
+      "individual_visual_acceptance": "user_accepted_2026-10-22",
+      "other_states_authorized": true,
+      "sha256": "0a62fb1efce589cac595346f022bf929a8e3fe144822732c418717cc163a1458",
+      "canvas_px": [
+        1024,
+        1536
+      ],
+      "mode": "RGBA",
+      "alpha_extrema": [
+        0,
+        254
+      ],
+      "main_bbox_alpha_ge_16": [
+        63,
+        104,
+        1004,
+        1487
+      ],
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "main_subject_within_canvas": true,
+      "source_file": "C:\\Users\\88445\\.codex\\generated_images\\01a15ef2-67bc-7673-b278-97b92008c893\\exec-92a973b2-5253-45f2-b7bf-f0f64f9ef601.png",
+      "camera_calibrated": false,
+      "runtime_integrated": false
+    },
+    {
+      "id": "silt_loach",
+      "name": "净泥鳅",
+      "category": "aquatic",
+      "state": "adult",
+      "file": "aquatic/silt_loach/silt_loach_adult_view35_v001.png",
+      "status": "produced_adult_source",
+      "individual_visual_acceptance": "user_accepted_2026-10-22",
+      "other_states_authorized": true,
+      "sha256": "2aa23564186da299e2b39834013cf26d1c71e347745dd2bca77ad1457b8da15c",
+      "canvas_px": [
+        1536,
+        1024
+      ],
+      "mode": "RGBA",
+      "alpha_extrema": [
+        0,
+        254
+      ],
+      "main_bbox_alpha_ge_16": [
+        39,
+        114,
+        1514,
+        917
+      ],
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "main_subject_within_canvas": true,
+      "source_file": "C:\\Users\\88445\\.codex\\generated_images\\01a15ef2-67bc-7673-b278-97b92008c893\\exec-cafdb90c-e85a-45a4-bc3d-3a09cc780926.png",
+      "camera_calibrated": false,
+      "runtime_integrated": false
+    },
+    {
+      "id": "reef_coral",
+      "name": "礁骨珊瑚",
+      "category": "aquatic",
+      "state": "adult",
+      "file": "aquatic/reef_coral/reef_coral_adult_view35_v001.png",
+      "status": "produced_adult_source",
+      "individual_visual_acceptance": "user_accepted_2026-10-22",
+      "other_states_authorized": true,
+      "sha256": "9b28323e1e03805f229cd61412a627ddebc8285d34dbd5e3f9d52eb1bce6e292",
+      "canvas_px": [
+        1312,
+        1199
+      ],
+      "mode": "RGBA",
+      "alpha_extrema": [
+        0,
+        255
+      ],
+      "main_bbox_alpha_ge_16": [
+        39,
+        34,
+        1285,
+        1165
+      ],
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "main_subject_within_canvas": true,
+      "source_file": "C:\\Users\\88445\\.codex\\generated_images\\01a15ef2-67bc-7673-b278-97b92008c893\\exec-7ca33122-c16c-4389-baee-7358f2103254.png",
+      "camera_calibrated": false,
+      "runtime_integrated": false
+    },
+    {
+      "id": "golden_wheat",
+      "name": "金穗麦",
+      "category": "plants",
+      "state": "mature",
+      "file": "plants/golden_wheat/golden_wheat_mature_view35_v001.png",
+      "status": "produced_adult_source",
+      "individual_visual_acceptance": "user_accepted_2026-10-22",
+      "other_states_authorized": true,
+      "sha256": "8bcaa6704c6b67765fbcc1b2caa1a7ea43fe27387fbcaf7e61aa14494b31ceda",
+      "canvas_px": [
+        1024,
+        1536
+      ],
+      "mode": "RGBA",
+      "alpha_extrema": [
+        0,
+        254
+      ],
+      "main_bbox_alpha_ge_16": [
+        35,
+        65,
+        1004,
+        1466
+      ],
+      "corner_alpha": [
+        0,
+        0,
+        1,
+        0
+      ],
+      "main_subject_within_canvas": true,
+      "source_file": "C:\\Users\\88445\\.codex\\generated_images\\01a15ef2-67bc-7673-b278-97b92008c893\\exec-6cd72107-6ff0-4fb3-8bfe-9c6faf568ebe.png",
+      "camera_calibrated": false,
+      "runtime_integrated": false
+    },
+    {
+      "id": "fast_fir",
+      "name": "速生杉",
+      "category": "plants",
+      "state": "mature",
+      "file": "plants/fast_fir/fast_fir_mature_view35_v001.png",
+      "status": "produced_adult_source",
+      "individual_visual_acceptance": "user_accepted_2026-10-22",
+      "other_states_authorized": true,
+      "sha256": "ae7e8a6afcb171b8bcc1a8d0c331599330ebb3833bd3e8a14a421752f4b89bb7",
+      "canvas_px": [
+        1024,
+        1536
+      ],
+      "mode": "RGBA",
+      "alpha_extrema": [
+        0,
+        254
+      ],
+      "main_bbox_alpha_ge_16": [
+        41,
+        12,
+        1011,
+        1507
+      ],
+      "corner_alpha": [
+        0,
+        0,
+        1,
+        0
+      ],
+      "main_subject_within_canvas": true,
+      "source_file": "C:\\Users\\88445\\.codex\\generated_images\\01a15ef2-67bc-7673-b278-97b92008c893\\exec-30d788b6-4a63-4692-a669-1f0b8eb88c07.png",
+      "camera_calibrated": false,
+      "runtime_integrated": false
+    },
+    {
+      "id": "resin_tree",
+      "name": "脂树",
+      "category": "plants",
+      "state": "mature",
+      "file": "plants/resin_tree/resin_tree_mature_view35_v001.png",
+      "status": "produced_adult_source",
+      "individual_visual_acceptance": "user_accepted_2026-10-22",
+      "other_states_authorized": true,
+      "sha256": "e8a7a78cd2b2d0d649d4a77db68541a8e2e17fe7857bc2ae452f2f6400b502ea",
+      "canvas_px": [
+        1209,
+        1300
+      ],
+      "mode": "RGBA",
+      "alpha_extrema": [
+        0,
+        255
+      ],
+      "main_bbox_alpha_ge_16": [
+        18,
+        23,
+        1191,
+        1280
+      ],
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "main_subject_within_canvas": true,
+      "source_file": "C:\\Users\\88445\\.codex\\generated_images\\01a15ef2-67bc-7673-b278-97b92008c893\\exec-82470305-72c1-44e5-a794-3a4ddd0d8c80.png",
+      "camera_calibrated": false,
+      "runtime_integrated": false
+    },
+    {
+      "id": "wood_decay_mushroom",
+      "name": "木腐菌",
+      "category": "plants",
+      "state": "mature",
+      "file": "plants/wood_decay_mushroom/wood_decay_mushroom_mature_view35_v001.png",
+      "status": "produced_adult_source",
+      "individual_visual_acceptance": "user_accepted_2026-10-22",
+      "other_states_authorized": true,
+      "sha256": "e058d9c3ee1224dad71f85ff9e63039e34ea3bd06502e761707a26982ea7a530",
+      "canvas_px": [
+        1230,
+        1278
+      ],
+      "mode": "RGBA",
+      "alpha_extrema": [
+        0,
+        255
+      ],
+      "main_bbox_alpha_ge_16": [
+        45,
+        66,
+        1188,
+        1208
+      ],
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "main_subject_within_canvas": true,
+      "source_file": "C:\\Users\\88445\\.codex\\generated_images\\01a15ef2-67bc-7673-b278-97b92008c893\\exec-73b6308a-a162-4122-8f98-50f2cd9f4c13.png",
+      "camera_calibrated": false,
+      "runtime_integrated": false
+    },
+    {
+      "id": "pasture_grass",
+      "name": "青牧草",
+      "category": "plants",
+      "state": "mature",
+      "file": "plants/pasture_grass/pasture_grass_mature_view35_v001.png",
+      "status": "produced_adult_source",
+      "individual_visual_acceptance": "user_accepted_2026-10-22",
+      "other_states_authorized": true,
+      "sha256": "24ec03828142808eb160604518c1f4c673b5fa95a6cd43ed9dfb5503d3ca242d",
+      "canvas_px": [
+        1199,
+        1312
+      ],
+      "mode": "RGBA",
+      "alpha_extrema": [
+        0,
+        255
+      ],
+      "main_bbox_alpha_ge_16": [
+        39,
+        154,
+        1174,
+        1205
+      ],
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "main_subject_within_canvas": true,
+      "source_file": "C:\\Users\\88445\\.codex\\generated_images\\01a15ef2-67bc-7673-b278-97b92008c893\\exec-98b5a7be-f6cb-4a97-b0c0-42441e4c0752.png",
+      "camera_calibrated": false,
+      "runtime_integrated": false
+    },
+    {
+      "id": "honeybell_bush",
+      "name": "蜜铃灌木",
+      "category": "plants",
+      "state": "mature",
+      "file": "plants/honeybell_bush/honeybell_bush_mature_view35_v001.png",
+      "status": "produced_adult_source",
+      "individual_visual_acceptance": "user_accepted_2026-10-22",
+      "other_states_authorized": true,
+      "sha256": "a520d1c00acc24509da369b9122e5c000d063e1caa1fae6202463d9f7f4bf62b",
+      "canvas_px": [
+        1199,
+        1312
+      ],
+      "mode": "RGBA",
+      "alpha_extrema": [
+        0,
+        255
+      ],
+      "main_bbox_alpha_ge_16": [
+        56,
+        37,
+        1176,
+        1270
+      ],
+      "corner_alpha": [
+        0,
+        0,
+        1,
+        0
+      ],
+      "main_subject_within_canvas": true,
+      "source_file": "C:\\Users\\88445\\.codex\\generated_images\\01a15ef2-67bc-7673-b278-97b92008c893\\exec-6093638c-5898-4c9c-b5aa-3500a8cc84b2.png",
+      "camera_calibrated": false,
+      "runtime_integrated": false
+    },
+    {
+      "id": "oilseed_flower",
+      "name": "油籽花",
+      "category": "plants",
+      "state": "mature",
+      "file": "plants/oilseed_flower/oilseed_flower_mature_view35_v001.png",
+      "status": "produced_adult_source",
+      "individual_visual_acceptance": "user_accepted_2026-10-22",
+      "other_states_authorized": true,
+      "sha256": "7b59d93ba4dae7883b3809c9b49b358b661fc7e0b0bfa8a5728a06e34aec5945",
+      "canvas_px": [
+        1024,
+        1536
+      ],
+      "mode": "RGBA",
+      "alpha_extrema": [
+        0,
+        254
+      ],
+      "main_bbox_alpha_ge_16": [
+        19,
+        103,
+        1006,
+        1379
+      ],
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "main_subject_within_canvas": true,
+      "source_file": "C:\\Users\\88445\\.codex\\generated_images\\01a15ef2-67bc-7673-b278-97b92008c893\\exec-797829f2-a560-46a4-a7c6-28eb52ba3ff4.png",
+      "camera_calibrated": false,
+      "runtime_integrated": false
+    },
+    {
+      "id": "duckweed",
+      "name": "浮萍",
+      "category": "plants",
+      "state": "mature",
+      "file": "plants/duckweed/duckweed_mature_view35_v001.png",
+      "status": "produced_adult_source",
+      "individual_visual_acceptance": "user_accepted_2026-10-22",
+      "other_states_authorized": true,
+      "sha256": "c88fbbcc10aee66d297930b8ffbebed71d77614e00350f6ae24faec032a0b52a",
+      "canvas_px": [
+        1536,
+        1024
+      ],
+      "mode": "RGBA",
+      "alpha_extrema": [
+        0,
+        254
+      ],
+      "main_bbox_alpha_ge_16": [
+        93,
+        48,
+        1461,
+        974
+      ],
+      "corner_alpha": [
+        0,
+        0,
+        1,
+        0
+      ],
+      "main_subject_within_canvas": true,
+      "source_file": "C:\\Users\\88445\\.codex\\generated_images\\01a15ef2-67bc-7673-b278-97b92008c893\\exec-59057a85-fae9-4553-a5d2-58f3b9c8f30e.png",
+      "camera_calibrated": false,
+      "runtime_integrated": false
+    },
+    {
+      "id": "reed",
+      "name": "芦苇",
+      "category": "plants",
+      "state": "mature",
+      "file": "plants/reed/reed_mature_view35_v001.png",
+      "status": "produced_adult_source",
+      "prior_source": ".art-work/p109/candidates/reed/reed_mature_view35_v002.png",
+      "style_approved": true,
+      "individual_visual_acceptance": "user_accepted_2026-10-22",
+      "other_states_authorized": true,
+      "sha256": "cfd6abb3a41d6da89cc994d7a27a48594c82f93f377810231820b2dbf3b28382",
+      "canvas_px": [
+        1024,
+        1536
+      ],
+      "mode": "RGBA",
+      "alpha_extrema": [
+        0,
+        254
+      ],
+      "main_bbox_alpha_ge_16": [
+        24,
+        70,
+        1009,
+        1446
+      ],
+      "corner_alpha": [
+        0,
+        0,
+        1,
+        0
+      ],
+      "main_subject_within_canvas": true,
+      "source_file": "C:\\Users\\88445\\Desktop\\code\\rpgmap\\.art-work\\p109\\candidates\\reed\\reed_mature_view35_v002.png",
+      "camera_calibrated": false,
+      "runtime_integrated": false
+    },
+    {
+      "id": "mulberry_tree",
+      "name": "果桑树",
+      "category": "plants",
+      "state": "mature",
+      "file": "plants/mulberry_tree/mulberry_tree_mature_view35_v001.png",
+      "status": "produced_adult_source",
+      "prior_source": ".art-work/p109/candidates/mulberry_tree/mulberry_tree_mature_view35_v001.png",
+      "style_approved": true,
+      "individual_visual_acceptance": "user_accepted_2026-10-22",
+      "other_states_authorized": true,
+      "sha256": "69c32b77784d51a945a1675e087ccfbcd32bdd50fb94a9256d955c596ca741e3",
+      "canvas_px": [
+        1024,
+        1536
+      ],
+      "mode": "RGBA",
+      "alpha_extrema": [
+        0,
+        254
+      ],
+      "main_bbox_alpha_ge_16": [
+        24,
+        102,
+        1002,
+        1453
+      ],
+      "corner_alpha": [
+        0,
+        0,
+        1,
+        0
+      ],
+      "main_subject_within_canvas": true,
+      "source_file": "C:\\Users\\88445\\Desktop\\code\\rpgmap\\.art-work\\p109\\candidates\\mulberry_tree\\mulberry_tree_mature_view35_v001.png",
+      "camera_calibrated": false,
+      "runtime_integrated": false
+    },
+    {
+      "id": "filter_algae_carp",
+      "name": "滤藻鲤",
+      "category": "aquatic",
+      "state": "adult",
+      "file": "aquatic/filter_algae_carp/filter_algae_carp_adult_view35_v001.png",
+      "status": "produced_adult_source",
+      "prior_source": ".art-work/p109/candidates/filter_algae_carp/filter_algae_carp_adult_view35_v001.png",
+      "style_approved": true,
+      "individual_visual_acceptance": "user_accepted_2026-10-22",
+      "other_states_authorized": true,
+      "sha256": "dea322647ff0f6b5072b6f0d7ebe36d32dfbd34312e3a5d516a03f5ce57b79eb",
+      "canvas_px": [
+        1536,
+        1024
+      ],
+      "mode": "RGBA",
+      "alpha_extrema": [
+        0,
+        254
+      ],
+      "main_bbox_alpha_ge_16": [
+        46,
+        57,
+        1494,
+        960
+      ],
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "main_subject_within_canvas": true,
+      "source_file": "C:\\Users\\88445\\Desktop\\code\\rpgmap\\.art-work\\p109\\candidates\\filter_algae_carp\\filter_algae_carp_adult_view35_v001.png",
+      "camera_calibrated": false,
+      "runtime_integrated": false
+    },
+    {
+      "id": "steel_sheep",
+      "name": "钢绵羊",
+      "category": "animals",
+      "state": "adult",
+      "file": "animals/steel_sheep/steel_sheep_adult_source_v001.png",
+      "status": "user_selected_original_archived",
+      "selected_reference": "User-provided original selected 2026-10-22; original local path provided in current chat",
+      "local_source_available": true,
+      "other_states_authorized": true,
+      "sha256": "c25c55ff8b94184503a3bd37fc540fb83bdc738f82e87b392b2065af35850ca3",
+      "canvas_px": [
+        1254,
+        1254
+      ],
+      "mode": "RGB",
+      "alpha_extrema": null,
+      "main_bbox_alpha_ge_16": null,
+      "corner_alpha": null,
+      "main_subject_within_canvas": false,
+      "source_file": "C:\\Users\\88445\\.zcode\\cli\\image-cache\\sess_16c9c49a-e086-4c6b-882d-e21c9f960fcb\\image-5ba8a51c4d600dc6386e5b62ea64039a.png",
+      "camera_calibrated": false,
+      "runtime_integrated": false,
+      "individual_visual_acceptance": "user_accepted_2026-10-22",
+      "style_approved": true,
+      "archive_unmodified": true,
+      "needs_alpha_extraction": true
+    }
+  ],
+  "production_summary": {
+    "registered_entries": 27,
+    "png_files": 27,
+    "new_images": 23,
+    "reused_approved_style_images": 3,
+    "user_selected_sheep_original": 1,
+    "rgba_files": 26,
+    "rgb_original_files": 1,
+    "additional_states_generated": 0,
+    "alternative_candidates_generated": 0,
+    "buildings_generated": 0,
+    "runtime_integrated": false
+  },
+  "adult_visual_acceptance": "user_accepted_2026-10-22"
+}
