@@ -970,14 +970,48 @@
       "id": "rock_mole",
       "category": "animals",
       "state": "juvenile",
-      "file": "animals/rock_mole/rock_mole_juvenile_view35_v001.png",
-      "source_file": "C:\\Users\\88445\\.codex\\generated_images\\01a15ef2-67bc-7673-b278-97b92008c893\\exec-2df240b5-8b9e-4d0b-a336-6459e2b402c8.png",
+      "version": "v002",
+      "file": "animals/rock_mole/rock_mole_juvenile_view35_v002.png",
+      "source_file": "C:\\Users\\88445\\.codex\\generated_images\\01a15ef2-67bc-7673-b278-97b92008c893\\exec-21e33ae3-ee98-4fe3-bf94-dac9d94a9756.png",
       "reference_file": "animals/rock_mole/rock_mole_adult_view35_v001.png",
-      "prompt": "Same exact species as attached approved adult asset, requested lifecycle state. Preserve identity, silhouette traits, accepted pale elegant fantasy-farm palette. Soft sculpted 3D with gentle painted shading, refined whimsical realism, soft neutral upper-left key with cool fill. No glow/bloom/halo/aura/particles/flare. Fixed 35-degree elevated orthographic three-quarter camera, same facing as reference. Whole organism isolated and centered, natural pose, base at lower center, transparent PNG with padding. No floor, cage, props, accessories, text, border, detached shadow, scene. Young rock mole around 60 percent adult size, compact rounded body, oversized digging forepaws, small blunt mineral-colored snout and a few soft slate-gray plates, youthful proportions.",
-      "status": "needs_age_differentiation_revision",
+      "prompt": "制作《灵田》的幼体正式素材：啮岩鼹（rock_mole）。年龄形态是本次最高优先级。\n一只尚未成年的小啮岩鼹。头部相对身体明显偏大，圆额头，口鼻仍有本种的楔形但明显短而圆，微小黑眼，耳朵不突出。躯干短细、腹部柔软、肩背没有成年粗壮隆起；前爪是小而圆钝的掘爪，矿石质仅刚在爪尖形成，额头只有两三粒很小的矿纹芽，不长成年大片矿石掘爪或岩甲。短柔毛、短小尾巴，四足站立。必须呈现幼鼹的稚嫩身体，不能是缩小的厚重成年鼹。\n\n参考图角色：附图是本物种已验收的成体，只参考物种身份、主色和材质语言；不能沿用成年轮廓、成年器官大小和成熟程度。按照已确认钢绵羊幼体v002的规则，用明确的年龄形态重新设计幼体，而不是把成年图等比例缩小。即使幼体与成体在屏幕上显示同样大小，也必须一眼看出年龄差别。\n画风：与P10.9母版统一的清淡雅致东方奇幻农场，柔和三维体积、细腻而概括的手绘明暗、自然适度可爱、克制的奇幻材质；避免摄影写实、密集细毛噪点、极端Q版和塑料玩具感。配色沿用本物种成体，幼体材质特征应体现刚开始发育的阶段，不堆成熟装甲或外放特效。\n机位：相对水平面35度正交俯视，能看到顶部和近侧面，动物头朝画面右侧；左上柔光和少量冷色填光，无广角、强透视、镜头倾斜。自然静止姿态，身体结构完整连贯。\n交付：只画本次要求的一个完整幼体，珊瑚/菌毯则为一个连贯初生群体；禁止成年体陪衬、对比图、多个年龄拼图。透明RGBA背景，主体外完全透明，四周保留8%安全边距，尾、鳍、耳、根/触腕完整。禁止背景光晕、泛光、雾、粒子、池水、地面阴影、地台、花盆、建筑、巢箱、草地、底座、文字、标签、饰品和道具。",
+      "status": "age_corrected_source_awaiting_user_acceptance",
+      "visual_acceptance": "pending",
       "runtime_integrated": false,
       "camera_calibrated": false,
-      "sha256": "9aefe96dbfa83d772999d6fcd6392ca240395f6964c76d0561e95f60d3495299",
+      "previous_revisions": [
+        {
+          "id": "rock_mole",
+          "category": "animals",
+          "state": "juvenile",
+          "file": "animals/rock_mole/rock_mole_juvenile_view35_v001.png",
+          "source_file": "C:\\Users\\88445\\.codex\\generated_images\\01a15ef2-67bc-7673-b278-97b92008c893\\exec-2df240b5-8b9e-4d0b-a336-6459e2b402c8.png",
+          "reference_file": "animals/rock_mole/rock_mole_adult_view35_v001.png",
+          "prompt": "Same exact species as attached approved adult asset, requested lifecycle state. Preserve identity, silhouette traits, accepted pale elegant fantasy-farm palette. Soft sculpted 3D with gentle painted shading, refined whimsical realism, soft neutral upper-left key with cool fill. No glow/bloom/halo/aura/particles/flare. Fixed 35-degree elevated orthographic three-quarter camera, same facing as reference. Whole organism isolated and centered, natural pose, base at lower center, transparent PNG with padding. No floor, cage, props, accessories, text, border, detached shadow, scene. Young rock mole around 60 percent adult size, compact rounded body, oversized digging forepaws, small blunt mineral-colored snout and a few soft slate-gray plates, youthful proportions.",
+          "status": "needs_age_differentiation_revision",
+          "runtime_integrated": false,
+          "camera_calibrated": false,
+          "sha256": "9aefe96dbfa83d772999d6fcd6392ca240395f6964c76d0561e95f60d3495299",
+          "canvas_px": [
+            1536,
+            1024
+          ],
+          "mode": "RGBA",
+          "alpha_extrema": [
+            0,
+            254
+          ],
+          "main_bbox_alpha_ge_16": [
+            215,
+            159,
+            1400,
+            937
+          ],
+          "main_subject_within_canvas": true,
+          "review_issue": "User reports juvenile looks too similar to adult; age morphology insufficient. Not visually accepted."
+        }
+      ],
+      "sha256": "4ec6ea87c6d8c2ed228bc729df3ebee16a4a549d9a3f8d88944f2e767c8f55da",
       "canvas_px": [
         1536,
         1024
@@ -988,26 +1022,59 @@
         254
       ],
       "main_bbox_alpha_ge_16": [
-        215,
-        159,
-        1400,
-        937
+        151,
+        115,
+        1490,
+        905
       ],
-      "main_subject_within_canvas": true,
-      "review_issue": "User reports juvenile looks too similar to adult; age morphology insufficient. Not visually accepted."
+      "main_subject_within_canvas": true
     },
     {
       "id": "rock_belly_beast",
       "category": "animals",
       "state": "juvenile",
-      "file": "animals/rock_belly_beast/rock_belly_beast_juvenile_view35_v001.png",
-      "source_file": "C:\\Users\\88445\\.codex\\generated_images\\01a15ef2-67bc-7673-b278-97b92008c893\\exec-04eb91fd-cf1e-4d98-8b06-4510d6e8e4bc.png",
+      "version": "v002",
+      "file": "animals/rock_belly_beast/rock_belly_beast_juvenile_view35_v002.png",
+      "source_file": "C:\\Users\\88445\\.codex\\generated_images\\01a15ef2-67bc-7673-b278-97b92008c893\\exec-980de849-be80-486c-956d-6b1907295176.png",
       "reference_file": "animals/rock_belly_beast/rock_belly_beast_adult_view35_v001.png",
-      "prompt": "Create one production juvenile asset of the same species as the attached approved adult reference. Preserve exact recognizable anatomy/material identity and accepted pale elegant fantasy-farm art style: softly sculpted 3D volume, gentle painted shading, refined whimsical forms, natural soft upper-left key and cool fill. The subject is clearly younger/smaller than adult, roughly 60 percent adult size or a smaller group as appropriate. No glow, bloom, halo, aura, sparks, particles, or smoke. Fixed 35-degree elevated orthographic three-quarter view, same facing as reference. Whole subject isolated and centered, transparent PNG, padding. No ground, enclosure, props, text, frame, detached shadow, environment. A young rock-belly beast around 60 percent adult size: compact squat fantasy quadruped with a rounded layered stone belly and sturdy short legs, smaller head/body proportions, mineral plates still sparse.",
-      "status": "needs_age_differentiation_revision",
+      "prompt": "制作《灵田》的幼体正式素材：岩腹兽（rock_belly_beast）。年龄形态是本次最高优先级。\n一只幼年岩腹兽，保留本物种四足灵兽身份。相对大而圆的头，短圆吻、较大柔和眼、圆耳；躯干短而窄，肩膀不隆起，四肢细小，脚爪圆钝。胸腹主要是柔软浅色皮毛，只有腹部中央两三块彼此分离、薄而圆的小岩片芽；没有成年覆盖整个胸腹的厚重石腹、连续大装甲或巨大前爪。短而柔软的绒毛，不要成年鬃毛，姿态轻巧。\n\n参考图角色：附图是本物种已验收的成体，只参考物种身份、主色和材质语言；不能沿用成年轮廓、成年器官大小和成熟程度。按照已确认钢绵羊幼体v002的规则，用明确的年龄形态重新设计幼体，而不是把成年图等比例缩小。即使幼体与成体在屏幕上显示同样大小，也必须一眼看出年龄差别。\n画风：与P10.9母版统一的清淡雅致东方奇幻农场，柔和三维体积、细腻而概括的手绘明暗、自然适度可爱、克制的奇幻材质；避免摄影写实、密集细毛噪点、极端Q版和塑料玩具感。配色沿用本物种成体，幼体材质特征应体现刚开始发育的阶段，不堆成熟装甲或外放特效。\n机位：相对水平面35度正交俯视，能看到顶部和近侧面，动物头朝画面右侧；左上柔光和少量冷色填光，无广角、强透视、镜头倾斜。自然静止姿态，身体结构完整连贯。\n交付：只画本次要求的一个完整幼体，珊瑚/菌毯则为一个连贯初生群体；禁止成年体陪衬、对比图、多个年龄拼图。透明RGBA背景，主体外完全透明，四周保留8%安全边距，尾、鳍、耳、根/触腕完整。禁止背景光晕、泛光、雾、粒子、池水、地面阴影、地台、花盆、建筑、巢箱、草地、底座、文字、标签、饰品和道具。",
+      "status": "age_corrected_source_awaiting_user_acceptance",
+      "visual_acceptance": "pending",
       "runtime_integrated": false,
       "camera_calibrated": false,
-      "sha256": "feeb354aa271ba2178ea7653abd6bcc79d02217cadb0a1b84bcc18b561610105",
+      "previous_revisions": [
+        {
+          "id": "rock_belly_beast",
+          "category": "animals",
+          "state": "juvenile",
+          "file": "animals/rock_belly_beast/rock_belly_beast_juvenile_view35_v001.png",
+          "source_file": "C:\\Users\\88445\\.codex\\generated_images\\01a15ef2-67bc-7673-b278-97b92008c893\\exec-04eb91fd-cf1e-4d98-8b06-4510d6e8e4bc.png",
+          "reference_file": "animals/rock_belly_beast/rock_belly_beast_adult_view35_v001.png",
+          "prompt": "Create one production juvenile asset of the same species as the attached approved adult reference. Preserve exact recognizable anatomy/material identity and accepted pale elegant fantasy-farm art style: softly sculpted 3D volume, gentle painted shading, refined whimsical forms, natural soft upper-left key and cool fill. The subject is clearly younger/smaller than adult, roughly 60 percent adult size or a smaller group as appropriate. No glow, bloom, halo, aura, sparks, particles, or smoke. Fixed 35-degree elevated orthographic three-quarter view, same facing as reference. Whole subject isolated and centered, transparent PNG, padding. No ground, enclosure, props, text, frame, detached shadow, environment. A young rock-belly beast around 60 percent adult size: compact squat fantasy quadruped with a rounded layered stone belly and sturdy short legs, smaller head/body proportions, mineral plates still sparse.",
+          "status": "needs_age_differentiation_revision",
+          "runtime_integrated": false,
+          "camera_calibrated": false,
+          "sha256": "feeb354aa271ba2178ea7653abd6bcc79d02217cadb0a1b84bcc18b561610105",
+          "canvas_px": [
+            1536,
+            1024
+          ],
+          "mode": "RGBA",
+          "alpha_extrema": [
+            0,
+            254
+          ],
+          "main_bbox_alpha_ge_16": [
+            210,
+            142,
+            1362,
+            906
+          ],
+          "main_subject_within_canvas": true,
+          "review_issue": "User reports juvenile looks too similar to adult; age morphology insufficient. Not visually accepted."
+        }
+      ],
+      "sha256": "685a302a11bd29243136fd9b037edbd824b03a7744c2279cecd0e248c11bcbe6",
       "canvas_px": [
         1536,
         1024
@@ -1018,26 +1085,59 @@
         254
       ],
       "main_bbox_alpha_ge_16": [
-        210,
-        142,
-        1362,
-        906
+        219,
+        135,
+        1375,
+        931
       ],
-      "main_subject_within_canvas": true,
-      "review_issue": "User reports juvenile looks too similar to adult; age morphology insufficient. Not visually accepted."
+      "main_subject_within_canvas": true
     },
     {
       "id": "carbon_belly_bug",
       "category": "animals",
       "state": "juvenile",
-      "file": "animals/carbon_belly_bug/carbon_belly_bug_juvenile_view35_v001.png",
-      "source_file": "C:\\Users\\88445\\.codex\\generated_images\\01a15ef2-67bc-7673-b278-97b92008c893\\exec-6800079c-2fa6-429a-ab59-240fbd541c4e.png",
+      "version": "v002",
+      "file": "animals/carbon_belly_bug/carbon_belly_bug_juvenile_view35_v002.png",
+      "source_file": "C:\\Users\\88445\\.codex\\generated_images\\01a15ef2-67bc-7673-b278-97b92008c893\\exec-79795dd0-d6e9-4650-beb3-ef9463b34210.png",
       "reference_file": "animals/carbon_belly_bug/carbon_belly_bug_adult_view35_v001.png",
-      "prompt": "Create one production juvenile asset of the same species as the attached approved adult reference. Preserve exact recognizable anatomy/material identity and accepted pale elegant fantasy-farm art style: softly sculpted 3D volume, gentle painted shading, refined whimsical forms, natural soft upper-left key and cool fill. The subject is clearly younger/smaller than adult, roughly 60 percent adult size or a smaller group as appropriate. No glow, bloom, halo, aura, sparks, particles, or smoke. Fixed 35-degree elevated orthographic three-quarter view, same facing as reference. Whole subject isolated and centered, transparent PNG, padding. No ground, enclosure, props, text, frame, detached shadow, environment. A juvenile carbon-belly bug group, about 60 percent adult size: a few small rounded charcoal-gray beetle-like insects with distinctive dark carbon abdomen and tiny warm ember-like markings, no flames or smoke.",
-      "status": "needs_age_differentiation_revision",
+      "prompt": "制作《灵田》的幼体正式素材：炭腹虫（carbon_belly_bug）。年龄形态是本次最高优先级。\n一只炭腹虫的初龄幼虫，明确采用昆虫幼虫体态，而不是成年甲虫。短胖而柔软的C形分节腹部、相对大的圆钝小头、三对短小胸足、短触角；主体浅炭灰与暖米色，腹部仅两三段出现淡淡炭色斑，表皮柔软，少量未硬化小片。没有成年背部完整鞘翅、金属大背甲、长尖足、扇形长触角或成熟发亮炭腹。无火焰、烟、发光裂纹。保持本物种炭灰/柔金色系和绘制风格。\n\n参考图角色：附图是本物种已验收的成体，只参考物种身份、主色和材质语言；不能沿用成年轮廓、成年器官大小和成熟程度。按照已确认钢绵羊幼体v002的规则，用明确的年龄形态重新设计幼体，而不是把成年图等比例缩小。即使幼体与成体在屏幕上显示同样大小，也必须一眼看出年龄差别。\n画风：与P10.9母版统一的清淡雅致东方奇幻农场，柔和三维体积、细腻而概括的手绘明暗、自然适度可爱、克制的奇幻材质；避免摄影写实、密集细毛噪点、极端Q版和塑料玩具感。配色沿用本物种成体，幼体材质特征应体现刚开始发育的阶段，不堆成熟装甲或外放特效。\n机位：相对水平面35度正交俯视，能看到顶部和近侧面，动物头朝画面右侧；左上柔光和少量冷色填光，无广角、强透视、镜头倾斜。自然静止姿态，身体结构完整连贯。\n交付：只画本次要求的一个完整幼体，珊瑚/菌毯则为一个连贯初生群体；禁止成年体陪衬、对比图、多个年龄拼图。透明RGBA背景，主体外完全透明，四周保留8%安全边距，尾、鳍、耳、根/触腕完整。禁止背景光晕、泛光、雾、粒子、池水、地面阴影、地台、花盆、建筑、巢箱、草地、底座、文字、标签、饰品和道具。",
+      "status": "age_corrected_source_awaiting_user_acceptance",
+      "visual_acceptance": "pending",
       "runtime_integrated": false,
       "camera_calibrated": false,
-      "sha256": "0ee4be288471e32374e76d9a931a39fa3d28e46376725c028093e855c01127d5",
+      "previous_revisions": [
+        {
+          "id": "carbon_belly_bug",
+          "category": "animals",
+          "state": "juvenile",
+          "file": "animals/carbon_belly_bug/carbon_belly_bug_juvenile_view35_v001.png",
+          "source_file": "C:\\Users\\88445\\.codex\\generated_images\\01a15ef2-67bc-7673-b278-97b92008c893\\exec-6800079c-2fa6-429a-ab59-240fbd541c4e.png",
+          "reference_file": "animals/carbon_belly_bug/carbon_belly_bug_adult_view35_v001.png",
+          "prompt": "Create one production juvenile asset of the same species as the attached approved adult reference. Preserve exact recognizable anatomy/material identity and accepted pale elegant fantasy-farm art style: softly sculpted 3D volume, gentle painted shading, refined whimsical forms, natural soft upper-left key and cool fill. The subject is clearly younger/smaller than adult, roughly 60 percent adult size or a smaller group as appropriate. No glow, bloom, halo, aura, sparks, particles, or smoke. Fixed 35-degree elevated orthographic three-quarter view, same facing as reference. Whole subject isolated and centered, transparent PNG, padding. No ground, enclosure, props, text, frame, detached shadow, environment. A juvenile carbon-belly bug group, about 60 percent adult size: a few small rounded charcoal-gray beetle-like insects with distinctive dark carbon abdomen and tiny warm ember-like markings, no flames or smoke.",
+          "status": "needs_age_differentiation_revision",
+          "runtime_integrated": false,
+          "camera_calibrated": false,
+          "sha256": "0ee4be288471e32374e76d9a931a39fa3d28e46376725c028093e855c01127d5",
+          "canvas_px": [
+            1536,
+            1024
+          ],
+          "mode": "RGBA",
+          "alpha_extrema": [
+            0,
+            254
+          ],
+          "main_bbox_alpha_ge_16": [
+            67,
+            64,
+            1486,
+            1007
+          ],
+          "main_subject_within_canvas": true,
+          "review_issue": "User reports juvenile looks too similar to adult; age morphology insufficient. Not visually accepted."
+        }
+      ],
+      "sha256": "0d43eac59589bf36d758f95446f165606eb88f828701ccb4be8501bbf6e6c8b1",
       "canvas_px": [
         1536,
         1024
@@ -1048,26 +1148,59 @@
         254
       ],
       "main_bbox_alpha_ge_16": [
-        67,
-        64,
-        1486,
-        1007
+        207,
+        163,
+        1406,
+        826
       ],
-      "main_subject_within_canvas": true,
-      "review_issue": "User reports juvenile looks too similar to adult; age morphology insufficient. Not visually accepted."
+      "main_subject_within_canvas": true
     },
     {
       "id": "leaf_silkworm",
       "category": "animals",
       "state": "juvenile",
-      "file": "animals/leaf_silkworm/leaf_silkworm_juvenile_view35_v001.png",
-      "source_file": "C:\\Users\\88445\\.codex\\generated_images\\01a15ef2-67bc-7673-b278-97b92008c893\\exec-6646d55e-753c-43e1-96fb-f96ea123f2ea.png",
+      "version": "v002",
+      "file": "animals/leaf_silkworm/leaf_silkworm_juvenile_view35_v002.png",
+      "source_file": "C:\\Users\\88445\\.codex\\generated_images\\01a15ef2-67bc-7673-b278-97b92008c893\\exec-2ea2a5ba-caef-4821-8430-3867143d6629.png",
       "reference_file": "animals/leaf_silkworm/leaf_silkworm_adult_view35_v001.png",
-      "prompt": "Create one production juvenile asset of the same species as the attached approved adult reference. Preserve exact recognizable anatomy/material identity and accepted pale elegant fantasy-farm art style: softly sculpted 3D volume, gentle painted shading, refined whimsical forms, natural soft upper-left key and cool fill. The subject is clearly younger/smaller than adult, roughly 60 percent adult size or a smaller group as appropriate. No glow, bloom, halo, aura, sparks, particles, or smoke. Fixed 35-degree elevated orthographic three-quarter view, same facing as reference. Whole subject isolated and centered, transparent PNG, padding. No ground, enclosure, props, text, frame, detached shadow, environment. A young leaf silkworm group: several small pale jade-green segmented caterpillars with tiny soft setae and subtle leaf-green markings, clearly juvenile larvae, no cocoons and no moths.",
-      "status": "needs_age_differentiation_revision",
+      "prompt": "制作《灵田》的幼体正式素材：叶丝蚕（leaf_silkworm）。年龄形态是本次最高优先级。\n一只刚开始取食的幼龄叶丝蚕，只有一只。细长柔软的浅奶白幼蚕，身体明显纤细、各体节圆润但不鼓胀，相对较大圆头和短小口器，微小黑眼点，极短小步足。背部只有一条很淡的嫩绿色细纹，最多两枚极小尚未展开的叶形突起；没有成熟肥厚产丝蚕的大鼓节、密集叶状背饰或厚重丝光白皮。此物种游戏成体仍是产丝蚕体，幼体也保持蚕形，不画蛾、蝶、茧或丝线道具。\n\n参考图角色：附图是本物种已验收的成体，只参考物种身份、主色和材质语言；不能沿用成年轮廓、成年器官大小和成熟程度。按照已确认钢绵羊幼体v002的规则，用明确的年龄形态重新设计幼体，而不是把成年图等比例缩小。即使幼体与成体在屏幕上显示同样大小，也必须一眼看出年龄差别。\n画风：与P10.9母版统一的清淡雅致东方奇幻农场，柔和三维体积、细腻而概括的手绘明暗、自然适度可爱、克制的奇幻材质；避免摄影写实、密集细毛噪点、极端Q版和塑料玩具感。配色沿用本物种成体，幼体材质特征应体现刚开始发育的阶段，不堆成熟装甲或外放特效。\n机位：相对水平面35度正交俯视，能看到顶部和近侧面，动物头朝画面右侧；左上柔光和少量冷色填光，无广角、强透视、镜头倾斜。自然静止姿态，身体结构完整连贯。\n交付：只画本次要求的一个完整幼体，珊瑚/菌毯则为一个连贯初生群体；禁止成年体陪衬、对比图、多个年龄拼图。透明RGBA背景，主体外完全透明，四周保留8%安全边距，尾、鳍、耳、根/触腕完整。禁止背景光晕、泛光、雾、粒子、池水、地面阴影、地台、花盆、建筑、巢箱、草地、底座、文字、标签、饰品和道具。",
+      "status": "age_corrected_source_awaiting_user_acceptance",
+      "visual_acceptance": "pending",
       "runtime_integrated": false,
       "camera_calibrated": false,
-      "sha256": "72e534c2d63669da6e4ce0f29ec82c034fcd8c22caf2cebcb69d804a0d104f78",
+      "previous_revisions": [
+        {
+          "id": "leaf_silkworm",
+          "category": "animals",
+          "state": "juvenile",
+          "file": "animals/leaf_silkworm/leaf_silkworm_juvenile_view35_v001.png",
+          "source_file": "C:\\Users\\88445\\.codex\\generated_images\\01a15ef2-67bc-7673-b278-97b92008c893\\exec-6646d55e-753c-43e1-96fb-f96ea123f2ea.png",
+          "reference_file": "animals/leaf_silkworm/leaf_silkworm_adult_view35_v001.png",
+          "prompt": "Create one production juvenile asset of the same species as the attached approved adult reference. Preserve exact recognizable anatomy/material identity and accepted pale elegant fantasy-farm art style: softly sculpted 3D volume, gentle painted shading, refined whimsical forms, natural soft upper-left key and cool fill. The subject is clearly younger/smaller than adult, roughly 60 percent adult size or a smaller group as appropriate. No glow, bloom, halo, aura, sparks, particles, or smoke. Fixed 35-degree elevated orthographic three-quarter view, same facing as reference. Whole subject isolated and centered, transparent PNG, padding. No ground, enclosure, props, text, frame, detached shadow, environment. A young leaf silkworm group: several small pale jade-green segmented caterpillars with tiny soft setae and subtle leaf-green markings, clearly juvenile larvae, no cocoons and no moths.",
+          "status": "needs_age_differentiation_revision",
+          "runtime_integrated": false,
+          "camera_calibrated": false,
+          "sha256": "72e534c2d63669da6e4ce0f29ec82c034fcd8c22caf2cebcb69d804a0d104f78",
+          "canvas_px": [
+            1536,
+            1024
+          ],
+          "mode": "RGBA",
+          "alpha_extrema": [
+            0,
+            254
+          ],
+          "main_bbox_alpha_ge_16": [
+            99,
+            55,
+            1460,
+            994
+          ],
+          "main_subject_within_canvas": true,
+          "review_issue": "User reports juvenile looks too similar to adult; age morphology insufficient. Not visually accepted."
+        }
+      ],
+      "sha256": "14c268e077bec43d1e51a418497e7241b00f16820e73c0cbef1c8886258d5c3c",
       "canvas_px": [
         1536,
         1024
@@ -1078,26 +1211,59 @@
         254
       ],
       "main_bbox_alpha_ge_16": [
-        99,
-        55,
-        1460,
-        994
+        65,
+        185,
+        1434,
+        884
       ],
-      "main_subject_within_canvas": true,
-      "review_issue": "User reports juvenile looks too similar to adult; age morphology insufficient. Not visually accepted."
+      "main_subject_within_canvas": true
     },
     {
       "id": "dew_shell_snail",
       "category": "animals",
       "state": "juvenile",
-      "file": "animals/dew_shell_snail/dew_shell_snail_juvenile_view35_v001.png",
-      "source_file": "C:\\Users\\88445\\.codex\\generated_images\\01a15ef2-67bc-7673-b278-97b92008c893\\exec-ebd653af-69eb-4e31-bc4d-4fcd4cade15d.png",
+      "version": "v002",
+      "file": "animals/dew_shell_snail/dew_shell_snail_juvenile_view35_v002.png",
+      "source_file": "C:\\Users\\88445\\.codex\\generated_images\\01a15ef2-67bc-7673-b278-97b92008c893\\exec-9b64a739-df8a-44f4-b63b-56fb40021bf7.png",
       "reference_file": "animals/dew_shell_snail/dew_shell_snail_adult_view35_v001.png",
-      "prompt": "Make one production juvenile of exact species from attached approved adult image. Preserve distinctive anatomy/materials and elegant pale fantasy-farm palette. Subject is clearly younger and around 60 percent adult overall scale. Soft sculpted 3D volume, gentle hand-painted shading, refined whimsical naturalism, diffuse upper-left light and cool fill. No glow, halo, bloom, particles, aura, sparks or smoke. Fixed 35-degree elevated orthographic three-quarter view, same facing as reference. Whole organism centered and isolated, transparent PNG, padding. No ground, habitat, props, text, border, shadow or environment. Young dew-shell snail around 60 percent adult size: small pale mint snail body with a single translucent dew-glass spiral shell, short eyestalks and a few sparkling dew droplets adhered to shell only, no puddle.",
-      "status": "needs_age_differentiation_revision",
+      "prompt": "制作《灵田》的幼体正式素材：露壳蜗牛（dew_shell_snail）。年龄形态是本次最高优先级。\n一只刚孵化不久的露壳幼蜗牛。头相对身体较大、触角短，身体细嫩而略透明，脚腹窄短。壳只有约一圈半的浅浅螺旋，薄、小、圆润，轻薄玻璃似的淡玉青半透明材质，能看出壳尚未长厚；绝不使用成年多圈大螺壳或壳盖过大半身体的体量。仅一颗针尖大小露滴附在壳面，不要成年大量大露珠、虹彩堆叠或成熟厚壳。\n\n参考图角色：附图是本物种已验收的成体，只参考物种身份、主色和材质语言；不能沿用成年轮廓、成年器官大小和成熟程度。按照已确认钢绵羊幼体v002的规则，用明确的年龄形态重新设计幼体，而不是把成年图等比例缩小。即使幼体与成体在屏幕上显示同样大小，也必须一眼看出年龄差别。\n画风：与P10.9母版统一的清淡雅致东方奇幻农场，柔和三维体积、细腻而概括的手绘明暗、自然适度可爱、克制的奇幻材质；避免摄影写实、密集细毛噪点、极端Q版和塑料玩具感。配色沿用本物种成体，幼体材质特征应体现刚开始发育的阶段，不堆成熟装甲或外放特效。\n机位：相对水平面35度正交俯视，能看到顶部和近侧面，动物头朝画面右侧；左上柔光和少量冷色填光，无广角、强透视、镜头倾斜。自然静止姿态，身体结构完整连贯。\n交付：只画本次要求的一个完整幼体，珊瑚/菌毯则为一个连贯初生群体；禁止成年体陪衬、对比图、多个年龄拼图。透明RGBA背景，主体外完全透明，四周保留8%安全边距，尾、鳍、耳、根/触腕完整。禁止背景光晕、泛光、雾、粒子、池水、地面阴影、地台、花盆、建筑、巢箱、草地、底座、文字、标签、饰品和道具。",
+      "status": "age_corrected_source_awaiting_user_acceptance",
+      "visual_acceptance": "pending",
       "runtime_integrated": false,
       "camera_calibrated": false,
-      "sha256": "66c379732f4312c311f7b015244e3d93e65dbd5a21571024dfab4b35d63435ff",
+      "previous_revisions": [
+        {
+          "id": "dew_shell_snail",
+          "category": "animals",
+          "state": "juvenile",
+          "file": "animals/dew_shell_snail/dew_shell_snail_juvenile_view35_v001.png",
+          "source_file": "C:\\Users\\88445\\.codex\\generated_images\\01a15ef2-67bc-7673-b278-97b92008c893\\exec-ebd653af-69eb-4e31-bc4d-4fcd4cade15d.png",
+          "reference_file": "animals/dew_shell_snail/dew_shell_snail_adult_view35_v001.png",
+          "prompt": "Make one production juvenile of exact species from attached approved adult image. Preserve distinctive anatomy/materials and elegant pale fantasy-farm palette. Subject is clearly younger and around 60 percent adult overall scale. Soft sculpted 3D volume, gentle hand-painted shading, refined whimsical naturalism, diffuse upper-left light and cool fill. No glow, halo, bloom, particles, aura, sparks or smoke. Fixed 35-degree elevated orthographic three-quarter view, same facing as reference. Whole organism centered and isolated, transparent PNG, padding. No ground, habitat, props, text, border, shadow or environment. Young dew-shell snail around 60 percent adult size: small pale mint snail body with a single translucent dew-glass spiral shell, short eyestalks and a few sparkling dew droplets adhered to shell only, no puddle.",
+          "status": "needs_age_differentiation_revision",
+          "runtime_integrated": false,
+          "camera_calibrated": false,
+          "sha256": "66c379732f4312c311f7b015244e3d93e65dbd5a21571024dfab4b35d63435ff",
+          "canvas_px": [
+            1536,
+            1024
+          ],
+          "mode": "RGBA",
+          "alpha_extrema": [
+            0,
+            254
+          ],
+          "main_bbox_alpha_ge_16": [
+            213,
+            151,
+            1399,
+            879
+          ],
+          "main_subject_within_canvas": true,
+          "review_issue": "User reports juvenile looks too similar to adult; age morphology insufficient. Not visually accepted."
+        }
+      ],
+      "sha256": "c973ccf294b1880969d22831f285d5aca15cbedf7f8e1501550aa7021b38018d",
       "canvas_px": [
         1536,
         1024
@@ -1108,26 +1274,59 @@
         254
       ],
       "main_bbox_alpha_ge_16": [
-        213,
-        151,
-        1399,
-        879
+        312,
+        193,
+        1339,
+        845
       ],
-      "main_subject_within_canvas": true,
-      "review_issue": "User reports juvenile looks too similar to adult; age morphology insufficient. Not visually accepted."
+      "main_subject_within_canvas": true
     },
     {
       "id": "mineral_scale_lizard",
       "category": "animals",
       "state": "juvenile",
-      "file": "animals/mineral_scale_lizard/mineral_scale_lizard_juvenile_view35_v001.png",
-      "source_file": "C:\\Users\\88445\\.codex\\generated_images\\01a15ef2-67bc-7673-b278-97b92008c893\\exec-6a0d8274-3a3e-453a-acb4-9d6573e7a18a.png",
+      "version": "v002",
+      "file": "animals/mineral_scale_lizard/mineral_scale_lizard_juvenile_view35_v002.png",
+      "source_file": "C:\\Users\\88445\\.codex\\generated_images\\01a15ef2-67bc-7673-b278-97b92008c893\\exec-4d2f82c4-f5fe-4660-969e-4f51bb06b24a.png",
       "reference_file": "animals/mineral_scale_lizard/mineral_scale_lizard_adult_view35_v001.png",
-      "prompt": "Make one production juvenile of exact species from attached approved adult image. Preserve distinctive anatomy/materials and elegant pale fantasy-farm palette. Subject is clearly younger and around 60 percent adult overall scale. Soft sculpted 3D volume, gentle hand-painted shading, refined whimsical naturalism, diffuse upper-left light and cool fill. No glow, halo, bloom, particles, aura, sparks or smoke. Fixed 35-degree elevated orthographic three-quarter view, same facing as reference. Whole organism centered and isolated, transparent PNG, padding. No ground, habitat, props, text, border, shadow or environment. Juvenile mineral-scale lizard around 60 percent adult length: small sturdy four-legged lizard with a short tail and sparse tiny pale mineral scales along back, youthful proportions, same muted stone-and-sage palette.",
-      "status": "needs_age_differentiation_revision",
+      "prompt": "制作《灵田》的幼体正式素材：矿鳞蜥（mineral_scale_lizard）。年龄形态是本次最高优先级。\n一只刚进入幼年期的小矿鳞蜥。明显较大的圆头、短吻、大而自然的眼，细长而轻盈的躯干，四肢细，细软尾巴，不能保持成年粗壮长躯干。身体绝大部分为平滑柔软的浅青灰小细鳞，背部中线仅有三至五枚相互分离、低矮圆钝的矿鳞芽；头顶无冠，颈背没有成年密集大片尖叶状矿鳞，尾巴没有完整鳞甲包覆。矿物材质只在少数小鳞芽出现，保留本物种淡青灰与暖米色。\n\n参考图角色：附图是本物种已验收的成体，只参考物种身份、主色和材质语言；不能沿用成年轮廓、成年器官大小和成熟程度。按照已确认钢绵羊幼体v002的规则，用明确的年龄形态重新设计幼体，而不是把成年图等比例缩小。即使幼体与成体在屏幕上显示同样大小，也必须一眼看出年龄差别。\n画风：与P10.9母版统一的清淡雅致东方奇幻农场，柔和三维体积、细腻而概括的手绘明暗、自然适度可爱、克制的奇幻材质；避免摄影写实、密集细毛噪点、极端Q版和塑料玩具感。配色沿用本物种成体，幼体材质特征应体现刚开始发育的阶段，不堆成熟装甲或外放特效。\n机位：相对水平面35度正交俯视，能看到顶部和近侧面，动物头朝画面右侧；左上柔光和少量冷色填光，无广角、强透视、镜头倾斜。自然静止姿态，身体结构完整连贯。\n交付：只画本次要求的一个完整幼体，珊瑚/菌毯则为一个连贯初生群体；禁止成年体陪衬、对比图、多个年龄拼图。透明RGBA背景，主体外完全透明，四周保留8%安全边距，尾、鳍、耳、根/触腕完整。禁止背景光晕、泛光、雾、粒子、池水、地面阴影、地台、花盆、建筑、巢箱、草地、底座、文字、标签、饰品和道具。",
+      "status": "age_corrected_source_awaiting_user_acceptance",
+      "visual_acceptance": "pending",
       "runtime_integrated": false,
       "camera_calibrated": false,
-      "sha256": "b4eec65f454724d0f9b973e90a5005f6a9f34567e1943e761cff062acee112a4",
+      "previous_revisions": [
+        {
+          "id": "mineral_scale_lizard",
+          "category": "animals",
+          "state": "juvenile",
+          "file": "animals/mineral_scale_lizard/mineral_scale_lizard_juvenile_view35_v001.png",
+          "source_file": "C:\\Users\\88445\\.codex\\generated_images\\01a15ef2-67bc-7673-b278-97b92008c893\\exec-6a0d8274-3a3e-453a-acb4-9d6573e7a18a.png",
+          "reference_file": "animals/mineral_scale_lizard/mineral_scale_lizard_adult_view35_v001.png",
+          "prompt": "Make one production juvenile of exact species from attached approved adult image. Preserve distinctive anatomy/materials and elegant pale fantasy-farm palette. Subject is clearly younger and around 60 percent adult overall scale. Soft sculpted 3D volume, gentle hand-painted shading, refined whimsical naturalism, diffuse upper-left light and cool fill. No glow, halo, bloom, particles, aura, sparks or smoke. Fixed 35-degree elevated orthographic three-quarter view, same facing as reference. Whole organism centered and isolated, transparent PNG, padding. No ground, habitat, props, text, border, shadow or environment. Juvenile mineral-scale lizard around 60 percent adult length: small sturdy four-legged lizard with a short tail and sparse tiny pale mineral scales along back, youthful proportions, same muted stone-and-sage palette.",
+          "status": "needs_age_differentiation_revision",
+          "runtime_integrated": false,
+          "camera_calibrated": false,
+          "sha256": "b4eec65f454724d0f9b973e90a5005f6a9f34567e1943e761cff062acee112a4",
+          "canvas_px": [
+            1536,
+            1024
+          ],
+          "mode": "RGBA",
+          "alpha_extrema": [
+            0,
+            254
+          ],
+          "main_bbox_alpha_ge_16": [
+            101,
+            149,
+            1477,
+            960
+          ],
+          "main_subject_within_canvas": true,
+          "review_issue": "User reports juvenile looks too similar to adult; age morphology insufficient. Not visually accepted."
+        }
+      ],
+      "sha256": "b75a087c28d1cdb91bf011d69ac9edcaa59d75b77fa01bb683d453553db7bd48",
       "canvas_px": [
         1536,
         1024
@@ -1138,26 +1337,59 @@
         254
       ],
       "main_bbox_alpha_ge_16": [
-        101,
-        149,
-        1477,
-        960
+        54,
+        107,
+        1470,
+        939
       ],
-      "main_subject_within_canvas": true,
-      "review_issue": "User reports juvenile looks too similar to adult; age morphology insufficient. Not visually accepted."
+      "main_subject_within_canvas": true
     },
     {
       "id": "compost_mouse",
       "category": "animals",
       "state": "juvenile",
-      "file": "animals/compost_mouse/compost_mouse_juvenile_view35_v001.png",
-      "source_file": "C:\\Users\\88445\\.codex\\generated_images\\01a15ef2-67bc-7673-b278-97b92008c893\\exec-3c84da91-9af9-44d5-adf9-0b041da4411e.png",
+      "version": "v002",
+      "file": "animals/compost_mouse/compost_mouse_juvenile_view35_v002.png",
+      "source_file": "C:\\Users\\88445\\.codex\\generated_images\\01a15ef2-67bc-7673-b278-97b92008c893\\exec-4c607aa0-d9b1-455b-bf73-14298100f5fa.png",
       "reference_file": "animals/compost_mouse/compost_mouse_adult_view35_v001.png",
-      "prompt": "Make one production juvenile of exact species from attached approved adult image. Preserve distinctive anatomy/materials and elegant pale fantasy-farm palette. Subject is clearly younger and around 60 percent adult overall scale. Soft sculpted 3D volume, gentle hand-painted shading, refined whimsical naturalism, diffuse upper-left light and cool fill. No glow, halo, bloom, particles, aura, sparks or smoke. Fixed 35-degree elevated orthographic three-quarter view, same facing as reference. Whole organism centered and isolated, transparent PNG, padding. No ground, habitat, props, text, border, shadow or environment. Young compost mouse around 60 percent adult size: small round mouse with soft warm gray-brown fur, tiny rounded ears and a few subtle green leaf/compost flecks in its coat, natural young-mouse proportions.",
-      "status": "needs_age_differentiation_revision",
+      "prompt": "制作《灵田》的幼体正式素材：堆肥鼠（compost_mouse）。年龄形态是本次最高优先级。\n一只刚断奶的堆肥幼鼠。相对大圆头、短圆鼻、大而自然的黑亮眼、柔软圆耳；短小的细躯干、细嫩小脚爪、细短尾巴、稀软短绒毛。背部仅两三簇极小浅绿色嫩叶形毛尖作为刚发育的物种特征，不要成年浓密的大叶鬃、长尾叶穗或厚大毛团。四足自然站立，呈现幼鼠的稚嫩比例，保留成年图的暖米褐/茶绿配色。\n\n参考图角色：附图是本物种已验收的成体，只参考物种身份、主色和材质语言；不能沿用成年轮廓、成年器官大小和成熟程度。按照已确认钢绵羊幼体v002的规则，用明确的年龄形态重新设计幼体，而不是把成年图等比例缩小。即使幼体与成体在屏幕上显示同样大小，也必须一眼看出年龄差别。\n画风：与P10.9母版统一的清淡雅致东方奇幻农场，柔和三维体积、细腻而概括的手绘明暗、自然适度可爱、克制的奇幻材质；避免摄影写实、密集细毛噪点、极端Q版和塑料玩具感。配色沿用本物种成体，幼体材质特征应体现刚开始发育的阶段，不堆成熟装甲或外放特效。\n机位：相对水平面35度正交俯视，能看到顶部和近侧面，动物头朝画面右侧；左上柔光和少量冷色填光，无广角、强透视、镜头倾斜。自然静止姿态，身体结构完整连贯。\n交付：只画本次要求的一个完整幼体，珊瑚/菌毯则为一个连贯初生群体；禁止成年体陪衬、对比图、多个年龄拼图。透明RGBA背景，主体外完全透明，四周保留8%安全边距，尾、鳍、耳、根/触腕完整。禁止背景光晕、泛光、雾、粒子、池水、地面阴影、地台、花盆、建筑、巢箱、草地、底座、文字、标签、饰品和道具。",
+      "status": "age_corrected_source_awaiting_user_acceptance",
+      "visual_acceptance": "pending",
       "runtime_integrated": false,
       "camera_calibrated": false,
-      "sha256": "fd73a65f102b039f174dd935d9c8c9e86fa7f957dd9bcca9bd7ad4ff76a75b90",
+      "previous_revisions": [
+        {
+          "id": "compost_mouse",
+          "category": "animals",
+          "state": "juvenile",
+          "file": "animals/compost_mouse/compost_mouse_juvenile_view35_v001.png",
+          "source_file": "C:\\Users\\88445\\.codex\\generated_images\\01a15ef2-67bc-7673-b278-97b92008c893\\exec-3c84da91-9af9-44d5-adf9-0b041da4411e.png",
+          "reference_file": "animals/compost_mouse/compost_mouse_adult_view35_v001.png",
+          "prompt": "Make one production juvenile of exact species from attached approved adult image. Preserve distinctive anatomy/materials and elegant pale fantasy-farm palette. Subject is clearly younger and around 60 percent adult overall scale. Soft sculpted 3D volume, gentle hand-painted shading, refined whimsical naturalism, diffuse upper-left light and cool fill. No glow, halo, bloom, particles, aura, sparks or smoke. Fixed 35-degree elevated orthographic three-quarter view, same facing as reference. Whole organism centered and isolated, transparent PNG, padding. No ground, habitat, props, text, border, shadow or environment. Young compost mouse around 60 percent adult size: small round mouse with soft warm gray-brown fur, tiny rounded ears and a few subtle green leaf/compost flecks in its coat, natural young-mouse proportions.",
+          "status": "needs_age_differentiation_revision",
+          "runtime_integrated": false,
+          "camera_calibrated": false,
+          "sha256": "fd73a65f102b039f174dd935d9c8c9e86fa7f957dd9bcca9bd7ad4ff76a75b90",
+          "canvas_px": [
+            1536,
+            1024
+          ],
+          "mode": "RGBA",
+          "alpha_extrema": [
+            0,
+            254
+          ],
+          "main_bbox_alpha_ge_16": [
+            101,
+            205,
+            1482,
+            910
+          ],
+          "main_subject_within_canvas": true,
+          "review_issue": "User reports juvenile looks too similar to adult; age morphology insufficient. Not visually accepted."
+        }
+      ],
+      "sha256": "325f954de6e054c2063001460b239fb03d9f2f067fb6039a22c180a9ac835eb5",
       "canvas_px": [
         1536,
         1024
@@ -1168,26 +1400,59 @@
         254
       ],
       "main_bbox_alpha_ge_16": [
-        101,
-        205,
-        1482,
-        910
+        141,
+        144,
+        1491,
+        908
       ],
-      "main_subject_within_canvas": true,
-      "review_issue": "User reports juvenile looks too similar to adult; age morphology insufficient. Not visually accepted."
+      "main_subject_within_canvas": true
     },
     {
       "id": "gravel_shell_snail",
       "category": "animals",
       "state": "juvenile",
-      "file": "animals/gravel_shell_snail/gravel_shell_snail_juvenile_view35_v001.png",
-      "source_file": "C:\\Users\\88445\\.codex\\generated_images\\01a15ef2-67bc-7673-b278-97b92008c893\\exec-a4e9e8e6-b5c2-4f49-8cd5-b25d5d6a1546.png",
+      "version": "v002",
+      "file": "animals/gravel_shell_snail/gravel_shell_snail_juvenile_view35_v002.png",
+      "source_file": "C:\\Users\\88445\\.codex\\generated_images\\01a15ef2-67bc-7673-b278-97b92008c893\\exec-be9d4747-c2c2-4004-bcba-4018243d3bec.png",
       "reference_file": "animals/gravel_shell_snail/gravel_shell_snail_adult_view35_v001.png",
-      "prompt": "One juvenile production sprite of exact species in attached accepted adult reference. Preserve unique anatomy, materials and palette; clearly young/smaller than adult about 60 percent. Match approved P10.9 softly sculpted 3D with gentle painted shading, pale elegant fantasy naturalism. Neutral soft key/fill; no glow/bloom/halo/aura/particles. Fixed 35-degree elevated orthographic three-quarter view, same orientation as reference. Whole subject centered, isolated transparent PNG, clean silhouette and padding. No water/background, ground, tank, props, text, frame, detached shadow, scene. A juvenile gravel-shell snail around 60 percent adult size, small soft sage-green snail body with a compact pale mineral gravel shell whose spiral is only partly formed, tiny eyestalks.",
-      "status": "needs_age_differentiation_revision",
+      "prompt": "制作《灵田》的幼体正式素材：砾甲蜗牛（gravel_shell_snail）。年龄形态是本次最高优先级。\n一只刚孵化不久的砾甲幼蜗牛。短触角、较大头、窄而细嫩的浅灰青软体，壳只约一圈半、轻薄、较小。幼壳主体是光滑温润薄壳，仅壳缘两三粒细小浅青灰砂砾开始结晶，石质覆盖不超过壳面的15%；没有成年大块岩板、厚重矿石螺旋或全壳拼石甲。必须能通过未矿化的幼壳辨认幼年，不能只缩小成熟岩壳。\n\n参考图角色：附图是本物种已验收的成体，只参考物种身份、主色和材质语言；不能沿用成年轮廓、成年器官大小和成熟程度。按照已确认钢绵羊幼体v002的规则，用明确的年龄形态重新设计幼体，而不是把成年图等比例缩小。即使幼体与成体在屏幕上显示同样大小，也必须一眼看出年龄差别。\n画风：与P10.9母版统一的清淡雅致东方奇幻农场，柔和三维体积、细腻而概括的手绘明暗、自然适度可爱、克制的奇幻材质；避免摄影写实、密集细毛噪点、极端Q版和塑料玩具感。配色沿用本物种成体，幼体材质特征应体现刚开始发育的阶段，不堆成熟装甲或外放特效。\n机位：相对水平面35度正交俯视，能看到顶部和近侧面，动物头朝画面右侧；左上柔光和少量冷色填光，无广角、强透视、镜头倾斜。自然静止姿态，身体结构完整连贯。\n交付：只画本次要求的一个完整幼体，珊瑚/菌毯则为一个连贯初生群体；禁止成年体陪衬、对比图、多个年龄拼图。透明RGBA背景，主体外完全透明，四周保留8%安全边距，尾、鳍、耳、根/触腕完整。禁止背景光晕、泛光、雾、粒子、池水、地面阴影、地台、花盆、建筑、巢箱、草地、底座、文字、标签、饰品和道具。",
+      "status": "age_corrected_source_awaiting_user_acceptance",
+      "visual_acceptance": "pending",
       "runtime_integrated": false,
       "camera_calibrated": false,
-      "sha256": "ec624bc1ccbc825097142a8c177044a13ae1a212f35b28d80c2ec9edda0e0fc7",
+      "previous_revisions": [
+        {
+          "id": "gravel_shell_snail",
+          "category": "animals",
+          "state": "juvenile",
+          "file": "animals/gravel_shell_snail/gravel_shell_snail_juvenile_view35_v001.png",
+          "source_file": "C:\\Users\\88445\\.codex\\generated_images\\01a15ef2-67bc-7673-b278-97b92008c893\\exec-a4e9e8e6-b5c2-4f49-8cd5-b25d5d6a1546.png",
+          "reference_file": "animals/gravel_shell_snail/gravel_shell_snail_adult_view35_v001.png",
+          "prompt": "One juvenile production sprite of exact species in attached accepted adult reference. Preserve unique anatomy, materials and palette; clearly young/smaller than adult about 60 percent. Match approved P10.9 softly sculpted 3D with gentle painted shading, pale elegant fantasy naturalism. Neutral soft key/fill; no glow/bloom/halo/aura/particles. Fixed 35-degree elevated orthographic three-quarter view, same orientation as reference. Whole subject centered, isolated transparent PNG, clean silhouette and padding. No water/background, ground, tank, props, text, frame, detached shadow, scene. A juvenile gravel-shell snail around 60 percent adult size, small soft sage-green snail body with a compact pale mineral gravel shell whose spiral is only partly formed, tiny eyestalks.",
+          "status": "needs_age_differentiation_revision",
+          "runtime_integrated": false,
+          "camera_calibrated": false,
+          "sha256": "ec624bc1ccbc825097142a8c177044a13ae1a212f35b28d80c2ec9edda0e0fc7",
+          "canvas_px": [
+            1536,
+            1024
+          ],
+          "mode": "RGBA",
+          "alpha_extrema": [
+            0,
+            254
+          ],
+          "main_bbox_alpha_ge_16": [
+            179,
+            131,
+            1416,
+            904
+          ],
+          "main_subject_within_canvas": true,
+          "review_issue": "User reports juvenile looks too similar to adult; age morphology insufficient. Not visually accepted."
+        }
+      ],
+      "sha256": "138612f7acae165e8430efefe94d976de6141784225cf81277bf532ae4e2d1f1",
       "canvas_px": [
         1536,
         1024
@@ -1198,26 +1463,59 @@
         254
       ],
       "main_bbox_alpha_ge_16": [
-        179,
-        131,
-        1416,
-        904
+        236,
+        173,
+        1363,
+        849
       ],
-      "main_subject_within_canvas": true,
-      "review_issue": "User reports juvenile looks too similar to adult; age morphology insufficient. Not visually accepted."
+      "main_subject_within_canvas": true
     },
     {
       "id": "filter_algae_carp",
       "category": "aquatic",
       "state": "juvenile",
-      "file": "aquatic/filter_algae_carp/filter_algae_carp_juvenile_view35_v001.png",
-      "source_file": "C:\\Users\\88445\\.codex\\generated_images\\01a15ef2-67bc-7673-b278-97b92008c893\\exec-4fbe7a48-143d-4feb-98a0-ed48f6f15c49.png",
+      "version": "v002",
+      "file": "aquatic/filter_algae_carp/filter_algae_carp_juvenile_view35_v002.png",
+      "source_file": "C:\\Users\\88445\\.codex\\generated_images\\01a15ef2-67bc-7673-b278-97b92008c893\\exec-d855b6f3-68cc-45af-b717-747ee492bc18.png",
       "reference_file": "aquatic/filter_algae_carp/filter_algae_carp_adult_view35_v001.png",
-      "prompt": "One juvenile production sprite of exact species in attached accepted adult reference. Preserve unique anatomy, materials and palette; clearly young/smaller than adult about 60 percent. Match approved P10.9 softly sculpted 3D with gentle painted shading, pale elegant fantasy naturalism. Neutral soft key/fill; no glow/bloom/halo/aura/particles. Fixed 35-degree elevated orthographic three-quarter view, same orientation as reference. Whole subject centered, isolated transparent PNG, clean silhouette and padding. No water/background, ground, tank, props, text, frame, detached shadow, scene. A young filter-algae carp fry around 60 percent adult length: small plump freshwater carp with short barbels, muted sage-silver scales, a few soft algae-green markings, clear fish silhouette and youthful fins.",
-      "status": "needs_age_differentiation_revision",
+      "prompt": "制作《灵田》的幼体正式素材：滤藻鲤（filter_algae_carp）。年龄形态是本次最高优先级。\n一尾刚度过仔鱼期的滤藻鲤鱼苗。头部相对身体偏大、黑眼较大、短圆口吻，身体纤细略透明，能看到柔和腹部线条。尾鳍短小透明扇形，背鳍和胸鳍都是短薄初生鳍，嘴边没有长须，鳞片尚不明显，只有数枚很淡细小银青鳞点。严禁成年长飘带尾鳍、层叠大鳞、肥厚鱼身或长鲤须；保留淡玉青与银白，不新增不同物种结构。\n\n参考图角色：附图是本物种已验收的成体，只参考物种身份、主色和材质语言；不能沿用成年轮廓、成年器官大小和成熟程度。按照已确认钢绵羊幼体v002的规则，用明确的年龄形态重新设计幼体，而不是把成年图等比例缩小。即使幼体与成体在屏幕上显示同样大小，也必须一眼看出年龄差别。\n画风：与P10.9母版统一的清淡雅致东方奇幻农场，柔和三维体积、细腻而概括的手绘明暗、自然适度可爱、克制的奇幻材质；避免摄影写实、密集细毛噪点、极端Q版和塑料玩具感。配色沿用本物种成体，幼体材质特征应体现刚开始发育的阶段，不堆成熟装甲或外放特效。\n机位：相对水平面35度正交俯视，能看到顶部和近侧面，动物头朝画面右侧；左上柔光和少量冷色填光，无广角、强透视、镜头倾斜。自然静止姿态，身体结构完整连贯。\n交付：只画本次要求的一个完整幼体，珊瑚/菌毯则为一个连贯初生群体；禁止成年体陪衬、对比图、多个年龄拼图。透明RGBA背景，主体外完全透明，四周保留8%安全边距，尾、鳍、耳、根/触腕完整。禁止背景光晕、泛光、雾、粒子、池水、地面阴影、地台、花盆、建筑、巢箱、草地、底座、文字、标签、饰品和道具。",
+      "status": "age_corrected_source_awaiting_user_acceptance",
+      "visual_acceptance": "pending",
       "runtime_integrated": false,
       "camera_calibrated": false,
-      "sha256": "2857420a98ea3bd67f241877899d7c7b26cdde2a4c6fed7f7b89efb643a536ec",
+      "previous_revisions": [
+        {
+          "id": "filter_algae_carp",
+          "category": "aquatic",
+          "state": "juvenile",
+          "file": "aquatic/filter_algae_carp/filter_algae_carp_juvenile_view35_v001.png",
+          "source_file": "C:\\Users\\88445\\.codex\\generated_images\\01a15ef2-67bc-7673-b278-97b92008c893\\exec-4fbe7a48-143d-4feb-98a0-ed48f6f15c49.png",
+          "reference_file": "aquatic/filter_algae_carp/filter_algae_carp_adult_view35_v001.png",
+          "prompt": "One juvenile production sprite of exact species in attached accepted adult reference. Preserve unique anatomy, materials and palette; clearly young/smaller than adult about 60 percent. Match approved P10.9 softly sculpted 3D with gentle painted shading, pale elegant fantasy naturalism. Neutral soft key/fill; no glow/bloom/halo/aura/particles. Fixed 35-degree elevated orthographic three-quarter view, same orientation as reference. Whole subject centered, isolated transparent PNG, clean silhouette and padding. No water/background, ground, tank, props, text, frame, detached shadow, scene. A young filter-algae carp fry around 60 percent adult length: small plump freshwater carp with short barbels, muted sage-silver scales, a few soft algae-green markings, clear fish silhouette and youthful fins.",
+          "status": "needs_age_differentiation_revision",
+          "runtime_integrated": false,
+          "camera_calibrated": false,
+          "sha256": "2857420a98ea3bd67f241877899d7c7b26cdde2a4c6fed7f7b89efb643a536ec",
+          "canvas_px": [
+            1536,
+            1024
+          ],
+          "mode": "RGBA",
+          "alpha_extrema": [
+            0,
+            254
+          ],
+          "main_bbox_alpha_ge_16": [
+            61,
+            80,
+            1468,
+            961
+          ],
+          "main_subject_within_canvas": true,
+          "review_issue": "User reports juvenile looks too similar to adult; age morphology insufficient. Not visually accepted."
+        }
+      ],
+      "sha256": "0b0062b32e2c085ce422de0feed5719d80fc3650ad555314f8f41e094831d505",
       "canvas_px": [
         1536,
         1024
@@ -1228,26 +1526,59 @@
         254
       ],
       "main_bbox_alpha_ge_16": [
-        61,
-        80,
-        1468,
-        961
+        111,
+        156,
+        1346,
+        885
       ],
-      "main_subject_within_canvas": true,
-      "review_issue": "User reports juvenile looks too similar to adult; age morphology insufficient. Not visually accepted."
+      "main_subject_within_canvas": true
     },
     {
       "id": "oilfin_fish",
       "category": "aquatic",
       "state": "juvenile",
-      "file": "aquatic/oilfin_fish/oilfin_fish_juvenile_view35_v001.png",
-      "source_file": "C:\\Users\\88445\\.codex\\generated_images\\01a15ef2-67bc-7673-b278-97b92008c893\\exec-d01f649a-0705-49fd-a418-2412ff36f203.png",
+      "version": "v002",
+      "file": "aquatic/oilfin_fish/oilfin_fish_juvenile_view35_v002.png",
+      "source_file": "C:\\Users\\88445\\.codex\\generated_images\\01a15ef2-67bc-7673-b278-97b92008c893\\exec-7a4e3115-bd73-43c7-a0eb-d90eaefdf3a7.png",
       "reference_file": "aquatic/oilfin_fish/oilfin_fish_adult_view35_v001.png",
-      "prompt": "One juvenile production sprite of exact species in attached accepted adult reference. Preserve unique anatomy, materials and palette; clearly young/smaller than adult about 60 percent. Match approved P10.9 softly sculpted 3D with gentle painted shading, pale elegant fantasy naturalism. Neutral soft key/fill; no glow/bloom/halo/aura/particles. Fixed 35-degree elevated orthographic three-quarter view, same orientation as reference. Whole subject centered, isolated transparent PNG, clean silhouette and padding. No water/background, ground, tank, props, text, frame, detached shadow, scene. A juvenile oilfin fish around 60 percent adult length: streamlined little fish with distinctive subtle iridescent oil-sheen along flank, small fins and tail, pale teal-silver scales, no oil droplets or water.",
-      "status": "needs_age_differentiation_revision",
+      "prompt": "制作《灵田》的幼体正式素材：油鳍鱼（oilfin_fish）。年龄形态是本次最高优先级。\n一尾幼龄油鳍鱼鱼苗。相对大头大眼、细长稚嫩略透明身体、短小透明初生鳍与短尾，鳞片几乎不显。体侧只有一条细窄而温润的浅金油脂光带作为刚发育的特征，不要成年宽大金色油鳍、巨大飘尾、肥厚腹部、长须或成片珠光成熟鳞。采用成年物种的淡青灰/米金配色，油脂是局部材质而非发光。\n\n参考图角色：附图是本物种已验收的成体，只参考物种身份、主色和材质语言；不能沿用成年轮廓、成年器官大小和成熟程度。按照已确认钢绵羊幼体v002的规则，用明确的年龄形态重新设计幼体，而不是把成年图等比例缩小。即使幼体与成体在屏幕上显示同样大小，也必须一眼看出年龄差别。\n画风：与P10.9母版统一的清淡雅致东方奇幻农场，柔和三维体积、细腻而概括的手绘明暗、自然适度可爱、克制的奇幻材质；避免摄影写实、密集细毛噪点、极端Q版和塑料玩具感。配色沿用本物种成体，幼体材质特征应体现刚开始发育的阶段，不堆成熟装甲或外放特效。\n机位：相对水平面35度正交俯视，能看到顶部和近侧面，动物头朝画面右侧；左上柔光和少量冷色填光，无广角、强透视、镜头倾斜。自然静止姿态，身体结构完整连贯。\n交付：只画本次要求的一个完整幼体，珊瑚/菌毯则为一个连贯初生群体；禁止成年体陪衬、对比图、多个年龄拼图。透明RGBA背景，主体外完全透明，四周保留8%安全边距，尾、鳍、耳、根/触腕完整。禁止背景光晕、泛光、雾、粒子、池水、地面阴影、地台、花盆、建筑、巢箱、草地、底座、文字、标签、饰品和道具。",
+      "status": "age_corrected_source_awaiting_user_acceptance",
+      "visual_acceptance": "pending",
       "runtime_integrated": false,
       "camera_calibrated": false,
-      "sha256": "bab9cab250fb1e73b291fa90a1de598c30efa0e62a8c67e25878e40532780802",
+      "previous_revisions": [
+        {
+          "id": "oilfin_fish",
+          "category": "aquatic",
+          "state": "juvenile",
+          "file": "aquatic/oilfin_fish/oilfin_fish_juvenile_view35_v001.png",
+          "source_file": "C:\\Users\\88445\\.codex\\generated_images\\01a15ef2-67bc-7673-b278-97b92008c893\\exec-d01f649a-0705-49fd-a418-2412ff36f203.png",
+          "reference_file": "aquatic/oilfin_fish/oilfin_fish_adult_view35_v001.png",
+          "prompt": "One juvenile production sprite of exact species in attached accepted adult reference. Preserve unique anatomy, materials and palette; clearly young/smaller than adult about 60 percent. Match approved P10.9 softly sculpted 3D with gentle painted shading, pale elegant fantasy naturalism. Neutral soft key/fill; no glow/bloom/halo/aura/particles. Fixed 35-degree elevated orthographic three-quarter view, same orientation as reference. Whole subject centered, isolated transparent PNG, clean silhouette and padding. No water/background, ground, tank, props, text, frame, detached shadow, scene. A juvenile oilfin fish around 60 percent adult length: streamlined little fish with distinctive subtle iridescent oil-sheen along flank, small fins and tail, pale teal-silver scales, no oil droplets or water.",
+          "status": "needs_age_differentiation_revision",
+          "runtime_integrated": false,
+          "camera_calibrated": false,
+          "sha256": "bab9cab250fb1e73b291fa90a1de598c30efa0e62a8c67e25878e40532780802",
+          "canvas_px": [
+            1536,
+            1024
+          ],
+          "mode": "RGBA",
+          "alpha_extrema": [
+            0,
+            254
+          ],
+          "main_bbox_alpha_ge_16": [
+            83,
+            88,
+            1447,
+            920
+          ],
+          "main_subject_within_canvas": true,
+          "review_issue": "User reports juvenile looks too similar to adult; age morphology insufficient. Not visually accepted."
+        }
+      ],
+      "sha256": "36bea07c4b022f1be4174c07a20737b343b7b41a05884a90d39c2c3415062d09",
       "canvas_px": [
         1536,
         1024
@@ -1258,18 +1589,214 @@
         254
       ],
       "main_bbox_alpha_ge_16": [
-        83,
         88,
-        1447,
-        920
+        170,
+        1414,
+        880
       ],
-      "main_subject_within_canvas": true,
-      "review_issue": "User reports juvenile looks too similar to adult; age morphology insufficient. Not visually accepted."
+      "main_subject_within_canvas": true
+    },
+    {
+      "id": "bell_bee",
+      "category": "living",
+      "state": "juvenile",
+      "version": "v001",
+      "file": "living/bell_bee/bell_bee_juvenile_view35_v001.png",
+      "source_file": "C:\\Users\\88445\\.codex\\generated_images\\01a15ef2-67bc-7673-b278-97b92008c893\\exec-dd1494f9-884a-4fd1-85af-94ee512f89a6.png",
+      "reference_file": "living/bell_bee/bell_bee_adult_view35_v001.png",
+      "prompt": "制作《灵田》的幼体正式素材：蜜盏蜂（bell_bee）。年龄形态是本次最高优先级。\n一只蜜盏蜂初龄幼虫，明确是尚未化蛹的蜂幼虫，不能画缩小版成年蜂。奶油白柔软短胖分节身体，轻轻蜷曲成C形，圆钝小头，仅有微小口器，体侧有极淡米金分节纹。完全没有翅膀、六条成蜂长腿、复眼大眼、成年毛领、黑金成蜂腹条或花粉篮。保留成年物种的奶白/柔金材质配色，稚嫩温润、健康自然；不画蜂巢、蜡房、蜂箱、花朵、蜂蜜或第二只蜂。\n\n参考图角色：附图是本物种已验收的成体，只参考物种身份、主色和材质语言；不能沿用成年轮廓、成年器官大小和成熟程度。按照已确认钢绵羊幼体v002的规则，用明确的年龄形态重新设计幼体，而不是把成年图等比例缩小。即使幼体与成体在屏幕上显示同样大小，也必须一眼看出年龄差别。\n画风：与P10.9母版统一的清淡雅致东方奇幻农场，柔和三维体积、细腻而概括的手绘明暗、自然适度可爱、克制的奇幻材质；避免摄影写实、密集细毛噪点、极端Q版和塑料玩具感。配色沿用本物种成体，幼体材质特征应体现刚开始发育的阶段，不堆成熟装甲或外放特效。\n机位：相对水平面35度正交俯视，能看到顶部和近侧面，动物头朝画面右侧；左上柔光和少量冷色填光，无广角、强透视、镜头倾斜。自然静止姿态，身体结构完整连贯。\n交付：只画本次要求的一个完整幼体，珊瑚/菌毯则为一个连贯初生群体；禁止成年体陪衬、对比图、多个年龄拼图。透明RGBA背景，主体外完全透明，四周保留8%安全边距，尾、鳍、耳、根/触腕完整。禁止背景光晕、泛光、雾、粒子、池水、地面阴影、地台、花盆、建筑、巢箱、草地、底座、文字、标签、饰品和道具。",
+      "status": "age_corrected_source_awaiting_user_acceptance",
+      "visual_acceptance": "pending",
+      "runtime_integrated": false,
+      "camera_calibrated": false,
+      "previous_revisions": [],
+      "sha256": "24df6b346c6efbe7de3e679d0eae4435bc91ec7faca17c2fa2262f45f460ac98",
+      "canvas_px": [
+        1536,
+        1024
+      ],
+      "mode": "RGBA",
+      "alpha_extrema": [
+        0,
+        254
+      ],
+      "main_bbox_alpha_ge_16": [
+        289,
+        133,
+        1316,
+        896
+      ],
+      "main_subject_within_canvas": true
+    },
+    {
+      "id": "silt_loach",
+      "category": "aquatic",
+      "state": "juvenile",
+      "version": "v001",
+      "file": "aquatic/silt_loach/silt_loach_juvenile_view35_v001.png",
+      "source_file": "C:\\Users\\88445\\.codex\\generated_images\\01a15ef2-67bc-7673-b278-97b92008c893\\exec-c9496080-cb03-4830-87eb-9d132191e3da.png",
+      "reference_file": "aquatic/silt_loach/silt_loach_adult_view35_v001.png",
+      "prompt": "制作《灵田》的幼体正式素材：净泥鳅（silt_loach）。年龄形态是本次最高优先级。\n一尾净泥鳅幼苗。头部相对身体较大，短圆吻、自然偏大的黑眼，细而柔软的半透明淡灰褐躯干，短小薄鳍与小尾鳍，嘴旁只有极短须芽，背部浅茶绿细纹很淡。没有成年粗壮圆筒身、厚皮泥纹、长须或明显成熟斑纹。身体轻轻自然弯曲但完整可读，不要蛇体，不要泥团、水底或碎屑道具。\n\n参考图角色：附图是本物种已验收的成体，只参考物种身份、主色和材质语言；不能沿用成年轮廓、成年器官大小和成熟程度。按照已确认钢绵羊幼体v002的规则，用明确的年龄形态重新设计幼体，而不是把成年图等比例缩小。即使幼体与成体在屏幕上显示同样大小，也必须一眼看出年龄差别。\n画风：与P10.9母版统一的清淡雅致东方奇幻农场，柔和三维体积、细腻而概括的手绘明暗、自然适度可爱、克制的奇幻材质；避免摄影写实、密集细毛噪点、极端Q版和塑料玩具感。配色沿用本物种成体，幼体材质特征应体现刚开始发育的阶段，不堆成熟装甲或外放特效。\n机位：相对水平面35度正交俯视，能看到顶部和近侧面，动物头朝画面右侧；左上柔光和少量冷色填光，无广角、强透视、镜头倾斜。自然静止姿态，身体结构完整连贯。\n交付：只画本次要求的一个完整幼体，珊瑚/菌毯则为一个连贯初生群体；禁止成年体陪衬、对比图、多个年龄拼图。透明RGBA背景，主体外完全透明，四周保留8%安全边距，尾、鳍、耳、根/触腕完整。禁止背景光晕、泛光、雾、粒子、池水、地面阴影、地台、花盆、建筑、巢箱、草地、底座、文字、标签、饰品和道具。",
+      "status": "age_corrected_source_awaiting_user_acceptance",
+      "visual_acceptance": "pending",
+      "runtime_integrated": false,
+      "camera_calibrated": false,
+      "previous_revisions": [],
+      "sha256": "de0fe7142585880301b48e05d2be67f0fd7e5db469809c559c70e06e426577eb",
+      "canvas_px": [
+        1536,
+        1024
+      ],
+      "mode": "RGBA",
+      "alpha_extrema": [
+        0,
+        254
+      ],
+      "main_bbox_alpha_ge_16": [
+        66,
+        143,
+        1458,
+        865
+      ],
+      "main_subject_within_canvas": true
+    },
+    {
+      "id": "pearl_mussel",
+      "category": "aquatic",
+      "state": "juvenile",
+      "version": "v001",
+      "file": "aquatic/pearl_mussel/pearl_mussel_juvenile_view35_v001.png",
+      "source_file": "C:\\Users\\88445\\.codex\\generated_images\\01a15ef2-67bc-7673-b278-97b92008c893\\exec-5d5bf3cc-be40-4e6a-9419-bac61e9e8ecb.png",
+      "reference_file": "aquatic/pearl_mussel/pearl_mussel_adult_view35_v001.png",
+      "prompt": "制作《灵田》的幼体正式素材：珍珠蚌（pearl_mussel）。年龄形态是本次最高优先级。\n一只稚贝期珍珠蚌。合拢的小巧双壳，幼壳薄而圆，只有三四道很浅的生长纹，壳缘轻薄略透明；外表是淡米白配少量玉青珍珠层光泽，结构光滑简洁、尚未形成成年厚实多层壳纹。只在壳缝露出极细软体边缘，没有成熟珍珠、没有张开的成人大蚌、没有完整成珠的内腔陈列。靠薄幼壳和稀疏生长纹体现年龄。\n\n参考图角色：附图是本物种已验收的成体，只参考物种身份、主色和材质语言；不能沿用成年轮廓、成年器官大小和成熟程度。按照已确认钢绵羊幼体v002的规则，用明确的年龄形态重新设计幼体，而不是把成年图等比例缩小。即使幼体与成体在屏幕上显示同样大小，也必须一眼看出年龄差别。\n画风：与P10.9母版统一的清淡雅致东方奇幻农场，柔和三维体积、细腻而概括的手绘明暗、自然适度可爱、克制的奇幻材质；避免摄影写实、密集细毛噪点、极端Q版和塑料玩具感。配色沿用本物种成体，幼体材质特征应体现刚开始发育的阶段，不堆成熟装甲或外放特效。\n机位：相对水平面35度正交俯视，能看到顶部和近侧面，动物头朝画面右侧；左上柔光和少量冷色填光，无广角、强透视、镜头倾斜。自然静止姿态，身体结构完整连贯。\n交付：只画本次要求的一个完整幼体，珊瑚/菌毯则为一个连贯初生群体；禁止成年体陪衬、对比图、多个年龄拼图。透明RGBA背景，主体外完全透明，四周保留8%安全边距，尾、鳍、耳、根/触腕完整。禁止背景光晕、泛光、雾、粒子、池水、地面阴影、地台、花盆、建筑、巢箱、草地、底座、文字、标签、饰品和道具。",
+      "status": "age_corrected_source_awaiting_user_acceptance",
+      "visual_acceptance": "pending",
+      "runtime_integrated": false,
+      "camera_calibrated": false,
+      "previous_revisions": [],
+      "sha256": "007dd2540e736a44d218b079aec5089f0ad5bdeda4e8cc5362c6a94cf0192a86",
+      "canvas_px": [
+        1536,
+        1024
+      ],
+      "mode": "RGBA",
+      "alpha_extrema": [
+        0,
+        254
+      ],
+      "main_bbox_alpha_ge_16": [
+        235,
+        154,
+        1325,
+        853
+      ],
+      "main_subject_within_canvas": true
+    },
+    {
+      "id": "gel_jellyfish",
+      "category": "aquatic",
+      "state": "juvenile",
+      "version": "v001",
+      "file": "aquatic/gel_jellyfish/gel_jellyfish_juvenile_view35_v001.png",
+      "source_file": "C:\\Users\\88445\\.codex\\generated_images\\01a15ef2-67bc-7673-b278-97b92008c893\\exec-2d4c9623-5242-4e23-bf4d-b9c4dbdeddc6.png",
+      "reference_file": "aquatic/gel_jellyfish/gel_jellyfish_adult_view35_v001.png",
+      "prompt": "制作《灵田》的幼体正式素材：凝胶水母（gel_jellyfish）。年龄形态是本次最高优先级。\n一只稚龄凝胶水母，碟状幼水母形态。扁浅、柔软、半透明的小碟形伞体，边缘八个短圆瓣，伞厚度很薄，中心是一小团淡玉青凝胶组织，只有几根极短细触腕，没有成年高大厚圆顶伞、长丝带触腕和大体积凝胶。必须呈现刚发育的浅碟形幼体，保留本物种淡青/淡藕紫透明材质，不能有背景光晕。\n\n参考图角色：附图是本物种已验收的成体，只参考物种身份、主色和材质语言；不能沿用成年轮廓、成年器官大小和成熟程度。按照已确认钢绵羊幼体v002的规则，用明确的年龄形态重新设计幼体，而不是把成年图等比例缩小。即使幼体与成体在屏幕上显示同样大小，也必须一眼看出年龄差别。\n画风：与P10.9母版统一的清淡雅致东方奇幻农场，柔和三维体积、细腻而概括的手绘明暗、自然适度可爱、克制的奇幻材质；避免摄影写实、密集细毛噪点、极端Q版和塑料玩具感。配色沿用本物种成体，幼体材质特征应体现刚开始发育的阶段，不堆成熟装甲或外放特效。\n机位：相对水平面35度正交俯视，能看到顶部和近侧面，动物头朝画面右侧；左上柔光和少量冷色填光，无广角、强透视、镜头倾斜。自然静止姿态，身体结构完整连贯。\n交付：只画本次要求的一个完整幼体，珊瑚/菌毯则为一个连贯初生群体；禁止成年体陪衬、对比图、多个年龄拼图。透明RGBA背景，主体外完全透明，四周保留8%安全边距，尾、鳍、耳、根/触腕完整。禁止背景光晕、泛光、雾、粒子、池水、地面阴影、地台、花盆、建筑、巢箱、草地、底座、文字、标签、饰品和道具。",
+      "status": "age_corrected_source_awaiting_user_acceptance",
+      "visual_acceptance": "pending",
+      "runtime_integrated": false,
+      "camera_calibrated": false,
+      "previous_revisions": [],
+      "sha256": "7799b7c8bc34f498f985f47e137b1e56fb19509af92a122dc29a3f259725dd03",
+      "canvas_px": [
+        1226,
+        1283
+      ],
+      "mode": "RGBA",
+      "alpha_extrema": [
+        0,
+        255
+      ],
+      "main_bbox_alpha_ge_16": [
+        135,
+        211,
+        1116,
+        1089
+      ],
+      "main_subject_within_canvas": true
+    },
+    {
+      "id": "reef_coral",
+      "category": "aquatic",
+      "state": "juvenile",
+      "version": "v001",
+      "file": "aquatic/reef_coral/reef_coral_juvenile_view35_v001.png",
+      "source_file": "C:\\Users\\88445\\.codex\\generated_images\\01a15ef2-67bc-7673-b278-97b92008c893\\exec-e344c043-0490-4ebd-9f3a-6e3c2a24c12d.png",
+      "reference_file": "aquatic/reef_coral/reef_coral_adult_view35_v001.png",
+      "prompt": "制作《灵田》的幼体正式素材：礁骨珊瑚（reef_coral）。年龄形态是本次最高优先级。\n一个刚定植的礁骨珊瑚初生小群体。只有一小块连续的幼生附着根组织，向上长三至五个低矮圆钝骨芽，芽之间留清楚间隙，表面孔很少、末端小而柔软；颜色沿用淡米白、灰茶绿和淡玉青。没有成年多层高大分枝、密集成丛骨架、大扇面、厚重礁体。初生根组织属于生物自身，不能额外画石头、沙地、岩台或容器。\n\n参考图角色：附图是本物种已验收的成体，只参考物种身份、主色和材质语言；不能沿用成年轮廓、成年器官大小和成熟程度。按照已确认钢绵羊幼体v002的规则，用明确的年龄形态重新设计幼体，而不是把成年图等比例缩小。即使幼体与成体在屏幕上显示同样大小，也必须一眼看出年龄差别。\n画风：与P10.9母版统一的清淡雅致东方奇幻农场，柔和三维体积、细腻而概括的手绘明暗、自然适度可爱、克制的奇幻材质；避免摄影写实、密集细毛噪点、极端Q版和塑料玩具感。配色沿用本物种成体，幼体材质特征应体现刚开始发育的阶段，不堆成熟装甲或外放特效。\n机位：相对水平面35度正交俯视，能看到顶部和近侧面，动物头朝画面右侧；左上柔光和少量冷色填光，无广角、强透视、镜头倾斜。自然静止姿态，身体结构完整连贯。\n交付：只画本次要求的一个完整幼体，珊瑚/菌毯则为一个连贯初生群体；禁止成年体陪衬、对比图、多个年龄拼图。透明RGBA背景，主体外完全透明，四周保留8%安全边距，尾、鳍、耳、根/触腕完整。禁止背景光晕、泛光、雾、粒子、池水、地面阴影、地台、花盆、建筑、巢箱、草地、底座、文字、标签、饰品和道具。",
+      "status": "age_corrected_source_awaiting_user_acceptance",
+      "visual_acceptance": "pending",
+      "runtime_integrated": false,
+      "camera_calibrated": false,
+      "previous_revisions": [],
+      "sha256": "ef8f51f07597dac8688ecaba6a29b409ebf42b5ee05a3323d176e842c60ce59f",
+      "canvas_px": [
+        1312,
+        1199
+      ],
+      "mode": "RGBA",
+      "alpha_extrema": [
+        0,
+        255
+      ],
+      "main_bbox_alpha_ge_16": [
+        198,
+        306,
+        1153,
+        1000
+      ],
+      "main_subject_within_canvas": true
+    },
+    {
+      "id": "purifying_mat",
+      "category": "living",
+      "state": "juvenile",
+      "version": "v001",
+      "file": "living/purifying_mat/purifying_mat_juvenile_view35_v001.png",
+      "source_file": "C:\\Users\\88445\\.codex\\generated_images\\01a15ef2-67bc-7673-b278-97b92008c893\\exec-550cf1a1-31c5-45a3-9276-906ffacfb27a.png",
+      "reference_file": "living/purifying_mat/purifying_mat_adult_view35_v001.png",
+      "prompt": "制作《灵田》的幼体正式素材：净水菌毯（purifying_mat）。年龄形态是本次最高优先级。\n一片刚接种并初步长成的净水菌毯幼生培养群体。只有一个连贯的小斑块，形状低矮扁薄、边缘稀疏羽状，淡米白/浅玉青的细菌丝网仍有清晰透空间隙，中央仅两三个微小凝结芽。没有成熟菌毯厚实绒垫、大团块、密集菌柱或广阔覆盖；以薄、疏、少的组织成熟度区分幼年，不单纯缩小成熟菌毯。不要培养皿、床架、土壤、滤材、池水或底座。\n\n参考图角色：附图是本物种已验收的成体，只参考物种身份、主色和材质语言；不能沿用成年轮廓、成年器官大小和成熟程度。按照已确认钢绵羊幼体v002的规则，用明确的年龄形态重新设计幼体，而不是把成年图等比例缩小。即使幼体与成体在屏幕上显示同样大小，也必须一眼看出年龄差别。\n画风：与P10.9母版统一的清淡雅致东方奇幻农场，柔和三维体积、细腻而概括的手绘明暗、自然适度可爱、克制的奇幻材质；避免摄影写实、密集细毛噪点、极端Q版和塑料玩具感。配色沿用本物种成体，幼体材质特征应体现刚开始发育的阶段，不堆成熟装甲或外放特效。\n机位：相对水平面35度正交俯视，能看到顶部和近侧面，动物头朝画面右侧；左上柔光和少量冷色填光，无广角、强透视、镜头倾斜。自然静止姿态，身体结构完整连贯。\n交付：只画本次要求的一个完整幼体，珊瑚/菌毯则为一个连贯初生群体；禁止成年体陪衬、对比图、多个年龄拼图。透明RGBA背景，主体外完全透明，四周保留8%安全边距，尾、鳍、耳、根/触腕完整。禁止背景光晕、泛光、雾、粒子、池水、地面阴影、地台、花盆、建筑、巢箱、草地、底座、文字、标签、饰品和道具。",
+      "status": "age_corrected_source_awaiting_user_acceptance",
+      "visual_acceptance": "pending",
+      "runtime_integrated": false,
+      "camera_calibrated": false,
+      "previous_revisions": [],
+      "sha256": "b1efd05179446facc3e13cda9c2e68c26236efe8feb143f4fdeea7a08b2cefda",
+      "canvas_px": [
+        1536,
+        1024
+      ],
+      "mode": "RGBA",
+      "alpha_extrema": [
+        0,
+        254
+      ],
+      "main_bbox_alpha_ge_16": [
+        94,
+        196,
+        1478,
+        841
+      ],
+      "main_subject_within_canvas": true
     }
   ],
   "production_summary": {
-    "registered_states": 42,
-    "runtime_integrated": false
+    "registered_states": 48,
+    "runtime_integrated": false,
+    "active_juvenile_species": 17,
+    "plant_growth_states": 31,
+    "current_total_states": 48,
+    "latest_juvenile_batch_new_images": 16,
+    "baseline_juvenile": "steel_sheep_v002"
   },
   "age_differentiation_review": {
     "date": "2026-10-22",
@@ -1289,6 +1816,7 @@
     "generation_on_hold_for_prompt_correction": false,
     "adult_acceptance": "user_accepted_2026-10-22",
     "finding": "Different prompts and different PNG bytes, but juvenile constraints rely too heavily on relative scale and preservation of adult silhouette.",
-    "next_action": "User explicitly authorized remaining juvenile production using steel_sheep v002 morphology approach, after committing current changes."
+    "next_action": "User explicitly authorized remaining juvenile production using steel_sheep v002 morphology approach, after committing current changes.",
+    "latest_status": "Remaining 16 juveniles produced using morphology-specific prompts; await user visual acceptance."
   }
 }

@@ -1,7 +1,7 @@
 {
   "date": "2026-10-22",
   "batch": "p109-adult-production-01",
-  "scope": "10 crops + 17 registered living types, mature/normal production state only; buildings deferred; no alternative candidates or other states",
+  "scope": "Adult source production round; additional growth states are tracked separately in states_manifest.json",
   "style": "User approved prior reed, carp and mulberry on 2026-10-22; keep accepted steel sheep unchanged",
   "style_approved": true,
   "tool": "built-in image_gen",
@@ -991,5 +991,6 @@
     "buildings_generated": 0,
     "runtime_integrated": false
   },
-  "adult_visual_acceptance": "user_accepted_2026-10-22"
+  "adult_visual_acceptance": "user_accepted_2026-10-22",
+  "growth_states_manifest": "states_manifest.json"
 }
