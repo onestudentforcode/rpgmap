@@ -32,9 +32,11 @@ var build_facing := "east"
 const RoomsUI := preload("res://scripts/farming/p8/p102_ui.gd")
 const RanchUI := preload("res://scripts/farming/p8/p103_ui.gd")
 const ServicesUI := preload("res://scripts/farming/p8/p104_ui.gd")
+const AnimalView := preload("res://scripts/farming/p8/p10_animal_view.gd")
 var rooms_ui := RoomsUI.new(self)
 var ranch_ui := RanchUI.new(self)
 var services_ui := ServicesUI.new(self)
+var animal_view := AnimalView.new(self)
 const EconomyUI := preload("res://scripts/farming/p8/p107_ui.gd")
 var economy_ui := EconomyUI.new(self)
 const BatchUI := preload("res://scripts/farming/p8/p108_batch.gd")
@@ -147,6 +149,7 @@ func _ready() -> void:
 	for argument in OS.get_cmdline_user_args():
 		if argument.begins_with("--plants="): requested_plants = argument.trim_prefix("--plants=")
 		if argument.begins_with("--facilities="): requested_facilities = argument.trim_prefix("--facilities=")
+		if argument.begins_with("--animals="): animal_view.enabled = argument.trim_prefix("--animals=") != "off"
 	var plant_result := configure_plant_profile(requested_plants)
 	if not plant_result["ok"]: push_error("Plant profile retained: %s" % plant_result["diagnostics"])
 	var facility_result := configure_facility_profile(requested_facilities)
@@ -239,6 +242,14 @@ func _show_settings() -> void:
 			fac_picker.select(0 if facility_profile == "p109" else 1)
 			_result(result))
 	sidebar.add_child(fac_picker)
+	_label(sidebar,"动物视野叠层（本次运行生效）")
+	var animal_toggle := CheckBox.new()
+	animal_toggle.text = "显示四分区动物小图"
+	animal_toggle.button_pressed = animal_view.enabled
+	animal_toggle.toggled.connect(func(pressed):
+		animal_view.enabled = pressed
+		overlay.queue_redraw())
+	sidebar.add_child(animal_toggle)
 
 func configure_visual_trial(profile: String, runtime_dir: String = "") -> Dictionary:
 	if profile not in ["baseline","grounding","integrated"]:
@@ -405,6 +416,22 @@ func _show_cell() -> void:
 	if _started and world.grid.in_bounds(selected.x,selected.y):
 		var crop := world.instance_at(selected)
 		var facility := world.facility_at(selected)
+		# P10.10 地格内容列表：本格动物条目（展示槽位）与所属区域入口；
+		# 工具输入不受影响——这里只写右侧信息区。
+		var cell_animals: Array = animal_view.animals_at(world, selected)
+		if not cell_animals.is_empty():
+			_label(sidebar,"本格动物（展示槽位）")
+			for uid in cell_animals:
+				var row: Dictionary = world.ranch.animal(int(uid))
+				if row.is_empty(): continue
+				var species: Dictionary = world.husbandry.species_def(String(row["species_id"]))
+				var uid_copy := int(uid)
+				_button(sidebar,"%s · %s #%d" % [String(species["name"]), "成体" if String(row["stage"]) == "adult" else "幼体", uid_copy],
+					func(): animal_view.show_detail(world, uid_copy))
+		var cell_zone: Dictionary = animal_view.zone_at(world, selected)
+		if not cell_zone.is_empty():
+			var zone_uid := int(cell_zone["uid"])
+			_button(sidebar,"所属区域：%s（畜牧名册）" % String(cell_zone["name"]), func(): ranch_ui.open())
 		var copy := _button(sidebar,"复制此处配置",func(): _copy_from_cell(selected))
 		copy.tooltip_text = "仅复制首版白名单中的选种计划、通用加工策略或田间维护站开关"
 		if crop.is_empty() and facility.is_empty() and world.rooms.floor_kind(selected) != "farmland": copy.disabled = true
