@@ -440,8 +440,13 @@ func _board_input(event: InputEvent) -> void:
 			overlay.queue_redraw()
 		return
 	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_RIGHT and event.pressed: logistics_ui.placing = ""
+	# 批量拖选/复制粘贴只认领自己能处理的释放事件：手动模式＋批量农具，或复制激活。
+	# 其余模式（建造/后勤部署/委托框选/取消标记等手动工具）必须保留_drag放行到父类，
+	# 否则对应点击全部失效（P10.8回归：设施放置、委托marks、取消标记单击）。
 	if _started and not shade.visible and not is_instance_valid(confirmation) and event is InputEventMouseButton \
-			and event.button_index == MOUSE_BUTTON_LEFT and not event.pressed and _drag and not _text_focus():
+			and event.button_index == MOUSE_BUTTON_LEFT and not event.pressed and _drag and not _text_focus() \
+			and build_tool.is_empty() and logistics_ui.placing.is_empty() \
+			and (not copy_config.is_empty() or (manual_mode and tool in ["till","plant","irrigate","fertilize","harvest","fell","clear"])):
 		var end_cell := _cell(event.position)
 		var drag_rect := _rect(_drag_start,end_cell)
 		_drag = false
@@ -459,7 +464,8 @@ func _board_input(event: InputEvent) -> void:
 	# and the inherited manual-action path so even resource points refresh at once.
 	if _started and not shade.visible and not is_instance_valid(confirmation) and not _text_focus() \
 			and event is InputEventMouseButton and event.button_index==MOUSE_BUTTON_LEFT and not event.pressed \
-			and not _map_pan and tool=="inspect" and copy_config.is_empty() and logistics_ui.placing.is_empty():
+			and not _map_pan and tool=="inspect" and copy_config.is_empty() and logistics_ui.placing.is_empty() \
+			and build_tool.is_empty():
 		_drag=false
 		selected=_cell(event.position)
 		_side_open=true
