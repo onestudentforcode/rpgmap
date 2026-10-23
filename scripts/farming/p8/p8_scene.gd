@@ -14,6 +14,11 @@ const PLANT_PROFILES := {
 }
 const FacilityVisuals := preload("res://scripts/farming/p8/p8_facility_visuals.gd")
 var facility_visuals := FacilityVisuals.new()
+var facility_profile := "legacy"
+const FACILITY_PROFILES := {
+	"legacy":"res://assets/farming/facilities/facility_manifest.json",
+	"p109":"res://assets/farming/p109/runtime/facility_manifest.json",
+}
 const TerrainSoften := preload("res://assets/farming/shaders/p8_terrain_soften.gdshader")
 const TrialGrounding := preload("res://scripts/farming/p8/p8_grounding.gd")
 const ProductionEnvironment := preload("res://scripts/farming/p8/p8_environment_visuals.gd")
@@ -138,10 +143,14 @@ func _ready() -> void:
 	_load_reading_preferences()
 	var style: Dictionary = JSON.parse_string(FileAccess.get_file_as_string("res://content/farming/p8/world_visuals.json"))
 	var requested_plants := String(style.get("plant_profile", "legacy"))
+	var requested_facilities := String(style.get("facility_profile", "p109"))
 	for argument in OS.get_cmdline_user_args():
 		if argument.begins_with("--plants="): requested_plants = argument.trim_prefix("--plants=")
+		if argument.begins_with("--facilities="): requested_facilities = argument.trim_prefix("--facilities=")
 	var plant_result := configure_plant_profile(requested_plants)
 	if not plant_result["ok"]: push_error("Plant profile retained: %s" % plant_result["diagnostics"])
+	var facility_result := configure_facility_profile(requested_facilities)
+	if not facility_result["ok"]: push_error("Facility profile retained: %s" % facility_result["diagnostics"])
 	for ident in style["terrain_tones"]:
 		if not terrain.layers.has(ident): continue
 		var material := ShaderMaterial.new()
@@ -188,6 +197,24 @@ func configure_plant_profile(profile: String) -> Dictionary:
 	if has_method("invalidate_projection_bounds"): call("invalidate_projection_bounds")
 	return {"ok":true,"profile":plant_profile,"diagnostics":[]}
 
+func configure_facility_profile(profile: String) -> Dictionary:
+	if profile not in FACILITY_PROFILES:
+		return {"ok":false,"profile":facility_profile,"diagnostics":["unknown facility profile: "+profile]}
+	if profile == facility_profile:
+		return {"ok":true,"profile":facility_profile,"diagnostics":[]}
+	# 先完整装载再替换：p109 只覆盖25项占位设施，其余14项沿用 legacy 条目。
+	var candidate := FacilityVisuals.new(FACILITY_PROFILES["legacy"])
+	var problems: Array = candidate.diagnostics.values()
+	if profile == "p109":
+		problems.append_array(candidate.merge_manifest(FACILITY_PROFILES["p109"]))
+	if not problems.is_empty():
+		return {"ok":false,"profile":facility_profile,"diagnostics":problems}
+	facility_visuals = candidate
+	facility_profile = profile
+	_facility_thumbnails.clear()
+	if is_instance_valid(overlay): overlay.queue_redraw()
+	return {"ok":true,"profile":facility_profile,"diagnostics":[]}
+
 func _show_settings() -> void:
 	super()
 	_label(sidebar,"植物美术预览（本次运行生效）")
@@ -201,6 +228,17 @@ func _show_settings() -> void:
 			picker.select(0 if plant_profile == "p109" else 1)
 			_result(result))
 	sidebar.add_child(picker)
+	_label(sidebar,"设施美术预览（本次运行生效）")
+	var fac_picker := OptionButton.new()
+	fac_picker.add_item("P10.9 新设施")
+	fac_picker.add_item("旧版设施")
+	fac_picker.select(0 if facility_profile == "p109" else 1)
+	fac_picker.item_selected.connect(func(index):
+		var result := configure_facility_profile("p109" if index == 0 else "legacy")
+		if not result["ok"]:
+			fac_picker.select(0 if facility_profile == "p109" else 1)
+			_result(result))
+	sidebar.add_child(fac_picker)
 
 func configure_visual_trial(profile: String, runtime_dir: String = "") -> Dictionary:
 	if profile not in ["baseline","grounding","integrated"]:
