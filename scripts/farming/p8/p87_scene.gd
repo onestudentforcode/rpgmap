@@ -179,6 +179,8 @@ func draw_map(target: Node2D) -> void:
 	for plan in world.workforce.state["seed_plans"]:
 		target.draw_circle(projection.ground_to_view(Vector2(plan["cell"][0],plan["cell"][1])*64+Vector2(52,12)),4*readable,UI.JADE)
 	if world.grid.in_bounds(selected.x,selected.y): target.draw_rect(projection.ground_rect(Rect2(Vector2(selected)*64,Vector2(64,64))),UI.JADE,false,2*readable)
+	# P10.10 动物视野叠层：四分区缩略图绘制在既有地图内容之上，可开关。
+	animal_view.draw_overlay(world, target, projection, readable)
 	if not build_tool.is_empty() and world.grid.in_bounds(_hover.x,_hover.y):
 		var valid: bool = world.can_build_facility(_hover,build_tool)["ok"]
 		var rect := projection.footprint([_hover.x,_hover.y],world.facility_defs[build_tool]["footprint"])

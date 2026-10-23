@@ -1,0 +1,873 @@
+{
+ "schema_version": 1,
+ "profile": "p109",
+ "texture_filter": "linear",
+ "note": "P10.9 facility runtime manifest; bodies from Blender unified 35deg renders",
+ "facilities": {
+  "dispatch_station": {
+   "footprint": [
+    1,
+    1
+   ],
+   "canvas_px": [
+    256,
+    256
+   ],
+   "path": "res://assets/farming/p109/runtime/facilities/dispatch_station/land/body.png",
+   "sha256": "5632270ba56b2b2abb6003b71975036237db13ae41af4e0d6fe10d0f322d18e3",
+   "anchor_uv": [
+    0.5,
+    0.62
+   ],
+   "draw_size": [
+    122.0,
+    122.0
+   ],
+   "scale_multiplier": 1.0,
+   "ground_placement": "footprint_center",
+   "shadow": {
+    "size": [
+     58.0,
+     22.0
+    ],
+    "offset": [
+     0,
+     4
+    ],
+    "opacity": 0.18
+   },
+   "p109_export_ppu": 151.23
+  },
+  "feed_trough": {
+   "footprint": [
+    1,
+    1
+   ],
+   "canvas_px": [
+    256,
+    256
+   ],
+   "path": "res://assets/farming/p109/runtime/facilities/feed_trough/land/body.png",
+   "sha256": "576a104de81e62c9fea1a5681bf71e98f026b2f3ce4ee2ceda79e4716968ca2a",
+   "anchor_uv": [
+    0.5,
+    0.62
+   ],
+   "draw_size": [
+    122.0,
+    122.0
+   ],
+   "scale_multiplier": 1.0,
+   "ground_placement": "footprint_center",
+   "shadow": {
+    "size": [
+     58.0,
+     22.0
+    ],
+    "offset": [
+     0,
+     4
+    ],
+    "opacity": 0.18
+   },
+   "p109_export_ppu": 160.0,
+   "p109_variants": {
+    "water": "res://assets/farming/p109/runtime/facilities/feed_trough/water/body.png"
+   }
+  },
+  "small_bed": {
+   "footprint": [
+    1,
+    1
+   ],
+   "canvas_px": [
+    256,
+    256
+   ],
+   "path": "res://assets/farming/p109/runtime/facilities/small_bed/land/body.png",
+   "sha256": "8dfa90db02a4793da0756d33b5e7e8d206177be09512c9c602905b1103a8a543",
+   "anchor_uv": [
+    0.5,
+    0.62
+   ],
+   "draw_size": [
+    122.0,
+    122.0
+   ],
+   "scale_multiplier": 1.0,
+   "ground_placement": "footprint_center",
+   "shadow": {
+    "size": [
+     58.0,
+     22.0
+    ],
+    "offset": [
+     0,
+     4
+    ],
+    "opacity": 0.18
+   },
+   "p109_export_ppu": 160.0,
+   "p109_variants": {
+    "water": "res://assets/farming/p109/runtime/facilities/small_bed/water/body.png"
+   }
+  },
+  "medium_bed": {
+   "footprint": [
+    1,
+    1
+   ],
+   "canvas_px": [
+    256,
+    256
+   ],
+   "path": "res://assets/farming/p109/runtime/facilities/medium_bed/land/body.png",
+   "sha256": "ff21f3760cc14f15cd5406ce8567ee4503863e5ed1b536714a2ff116ff7b61e7",
+   "anchor_uv": [
+    0.5,
+    0.62
+   ],
+   "draw_size": [
+    122.0,
+    122.0
+   ],
+   "scale_multiplier": 1.0,
+   "ground_placement": "footprint_center",
+   "shadow": {
+    "size": [
+     58.0,
+     22.0
+    ],
+    "offset": [
+     0,
+     4
+    ],
+    "opacity": 0.18
+   },
+   "p109_export_ppu": 160.0,
+   "p109_variants": {
+    "water": "res://assets/farming/p109/runtime/facilities/medium_bed/water/body.png"
+   }
+  },
+  "large_bed": {
+   "footprint": [
+    1,
+    1
+   ],
+   "canvas_px": [
+    256,
+    256
+   ],
+   "path": "res://assets/farming/p109/runtime/facilities/large_bed/land/body.png",
+   "sha256": "eeaf247a336ed598edc6acc92767dd95bafe3447311e4f4ba19d84ca9429c468",
+   "anchor_uv": [
+    0.5,
+    0.62
+   ],
+   "draw_size": [
+    122.0,
+    122.0
+   ],
+   "scale_multiplier": 1.0,
+   "ground_placement": "footprint_center",
+   "shadow": {
+    "size": [
+     58.0,
+     22.0
+    ],
+    "offset": [
+     0,
+     4
+    ],
+    "opacity": 0.18
+   },
+   "p109_export_ppu": 160.0
+  },
+  "care_table": {
+   "footprint": [
+    1,
+    1
+   ],
+   "canvas_px": [
+    256,
+    256
+   ],
+   "path": "res://assets/farming/p109/runtime/facilities/care_table/land/body.png",
+   "sha256": "c71460280770737c7a818bd8ff135e0ae4e02ab90161181b47d6a52e723e18c2",
+   "anchor_uv": [
+    0.5,
+    0.62
+   ],
+   "draw_size": [
+    122.0,
+    122.0
+   ],
+   "scale_multiplier": 1.0,
+   "ground_placement": "footprint_center",
+   "shadow": {
+    "size": [
+     58.0,
+     22.0
+    ],
+    "offset": [
+     0,
+     4
+    ],
+    "opacity": 0.18
+   },
+   "p109_export_ppu": 160.0,
+   "p109_variants": {
+    "water": "res://assets/farming/p109/runtime/facilities/care_table/water/body.png"
+   }
+  },
+  "soothing_station": {
+   "footprint": [
+    1,
+    1
+   ],
+   "canvas_px": [
+    256,
+    256
+   ],
+   "path": "res://assets/farming/p109/runtime/facilities/soothing_station/land/body.png",
+   "sha256": "91a67a480b19e5bf3c4adcb89bd491b0960f3ee0a41fe97c2c280faf9b3d1c57",
+   "anchor_uv": [
+    0.5,
+    0.6171875
+   ],
+   "draw_size": [
+    122.0,
+    122.0
+   ],
+   "scale_multiplier": 1.0,
+   "ground_placement": "footprint_center",
+   "shadow": {
+    "size": [
+     58.0,
+     22.0
+    ],
+    "offset": [
+     0,
+     4
+    ],
+    "opacity": 0.18
+   },
+   "p109_export_ppu": 160.0,
+   "p109_variants": {
+    "water": "res://assets/farming/p109/runtime/facilities/soothing_station/water/body.png"
+   }
+  },
+  "toy_station": {
+   "footprint": [
+    1,
+    1
+   ],
+   "canvas_px": [
+    256,
+    256
+   ],
+   "path": "res://assets/farming/p109/runtime/facilities/toy_station/land/body.png",
+   "sha256": "5af95defa07f70b0d723ba5cef1ed19571647900b8652c3eec8145398fc568a1",
+   "anchor_uv": [
+    0.5,
+    0.6171875
+   ],
+   "draw_size": [
+    122.0,
+    122.0
+   ],
+   "scale_multiplier": 1.0,
+   "ground_placement": "footprint_center",
+   "shadow": {
+    "size": [
+     58.0,
+     22.0
+    ],
+    "offset": [
+     0,
+     4
+    ],
+    "opacity": 0.18
+   },
+   "p109_export_ppu": 160.0
+  },
+  "wool_station": {
+   "footprint": [
+    1,
+    1
+   ],
+   "canvas_px": [
+    256,
+    256
+   ],
+   "path": "res://assets/farming/p109/runtime/facilities/wool_station/land/body.png",
+   "sha256": "4b80b64ef4d88d994fdfb38b99bd0d2d2b03df22fd78233825c8df64469834b0",
+   "anchor_uv": [
+    0.5,
+    0.6171875
+   ],
+   "draw_size": [
+    122.0,
+    122.0
+   ],
+   "scale_multiplier": 1.0,
+   "ground_placement": "footprint_center",
+   "shadow": {
+    "size": [
+     58.0,
+     22.0
+    ],
+    "offset": [
+     0,
+     4
+    ],
+    "opacity": 0.18
+   },
+   "p109_export_ppu": 160.0
+  },
+  "silkworm_rack": {
+   "footprint": [
+    1,
+    1
+   ],
+   "canvas_px": [
+    256,
+    256
+   ],
+   "path": "res://assets/farming/p109/runtime/facilities/silkworm_rack/land/body.png",
+   "sha256": "bcd4b918fbdcc38a8ceb8693b0600685dfc87bb3b8575847ca88ac6ff3af62ec",
+   "anchor_uv": [
+    0.5,
+    0.6171875
+   ],
+   "draw_size": [
+    122.0,
+    122.0
+   ],
+   "scale_multiplier": 1.0,
+   "ground_placement": "footprint_center",
+   "shadow": {
+    "size": [
+     58.0,
+     22.0
+    ],
+    "offset": [
+     0,
+     4
+    ],
+    "opacity": 0.18
+   },
+   "p109_export_ppu": 160.0
+  },
+  "spirit_liquid_collector": {
+   "footprint": [
+    1,
+    1
+   ],
+   "canvas_px": [
+    256,
+    256
+   ],
+   "path": "res://assets/farming/p109/runtime/facilities/spirit_liquid_collector/land/body.png",
+   "sha256": "e1bc0b2daa71b0d7a4036a8e4bb8bb9a1070473066f9fba24182f2ef7092e5d4",
+   "anchor_uv": [
+    0.5,
+    0.6171875
+   ],
+   "draw_size": [
+    122.0,
+    122.0
+   ],
+   "scale_multiplier": 1.0,
+   "ground_placement": "footprint_center",
+   "shadow": {
+    "size": [
+     58.0,
+     22.0
+    ],
+    "offset": [
+     0,
+     4
+    ],
+    "opacity": 0.18
+   },
+   "p109_export_ppu": 160.0
+  },
+  "scale_station": {
+   "footprint": [
+    1,
+    1
+   ],
+   "canvas_px": [
+    256,
+    256
+   ],
+   "path": "res://assets/farming/p109/runtime/facilities/scale_station/land/body.png",
+   "sha256": "b3b0fc671a588fb166187a3cfba4ed4bcebe58e2e3bd64779cf362647741d2e2",
+   "anchor_uv": [
+    0.5,
+    0.6171875
+   ],
+   "draw_size": [
+    122.0,
+    122.0
+   ],
+   "scale_multiplier": 1.0,
+   "ground_placement": "footprint_center",
+   "shadow": {
+    "size": [
+     58.0,
+     22.0
+    ],
+    "offset": [
+     0,
+     4
+    ],
+    "opacity": 0.18
+   },
+   "p109_export_ppu": 160.0
+  },
+  "rock_breaking_yard": {
+   "footprint": [
+    2,
+    2
+   ],
+   "canvas_px": [
+    512,
+    512
+   ],
+   "path": "res://assets/farming/p109/runtime/facilities/rock_breaking_yard/land/body.png",
+   "sha256": "88c6e50c405d49c28b903508de3e472cdb9026455de034eeef269da9612bd82a",
+   "anchor_uv": [
+    0.5,
+    0.51171875
+   ],
+   "draw_size": [
+    204.8,
+    204.8
+   ],
+   "scale_multiplier": 1.0,
+   "ground_placement": "footprint_center",
+   "shadow": {
+    "size": [
+     112,
+     45
+    ],
+    "offset": [
+     0,
+     5
+    ],
+    "opacity": 0.21
+   },
+   "p109_export_ppu": 128.0
+  },
+  "ore_sorting_yard": {
+   "footprint": [
+    2,
+    2
+   ],
+   "canvas_px": [
+    512,
+    512
+   ],
+   "path": "res://assets/farming/p109/runtime/facilities/ore_sorting_yard/land/body.png",
+   "sha256": "a08096be0c2d643a900fab6ab8e2cdf6f4bbd4d51128d0a1c6c5c01ee9930ac6",
+   "anchor_uv": [
+    0.5,
+    0.51171875
+   ],
+   "draw_size": [
+    204.8,
+    204.8
+   ],
+   "scale_multiplier": 1.0,
+   "ground_placement": "footprint_center",
+   "shadow": {
+    "size": [
+     112,
+     45
+    ],
+    "offset": [
+     0,
+     5
+    ],
+    "opacity": 0.21
+   },
+   "p109_export_ppu": 128.0
+  },
+  "carbonization_nest": {
+   "footprint": [
+    2,
+    2
+   ],
+   "canvas_px": [
+    512,
+    512
+   ],
+   "path": "res://assets/farming/p109/runtime/facilities/carbonization_nest/land/body.png",
+   "sha256": "f7332ca6d91ba9e2c639ef5f5c455a020fb60caf7834e8be63643d4817d4ca47",
+   "anchor_uv": [
+    0.5,
+    0.51171875
+   ],
+   "draw_size": [
+    204.8,
+    204.8
+   ],
+   "scale_multiplier": 1.0,
+   "ground_placement": "footprint_center",
+   "shadow": {
+    "size": [
+     112,
+     45
+    ],
+    "offset": [
+     0,
+     5
+    ],
+    "opacity": 0.21
+   },
+   "p109_export_ppu": 128.0
+  },
+  "compost_mouse_den": {
+   "footprint": [
+    2,
+    2
+   ],
+   "canvas_px": [
+    512,
+    512
+   ],
+   "path": "res://assets/farming/p109/runtime/facilities/compost_mouse_den/land/body.png",
+   "sha256": "49f96e99020b1f1b160322a3fd18659c6ccdcb1589d5bc268e8043cba1b51b7a",
+   "anchor_uv": [
+    0.5,
+    0.51171875
+   ],
+   "draw_size": [
+    204.8,
+    204.8
+   ],
+   "scale_multiplier": 1.0,
+   "ground_placement": "footprint_center",
+   "shadow": {
+    "size": [
+     112,
+     45
+    ],
+    "offset": [
+     0,
+     5
+    ],
+    "opacity": 0.21
+   },
+   "p109_export_ppu": 128.0
+  },
+  "shell_forming_station": {
+   "footprint": [
+    2,
+    2
+   ],
+   "canvas_px": [
+    512,
+    512
+   ],
+   "path": "res://assets/farming/p109/runtime/facilities/shell_forming_station/land/body.png",
+   "sha256": "ec68100a8b63f952ff1273e2c0e6c02588389c58955630a51561623e501251ac",
+   "anchor_uv": [
+    0.5,
+    0.51171875
+   ],
+   "draw_size": [
+    204.8,
+    204.8
+   ],
+   "scale_multiplier": 1.0,
+   "ground_placement": "footprint_center",
+   "shadow": {
+    "size": [
+     112,
+     45
+    ],
+    "offset": [
+     0,
+     5
+    ],
+    "opacity": 0.21
+   },
+   "p109_export_ppu": 128.0
+  },
+  "carp_harvest_station": {
+   "footprint": [
+    1,
+    1
+   ],
+   "canvas_px": [
+    256,
+    256
+   ],
+   "path": "res://assets/farming/p109/runtime/facilities/carp_harvest_station/water/body.png",
+   "sha256": "f389a4a3c97d44069f8bafe380f6fde0fab001d5b44f3b9c6fafdd1274634943",
+   "anchor_uv": [
+    0.5,
+    0.6171875
+   ],
+   "draw_size": [
+    122.0,
+    122.0
+   ],
+   "scale_multiplier": 1.0,
+   "ground_placement": "footprint_center",
+   "shadow": {
+    "size": [
+     58.0,
+     22.0
+    ],
+    "offset": [
+     0,
+     4
+    ],
+    "opacity": 0.1
+   },
+   "p109_export_ppu": 160.0
+  },
+  "oilfish_harvest_station": {
+   "footprint": [
+    1,
+    1
+   ],
+   "canvas_px": [
+    256,
+    256
+   ],
+   "path": "res://assets/farming/p109/runtime/facilities/oilfish_harvest_station/water/body.png",
+   "sha256": "b98a5f16f64d0cb77fefce9fb5d16a261da83919c9f591ff916e79995f73e987",
+   "anchor_uv": [
+    0.5,
+    0.6171875
+   ],
+   "draw_size": [
+    122.0,
+    122.0
+   ],
+   "scale_multiplier": 1.0,
+   "ground_placement": "footprint_center",
+   "shadow": {
+    "size": [
+     58.0,
+     22.0
+    ],
+    "offset": [
+     0,
+     4
+    ],
+    "opacity": 0.1
+   },
+   "p109_export_ppu": 160.0
+  },
+  "pearl_station": {
+   "footprint": [
+    1,
+    1
+   ],
+   "canvas_px": [
+    256,
+    256
+   ],
+   "path": "res://assets/farming/p109/runtime/facilities/pearl_station/water/body.png",
+   "sha256": "8aad609d6e938f8743c891d29b91b6569fe7c3239b14f2b5c117d54247992f52",
+   "anchor_uv": [
+    0.5,
+    0.6171875
+   ],
+   "draw_size": [
+    122.0,
+    122.0
+   ],
+   "scale_multiplier": 1.0,
+   "ground_placement": "footprint_center",
+   "shadow": {
+    "size": [
+     58.0,
+     22.0
+    ],
+    "offset": [
+     0,
+     4
+    ],
+    "opacity": 0.1
+   },
+   "p109_export_ppu": 160.0
+  },
+  "gel_station": {
+   "footprint": [
+    1,
+    1
+   ],
+   "canvas_px": [
+    256,
+    256
+   ],
+   "path": "res://assets/farming/p109/runtime/facilities/gel_station/water/body.png",
+   "sha256": "6a5a3be36424daa128aaeeedc201bf038e45f36a132a8b55683285ce0d8ff2a2",
+   "anchor_uv": [
+    0.5,
+    0.6171875
+   ],
+   "draw_size": [
+    122.0,
+    122.0
+   ],
+   "scale_multiplier": 1.0,
+   "ground_placement": "footprint_center",
+   "shadow": {
+    "size": [
+     58.0,
+     22.0
+    ],
+    "offset": [
+     0,
+     4
+    ],
+    "opacity": 0.1
+   },
+   "p109_export_ppu": 160.0
+  },
+  "coral_station": {
+   "footprint": [
+    1,
+    1
+   ],
+   "canvas_px": [
+    256,
+    256
+   ],
+   "path": "res://assets/farming/p109/runtime/facilities/coral_station/water/body.png",
+   "sha256": "d01dfcfca576fe426c2f8e29dbfce11156ccf97f7e9993a87ed5c5401f495515",
+   "anchor_uv": [
+    0.5,
+    0.6171875
+   ],
+   "draw_size": [
+    122.0,
+    122.0
+   ],
+   "scale_multiplier": 1.0,
+   "ground_placement": "footprint_center",
+   "shadow": {
+    "size": [
+     58.0,
+     22.0
+    ],
+    "offset": [
+     0,
+     4
+    ],
+    "opacity": 0.1
+   },
+   "p109_export_ppu": 160.0
+  },
+  "silt_processing_station": {
+   "footprint": [
+    1,
+    1
+   ],
+   "canvas_px": [
+    256,
+    256
+   ],
+   "path": "res://assets/farming/p109/runtime/facilities/silt_processing_station/water/body.png",
+   "sha256": "6ff880f85560b87a56ab56d50b6e78b515397a55d05532972ec1cdf68dadfa73",
+   "anchor_uv": [
+    0.5,
+    0.6171875
+   ],
+   "draw_size": [
+    122.0,
+    122.0
+   ],
+   "scale_multiplier": 1.0,
+   "ground_placement": "footprint_center",
+   "shadow": {
+    "size": [
+     58.0,
+     22.0
+    ],
+    "offset": [
+     0,
+     4
+    ],
+    "opacity": 0.1
+   },
+   "p109_export_ppu": 160.0
+  },
+  "aquatic_crop_station": {
+   "footprint": [
+    1,
+    1
+   ],
+   "canvas_px": [
+    256,
+    256
+   ],
+   "path": "res://assets/farming/p109/runtime/facilities/aquatic_crop_station/water/body.png",
+   "sha256": "415887215d55c9b166d54aff8813d00001237c51b442058f1e3399e19d611bda",
+   "anchor_uv": [
+    0.5,
+    0.6171875
+   ],
+   "draw_size": [
+    122.0,
+    122.0
+   ],
+   "scale_multiplier": 1.0,
+   "ground_placement": "footprint_center",
+   "shadow": {
+    "size": [
+     58.0,
+     22.0
+    ],
+    "offset": [
+     0,
+     4
+    ],
+    "opacity": 0.1
+   },
+   "p109_export_ppu": 160.0
+  },
+  "water_change_station": {
+   "footprint": [
+    1,
+    1
+   ],
+   "canvas_px": [
+    256,
+    256
+   ],
+   "path": "res://assets/farming/p109/runtime/facilities/water_change_station/land/body.png",
+   "sha256": "f302ea19987a5222d1f2d4012a86259c064f6fbf5d172d3edde9ab39a134f588",
+   "anchor_uv": [
+    0.5,
+    0.6171875
+   ],
+   "draw_size": [
+    122.0,
+    122.0
+   ],
+   "scale_multiplier": 1.0,
+   "ground_placement": "footprint_center",
+   "shadow": {
+    "size": [
+     58.0,
+     22.0
+    ],
+    "offset": [
+     0,
+     4
+    ],
+    "opacity": 0.18
+   },
+   "p109_export_ppu": 160.0
+  }
+ }
+}

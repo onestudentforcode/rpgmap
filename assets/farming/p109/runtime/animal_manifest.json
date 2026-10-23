@@ -1,0 +1,552 @@
+{
+ "schema_version": 1,
+ "profile": "p109",
+ "texture_filter": "linear",
+ "note": "P10.10 animal view thumbnails; display-only, no gameplay semantics",
+ "species": {
+  "bell_bee": {
+   "name": "蜜盏蜂",
+   "habitat_facility": true,
+   "stages": {
+    "adult": {
+     "canvas_px": [
+      96,
+      96
+     ],
+     "anchor_uv": [
+      0.5,
+      0.9583333333333334
+     ],
+     "aspect": 0.67,
+     "path": "res://assets/farming/p109/runtime/animals/bell_bee/adult.png",
+     "sha256": "2b73791e8834734430ad42422d104703b717e64c20214d5b6d3ea0c88a7fa76b"
+    },
+    "juvenile": {
+     "canvas_px": [
+      96,
+      96
+     ],
+     "anchor_uv": [
+      0.5,
+      0.9583333333333334
+     ],
+     "aspect": 0.648,
+     "path": "res://assets/farming/p109/runtime/animals/bell_bee/juvenile.png",
+     "sha256": "a0c11b3a895bfbf7b33f57a63308736b5eda4d2e0240b99f62a1bb6bc1e856aa"
+    }
+   }
+  },
+  "carbon_belly_bug": {
+   "name": "炭腹虫",
+   "habitat_facility": false,
+   "stages": {
+    "adult": {
+     "canvas_px": [
+      96,
+      96
+     ],
+     "anchor_uv": [
+      0.5,
+      0.9583333333333334
+     ],
+     "aspect": 0.67,
+     "path": "res://assets/farming/p109/runtime/animals/carbon_belly_bug/adult.png",
+     "sha256": "1d03b525d13aff1f833ab5c1e3711e8ebe0484bee402eacd9c9cbe92e60671b4"
+    },
+    "juvenile": {
+     "canvas_px": [
+      96,
+      96
+     ],
+     "anchor_uv": [
+      0.5,
+      0.9583333333333334
+     ],
+     "aspect": 0.682,
+     "path": "res://assets/farming/p109/runtime/animals/carbon_belly_bug/juvenile.png",
+     "sha256": "6909ee1ea11e96fca1561dc0c25de86974d9ab66a9c1bc8f289324afe5083aed"
+    }
+   }
+  },
+  "compost_mouse": {
+   "name": "堆肥鼠",
+   "habitat_facility": false,
+   "stages": {
+    "adult": {
+     "canvas_px": [
+      96,
+      96
+     ],
+     "anchor_uv": [
+      0.5,
+      0.9583333333333334
+     ],
+     "aspect": 0.659,
+     "path": "res://assets/farming/p109/runtime/animals/compost_mouse/adult.png",
+     "sha256": "973df34a8a5e2583b94b5f963b13a219946e950dfd1ed412c9f763accd0142a4"
+    },
+    "juvenile": {
+     "canvas_px": [
+      96,
+      96
+     ],
+     "anchor_uv": [
+      0.5,
+      0.9583333333333334
+     ],
+     "aspect": 0.682,
+     "path": "res://assets/farming/p109/runtime/animals/compost_mouse/juvenile.png",
+     "sha256": "5462772f5bd265e4a4d30d00be98822224175e5eceb4b85a9ba0027cc61a3599"
+    }
+   }
+  },
+  "dew_shell_snail": {
+   "name": "露壳蜗牛",
+   "habitat_facility": false,
+   "stages": {
+    "adult": {
+     "canvas_px": [
+      96,
+      96
+     ],
+     "anchor_uv": [
+      0.5,
+      0.9583333333333334
+     ],
+     "aspect": 0.659,
+     "path": "res://assets/farming/p109/runtime/animals/dew_shell_snail/adult.png",
+     "sha256": "6cf9786e19b8c8edb3ee8a2e31c1220659d066d54927065ff51ac6b2940efdc3"
+    },
+    "juvenile": {
+     "canvas_px": [
+      96,
+      96
+     ],
+     "anchor_uv": [
+      0.5,
+      0.9583333333333334
+     ],
+     "aspect": 0.682,
+     "path": "res://assets/farming/p109/runtime/animals/dew_shell_snail/juvenile.png",
+     "sha256": "4c03f4a98ff2dd2c34bf8b194538f27834ef88c3f5e81ef15bb8740c50672357"
+    }
+   }
+  },
+  "filter_algae_carp": {
+   "name": "滤藻鲤",
+   "habitat_facility": false,
+   "stages": {
+    "adult": {
+     "canvas_px": [
+      96,
+      96
+     ],
+     "anchor_uv": [
+      0.5,
+      0.9583333333333334
+     ],
+     "aspect": 0.648,
+     "path": "res://assets/farming/p109/runtime/animals/filter_algae_carp/adult.png",
+     "sha256": "1ba57a5df8d555ce74323654b0b7403af76a84a4d01052aac96fc637f05af4d9"
+    },
+    "juvenile": {
+     "canvas_px": [
+      96,
+      96
+     ],
+     "anchor_uv": [
+      0.5,
+      0.9583333333333334
+     ],
+     "aspect": 0.67,
+     "path": "res://assets/farming/p109/runtime/animals/filter_algae_carp/juvenile.png",
+     "sha256": "5c529480826ec75d370bccd6a94e0035306a2d7713edb7282d16c8c6adfca4fb"
+    }
+   }
+  },
+  "gel_jellyfish": {
+   "name": "凝胶水母",
+   "habitat_facility": false,
+   "stages": {
+    "adult": {
+     "canvas_px": [
+      96,
+      96
+     ],
+     "anchor_uv": [
+      0.5,
+      0.9583333333333334
+     ],
+     "aspect": 1.467,
+     "path": "res://assets/farming/p109/runtime/animals/gel_jellyfish/adult.png",
+     "sha256": "1b8179cd9df1299f435476e3d3e88be108a56089a6ea0960a3007fcb912f91fe"
+    },
+    "juvenile": {
+     "canvas_px": [
+      96,
+      96
+     ],
+     "anchor_uv": [
+      0.5,
+      0.9583333333333334
+     ],
+     "aspect": 1.06,
+     "path": "res://assets/farming/p109/runtime/animals/gel_jellyfish/juvenile.png",
+     "sha256": "bf691617c6bcad7f3a01bd85716276eb25642f29b6bb8a2d80fc8085500b8aa7"
+    }
+   }
+  },
+  "gravel_shell_snail": {
+   "name": "砾甲蜗牛",
+   "habitat_facility": false,
+   "stages": {
+    "adult": {
+     "canvas_px": [
+      96,
+      96
+     ],
+     "anchor_uv": [
+      0.5,
+      0.9583333333333334
+     ],
+     "aspect": 0.659,
+     "path": "res://assets/farming/p109/runtime/animals/gravel_shell_snail/adult.png",
+     "sha256": "3094424cdfc62dbf51fe7984e472dde2d7e8baae561231b269a74051fa27a9da"
+    },
+    "juvenile": {
+     "canvas_px": [
+      96,
+      96
+     ],
+     "anchor_uv": [
+      0.5,
+      0.9583333333333334
+     ],
+     "aspect": 0.659,
+     "path": "res://assets/farming/p109/runtime/animals/gravel_shell_snail/juvenile.png",
+     "sha256": "1d6c3250b5d45fdfa8e785d05f205d75103d02e771319902b9fc1b1e2f6d6435"
+    }
+   }
+  },
+  "leaf_silkworm": {
+   "name": "叶丝蚕",
+   "habitat_facility": false,
+   "stages": {
+    "adult": {
+     "canvas_px": [
+      96,
+      96
+     ],
+     "anchor_uv": [
+      0.5,
+      0.9583333333333334
+     ],
+     "aspect": 0.648,
+     "path": "res://assets/farming/p109/runtime/animals/leaf_silkworm/adult.png",
+     "sha256": "866adcf0fb0b801ed88db8695df6689ee0a5417cdfc6ed05f9e72e242862f520"
+    },
+    "juvenile": {
+     "canvas_px": [
+      96,
+      96
+     ],
+     "anchor_uv": [
+      0.5,
+      0.9583333333333334
+     ],
+     "aspect": 0.67,
+     "path": "res://assets/farming/p109/runtime/animals/leaf_silkworm/juvenile.png",
+     "sha256": "d917950fd5e69563ecddfc70484827cc28819036dc937a14e041a63edaf352e1"
+    }
+   }
+  },
+  "mineral_scale_lizard": {
+   "name": "矿鳞蜥",
+   "habitat_facility": false,
+   "stages": {
+    "adult": {
+     "canvas_px": [
+      96,
+      96
+     ],
+     "anchor_uv": [
+      0.5,
+      0.9583333333333334
+     ],
+     "aspect": 0.67,
+     "path": "res://assets/farming/p109/runtime/animals/mineral_scale_lizard/adult.png",
+     "sha256": "e347701bee67ccbb1790431ebdffbe827d7669d0747249490f333135b84d4a2e"
+    },
+    "juvenile": {
+     "canvas_px": [
+      96,
+      96
+     ],
+     "anchor_uv": [
+      0.5,
+      0.9583333333333334
+     ],
+     "aspect": 0.648,
+     "path": "res://assets/farming/p109/runtime/animals/mineral_scale_lizard/juvenile.png",
+     "sha256": "e7cb7357bd651e9c54f10aa0c6c31b8e4ad90959abe4bd06311249a8a506b96a"
+    }
+   }
+  },
+  "oilfin_fish": {
+   "name": "油鳍鱼",
+   "habitat_facility": false,
+   "stages": {
+    "adult": {
+     "canvas_px": [
+      96,
+      96
+     ],
+     "anchor_uv": [
+      0.5,
+      0.9583333333333334
+     ],
+     "aspect": 0.636,
+     "path": "res://assets/farming/p109/runtime/animals/oilfin_fish/adult.png",
+     "sha256": "c4f4fea3a9394325021722ea813752a93a4e9ab0983b776af7e2eae9273fb8b3"
+    },
+    "juvenile": {
+     "canvas_px": [
+      96,
+      96
+     ],
+     "anchor_uv": [
+      0.5,
+      0.9583333333333334
+     ],
+     "aspect": 0.67,
+     "path": "res://assets/farming/p109/runtime/animals/oilfin_fish/juvenile.png",
+     "sha256": "fa466ac844efa75b1884b20a3251810de1fbe18e713c434f0b63959c427ac395"
+    }
+   }
+  },
+  "pearl_mussel": {
+   "name": "珍珠蚌",
+   "habitat_facility": false,
+   "stages": {
+    "adult": {
+     "canvas_px": [
+      96,
+      96
+     ],
+     "anchor_uv": [
+      0.5,
+      0.9583333333333334
+     ],
+     "aspect": 0.625,
+     "path": "res://assets/farming/p109/runtime/animals/pearl_mussel/adult.png",
+     "sha256": "15d00bf7ee7ff457e9449d0982f710d98164f2d2c5795d12399b0b0480277e96"
+    },
+    "juvenile": {
+     "canvas_px": [
+      96,
+      96
+     ],
+     "anchor_uv": [
+      0.5,
+      0.9583333333333334
+     ],
+     "aspect": 0.648,
+     "path": "res://assets/farming/p109/runtime/animals/pearl_mussel/juvenile.png",
+     "sha256": "03ead1e23de932f7c7a6b8093090d56c3a7c7f8278e02d40e22119dcaa31aa13"
+    }
+   }
+  },
+  "purifying_mat": {
+   "name": "净水菌毯",
+   "habitat_facility": true,
+   "stages": {
+    "adult": {
+     "canvas_px": [
+      96,
+      96
+     ],
+     "anchor_uv": [
+      0.5,
+      0.9583333333333334
+     ],
+     "aspect": 0.659,
+     "path": "res://assets/farming/p109/runtime/animals/purifying_mat/adult.png",
+     "sha256": "2016bad73be3abbd1aa5aef15fd129e85838d59b0b8dd2b619c73737462e56f1"
+    },
+    "juvenile": {
+     "canvas_px": [
+      96,
+      96
+     ],
+     "anchor_uv": [
+      0.5,
+      0.9583333333333334
+     ],
+     "aspect": 0.67,
+     "path": "res://assets/farming/p109/runtime/animals/purifying_mat/juvenile.png",
+     "sha256": "a93d4fa8fc5568f6acaddf3b1704ea9b9a62fc18bea7d3d1f5411fb3d36732ca"
+    }
+   }
+  },
+  "reef_coral": {
+   "name": "礁骨珊瑚",
+   "habitat_facility": false,
+   "stages": {
+    "adult": {
+     "canvas_px": [
+      96,
+      96
+     ],
+     "anchor_uv": [
+      0.5,
+      0.9583333333333334
+     ],
+     "aspect": 0.909,
+     "path": "res://assets/farming/p109/runtime/animals/reef_coral/adult.png",
+     "sha256": "cbec1104a98e780aa9a1fd25e0ea7f3a087c541b5ed0092c73c38b4678141d15"
+    },
+    "juvenile": {
+     "canvas_px": [
+      96,
+      96
+     ],
+     "anchor_uv": [
+      0.5,
+      0.9583333333333334
+     ],
+     "aspect": 0.943,
+     "path": "res://assets/farming/p109/runtime/animals/reef_coral/juvenile.png",
+     "sha256": "b21853b3c145504763e88eed59636e30dad1a44eb77e9d9f3c17f0280022dbc3"
+    }
+   }
+  },
+  "rock_belly_beast": {
+   "name": "岩腹兽",
+   "habitat_facility": false,
+   "stages": {
+    "adult": {
+     "canvas_px": [
+      96,
+      96
+     ],
+     "anchor_uv": [
+      0.5,
+      0.9583333333333334
+     ],
+     "aspect": 0.659,
+     "path": "res://assets/farming/p109/runtime/animals/rock_belly_beast/adult.png",
+     "sha256": "e62a41d669605bf2dc0c9814b28ecaa61dc88cbf251fd40daaf6c2d3fbd75a53"
+    },
+    "juvenile": {
+     "canvas_px": [
+      96,
+      96
+     ],
+     "anchor_uv": [
+      0.5,
+      0.9583333333333334
+     ],
+     "aspect": 0.659,
+     "path": "res://assets/farming/p109/runtime/animals/rock_belly_beast/juvenile.png",
+     "sha256": "28b27a85378e7bdd4004dca9a9850651516258e7440f22c84529d3b0017acdec"
+    }
+   }
+  },
+  "rock_mole": {
+   "name": "啮岩鼹",
+   "habitat_facility": false,
+   "stages": {
+    "adult": {
+     "canvas_px": [
+      96,
+      96
+     ],
+     "anchor_uv": [
+      0.5,
+      0.9583333333333334
+     ],
+     "aspect": 0.693,
+     "path": "res://assets/farming/p109/runtime/animals/rock_mole/adult.png",
+     "sha256": "24f7cd05d8f47314afc0a804e6427025497f9ea053fd4d89c367956ec00d2959"
+    },
+    "juvenile": {
+     "canvas_px": [
+      96,
+      96
+     ],
+     "anchor_uv": [
+      0.5,
+      0.9583333333333334
+     ],
+     "aspect": 0.67,
+     "path": "res://assets/farming/p109/runtime/animals/rock_mole/juvenile.png",
+     "sha256": "a2e9b7a821485ea8a02109ad4efbdd614b10775217c3310f6b7a0f2eeffa5d38"
+    }
+   }
+  },
+  "silt_loach": {
+   "name": "净泥鳅",
+   "habitat_facility": false,
+   "stages": {
+    "adult": {
+     "canvas_px": [
+      96,
+      96
+     ],
+     "anchor_uv": [
+      0.5,
+      0.9583333333333334
+     ],
+     "aspect": 0.625,
+     "path": "res://assets/farming/p109/runtime/animals/silt_loach/adult.png",
+     "sha256": "5aee73274de1f9fe89180b88c6f53f839c5367ffb8e5bc2c279ee81e0735182b"
+    },
+    "juvenile": {
+     "canvas_px": [
+      96,
+      96
+     ],
+     "anchor_uv": [
+      0.5,
+      0.9583333333333334
+     ],
+     "aspect": 0.625,
+     "path": "res://assets/farming/p109/runtime/animals/silt_loach/juvenile.png",
+     "sha256": "64cb98d964a6b6c146b38f47b3f3427d34ff544f1c11fe1bc34a79c8c469b024"
+    }
+   }
+  },
+  "steel_sheep": {
+   "name": "钢绵羊",
+   "habitat_facility": false,
+   "stages": {
+    "adult": {
+     "canvas_px": [
+      96,
+      96
+     ],
+     "anchor_uv": [
+      0.5,
+      0.9583333333333334
+     ],
+     "aspect": 1.0,
+     "path": "res://assets/farming/p109/runtime/animals/steel_sheep/adult.png",
+     "sha256": "7ffc366b473bde330ea93b0907ac718858830c0a0e761d80da70eec74f01ab3f"
+    },
+    "juvenile": {
+     "canvas_px": [
+      96,
+      96
+     ],
+     "anchor_uv": [
+      0.5,
+      0.9583333333333334
+     ],
+     "aspect": 0.989,
+     "path": "res://assets/farming/p109/runtime/animals/steel_sheep/juvenile.png",
+     "sha256": "04246f48d5ce7d9527dd74f0e66d32c6e3c1d7d5e42048e3431a5f61c1f75490"
+    }
+   }
+  }
+ }
+}

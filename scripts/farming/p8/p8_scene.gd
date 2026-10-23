@@ -14,6 +14,11 @@ const PLANT_PROFILES := {
 }
 const FacilityVisuals := preload("res://scripts/farming/p8/p8_facility_visuals.gd")
 var facility_visuals := FacilityVisuals.new()
+var facility_profile := "legacy"
+const FACILITY_PROFILES := {
+	"legacy":"res://assets/farming/facilities/facility_manifest.json",
+	"p109":"res://assets/farming/p109/runtime/facility_manifest.json",
+}
 const TerrainSoften := preload("res://assets/farming/shaders/p8_terrain_soften.gdshader")
 const TrialGrounding := preload("res://scripts/farming/p8/p8_grounding.gd")
 const ProductionEnvironment := preload("res://scripts/farming/p8/p8_environment_visuals.gd")
@@ -27,9 +32,11 @@ var build_facing := "east"
 const RoomsUI := preload("res://scripts/farming/p8/p102_ui.gd")
 const RanchUI := preload("res://scripts/farming/p8/p103_ui.gd")
 const ServicesUI := preload("res://scripts/farming/p8/p104_ui.gd")
+const AnimalView := preload("res://scripts/farming/p8/p10_animal_view.gd")
 var rooms_ui := RoomsUI.new(self)
 var ranch_ui := RanchUI.new(self)
 var services_ui := ServicesUI.new(self)
+var animal_view := AnimalView.new(self)
 const EconomyUI := preload("res://scripts/farming/p8/p107_ui.gd")
 var economy_ui := EconomyUI.new(self)
 const BatchUI := preload("res://scripts/farming/p8/p108_batch.gd")
@@ -138,10 +145,15 @@ func _ready() -> void:
 	_load_reading_preferences()
 	var style: Dictionary = JSON.parse_string(FileAccess.get_file_as_string("res://content/farming/p8/world_visuals.json"))
 	var requested_plants := String(style.get("plant_profile", "legacy"))
+	var requested_facilities := String(style.get("facility_profile", "p109"))
 	for argument in OS.get_cmdline_user_args():
 		if argument.begins_with("--plants="): requested_plants = argument.trim_prefix("--plants=")
+		if argument.begins_with("--facilities="): requested_facilities = argument.trim_prefix("--facilities=")
+		if argument.begins_with("--animals="): animal_view.enabled = argument.trim_prefix("--animals=") != "off"
 	var plant_result := configure_plant_profile(requested_plants)
 	if not plant_result["ok"]: push_error("Plant profile retained: %s" % plant_result["diagnostics"])
+	var facility_result := configure_facility_profile(requested_facilities)
+	if not facility_result["ok"]: push_error("Facility profile retained: %s" % facility_result["diagnostics"])
 	for ident in style["terrain_tones"]:
 		if not terrain.layers.has(ident): continue
 		var material := ShaderMaterial.new()
@@ -188,6 +200,24 @@ func configure_plant_profile(profile: String) -> Dictionary:
 	if has_method("invalidate_projection_bounds"): call("invalidate_projection_bounds")
 	return {"ok":true,"profile":plant_profile,"diagnostics":[]}
 
+func configure_facility_profile(profile: String) -> Dictionary:
+	if profile not in FACILITY_PROFILES:
+		return {"ok":false,"profile":facility_profile,"diagnostics":["unknown facility profile: "+profile]}
+	if profile == facility_profile:
+		return {"ok":true,"profile":facility_profile,"diagnostics":[]}
+	# 先完整装载再替换：p109 只覆盖25项占位设施，其余14项沿用 legacy 条目。
+	var candidate := FacilityVisuals.new(FACILITY_PROFILES["legacy"])
+	var problems: Array = candidate.diagnostics.values()
+	if profile == "p109":
+		problems.append_array(candidate.merge_manifest(FACILITY_PROFILES["p109"]))
+	if not problems.is_empty():
+		return {"ok":false,"profile":facility_profile,"diagnostics":problems}
+	facility_visuals = candidate
+	facility_profile = profile
+	_facility_thumbnails.clear()
+	if is_instance_valid(overlay): overlay.queue_redraw()
+	return {"ok":true,"profile":facility_profile,"diagnostics":[]}
+
 func _show_settings() -> void:
 	super()
 	_label(sidebar,"植物美术预览（本次运行生效）")
@@ -201,6 +231,25 @@ func _show_settings() -> void:
 			picker.select(0 if plant_profile == "p109" else 1)
 			_result(result))
 	sidebar.add_child(picker)
+	_label(sidebar,"设施美术预览（本次运行生效）")
+	var fac_picker := OptionButton.new()
+	fac_picker.add_item("P10.9 新设施")
+	fac_picker.add_item("旧版设施")
+	fac_picker.select(0 if facility_profile == "p109" else 1)
+	fac_picker.item_selected.connect(func(index):
+		var result := configure_facility_profile("p109" if index == 0 else "legacy")
+		if not result["ok"]:
+			fac_picker.select(0 if facility_profile == "p109" else 1)
+			_result(result))
+	sidebar.add_child(fac_picker)
+	_label(sidebar,"动物视野叠层（本次运行生效）")
+	var animal_toggle := CheckBox.new()
+	animal_toggle.text = "显示四分区动物小图"
+	animal_toggle.button_pressed = animal_view.enabled
+	animal_toggle.toggled.connect(func(pressed):
+		animal_view.enabled = pressed
+		overlay.queue_redraw())
+	sidebar.add_child(animal_toggle)
 
 func configure_visual_trial(profile: String, runtime_dir: String = "") -> Dictionary:
 	if profile not in ["baseline","grounding","integrated"]:
@@ -367,6 +416,22 @@ func _show_cell() -> void:
 	if _started and world.grid.in_bounds(selected.x,selected.y):
 		var crop := world.instance_at(selected)
 		var facility := world.facility_at(selected)
+		# P10.10 地格内容列表：本格动物条目（展示槽位）与所属区域入口；
+		# 工具输入不受影响——这里只写右侧信息区。
+		var cell_animals: Array = animal_view.animals_at(world, selected)
+		if not cell_animals.is_empty():
+			_label(sidebar,"本格动物（展示槽位）")
+			for uid in cell_animals:
+				var row: Dictionary = world.ranch.animal(int(uid))
+				if row.is_empty(): continue
+				var species: Dictionary = world.husbandry.species_def(String(row["species_id"]))
+				var uid_copy := int(uid)
+				_button(sidebar,"%s · %s #%d" % [String(species["name"]), "成体" if String(row["stage"]) == "adult" else "幼体", uid_copy],
+					func(): animal_view.show_detail(world, uid_copy))
+		var cell_zone: Dictionary = animal_view.zone_at(world, selected)
+		if not cell_zone.is_empty():
+			var zone_uid := int(cell_zone["uid"])
+			_button(sidebar,"所属区域：%s（畜牧名册）" % String(cell_zone["name"]), func(): ranch_ui.open())
 		var copy := _button(sidebar,"复制此处配置",func(): _copy_from_cell(selected))
 		copy.tooltip_text = "仅复制首版白名单中的选种计划、通用加工策略或田间维护站开关"
 		if crop.is_empty() and facility.is_empty() and world.rooms.floor_kind(selected) != "farmland": copy.disabled = true
@@ -402,8 +467,13 @@ func _board_input(event: InputEvent) -> void:
 			overlay.queue_redraw()
 		return
 	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_RIGHT and event.pressed: logistics_ui.placing = ""
+	# 批量拖选/复制粘贴只认领自己能处理的释放事件：手动模式＋批量农具，或复制激活。
+	# 其余模式（建造/后勤部署/委托框选/取消标记等手动工具）必须保留_drag放行到父类，
+	# 否则对应点击全部失效（P10.8回归：设施放置、委托marks、取消标记单击）。
 	if _started and not shade.visible and not is_instance_valid(confirmation) and event is InputEventMouseButton \
-			and event.button_index == MOUSE_BUTTON_LEFT and not event.pressed and _drag and not _text_focus():
+			and event.button_index == MOUSE_BUTTON_LEFT and not event.pressed and _drag and not _text_focus() \
+			and build_tool.is_empty() and logistics_ui.placing.is_empty() \
+			and (not copy_config.is_empty() or (manual_mode and tool in ["till","plant","irrigate","fertilize","harvest","fell","clear"])):
 		var end_cell := _cell(event.position)
 		var drag_rect := _rect(_drag_start,end_cell)
 		_drag = false
@@ -421,7 +491,8 @@ func _board_input(event: InputEvent) -> void:
 	# and the inherited manual-action path so even resource points refresh at once.
 	if _started and not shade.visible and not is_instance_valid(confirmation) and not _text_focus() \
 			and event is InputEventMouseButton and event.button_index==MOUSE_BUTTON_LEFT and not event.pressed \
-			and not _map_pan and tool=="inspect" and copy_config.is_empty() and logistics_ui.placing.is_empty():
+			and not _map_pan and tool=="inspect" and copy_config.is_empty() and logistics_ui.placing.is_empty() \
+			and build_tool.is_empty():
 		_drag=false
 		selected=_cell(event.position)
 		_side_open=true
